@@ -1,6 +1,6 @@
 import { Pipe, PipeTransform } from '@angular/core';
 
-import * as moment from 'moment';
+declare const moment: any;
 
 @Pipe({
     name: 'time'
