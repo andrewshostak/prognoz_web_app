@@ -14,7 +14,7 @@
     
 - New task
     - ~~Update to latest Angular version~~
-    - Use moment.js instead of backend Carbon
+    - ~~Use moment.js instead of backend Carbon~~
     - Ability to change user password
     - Captcha in recovery + ~~update captcha library~~
     - Edit ended match page (team competition)
@@ -41,7 +41,7 @@
     - All labels click shout make input focused
     - Hide data when user click reload button - standardize
     - Refactor environment files
-    - Remove confirmation popover. use confirm popup instead
+    - ~~Remove confirmation popover. use confirm popup instead~~
     - Standardize forms with current user id
     - Backend repositories refactor
     - Backend services refactor

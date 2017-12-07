@@ -3,7 +3,7 @@ import { Component, OnInit }    from '@angular/core';
 import { Competition }          from '../../shared/models/competition.model';
 import { CompetitionService }   from '../manage-competition/shared/competition.service';
 import { environment }          from '../../../environments/environment';
-import { NotificationsService } from "angular2-notifications";
+import { NotificationsService } from 'angular2-notifications';
 
 declare var $: any;
 

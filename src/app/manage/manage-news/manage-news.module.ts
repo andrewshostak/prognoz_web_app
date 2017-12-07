@@ -2,7 +2,6 @@ import { CommonModule }              from '@angular/common';
 import { NgModule }                  from '@angular/core';
 import { ReactiveFormsModule }       from '@angular/forms';
 
-import { ConfirmationPopoverModule } from 'angular-confirmation-popover';
 import { ManageNewsComponent }       from './manage-news.component';
 import { ManageNewsGuard }           from './shared/manage-news-guard.service';
 import { ManageNewsRoutingModule }   from './manage-news-routing.module';
@@ -16,10 +15,6 @@ import { SharedModule }              from '../../shared/shared.module';
         CommonModule,
         ReactiveFormsModule,
         ManageNewsRoutingModule,
-        ConfirmationPopoverModule.forRoot({
-            confirmButtonType: 'danger',
-            focusButton: 'confirm'
-        }),
         SharedModule
     ],
     declarations: [

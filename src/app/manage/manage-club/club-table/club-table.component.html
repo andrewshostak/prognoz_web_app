@@ -48,12 +48,9 @@
                             </a>
                             <button type="button"
                                     class="btn btn-sm btn-outline-danger"
-                                    mwlConfirmationPopover
-                                    [title]="title"
-                                    [message]="message + ' ' + club.title + '?'"
-                                    placement="left"
-                                    (confirm)="deleteClub(club)"
-                                    (cancel)="cancelClicked = true">
+                                    (click)="deleteClubConfirmModalOpen(club)"
+                                    data-toggle="modal"
+                                    data-target="#deleteClubConfirmModal">
                                 <i class="fa fa-trash-o fa-lg" aria-hidden="true"></i>
                             </button>
                         </td>
@@ -69,3 +66,9 @@
                     [path]="path">
     </app-pagination>
 </div>
+<app-confirm-modal [data]="confirmModalData"
+                   [modalId]="confirmModalId"
+                   [message]="confirmModalMessage"
+                   [spinnerButton]="confirmSpinnerButton"
+                   (onConfirmed)="confirmModalSubmit($event)">
+</app-confirm-modal>

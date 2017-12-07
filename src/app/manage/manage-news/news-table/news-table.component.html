@@ -35,12 +35,9 @@
                         <td>
                             <button type="button"
                                     class="btn btn-outline-danger"
-                                    mwlConfirmationPopover
-                                    [title]="title"
-                                    [message]="message + ' ' + one.title + '?'"
-                                    placement="left"
-                                    (confirm)="deleteNewsItem(one)"
-                                    (cancel)="cancelClicked = true">
+                                    (click)="deleteNewsConfirmModalOpen(one)"
+                                    data-toggle="modal"
+                                    data-target="#deleteNewsConfirmModal">
                                 Видалити
                             </button>
                         </td>
@@ -57,3 +54,9 @@
                     [path]="path">
     </app-pagination>
 </div>
+<app-confirm-modal [data]="confirmModalData"
+                   [modalId]="confirmModalId"
+                   [message]="confirmModalMessage"
+                   [spinnerButton]="confirmSpinnerButton"
+                   (onConfirmed)="confirmModalSubmit($event)">
+</app-confirm-modal>

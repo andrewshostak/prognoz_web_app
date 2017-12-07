@@ -5,6 +5,8 @@ import { NotificationsService }           from 'angular2-notifications';
 import { News }                           from '../../../shared/models/news.model';
 import { NewsService }                    from '../../../news/shared/news.service';
 
+declare var $: any;
+
 @Component({
   selector: 'app-news-table',
   templateUrl: './news-table.component.html',
@@ -18,31 +20,50 @@ export class NewsTableComponent implements OnInit {
         private newsService: NewsService
     ) { }
 
-    cancelClicked: boolean = false;
-    confirmClicked: boolean = false;
+    confirmModalData: any;
+    confirmModalId: string;
+    confirmModalMessage: string;
+    confirmSpinnerButton: boolean;
     currentPage: number;
     errorNews: string | Array<string>;
     news: News[];
     lastPage: number;
-    message: string = 'Ви дійсно бажаєте видалити';
     path: string = '/manage/news/page/';
     perPage: number;
-    title: string = 'Підтвердження';
     total: number;
 
+    confirmModalSubmit(data: any) {
+        switch (this.confirmModalId) {
+            case 'deleteNewsConfirmModal':
+                this.deleteNewsItem(data);
+                break;
+        }
+    }
+
     deleteNewsItem(news: News) {
+        this.confirmSpinnerButton = true;
         this.newsService.deleteNewsItem(news.id).subscribe(
             response => {
                 this.total--;
                 this.news = this.news.filter(n => n !== news);
                 this.notificationService.success('Успішно', news.title + ' видалено');
+                this.confirmSpinnerButton = false;
+                $('#' + this.confirmModalId).modal('hide');
             },
             errors => {
                 for (let error of errors) {
                     this.notificationService.error('Помилка', error);
                 }
+                this.confirmSpinnerButton = false;
+                $('#' + this.confirmModalId).modal('hide');
             }
         );
+    }
+
+    deleteNewsConfirmModalOpen(news: News) {
+        this.confirmModalMessage = 'Ви справді хочете видалити цю новину?';
+        this.confirmModalId = 'deleteNewsConfirmModal';
+        this.confirmModalData = news;
     }
 
     ngOnInit() {
