@@ -1,8 +1,8 @@
 import { CommonModule }                               from '@angular/common';
 import { NgModule }                                   from '@angular/core';
 import { ReactiveFormsModule }                        from '@angular/forms';
+import { RouterModule }                               from '@angular/router';
 
-import { AppRoutingModule }                           from '../app-routing.module';
 import { ChartsModule }                               from 'ng2-charts';
 import { ChampionshipLastResultsComponent }           from './championship/championship-last-results/championship-last-results.component';
 import { ChampionshipMatchPredictableComponent }      from './championship/championship-match-predictable/championship-match-predictable.component';
@@ -35,7 +35,7 @@ import { TimePipe }                                   from './pipes/time.pipe';
 @NgModule({
     imports: [
         CommonModule,
-        AppRoutingModule,
+        RouterModule,
         ChartsModule,
         ReactiveFormsModule,
         SimpleNotificationsModule

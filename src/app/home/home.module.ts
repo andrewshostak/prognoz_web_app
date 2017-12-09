@@ -11,7 +11,6 @@ import { SharedModule }     from '../shared/shared.module';
         AppRoutingModule,
         SharedModule,
     ],
-    declarations: [HomeComponent],
-    exports: [HomeComponent]
+    declarations: [HomeComponent]
 })
 export class HomeModule { }

@@ -11,7 +11,6 @@ import { CoreModule }                               from './core/core.module';
 import { GuestbookModule }                          from './guestbook/guestbook.module';
 import { HomeModule }                               from './home/home.module';
 import { ManageModule }                             from './manage/manage.module';
-import { MeModule }                                 from './me/me.module';
 import { NewsModule }                               from './news/news.module';
 import { NgProgressModule, NgProgressInterceptor }  from 'ngx-progressbar';
 import { SharedModule }                             from './shared/shared.module';
@@ -33,7 +32,6 @@ import { TeamModule }                               from './team/team.module';
         HomeModule,
         HttpClientModule,
         ManageModule,
-        MeModule,
         NgProgressModule,
         TeamModule,
         NewsModule,
