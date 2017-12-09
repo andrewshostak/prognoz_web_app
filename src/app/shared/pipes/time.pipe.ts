@@ -8,6 +8,10 @@ declare const moment: any;
 export class TimePipe implements PipeTransform {
 
     transform(value: string, format: string): any {
+        if (!Date.parse(value)) {
+            return value;
+        }
+
         moment.locale('uk');
         if (format === 'calendar') {
             return moment(value).calendar();
