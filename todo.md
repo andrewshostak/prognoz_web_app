@@ -1,6 +1,6 @@
 # to do list
 - Bugs
-    - Goalkeeper could block matches only before round start
+    - ~~Goalkeeper could block matches only before round start~~
     - ~~Championship user page error if no predictions~~
     - Championship match navigation: previous/next (Chart.js bug)
 

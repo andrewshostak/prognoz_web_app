@@ -3,15 +3,14 @@
         <div class="row align-items-center">
             <div class="col-12 col-md-7 col-lg-8">
                 <div class="form-group mb-0"
-                     *ngIf="!blockedTeamMatch || blockedTeamMatch.is_predictable"
+                     *ngIf="!isRoundStarted"
                      [class.form-group-invalid-custom]="teamGoalkeeperForm.get('team_match_id').hasError('required') && teamGoalkeeperForm.get('team_match_id').touched">
                     <select id="team_match_id"
                             class="form-control"
                             formControlName="team_match_id">
                         <option [value]="''">Не вибрано</option>
                         <option *ngFor="let teamMatch of teamMatches"
-                                [value]="teamMatch.id"
-                                [disabled]="!teamMatch.is_predictable">
+                                [value]="teamMatch.id">
                             {{teamMatch.club_first.title + ' - ' + teamMatch.club_second.title}}
                         </option>
                     </select>
@@ -19,23 +18,23 @@
                         <small>Вибір матчу для блокування обов'язковий.</small>
                     </div>
                 </div>
-                <div *ngIf="blockedTeamMatch && !blockedTeamMatch.is_predictable" class="text-center font-weight-bold">
-                    {{blockedTeamMatch.club_first.title + ' - ' + blockedTeamMatch.club_second.title}}
+                <div *ngIf="isRoundStarted" class="text-center font-weight-bold">
+                    {{blockedTeamMatch ? (blockedTeamMatch.club_first.title + ' - ' + blockedTeamMatch.club_second.title) : 'Не заблоковано'}}
                 </div>
             </div>
             <div class="col-12 col-md-5 col-lg-4 text-center">
                 <!-- submit button -->
-                <button *ngIf="!spinnerButton && (!blockedTeamMatch || blockedTeamMatch.is_predictable)"
+                <button *ngIf="!spinnerButton && !isRoundStarted"
                         class="btn btn-block"
                         [ngClass]="{'btn-outline-primary': blockedTeamMatch, 'btn-primary': !blockedTeamMatch}"
-                        [disabled]="teamGoalkeeperForm.invalid"
+                        [disabled]="teamGoalkeeperForm.invalid || isRoundStarted"
                         type="submit">
                     <i [hidden]="blockedTeamMatch" class="fa fa-check-circle-o" aria-hidden="true"></i>
                     <i [hidden]="!blockedTeamMatch" class="fa fa-pencil-square-o" aria-hidden="true"></i>
                     {{blockedTeamMatch ? 'Змінити' : 'Заблокувати'}}
                 </button>
                 <!-- disabled button -->
-                <button *ngIf="blockedTeamMatch && !blockedTeamMatch.is_predictable"
+                <button *ngIf="isRoundStarted"
                         class="btn btn-block btn-outline-secondary"
                         type="button"
                         disabled>

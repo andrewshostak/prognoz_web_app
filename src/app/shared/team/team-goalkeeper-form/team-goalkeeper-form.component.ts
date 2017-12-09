@@ -20,6 +20,7 @@ export class TeamGoalkeeperFormComponent implements OnInit, OnChanges {
     @Input() authenticatedUser: User;
     @Output() reloadData = new EventEmitter<any>();
 
+    isRoundStarted: boolean;
     teamGoalkeeperForm: FormGroup;
     spinnerButton: boolean;
 
@@ -34,11 +35,18 @@ export class TeamGoalkeeperFormComponent implements OnInit, OnChanges {
     }
 
     ngOnChanges(changes: SimpleChanges) {
-        for (let propName in changes) {
+        for(const propName in changes) {
             if (!changes[propName].firstChange && propName === 'blockedTeamMatch') {
                 this.teamGoalkeeperForm.patchValue({team_match_id: changes[propName].currentValue.id});
             }
+            if (!changes[propName].firstChange && propName === 'teamMatches') {
+                this.isRoundStarted = !!this.getStartedMatches(changes[propName].currentValue).length;
+            }
         }
+    }
+
+    getStartedMatches(teamMatches: TeamMatch[]): TeamMatch[] {
+        return teamMatches.filter(teamMatch => !teamMatch.is_predictable);
     }
 
     ngOnInit() {

@@ -15,11 +15,11 @@ export class ErrorHandlerService {
         const errorMessage: Array<any> = [];
         if (error instanceof HttpErrorResponse) {
             if (error.status !== 422) {
-                const errorJson = JSON.parse(error.error);
+                const errorJson = error.error;
                 const err = errorJson.message || JSON.stringify(errorJson);
-                errorMessage.push(`${error.status} - ${err}`);
+                errorMessage.push(`${err}`);
             } else {
-                errorObject = JSON.parse(error.error);
+                errorObject = error.error;
                 Object.keys(errorObject.errors).forEach(function(key) {
                     errorMessage.push(errorObject.errors[key]);
                 });
