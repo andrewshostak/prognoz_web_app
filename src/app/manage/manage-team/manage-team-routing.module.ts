@@ -9,7 +9,7 @@ import { TeamMatchEditComponent }       from './team-match-edit/team-match-edit.
 
 const routes: Routes = [
     {
-        path: 'manage/team',
+        path: 'team',
         component: ManageTeamComponent,
         canActivate: [ ManageTeamGuard ],
         children: [

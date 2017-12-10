@@ -6,9 +6,10 @@ import { HomeComponent }            from './home/home.component';
 
 const routes: Routes = [
     { path: '403', component: AccessDeniedComponent },
-    { path: 'me', loadChildren: 'app/me/me.module#MeModule'},
-    { path: 'user', redirectTo: '/me', pathMatch: 'full'},
-    { path: '', component: HomeComponent}
+    { path: 'guestbook', loadChildren: 'app/guestbook/guestbook.module#GuestbookModule' },
+    { path: 'manage', loadChildren: 'app/manage/manage.module#ManageModule' },
+    { path: 'me', loadChildren: 'app/me/me.module#MeModule' },
+    { path: '', component: HomeComponent }
 ];
 
 @NgModule({

@@ -27,13 +27,14 @@
     - Hall of fame page
     - ~~Users online component~~
     - Message system
+    - Club-user relation many-to-many
+    - Secure connection (https instead of http) backend / frontend
     
 - Consider to implement
     - Select-input everywhere where is club select
     - Change all *ngIf to [hidden] where its possible
     - Yellow highlight when data is changed and unsaved
     - Create about page. my contacts. link in footer
-    - User-club relation
     - Championship-match comment relation
     
 - Refactoring
@@ -45,6 +46,7 @@
     - Standardize forms with current user id
     - Backend repositories refactor
     - Backend services refactor
+    - ~~Lazy loading for modules: me, manage, guestbook~~
     
 - Test/Check
     - Check registration in production with invalid email

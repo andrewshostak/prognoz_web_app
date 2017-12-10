@@ -9,7 +9,7 @@ import { NewsTableComponent }       from './news-table/news-table.component';
 
 const routes: Routes = [
     {
-        path: 'manage/news',
+        path: 'news',
         component: ManageNewsComponent,
         canActivate: [ ManageNewsGuard ],
         children: [

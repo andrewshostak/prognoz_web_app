@@ -9,7 +9,7 @@ import { SeasonTableComponent }     from './season-table/season-table.component'
 
 const routes: Routes = [
     {
-        path: 'manage/seasons',
+        path: 'seasons',
         component: ManageSeasonComponent,
         canActivate: [ ManageSeasonGuard ],
         children: [

@@ -10,7 +10,7 @@ import { MatchEditEndedComponent }          from './match-edit-ended/match-edit-
 
 const routes: Routes = [
     {
-        path: 'manage/championship',
+        path: 'championship',
         component: ManageChampionshipComponent,
         canActivate: [ ManageChampionshipGuard ],
         children: [

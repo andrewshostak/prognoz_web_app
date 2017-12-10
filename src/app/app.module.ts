@@ -8,9 +8,7 @@ import { AppRoutingModule }                         from './app-routing.module';
 import { AuthModule }                               from './auth/auth.module';
 import { ChampionshipModule }                       from './championship/championship.module';
 import { CoreModule }                               from './core/core.module';
-import { GuestbookModule }                          from './guestbook/guestbook.module';
 import { HomeModule }                               from './home/home.module';
-import { ManageModule }                             from './manage/manage.module';
 import { NewsModule }                               from './news/news.module';
 import { NgProgressModule, NgProgressInterceptor }  from 'ngx-progressbar';
 import { SharedModule }                             from './shared/shared.module';
@@ -28,10 +26,8 @@ import { TeamModule }                               from './team/team.module';
         BrowserModule,
         ChampionshipModule,
         CoreModule,
-        GuestbookModule,
         HomeModule,
         HttpClientModule,
-        ManageModule,
         NgProgressModule,
         TeamModule,
         NewsModule,

@@ -11,7 +11,7 @@ const routes: Routes = [
         pathMatch: 'full'
     },
     {
-        path: 'guestbook',
+        path: '',
         component: GuestbookComponent,
         children: [
             {

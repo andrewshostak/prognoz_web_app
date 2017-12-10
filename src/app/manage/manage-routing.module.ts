@@ -6,7 +6,7 @@ import { ManageGuard }              from './shared/manage-guard.service';
 
 const routes: Routes = [
     {
-        path: 'manage',
+        path: '',
         component: ManageComponent,
         canActivate: [ManageGuard]
     }

@@ -9,7 +9,7 @@ import { ManageCompetitionGuard }     from './shared/manage-competition-guard.se
 
 const routes: Routes = [
     {
-        path: 'manage/competitions',
+        path: 'competitions',
         component: ManageCompetitionComponent,
         canActivate: [ ManageCompetitionGuard ],
         children: [
