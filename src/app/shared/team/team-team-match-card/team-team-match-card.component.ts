@@ -3,7 +3,7 @@ import { AfterViewInit, Component, Input, ChangeDetectorRef }   from '@angular/c
 import { environment }                                          from '../../../../environments/environment';
 import { HelperService }                                        from '../../../core/helper.service';
 import { TeamMatch }                                            from '../../models/team-match.model';
-import { TeamMatchService }                                     from '../../../manage/manage-team/shared/team-match.service';
+import { TeamMatchService }                                     from '../../../team/shared/team-match.service';
 import { TeamTeamMatch }                                        from '../../models/team-team-match.model';
 
 declare var $: any;

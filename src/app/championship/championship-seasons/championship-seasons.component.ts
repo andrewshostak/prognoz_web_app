@@ -1,7 +1,7 @@
 import { Component, OnInit }   from '@angular/core';
 
 import { Season }              from '../../shared/models/season.model';
-import { SeasonService }       from '../../manage/manage-season/shared/season.service';
+import { SeasonService }       from '../../core/season.service';
 import { TitleService }        from '../../core/title.service';
 
 @Component({

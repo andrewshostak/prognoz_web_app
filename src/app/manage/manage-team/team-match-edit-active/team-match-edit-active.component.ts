@@ -2,10 +2,10 @@ import { Component, OnInit }                    from '@angular/core';
 import { FormBuilder, FormGroup, Validators }   from '@angular/forms';
 
 import { Club }                                 from '../../../shared/models/club.model';
-import { ClubService }                          from '../../manage-club/shared/club.service';
+import { ClubService }                          from '../../../core/club.service';
 import { environment }                          from '../../../../environments/environment';
 import { TeamMatch }                            from '../../../shared/models/team-match.model';
-import { TeamMatchService }                     from '../shared/team-match.service';
+import { TeamMatchService }                     from '../../../team/shared/team-match.service';
 import { NotificationsService }                 from 'angular2-notifications';
 
 @Component({

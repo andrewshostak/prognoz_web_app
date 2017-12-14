@@ -3,7 +3,7 @@ import { Component, OnInit }    from '@angular/core';
 import { environment }          from '../../../../environments/environment';
 import { NotificationsService } from 'angular2-notifications';
 import { TeamMatch }            from '../../../shared/models/team-match.model';
-import { TeamMatchService }     from '../shared/team-match.service';
+import { TeamMatchService }     from '../../../team/shared/team-match.service';
 
 @Component({
     selector: 'app-team-match-edit',

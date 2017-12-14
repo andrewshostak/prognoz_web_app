@@ -4,7 +4,6 @@ import { ReactiveFormsModule }       from '@angular/forms';
 
 import { ClubCreateComponent }       from './club-create/club-create.component';
 import { ClubEditComponent }         from './club-edit/club-edit.component';
-import { ClubService }               from './shared/club.service';
 import { ClubTableComponent }        from './club-table/club-table.component';
 import { ManageClubComponent }       from './manage-club.component';
 import { ManageClubGuard }           from './shared/manage-club-guard.service';
@@ -25,8 +24,7 @@ import { SharedModule }              from '../../shared/shared.module';
         ClubEditComponent
     ],
     providers: [
-        ManageClubGuard,
-        ClubService
+        ManageClubGuard
     ]
 })
 export class ManageClubModule { }

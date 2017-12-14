@@ -9,7 +9,7 @@ import { environment }                  from '../../../environments/environment'
 import { HelperService }                from '../../core/helper.service';
 import { NotificationsService }         from 'angular2-notifications';
 import { TeamMatch }                    from '../../shared/models/team-match.model';
-import { TeamMatchService }             from '../../manage/manage-team/shared/team-match.service';
+import { TeamMatchService }             from '../shared/team-match.service';
 import { TeamParticipant }              from '../../shared/models/team-participant.model';
 import { TeamParticipantService }       from '../shared/team-participant.service';
 import { TeamPredictionService }        from '../shared/team-prediction.service';

@@ -2,7 +2,7 @@ import { Component, EventEmitter, Input, OnInit, Output }   from '@angular/core'
 import { FormControl, FormGroup, Validators }               from '@angular/forms';
 
 import { Club }                                             from '../../models/club.model';
-import { ClubService }                                      from '../../../manage/manage-club/shared/club.service';
+import { ClubService }                                      from '../../../core/club.service';
 import { environment }                                      from '../../../../environments/environment';
 import { ImageService }                                     from '../../../core/image.service';
 import { NotificationsService }                             from 'angular2-notifications';

@@ -4,13 +4,13 @@ import { ActivatedRoute, Params, Router }                   from '@angular/route
 import { FormBuilder, FormControl, FormGroup, Validators }  from '@angular/forms';
 
 import { Competition }                                      from '../../../shared/models/competition.model';
-import { CompetitionService }                               from '../shared/competition.service';
+import { CompetitionService }                               from '../../../core/competition.service';
 import { environment }                                      from '../../../../environments/environment';
 import { NotificationsService }                             from 'angular2-notifications';
 import { Season }                                           from '../../../shared/models/season.model';
-import { SeasonService }                                    from '../../manage-season/shared/season.service';
+import { SeasonService }                                    from '../../../core/season.service';
 import { Tournament }                                       from '../../../shared/models/tournament.model';
-import { TournamentService }                                from '../../manage-tournament/shared/tournament.service';
+import { TournamentService }                                from '../../../core/tournament.service';
 
 
 @Component({

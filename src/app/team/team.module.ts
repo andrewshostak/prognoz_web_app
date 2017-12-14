@@ -6,6 +6,7 @@ import { SharedModule }                     from '../shared/shared.module';
 import { TeamCaptainComponent }             from './team-captain/team-captain.component';
 import { TeamComponent }                    from './team.component';
 import { TeamMatchesComponent }             from './team-matches/team-matches.component';
+import { TeamMatchService }                 from './shared/team-match.service';
 import { TeamMyComponent }                  from './team-my/team-my.component';
 import { TeamParticipantService }           from './shared/team-participant.service';
 import { TeamPredictionsComponent }         from './team-predictions/team-predictions.component';
@@ -41,6 +42,7 @@ import { TeamTeamMatchService }             from './shared/team-team-match.servi
         TeamComponent
     ],
     providers: [
+        TeamMatchService,
         TeamParticipantService,
         TeamPredictionService,
         TeamRatingService,

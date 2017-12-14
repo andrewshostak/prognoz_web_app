@@ -3,6 +3,7 @@
     - ~~Goalkeeper could block matches only before round start~~
     - ~~Championship user page error if no predictions~~
     - Championship match navigation: previous/next (Chart.js bug)
+    - Users online list duplicate
 
 - Small changes
     - ~~Team squads page ordering~~
@@ -41,11 +42,21 @@
     - All forms submit standardize
     - All labels click shout make input focused
     - Hide data when user click reload button - standardize
-    - Refactor environment files
+    - ~~Refactor environment files~~
     - ~~Remove confirmation popover. use confirm popup instead~~
     - Standardize forms with current user id
-    - Backend repositories refactor
-    - Backend services refactor
+    - Backend repositories refactor: 
+        - ~~ChampionshipMatchRepository~~
+        - ChampionshipPredictRepository
+        - ChamponshipRatingRepository
+    - Backend services refactor: 
+        - ~~ChampionshipMatchService~~
+        - ChampionshipPredictService
+        - ChampionshipRatingService
+    - Backend controllers refactor
+        - ~~ChampionshipMatchController~~
+        - ChampionshipPredictController
+        - ChampionshipRatingController
     - ~~Lazy loading for modules: me, manage, guestbook~~
     
 - Test/Check

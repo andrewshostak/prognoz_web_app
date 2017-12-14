@@ -9,7 +9,6 @@ import { SharedModule }                     from '../../shared/shared.module';
 import { TeamMatchCreateComponent }         from './team-match-create/team-match-create.component';
 import { TeamMatchEditActiveComponent }     from './team-match-edit-active/team-match-edit-active.component';
 import { TeamMatchEditComponent }           from './team-match-edit/team-match-edit.component';
-import { TeamMatchService }                 from './shared/team-match.service';
 
 @NgModule({
     imports: [
@@ -26,8 +25,7 @@ import { TeamMatchService }                 from './shared/team-match.service';
         TeamMatchEditComponent,
     ],
     providers: [
-        ManageTeamGuard,
-        TeamMatchService
+        ManageTeamGuard
     ]
 })
 export class ManageTeamModule { }

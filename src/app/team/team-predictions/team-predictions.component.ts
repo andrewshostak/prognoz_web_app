@@ -5,7 +5,7 @@ import { Subscription }                 from 'rxjs/Subscription';
 import { AuthService }                  from '../../core/auth.service';
 import { CurrentStateService }          from '../../core/current-state.service';
 import { TeamMatch }                    from '../../shared/models/team-match.model';
-import { TeamMatchService }             from '../../manage/manage-team/shared/team-match.service';
+import { TeamMatchService }             from '../shared/team-match.service';
 import { TeamTeamMatch }                from '../../shared/models/team-team-match.model';
 import { TeamTeamMatchService }         from '../shared/team-team-match.service';
 import { TeamPrediction }               from '../../shared/models/team-prediction.model';

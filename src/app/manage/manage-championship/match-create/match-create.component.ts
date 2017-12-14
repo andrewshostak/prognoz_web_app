@@ -4,7 +4,7 @@ import { FormBuilder, FormGroup, Validators }   from '@angular/forms';
 import { ChampionshipMatch }                    from '../../../shared/models/championship-match.model';
 import { ChampionshipMatchService }             from '../../../championship/shared/championship-match.service';
 import { Club }                                 from '../../../shared/models/club.model';
-import { ClubService }                          from '../../manage-club/shared/club.service';
+import { ClubService }                          from '../../../core/club.service';
 import { environment }                          from '../../../../environments/environment';
 import { NotificationsService }                 from 'angular2-notifications';
 

@@ -4,7 +4,7 @@ import { Subscription }                 from 'rxjs/Subscription';
 
 import { AuthService }                  from '../../core/auth.service';
 import { Competition }                  from '../../shared/models/competition.model';
-import { CompetitionService }           from '../../manage/manage-competition/shared/competition.service';
+import { CompetitionService }           from '../../core/competition.service';
 import { CurrentStateService }          from '../../core/current-state.service';
 import { environment }                  from '../../../environments/environment';
 import { TeamTeamMatch }                from '../../shared/models/team-team-match.model';

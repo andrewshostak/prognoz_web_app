@@ -2,7 +2,7 @@ import { Component, OnInit }              from '@angular/core';
 import { ActivatedRoute, Params }         from '@angular/router';
 
 import { Club }                           from '../../../shared/models/club.model';
-import { ClubService }                    from '../shared/club.service';
+import { ClubService }                    from '../../../core/club.service';
 import { environment }                    from '../../../../environments/environment';
 import { NotificationsService }           from 'angular2-notifications';
 

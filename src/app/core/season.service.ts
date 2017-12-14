@@ -2,10 +2,10 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 
-import { environment }          from '../../../../environments/environment';
-import { ErrorHandlerService }  from '../../../core/error-handler.service';
-import { HeadersWithToken }     from '../../../core/headers-with-token.service';
-import { Season }               from '../../../shared/models/season.model';
+import { environment }          from '../../environments/environment';
+import { ErrorHandlerService }  from './error-handler.service';
+import { HeadersWithToken }     from './headers-with-token.service';
+import { Season }               from '../shared/models/season.model';
 
 @Injectable()
 

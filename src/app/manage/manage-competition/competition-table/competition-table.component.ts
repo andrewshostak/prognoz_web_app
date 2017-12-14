@@ -2,7 +2,7 @@ import { Component, OnInit }      from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 
 import { Competition }            from '../../../shared/models/competition.model';
-import { CompetitionService }     from '../shared/competition.service';
+import { CompetitionService }     from '../../../core/competition.service';
 
 @Component({
     selector: 'app-competition-table',

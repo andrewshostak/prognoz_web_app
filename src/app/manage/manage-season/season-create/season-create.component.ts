@@ -3,7 +3,7 @@ import { FormControl, FormGroup, Validators }   from '@angular/forms';
 import { Router }                               from '@angular/router';
 
 import { NotificationsService }                 from 'angular2-notifications';
-import { SeasonService }                        from '../shared/season.service';
+import { SeasonService }                        from '../../../core/season.service';
 
 @Component({
     selector: 'app-season-create',
