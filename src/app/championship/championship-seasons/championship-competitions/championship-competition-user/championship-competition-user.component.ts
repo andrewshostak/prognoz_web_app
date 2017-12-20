@@ -48,8 +48,8 @@ export class ChampionshipCompetitionUserComponent implements OnInit {
 
     private getChampionshipPredictionsData(userId: number, competitionId: number) {
         let param = [
-            {parameter: 'user-id', value: userId.toString()},
-            {parameter: 'competition-id', value: competitionId.toString()}
+            {parameter: 'user_id', value: userId.toString()},
+            {parameter: 'competition_id', value: competitionId.toString()}
         ];
         this.championshipPredictionService.getChampionshipPredictions(param).subscribe(
             response => {

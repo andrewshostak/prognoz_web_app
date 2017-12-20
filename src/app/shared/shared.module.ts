@@ -95,6 +95,9 @@ import { TimePipe }                                   from './pipes/time.pipe';
         TeamSelectModalComponent,
         TeamTeamMatchCardComponent,
         TimePipe
+    ],
+    providers: [
+        TimePipe
     ]
 })
 export class SharedModule { }

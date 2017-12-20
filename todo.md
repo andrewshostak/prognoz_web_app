@@ -47,16 +47,19 @@
     - Standardize forms with current user id
     - Backend repositories refactor: 
         - ~~ChampionshipMatchRepository~~
-        - ChampionshipPredictRepository
-        - ChamponshipRatingRepository
+        - ~~ChampionshipPredictRepository~~
+        - ~~ChamponshipRatingRepository~~
+        - ~~CompetitionRepository~~
     - Backend services refactor: 
         - ~~ChampionshipMatchService~~
-        - ChampionshipPredictService
-        - ChampionshipRatingService
+        - ~~ChampionshipPredictService~~
+        - ~~ChampionshipRatingService~~
+        - ~~CompetitionService~~
     - Backend controllers refactor
         - ~~ChampionshipMatchController~~
-        - ChampionshipPredictController
-        - ChampionshipRatingController
+        - ~~ChampionshipPredictController~~
+        - ~~ChampionshipRatingController~~
+        - ~~CompetitionController~~
     - ~~Lazy loading for modules: me, manage, guestbook~~
     
 - Test/Check

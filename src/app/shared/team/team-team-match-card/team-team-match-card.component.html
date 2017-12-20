@@ -107,25 +107,35 @@
                 </thead>
                 <tbody>
                     <tr *ngFor="let teamMatch of teamMatches">
-                        <td class="align-middle text-center"
-                            title="Прогноз зроблено {{getPredictionDetails(teamMatch, teamTeamMatch.home_team_id).predicted_at | time:'YYYY-MM-DD HH:mm'}}"
+                        <td colspan="2"
+                            class="p-0 align-middle"
+                            data-toggle="tooltip"
+                            data-placement="right"
+                            title="{{getTitle(teamMatch, teamTeamMatch.home_team_id)}}"
                             [ngClass]="{'bg-success': helperService.isTeamMatchGuessed(teamMatch, teamTeamMatch.home_team_id) &&
-                                                      !helperService.isTeamMatchBlocked(teamMatch, teamTeamMatch.home_team_id),
+                                                     !helperService.isTeamMatchBlocked(teamMatch, teamTeamMatch.home_team_id),
                                         'bg-danger': helperService.isTeamMatchBlocked(teamMatch, teamTeamMatch.home_team_id),
                                         'text-white': helperService.isTeamMatchBlocked(teamMatch, teamTeamMatch.home_team_id) ||
-                                                      helperService.isTeamMatchGuessed(teamMatch, teamTeamMatch.home_team_id)}">
-                            <span class="d-none d-sm-inline">{{getPredictionDetails(teamMatch, teamTeamMatch.home_team_id).prediction}}</span>
-                            <small class="d-sm-none">{{getPredictionDetails(teamMatch, teamTeamMatch.home_team_id).prediction}}</small>
-                        </td>
-                        <td class="align-middle text-center"
-                            title="Прогноз зроблено {{getPredictionDetails(teamMatch, teamTeamMatch.home_team_id).predicted_at | time:'YYYY-MM-DD HH:mm'}}"
-                            [ngClass]="{'bg-success': helperService.isTeamMatchGuessed(teamMatch, teamTeamMatch.home_team_id) &&
-                                                      !helperService.isTeamMatchBlocked(teamMatch, teamTeamMatch.home_team_id),
-                                        'bg-danger': helperService.isTeamMatchBlocked(teamMatch, teamTeamMatch.home_team_id),
-                                        'text-white': helperService.isTeamMatchBlocked(teamMatch, teamTeamMatch.home_team_id) ||
-                                                      helperService.isTeamMatchGuessed(teamMatch, teamTeamMatch.home_team_id)}">
-                            <span class="d-none d-sm-inline">{{getPredictionDetails(teamMatch, teamTeamMatch.home_team_id).name}}</span>
-                            <small class="d-sm-none">{{getPredictionDetails(teamMatch, teamTeamMatch.home_team_id).name}}</small>
+                                                    helperService.isTeamMatchGuessed(teamMatch, teamTeamMatch.home_team_id)}">
+                            <table class="w-100">
+                                <tr *ngIf="!isTeamMatchPredictable(teamMatch)" class="text-center bg-transparent">
+                                    <td class="w-50 border-left-0 border-top-0 border-bottom-0 align-middle">
+                                        <span class="d-none d-sm-inline">{{(getPredictionDetails(teamMatch, teamTeamMatch.home_team_id).prediction?.long || '-')}}</span>
+                                        <small class="d-sm-none">{{(getPredictionDetails(teamMatch, teamTeamMatch.home_team_id).prediction?.short || '-')}}</small>
+                                    </td>
+                                    <td class="w-50 border-right-0 border-top-0 border-bottom-0 align-middle">
+                                        <span class="d-none d-sm-inline">{{(getPredictionDetails(teamMatch, teamTeamMatch.home_team_id).user?.name || '-')}}</span>
+                                        <img class="d-sm-none small-image rounded-circle"
+                                             src="{{getUserImageSource(getPredictionDetails(teamMatch, teamTeamMatch.home_team_id).user)}}" alt="-">
+                                    </td>
+                                </tr>
+                                <tr *ngIf="isTeamMatchPredictable(teamMatch)" class="text-center bg-transparent">
+                                    <td colspan="2" class="text-muted">
+                                        <i class="fa fa-question-circle" aria-hidden="true"></i>
+                                        <span class="d-none d-sm-inline">Приховано</span>
+                                    </td>
+                                </tr>
+                            </table>
                         </td>
                         <td class="align-middle text-right">
                             <span *ngIf="helperService.isTeamMatchGuessed(teamMatch, teamTeamMatch.home_team_id) && !helperService.isTeamMatchBlocked(teamMatch, teamTeamMatch.home_team_id)"
@@ -173,25 +183,35 @@
                                 </span>
                             </span>
                         </td>
-                        <td class="align-middle text-center"
-                            title="Прогноз зроблено {{getPredictionDetails(teamMatch, teamTeamMatch.away_team_id).predicted_at | time:'YYYY-MM-DD HH:mm'}}"
+                        <td colspan="2"
+                            class="p-0 align-middle"
+                            data-toggle="tooltip"
+                            data-placement="left"
+                            title="{{getTitle(teamMatch, teamTeamMatch.away_team_id)}}"
                             [ngClass]="{'bg-success': helperService.isTeamMatchGuessed(teamMatch, teamTeamMatch.away_team_id) &&
-                                                      !helperService.isTeamMatchBlocked(teamMatch, teamTeamMatch.away_team_id),
+                                                    !helperService.isTeamMatchBlocked(teamMatch, teamTeamMatch.away_team_id),
                                         'bg-danger': helperService.isTeamMatchBlocked(teamMatch, teamTeamMatch.away_team_id),
                                         'text-white': helperService.isTeamMatchBlocked(teamMatch, teamTeamMatch.away_team_id) ||
-                                                      helperService.isTeamMatchGuessed(teamMatch, teamTeamMatch.away_team_id)}">
-                            <span class="d-none d-sm-inline">{{getPredictionDetails(teamMatch, teamTeamMatch.away_team_id).name}}</span>
-                            <small class="d-sm-none">{{getPredictionDetails(teamMatch, teamTeamMatch.away_team_id).name}}</small>
-                        </td>
-                        <td class="align-middle text-center"
-                            title="Прогноз зроблено {{getPredictionDetails(teamMatch, teamTeamMatch.away_team_id).predicted_at | time:'YYYY-MM-DD HH:mm'}}"
-                            [ngClass]="{'bg-success': helperService.isTeamMatchGuessed(teamMatch, teamTeamMatch.away_team_id) &&
-                                                      !helperService.isTeamMatchBlocked(teamMatch, teamTeamMatch.away_team_id),
-                                        'bg-danger': helperService.isTeamMatchBlocked(teamMatch, teamTeamMatch.away_team_id),
-                                        'text-white': helperService.isTeamMatchBlocked(teamMatch, teamTeamMatch.away_team_id) ||
-                                                      helperService.isTeamMatchGuessed(teamMatch, teamTeamMatch.away_team_id)}">
-                            <span class="d-none d-sm-inline">{{getPredictionDetails(teamMatch, teamTeamMatch.away_team_id).prediction}}</span>
-                            <small class="d-sm-none">{{getPredictionDetails(teamMatch, teamTeamMatch.away_team_id).prediction}}</small>
+                                                    helperService.isTeamMatchGuessed(teamMatch, teamTeamMatch.away_team_id)}">
+                            <table class="w-100">
+                                <tr *ngIf="!isTeamMatchPredictable(teamMatch)" class="text-center bg-transparent">
+                                    <td class="w-50 border-left-0 border-top-0 border-bottom-0 align-middle">
+                                        <span class="d-none d-sm-inline">{{(getPredictionDetails(teamMatch, teamTeamMatch.away_team_id).user?.name || '-')}}</span>
+                                        <img class="d-sm-none small-image rounded-circle"
+                                             src="{{getUserImageSource(getPredictionDetails(teamMatch, teamTeamMatch.away_team_id).user)}}" alt="-">
+                                    </td>
+                                    <td class="w-50 border-right-0 border-top-0 border-bottom-0 align-middle">
+                                        <span class="d-none d-sm-inline">{{(getPredictionDetails(teamMatch, teamTeamMatch.away_team_id).prediction?.long || '-')}}</span>
+                                        <small class="d-sm-none">{{(getPredictionDetails(teamMatch, teamTeamMatch.away_team_id).prediction?.short || '-')}}</small>
+                                    </td>
+                                </tr>
+                                <tr *ngIf="isTeamMatchPredictable(teamMatch)" class="text-center bg-transparent">
+                                    <td colspan="2" class="text-muted">
+                                        <span class="d-none d-sm-inline">Приховано</span>
+                                        <i class="fa fa-question-circle" aria-hidden="true"></i>
+                                    </td>
+                                </tr>
+                            </table>
                         </td>
                     </tr>
                 </tbody>

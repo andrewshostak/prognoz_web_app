@@ -5,8 +5,10 @@ import { HelperService }                                        from '../../../c
 import { TeamMatch }                                            from '../../models/team-match.model';
 import { TeamMatchService }                                     from '../../../team/shared/team-match.service';
 import { TeamTeamMatch }                                        from '../../models/team-team-match.model';
+import { TimePipe }                                             from '../../pipes/time.pipe';
+import { User }                                                 from '../../models/user.model';
 
-declare var $: any;
+declare const $: any;
 
 @Component({
     selector: 'app-team-team-match-card',
@@ -18,7 +20,8 @@ export class TeamTeamMatchCardComponent implements AfterViewInit {
     constructor(
         private teamMatchService: TeamMatchService,
         public helperService: HelperService,
-        private changeDetectorRef: ChangeDetectorRef
+        private changeDetectorRef: ChangeDetectorRef,
+        private timePipe: TimePipe
     ) {}
 
     @Input() teamTeamMatch: TeamTeamMatch;
@@ -45,6 +48,7 @@ export class TeamTeamMatchCardComponent implements AfterViewInit {
             response => {
                 if (response) this.teamMatches = response.team_matches;
                 this.spinnerTeamMatches = false;
+                $(() => $('[data-toggle="tooltip"]').tooltip());
                 this.changeDetectorRef.detectChanges();
             },
             error => {
@@ -55,26 +59,56 @@ export class TeamTeamMatchCardComponent implements AfterViewInit {
         );
     }
 
-    getPredictionDetails(teamMatch: TeamMatch, teamId: number): {name: string, prediction: string, predicted_at: string} {
-        if (teamMatch.is_predictable) {
-            return {name: '?', prediction: '?', predicted_at: '?'};
-        } else if (teamMatch.team_predictions) {
-            let teamPrediction = teamMatch.team_predictions.find((teamPrediction) => teamId === teamPrediction.team_id);
+    getPredictionDetails(teamMatch: TeamMatch, teamId: number) {
+        if (teamMatch.team_predictions) {
+            const teamPrediction = teamMatch.team_predictions.find((prediction) => teamId === prediction.team_id);
             if (teamPrediction) {
                 return {
-                    name: teamPrediction.user ? teamPrediction.user.name : '-',
-                    prediction: this.helperService.isScore(teamPrediction.home, teamPrediction.away)
-                        ? `${teamPrediction.home} : ${teamPrediction.away}` : '-',
-                    predicted_at: this.helperService.isScore(teamPrediction.home, teamPrediction.away)
-                        ? teamPrediction.predicted_at : '-'
+                    user: teamPrediction.user || null,
+                    prediction: this.helperService.isScore(teamPrediction.home, teamPrediction.away) ?
+                        {
+                            home: teamPrediction.home,
+                            away: teamPrediction.away,
+                            short: teamPrediction.home + ':' + teamPrediction.away,
+                            long: teamPrediction.home + ' : ' + teamPrediction.away,
+                        } : null
                 };
             }
         }
-        return {name: '-', prediction: '-', predicted_at: '-'};
+        return { user: null, prediction: null };
+    }
+
+    isTeamMatchPredictable(teamMatch: TeamMatch) {
+        return teamMatch.is_predictable;
+    }
+
+    getTitle(teamMatch: TeamMatch, teamId: number): string {
+        if (teamMatch.is_predictable) {
+            return 'Прогнози гравців відображаються після початку другого тайму матчу';
+        } else if (teamMatch.team_predictions) {
+            const teamPrediction = teamMatch.team_predictions.find((prediction) => teamId === prediction.team_id);
+            if (teamPrediction) {
+                if (!this.helperService.isScore(teamPrediction.home, teamPrediction.away)) {
+                    return 'Прогноз не зроблено';
+                }
+                const date = this.timePipe.transform(teamPrediction.predicted_at, 'YYYY-MM-DD HH:mm');
+                return 'Прогноз зроблено ' + date;
+            }
+        }
+
+        return 'Прогноз не зроблено';
+    }
+
+    getUserImageSource(user: User): string | null {
+        if (!user) {
+            return null;
+        }
+
+        return this.userImagesUrl + (user.image || this.userImageDefault);
     }
 
     ngAfterViewInit() {
-        let id = '#collapseTeamTeamMatch' + this.teamTeamMatch.id;
+        const id = '#collapseTeamTeamMatch' + this.teamTeamMatch.id;
         $(id).on('hidden.bs.collapse', () => {
             this.toggleChevron();
             this.changeDetectorRef.detectChanges();

@@ -17,6 +17,9 @@ body {
 .bg-black {
     background-color: #000;
 }
+.bg-transparent {
+    background-color: transparent;
+}
 .black-shadow {
     box-shadow: 0 0 5px #333;
 }
