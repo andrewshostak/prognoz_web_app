@@ -26,6 +26,7 @@ import { TeamGoalkeeperFormComponent }                from './team/team-goalkeep
 import { TeamNavigationComponent }                    from './team/team-navigation/team-navigation.component';
 import { TeamRatingTableComponent }                   from './team/team-rating-table/team-rating-table.component';
 import { TeamRatingUserTableComponent }               from './team/team-rating-user-table/team-rating-user-table.component';
+import { TeamResultsTableComponent }                  from './team/team-results-table/team-results-table.component';
 import { TeamPredictionFormComponent }                from './team/team-prediction-form/team-prediction-form.component';
 import { TeamRoundNavigationComponent }               from './team/team-round-navigation/team-round-navigation.component';
 import { TeamSelectModalComponent }                   from './team/team-select-modal/team-select-modal.component';
@@ -63,6 +64,7 @@ import { TimePipe }                                   from './pipes/time.pipe';
         TeamPredictionFormComponent,
         TeamRatingTableComponent,
         TeamRatingUserTableComponent,
+        TeamResultsTableComponent,
         TeamRoundNavigationComponent,
         TeamSelectModalComponent,
         TeamTeamMatchCardComponent,
@@ -90,6 +92,7 @@ import { TimePipe }                                   from './pipes/time.pipe';
         TeamNavigationComponent,
         TeamPredictionFormComponent,
         TeamRatingTableComponent,
+        TeamResultsTableComponent,
         TeamRatingUserTableComponent,
         TeamRoundNavigationComponent,
         TeamSelectModalComponent,

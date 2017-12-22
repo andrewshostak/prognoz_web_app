@@ -9,6 +9,6 @@ import { ChampionshipMatch }  from '../../models/championship-match.model';
 })
 export class ChampionshipResultsTableComponent {
 
-  @Input() results: ChampionshipMatch[];
-  @Input() error: string;
+    @Input() results: ChampionshipMatch[];
+    @Input() error: string;
 }

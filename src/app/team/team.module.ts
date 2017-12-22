@@ -14,6 +14,7 @@ import { TeamPredictionService }            from './shared/team-prediction.servi
 import { TeamRatingComponent }              from './team-rating/team-rating.component';
 import { TeamRatingService }                from './shared/team-rating.service';
 import { TeamRatingUserService }            from './shared/team-rating-user.service';
+import { TeamResultsComponent }             from './team-results/team-results.component';
 import { TeamRoutingModule }                from './team-routing.module';
 import { TeamRulesComponent }               from './team-rules/team-rules.component';
 import { TeamService }                      from './shared/team.service';
@@ -35,6 +36,7 @@ import { TeamTeamMatchService }             from './shared/team-team-match.servi
         TeamMyComponent,
         TeamPredictionsComponent,
         TeamRatingComponent,
+        TeamResultsComponent,
         TeamRulesComponent,
         TeamSquadsComponent,
     ],

@@ -83,3 +83,16 @@ form .form-group-invalid-custom .input-group-addon {
     display: none !important;
 }
 
+@media (max-width: 460px) {
+    .table-responsive-xs-custom {
+        display: block;
+        width: 100%;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        -ms-overflow-style: -ms-autohiding-scrollbar;
+    }
+    .table-responsive-xs-custom.table-bordered {
+        border: 0;
+    }
+}
+
