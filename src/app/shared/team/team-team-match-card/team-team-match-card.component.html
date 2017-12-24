@@ -119,7 +119,7 @@
                                                     helperService.isTeamMatchGuessed(teamMatch, teamTeamMatch.home_team_id)}">
                             <table class="w-100">
                                 <tr *ngIf="!isTeamMatchPredictable(teamMatch)" class="text-center bg-transparent">
-                                    <td class="w-50 border-left-0 border-top-0 border-bottom-0 align-middle">
+                                    <td class="w-50 border-left-0 border-top-0 border-bottom-0 text-nowrap align-middle">
                                         <span class="d-none d-sm-inline">{{(getPredictionDetails(teamMatch, teamTeamMatch.home_team_id).prediction?.long || '-')}}</span>
                                         <small class="d-sm-none">{{(getPredictionDetails(teamMatch, teamTeamMatch.home_team_id).prediction?.short || '-')}}</small>
                                     </td>
@@ -200,7 +200,7 @@
                                         <img class="d-sm-none small-image rounded-circle"
                                              src="{{getUserImageSource(getPredictionDetails(teamMatch, teamTeamMatch.away_team_id).user)}}" alt="-">
                                     </td>
-                                    <td class="w-50 border-right-0 border-top-0 border-bottom-0 align-middle">
+                                    <td class="w-50 border-right-0 border-top-0 border-bottom-0 text-nowrap align-middle">
                                         <span class="d-none d-sm-inline">{{(getPredictionDetails(teamMatch, teamTeamMatch.away_team_id).prediction?.long || '-')}}</span>
                                         <small class="d-sm-none">{{(getPredictionDetails(teamMatch, teamTeamMatch.away_team_id).prediction?.short || '-')}}</small>
                                     </td>

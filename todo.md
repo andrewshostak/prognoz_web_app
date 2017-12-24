@@ -19,7 +19,7 @@
     - Ability to change user password
     - Captcha in recovery + ~~update captcha library~~
     - Edit ended match page (team competition)
-    - Results page (team competition)
+    ~~- Results page (team competition)~~
     - Archive page (team competition)
     - Edit message/comment
     - Award create page
