@@ -47,6 +47,7 @@ export class CurrentStateService {
             const subscription = this.pusherService.subscribeToChannel(this.pusherInstance, 'presence-users');
 
             this.pusherService.bindEvent(subscription, 'pusher:subscription_succeeded', (members) => {
+                this.clearOnlineUsersList();
                 members.each((member) => {
                     this.addOnlineUser(member.id, member.info);
                     this.onlineUserObservable.next();
@@ -65,7 +66,7 @@ export class CurrentStateService {
 
         } else if (this.pusherInstance) {
             this.pusherInstance.disconnect();
-            this.onlineUsers = [];
+            this.clearOnlineUsersList();
             this.onlineUserObservable.next();
         }
     }
@@ -77,5 +78,9 @@ export class CurrentStateService {
     private removeOnlineUser(userId): void {
         userId = parseInt(userId);
         this.onlineUsers = this.onlineUsers.filter(user => user.id !== userId);
+    }
+
+    private clearOnlineUsersList(): void {
+        this.onlineUsers = [];
     }
 }

@@ -8,4 +8,5 @@ export class ChampionshipRating {
     dc:             number;
     position:       number;
     moving:         number;
+    user:           any;
 }

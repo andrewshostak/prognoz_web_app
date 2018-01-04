@@ -9,4 +9,6 @@ export class User {
     updated_at:             string;
     showAdministrationLink: boolean;
     winners:                Array<any>;
+    main_club:              any;
+    clubs:                  any;
 }

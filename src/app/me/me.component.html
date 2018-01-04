@@ -83,20 +83,70 @@
                                         <small>Місто повинно бути меншим ніж 50 символів</small>
                                     </div>
                                 </div>
-                                <!-- favorite team input -->
-                                <div class="form-group"
-                                     [class.form-group-invalid-custom]="userEditForm.get('favorite_team').invalid && !userEditForm.get('favorite_team').pristine">
-                                    <label class="form-control-label" for="favorite_team"><strong>Улюблена команда:</strong></label>
-                                    <div class="input-group">
-                                        <span class="input-group-addon"><i class="fa fa-soccer-ball-o" aria-hidden="true"></i></span>
-                                        <input type="text"
-                                               id="favorite_team"
-                                               placeholder="Напишіть свою улюблену команду"
-                                               class="form-control"
-                                               formControlName="favorite_team">
-                                    </div>
-                                    <div *ngIf="userEditForm.get('favorite_team').hasError('maxlength') && !userEditForm.get('favorite_team').pristine">
-                                        <small>Команда повинна бути меншою ніж 50 символів</small>
+                                <div *ngIf="clubs" formArrayName="club_user" class="form-group">
+                                    <label class="form-control-label font-weight-bold">Улюблені команди:</label>
+                                    <div class="clubs rounded p-1" [class.border-danger]="userEditForm.hasError('clubUserEqality')">
+                                        <div [hidden]="userEditForm.hasError('clubUserEqality')" class="alert alert-info mb-1" role="alert">
+                                            <i class="fa fa-info-circle" aria-hidden="true"></i>
+                                            Добавте улюблені команди, вказавши головну.
+                                        </div>
+                                        <div [hidden]="!userEditForm.hasError('clubUserEqality')" class="alert alert-danger mb-1" role="alert">
+                                            <i class="fa fa-exclamation-circle" aria-hidden="true"></i>
+                                            Виберіть унікальні команди
+                                        </div>
+                                        <div *ngFor="let club of clubUser.controls; let i = index;"
+                                             [formGroup]="club"
+                                             class="form-row align-items-center mt-1 mb-1 pt-2 pb-2"
+                                             [ngClass]="{'club-selected': club.get('main').value}">
+                                            <div class="form-group col-2 text-right mb-0">
+                                                <div class="form-check mb-2 mb-sm-0">
+                                                    <label class="form-check-label">
+                                                        <input type="radio"
+                                                               class="form-check-input"
+                                                               [value]="1"
+                                                               formControlName="main"
+                                                               (change)="onSelectMainClub(i)">
+                                                        <img *ngIf="club.get('club_id').value"
+                                                             src="{{clubsImagesUrl}}{{findClub(club.get('club_id').value)?.image}}"
+                                                             class="small-image">
+                                                        <i *ngIf="!club.get('club_id').value"
+                                                           class="fa fa-shield fa-lg text-muted ml-1 mr-1"
+                                                           aria-hidden="true">
+                                                        </i>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                            <div class="form-group col-8 mb-0"
+                                                 [class.form-group-invalid-custom]="club.get('club_id').invalid && club.get('club_id').touched">
+                                                <select id="club_id"
+                                                        class="form-control"
+                                                        formControlName="club_id">
+                                                    <option *ngFor="let c of clubs" [value]="c.id">{{c.title}}</option>
+                                                </select>
+                                                <div *ngIf="club.get('club_id').hasError('required') && club.get('club_id').touched">
+                                                    <small>Виберіть команду зі списку або видаліть це поле</small>
+                                                </div>
+                                            </div>
+                                            <div class="form-group col-2 mb-0">
+                                                <button type="button"
+                                                        title="Видалити"
+                                                        class="btn btn-danger"
+                                                        (click)="removeClub(i)">
+                                                    <i class="fa fa-trash" aria-hidden="true"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                        <div class="form-row justify-content-center">
+                                            <div class="form-group text-center mb-0">
+                                                <button type="button"
+                                                        class="btn btn-outline-primary"
+                                                        (click)="addClub()"
+                                                        [disabled]="disableAddClubButton() || userEditForm.hasError('clubUserEqality')">
+                                                    <i class="fa fa-plus-circle" aria-hidden="true"></i>
+                                                    Добавити
+                                                </button>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -106,7 +156,8 @@
                         </div>
                         <!-- help text after new avatar image uploaded -->
                         <div *ngIf="userEditForm.value.image && !errorImage && hasUnsavedChanges" class="alert alert-info" role="alert">
-                            <small>Натисніть <strong>"Зберегти зміни"</strong> щоб зберегти це зображення для вашого профілю.</small>
+                            <i class="fa fa-info-circle" aria-hidden="true"></i>
+                            Натисніть <strong>"Зберегти зміни"</strong> щоб зберегти це зображення для вашого профілю.
                         </div>
                     </div>
                 </div>

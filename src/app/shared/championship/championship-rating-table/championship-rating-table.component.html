@@ -11,6 +11,9 @@
                 <i class="fa fa-circle-o" aria-hidden="true"></i>
                 <i class="fa fa-arrow-circle-up text-success" aria-hidden="true"></i>
             </th>
+            <th class="text-center" title="Улюблена команда">
+                <i class="fa fa-shield" aria-hidden="true"></i><br>
+            </th>
             <th class="text-left" title="Ім'я гравця">Ім'я</th>
             <th class="text-center d-none d-sm-table-cell" title="2 очки">x2</th>
             <th class="text-center" title="3 очки">x3</th>
@@ -20,9 +23,9 @@
     </thead>
     <tbody>
         <tr *ngFor="let ratingItem of rating; let i = index;"
-            routerLink="{{(ratingItem.position ? ('../users/') : ('/championship/users/')) + ratingItem.user.id}}"
+            routerLink="{{(ratingItem.position ? ('../users/') : ('/championship/users/')) + ratingItem.user_id}}"
             class="cursor-pointer"
-            [ngClass]="{'table-active': authenticatedUser && (ratingItem.user.id === authenticatedUser.id)}">
+            [ngClass]="{'table-active': authenticatedUser && (ratingItem.user_id === authenticatedUser.id)}">
             <th scope="row" class="text-center">{{ratingItem.position ? ratingItem.position : i + 1}}.</th>
             <!-- no moving -->
             <td *ngIf="!ratingItem.moving" class="text-center text-muted">
@@ -37,6 +40,12 @@
             <td *ngIf="ratingItem.moving < 0" class="text-center text-danger">
                 <i class="fa fa-arrow-circle-down" aria-hidden="true"></i>
                 <strong>{{helperService.makeUnsigned(ratingItem.moving)}}</strong>
+            </td>
+            <td class="text-center p-1">
+                <img *ngIf="ratingItem.user.main_club.length"
+                     [attr.src]="clubsImagesUrl + ratingItem.user.main_club[0].image"
+                     [attr.alt]="ratingItem.user.main_club[0].title"
+                     class="small-image">
             </td>
             <td class="text-left">
                 <strong>{{ratingItem.user.name}}</strong>
