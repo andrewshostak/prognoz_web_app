@@ -98,7 +98,7 @@
                                              [formGroup]="club"
                                              class="form-row align-items-center mt-1 mb-1 pt-2 pb-2"
                                              [ngClass]="{'club-selected': club.get('main').value}">
-                                            <div class="form-group col-2 text-right mb-0">
+                                            <div class="form-group col-3 col-sm-2 text-right mb-0">
                                                 <div class="form-check mb-2 mb-sm-0">
                                                     <label class="form-check-label">
                                                         <input type="radio"
@@ -116,7 +116,7 @@
                                                     </label>
                                                 </div>
                                             </div>
-                                            <div class="form-group col-8 mb-0"
+                                            <div class="form-group col-6 col-sm-8 mb-0"
                                                  [class.form-group-invalid-custom]="club.get('club_id').invalid && club.get('club_id').touched">
                                                 <select id="club_id"
                                                         class="form-control"
@@ -127,7 +127,7 @@
                                                     <small>Виберіть команду зі списку або видаліть це поле</small>
                                                 </div>
                                             </div>
-                                            <div class="form-group col-2 mb-0">
+                                            <div class="form-group col-3 col-sm-2 mb-0">
                                                 <button type="button"
                                                         title="Видалити"
                                                         class="btn btn-danger"

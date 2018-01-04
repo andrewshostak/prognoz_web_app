@@ -1,7 +1,6 @@
 <h2>Прогнози {{user ? user.name : 'гравця'}}: </h2>
 <!-- error user/rating -->
-<app-error *ngIf="errorUser" [message]="error"></app-error>
-<app-error *ngIf="errorRating" [message]="errorRating"></app-error>
+<app-error *ngIf="errorUser && errorRating" [message]="errorUser + errorRating"></app-error>
 <!-- user data -->
 <div *ngIf="user" class="card black-shadow mb-2">
     <div class="card-body">
@@ -39,6 +38,16 @@
                     </tbody>
                 </table>
             </div>
+        </div>
+        <div *ngIf="user.clubs.length"
+             class="d-flex flex-row justify-content-center border border-left-0 border-right-0 border-bottom-0 mt-1">
+            <img *ngFor="let club of user.clubs"
+                 data-toggle="tooltip"
+                 data-placement="bottom"
+                 [attr.title]="club.title"
+                 [attr.src]="clubImagesUrl + club.image"
+                 [attr.alt]="club.title"
+                 class="club-image m-2">
         </div>
     </div>
 </div>

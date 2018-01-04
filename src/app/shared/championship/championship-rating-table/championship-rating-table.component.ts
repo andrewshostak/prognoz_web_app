@@ -1,15 +1,17 @@
-import { Component, Input }   from '@angular/core';
+import { Component, Input, OnChanges, SimpleChanges }   from '@angular/core';
 
 import { ChampionshipRating } from '../../models/championship-rating.model';
 import { environment }        from '../../../../environments/environment';
 import { HelperService }      from '../../../core/helper.service';
+
+declare const $: any;
 
 @Component({
   selector: 'app-championship-rating-table',
   templateUrl: './championship-rating-table.component.html',
   styleUrls: ['./championship-rating-table.component.css']
 })
-export class ChampionshipRatingTableComponent {
+export class ChampionshipRatingTableComponent implements OnChanges {
 
     @Input() rating: ChampionshipRating[];
     @Input() error: string;
@@ -20,4 +22,12 @@ export class ChampionshipRatingTableComponent {
     constructor(
         public helperService: HelperService
     ) { }
+
+    ngOnChanges(changes: SimpleChanges) {
+        for (const propName in changes) {
+            if (!changes[propName].firstChange && propName === 'rating') {
+                $(() => $('[data-toggle="tooltip"]').tooltip());
+            }
+        }
+    }
 }

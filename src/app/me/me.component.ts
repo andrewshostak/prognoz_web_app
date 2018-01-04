@@ -169,14 +169,16 @@ export class MeComponent implements OnInit, OnDestroy {
             club_user: new FormArray([]),
         }, this.validateClubUser);
 
-        this.authenticatedUser.clubs.forEach((club) => {
-            this.clubUser.push(
-                new FormGroup({
-                    club_id: new FormControl(club.id.toString(), [Validators.required]),
-                    main: new FormControl(club.pivot.main)
-                })
-            );
-        });
+        if (this.authenticatedUser.clubs) {
+            this.authenticatedUser.clubs.forEach((club) => {
+                this.clubUser.push(
+                    new FormGroup({
+                        club_id: new FormControl(club.id.toString(), [Validators.required]),
+                        main: new FormControl(club.pivot.main)
+                    })
+                );
+            });
+        }
     }
 
     private validateClubUser(formGroup: FormGroup) {

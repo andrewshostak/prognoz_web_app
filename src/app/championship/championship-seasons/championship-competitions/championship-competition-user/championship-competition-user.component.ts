@@ -11,6 +11,8 @@ import { TitleService }                  from '../../../../core/title.service';
 import { User }                          from '../../../../shared/models/user.model';
 import { UserService }                   from '../../../../core/user.service';
 
+declare const $: any;
+
 @Component({
   selector: 'app-championship-competition-user',
   templateUrl: './championship-competition-user.component.html',
@@ -29,6 +31,7 @@ export class ChampionshipCompetitionUserComponent implements OnInit {
 
     championshipPredictions: ChampionshipPrediction[];
     championshipRatingItem: ChampionshipRating;
+    clubImagesUrl: string = environment.apiImageClubs;
     competitionId: number;
     errorChampionshipPredictions: string;
     errorRating: string;
@@ -80,6 +83,7 @@ export class ChampionshipCompetitionUserComponent implements OnInit {
                 this.user = response;
                 this.titleService.setTitle(`Прогнози ${this.user.name}
                     ${this.helperService.getHometown(this.user.hometown)} в конкурсі ${this.competitionId} - Чемпіонат`);
+                $(() => $('[data-toggle="tooltip"]').tooltip());
             },
             error => {
                 this.errorUser = error;
