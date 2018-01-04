@@ -42,7 +42,7 @@
                 <strong>{{helperService.makeUnsigned(ratingItem.moving)}}</strong>
             </td>
             <td class="text-center p-1">
-                <img *ngIf="ratingItem.user.main_club.length"
+                <img *ngIf="ratingItem.user?.main_club?.length"
                      data-toggle="tooltip"
                      data-placement="left"
                      [attr.title]="ratingItem.user.main_club[0].title"
