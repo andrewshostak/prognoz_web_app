@@ -11,9 +11,6 @@
                  alt="{{user.name}}">
             <strong>{{user.name}}</strong>
             {{helperService.getHometown(user.hometown)}}
-            <p *ngIf="user.favorite_team">
-                <span class="small text-muted">Вболіває за: </span>{{user.favorite_team}}
-            </p>
         </div>
         <div class="col-12 col-md-8">
             <table *ngIf="championshipRatingItem" class="table table-bordered">
