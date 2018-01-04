@@ -1,8 +1,8 @@
-import { Component, Input, OnChanges, SimpleChanges }   from '@angular/core';
+import { Component, Input, OnChanges, OnDestroy, SimpleChanges }    from '@angular/core';
 
-import { ChampionshipRating } from '../../models/championship-rating.model';
-import { environment }        from '../../../../environments/environment';
-import { HelperService }      from '../../../core/helper.service';
+import { ChampionshipRating }                                       from '../../models/championship-rating.model';
+import { environment }                                              from '../../../../environments/environment';
+import { HelperService }                                            from '../../../core/helper.service';
 
 declare const $: any;
 
@@ -11,7 +11,7 @@ declare const $: any;
   templateUrl: './championship-rating-table.component.html',
   styleUrls: ['./championship-rating-table.component.css']
 })
-export class ChampionshipRatingTableComponent implements OnChanges {
+export class ChampionshipRatingTableComponent implements OnChanges, OnDestroy {
 
     @Input() rating: ChampionshipRating[];
     @Input() error: string;
@@ -29,5 +29,9 @@ export class ChampionshipRatingTableComponent implements OnChanges {
                 $(() => $('[data-toggle="tooltip"]').tooltip());
             }
         }
+    }
+
+    ngOnDestroy() {
+        $('[data-toggle="tooltip"]').tooltip('dispose');
     }
 }

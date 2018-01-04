@@ -1,12 +1,12 @@
-import { AfterViewInit, Component, Input, ChangeDetectorRef }   from '@angular/core';
+import { AfterViewInit, Component, Input, ChangeDetectorRef, OnDestroy }    from '@angular/core';
 
-import { environment }                                          from '../../../../environments/environment';
-import { HelperService }                                        from '../../../core/helper.service';
-import { TeamMatch }                                            from '../../models/team-match.model';
-import { TeamMatchService }                                     from '../../../team/shared/team-match.service';
-import { TeamTeamMatch }                                        from '../../models/team-team-match.model';
-import { TimePipe }                                             from '../../pipes/time.pipe';
-import { User }                                                 from '../../models/user.model';
+import { environment }                                                      from '../../../../environments/environment';
+import { HelperService }                                                    from '../../../core/helper.service';
+import { TeamMatch }                                                        from '../../models/team-match.model';
+import { TeamMatchService }                                                 from '../../../team/shared/team-match.service';
+import { TeamTeamMatch }                                                    from '../../models/team-team-match.model';
+import { TimePipe }                                                         from '../../pipes/time.pipe';
+import { User }                                                             from '../../models/user.model';
 
 declare const $: any;
 
@@ -15,7 +15,7 @@ declare const $: any;
     templateUrl: './team-team-match-card.component.html',
     styleUrls: ['./team-team-match-card.component.css']
 })
-export class TeamTeamMatchCardComponent implements AfterViewInit {
+export class TeamTeamMatchCardComponent implements AfterViewInit, OnDestroy {
 
     constructor(
         private teamMatchService: TeamMatchService,
@@ -121,6 +121,10 @@ export class TeamTeamMatchCardComponent implements AfterViewInit {
             this.spinnerTeamMatches = true;
             this.changeDetectorRef.detectChanges();
         });
+    }
+
+    ngOnDestroy() {
+        $('[data-toggle="tooltip"]').tooltip('dispose');
     }
 
     toggleChevron() {

@@ -1,4 +1,4 @@
-import { Component, OnInit }                    from '@angular/core';
+import { Component, OnDestroy, OnInit }         from '@angular/core';
 import { ActivatedRoute, Params }               from '@angular/router';
 
 import { ChampionshipPrediction }               from '../../shared/models/championship-prediction.model';
@@ -18,7 +18,7 @@ declare const $: any;
   templateUrl: './championship-user.component.html',
   styleUrls: ['./championship-user.component.css']
 })
-export class ChampionshipUserComponent implements OnInit {
+export class ChampionshipUserComponent implements OnInit, OnDestroy {
 
     constructor(
         private activatedRoute: ActivatedRoute,
@@ -46,6 +46,10 @@ export class ChampionshipUserComponent implements OnInit {
             this.getChampionshipRatingItemData(params['id']);
             this.getChampionshipPredictionsData(params['id']);
         });
+    }
+
+    ngOnDestroy() {
+        $('[data-toggle="tooltip"]').tooltip('dispose');
     }
 
     private getChampionshipPredictionsData(userId: number) {
