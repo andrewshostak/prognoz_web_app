@@ -3,7 +3,7 @@
     - ~~Goalkeeper could block matches only before round start~~
     - ~~Championship user page error if no predictions~~
     - Championship match navigation: previous/next (Chart.js bug)
-    - Users online list duplicate
+    - ~~Users online list duplicate~~
 
 - Small changes
     - ~~Team squads page ordering~~
@@ -17,7 +17,7 @@
     - ~~Update to latest Angular version~~
     - ~~Use moment.js instead of backend Carbon~~
     - Ability to change user password
-    - Captcha in recovery + ~~update captcha library~~
+    - ~~Captcha in recovery + update captcha library~~
     - Edit ended match page (team competition)
     ~~- Results page (team competition)~~
     - Archive page (team competition)
@@ -28,7 +28,7 @@
     - Hall of fame page
     - ~~Users online component~~
     - Message system
-    - Club-user relation many-to-many
+    - ~~Club-user relation many-to-many~~
     - Secure connection (https instead of http) backend / frontend
     
 - Consider to implement

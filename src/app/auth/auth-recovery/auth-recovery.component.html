@@ -27,8 +27,12 @@
                         <small>Email введено неправильно.</small>
                     </div>
                 </div>
+                <!-- reCaptcha -->
+                <div class="mb-2">
+                    <re-captcha (resolved)="resolved($event)" siteKey="6LcZUhQUAAAAAO0sLBWgT4DujK8EfRpEG2jdZbLv"></re-captcha>
+                </div>
                 <!-- submit button -->
-                <button [hidden]="spinnerButton" [disabled]="recoveryForm.invalid" type="submit" class="btn btn-primary">
+                <button [hidden]="spinnerButton" [disabled]="recoveryForm.invalid || !captchaValidity" type="submit" class="btn btn-primary">
                     <i class="fa fa-arrow-circle-right" aria-hidden="true"></i> Продовжити
                 </button>
                 <!-- spinner button -->

@@ -21,8 +21,9 @@ export class AuthRecoveryComponent implements OnInit {
         private titleService: TitleService
     ) { }
 
+    captchaValidity: boolean;
     recoveryForm: FormGroup;
-    spinnerButton: boolean = false;
+    spinnerButton: boolean;
     user: User = this.currentStateService.user;
 
     ngOnInit() {
@@ -35,7 +36,7 @@ export class AuthRecoveryComponent implements OnInit {
     }
 
     onSubmit() {
-        if (this.recoveryForm.valid) {
+        if (this.recoveryForm.valid && this.captchaValidity) {
             this.spinnerButton = true;
             this.authService.recovery(this.recoveryForm.value.email)
                 .subscribe(
@@ -52,5 +53,9 @@ export class AuthRecoveryComponent implements OnInit {
                     }
                 );
         }
+    }
+
+    resolved(captchaResponse: string): void {
+        this.captchaValidity = !!captchaResponse;
     }
 }

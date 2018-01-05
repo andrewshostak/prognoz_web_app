@@ -23,9 +23,9 @@ export class AuthSignupComponent implements OnInit {
         private titleService: TitleService
     ) { }
 
-    captchaValidity: boolean = false;
+    captchaValidity: boolean;
     signUpForm: FormGroup;
-    spinnerButton: boolean = false;
+    spinnerButton: boolean;
     user: User = this.currentStateService.user;
 
     ngOnInit() {
@@ -41,7 +41,7 @@ export class AuthSignupComponent implements OnInit {
     }
 
     onSubmit() {
-        if (this.signUpForm.valid) {
+        if (this.signUpForm.valid && this.captchaValidity) {
             this.spinnerButton = true;
             this.authService.signUp(this.signUpForm.value).subscribe(
                 response => {
@@ -59,9 +59,7 @@ export class AuthSignupComponent implements OnInit {
         }
     }
 
-    resolved(captchaResponse: string) {
-        if (captchaResponse) {
-            this.captchaValidity = true;
-        }
+    resolved(captchaResponse: string): void {
+        this.captchaValidity = !!captchaResponse;
     }
 }
