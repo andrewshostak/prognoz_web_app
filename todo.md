@@ -21,6 +21,7 @@
     - Edit ended match page (team competition)
     ~~- Results page (team competition)~~
     - Archive page (team competition)
+    ~~- Show blocked matches to current team participants~~
     - Edit message/comment
     - Award create page
     - Award edit page

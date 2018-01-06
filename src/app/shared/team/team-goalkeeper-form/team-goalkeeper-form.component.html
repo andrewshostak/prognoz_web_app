@@ -1,9 +1,9 @@
-<div class="card black-shadow mb-2">
+<div *ngIf="teamMatches" class="card black-shadow mb-2">
     <form novalidate [formGroup]="teamGoalkeeperForm" (ngSubmit)="onSubmit()" class="p-2">
         <div class="row align-items-center">
-            <div class="col-12 col-md-7 col-lg-8">
+            <div class="col-12 col-sm-7 col-lg-8">
                 <div class="form-group mb-0"
-                     *ngIf="!isRoundStarted"
+                     *ngIf="!isRoundStarted && isGoalkeeper"
                      [class.form-group-invalid-custom]="teamGoalkeeperForm.get('team_match_id').hasError('required') && teamGoalkeeperForm.get('team_match_id').touched">
                     <select id="team_match_id"
                             class="form-control"
@@ -18,23 +18,23 @@
                         <small>Вибір матчу для блокування обов'язковий.</small>
                     </div>
                 </div>
-                <div *ngIf="isRoundStarted" class="text-center font-weight-bold">
+                <div *ngIf="isRoundStarted || !isGoalkeeper" class="text-center font-weight-bold">
                     {{blockedTeamMatch ? (blockedTeamMatch.club_first.title + ' - ' + blockedTeamMatch.club_second.title) : 'Не заблоковано'}}
                 </div>
             </div>
-            <div class="col-12 col-md-5 col-lg-4 text-center">
+            <div class="col-12 col-sm-5 col-lg-4 text-center mt-2 mt-sm-0">
                 <!-- submit button -->
-                <button *ngIf="!spinnerButton && !isRoundStarted"
+                <button *ngIf="!spinnerButton && !isRoundStarted && isGoalkeeper"
                         class="btn btn-block"
                         [ngClass]="{'btn-outline-primary': blockedTeamMatch, 'btn-primary': !blockedTeamMatch}"
-                        [disabled]="teamGoalkeeperForm.invalid || isRoundStarted"
+                        [disabled]="teamGoalkeeperForm.invalid || isRoundStarted || !isGoalkeeper"
                         type="submit">
                     <i [hidden]="blockedTeamMatch" class="fa fa-check-circle-o" aria-hidden="true"></i>
                     <i [hidden]="!blockedTeamMatch" class="fa fa-pencil-square-o" aria-hidden="true"></i>
                     {{blockedTeamMatch ? 'Змінити' : 'Заблокувати'}}
                 </button>
                 <!-- disabled button -->
-                <button *ngIf="isRoundStarted"
+                <button *ngIf="isRoundStarted || !isGoalkeeper"
                         class="btn btn-block btn-outline-secondary"
                         type="button"
                         disabled>

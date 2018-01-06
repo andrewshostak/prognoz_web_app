@@ -36,7 +36,7 @@ export class TeamPredictionsComponent implements OnInit, OnDestroy {
     errorTeamMatches: string;
     errorTeamTeamMatches: string;
     errorTeamPredictions: string;
-    isGoalkeeper: boolean = false;
+    isGoalkeeper: boolean;
     nextRound: string;
     noAccess: string = 'Доступ заборонено. Увійдіть на сайт для перегляду цієї сторінки.';
     oppositeTeamId: number;
@@ -68,14 +68,13 @@ export class TeamPredictionsComponent implements OnInit, OnDestroy {
 
     getTeamGoalkeeperData() {
         if (this.teamTeamMatches && this.authenticatedUser) {
+            this.getMyTeamMatchesData(this.round);
             for (let teamTeamMatch of this.teamTeamMatches) {
                 if (this.authenticatedUser.id === teamTeamMatch.home_team_goalkeeper_id) {
                     this.oppositeTeamId = teamTeamMatch.away_team_id;
-                    this.getMyTeamMatchesData(this.round);
                     this.isGoalkeeper = true;
                 } else if (this.authenticatedUser.id === teamTeamMatch.away_team_goalkeeper_id) {
                     this.oppositeTeamId = teamTeamMatch.home_team_id;
-                    this.getMyTeamMatchesData(this.round);
                     this.isGoalkeeper = true;
                 }
             }

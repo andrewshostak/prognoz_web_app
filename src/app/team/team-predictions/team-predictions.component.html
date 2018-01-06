@@ -11,19 +11,20 @@
 <div *ngIf="authenticatedUser && teamPredictions" class="container-fluid">
     <app-team-prediction-form *ngFor="let teamPrediction of teamPredictions"
                               [teamPrediction]="teamPrediction"
-                              (teamPredictionUpdated)="reloadTeamPredictionsData()"
-    ></app-team-prediction-form>
+                              (teamPredictionUpdated)="reloadTeamPredictionsData()">
+    </app-team-prediction-form>
 </div>
 <!-- error team matches -->
 <app-error *ngIf="errorTeamMatches" [message]="errorTeamMatches"></app-error>
 <!-- matches to block -->
-<div *ngIf="authenticatedUser && isGoalkeeper" [hidden]="!teamMatches">
-    <h2>Заблокувати матчі суперника:</h2>
+<div *ngIf="authenticatedUser" [hidden]="!teamMatches">
+    <h2>{{isGoalkeeper ? 'Заблокувати' : 'Заблоковані'}} матчі суперника:</h2>
     <app-team-goalkeeper-form [teamMatches]="teamMatches"
                               [round]="round"
                               [blockedTeamMatch]="blockedTeamMatchFirst"
                               [authenticatedUser]="authenticatedUser"
                               [oppositeTeamId]="oppositeTeamId"
+                              [isGoalkeeper]="isGoalkeeper"
                               (reloadData)="reloadTeamGoalkeeperData($event)">
     </app-team-goalkeeper-form>
     <app-team-goalkeeper-form [teamMatches]="teamMatches"
@@ -31,6 +32,7 @@
                               [blockedTeamMatch]="blockedTeamMatchSecond"
                               [authenticatedUser]="authenticatedUser"
                               [oppositeTeamId]="oppositeTeamId"
+                              [isGoalkeeper]="isGoalkeeper"
                               (reloadData)="reloadTeamGoalkeeperData($event)">
     </app-team-goalkeeper-form>
 </div>
