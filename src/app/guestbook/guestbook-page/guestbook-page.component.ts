@@ -13,6 +13,8 @@ import { NotificationsService }                 from 'angular2-notifications';
 import { TitleService }                         from '../../core/title.service';
 import { User }                                 from '../../shared/models/user.model';
 
+declare const $: any;
+
 @Component({
     selector: 'app-guestbook-page',
     templateUrl: './guestbook-page.component.html',
@@ -33,6 +35,8 @@ export class GuestbookPageComponent implements OnInit, OnDestroy {
 
     addGuestbookMessageForm: FormGroup;
     authenticatedUser: User = this.currentStateService.user;
+    awardsImagesUrl: string = environment.apiImageAwards;
+    clubImagesUrl: string = environment.apiImageClubs;
     currentPage: number;
     errorGuestbookMessages: string | Array<string>;
     guestbookMessages: GuestbookMessage[];
@@ -62,6 +66,7 @@ export class GuestbookPageComponent implements OnInit, OnDestroy {
                         this.guestbookMessages = response.data;
                         let userId = this.authenticatedUser ? this.authenticatedUser.id.toString() : '';
                         this.addGuestbookMessageForm.patchValue({user_id: userId});
+                        $(() => $('[data-toggle="tooltip"]').tooltip());
                     }
                 },
                 error => {
@@ -75,6 +80,7 @@ export class GuestbookPageComponent implements OnInit, OnDestroy {
         if (!this.userSubscription.closed) {
             this.userSubscription.unsubscribe();
         }
+        $('[data-toggle="tooltip"]').tooltip('dispose');
     }
 
     ngOnInit() {
