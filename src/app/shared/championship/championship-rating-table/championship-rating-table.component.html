@@ -45,7 +45,8 @@
                 <img *ngIf="ratingItem.user?.main_club?.length"
                      data-toggle="tooltip"
                      data-placement="left"
-                     [attr.title]="ratingItem.user.main_club[0].title"
+                     data-html="true"
+                     title="<img src='{{clubsImagesUrl + ratingItem.user.main_club[0].image}}' alt='{{ratingItem.user.main_club[0].title}}' class='img-fluid p-2'>"
                      [attr.src]="clubsImagesUrl + ratingItem.user.main_club[0].image"
                      [attr.alt]="ratingItem.user.main_club[0].title"
                      class="small-image">

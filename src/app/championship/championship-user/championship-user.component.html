@@ -1,71 +1,9 @@
 <h2>Прогнози {{user ? user.name : 'гравця'}}: </h2>
-<!-- error user/rating -->
-<app-error *ngIf="errorUser && errorRating" [message]="errorUser + errorRating"></app-error>
-<!-- user data -->
-<div *ngIf="user" class="card black-shadow mb-2">
-    <div class="card-body">
-        <div class="row">
-            <div class="col-12 col-md-4 text-center">
-                <img class="rounded img-fluid mb-2 w-100"
-                     src="{{userImagesUrl}}{{user.image || userImageDefault}}"
-                     alt="{{user.name}}">
-                <strong>{{user.name}}</strong>
-                {{helperService.getHometown(user.hometown)}}
-            </div>
-            <div class="col-12 col-md-8">
-                <table *ngIf="championshipRatingItem" class="table table-bordered">
-                    <tbody>
-                        <tr>
-                            <td>Позиція в рейтингу</td>
-                            <td class="text-center">{{championshipRatingItem.position}}</td>
-                        </tr>
-                        <tr>
-                            <td>Очки</td>
-                            <td class="text-center">{{championshipRatingItem.points}}</td>
-                        </tr>
-                        <tr>
-                            <td>x3 <small class="text-muted">(Трьохочкові)</small></td>
-                            <td class="text-center">{{championshipRatingItem.x3}}</td>
-                        </tr>
-                        <tr>
-                            <td>x2 <small class="text-muted">(Двохочкові)</small></td>
-                            <td class="text-center">{{championshipRatingItem.x2}}</td>
-                        </tr>
-                        <tr>
-                            <td>Коефіцієнт складності</td>
-                            <td class="text-center">{{championshipRatingItem.dc}}</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-        <div *ngIf="user.clubs.length"
-             class="d-flex flex-row justify-content-center border border-left-0 border-right-0 border-bottom-0 mt-1">
-            <img *ngFor="let club of user.clubs"
-                 data-toggle="tooltip"
-                 data-placement="bottom"
-                 [attr.title]="club.title"
-                 [attr.src]="clubImagesUrl + club.image"
-                 [attr.alt]="club.title"
-                 class="club-image m-2">
-        </div>
-    </div>
-</div>
-<!-- user awards -->
-<div *ngIf="user && user.winners.length" class="card black-shadow mb-2">
-    <div class="card-body">
-        <div class="row">
-            <div *ngFor="let win of user.winners" class="col-12 col-sm-6 col-md-4 col-lg-3">
-                <div class="card mb-2">
-                    <div class="card-header text-center">
-                        {{win.award.title}}
-                    </div>
-                    <img class="img-fluid p-2" src="{{awardsImagesUrl}}{{win.award.image}}" alt="{{win.award.title}}">
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+<app-championship-user-rating-details [user]="user"
+                                      [championshipRatingItem]="championshipRatingItem"
+                                      [errorChampionshipRating]="errorRating"
+                                      [errorUser]="errorUser">
+</app-championship-user-rating-details>
 <app-championship-user-predictions-table [predictions]="championshipPredictions"
                                          [error]="errorChampionshipPredictions">
 </app-championship-user-predictions-table>

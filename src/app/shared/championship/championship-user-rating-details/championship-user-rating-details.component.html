@@ -1,0 +1,64 @@
+<!-- error user/rating -->
+<app-error *ngIf="errorUser && errorChampionshipRating" [message]="errorUser + errorChampionshipRating"></app-error>
+<!-- user -->
+<div *ngIf="user" class="card black-shadow mb-2">
+    <div class="card-header">
+        <img class="rounded-circle small-image mr-2"
+             src="{{userImagesUrl}}{{user.image || userImageDefault}}"
+             alt="{{user.name}}">
+        <strong class="align-middle">{{user.name}}</strong>
+        <small *ngIf="user.hometown" class="text-muted">({{user.hometown}})</small>
+        <div *ngIf="user.clubs.length"
+             class="float-right">
+            <img *ngFor="let club of user.clubs"
+                 data-toggle="tooltip"
+                 data-placement="bottom"
+                 data-html="true"
+                 title="<img src='{{clubImagesUrl + club.image}}' alt='{{club.title}}' class='img-fluid p-2'>"
+                 [attr.src]="clubImagesUrl + club.image"
+                 [attr.alt]="club.title"
+                 class="small-image ml-2 mr-2">
+        </div>
+    </div>
+    <div class="card-body">
+        <div class="card-text break-word">
+            <table *ngIf="championshipRatingItem" class="table table-bordered mb-0">
+                <tbody>
+                <tr>
+                    <td>Позиція в рейтингу</td>
+                    <td class="text-center">{{championshipRatingItem.position}}</td>
+                </tr>
+                <tr>
+                    <td>Очки</td>
+                    <td class="text-center">{{championshipRatingItem.points}}</td>
+                </tr>
+                <tr>
+                    <td>x3 <small class="text-muted">(Трьохочкові)</small></td>
+                    <td class="text-center">{{championshipRatingItem.x3}}</td>
+                </tr>
+                <tr>
+                    <td>x2 <small class="text-muted">(Двохочкові)</small></td>
+                    <td class="text-center">{{championshipRatingItem.x2}}</td>
+                </tr>
+                <tr>
+                    <td>Коефіцієнт складності</td>
+                    <td class="text-center">{{championshipRatingItem.dc}}</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div *ngIf="user.winners.length" class="card-footer">
+        <img *ngFor="let win of user.winners"
+             data-toggle="tooltip"
+             data-html="true"
+             data-placement="top"
+             title="<img src='{{awardsImagesUrl + win.award.image}}' alt='{{win.award.title}}' class='img-fluid p-2'>
+                    <hr class='bg-white m-1'>
+                    <div class='font-weight-bold'>{{win.award.title}}</div>
+                    <div>{{win.competition.title}}</div>"
+             [attr.src]="awardsImagesUrl + win.award.image"
+             [attr.alt]="win.award.title"
+             class="small-image mb-2 mb-sm-0 ml-2 mr-2">
+    </div>
+</div>

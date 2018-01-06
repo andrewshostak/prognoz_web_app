@@ -12,6 +12,7 @@ import { ChampionshipRatingTableComponent }           from './championship/champ
 import { ChampionshipRatingTopComponent }             from './championship/championship-rating-top/championship-rating-top.component';
 import { ChampionshipResultsTableComponent }          from './championship/championship-results-table/championship-results-table.component';
 import { ChampionshipUserPredictionsTableComponent }  from './championship/championship-user-predictions-table/championship-user-predictions-table.component';
+import { ChampionshipUserRatingDetailsComponent }     from './championship/championship-user-rating-details/championship-user-rating-details.component';
 import { ConfirmModalComponent }                      from './confirm-modal/confirm-modal.component';
 import { ErrorComponent }                             from './error/error.component';
 import { InfoComponent }                              from './info/info.component';
@@ -45,11 +46,12 @@ import { TimePipe }                                   from './pipes/time.pipe';
         ChampionshipRatingTopComponent,
         ChampionshipLastResultsComponent,
         ChampionshipRatingTableComponent,
+        ChampionshipMatchPredictableComponent,
         ChampionshipNavigationComponent,
         ChampionshipResultsTableComponent,
         ChampionshipMatchPredictionsTableComponent,
         ChampionshipUserPredictionsTableComponent,
-        ChampionshipMatchPredictableComponent,
+        ChampionshipUserRatingDetailsComponent,
         ConfirmModalComponent,
         ErrorComponent,
         InfoComponent,
@@ -74,11 +76,12 @@ import { TimePipe }                                   from './pipes/time.pipe';
         ChampionshipRatingTopComponent,
         ChampionshipLastResultsComponent,
         ChampionshipRatingTableComponent,
+        ChampionshipMatchPredictableComponent,
         ChampionshipNavigationComponent,
         ChampionshipResultsTableComponent,
         ChampionshipMatchPredictionsTableComponent,
         ChampionshipUserPredictionsTableComponent,
-        ChampionshipMatchPredictableComponent,
+        ChampionshipUserRatingDetailsComponent,
         ConfirmModalComponent,
         ErrorComponent,
         InfoComponent,
