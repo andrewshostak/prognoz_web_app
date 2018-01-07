@@ -9,6 +9,7 @@ import { SharedModule }                     from '../../shared/shared.module';
 import { TeamMatchCreateComponent }         from './team-match-create/team-match-create.component';
 import { TeamMatchEditActiveComponent }     from './team-match-edit-active/team-match-edit-active.component';
 import { TeamMatchEditComponent }           from './team-match-edit/team-match-edit.component';
+import { TeamMatchEditEndedComponent }      from './team-match-edit-ended/team-match-edit-ended.component';
 
 @NgModule({
     imports: [
@@ -23,6 +24,7 @@ import { TeamMatchEditComponent }           from './team-match-edit/team-match-e
         TeamMatchCreateComponent,
         TeamMatchEditActiveComponent,
         TeamMatchEditComponent,
+        TeamMatchEditEndedComponent,
     ],
     providers: [
         ManageTeamGuard

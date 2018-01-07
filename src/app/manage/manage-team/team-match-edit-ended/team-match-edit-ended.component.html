@@ -1,0 +1,76 @@
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <h2>Змінити результат:</h2>
+        </div>
+    </div>
+    <!-- error team matches-->
+    <app-error *ngIf="errorTeamMatches" [message]="errorTeamMatches"></app-error>
+    <!-- matches -->
+    <div *ngIf="teamMatches" class="row">
+        <div class="col-12">
+            <table class="table table-hover table-dark table-striped table-bordered">
+                <thead class="bg-primary">
+                    <tr>
+                        <th class="d-none d-md-table-cell text-center" title="Номер матчу/номер в раунді">№</th>
+                        <th class="d-none d-md-table-cell text-center">Матч</th>
+                        <th colspan="2" class="text-center">Результати</th>
+                        <th class="text-center">
+                            <span class="d-none d-md-inline">Змінити</span>
+                            <i class="fa fa-edit d-md-none" aria-hidden="true"></i>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let teamMatch of teamMatches" [ngClass]="{'bg-success': updatedMatches['match_' + teamMatch.id]}">
+                        <th scope="row" class="d-none d-md-table-cell align-middle text-center">
+                            <strong>{{teamMatch.id + '/' + teamMatch.number_in_round}}</strong>
+                        </th>
+                        <td class="d-none d-md-table-cell">
+                            <img class="small-image" src="{{clubsImagesUrl}}{{teamMatch.club_first.image}}" alt="{{teamMatch.club_first.link}}">
+                            <small class="text-muted">{{teamMatch.starts_at}}</small>
+                            <img class="small-image" src="{{clubsImagesUrl}}{{teamMatch.club_second.image}}" alt="{{teamMatch.club_second.link}}"><br>
+                            <strong>{{teamMatch.club_first.title}}</strong> - <strong>{{teamMatch.club_second.title}}</strong>
+                        </td>
+                        <td class="align-middle text-center">
+                            <div class="d-md-none">
+                                <img class="small-image" src="{{clubsImagesUrl}}{{teamMatch.club_first.image}}" alt="{{teamMatch.club_first.link}}"><br>
+                                <small>{{teamMatch.club_first.title}}</small>
+                            </div>
+                            <input type="number"
+                                   class="form-control text-center"
+                                   min="0"
+                                   max="9"
+                                   maxlength="1"
+                                   [disabled]="updatedMatches['match_' + teamMatch.id]"
+                                   [(ngModel)]="teamMatch.home">
+                        </td>
+                        <td class="align-middle text-center">
+                            <div class="d-md-none">
+                                <img class="small-image" src="{{clubsImagesUrl}}{{teamMatch.club_second.image}}" alt="{{teamMatch.club_second.link}}"><br>
+                                <small>{{teamMatch.club_second.title}}</small>
+                            </div>
+                            <input type="number"
+                                   class="form-control text-center"
+                                   min="0"
+                                   max="9"
+                                   maxlength="1"
+                                   [disabled]="updatedMatches['match_' + teamMatch.id]"
+                                   [(ngModel)]="teamMatch.away">
+                        </td>
+                        <td class="align-middle text-center">
+                            <button (click)="onSubmit(teamMatch)"
+                                    [hidden]="spinnerButton['match_' + teamMatch.id] || updatedMatches['match_' + teamMatch.id]"
+                                    class="btn btn-danger">
+                                <span class="d-none d-md-inline">Змінити</span>
+                                <i class="fa fa-plus-circle d-md-none" aria-hidden="true"></i>
+                            </button>
+                            <app-spinner-button [hidden]="!spinnerButton['match_' + teamMatch.id]"></app-spinner-button>
+                            <i [hidden]="!updatedMatches['match_' + teamMatch.id]" class="fa fa-check-circle fa-lg" aria-hidden="true"></i>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
