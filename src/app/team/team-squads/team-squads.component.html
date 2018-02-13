@@ -5,7 +5,7 @@
     </button>
 </h2>
 <!-- create / make team stated button -->
-<div *ngIf="authenticatedUser && !alreadyJoined && !alreadyPending && competition && competition.stated && teams" class="row mb-2">
+<div *ngIf="authenticatedUser && !alreadyJoined && !alreadyPending && competition && competition.stated" class="row mb-2">
     <div class="col">
         <button type="button" class="btn btn-primary mb-2 mb-sm-0" data-toggle="modal" data-target="#teamEditModal">
             Створити нову команду
