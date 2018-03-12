@@ -1,16 +1,16 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { ActivatedRoute, Params }       from '@angular/router';
-import { Subscription }                 from 'rxjs/Subscription';
+import { Component, OnDestroy, OnInit }     from '@angular/core';
+import { ActivatedRoute, Params, Router }   from '@angular/router';
+import { Subscription }                     from 'rxjs/Subscription';
 
-import { AuthService }                  from '../../core/auth.service';
-import { Competition }                  from '../../shared/models/competition.model';
-import { CompetitionService }           from '../../core/competition.service';
-import { CurrentStateService }          from '../../core/current-state.service';
-import { environment }                  from '../../../environments/environment';
-import { TeamTeamMatch }                from '../../shared/models/team-team-match.model';
-import { TeamTeamMatchService }         from '../shared/team-team-match.service';
-import { TitleService }                 from '../../core/title.service';
-import { User }                         from '../../shared/models/user.model';
+import { AuthService }                      from '../../core/auth.service';
+import { Competition }                      from '../../shared/models/competition.model';
+import { CompetitionService }               from '../../core/competition.service';
+import { CurrentStateService }              from '../../core/current-state.service';
+import { environment }                      from '../../../environments/environment';
+import { TeamTeamMatch }                    from '../../shared/models/team-team-match.model';
+import { TeamTeamMatchService }             from '../shared/team-team-match.service';
+import { TitleService }                     from '../../core/title.service';
+import { User }                             from '../../shared/models/user.model';
 
 @Component({
     selector: 'app-team-matches',
@@ -24,6 +24,7 @@ export class TeamMatchesComponent implements OnInit, OnDestroy {
         private authService: AuthService,
         private competitionService: CompetitionService,
         private currentStateService: CurrentStateService,
+        private router: Router,
         private teamTeamMatchService: TeamTeamMatchService,
         private titleService: TitleService
     ) { }
@@ -84,6 +85,9 @@ export class TeamMatchesComponent implements OnInit, OnDestroy {
                 response => {
                     if (response) {
                         this.competition = response.competition;
+                        if (this.competition.stated) {
+                            this.router.navigate(['/team/squads']);
+                        }
                         this.getTeamTeamMatchesData(response.competition.round);
                     }
                 },

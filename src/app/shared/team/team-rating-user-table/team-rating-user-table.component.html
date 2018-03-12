@@ -1,3 +1,15 @@
+<div *ngIf="teams" class="d-flex flex-wrap justify-content-center">
+    <div *ngFor="let team of teams" class="p-1">
+        <button type="button"
+                (click)="filterTeamRatingUser(team)"
+                class="btn pl-2 pr-2"
+                [ngClass]="{'btn-primary': isTeamSelected(team.id), 'btn-outline-primary': !isTeamSelected(team.id)}">
+            <img class="small-image rounded"
+                 src="{{teamImagesUrl}}{{team.image || teamImageDefault}}"
+                 alt="{{team.name}}">
+        </button>
+    </div>
+</div>
 <div *ngIf="topScorersRating" class="row align-items-end mt-2">
     <div class="col-12">
         <h2>Рейтинг бомбардирів: </h2>
