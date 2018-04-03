@@ -13,7 +13,9 @@
                      [class.form-group-invalid-custom]="signUpForm.get('name').invalid && (signUpForm.get('name').touched || !signUpForm.get('name').pristine)">
                     <label class="form-control-label" for="name"><strong>Ім'я:</strong></label>
                     <div class="input-group">
-                        <span class="input-group-addon"><i class="fa fa-user fa-fw"></i></span>
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"><i class="fa fa-user fa-fw"></i></span>
+                        </div>
                         <input type="text"
                                id="name"
                                placeholder="Придумайте собі оригінальне ім'я"
@@ -35,7 +37,9 @@
                      [class.form-group-invalid-custom]="signUpForm.get('email').invalid && (signUpForm.get('email').touched || !signUpForm.get('email').pristine)">
                     <label class="form-control-label" for="email"><strong>E-mail:</strong></label>
                     <div class="input-group">
-                        <span class="input-group-addon"><i class="fa fa-envelope-o fa-fw"></i></span>
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"><i class="fa fa-envelope-o fa-fw"></i></span>
+                        </div>
                         <input type="email"
                                id="email"
                                placeholder="Введіть свій email"
@@ -54,7 +58,9 @@
                      [class.form-group-invalid-custom]="signUpForm.get('password').invalid && (signUpForm.get('password').touched || !signUpForm.get('password').pristine)">
                     <label class="form-control-label" for="password"><strong>Пароль:</strong></label>
                     <div class="input-group">
-                        <span class="input-group-addon"><i class="fa fa-key" aria-hidden="true"></i></span>
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"><i class="fa fa-key" aria-hidden="true"></i></span>
+                        </div>
                         <input type="password"
                                id="password"
                                placeholder="Придумайте пароль"
@@ -74,7 +80,9 @@
                                         && (signUpForm.get('password_confirmation').touched || !signUpForm.get('password_confirmation').pristine)">
                     <label class="form-control-label" for="password_confirmation"><strong>Повторіть пароль:</strong></label>
                     <div class="input-group">
-                        <span class="input-group-addon"><i class="fa fa-key" aria-hidden="true"></i></span>
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"><i class="fa fa-key" aria-hidden="true"></i></span>
+                        </div>
                         <input type="password"
                                id="password_confirmation"
                                placeholder="Повторіть пароль"

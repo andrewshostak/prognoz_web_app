@@ -13,7 +13,9 @@
                      [class.form-group-invalid-custom]="recoveryForm.get('email').invalid && (!recoveryForm.get('email').pristine || recoveryForm.get('email').touched)">
                     <label class="form-control-label" for="email"><strong>Email:</strong></label>
                     <div class="input-group">
-                        <span class="input-group-addon"><i class="fa fa-envelope-o fa-fw"></i></span>
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"><i class="fa fa-envelope-o fa-fw"></i></span>
+                        </div>
                         <input type="email"
                                id="email"
                                placeholder="Введіть свій email"

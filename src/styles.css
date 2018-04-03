@@ -70,7 +70,7 @@ form .form-group-invalid-custom .ng-invalid {
 form .form-group-invalid-custom .ng-invalid:focus {
     box-shadow: 0 0 0 .2rem rgba(220, 53, 69, .25);
 }
-form .form-group-invalid-custom .input-group-addon {
+form .form-group-invalid-custom .input-group-prepend .input-group-text {
     border-color: #dc3545;
     color: #dc3545;
 }

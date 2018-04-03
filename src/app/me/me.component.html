@@ -42,7 +42,9 @@
                                      [class.form-group-invalid-custom]="userEditForm.get('first_name').invalid && !userEditForm.get('first_name').pristine">
                                     <label class="form-control-label" for="first_name"><strong>Ім'я:</strong></label>
                                     <div class="input-group">
-                                        <span class="input-group-addon"><i class="fa fa-user-circle-o" aria-hidden="true"></i></span>
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text"><i class="fa fa-user-circle-o" aria-hidden="true"></i></span>
+                                        </div>
                                         <input type="text"
                                                id="first_name"
                                                placeholder="Напишіть своє ім'я"
@@ -56,14 +58,21 @@
                                 <!-- image input -->
                                 <div class="form-group" [class.form-group-invalid-custom]="errorImage">
                                     <label class="form-control-label"><strong>Аватарка:</strong></label><br>
-                                    <label class="custom-file mb-2">
-                                        <input type="file"
-                                               id="image"
-                                               class="custom-file-input"
-                                               (change)="fileChange($event)"
-                                               accept=".png,.jpg,.gif,.jpeg">
-                                        <span class="custom-file-control"></span>
-                                    </label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">
+                                                <i class="fa fa-user-circle-o" aria-hidden="true"></i>
+                                            </span>
+                                        </div>
+                                        <div class="custom-file">
+                                            <input type="file"
+                                                   class="custom-file-input"
+                                                   (change)="fileChange($event)"
+                                                   accept=".png,.jpg,.gif,.jpeg"
+                                                   id="image">
+                                            <label class="custom-file-label" for="image">Виберіть зображення</label>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                             <div class="col-12 col-md-6">
@@ -72,7 +81,9 @@
                                      [class.form-group-invalid-custom]="userEditForm.get('hometown').invalid && !userEditForm.get('hometown').pristine">
                                     <label class="form-control-label" for="hometown"><strong>Звідки ви:</strong></label>
                                     <div class="input-group">
-                                        <span class="input-group-addon"><i class="fa fa-building" aria-hidden="true"></i></span>
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text"><i class="fa fa-building" aria-hidden="true"></i></span>
+                                        </div>
                                         <input type="text"
                                                id="hometown"
                                                placeholder="Напишіть звідки ви"

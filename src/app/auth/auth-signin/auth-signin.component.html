@@ -13,7 +13,11 @@
                      [class.form-group-invalid-custom]="signInForm.get('name').invalid && (signInForm.get('name').touched || !signInForm.get('name').pristine)">
                     <label class="form-control-label" for="name"><strong>Ім'я:</strong></label>
                     <div class="input-group">
-                        <span class="input-group-addon"><i class="fa fa-user fa-fw"></i></span>
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">
+                                <i class="fa fa-user fa-fw"></i>
+                            </span>
+                        </div>
                         <input type="text"
                                id="name"
                                placeholder="Введіть ім'я"
@@ -32,7 +36,9 @@
                      [class.form-group-invalid-custom]="signInForm.get('password').invalid && (signInForm.get('password').touched || !signInForm.get('password').pristine)">
                     <label class="form-control-label" for="password"><strong>Пароль:</strong></label>
                     <div class="input-group">
-                        <span class="input-group-addon"><i class="fa fa-key" aria-hidden="true"></i></span>
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"><i class="fa fa-key" aria-hidden="true"></i></span>
+                        </div>
                         <input type="password"
                                id="password"
                                placeholder="Введіть пароль"
