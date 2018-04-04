@@ -9,6 +9,7 @@ const routes: Routes = [
     { path: 'guestbook', loadChildren: 'app/guestbook/guestbook.module#GuestbookModule' },
     { path: 'manage', loadChildren: 'app/manage/manage.module#ManageModule' },
     { path: 'me', loadChildren: 'app/me/me.module#MeModule' },
+    { path: 'cup', loadChildren: 'app/cup/cup.module#CupModule' },
     { path: '', component: HomeComponent }
 ];
 

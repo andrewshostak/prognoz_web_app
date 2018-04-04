@@ -7,16 +7,16 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ChampionshipNavigationComponent implements OnInit {
 
-  navigationItems: Array<any>;
+    navigationItems: {link: string, title: string}[];
 
-  ngOnInit() {
-      this.navigationItems = [
-          {link: '/championship/rules', title: 'Правила'},
-          {link: '/championship/predictions', title: 'Прогнози'},
-          {link: '/championship/rating', title: 'Рейтинг'},
-          {link: '/championship/results', title: 'Результати'},
-          {link: '/championship/seasons', title: 'Архів'}
-      ];
-  }
+    ngOnInit() {
+        this.navigationItems = [
+            {link: '/championship/rules', title: 'Правила'},
+            {link: '/championship/predictions', title: 'Прогнози'},
+            {link: '/championship/rating', title: 'Рейтинг'},
+            {link: '/championship/results', title: 'Результати'},
+            {link: '/championship/seasons', title: 'Архів'}
+        ];
+    }
 
 }
