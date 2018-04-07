@@ -26,4 +26,14 @@ export class CupRatingService {
             .catch(this.errorHandlerService.handle);
     }
 
+    /**
+     * Get user cup rating
+     * @param {number} userId
+     * @returns {Observable<CupRating>}
+     */
+    getCupRatingUser(userId: number): Observable<CupRating> {
+        return this.httpClient
+            .get(`${this.cupRatingUrl}/${userId}`)
+            .catch(this.errorHandlerService.handle);
+    }
 }

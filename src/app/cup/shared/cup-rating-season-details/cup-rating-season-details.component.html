@@ -1,0 +1,46 @@
+<div *ngIf="cupRating" class="card black-shadow mb-2">
+    <div class="card-header font-weight-bold">Сезон {{cupRating.season.title}}</div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-bordered">
+                <tr>
+                    <td>Кількість очок</td>
+                    <td class="text-center">{{cupRating.points}} <span class="text-muted">* {{cupRating.coefficient}}</span></td>
+                </tr>
+                <tr>
+                    <td>Забиті : Пропущені</td>
+                    <td class="text-center">{{cupRating.scored}}:{{cupRating.missed}}</td>
+                </tr>
+                <tr>
+                    <td>Виграші - Нічиї - Програші</td>
+                    <td class="text-center">{{cupRating.win}}-{{cupRating.draw}}-{{cupRating.loss}}</td>
+                </tr>
+            </table>
+        </div>
+        <div class="row">
+            <div class="col-12 col-lg-6">
+                <div *ngIf="winDrawLossChartData" class="d-block">
+                    <canvas baseChart
+                            class="border"
+                            [data]="winDrawLossChartData"
+                            [labels]="winDrawLossChartLabels"
+                            [options]="winDrawLossChartOptions"
+                            [colors]="winDrawLossChartColors"
+                            [chartType]="winDrawLossChartType">
+                    </canvas>
+                </div>
+            </div>
+            <div class="col-12 col-lg-6">
+                <div *ngIf="scoredMissedChartData" class="d-block">
+                    <canvas baseChart
+                            class="border"
+                            [data]="scoredMissedChartData"
+                            [labels]="scoredMissedChartLabels"
+                            [colors]="scoredMissedChartColors"
+                            [chartType]="scoredMissedChartType">
+                    </canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

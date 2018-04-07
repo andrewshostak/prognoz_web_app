@@ -16,15 +16,15 @@
                     <th title="Ім'я гравця" class="align-middle">Ім'я</th>
                     <th class="text-center">
                         {{beforePreviousSeason ? beforePreviousSeason.title : ''}}
-                        <small class="text-muted text-nowrap">Рейтинг / 4</small>
+                        <small class="text-muted text-nowrap">(Рейтинг * {{cupRating[0].before_previous_coefficient}})</small>
                     </th>
                     <th class="text-center">
                         {{previousSeason ? previousSeason.title : ''}}
-                        <small class="text-muted text-nowrap">Рейтинг / 2</small>
+                        <small class="text-muted text-nowrap">(Рейтинг * {{cupRating[0].previous_coefficient}})</small>
                     </th>
                     <th class="text-center">
                         {{activeSeason ? activeSeason.title : ''}}
-                        <small class="text-muted text-nowrap">Рейтинг</small>
+                        <small class="text-muted text-nowrap">(Рейтинг * {{cupRating[0].active_coefficient}})</small>
                     </th>
                     <th title="Сума очок за три сезони" class="text-center align-middle">
                         Сума
@@ -33,7 +33,9 @@
             </thead>
             <tbody>
                 <tr *ngFor="let cupRatingItem of cupRating; let i = index;"
-                    [ngClass]="{'table-active': authenticatedUser && (cupRatingItem.user_id === authenticatedUser.id)}">
+                    class="cursor-pointer"
+                    [ngClass]="{'table-active': authenticatedUser && (cupRatingItem.user_id === authenticatedUser.id)}"
+                    [routerLink]="cupRatingItem.user_id">
                     <th scope="row" class="text-center">{{i + 1}}.</th>
                     <td class="text-center p-1">
                         <img *ngIf="cupRatingItem.user?.main_club?.length"

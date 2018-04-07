@@ -4,6 +4,7 @@ import { Subscription }                 from 'rxjs/Subscription';
 import { AuthService }                  from '../../core/auth.service';
 import { CupRating }                    from '../../shared/models/cup-rating.model';
 import { CupRatingService }             from './cup-rating.service';
+import { CurrentStateService }          from '../../core/current-state.service';
 import { Season }                       from '../../shared/models/season.model';
 import { SeasonService }                from '../../core/season.service';
 import { TitleService }                 from '../../core/title.service';
@@ -19,6 +20,7 @@ export class CupRatingComponent implements OnInit, OnDestroy {
     constructor(
         private authService: AuthService,
         private cupRatingService: CupRatingService,
+        private currentStateService: CurrentStateService,
         private seasonService: SeasonService,
         private titleService: TitleService
     ) { }
@@ -36,6 +38,7 @@ export class CupRatingComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit() {
+        this.authenticatedUser = this.currentStateService.user;
         this.titleService.setTitle('Рейтинг гравців - Кубок');
         this.userSubscription = this.authService.getUser.subscribe(response => {
             this.authenticatedUser = response;
