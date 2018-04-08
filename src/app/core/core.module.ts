@@ -7,6 +7,7 @@ import { AccessDeniedComponent }  from './access-denied/access-denied.component'
 import { AuthService }            from './auth.service';
 import { ClubService }            from './club.service';
 import { CompetitionService }     from './competition.service';
+import { ConfirmModalService }    from './confirm-modal.service';
 import { CurrentStateService }    from './current-state.service';
 import { ErrorHandlerService }    from './error-handler.service';
 import { FooterComponent }        from './footer/footer.component';
@@ -46,6 +47,7 @@ import { UserService }            from './user.service';
         AuthService,
         ClubService,
         CompetitionService,
+        ConfirmModalService,
         CurrentStateService,
         ErrorHandlerService,
         HeadersWithToken,

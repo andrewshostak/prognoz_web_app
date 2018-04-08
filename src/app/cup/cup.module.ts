@@ -2,6 +2,8 @@ import { NgModule }                         from '@angular/core';
 import { CommonModule }                     from '@angular/common';
 
 import { ChartsModule }                     from 'ng2-charts';
+import { CupApplicationsComponent }         from './cup-applications/cup-applications.component';
+import { CupApplicationService }            from './cup-applications/cup-application.service';
 import { CupComponent }                     from './cup.component';
 import { CupNavigationComponent }           from './shared/cup-navigation/cup-navigation.component';
 import { CupRatingComponent }               from './cup-rating/cup-rating.component';
@@ -22,6 +24,7 @@ import { SharedModule }                     from '../shared/shared.module';
     ],
     declarations: [
         CupComponent,
+        CupApplicationsComponent,
         CupNavigationComponent,
         CupRatingComponent,
         CupRatingSeasonDetailsComponent,
@@ -30,6 +33,7 @@ import { SharedModule }                     from '../shared/shared.module';
         CupRatingUserComponent,
     ],
     providers: [
+        CupApplicationService,
         CupRatingService
     ]
 })

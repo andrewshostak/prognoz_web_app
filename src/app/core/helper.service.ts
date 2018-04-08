@@ -25,6 +25,15 @@ export class HelperService {
     }
 
     /**
+     * Get item from local storage
+     * @param {string} key
+     * @returns {any}
+     */
+    getItemFromLocalStorage(key: string): any {
+        return JSON.parse(localStorage.getItem(key));
+    }
+
+    /**
      * Returns user points of the match
      * @param resultHome
      * @param resultAway

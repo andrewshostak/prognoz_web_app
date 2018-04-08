@@ -18,6 +18,9 @@ export const environment = {
         championship: {
             id: 1
         },
+        cup: {
+            id: 2
+        },
         team: {
             id: 3,
             participantsInTeam: 4,

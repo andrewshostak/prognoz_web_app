@@ -1,0 +1,76 @@
+<h2 class="h2">Заявки / Учасники:</h2>
+<div *ngIf="competitions">
+    <button *ngFor="let competition of competitions"
+            class="btn btn-outline-primary m-1"
+            type="button"
+            (click)="onClick(competition)">
+        {{competition.title}}
+    </button>
+    <div *ngFor="let competition of competitions">
+        <h2 class="h2" [attr.id]="'competition-' + competition.id">
+            {{competition.title}}:
+            <button *ngIf="hasAddApplicationAbility(competition)" type="button" class="btn btn-primary ml-2">Подати заявку</button>
+        </h2>
+        <div class="card mb-2">
+            <div class="table-responsive black-border black-shadow">
+                <table class="table table-bordered table-hover mb-0">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th>№</th>
+                            <th>Заявник</th>
+                            <th *ngIf="isFriendlyCompetition(competition)">Отримувач</th>
+                            <th *ngIf="isFriendlyCompetition(competition)">Місце</th>
+                            <th class="text-center">Статус</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let cupApplication of competition.cup_applications; let i = index;">
+                            <th scope="row">{{i + 1}}.</th>
+                            <td class="text-nowrap">
+                                <img class="rounded-circle small-image mr-1 mr-sm-2"
+                                     src="{{userImagesUrl}}{{cupApplication.applicant.image || userImageDefault}}"
+                                     alt="{{cupApplication.applicant.name}}">
+                                {{cupApplication.applicant.name}}
+                            </td>
+                            <td *ngIf="isFriendlyCompetition(competition)" class="text-nowrap">
+                                <img *ngIf="cupApplication.receiver" class="rounded-circle small-image mr-1 mr-sm-2"
+                                     src="{{userImagesUrl}}{{cupApplication.receiver.image || userImageDefault}}"
+                                     alt="{{cupApplication.receiver.name}}">
+                                {{cupApplication.receiver?.name}}
+                            </td>
+                            <td *ngIf="isFriendlyCompetition(competition)" class="text-nowrap">
+                                {{getPlaceTitle(cupApplication.place)}}
+                            </td>
+                            <td class="text-center">
+                                <div *ngIf="showActionButtons(competition, cupApplication); else statusBlock;" class="text-nowrap">
+                                    <button type="button" class="btn btn-sm btn-success" (click)="confirmApplication(cupApplication)">
+                                        <i aria-hidden="true" class="fa fa-lg fa-check-circle-o"></i>
+                                        Прийняти
+                                    </button>
+                                    <button *ngIf="showRefuseButton(cupApplication)" type="button" class="btn btn-sm btn-danger" (click)="refuseApplication(cupApplication)">
+                                        <i aria-hidden="true" class="fa fa-lg fa-times-circle-o"></i>
+                                        Відхилити
+                                    </button>
+                                </div>
+                                <ng-template #statusBlock>
+                                    <div *ngIf="!cupApplication.confirmed_at && !cupApplication.refused_at"
+                                         title="Очікується">
+                                        <strong class="text-info"><i aria-hidden="true" class="fa fa-lg fa-question-circle-o"></i> <span class="d-none d-sm-inline">Очікується</span></strong>
+                                    </div>
+                                    <div *ngIf="cupApplication.confirmed_at && !cupApplication.refused_at"
+                                         title="Підтверджено">
+                                        <strong class="text-success"><i aria-hidden="true" class="fa fa-lg fa-check-circle-o"></i> <span class="d-none d-sm-inline">Підтверджено</span></strong>
+                                    </div>
+                                    <div *ngIf="!cupApplication.confirmed_at && cupApplication.refused_at"
+                                         title="Відхилено">
+                                        <strong class="text-danger"><i aria-hidden="true" class="fa fa-lg fa-times-circle-o"></i> <span class="d-none d-sm-inline">Відхилено</span></strong>
+                                    </div>
+                                </ng-template>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

@@ -13,4 +13,5 @@ export class Competition {
     active_round:        number;
     winners:             Array<any>;
     number_of_teams:     number;
+    cup_applications:    Array<any>;
 }

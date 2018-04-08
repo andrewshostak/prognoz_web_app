@@ -6,6 +6,7 @@ import { Competition }          from '../shared/models/competition.model';
 import { ErrorHandlerService }  from './error-handler.service';
 import { environment }          from '../../environments/environment';
 import { HeadersWithToken }     from './headers-with-token.service';
+import { isNullOrUndefined }    from 'util';
 
 @Injectable()
 
@@ -25,14 +26,42 @@ export class CompetitionService {
      * @param season
      * @param tournament
      * @param state
+     * @param stated
+     * @param active
+     * @param ended
      * @returns {Observable<any>}
      */
-    getCompetitions(page?: number, tournament?: number, season?: number, state?: boolean): Observable<any> {
+    getCompetitions(
+        page?: number,
+        tournament?: number,
+        season?: number,
+        state?: boolean,
+        stated?: boolean,
+        active?: boolean,
+        ended?: boolean
+    ): Observable<any> {
         let params: HttpParams = new HttpParams();
-        if (page) params = params.append('page', page.toString());
-        if (tournament) params = params.append('tournament', tournament.toString());
-        if (season) params = params.append('season', season.toString());
-        if (state) params = params.append('state', state.toString());
+        if (page) {
+            params = params.append('page', page.toString());
+        }
+        if (tournament) {
+            params = params.append('tournament', tournament.toString());
+        }
+        if (season) {
+            params = params.append('season', season.toString());
+        }
+        if (state) {
+            params = params.append('state', state.toString());
+        }
+        if (!isNullOrUndefined(stated)) {
+            params = params.append('stated', (stated ? 1 : 0).toString());
+        }
+        if (!isNullOrUndefined(active)) {
+            params = params.append('active', (active ? 1 : 0).toString());
+        }
+        if (!isNullOrUndefined(ended)) {
+            params = params.append('ended', (ended ? 1 : 0).toString());
+        }
         return this.httpClient
             .get(this.competitionUrl, {params: params})
             .catch(this.errorHandlerService.handle);

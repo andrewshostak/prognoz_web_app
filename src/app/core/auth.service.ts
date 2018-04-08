@@ -14,7 +14,7 @@ export class AuthService {
         private errorHandlerService: ErrorHandlerService,
         private headersWithToken: HeadersWithToken,
         private httpClient: HttpClient
-    ){
+    ) {
         this.getUser = new Observable(observer => {
             this.userObserver = observer;
         }).share();

@@ -14,6 +14,7 @@ import { ChampionshipResultsTableComponent }          from './championship/champ
 import { ChampionshipUserPredictionsTableComponent }  from './championship/championship-user-predictions-table/championship-user-predictions-table.component';
 import { ChampionshipUserRatingDetailsComponent }     from './championship/championship-user-rating-details/championship-user-rating-details.component';
 import { ConfirmModalComponent }                      from './confirm-modal/confirm-modal.component';
+import { ConfirmModalNewComponent }                   from './confirm-modal-new/confirm-modal-new.component';
 import { ErrorComponent }                             from './error/error.component';
 import { InfoComponent }                              from './info/info.component';
 import { LastUserComponent }                          from './last-user/last-user.component';
@@ -53,6 +54,7 @@ import { TimePipe }                                   from './pipes/time.pipe';
         ChampionshipUserPredictionsTableComponent,
         ChampionshipUserRatingDetailsComponent,
         ConfirmModalComponent,
+        ConfirmModalNewComponent,
         ErrorComponent,
         InfoComponent,
         LastUserComponent,
@@ -83,6 +85,7 @@ import { TimePipe }                                   from './pipes/time.pipe';
         ChampionshipUserPredictionsTableComponent,
         ChampionshipUserRatingDetailsComponent,
         ConfirmModalComponent,
+        ConfirmModalNewComponent,
         ErrorComponent,
         InfoComponent,
         LastUserComponent,
