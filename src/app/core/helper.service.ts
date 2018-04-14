@@ -250,4 +250,19 @@ export class HelperService {
         const element = array.find(item => item[property] === value);
         return !!element;
     }
+
+    /**
+     * Authenticated user has role
+     * @param {string} role
+     * @returns {boolean}
+     */
+    hasRole(role: string): boolean {
+        const userRoles = this.getItemFromLocalStorage('roles');
+        if (userRoles && userRoles.length) {
+            if (userRoles.includes(role)) {
+                return true;
+            }
+        }
+        return false;
+    }
 }

@@ -3,10 +3,9 @@ import { ActivatedRoute, Params }         from '@angular/router';
 
 import { Club }                           from '../../../shared/models/club.model';
 import { ClubService }                    from '../../../core/club.service';
+import { ConfirmModalService }            from '../../../core/confirm-modal.service';
 import { environment }                    from '../../../../environments/environment';
 import { NotificationsService }           from 'angular2-notifications';
-
-declare var $: any;
 
 @Component({
   selector: 'app-club-table',
@@ -18,13 +17,10 @@ export class ClubTableComponent implements OnInit {
     constructor(
         private activatedRoute: ActivatedRoute,
         private clubService: ClubService,
+        private confirmModalService: ConfirmModalService,
         private notificationService: NotificationsService
     ) { }
 
-    confirmModalData: any;
-    confirmModalId: string;
-    confirmModalMessage: string;
-    confirmSpinnerButton: boolean;
     clubs: Club[];
     clubsImagesUrl: string = environment.apiImageClubs;
     currentPage: number;
@@ -34,38 +30,26 @@ export class ClubTableComponent implements OnInit {
     perPage: number;
     total: number;
 
-    confirmModalSubmit(data) {
-        switch (this.confirmModalId) {
-            case 'deleteClubConfirmModal':
-                this.deleteClub(data);
-                break;
-        }
-    }
-
-    deleteClub(club) {
-        this.confirmSpinnerButton = true;
-        this.clubService.deleteClub(club.id)
-            .subscribe(
-                response => {
-                    this.total--;
-                    this.clubs = this.clubs.filter(n => n !== club);
-                    this.notificationService.success('Успішно', club.title + ' видалено');
-                    this.confirmSpinnerButton = false;
-                    $('#' + this.confirmModalId).modal('hide');
-                },
-                errors => {
-                    for (let error of errors) {
-                        this.notificationService.error('Помилка', error);
-                    }
-                    this.confirmSpinnerButton = false;
-                    $('#' + this.confirmModalId).modal('hide');
-                });
-    }
-
-    deleteClubConfirmModalOpen(club: Club) {
-        this.confirmModalMessage = 'Ви справді хочете видалити цей клуб?';
-        this.confirmModalId = 'deleteClubConfirmModal';
-        this.confirmModalData = club;
+    deleteClub(club: Club): void {
+        this.confirmModalService.show(
+            () => {
+                this.clubService.deleteClub(club.id)
+                    .subscribe(
+                        response => {
+                            this.confirmModalService.hide();
+                            this.total--;
+                            this.clubs = this.clubs.filter(n => n !== club);
+                            this.notificationService.success('Успішно', club.title + ' видалено');
+                        },
+                        errors => {
+                            this.confirmModalService.hide();
+                            for (const error of errors) {
+                                this.notificationService.error('Помилка', error);
+                            }
+                        });
+            },
+            `Видалити ${club.title}?`
+        );
     }
 
     ngOnInit() {

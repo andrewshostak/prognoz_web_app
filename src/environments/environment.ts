@@ -19,7 +19,12 @@ export const environment = {
             id: 1
         },
         cup: {
-            id: 2
+            id: 2,
+            places: [
+                {id: 1, title: 'Вдома', slug: 'home'},
+                {id: 2, title: 'На виїзді', slug: 'away'},
+                {id: 3, title: 'Будь-де', slug: 'anywhere'}
+            ]
         },
         team: {
             id: 3,

@@ -48,7 +48,7 @@
                             </a>
                             <button type="button"
                                     class="btn btn-sm btn-outline-danger"
-                                    (click)="deleteClubConfirmModalOpen(club)"
+                                    (click)="deleteClub(club)"
                                     data-toggle="modal"
                                     data-target="#deleteClubConfirmModal">
                                 <i class="fa fa-trash-o fa-lg" aria-hidden="true"></i>
@@ -66,9 +66,3 @@
                     [path]="path">
     </app-pagination>
 </div>
-<app-confirm-modal [data]="confirmModalData"
-                   [modalId]="confirmModalId"
-                   [message]="confirmModalMessage"
-                   [spinnerButton]="confirmSpinnerButton"
-                   (onConfirmed)="confirmModalSubmit($event)">
-</app-confirm-modal>

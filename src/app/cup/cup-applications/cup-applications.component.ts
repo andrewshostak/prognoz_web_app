@@ -12,7 +12,10 @@ import { forkJoin }                                 from 'rxjs/observable/forkJo
 import { HelperService }                            from '../../core/helper.service';
 import { NotificationsService }                     from 'angular2-notifications';
 import { Subscription }                             from 'rxjs/Subscription';
+import { TitleService }                             from '../../core/title.service';
 import { User }                                     from '../../shared/models/user.model';
+
+declare const $: any;
 
 @Component({
   selector: 'app-cup-applications',
@@ -30,12 +33,21 @@ export class CupApplicationsComponent implements OnInit, OnDestroy {
         private elementRef: ElementRef,
         private helperService: HelperService,
         private notificationService: NotificationsService,
+        private titleService: TitleService
     ) { }
 
     authenticatedUser: User;
     competitions: Competition[];
     cupApplications: CupApplication[];
     errorCupApplications: string;
+    selectedCompetitionForNewApplication: Competition;
+    selectedCupApplication: {
+        competition_id: number,
+        applicant_id: number,
+        receiver_id?: number,
+        place?: number,
+        id?: number
+    };
     userImageDefault: string;
     userImagesUrl: string;
     userSubscription: Subscription;
@@ -73,6 +85,29 @@ export class CupApplicationsComponent implements OnInit, OnDestroy {
             },
             `Підтвердити заявку ${cupApplication.applicant.name}?`
         );
+    }
+
+    deleteCupApplication(competition: Competition, cupApplication: CupApplication): void {
+        if (this.showEditAndDeleteButtons(competition, cupApplication)) {
+            this.confirmModalService.show(() => {
+                    this.cupApplicationService
+                        .deleteCupApplication(cupApplication.id)
+                        .subscribe(
+                            response => {
+                                this.getApplicationsAndCompetitions();
+                                this.confirmModalService.hide();
+                                this.notificationService.success('Успішно', 'Заявку видалено');
+                            },
+                            error => {
+                                this.getApplicationsAndCompetitions();
+                                this.confirmModalService.hide();
+                                this.notificationService.error('Помилка', error);
+                            }
+                    );
+                },
+                `Видалити заявку ${cupApplication.applicant.name}?`
+            );
+        }
     }
 
     getApplicationsAndCompetitions(): void {
@@ -121,13 +156,7 @@ export class CupApplicationsComponent implements OnInit, OnDestroy {
     }
 
     hasModeratorRights(): boolean {
-        const roles = this.helperService.getItemFromLocalStorage('roles');
-        if (roles && roles.length) {
-            if (roles.includes('admin') || roles.includes('cup_editor')) {
-                return true;
-            }
-        }
-        return false;
+        return this.helperService.hasRole('admin') || this.helperService.hasRole('cup_editor');
     }
 
     hasConfirmedRequisitionAsReceiver(receiver: User): boolean {
@@ -162,6 +191,7 @@ export class CupApplicationsComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit() {
+        this.titleService.setTitle('Заявки / Учасники - Кубок');
         this.userImageDefault = environment.imageUserDefault;
         this.userImagesUrl = environment.apiImageUsers;
         this.authenticatedUser = this.currentStateService.user;
@@ -176,6 +206,28 @@ export class CupApplicationsComponent implements OnInit, OnDestroy {
         if (element) {
             element.scrollIntoView();
         }
+    }
+
+    openAddApplicationModal(competition: Competition, cupApplication?: CupApplication): void {
+        this.selectedCompetitionForNewApplication = competition;
+        if (!cupApplication) {
+            this.selectedCupApplication = {
+                competition_id: competition.id,
+                applicant_id: this.authenticatedUser.id,
+                place: this.isFriendlyCompetition(competition) ?
+                    environment.tournaments.cup.places.find(place => place.slug === 'anywhere').id :
+                    null
+            };
+        } else {
+            this.selectedCupApplication = {
+                id: cupApplication.id,
+                competition_id: cupApplication.competition_id,
+                applicant_id: cupApplication.applicant_id,
+                receiver_id: cupApplication.receiver_id,
+                place: cupApplication.place
+            };
+        }
+        $(this.elementRef.nativeElement.querySelector('#cupAddApplicationModal')).modal('show');
     }
 
     refuseApplication(cupApplication: CupApplication): void {
@@ -227,6 +279,21 @@ export class CupApplicationsComponent implements OnInit, OnDestroy {
             }
         } else {
             return this.hasModeratorRights();
+        }
+        return false;
+    }
+
+    showEditAndDeleteButtons(competition: Competition, cupApplication: CupApplication): boolean {
+        if (!this.authenticatedUser) {
+            return false;
+        }
+        if (!competition.stated) {
+            return false;
+        }
+        if (this.authenticatedUser.id === cupApplication.applicant_id || this.hasModeratorRights()) {
+            if (!cupApplication.confirmed_at && !cupApplication.refused_at && !cupApplication.ended) {
+                return true;
+            }
         }
         return false;
     }

@@ -8,5 +8,5 @@ import { Component, Input } from '@angular/core';
 
 export class ErrorComponent {
     @Input() message: string;
-    @Input() additionalInfo: boolean = true;
+    @Input() additionalInfo: boolean;
 }

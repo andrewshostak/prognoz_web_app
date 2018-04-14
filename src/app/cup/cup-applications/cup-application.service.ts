@@ -41,4 +41,25 @@ export class CupApplicationService {
             .catch(this.errorHandlerService.handle);
     }
 
+    /**
+     * Create cup application
+     * @param {CupApplication} cupApplication
+     * @returns {Observable<CupApplication>}
+     */
+    createCupApplication(cupApplication: CupApplication): Observable<CupApplication> {
+        return this.headersWithToken
+            .post(this.cupApplicationUrl, cupApplication)
+            .catch(this.errorHandlerService.handle);
+    }
+
+    /**
+     * Delete cup application
+     * @param {number} cupApplicationId
+     * @returns {Observable<void>}
+     */
+    deleteCupApplication(cupApplicationId: number): Observable<void> {
+        return this.headersWithToken
+            .delete(`${this.cupApplicationUrl}/${cupApplicationId}`)
+            .catch(this.errorHandlerService.handle);
+    }
 }
