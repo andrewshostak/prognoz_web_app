@@ -96,9 +96,9 @@ export class CompetitionService {
      * @param competition
      * @returns {Observable<Competition>}
      */
-    updateCompetition(competition: Competition): Observable<Competition> {
+    updateCompetition(competition: Competition, competitionId: number): Observable<Competition> {
         return this.headersWithToken
-            .put(`${this.competitionUrl}/${competition.id}`, competition)
+            .put(`${this.competitionUrl}/${competitionId}`, competition)
             .map(response => response['competition'])
             .catch(this.errorHandlerService.handle);
     }

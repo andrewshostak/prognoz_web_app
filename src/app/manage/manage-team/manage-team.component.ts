@@ -65,10 +65,10 @@ export class ManageTeamComponent implements OnInit {
 
     startDraw(competition: Competition) {
         this.confirmSpinnerButton = true;
-        let competitionToUpdate = Object.assign({}, competition);
+        const competitionToUpdate = Object.assign({}, competition);
         competitionToUpdate.stated = false;
         competitionToUpdate.active = true;
-        this.competitionService.updateCompetition(competitionToUpdate).subscribe(
+        this.competitionService.updateCompetition(competitionToUpdate, competitionToUpdate.id).subscribe(
             response => {
                 this.notificationService.success('Успішно', 'Жеребкування календаря проведено');
                 this.confirmSpinnerButton = false;
@@ -90,9 +90,9 @@ export class ManageTeamComponent implements OnInit {
 
     startNextRound(competition: Competition) {
         this.confirmSpinnerButton = true;
-        let competitionToUpdate = Object.assign({}, competition);
+        const competitionToUpdate = Object.assign({}, competition);
         competitionToUpdate.active_round = this.nextRoundNumber();
-        this.competitionService.updateCompetition(competitionToUpdate).subscribe(
+        this.competitionService.updateCompetition(competitionToUpdate, competitionToUpdate.id).subscribe(
             response => {
                 this.notificationService.success('Успішно', 'Наступний раунд розпочато');
                 this.confirmSpinnerButton = false;

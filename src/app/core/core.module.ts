@@ -23,6 +23,7 @@ import { throwIfAlreadyLoaded }   from './module-import-guard';
 import { TournamentService }      from './tournament.service';
 import { TitleService }           from './title.service';
 import { UserService }            from './user.service';
+import { ValidatorService }       from './services/validator.service';
 
 @NgModule({
     imports: [
@@ -58,6 +59,7 @@ import { UserService }            from './user.service';
         TitleService,
         TournamentService,
         UserService,
+        ValidatorService
     ],
 })
 export class CoreModule {

@@ -17,15 +17,14 @@ export class AppComponent implements OnInit {
         private notificationService: NotificationsService
     ) {}
 
-    options = {
-        position: ['right', 'bottom'],
-        timeOut: 5000,
-        showProgressBar: false,
-        maxLength: 0,
-        animate: 'scale'
-    };
-
     ngOnInit() {
         this.currentStateService.initialize();
+        this.notificationService.globalOptions = {
+            position: ['right', 'bottom'],
+            timeOut: 5000,
+            showProgressBar: false,
+            maxLength: 0,
+            animate: 'scale'
+        };
     }
 }

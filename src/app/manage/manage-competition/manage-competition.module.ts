@@ -4,6 +4,7 @@ import { ReactiveFormsModule }              from '@angular/forms';
 
 import { CompetitionCreateComponent }       from './competition-create/competition-create.component';
 import { CompetitionEditComponent }         from './competition-edit/competition-edit.component';
+import { CompetitionFormComponent }         from './shared/competition-form/competition-form.component';
 import { CompetitionTableComponent }        from './competition-table/competition-table.component';
 import { SharedModule }                     from '../../shared/shared.module';
 import { ManageCompetitionComponent }       from './manage-competition.component';
@@ -18,10 +19,11 @@ import { ManageCompetitionRoutingModule }   from './manage-competition-routing.m
         ManageCompetitionRoutingModule
     ],
     declarations: [
-        ManageCompetitionComponent,
         CompetitionCreateComponent,
+        CompetitionEditComponent,
+        CompetitionFormComponent,
         CompetitionTableComponent,
-        CompetitionEditComponent
+        ManageCompetitionComponent,
     ],
     providers: [
         ManageCompetitionGuard
