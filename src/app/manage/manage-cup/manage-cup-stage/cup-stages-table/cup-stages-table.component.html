@@ -1,0 +1,59 @@
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <h2 class="h2">Таблиця кубкових стадій:</h2>
+        </div>
+    </div>
+    <div *ngIf="cupStages" class="row">
+        <div class="col-12">
+            <div class="table-responsive">
+                <table class="table table-bordered table-striped table-hover">
+                    <thead>
+                    <tr>
+                        <th>ID.</th>
+                        <th>Назва</th>
+                        <th>Змагання</th>
+                        <th>Тип</th>
+                        <th>Раунд</th>
+                        <th>Активний</th>
+                        <th>Завершений</th>
+                        <th>Дія</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr *ngFor="let cupStage of cupStages">
+                        <th scope="row">{{cupStage.id}}</th>
+                        <td>{{cupStage.title}}</td>
+                        <td>{{cupStage.competition.title}}</td>
+                        <td>{{cupStage.cup_stage_type.title}}</td>
+                        <td class="text-center">{{cupStage.round}}</td>
+                        <td class="text-center">
+                            <i *ngIf="cupStage.active" class="text-success fa fa-check-circle fa-lg" aria-hidden="true"></i>
+                            <i *ngIf="!cupStage.active" class="text-danger fa fa-times fa-lg" aria-hidden="true"></i>
+                        </td>
+                        <td class="text-center">
+                            <i *ngIf="cupStage.ended" class="text-success fa fa-check-circle fa-lg" aria-hidden="true"></i>
+                            <i *ngIf="!cupStage.ended" class="text-danger fa fa-times fa-lg" aria-hidden="true"></i>
+                        </td>
+                        <td class="text-nowrap">
+                            <button routerLink="/manage/cup/stages/{{cupStage.id}}/edit" type="button" class="btn btn-sm btn-outline-warning">
+                                <i class="fa fa-pencil-square-o fa-lg" aria-hidden="true"></i>
+                            </button>
+                            <button type="button" class="btn btn-sm btn-outline-danger" (click)="deleteCupStage(cupStage)">
+                                <i class="fa fa-trash-o fa-lg" aria-hidden="true"></i>
+                            </button>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <app-error *ngIf="errorCupStages" [message]="errorCupStages"></app-error>
+    <app-pagination *ngIf="cupStages"
+                    [totalItems]="total"
+                    [currentPage]="currentPage"
+                    [pageSize]="perPage"
+                    [path]="path">
+    </app-pagination>
+</div>

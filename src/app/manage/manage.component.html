@@ -7,57 +7,11 @@
     <div class="row">
         <div class="col-12">
             <div class="card-columns">
-                <!-- championship -->
-                <div class="card">
+                <div *ngFor="let navigationItem of navigationItems" class="card">
                     <div class="card-body text-center">
-                        <button routerLink="championship" type="button" class="btn btn-outline-primary">
-                            <i class="fa fa-trophy fa-4x" aria-hidden="true"></i><br>
-                            Чемпіонат
-                        </button>
-                    </div>
-                </div>
-                <!-- team -->
-                <div class="card">
-                    <div class="card-body text-center">
-                        <button routerLink="team" type="button" class="btn btn-outline-primary">
-                            <i class="fa fa-users fa-4x" aria-hidden="true"></i><br>
-                            Командний
-                        </button>
-                    </div>
-                </div>
-                <!-- news -->
-                <div class="card">
-                    <div class="card-body text-center">
-                        <button routerLink="news" type="button" class="btn btn-outline-primary">
-                            <i class="fa fa-newspaper-o fa-4x" aria-hidden="true"></i><br>
-                            Новини
-                        </button>
-                    </div>
-                </div>
-                <!-- clubs -->
-                <div class="card">
-                    <div class="card-body text-center">
-                        <button routerLink="clubs" type="button" class="btn btn-outline-primary">
-                            <i class="fa fa-shield fa-4x" aria-hidden="true"></i><br>
-                            Команди
-                        </button>
-                    </div>
-                </div>
-                <!-- seasons -->
-                <div class="card">
-                    <div class="card-body text-center">
-                        <button routerLink="seasons" type="button" class="btn btn-outline-primary">
-                            <i class="fa fa-globe fa-4x" aria-hidden="true"></i><br>
-                            Сезони
-                        </button>
-                    </div>
-                </div>
-                <!-- competitions -->
-                <div class="card">
-                    <div class="card-body text-center">
-                        <button routerLink="competitions" type="button" class="btn btn-outline-primary">
-                            <i class="fa fa-star fa-4x" aria-hidden="true"></i><br>
-                            Змагання
+                        <button [routerLink]="navigationItem.routerLink" type="button" class="btn btn-outline-primary">
+                            <i [attr.class]="navigationItem.iconClass + ' fa fa-4x'" aria-hidden="true"></i><br>
+                            {{navigationItem.title}}
                         </button>
                     </div>
                 </div>

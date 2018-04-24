@@ -8,6 +8,8 @@ import { AuthService }            from './auth.service';
 import { ClubService }            from './club.service';
 import { CompetitionService }     from './competition.service';
 import { ConfirmModalService }    from './confirm-modal.service';
+import { CupMatchService }        from './services/cup/cup-match.service';
+import { CupStageTypeService }    from './services/cup/cup-stage-type.service';
 import { CurrentStateService }    from './current-state.service';
 import { ErrorHandlerService }    from './error-handler.service';
 import { FooterComponent }        from './footer/footer.component';
@@ -49,6 +51,8 @@ import { ValidatorService }       from './services/validator.service';
         ClubService,
         CompetitionService,
         ConfirmModalService,
+        CupMatchService,
+        CupStageTypeService,
         CurrentStateService,
         ErrorHandlerService,
         HeadersWithToken,

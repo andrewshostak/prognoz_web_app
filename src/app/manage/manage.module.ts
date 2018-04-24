@@ -5,6 +5,7 @@ import { ManageChampionshipModule } from './manage-championship/manage-champions
 import { ManageCompetitionModule }  from './manage-competition/manage-competition.module';
 import { ManageComponent }          from './manage.component';
 import { ManageClubModule }         from './manage-club/manage-club.module';
+import { ManageCupModule }          from './manage-cup/manage-cup.module';
 import { ManageGuard }              from './shared/manage-guard.service';
 import { ManageNewsModule }         from './manage-news/manage-news.module';
 import { ManageRoutingModule }      from './manage-routing.module';
@@ -16,8 +17,9 @@ import { ManageTournamentModule }   from './manage-tournament/manage-tournament.
     imports: [
         CommonModule,
         ManageNewsModule,
-        ManageClubModule,
         ManageChampionshipModule,
+        ManageClubModule,
+        ManageCupModule,
         ManageSeasonModule,
         ManageCompetitionModule,
         ManageTeamModule,

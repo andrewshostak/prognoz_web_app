@@ -17,10 +17,10 @@ export function patchSimpleChangeValuesInForm(
             if (valueChange.currentValue) {
                 Object.entries(valueChange.currentValue).forEach(
                     ([field, value]) => {
-                        if (formGroup.get(field)) {
-                            if (onUpdatedCallback) {
-                                onUpdatedCallback(formGroup, field, value);
-                            } else {
+                        if (onUpdatedCallback) {
+                            onUpdatedCallback(formGroup, field, value);
+                        } else {
+                            if (formGroup.get(field)) {
                                 formGroup.patchValue({ [field]: value });
                             }
                         }
