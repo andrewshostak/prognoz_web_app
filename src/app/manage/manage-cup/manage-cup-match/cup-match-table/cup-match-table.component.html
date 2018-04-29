@@ -1,0 +1,48 @@
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <h2 class="h2">Таблиця кубкових матчів:</h2>
+        </div>
+    </div>
+    <div *ngIf="cupMatches" class="row">
+        <div class="col-12">
+            <div class="table-responsive">
+                <table class="table table-bordered table-striped table-hover">
+                    <thead>
+                    <tr>
+                        <th scope="col">ID.</th>
+                        <th scope="col">Команди</th>
+                        <th scope="col">Час початку</th>
+                        <th scope="col" class="text-center">Активний</th>
+                        <th scope="col" class="text-center">Завершений</th>
+                        <th scope="col">Дія</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr *ngFor="let cupMatch of cupMatches">
+                        <th scope="row">{{cupMatch.id}}</th>
+                        <td class="text-nowrap">{{cupMatch.club_first.title}} - {{cupMatch.club_second.title}}</td>
+                        <td class="text-nowrap">{{cupMatch.starts_at}}</td>
+                        <td class="text-center">
+                            <i *ngIf="cupMatch.active" class="text-success fa fa-check-circle fa-lg" aria-hidden="true"></i>
+                            <i *ngIf="!cupMatch.active" class="text-danger fa fa-times fa-lg" aria-hidden="true"></i>
+                        </td>
+                        <td class="text-center">
+                            <i *ngIf="cupMatch.ended" class="text-success fa fa-check-circle fa-lg" aria-hidden="true"></i>
+                            <i *ngIf="!cupMatch.ended" class="text-danger fa fa-times fa-lg" aria-hidden="true"></i>
+                        </td>
+                        <td class="text-nowrap">
+                            <button routerLink="/manage/cup/matches/{{cupMatch.id}}/edit" type="button" class="btn btn-sm btn-outline-warning">
+                                <i class="fa fa-pencil-square-o fa-lg" aria-hidden="true"></i>
+                            </button>
+                            <button type="button" class="btn btn-sm btn-outline-danger" (click)="deleteCupMatch(cupMatch)">
+                                <i class="fa fa-trash-o fa-lg" aria-hidden="true"></i>
+                            </button>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

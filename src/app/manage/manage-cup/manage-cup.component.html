@@ -12,8 +12,10 @@
     <div class="row">
         <div class="col-12">
             <ul class="nav nav-pills justify-content-center mb-2 flex-column flex-sm-row">
-                <li class="nav-item">
-                    <a routerLink="stages" routerLinkActive="active" class="nav-link">Кубкові стадії</a>
+                <li *ngFor="let navigationItem of navigationItems" class="nav-item">
+                    <a [routerLink]="navigationItem.routerLink" routerLinkActive="active" class="nav-link">
+                        {{navigationItem.title}}
+                    </a>
                 </li>
             </ul>
         </div>

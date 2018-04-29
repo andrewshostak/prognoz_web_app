@@ -6,6 +6,7 @@ import { environment }              from '../../../../../environments/environmen
 import { ErrorHandlerService }      from '../../../../core/error-handler.service';
 import { HeadersWithToken }         from '../../../../core/headers-with-token.service';
 import { Observable }               from 'rxjs/Observable';
+import { isNullOrUndefined }        from 'util';
 
 @Injectable()
 export class CupStageService {
@@ -21,12 +22,20 @@ export class CupStageService {
     /**
      * Get cup stages
      * @param {number} page
+     * @param {boolean} active
+     * @param {boolean} ended
      * @returns {Observable<any>}
      */
-    getCupStages(page?: number): Observable<any> {
+    getCupStages(page?: number, active?: boolean, ended?: boolean): Observable<any> {
         let params = new HttpParams();
         if (page) {
             params = params.append('page', page.toString());
+        }
+        if (!isNullOrUndefined(active)) {
+            params = params.append('active', active ? '1' : '0');
+        }
+        if (!isNullOrUndefined(ended)) {
+            params = params.append('ended', ended ? '1' : '0');
         }
         return this.httpClient
             .get(this.cupStageUrl, {params: params})

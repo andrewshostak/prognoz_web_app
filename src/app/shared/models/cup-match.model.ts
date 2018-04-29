@@ -17,4 +17,7 @@ export class CupMatch {
     club_second: {
         title: string;
     };
+    cup_stages: {
+        id: number
+    }[];
 }

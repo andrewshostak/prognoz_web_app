@@ -5,7 +5,7 @@ import { CupMatch }                 from '../../../shared/models/cup-match.model
 import { environment }              from '../../../../environments/environment';
 import { ErrorHandlerService }      from '../../error-handler.service';
 import { HeadersWithToken }         from '../../headers-with-token.service';
-import { isNull }                   from 'util';
+import { isNullOrUndefined }        from 'util';
 import { Observable }               from 'rxjs/Observable';
 
 @Injectable()
@@ -21,22 +21,72 @@ export class CupMatchService {
 
     /**
      * Get cup matches
-     * @param {any} active
-     * @param {any} ended
+     * @param {number} page
+     * @param {boolean} active
+     * @param {boolean} ended
      * @returns {Observable<CupMatch[]>}
      */
-    getCupMatches(active: boolean = null, ended: boolean = null): Observable<CupMatch[]> {
+    getCupMatches(page?: number, active?: boolean, ended?: boolean): Observable<any> {
         let params: HttpParams = new HttpParams();
-        if (!isNull(active)) {
-            params = params.append('active', (active ? 1 : 0).toString());
+        if (page) {
+            params = params.append('page', page.toString());
         }
-        if (!isNull(ended)) {
-            params = params.append('ended', (ended ? 1 : 0).toString());
+        if (!isNullOrUndefined(active)) {
+            params = params.append('active', active ? '1' : '0');
+        }
+        if (!isNullOrUndefined(ended)) {
+            params = params.append('ended', ended ? '1' : '0');
         }
         return this.httpClient
             .get(this.cupMatchUrl, {params: params})
-            .map(response => response['cup_matches'])
             .catch(this.errorHandlerService.handle);
     }
 
+    /**
+     * Get cup match
+     * @param {number} cupMatchId
+     * @returns {Observable<CupMatch>}
+     */
+    getCupMatch(cupMatchId: number): Observable<CupMatch> {
+        return this.httpClient
+            .get(`${this.cupMatchUrl}/${cupMatchId}`)
+            .map(response => response['cup_match'])
+            .catch(this.errorHandlerService.handle);
+    }
+
+    /**
+     * Create cup match
+     * @param {CupMatch} cupMatch
+     * @returns {Observable<CupMatch>}
+     */
+    createCupMatch(cupMatch: CupMatch): Observable<CupMatch> {
+        return this.headersWithToken
+            .post(this.cupMatchUrl, cupMatch)
+            .map(response => response['cupMatch'])
+            .catch(this.errorHandlerService.handle);
+    }
+
+    /**
+     * Update cup match
+     * @param {CupMatch} cupMatch
+     * @param {number} cupMatchId
+     * @returns {Observable<CupMatch>}
+     */
+    updateCupMatch(cupMatch: CupMatch, cupMatchId: number): Observable<CupMatch> {
+        return this.headersWithToken
+            .put(`${this.cupMatchUrl}/${cupMatchId}`, cupMatch)
+            .map(response => response['cupMatch'])
+            .catch(this.errorHandlerService.handle);
+    }
+
+    /**
+     * Delete cup match
+     * @param {number} cupMatchId
+     * @returns {Observable<void>}
+     */
+    deleteCupMatch(cupMatchId: number): Observable<void> {
+        return this.headersWithToken
+            .delete(`${this.cupMatchUrl}/${cupMatchId}`)
+            .catch(this.errorHandlerService.handle);
+    }
 }

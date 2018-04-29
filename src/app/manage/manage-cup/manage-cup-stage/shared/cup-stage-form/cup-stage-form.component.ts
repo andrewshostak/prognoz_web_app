@@ -110,7 +110,7 @@ export class CupStageFormComponent implements OnChanges, OnInit {
         this.cupMatchesFormArray.removeAt(index);
     }
 
-    resetStationLinksForm(): void {
+    resetCupStageForm(): void {
         this.confirmModalService.show(() => {
             this.clearCupMatchesFormArray();
             this.cupStageForm.reset();
@@ -128,6 +128,10 @@ export class CupStageFormComponent implements OnChanges, OnInit {
         }, 'Очистити форму від змін?');
     }
 
+    private clearCupMatchesFormArray(): void {
+        clearFormArray(this.cupMatchesFormArray);
+    }
+
     private createCupStage(cupStage: CupStage): void {
         this.cupStageService
             .createCupStage(cupStage)
@@ -143,12 +147,12 @@ export class CupStageFormComponent implements OnChanges, OnInit {
     }
 
     private getCupMatchesData(): void {
-        this.cupMatchService.getCupMatches(true, false).subscribe(
+        this.cupMatchService.getCupMatches(null, true, false).subscribe(
             response => {
                 if (!this.cupMatches) {
-                    this.cupMatches = response;
+                    this.cupMatches = response.cup_matches;
                 } else {
-                    response.forEach(cupMatch => {
+                    response.cup_matches.forEach(cupMatch => {
                         if (!this.cupMatches.find((item) => item.id === cupMatch.id)) {
                             this.cupMatches.push(cupMatch);
                         }
@@ -188,10 +192,6 @@ export class CupStageFormComponent implements OnChanges, OnInit {
                 this.errorCupStageTypes = error;
             }
         );
-    }
-
-    private clearCupMatchesFormArray(): void {
-        clearFormArray(this.cupMatchesFormArray);
     }
 
     private updateCupStage(cupStage: CupStage): void {

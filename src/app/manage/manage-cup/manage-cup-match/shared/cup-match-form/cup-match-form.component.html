@@ -1,0 +1,143 @@
+<form novalidate [formGroup]="cupMatchForm" (ngSubmit)="onSubmit()">
+    <div *ngIf="clubs"
+         class="form-group"
+         [class.form-group-invalid-custom]="cupMatchForm.get('t1_id').invalid && cupMatchForm.get('t1_id').touched">
+        <label for="t1_id" class="font-weight-bold">Господарі:</label>
+        <select id="t1_id"
+                class="form-control"
+                formControlName="t1_id">
+            <option *ngFor="let club of clubs" [value]="club.id">{{club.title}}</option>
+        </select>
+        <div *ngIf="cupMatchForm.get('t1_id').hasError('required') && cupMatchForm.get('t1_id').touched">
+            <small>Вибір першої команди обов'язковий</small>
+        </div>
+    </div>
+    <div *ngIf="clubs"
+         class="form-group"
+         [class.form-group-invalid-custom]="cupMatchForm.get('t2_id').invalid && cupMatchForm.get('t2_id').touched">
+        <label for="t2_id" class="font-weight-bold">Гості:</label>
+        <select id="t2_id"
+                class="form-control"
+                formControlName="t2_id">
+            <option *ngFor="let club of clubs" [value]="club.id">{{club.title}}</option>
+        </select>
+        <div *ngIf="cupMatchForm.get('t2_id').hasError('required') && cupMatchForm.get('t2_id').touched">
+            <small>Вибір другої команди обов'язковий</small>
+        </div>
+    </div>
+    <div class="row mb-2">
+        <div class="col-6 text-center">
+            <div class="form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input"
+                           type="checkbox"
+                           formControlName="active">
+                    <strong>Активний</strong>
+                </label>
+            </div>
+        </div>
+        <div class="col-6 text-center">
+            <div class="form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input"
+                           type="checkbox"
+                           formControlName="ended">
+                    <strong>Завершений</strong>
+                </label>
+            </div>
+        </div>
+    </div>
+    <div class="form-group"
+         [class.form-group-invalid-custom]="cupMatchForm.get('starts_at').invalid && cupMatchForm.get('starts_at').touched">
+        <label for="starts_at" class="font-weight-bold">Час початку мату:</label>
+        <input type="text"
+               id="starts_at"
+               class="form-control"
+               formControlName="starts_at">
+        <div *ngIf="cupMatchForm.get('starts_at').hasError('required') && cupMatchForm.get('starts_at').touched">
+            <small>Вибір часу початку матчу обов'язковий.</small>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-6">
+            <div class="form-group"
+                 [class.form-group-invalid-custom]="cupMatchForm.get('home').invalid && cupMatchForm.get('home').touched">
+                <label for="home" class="font-weight-bold">Результат першої команди:</label>
+                <input type="number"
+                       id="home"
+                       class="form-control"
+                       formControlName="home">
+                <div *ngIf="cupMatchForm.get('home').hasError('maxLength') && cupMatchForm.get('home').touched">
+                    <small>Максимальна довжина: 1</small>
+                </div>
+                <div *ngIf="cupMatchForm.get('home').hasError('min') && cupMatchForm.get('home').touched">
+                    <small>Мінімальне значення: 0</small>
+                </div>
+                <div *ngIf="cupMatchForm.get('home').hasError('max') && cupMatchForm.get('home').touched">
+                    <small>Максимальне значення: 9</small>
+                </div>
+            </div>
+        </div>
+        <div class="col-6">
+            <div class="form-group"
+                 [class.form-group-invalid-custom]="cupMatchForm.get('away').invalid && cupMatchForm.get('away').touched">
+                <label for="away" class="font-weight-bold">Результат другої команди:</label>
+                <input type="number"
+                       id="away"
+                       class="form-control"
+                       formControlName="away">
+                <div *ngIf="cupMatchForm.get('away').hasError('maxLength') && cupMatchForm.get('away').touched">
+                    <small>Максимальна довжина: 1</small>
+                </div>
+                <div *ngIf="cupMatchForm.get('away').hasError('min') && cupMatchForm.get('away').touched">
+                    <small>Мінімальне значення: 0</small>
+                </div>
+                <div *ngIf="cupMatchForm.get('away').hasError('max') && cupMatchForm.get('away').touched">
+                    <small>Максимальне значення: 9</small>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div *ngIf="cupStages" formArrayName="cup_stages" class="mb-2">
+        <label class="font-weight-bold">Кубкові стадії ({{cupStagesFormArray.controls.length}}):</label>
+        <div *ngFor="let cupStageFormGroup of cupStagesFormArray.controls; let i = index;"
+             [formGroup]="cupStageFormGroup"
+             class="form-row mb-2">
+            <div class="col d-flex align-items-center justify-content-end">
+                {{i + 1}}.
+            </div>
+            <div class="col-9">
+                <div class="form-group mb-0"
+                     [class.form-group-invalid-custom]="cupStageFormGroup.get('id').invalid && cupStageFormGroup.get('id').touched">
+                    <select id="id"
+                            class="form-control"
+                            formControlName="id">
+                        <option *ngFor="let cupStage of cupStages" [value]="cupStage.id">
+                            {{cupStage.title}} ({{cupStage.round}}) | {{cupStage.competition?.title}}
+                        </option>
+                    </select>
+                    <div *ngIf="cupStageFormGroup.get('id').hasError('required') && cupStageFormGroup.get('id').touched">
+                        <small>Виберіть стадію зі списку або видаліть це поле</small>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <button type="button"
+                        title="Видалити"
+                        class="btn btn-danger"
+                        (click)="removeCupStage(i)">
+                    <i class="fa fa-trash" aria-hidden="true"></i>
+                </button>
+            </div>
+        </div>
+        <div>
+            <button type="button" class="btn btn-outline-success" (click)="addCupStage()">Добавити</button>
+        </div>
+    </div>
+    <div class="d-flex justify-content-between">
+        <button type="button" class="btn btn-outline-danger" (click)="resetCupMatchForm()">Відмінити зміни</button>
+        <button type="submit" class="btn btn-primary">{{cupMatch ? 'Змінити' : 'Зберегти'}}</button>
+    </div>
+</form>
+<app-error *ngIf="errorCupStages" [message]="errorCupStages"></app-error>
+<app-error *ngIf="errorClubs" [message]="errorClubs"></app-error>
