@@ -175,7 +175,9 @@ export class CupStageFormComponent implements OnChanges, OnInit {
             true
         ).subscribe(
             response => {
-                this.competitions = response.competitions;
+                if (response) {
+                    this.competitions = response.competitions;
+                }
             },
             error => {
                 this.errorCompetitions = error;

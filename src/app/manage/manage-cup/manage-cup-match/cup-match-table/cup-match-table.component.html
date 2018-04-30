@@ -45,4 +45,11 @@
             </div>
         </div>
     </div>
+    <app-error *ngIf="errorCupMatches" [message]="errorCupMatches"></app-error>
+    <app-pagination *ngIf="cupMatches"
+                    [totalItems]="total"
+                    [currentPage]="currentPage"
+                    [pageSize]="perPage"
+                    [path]="path">
+    </app-pagination>
 </div>

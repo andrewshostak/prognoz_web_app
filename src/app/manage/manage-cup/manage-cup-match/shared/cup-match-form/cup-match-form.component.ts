@@ -132,7 +132,8 @@ export class CupMatchFormComponent implements OnChanges, OnInit {
             .subscribe(
                 response => {
                     this.notificationsService.success('Успішно', 'Кубковий матч створено');
-                    this.location.back();
+                    this.clearCupStagesFormArray();
+                    this.cupMatchForm.reset({starts_at: cupMatch.starts_at});
                 },
                 errors => {
                     errors.forEach(error => this.notificationsService.error('Помилка', error));
@@ -155,7 +156,7 @@ export class CupMatchFormComponent implements OnChanges, OnInit {
 
     private getCupStagesData(): void {
         this.cupStageService
-            .getCupStages()
+            .getCupStages(null, null, false)
             .subscribe(
                 response => {
                     this.cupStages = response.cup_stages;

@@ -68,7 +68,13 @@ export class CupMatchTableComponent implements OnInit, OnDestroy {
         this.path = '/manage/cup/matches/page/';
         this.activatedRouteSubscription = this.activatedRoute.params
             .subscribe((params: Params) => {
-                this.cupMatchService.getCupMatches(params['number']).subscribe(
+                this.cupMatchService.getCupMatches(
+                    params['number'],
+                    null,
+                    null,
+                    'starts_at',
+                    'desc'
+                ).subscribe(
                     response => {
                         this.currentPage = response.current_page;
                         this.lastPage = response.last_page;

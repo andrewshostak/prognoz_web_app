@@ -26,7 +26,11 @@ export class CupStageService {
      * @param {boolean} ended
      * @returns {Observable<any>}
      */
-    getCupStages(page?: number, active?: boolean, ended?: boolean): Observable<any> {
+    getCupStages(
+        page?: number,
+        active?: boolean,
+        ended?: boolean
+    ): Observable<any> {
         let params = new HttpParams();
         if (page) {
             params = params.append('page', page.toString());
