@@ -4,6 +4,7 @@ import { ActivatedRoute, Params }       from '@angular/router';
 import { ConfirmModalService }          from '../../../../core/confirm-modal.service';
 import { CupMatch }                     from '../../../../shared/models/cup-match.model';
 import { CupMatchService }              from '../../../../core/services/cup/cup-match.service';
+import { environment }                  from '../../../../../environments/environment';
 import { NotificationsService }         from 'angular2-notifications';
 import { Subscription }                 from 'rxjs/Subscription';
 
@@ -24,11 +25,27 @@ export class CupMatchTableComponent implements OnInit, OnDestroy {
     activatedRouteSubscription: Subscription;
     cupMatches: CupMatch[];
     currentPage: number;
+    clubImagesUrl: string;
     errorCupMatches: string;
     lastPage: number;
     path: string;
     perPage: number;
     total: number;
+
+    addResult(cupMatch: CupMatch): void {
+        this.cupMatchService
+            .updateCupMatch(cupMatch, cupMatch.id)
+            .subscribe(
+                response => {
+                    this.notificationsService.success('Успішно', 'Результат в матчі ' + response.id + ' добавлено!');
+                    const index = this.cupMatches.findIndex((item) => item.id === cupMatch.id);
+                    this.cupMatches[index] = response;
+                },
+                errors => {
+                    errors.forEach(error => this.notificationsService.error('Помилка', error));
+                }
+            );
+    }
 
     deleteCupMatch(cupMatch: CupMatch): void {
         this.confirmModalService.show(
@@ -48,14 +65,16 @@ export class CupMatchTableComponent implements OnInit, OnDestroy {
                         },
                         errors => {
                             this.confirmModalService.hide();
-                            for (const error of errors) {
-                                this.notificationsService.error('Помилка', error);
-                            }
+                            errors.forEach(error => this.notificationsService.error('Помилка', error));
                         }
                     );
             },
             `Видалити ${cupMatch.club_first.title} - ${cupMatch.club_second.title}?`
         );
+    }
+
+    matchHasEndedStages(cupMatch: CupMatch): boolean {
+        return !!cupMatch.cup_stages.find((cupStage) => cupStage.ended);
     }
 
     ngOnDestroy() {
@@ -65,6 +84,7 @@ export class CupMatchTableComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit() {
+        this.clubImagesUrl = environment.apiImageClubs;
         this.path = '/manage/cup/matches/page/';
         this.activatedRouteSubscription = this.activatedRoute.params
             .subscribe((params: Params) => {

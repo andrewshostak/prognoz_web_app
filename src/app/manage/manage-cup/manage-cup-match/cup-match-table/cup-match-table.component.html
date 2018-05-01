@@ -10,32 +10,75 @@
                 <table class="table table-bordered table-striped table-hover">
                     <thead>
                     <tr>
-                        <th scope="col">ID.</th>
+                        <th scope="col">Id</th>
                         <th scope="col">Команди</th>
                         <th scope="col">Час початку</th>
-                        <th scope="col" class="text-center">Активний</th>
-                        <th scope="col" class="text-center">Завершений</th>
+                        <th scope="col" class="text-center" title="Кількість стадій">С.</th>
+                        <th scope="col" class="text-center" title="Активний">А.</th>
+                        <th scope="col" class="text-center" title="Завершений">З.</th>
+                        <th scope="col" class="text-center">Результат</th>
                         <th scope="col">Дія</th>
                     </tr>
                     </thead>
                     <tbody>
                     <tr *ngFor="let cupMatch of cupMatches">
-                        <th scope="row">{{cupMatch.id}}</th>
-                        <td class="text-nowrap">{{cupMatch.club_first.title}} - {{cupMatch.club_second.title}}</td>
-                        <td class="text-nowrap">{{cupMatch.starts_at}}</td>
-                        <td class="text-center">
+                        <th scope="row" class="text-center align-middle">{{cupMatch.id}}</th>
+                        <td class="text-nowrap align-middle">
+                            <img [attr.src]="clubImagesUrl + cupMatch.club_first.image"
+                                 [attr.alt]="cupMatch.club_first.title"
+                                 class="small-image">
+                            {{cupMatch.club_first.title}} - {{cupMatch.club_second.title}}
+                            <img [attr.src]="clubImagesUrl + cupMatch.club_second.image"
+                                 [attr.alt]="cupMatch.club_second.title"
+                                 class="small-image">
+                        </td>
+                        <td class="text-nowrap align-middle">{{cupMatch.starts_at}}</td>
+                        <td class="text-center align-middle">{{cupMatch.cup_stages.length}}</td>
+                        <td class="text-center align-middle">
                             <i *ngIf="cupMatch.active" class="text-success fa fa-check-circle fa-lg" aria-hidden="true"></i>
                             <i *ngIf="!cupMatch.active" class="text-danger fa fa-times fa-lg" aria-hidden="true"></i>
                         </td>
-                        <td class="text-center">
+                        <td class="text-center align-middle">
                             <i *ngIf="cupMatch.ended" class="text-success fa fa-check-circle fa-lg" aria-hidden="true"></i>
                             <i *ngIf="!cupMatch.ended" class="text-danger fa fa-times fa-lg" aria-hidden="true"></i>
                         </td>
                         <td class="text-nowrap">
-                            <button routerLink="/manage/cup/matches/{{cupMatch.id}}/edit" type="button" class="btn btn-sm btn-outline-warning">
+                            <div class="form-row">
+                                <div class="col">
+                                    <input type="number"
+                                           class="form-control form-control-sm"
+                                           min="0"
+                                           max="9"
+                                           maxlength="1"
+                                           [disabled]="cupMatch.ended"
+                                           [(ngModel)]="cupMatch.home">
+                                </div>
+                                <div class="col">
+                                    <input type="number"
+                                           class="form-control form-control-sm"
+                                           min="0"
+                                           max="9"
+                                           maxlength="1"
+                                           [disabled]="cupMatch.ended"
+                                           [(ngModel)]="cupMatch.away">
+                                </div>
+                                <div [hidden]="cupMatch.ended" class="col">
+                                    <button type="button" class="btn btn-sm btn-primary" (click)="addResult(cupMatch)">
+                                        <i class="fa fa-plus-circle" aria-hidden="true"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </td>
+                        <td class="text-nowrap text-center">
+                            <button *ngIf="!matchHasEndedStages(cupMatch); else noActionButton" routerLink="/manage/cup/matches/{{cupMatch.id}}/edit" type="button" class="btn btn-sm btn-warning">
                                 <i class="fa fa-pencil-square-o fa-lg" aria-hidden="true"></i>
                             </button>
-                            <button type="button" class="btn btn-sm btn-outline-danger" (click)="deleteCupMatch(cupMatch)">
+                            <ng-template #noActionButton>
+                                <button disabled class="btn btn-sm btn-outline-secondary">
+                                    <i class="fa fa-ban fa-lg" aria-hidden="true"></i>
+                                </button>
+                            </ng-template>
+                            <button type="button" [hidden]="cupMatch.ended" class="btn btn-sm btn-danger" (click)="deleteCupMatch(cupMatch)">
                                 <i class="fa fa-trash-o fa-lg" aria-hidden="true"></i>
                             </button>
                         </td>

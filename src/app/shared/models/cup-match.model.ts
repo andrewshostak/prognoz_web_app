@@ -13,11 +13,14 @@ export class CupMatch {
     ended: boolean;
     club_first: {
         title: string;
+        image: string;
     };
     club_second: {
         title: string;
+        image: string;
     };
     cup_stages: {
-        id: number
+        id: number,
+        ended: boolean
     }[];
 }
