@@ -15,4 +15,13 @@ export class CupStage {
     cup_matches: {
         id: number;
     }[];
+    cup_cup_matches: {
+        id: number;
+        home_user: {
+            name: string;
+        };
+        away_user: {
+            name: string;
+        };
+    }[];
 }

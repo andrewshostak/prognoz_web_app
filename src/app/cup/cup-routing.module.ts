@@ -3,6 +3,7 @@ import { RouterModule, Routes }     from '@angular/router';
 
 import { CupApplicationsComponent } from './cup-applications/cup-applications.component';
 import { CupComponent }             from './cup.component';
+import { CupCupMatchesComponent }   from './cup-cup-matches/cup-cup-matches.component';
 import { CupRatingComponent }       from './cup-rating/cup-rating.component';
 import { CupRatingUserComponent }   from './cup-rating-user/cup-rating-user.component';
 
@@ -22,6 +23,10 @@ const routes: Routes = [
             {
                 path: 'applications',
                 component: CupApplicationsComponent
+            },
+            {
+                path: 'cup-matches',
+                component: CupCupMatchesComponent
             }
         ]
     }

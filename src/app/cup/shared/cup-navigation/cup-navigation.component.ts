@@ -9,12 +9,13 @@ export class CupNavigationComponent implements OnInit {
 
     constructor() { }
 
-    navigationItems: {link: string, title: string}[];
+    navigationItems: {link: any[], title: string, queryParams?: any}[];
 
     ngOnInit() {
         this.navigationItems = [
-            {link: '/cup/rating', title: 'Рейтинг'},
-            {link: '/cup/applications', title: 'Заявки / Учасники'}
+            {link: ['/cup/rating'], title: 'Рейтинг'},
+            {link: ['/cup/applications'], title: 'Заявки / Учасники'},
+            {link: ['/cup/cup-matches', {active: true}], title: 'Матчі'}
         ];
     }
 

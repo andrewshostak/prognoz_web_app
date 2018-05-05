@@ -1,7 +1,7 @@
 <ul class="list-group list-group-flush">
     <a *ngFor="let item of navigationItems"
        class="list-group-item list-group-item-action"
-       routerLink="{{item.link}}"
+       [routerLink]="item.link"
        routerLinkActive="active">
         {{item.title}}
     </a>

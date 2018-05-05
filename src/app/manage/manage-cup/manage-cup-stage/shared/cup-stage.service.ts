@@ -66,7 +66,7 @@ export class CupStageService {
     createCupStage(cupStage: CupStage): Observable<CupStage> {
         return this.headersWithToken
             .post(this.cupStageUrl, cupStage)
-            .map(response => response['cupStage'])
+            .map(response => response['cup_stage'])
             .catch(this.errorHandlerService.handle);
     }
 
@@ -79,7 +79,7 @@ export class CupStageService {
     updateCupStage(cupStage: CupStage, cupStageId: number): Observable<CupStage> {
         return this.headersWithToken
             .put(`${this.cupStageUrl}/${cupStageId}`, cupStage)
-            .map(response => response['cupStage'])
+            .map(response => response['cup_stage'])
             .catch(this.errorHandlerService.handle);
     }
 

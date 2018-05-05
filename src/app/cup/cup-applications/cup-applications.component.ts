@@ -54,7 +54,7 @@ export class CupApplicationsComponent implements OnInit, OnDestroy {
 
     attachApplicationsToCompetitions(): void {
         if (this.competitions.length) {
-            const grouped = this.groupBy(this.cupApplications, cupApplication => cupApplication.competition_id);
+            const grouped = this.helperService.groupBy(this.cupApplications, cupApplication => cupApplication.competition_id);
             this.competitions.map((competition) => {
                 return competition.cup_applications = grouped.get(competition.id);
             });
@@ -307,20 +307,6 @@ export class CupApplicationsComponent implements OnInit, OnDestroy {
         }
 
         return false;
-    }
-
-    private groupBy(list: any[], keyGetter) {
-        const map = new Map();
-        list.forEach((item) => {
-            const key = keyGetter(item);
-            const collection = map.get(key);
-            if (!collection) {
-                map.set(key, [item]);
-            } else {
-                collection.push(item);
-            }
-        });
-        return map;
     }
 
 }

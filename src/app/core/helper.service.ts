@@ -110,6 +110,45 @@ export class HelperService {
     }
 
     /**
+     * Filter array. leave only distinct items
+     * @param items
+     * @param key
+     * @returns {Array}
+     */
+    getDistinctItems<T>(items: T[], key: string = 'id'): T[] {
+        const distinctItems = [];
+        if (!items.length) {
+            return distinctItems;
+        }
+        items.forEach((item) => {
+            if (!distinctItems.find(distinctItem => distinctItem[key] === item[key])) {
+                distinctItems.push(item);
+            }
+        });
+        return distinctItems;
+    }
+
+    /**
+     * Function for groupping
+     * @param list
+     * @param keyGetter
+     * @returns {Map<any, any>}
+     */
+    groupBy(list: any[], keyGetter) {
+        const map = new Map();
+        list.forEach((item) => {
+            const key = keyGetter(item);
+            const collection = map.get(key);
+            if (!collection) {
+                map.set(key, [item]);
+            } else {
+                collection.push(item);
+            }
+        });
+        return map;
+    }
+
+    /**
      * Returns unsigned number
      * @param moving
      * @returns {number}

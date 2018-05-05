@@ -8,6 +8,7 @@ import { AuthService }            from './auth.service';
 import { ClubService }            from './club.service';
 import { CompetitionService }     from './competition.service';
 import { ConfirmModalService }    from './confirm-modal.service';
+import { CupCupMatchService }     from './services/cup/cup-cup-match.service';
 import { CupMatchService }        from './services/cup/cup-match.service';
 import { CupStageTypeService }    from './services/cup/cup-stage-type.service';
 import { CurrentStateService }    from './current-state.service';
@@ -51,6 +52,7 @@ import { ValidatorService }       from './services/validator.service';
         ClubService,
         CompetitionService,
         ConfirmModalService,
+        CupCupMatchService,
         CupMatchService,
         CupStageTypeService,
         CurrentStateService,

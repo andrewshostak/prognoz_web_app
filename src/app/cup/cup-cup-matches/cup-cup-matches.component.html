@@ -1,0 +1,33 @@
+<h2 class="h2">Матчі:</h2>
+<div *ngIf="cupStagesWithCupMatches">
+    <div *ngFor="let cupStage of cupStagesWithCupMatches" class="mb-2">
+        <div class="d-inline-flex bg-white rounded-top border border-bottom-0 font-weight-bold black-shadow p-2">
+            {{cupStage.title}}
+        </div>
+        <div class="card black-shadow">
+            <ul class="list-group list-group-flush">
+                <li *ngFor="let cupCupMatch of cupStage.cup_cup_matches" class="list-group-item">
+                    <div class="row">
+                        <div class="col-4 col-sm-5 text-right">
+                            <strong class="d-none d-sm-inline">{{cupCupMatch.home_user.name}}</strong>
+                            <small class="d-sm-none">{{cupCupMatch.home_user.name}}</small>
+                            <img class="small-image rounded-circle d-none d-sm-inline ml-1"
+                                 src="{{userImagesUrl}}{{cupCupMatch.home_user.image || userImageDefault}}"
+                                 alt="{{cupCupMatch.home_user.name}}">
+                        </div>
+                        <div class="col-4 col-sm-2 text-center">
+                            <strong>{{helperService.showScore(cupCupMatch.home, cupCupMatch.away, 'vs')}}</strong>
+                        </div>
+                        <div class="col-4 col-sm-5 text-left">
+                            <img class="small-image rounded-circle d-none d-sm-inline mr-1"
+                                 src="{{userImagesUrl}}{{cupCupMatch.away_user.image || userImageDefault}}"
+                                 alt="{{cupCupMatch.away_user.name}}">
+                            <strong class="d-none d-sm-inline">{{cupCupMatch.away_user.name}}</strong>
+                            <small class="d-sm-none">{{cupCupMatch.away_user.name}}</small>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
