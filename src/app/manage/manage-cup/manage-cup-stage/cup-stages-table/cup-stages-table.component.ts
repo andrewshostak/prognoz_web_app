@@ -3,7 +3,7 @@ import { ActivatedRoute, Params }       from '@angular/router';
 
 import { ConfirmModalService }          from '../../../../core/confirm-modal.service';
 import { CupStage }                     from '../../../../shared/models/cup-stage.model';
-import { CupStageService }              from '../shared/cup-stage.service';
+import { CupStageService }              from '../../../../core/services/cup/cup-stage.service';
 import { NotificationsService }         from 'angular2-notifications';
 import { Subscription }                 from 'rxjs/Subscription';
 

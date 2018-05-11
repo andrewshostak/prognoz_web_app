@@ -15,7 +15,7 @@ export class CupNavigationComponent implements OnInit {
         this.navigationItems = [
             {link: ['/cup/rating'], title: 'Рейтинг'},
             {link: ['/cup/applications'], title: 'Заявки / Учасники'},
-            {link: ['/cup/cup-matches', {active: true}], title: 'Матчі'}
+            {link: ['/cup/cup-matches', {active: 1}], title: 'Матчі'}
         ];
     }
 

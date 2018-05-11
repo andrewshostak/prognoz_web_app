@@ -10,7 +10,7 @@ import { ConfirmModalService }                                  from '../../../.
 import { CupMatch }                                             from '../../../../../shared/models/cup-match.model';
 import { CupMatchService }                                      from '../../../../../core/services/cup/cup-match.service';
 import { CupStage }                                             from '../../../../../shared/models/cup-stage.model';
-import { CupStageService }                                      from '../cup-stage.service';
+import { CupStageService }                                      from '../../../../../core/services/cup/cup-stage.service';
 import { CupStageType }                                         from '../../../../../shared/models/cup-stage-type.model';
 import { CupStageTypeService }                                  from '../../../../../core/services/cup/cup-stage-type.service';
 import { NotificationsService }                                 from 'angular2-notifications';

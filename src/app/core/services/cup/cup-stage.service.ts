@@ -1,12 +1,12 @@
 import { Injectable }               from '@angular/core';
 import { HttpClient, HttpParams }   from '@angular/common/http';
 
-import { CupStage }                 from '../../../../shared/models/cup-stage.model';
-import { environment }              from '../../../../../environments/environment';
-import { ErrorHandlerService }      from '../../../../core/error-handler.service';
-import { HeadersWithToken }         from '../../../../core/headers-with-token.service';
-import { Observable }               from 'rxjs/Observable';
+import { CupStage }                 from '../../../shared/models/cup-stage.model';
+import { environment }              from 'environments/environment';
+import { ErrorHandlerService }      from '../../error-handler.service';
+import { HeadersWithToken }         from '../../headers-with-token.service';
 import { isNullOrUndefined }        from 'util';
+import { Observable }               from 'rxjs/Observable';
 
 @Injectable()
 export class CupStageService {
@@ -24,12 +24,14 @@ export class CupStageService {
      * @param {number} page
      * @param {boolean} active
      * @param {boolean} ended
+     * @param {number} competitionId
      * @returns {Observable<any>}
      */
     getCupStages(
         page?: number,
         active?: boolean,
-        ended?: boolean
+        ended?: boolean,
+        competitionId?: number
     ): Observable<any> {
         let params = new HttpParams();
         if (page) {
@@ -40,6 +42,9 @@ export class CupStageService {
         }
         if (!isNullOrUndefined(ended)) {
             params = params.append('ended', ended ? '1' : '0');
+        }
+        if (!isNullOrUndefined(competitionId)) {
+            params = params.append('competition_id', competitionId.toString());
         }
         return this.httpClient
             .get(this.cupStageUrl, {params: params})

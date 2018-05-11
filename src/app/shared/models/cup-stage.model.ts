@@ -23,5 +23,8 @@ export class CupStage {
         away_user: {
             name: string;
         };
+        home: number;
+        away: number;
+        score: string;
     }[];
 }

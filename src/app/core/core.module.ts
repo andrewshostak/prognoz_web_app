@@ -10,6 +10,7 @@ import { CompetitionService }     from './competition.service';
 import { ConfirmModalService }    from './confirm-modal.service';
 import { CupCupMatchService }     from './services/cup/cup-cup-match.service';
 import { CupMatchService }        from './services/cup/cup-match.service';
+import { CupStageService }        from './services/cup/cup-stage.service';
 import { CupStageTypeService }    from './services/cup/cup-stage-type.service';
 import { CurrentStateService }    from './current-state.service';
 import { ErrorHandlerService }    from './error-handler.service';
@@ -54,6 +55,7 @@ import { ValidatorService }       from './services/validator.service';
         ConfirmModalService,
         CupCupMatchService,
         CupMatchService,
+        CupStageService,
         CupStageTypeService,
         CurrentStateService,
         ErrorHandlerService,
