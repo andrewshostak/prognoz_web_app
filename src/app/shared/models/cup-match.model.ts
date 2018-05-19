@@ -11,6 +11,7 @@ export class CupMatch {
     dc_sum: number;
     active: boolean;
     ended: boolean;
+    is_predictable: boolean;
     club_first: {
         title: string;
         image: string;
@@ -23,4 +24,8 @@ export class CupMatch {
         id: number,
         ended: boolean
     }[];
+    home_prediction: string;
+    away_prediction: string;
+    home_prediction_created_at: string;
+    away_prediction_created_at: string;
 }

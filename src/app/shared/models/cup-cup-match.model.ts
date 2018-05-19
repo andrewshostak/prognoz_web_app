@@ -6,8 +6,8 @@ export class CupCupMatch {
     home: number;
     away: number;
     group_number: number;
-    home_raitng_points: number;
-    away_raitng_points: number;
+    home_rating_points: number;
+    away_rating_points: number;
     home_points: number;
     away_points: number;
     home_dc_sum: number;
@@ -16,6 +16,21 @@ export class CupCupMatch {
     ended: boolean;
     cup_stage: {
         id: number;
-        title: string
+        title: string;
+        competition: {
+            title: string;
+        }
+        cup_stage_type: {
+            title: string
+        }
     };
+    home_user: {
+        name: string;
+        image: string;
+    };
+    away_user: {
+        name: string;
+        image: string;
+    };
+    score: string;
 }

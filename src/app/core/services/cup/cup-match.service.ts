@@ -26,6 +26,7 @@ export class CupMatchService {
      * @param {boolean} ended
      * @param {string} order
      * @param {string} sequence
+     * @param {string} cupStageId
      * @returns {Observable<CupMatch[]>}
      */
     getCupMatches(
@@ -33,7 +34,8 @@ export class CupMatchService {
         active?: boolean,
         ended?: boolean,
         order?: string,
-        sequence?: string
+        sequence?: string,
+        cupStageId?: number
     ): Observable<any> {
         let params: HttpParams = new HttpParams();
         if (page) {
@@ -51,8 +53,11 @@ export class CupMatchService {
         if (!isNullOrUndefined(sequence)) {
             params = params.append('sequence', sequence);
         }
+        if (!isNullOrUndefined(cupStageId)) {
+            params = params.append('cup_stage_id', cupStageId.toString());
+        }
         return this.httpClient
-            .get(this.cupMatchUrl, {params: params})
+            .get(this.cupMatchUrl, {params})
             .catch(this.errorHandlerService.handle);
     }
 

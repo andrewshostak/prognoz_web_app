@@ -39,4 +39,16 @@ export class CupCupMatchService {
             .catch(this.errorHandlerService.handle);
     }
 
+    /**
+     * Get cup cup match
+     * @param {number} cupCupMatchId
+     * @returns {Observable<CupCupMatch>}
+     */
+    getCupCupMatch(cupCupMatchId: number): Observable<CupCupMatch> {
+        return this.httpClient
+            .get(`${this.cupCupMatchUrl}/${cupCupMatchId}`)
+            .map(response => response['cup_cup_match'])
+            .catch(this.errorHandlerService.handle);
+    }
+
 }

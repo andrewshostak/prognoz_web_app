@@ -57,7 +57,9 @@
         </div>
         <div class="card black-shadow">
             <ul class="list-group list-group-flush">
-                <li *ngFor="let cupCupMatch of cupStage.cup_cup_matches" class="list-group-item">
+                <li *ngFor="let cupCupMatch of cupStage.cup_cup_matches"
+                    class="list-group-item cursor-pointer"
+                    [routerLink]="'/cup/cup-matches/' + cupCupMatch.id">
                     <div class="row">
                         <div class="col-4 col-sm-5 text-right">
                             <strong class="d-none d-sm-inline">{{cupCupMatch.home_user.name}}</strong>

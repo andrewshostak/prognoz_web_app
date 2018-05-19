@@ -19,9 +19,11 @@ export class CupStage {
         id: number;
         home_user: {
             name: string;
+            image: string;
         };
         away_user: {
             name: string;
+            image: string;
         };
         home: number;
         away: number;

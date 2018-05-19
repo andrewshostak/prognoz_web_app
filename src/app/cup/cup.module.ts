@@ -7,6 +7,7 @@ import { CupAddApplicationModalComponent }  from './shared/cup-add-application-m
 import { CupApplicationsComponent }         from './cup-applications/cup-applications.component';
 import { CupApplicationService }            from './cup-applications/cup-application.service';
 import { CupComponent }                     from './cup.component';
+import { CupCupMatchComponent }             from './cup-cup-match/cup-cup-match.component';
 import { CupCupMatchesComponent }           from './cup-cup-matches/cup-cup-matches.component';
 import { CupNavigationComponent }           from './shared/cup-navigation/cup-navigation.component';
 import { CupRatingComponent }               from './cup-rating/cup-rating.component';
@@ -31,6 +32,7 @@ import { SharedModule }                     from '../shared/shared.module';
         CupAddApplicationModalComponent,
         CupApplicationsComponent,
         CupCupMatchesComponent,
+        CupCupMatchComponent,
         CupNavigationComponent,
         CupRatingComponent,
         CupRatingSeasonDetailsComponent,

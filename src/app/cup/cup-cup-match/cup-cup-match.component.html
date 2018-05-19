@@ -1,0 +1,113 @@
+<h2 class="h2">Матч:</h2>
+<div *ngIf="cupCupMatch">
+    <div class="card black-shadow">
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item">
+                <div class="row">
+                    <div class="col-4 col-sm-5 text-right">
+                        <strong class="d-none d-sm-inline">{{cupCupMatch.home_user.name}}</strong>
+                        <small class="d-sm-none">{{cupCupMatch.home_user.name}}</small>
+                        <img class="small-image rounded-circle d-none d-sm-inline ml-1"
+                             src="{{userImagesUrl}}{{cupCupMatch.home_user.image || userImageDefault}}"
+                             alt="{{cupCupMatch.home_user.name}}">
+                    </div>
+                    <div class="col-4 col-sm-2 text-center">
+                        <strong>{{cupCupMatch.score}}</strong>
+                    </div>
+                    <div class="col-4 col-sm-5 text-left">
+                        <img class="small-image rounded-circle d-none d-sm-inline mr-1"
+                             src="{{userImagesUrl}}{{cupCupMatch.away_user.image || userImageDefault}}"
+                             alt="{{cupCupMatch.away_user.name}}">
+                        <strong class="d-none d-sm-inline">{{cupCupMatch.away_user.name}}</strong>
+                        <small class="d-sm-none">{{cupCupMatch.away_user.name}}</small>
+                    </div>
+                </div>
+            </li>
+        </ul>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered table-sm">
+                    <tr>
+                        <td class="text-center">{{cupCupMatch.home}}</td>
+                        <th class="text-center">Голи</th>
+                        <td class="text-center">{{cupCupMatch.away}}</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">{{cupCupMatch.home_points}}</td>
+                        <th class="text-center">Очки <small class="text-muted">(за принципом чемпіонату)</small></th>
+                        <td class="text-center">{{cupCupMatch.away_points}}</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">{{cupCupMatch.home_dc_sum}}</td>
+                        <th class="text-center">Коефіцієнт складності</th>
+                        <td class="text-center">{{cupCupMatch.away_dc_sum}}</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">{{cupCupMatch.home_rating_points}}</td>
+                        <th class="text-center">Рейтингові очки</th>
+                        <td class="text-center">{{cupCupMatch.away_rating_points}}</td>
+                    </tr>
+                </table>
+            </div>
+            <div *ngIf="cupMatches" class="table-responsive">
+                <table class="table table-bordered table-striped table-sm">
+                    <tr *ngFor="let cupMatch of cupMatches">
+                        <td class="text-center text-nowrap"
+                            data-toggle="tooltip"
+                            data-placement="right"
+                            [title]="cupMatch.home_prediction_created_at"
+                            [ngClass]="{'bg-success text-white': isCupMatchGuessed(cupMatch, cupMatch.home_prediction)}">
+                            {{cupMatch.home_prediction}}
+                        </td>
+                        <td class="text-right text-nowrap">
+                            <span *ngIf="isCupMatchGuessed(cupMatch, cupMatch.home_prediction)"
+                                  class="pull-left text-success d-none d-lg-inline">
+                                <i class="fa fa-lg fa-check-circle-o" aria-hidden="true"></i>
+                            </span>
+                            <span class="d-none d-sm-inline">{{cupMatch.club_first.title}}</span>
+                            <img class="small-image" src="{{clubsImagesUrl}}{{cupMatch.club_first.image}}" alt="{{cupMatch.club_first.title}}"
+                                 title="{{cupMatch.club_first.title}}">
+                        </td>
+                        <th class="text-center text-nowrap">
+                           {{showScore(cupMatch)}}
+                        </th>
+                        <td class="text-left text-nowrap">
+                            <img class="small-image" src="{{clubsImagesUrl}}{{cupMatch.club_second.image}}" alt="{{cupMatch.club_second.title}}"
+                                 title="{{cupMatch.club_second.title}}">
+                            <span class="d-none d-sm-inline">{{cupMatch.club_second.title}}</span>
+                            <span *ngIf="isCupMatchGuessed(cupMatch, cupMatch.away_prediction)"
+                                  class="pull-right text-success d-none d-lg-inline">
+                                <i class="fa fa-lg fa-check-circle-o" aria-hidden="true"></i>
+                            </span>
+                        </td>
+                        <td class="text-center text-nowrap"
+                            data-toggle="tooltip"
+                            data-placement="left"
+                            [title]="cupMatch.away_prediction_created_at"
+                            [ngClass]="{'bg-success text-white': isCupMatchGuessed(cupMatch, cupMatch.away_prediction)}">
+                            {{cupMatch.away_prediction}}
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div class="table-responsive">
+                <table class="table table-bordered table-sm">
+                    <tr>
+                        <th>Змагання</th>
+                        <td>{{cupCupMatch.cup_stage.competition.title}}</td>
+                    </tr>
+                    <tr>
+                        <th>Назва стадії</th>
+                        <td>{{cupCupMatch.cup_stage.title}}</td>
+                    </tr>
+                    <tr>
+                        <th>Тип стадії</th>
+                        <td>{{cupCupMatch.cup_stage.cup_stage_type.title}}</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<app-error *ngIf="errorCupCupMatch" [message]="errorCupCupMatch"></app-error>
+<app-error *ngIf="errorCupMatches" [message]="errorCupMatches"></app-error>
