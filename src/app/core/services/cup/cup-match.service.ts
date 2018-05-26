@@ -62,6 +62,17 @@ export class CupMatchService {
     }
 
     /**
+     * Get predictable cup matches
+     * @returns {Observable<CupMatch[]>}
+     */
+    getCupMatchesPredictable(): Observable<CupMatch[]> {
+        return this.headersWithToken
+            .get(`${this.cupMatchUrl}-predictable`)
+            .map(response => response['cup_matches'])
+            .catch(this.errorHandlerService.handle);
+    }
+
+    /**
      * Get cup match
      * @param {number} cupMatchId
      * @returns {Observable<CupMatch>}

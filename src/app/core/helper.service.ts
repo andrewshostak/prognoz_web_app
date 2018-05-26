@@ -17,7 +17,7 @@ export class HelperService {
      * @param away
      * @returns {boolean}
      */
-    isScore(home: number, away: number) {
+    isScore(home: number, away: number): boolean {
         if ((home != null) && (away != null)) {
             return true;
         }

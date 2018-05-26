@@ -37,4 +37,16 @@ export class CupPredictionService {
             .map(response => response['cup_predictions'])
             .catch(this.errorHandlerService.handle);
     }
+
+    /**
+     * Update or create cup prediction
+     * @param {CupPrediction} cupPrediction
+     * @returns {Observable<CupPrediction>}
+     */
+    updateCupPrediction(cupPrediction: CupPrediction): Observable<CupPrediction> {
+        return this.headersWithToken
+            .put(this.cupPredictionUrl, cupPrediction)
+            .map(response => response['cup_prediction'])
+            .catch(this.errorHandlerService.handle);
+    }
 }

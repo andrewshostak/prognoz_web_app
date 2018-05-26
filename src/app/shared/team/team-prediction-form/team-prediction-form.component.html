@@ -1,8 +1,8 @@
 <form novalidate [formGroup]="teamPredictionUpdateForm" (ngSubmit)="onSubmit()">
     <div class="row">
         <!-- form block -->
-        <div class="col-12 col-md-10">
-            <div class="row align-items-center mb-2 p-md-1 rounded bg-white black-shadow black-border"
+        <div class="col-12 col-md-10 mb-2">
+            <div class="row align-items-center p-md-1 rounded bg-white black-shadow black-border h-100"
                  [ngClass]="{'green-inset-and-black-shadow': helperService.isScore(teamPrediction.home, teamPrediction.away),
                             'red-inset-and-black-shadow': !helperService.isScore(teamPrediction.home, teamPrediction.away)}">
                 <!-- home club logo -->

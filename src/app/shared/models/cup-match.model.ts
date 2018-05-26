@@ -21,9 +21,13 @@ export class CupMatch {
         image: string;
     };
     cup_stages: {
-        id: number,
-        ended: boolean
+        id: number;
+        ended: boolean;
+        cup_cup_matches: {
+            id: number;
+        }[];
     }[];
+    cup_predictions: any[];
     home_prediction: string;
     away_prediction: string;
     home_prediction_created_at: string;
