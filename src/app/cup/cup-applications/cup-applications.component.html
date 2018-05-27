@@ -47,7 +47,7 @@
                                 <img *ngIf="cupApplication.receiver" class="rounded-circle small-image mr-1 mr-sm-2"
                                      src="{{userImagesUrl}}{{cupApplication.receiver.image || userImageDefault}}"
                                      alt="{{cupApplication.receiver.name}}">
-                                {{cupApplication.receiver?.name}}
+                                {{cupApplication.receiver?.name || 'Будь-хто'}}
                             </td>
                             <td *ngIf="isFriendlyCompetition(competition)" class="text-nowrap">
                                 {{getPlaceTitle(cupApplication.place)}}

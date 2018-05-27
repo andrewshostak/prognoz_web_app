@@ -13,7 +13,7 @@ export class CupRulesComponent implements OnInit {
     ) { }
 
     ngOnInit() {
-        this.titleService.setTitle('Правила - Кубок');
+        this.titleService.setTitle('Правила конкурсу - Кубок');
     }
 
 }

@@ -33,7 +33,7 @@
                                 [class.is-invalid]="cupAddApplicationForm.get('receiver_id').invalid &&
                                                     (cupAddApplicationForm.get('receiver_id').touched ||
                                                      !cupAddApplicationForm.get('receiver_id').pristine)">
-                            <option [value]="null">Будь-хто</option>
+                            <option [ngValue]="null">Будь-хто</option>
                             <option *ngFor="let user of users" [value]="user.id">{{user.name}}</option>
                         </select>
                     </div>

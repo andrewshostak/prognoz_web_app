@@ -53,7 +53,7 @@
     </div>
     <div *ngFor="let cupStage of cupStagesWithCupCupMatches" class="mb-2">
         <div class="d-inline-flex bg-white rounded-top border border-bottom-0 font-weight-bold black-shadow p-2">
-            {{cupStage.title}}
+            {{cupStage.title}} - {{cupStage.competition.title}}
         </div>
         <div class="card black-shadow">
             <ul class="list-group list-group-flush">

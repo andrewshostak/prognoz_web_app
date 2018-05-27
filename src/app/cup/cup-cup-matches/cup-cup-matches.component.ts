@@ -76,7 +76,7 @@ export class CupCupMatchesComponent implements OnInit, OnDestroy {
                 ).subscribe(
                 response => {
                     this.errorCupCupMatches = null;
-                    if (response) {
+                    if (response && response.cup_cup_matches) {
                         this.prepareViewData(response.cup_cup_matches);
                     } else {
                         this.cupStagesWithCupCupMatches = [];
