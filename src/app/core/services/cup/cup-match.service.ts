@@ -34,7 +34,7 @@ export class CupMatchService {
         active?: boolean,
         ended?: boolean,
         order?: string,
-        sequence?: string,
+        sequence?: 'asc' | 'desc',
         cupStageId?: number
     ): Observable<any> {
         let params: HttpParams = new HttpParams();

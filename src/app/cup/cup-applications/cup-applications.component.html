@@ -80,7 +80,7 @@
                             </td>
                             <td class="text-center">
                                 <div *ngIf="showEditAndDeleteButtons(competition, cupApplication); else noActionsblock;" class="text-nowrap">
-                                    <button type="button" class="btn btn-sm btn-outline-primary" (click)="openAddApplicationModal(competition, cupApplication)">
+                                    <button *ngIf="isFriendlyCompetition(competition)" type="button" class="btn btn-sm btn-outline-primary" (click)="openAddApplicationModal(competition, cupApplication)">
                                         <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
                                     </button>
                                     <button type="button" class="btn btn-sm btn-outline-danger" (click)="deleteCupApplication(competition, cupApplication)">

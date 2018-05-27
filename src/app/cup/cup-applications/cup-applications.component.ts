@@ -53,7 +53,7 @@ export class CupApplicationsComponent implements OnInit, OnDestroy {
     userSubscription: Subscription;
 
     attachApplicationsToCompetitions(): void {
-        if (this.competitions.length) {
+        if (this.competitions.length && !this.noCupApplications()) {
             const grouped = this.helperService.groupBy(this.cupApplications, cupApplication => cupApplication.competition_id);
             this.competitions.map((competition) => {
                 return competition.cup_applications = grouped.get(competition.id);
@@ -160,24 +160,36 @@ export class CupApplicationsComponent implements OnInit, OnDestroy {
     }
 
     hasConfirmedRequisitionAsReceiver(receiver: User): boolean {
-        return !!this.cupApplications
-            .find((cupApplication) => cupApplication.receiver_id === receiver.id && !!cupApplication.confirmed_at);
+        if (this.noCupApplications()) {
+            return false;
+        }
+        return this.cupApplications
+            .some((cupApplication) => cupApplication.receiver_id === receiver.id && !!cupApplication.confirmed_at);
     }
 
     hasConfirmedRequisitionAsApplicant(applicant: User): boolean {
-        return !!this.cupApplications
-            .find((cupApplication) => cupApplication.applicant_id === applicant.id && !!cupApplication.confirmed_at);
+        if (this.noCupApplications()) {
+            return false;
+        }
+        return this.cupApplications
+            .some((cupApplication) => cupApplication.applicant_id === applicant.id && !!cupApplication.confirmed_at);
     }
 
     hasRefusedApplication(competition: Competition, applicant: User): boolean {
-        return !this.isFriendlyCompetition(competition) && !!this.cupApplications.find((cupApplication) => {
+        if (this.noCupApplications()) {
+            return false;
+        }
+        return !this.isFriendlyCompetition(competition) && this.cupApplications.some((cupApplication) => {
                 return cupApplication.applicant_id === applicant.id && !!cupApplication.refused_at;
             });
     }
 
     hasUnConfirmedRequisition(applicant: User): boolean {
-        return !!this.cupApplications
-            .find((cupApplication) => {
+        if (this.noCupApplications()) {
+            return false;
+        }
+        return this.cupApplications
+            .some((cupApplication) => {
                 return cupApplication.applicant_id === applicant.id &&
                     !cupApplication.confirmed_at &&
                     !cupApplication.refused_at;
@@ -307,6 +319,11 @@ export class CupApplicationsComponent implements OnInit, OnDestroy {
         }
 
         return false;
+    }
+
+
+    private noCupApplications(): boolean {
+        return !this.cupApplications || !this.cupApplications.length;
     }
 
 }

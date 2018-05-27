@@ -12,7 +12,8 @@ export class ManageCupComponent implements OnInit {
     ngOnInit() {
         this.navigationItems = [
             {title: 'Стадії', routerLink: 'stages'},
-            {title: 'Матчі', routerLink: 'matches'}
+            {title: 'Матчі', routerLink: 'matches'},
+            {title: 'Кубок-матчі', routerLink: 'cup-matches'}
         ];
     }
 }

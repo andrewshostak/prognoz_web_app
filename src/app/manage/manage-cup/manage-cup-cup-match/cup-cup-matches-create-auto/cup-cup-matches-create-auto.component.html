@@ -1,0 +1,81 @@
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <h2 class="h2">Створити кубок-матчі (автоматично):</h2>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12 col-sm-10 offset-sm-1 col-md-8 offset-md-2 col-lg-6 offset-lg-3">
+            <div class="card black-shadow">
+                <div class="card-body">
+                    <form novalidate [formGroup]="cupCupMatchAutoForm" (ngSubmit)="onSubmit()">
+                        <div class="form-group"
+                             [class.form-group-invalid-custom]="cupCupMatchAutoForm.get('type').invalid && cupCupMatchAutoForm.get('type').touched">
+                            <label for="type" class="font-weight-bold">Тип</label>
+                            <input type="text"
+                                   id="type"
+                                   class="form-control"
+                                   formControlName="type">
+                        </div>
+                        <div *ngIf="cupStages"
+                             class="form-group"
+                             [class.form-group-invalid-custom]="cupCupMatchAutoForm.get('to').invalid && cupCupMatchAutoForm.get('to').touched">
+                            <label for="to" class="font-weight-bold">Для якої стадії формувати кубок матчі</label>
+                            <select id="to"
+                                    class="form-control"
+                                    formControlName="to">
+                                <option *ngFor="let cupStage of cupStages" [value]="cupStage.id">{{cupStage.title}}</option>
+                            </select>
+                            <div *ngIf="cupCupMatchAutoForm.get('to').hasError('required') && cupCupMatchAutoForm.get('to').touched">
+                                <small>Кубкова стадія обов'язкова</small>
+                            </div>
+                        </div>
+                        <div class="form-group"
+                             [class.form-group-invalid-custom]="cupCupMatchAutoForm.get('number_of_matches').invalid && cupCupMatchAutoForm.get('number_of_matches').touched">
+                            <label for="number_of_matches" class="font-weight-bold">Клькість</label>
+                            <input type="number"
+                                   id="number_of_matches"
+                                   class="form-control"
+                                   formContolName="number_of_matches">
+                            <div *ngIf="cupCupMatchAutoForm.get('number_of_matches').hasError('min') && cupCupMatchAutoForm.get('number_of_matches').touched">
+                                <small>Мінімальна кількість матчів - 1</small>
+                            </div>
+                        </div>
+                        <div class="d-flex justify-content-between">
+                            <button type="button" class="btn btn-outline-danger" (click)="resetCupCupMatchAutoForm()">Відмінити зміни</button>
+                            <button type="submit" class="btn btn-primary">Зберегти</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div *ngIf="cupCupMatches" class="col-12">
+            <div class="table-responsive">
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th scope="col">№</th>
+                        <th scope="col">Id</th>
+                        <th scope="col">Кубкова стадія</th>
+                        <th scope="col">Гравець 1</th>
+                        <th scope="col">Гравець 2</th>
+                        <th scope="col">Номер групи</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr *ngFor="let cupCupMatch of cupCupMatches; let i = index;">
+                        <th scope="row">{{i + 1}}.</th>
+                        <td>{{cupCupMatch.id}}</td>
+                        <td>{{cupCupMatch.cup_stage.title}}</td>
+                        <td>{{cupCupMatch.home_user.name}}</td>
+                        <td>{{cupCupMatch.away_user.name}}</td>
+                        <td>{{cupCupMatch.group_number}}</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

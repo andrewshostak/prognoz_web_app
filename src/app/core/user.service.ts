@@ -26,7 +26,7 @@ export class UserService {
      * @param sequence
      * @returns {Observable<any>}
      */
-    getUsers(limit?: number, order?: string, sequence?: string): Observable<any> {
+    getUsers(limit?: number, order?: string, sequence?: 'asc' | 'desc'): Observable<any> {
         let params: HttpParams = new HttpParams();
         if (limit) params = params.append('limit', limit.toString());
         if (order) params = params.append('order', order);

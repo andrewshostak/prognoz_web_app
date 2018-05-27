@@ -1,0 +1,58 @@
+<form novalidate [formGroup]="cupCupMatchForm" (ngSubmit)="onSubmit()">
+    <div *ngIf="cupStages"
+         class="form-group"
+         [class.form-group-invalid-custom]="cupCupMatchForm.get('cup_stage_id').invalid && cupCupMatchForm.get('cup_stage_id').touched">
+        <label for="cup_stage_id" class="font-weight-bold">Стадія</label>
+        <select id="cup_stage_id"
+                class="form-control"
+                formControlName="cup_stage_id">
+            <option *ngFor="let cupStage of cupStages" [value]="cupStage.id">{{cupStage.title}}</option>
+        </select>
+        <div *ngIf="cupCupMatchForm.get('cup_stage_id').hasError('required') && cupCupMatchForm.get('cup_stage_id').touched">
+            <small>Кубкова стадія обов'язкова</small>
+        </div>
+    </div>
+    <div *ngIf="users"
+         class="form-group"
+         [class.form-group-invalid-custom]="cupCupMatchForm.get('home_user_id').invalid && cupCupMatchForm.get('home_user_id').touched">
+        <label for="home_user_id" class="font-weight-bold">Гравець 1</label>
+        <select id="home_user_id"
+                class="form-control"
+                formControlName="home_user_id">
+            <option *ngFor="let user of users" [value]="user.id">{{user.name}}</option>
+        </select>
+        <div *ngIf="cupCupMatchForm.get('home_user_id').hasError('required') && cupCupMatchForm.get('home_user_id').touched">
+            <small>Гравець 1 обов'язковий</small>
+        </div>
+    </div>
+    <div *ngIf="users"
+         class="form-group"
+         [class.form-group-invalid-custom]="cupCupMatchForm.get('away_user_id').invalid && cupCupMatchForm.get('away_user_id').touched">
+        <label for="away_user_id" class="font-weight-bold">Гравець 2</label>
+        <select id="away_user_id"
+                class="form-control"
+                formControlName="away_user_id">
+            <option *ngFor="let user of users" [value]="user.id">{{user.name}}</option>
+        </select>
+        <div *ngIf="cupCupMatchForm.get('away_user_id').hasError('required') && cupCupMatchForm.get('away_user_id').touched">
+            <small>Гравець 2 обов'язковий</small>
+        </div>
+    </div>
+    <div class="form-group"
+         [class.form-group-invalid-custom]="cupCupMatchForm.get('group_number').invalid && cupCupMatchForm.get('group_number').touched">
+        <label for="group_number" class="font-weight-bold">Номер групи</label>
+        <input type="number"
+               id="group_number"
+               class="form-control"
+               formContolName="group_number">
+        <div *ngIf="cupCupMatchForm.get('group_number').hasError('min') && cupCupMatchForm.get('group_number').touched">
+            <small>Мінімальний номер групи - 1</small>
+        </div>
+    </div>
+    <div class="d-flex justify-content-between">
+        <button type="button" class="btn btn-outline-danger" (click)="resetCupCupMatchForm()">Відмінити зміни</button>
+        <button type="submit" class="btn btn-primary">{{cupCupMatch ? 'Змінити' : 'Зберегти'}}</button>
+    </div>
+</form>
+<app-error *ngIf="errorCupStages" [message]="errorCupStages"></app-error>
+<app-error *ngIf="errorUsers" [message]="errorUsers"></app-error>

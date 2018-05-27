@@ -1,0 +1,65 @@
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <h2 class="h2">Таблиця кубок-матчів:</h2>
+        </div>
+    </div>
+    <div *ngIf="cupCupMatches" class="row">
+        <div class="col-12">
+            <div class="table-responsive">
+                <table class="table table-bordered table-striped table-hover">
+                    <thead>
+                    <tr class="text-center">
+                        <th scope="col">Id</th>
+                        <th scope="col">Кубкова стадія</th>
+                        <th scope="col">Гравці</th>
+                        <th scope="col">Номер групи</th>
+                        <th scope="col">Результат</th>
+                        <th scope="col">Рейтингові очки</th>
+                        <th scope="col">Очки</th>
+                        <th scope="col">КС</th>
+                        <th scope="col">Активний</th>
+                        <th scope="col">Завершений</th>
+                        <th scope="col">Дія</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let cupCupMatch of cupCupMatches" class="text-center">
+                            <th scope="row">{{cupCupMatch.id}}</th>
+                            <td class="text-nowrap">{{cupCupMatch.cup_stage.title}}</td>
+                            <td class="text-nowrap">{{cupCupMatch.home_user.name + ' - ' + cupCupMatch.away_user.name}}</td>
+                            <td>{{cupCupMatch.group_number}}</td>
+                            <td class="text-nowrap">{{cupCupMatch.home + ':' + cupCupMatch.away}}</td>
+                            <td class="text-nowrap">{{cupCupMatch.home_rating_points + ' / ' + cupCupMatch.away_rating_points}}</td>
+                            <td class="text-nowrap">{{cupCupMatch.home_points + ' / ' + cupCupMatch.away_points}}</td>
+                            <td class="text-nowrap">{{cupCupMatch.home_dc_sum + ' / ' + cupCupMatch.away_dc_sum}}</td>
+                            <td>
+                                <i *ngIf="cupCupMatch.active" class="text-success fa fa-check-circle fa-lg" aria-hidden="true"></i>
+                                <i *ngIf="!cupCupMatch.active" class="text-danger fa fa-times fa-lg" aria-hidden="true"></i>
+                            </td>
+                            <td>
+                                <i *ngIf="cupCupMatch.ended" class="text-success fa fa-check-circle fa-lg" aria-hidden="true"></i>
+                                <i *ngIf="!cupCupMatch.ended" class="text-danger fa fa-times fa-lg" aria-hidden="true"></i>
+                            </td>
+                            <td class="text-nowrap">
+                                <button [disabled]="cupCupMatch.ended" routerLink="/manage/cup/cup-matches/{{cupCupMatch.id}}/edit" type="button" class="btn btn-sm btn-outline-warning">
+                                    <i class="fa fa-pencil-square-o fa-lg" aria-hidden="true"></i>
+                                </button>
+                                <button [disabled]="cupCupMatch.ended" type="button" class="btn btn-sm btn-outline-danger" (click)="deleteCupCupMatch(cupCupMatch)">
+                                    <i class="fa fa-trash-o fa-lg" aria-hidden="true"></i>
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <app-error *ngIf="errorCupCupMatches" [message]="errorCupCupMatches"></app-error>
+    <app-pagination *ngIf="cupCupMatches"
+                    [totalItems]="total"
+                    [currentPage]="currentPage"
+                    [pageSize]="perPage"
+                    [path]="path">
+    </app-pagination>
+</div>
