@@ -21,6 +21,7 @@ import { CupRatingTableComponent }          from './shared/cup-rating-table/cup-
 import { CupRatingUserComponent }           from './cup-rating-user/cup-rating-user.component';
 import { CupRoutingModule }                 from './cup-routing.module';
 import { SharedModule }                     from '../shared/shared.module';
+import { CupRulesComponent }                from './cup-rules/cup-rules.component';
 
 @NgModule({
     imports: [
@@ -45,6 +46,7 @@ import { SharedModule }                     from '../shared/shared.module';
         CupRatingSeasonsSummaryComponent,
         CupRatingTableComponent,
         CupRatingUserComponent,
+        CupRulesComponent,
     ],
     providers: [
         CupApplicationService,

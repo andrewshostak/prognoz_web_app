@@ -9,6 +9,7 @@ import { CupPredictionsComponent }  from './cup-predictions/cup-predictions.comp
 import { CupRatingComponent }       from './cup-rating/cup-rating.component';
 import { CupRatingGroupComponent }  from './cup-rating-group/cup-rating-group.component';
 import { CupRatingUserComponent }   from './cup-rating-user/cup-rating-user.component';
+import { CupRulesComponent }        from './cup-rules/cup-rules.component';
 
 const routes: Routes = [
     {
@@ -42,6 +43,15 @@ const routes: Routes = [
             {
                 path: ':competitionId/rating-group/:groupNumber',
                 component: CupRatingGroupComponent
+            },
+            {
+                path: 'rules',
+                component: CupRulesComponent
+            },
+            {
+                path: '',
+                pathMatch: 'full',
+                redirectTo: 'cup-matches;active=1'
             }
         ]
     }

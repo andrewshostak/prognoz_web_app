@@ -6,6 +6,7 @@ import { CupRatingService }         from '../cup-rating/cup-rating.service';
 import { environment}               from '../../../environments/environment';
 import { HelperService }            from '../../core/helper.service';
 import { Subscription }             from 'rxjs/Subscription';
+import { TitleService }             from '../../core/title.service';
 
 @Component({
   selector: 'app-cup-rating-group',
@@ -17,7 +18,8 @@ export class CupRatingGroupComponent implements OnInit {
     constructor(
         private activatedRoute: ActivatedRoute,
         private cupRatingService: CupRatingService,
-        private helperService: HelperService
+        private helperService: HelperService,
+        private titleService: TitleService
     ) { }
 
     activatedRouteSubscription: Subscription;
@@ -34,6 +36,7 @@ export class CupRatingGroupComponent implements OnInit {
         this.activatedRouteSubscription = this.activatedRoute.params.subscribe((params: Params) => {
             this.competitionId = params['competitionId'];
             this.groupNumber = params['groupNumber'];
+            this.titleService.setTitle(`Рейтинг групи ${this.groupNumber} - Кубок`);
             this.cupRatingService.getCupRatingGroup(
                 this.competitionId,
                 this.groupNumber

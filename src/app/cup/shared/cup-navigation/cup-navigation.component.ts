@@ -13,6 +13,7 @@ export class CupNavigationComponent implements OnInit {
 
     ngOnInit() {
         this.navigationItems = [
+            {link: ['/cup/rules'], title: 'Правила'},
             {link: ['/cup/rating'], title: 'Рейтинг'},
             {link: ['/cup/applications'], title: 'Заявки / Учасники'},
             {link: ['/cup/cup-matches', {active: 1}], title: 'Матчі'},
