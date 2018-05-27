@@ -116,7 +116,7 @@ export class CupCupMatchComponent implements OnDestroy, OnInit {
         ).subscribe(
             response => {
                 this.errorCupMatches = null;
-                if (response) {
+                if (response && response.cup_matches) {
                     this.cupMatches = response.cup_matches;
                     const cupPredictionsHome = this.cupPredictionService
                         .getCupPredictions(this.cupCupMatch.id, this.cupCupMatch.home_user_id);

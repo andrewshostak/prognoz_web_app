@@ -9,6 +9,7 @@ import { CupCupMatchService }               from '../../core/services/cup/cup-cu
 import { CupStage }                         from '../../shared/models/cup-stage.model';
 import { CupStageService }                  from '../../core/services/cup/cup-stage.service';
 import { environment }                      from '../../../environments/environment';
+import { isNullOrUndefined }                from 'util';
 import { HelperService }                    from '../../core/helper.service';
 import { Season }                           from '../../shared/models/season.model';
 import { SeasonService }                    from '../../core/season.service';
@@ -70,13 +71,13 @@ export class CupCupMatchesComponent implements OnInit, OnDestroy {
         });
         this.activatedRouteSubscription = this.activatedRoute.params.subscribe((params: Params) => {
             this.cupCupMatchService.getCupCupMatches(
-                    !!parseInt(params.active, 10),
+                    isNullOrUndefined(params.active) ? null : !!parseInt(params.active, 10),
                     params.cup_stage_id
                 ).subscribe(
                 response => {
                     this.errorCupCupMatches = null;
                     if (response) {
-                        this.prepareViewData(response);
+                        this.prepareViewData(response.cup_cup_matches);
                     } else {
                         this.cupStagesWithCupCupMatches = [];
                     }

@@ -102,7 +102,18 @@
                     </tr>
                     <tr>
                         <th>Тип стадії</th>
-                        <td>{{cupCupMatch.cup_stage.cup_stage_type.title}}</td>
+                        <td>
+                            {{cupCupMatch.cup_stage.cup_stage_type.title}}
+                        </td>
+                    </tr>
+                    <tr *ngIf="cupCupMatch.group_number">
+                        <th>Група</th>
+                        <td>
+                            <button [routerLink]="['/cup', cupCupMatch.cup_stage.competition_id, 'rating-group', cupCupMatch.group_number]"
+                                    class="btn btn-sm btn-primary">
+                                Рейтинг групи {{cupCupMatch.group_number}}
+                            </button>
+                        </td>
                     </tr>
                 </table>
             </div>

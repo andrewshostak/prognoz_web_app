@@ -3,6 +3,7 @@ import { HttpClient }           from '@angular/common/http';
 import { Observable }           from 'rxjs/Observable';
 
 import { CupRating }            from '../../shared/models/cup-rating.model';
+import { CupRatingGroup }       from '../../shared/models/cup-rating-group.model';
 import { ErrorHandlerService }  from '../../core/error-handler.service';
 import { environment }          from '../../../environments/environment';
 
@@ -34,6 +35,18 @@ export class CupRatingService {
     getCupRatingUser(userId: number): Observable<CupRating> {
         return this.httpClient
             .get(`${this.cupRatingUrl}/${userId}`)
+            .catch(this.errorHandlerService.handle);
+    }
+
+    /**
+     * Get group rating
+     * @param {number} competitionId
+     * @param {number} groupNumber
+     * @returns {Observable<CupRatingGroup[]>}
+     */
+    getCupRatingGroup(competitionId: number, groupNumber: number): Observable<CupRatingGroup[]> {
+        return this.httpClient
+            .get(`${environment.apiUrl}cup/${competitionId}/rating-group/${groupNumber}`)
             .catch(this.errorHandlerService.handle);
     }
 }

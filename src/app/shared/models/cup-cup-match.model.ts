@@ -16,6 +16,7 @@ export class CupCupMatch {
     ended: boolean;
     cup_stage: {
         id: number;
+        competition_id: number;
         title: string;
         competition: {
             title: string;

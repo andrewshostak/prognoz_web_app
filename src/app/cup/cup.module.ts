@@ -13,6 +13,7 @@ import { CupNavigationComponent }           from './shared/cup-navigation/cup-na
 import { CupPredictionFormComponent }       from './shared/cup-prediction-form/cup-prediction-form.component';
 import { CupPredictionsComponent }          from './cup-predictions/cup-predictions.component';
 import { CupRatingComponent }               from './cup-rating/cup-rating.component';
+import { CupRatingGroupComponent }          from './cup-rating-group/cup-rating-group.component';
 import { CupRatingService }                 from './cup-rating/cup-rating.service';
 import { CupRatingSeasonDetailsComponent }  from './shared/cup-rating-season-details/cup-rating-season-details.component';
 import { CupRatingSeasonsSummaryComponent } from './shared/cup-rating-seasons-summary/cup-rating-seasons-summary.component';
@@ -39,6 +40,7 @@ import { SharedModule }                     from '../shared/shared.module';
         CupPredictionFormComponent,
         CupPredictionsComponent,
         CupRatingComponent,
+        CupRatingGroupComponent,
         CupRatingSeasonDetailsComponent,
         CupRatingSeasonsSummaryComponent,
         CupRatingTableComponent,
