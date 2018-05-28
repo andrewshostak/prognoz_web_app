@@ -118,7 +118,7 @@ export class CupApplicationsComponent implements OnInit, OnDestroy {
         forkJoin([cupApplications, competitions]).subscribe(
             response => {
                 this.cupApplications = response[0];
-                this.competitions = response[1].competitions;
+                this.competitions = response[1] ? response[1].competitions : [];
                 this.attachApplicationsToCompetitions();
             },
             error => {
