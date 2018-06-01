@@ -2,12 +2,14 @@ import { Component, OnDestroy, OnInit }     from '@angular/core';
 import { ActivatedRoute, Params, Router }   from '@angular/router';
 import { FormControl, FormGroup }           from '@angular/forms';
 
+import { AuthService }                      from '../../core/auth.service';
 import { Competition }                      from 'app/shared/models/competition.model';
 import { CompetitionService }               from '../../core/competition.service';
 import { CupCupMatch }                      from '../../shared/models/cup-cup-match.model';
 import { CupCupMatchService }               from '../../core/services/cup/cup-cup-match.service';
 import { CupStage }                         from '../../shared/models/cup-stage.model';
 import { CupStageService }                  from '../../core/services/cup/cup-stage.service';
+import { CurrentStateService }              from '../../core/current-state.service';
 import { environment }                      from '../../../environments/environment';
 import { isNullOrUndefined }                from 'util';
 import { HelperService }                    from '../../core/helper.service';
@@ -15,6 +17,7 @@ import { Season }                           from '../../shared/models/season.mod
 import { SeasonService }                    from '../../core/season.service';
 import { Subscription }                     from 'rxjs/Subscription';
 import { TitleService }                     from '../../core/title.service';
+import { User }                             from '../../shared/models/user.model';
 
 @Component({
   selector: 'app-cup-cup-matches',
@@ -25,15 +28,18 @@ export class CupCupMatchesComponent implements OnInit, OnDestroy {
 
     constructor(
         private activatedRoute: ActivatedRoute,
+        private authService: AuthService,
         private competitionService: CompetitionService,
         private cupCupMatchService: CupCupMatchService,
         private cupStageService: CupStageService,
+        private currentStateService: CurrentStateService,
         private helperService: HelperService,
         private seasonService: SeasonService,
         private titleService: TitleService,
         private router: Router
     ) { }
 
+    authenticatedUser: User = this.currentStateService.user;
     activatedRouteSubscription: Subscription;
     competitions: Competition[];
     cupStagesWithCupCupMatches: CupStage[];
@@ -46,6 +52,15 @@ export class CupCupMatchesComponent implements OnInit, OnDestroy {
     seasons: Season[];
     userImageDefault: string;
     userImagesUrl: string;
+    userSubscription: Subscription;
+
+    currentUserCupCupMatch(cupCupMatch): boolean {
+        if (!this.authenticatedUser) {
+            return false;
+        }
+        return this.authenticatedUser.id === cupCupMatch.home_user_id
+            || this.authenticatedUser.id === cupCupMatch.away_user_id;
+    }
 
     getFilterData(): void {
         if (!this.seasons) {
@@ -54,12 +69,16 @@ export class CupCupMatchesComponent implements OnInit, OnDestroy {
     }
 
     ngOnDestroy() {
+        this.userSubscription.unsubscribe();
         if (!this.activatedRouteSubscription.closed) {
             this.activatedRouteSubscription.unsubscribe();
         }
     }
 
     ngOnInit() {
+        this.userSubscription = this.authService.getUser.subscribe(response => {
+            this.authenticatedUser = response;
+        });
         this.titleService.setTitle('Матчі - Кубок');
         this.userImageDefault = environment.imageUserDefault;
         this.userImagesUrl = environment.apiImageUsers;

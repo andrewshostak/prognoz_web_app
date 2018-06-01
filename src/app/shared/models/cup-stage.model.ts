@@ -20,10 +20,12 @@ export class CupStage {
         home_user: {
             name: string;
             image: string;
+            hometown: string;
         };
         away_user: {
             name: string;
             image: string;
+            hometown: string;
         };
         home: number;
         away: number;
