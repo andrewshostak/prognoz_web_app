@@ -45,7 +45,17 @@ export class CupRatingComponent implements OnInit, OnDestroy {
         });
         this.cupRatingService.getCupRating().subscribe(
             response => {
-                this.cupRating = response;
+                this.cupRating = response.map(cupRatingItem => {
+                    cupRatingItem.before_previous_season_points =
+                        parseFloat(cupRatingItem.before_previous_season_points.toFixed(3));
+                    cupRatingItem.previous_season_points =
+                        parseFloat(cupRatingItem.previous_season_points.toFixed(3));
+                    cupRatingItem.active_season_points =
+                        parseFloat(cupRatingItem.active_season_points.toFixed(3));
+                    cupRatingItem.points_summary =
+                        parseFloat(cupRatingItem.points_summary.toFixed(3));
+                    return cupRatingItem;
+                });
             },
             error => {
                 this.errorCupRating = error;

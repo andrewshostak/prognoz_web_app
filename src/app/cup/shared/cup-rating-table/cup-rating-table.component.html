@@ -49,12 +49,23 @@
                     </td>
                     <td>
                         <strong>{{cupRatingItem.user.name}}</strong>
-                        {{helperService.getHometown(cupRatingItem.user.hometown)}}
+                        {{cupRatingItem.user.hometown ? '(' + cupRatingItem.user.hometown + ')' : ''}}
                     </td>
-                    <td class="text-center text-muted"><small>{{cupRatingItem.before_previous_season_points.toFixed(2)}}</small></td>
-                    <td class="text-center text-muted"><small>{{cupRatingItem.previous_season_points.toFixed(2)}}</small></td>
-                    <td class="text-center text-muted"><small>{{cupRatingItem.active_season_points.toFixed(2)}}</small></td>
-                    <td class="font-weight-bold text-center">{{cupRatingItem.points_summary.toFixed(2)}}</td>
+                    <td class="text-center text-muted"
+                        [ngClass]="{'table-danger': !cupRatingItem.before_previous_season_points}">
+                        <small>{{cupRatingItem.before_previous_season_points}}</small>
+                    </td>
+                    <td class="text-center text-muted"
+                        [ngClass]="{'table-danger': !cupRatingItem.previous_season_points}">
+                        <small>{{cupRatingItem.previous_season_points}}</small>
+                    </td>
+                    <td class="text-center text-muted"
+                        [ngClass]="{'table-danger': !cupRatingItem.active_season_points}">
+                        <small>{{cupRatingItem.active_season_points}}</small>
+                    </td>
+                    <td class="text-center">
+                        <strong>{{cupRatingItem.points_summary}}</strong>
+                    </td>
                 </tr>
             </tbody>
         </table>

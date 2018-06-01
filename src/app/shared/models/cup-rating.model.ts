@@ -24,7 +24,7 @@ export class CupRating {
         main_club: {
             image: string,
             title: string
-        },
+        }[],
         clubs: {
             image: string;
             title: string;
