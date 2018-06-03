@@ -28,10 +28,12 @@ export class CupCupMatch {
     home_user: {
         name: string;
         image: string;
+        hometown: string;
     };
     away_user: {
         name: string;
         image: string;
+        hometown: string;
     };
     score: string;
 }

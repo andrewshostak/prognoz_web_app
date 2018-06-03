@@ -1,54 +1,51 @@
 <h2 class="h2">Матч:</h2>
 <div *ngIf="cupCupMatch">
     <div class="card black-shadow">
+        <div class="card-header">
+            <strong>{{cupCupMatch.cup_stage.competition.title}}: </strong>{{cupCupMatch.cup_stage.title}}
+        </div>
         <ul class="list-group list-group-flush">
             <li class="list-group-item">
                 <div class="row">
-                    <div class="col-4 col-sm-5 text-right">
-                        <strong class="d-none d-sm-inline">{{cupCupMatch.home_user.name}}</strong>
-                        <small class="d-sm-none">{{cupCupMatch.home_user.name}}</small>
-                        <img class="small-image rounded-circle d-none d-sm-inline ml-1"
-                             src="{{userImagesUrl}}{{cupCupMatch.home_user.image || userImageDefault}}"
-                             alt="{{cupCupMatch.home_user.name}}">
+                    <div class="col-5">
+                        <div class="d-flex flex-row justify-content-end h-100">
+                            <div class="d-flex flex-column text-right justify-content-center">
+                                <strong>{{cupCupMatch.home_user.name}}</strong>
+                                <small class="text-muted hometown">
+                                    {{cupCupMatch.home_user.hometown ? '(' + cupCupMatch.home_user.hometown + ')' : ''}}
+                                </small>
+                            </div>
+                            <div class="d-flex flex-column justify-content-center ml-2">
+                                <img class="small-image rounded-circle d-none d-sm-inline"
+                                     src="{{userImagesUrl}}{{cupCupMatch.home_user.image || userImageDefault}}"
+                                     alt="{{cupCupMatch.home_user.name}}">
+                            </div>
+                        </div>
                     </div>
-                    <div class="col-4 col-sm-2 text-center">
-                        <strong>{{cupCupMatch.score}}</strong>
+                    <div class="col-2 text-center">
+                        <div class="d-flex justify-content-center align-items-center h-100">
+                            <strong class="text-nowrap">{{cupCupMatch.score}}</strong>
+                        </div>
                     </div>
-                    <div class="col-4 col-sm-5 text-left">
-                        <img class="small-image rounded-circle d-none d-sm-inline mr-1"
-                             src="{{userImagesUrl}}{{cupCupMatch.away_user.image || userImageDefault}}"
-                             alt="{{cupCupMatch.away_user.name}}">
-                        <strong class="d-none d-sm-inline">{{cupCupMatch.away_user.name}}</strong>
-                        <small class="d-sm-none">{{cupCupMatch.away_user.name}}</small>
+                    <div class="col-5">
+                        <div class="d-flex flex-row h-100">
+                            <div class="d-flex flex-column justify-content-center mr-2">
+                                <img class="small-image rounded-circle d-none d-sm-inline"
+                                     src="{{userImagesUrl}}{{cupCupMatch.away_user.image || userImageDefault}}"
+                                     alt="{{cupCupMatch.away_user.name}}">
+                            </div>
+                            <div class="d-flex flex-column justify-content-center">
+                                <strong>{{cupCupMatch.away_user.name}}</strong>
+                                <small class="text-muted hometown">
+                                    {{cupCupMatch.away_user.hometown ? '(' + cupCupMatch.away_user.hometown + ')' : ''}}
+                                </small>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </li>
         </ul>
         <div class="card-body">
-            <div class="table-responsive">
-                <table class="table table-bordered table-sm">
-                    <tr>
-                        <td class="text-center">{{cupCupMatch.home}}</td>
-                        <th class="text-center">Голи</th>
-                        <td class="text-center">{{cupCupMatch.away}}</td>
-                    </tr>
-                    <tr>
-                        <td class="text-center">{{cupCupMatch.home_points}}</td>
-                        <th class="text-center">Очки <small class="text-muted">(за принципом чемпіонату)</small></th>
-                        <td class="text-center">{{cupCupMatch.away_points}}</td>
-                    </tr>
-                    <tr>
-                        <td class="text-center">{{cupCupMatch.home_dc_sum}}</td>
-                        <th class="text-center">Коефіцієнт складності</th>
-                        <td class="text-center">{{cupCupMatch.away_dc_sum}}</td>
-                    </tr>
-                    <tr>
-                        <td class="text-center">{{cupCupMatch.home_rating_points}}</td>
-                        <th class="text-center">Рейтингові очки</th>
-                        <td class="text-center">{{cupCupMatch.away_rating_points}}</td>
-                    </tr>
-                </table>
-            </div>
             <div *ngIf="cupMatches" class="table-responsive">
                 <table class="table table-bordered table-striped table-sm">
                     <tr *ngFor="let cupMatch of cupMatches">
@@ -69,7 +66,7 @@
                                  title="{{cupMatch.club_first.title}}">
                         </td>
                         <th class="text-center text-nowrap">
-                           {{showScore(cupMatch)}}
+                            {{showScore(cupMatch)}}
                         </th>
                         <td class="text-left text-nowrap">
                             <img class="small-image" src="{{clubsImagesUrl}}{{cupMatch.club_second.image}}" alt="{{cupMatch.club_second.title}}"
@@ -93,29 +90,46 @@
             <div class="table-responsive">
                 <table class="table table-bordered table-sm">
                     <tr>
-                        <th>Змагання</th>
-                        <td>{{cupCupMatch.cup_stage.competition.title}}</td>
+                        <td class="text-center font-weight-bold">{{cupCupMatch.home}}</td>
+                        <th class="text-center">Голи</th>
+                        <td class="text-center font-weight-bold">{{cupCupMatch.away}}</td>
                     </tr>
                     <tr>
-                        <th>Назва стадії</th>
-                        <td>{{cupCupMatch.cup_stage.title}}</td>
+                        <td class="text-center">{{cupCupMatch.home_points}}</td>
+                        <th class="text-center">Очки <small class="text-muted">(за принципом чемпіонату)</small></th>
+                        <td class="text-center">{{cupCupMatch.away_points}}</td>
                     </tr>
                     <tr>
-                        <th>Тип стадії</th>
-                        <td>
-                            {{cupCupMatch.cup_stage.cup_stage_type.title}}
+                        <td class="text-center text-muted">{{cupCupMatch.home_dc_sum}}</td>
+                        <th class="text-center">Коефіцієнт складності</th>
+                        <td class="text-center text-muted">{{cupCupMatch.away_dc_sum}}</td>
+                    </tr>
+                    <tr *ngIf="cupPredictionsRequestsEnded">
+                        <td class="text-center">
+                            <i *ngIf="numberOfMatchesInStage === numberOfHomePredictions" class="fa fa-check-circle text-success" aria-hidden="true"></i>
+                            <i *ngIf="!numberOfHomePredictions" class="fa fa-times text-danger" aria-hidden="true"></i>
+                            <span *ngIf="numberOfHomePredictions && numberOfMatchesInStage !== numberOfHomePredictions" class="text-danger">{{numberOfHomePredictions}} / {{numberOfMatchesInStage}}</span>
+                        </td>
+                        <th class="text-center">Прогнози зроблено</th>
+                        <td class="text-center">
+                            <i *ngIf="numberOfMatchesInStage === numberOfAwayPredictions" class="fa fa-check-circle text-success" aria-hidden="true"></i>
+                            <i *ngIf="!numberOfAwayPredictions" class="fa fa-times text-danger" aria-hidden="true"></i>
+                            <span *ngIf="numberOfAwayPredictions && numberOfMatchesInStage !== numberOfAwayPredictions" class="text-danger">{{numberOfAwayPredictions}} / {{numberOfMatchesInStage}}</span>
                         </td>
                     </tr>
-                    <tr *ngIf="cupCupMatch.group_number">
-                        <th>Група</th>
-                        <td>
-                            <button [routerLink]="['/cup', cupCupMatch.cup_stage.competition_id, 'rating-group', cupCupMatch.group_number]"
-                                    class="btn btn-sm btn-primary">
-                                Рейтинг групи {{cupCupMatch.group_number}}
-                            </button>
-                        </td>
+                    <tr>
+                        <td class="text-center">{{cupCupMatch.home_rating_points}}</td>
+                        <th class="text-center">Рейтингові очки</th>
+                        <td class="text-center">{{cupCupMatch.away_rating_points}}</td>
                     </tr>
                 </table>
+            </div>
+            <div class="d-flex justify-content-between">
+                <div><strong>Тип кубкової стадії:</strong> {{cupCupMatch.cup_stage.cup_stage_type.title}}</div>
+                <button *ngIf="cupCupMatch.group_number" [routerLink]="['/cup', cupCupMatch.cup_stage.competition_id, 'rating-group', cupCupMatch.group_number]"
+                        class="btn btn-sm btn-primary">
+                    Рейтинг групи {{cupCupMatch.group_number}}
+                </button>
             </div>
         </div>
     </div>

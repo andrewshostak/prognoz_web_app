@@ -39,9 +39,13 @@ export class CupCupMatchComponent implements OnDestroy, OnInit {
     clubsImagesUrl: string;
     cupCupMatch: CupCupMatch;
     cupMatches: CupMatch[];
+    cupPredictionsRequestsEnded: boolean;
     errorCupCupMatch: string;
     errorCupMatches: string;
     errorCupPredictions: string;
+    numberOfHomePredictions: number;
+    numberOfAwayPredictions: number;
+    numberOfMatchesInStage: number;
     userImageDefault: string;
     userImagesUrl: string;
 
@@ -84,6 +88,7 @@ export class CupCupMatchComponent implements OnDestroy, OnInit {
         this.clubsImagesUrl = environment.apiImageClubs;
         this.userImageDefault = environment.imageUserDefault;
         this.userImagesUrl = environment.apiImageUsers;
+        this.numberOfMatchesInStage = environment.tournaments.cup.numberOfMatchesInStage;
         this.activatedRouteSubscription = this.activatedRoute.params.subscribe((params: Params) => {
             this.cupCupMatchService.getCupCupMatch(params['cupCupMatchId']).subscribe(
                 response => {
@@ -127,6 +132,8 @@ export class CupCupMatchComponent implements OnDestroy, OnInit {
                         return { home, away };
                     }).subscribe(
                         r => {
+                            this.numberOfHomePredictions = 0;
+                            this.numberOfAwayPredictions = 0;
                             this.errorCupPredictions = null;
                             this.cupMatches = this.cupMatches.map((cupMatch) => {
                                 const homePrediction = r.home ? r.home.find((prediction) => prediction.cup_match_id === cupMatch.id) : null;
@@ -135,8 +142,15 @@ export class CupCupMatchComponent implements OnDestroy, OnInit {
                                 cupMatch.away_prediction = this.getCupPrediction(cupMatch, awayPrediction);
                                 cupMatch.home_prediction_created_at = this.getCupPredictionTime(cupMatch, homePrediction);
                                 cupMatch.away_prediction_created_at = this.getCupPredictionTime(cupMatch, awayPrediction);
+                                if (homePrediction) {
+                                    this.numberOfHomePredictions++;
+                                }
+                                if (awayPrediction) {
+                                    this.numberOfAwayPredictions++;
+                                }
                                 return cupMatch;
                             });
+                            this.cupPredictionsRequestsEnded = true;
                             $(() => $('[data-toggle="tooltip"]').tooltip());
                         },
                         error => this.errorCupPredictions = error
