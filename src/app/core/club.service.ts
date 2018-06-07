@@ -1,16 +1,14 @@
-import { Injectable }               from '@angular/core';
-import { HttpClient, HttpParams }   from '@angular/common/http';
-import { Observable }               from 'rxjs/Observable';
+import { Injectable } from '@angular/core';
+import { HttpClient, HttpParams } from '@angular/common/http';
+import { Observable } from 'rxjs/Observable';
 
-import { Club }                 from '../shared/models/club.model';
-import { environment }          from '../../environments/environment';
-import { ErrorHandlerService }  from './error-handler.service';
-import { HeadersWithToken }     from './headers-with-token.service';
+import { Club } from '../shared/models/club.model';
+import { environment } from '../../environments/environment';
+import { ErrorHandlerService } from './error-handler.service';
+import { HeadersWithToken } from './headers-with-token.service';
 
 @Injectable()
-
 export class ClubService {
-
     constructor(
         private errorHandlerService: ErrorHandlerService,
         private headersWithToken: HeadersWithToken,
@@ -27,11 +25,13 @@ export class ClubService {
      */
     getClubs(page?: number, type?: string): Observable<any> {
         let params: HttpParams = new HttpParams();
-        if (page) params = params.append('page', page.toString());
-        if (type) params = params.append('type', type);
-        return this.httpClient
-            .get(this.clubUrl, {params: params})
-            .catch(this.errorHandlerService.handle);
+        if (page) {
+            params = params.append('page', page.toString());
+        }
+        if (type) {
+            params = params.append('type', type);
+        }
+        return this.httpClient.get(this.clubUrl, { params: params }).catch(this.errorHandlerService.handle);
     }
 
     /**
@@ -64,9 +64,7 @@ export class ClubService {
      * @returns {Observable<void>}
      */
     deleteClub(id: number): Observable<void> {
-        return this.headersWithToken
-            .delete(`${this.clubUrl}/${id}`)
-            .catch(this.errorHandlerService.handle);
+        return this.headersWithToken.delete(`${this.clubUrl}/${id}`).catch(this.errorHandlerService.handle);
     }
 
     /**

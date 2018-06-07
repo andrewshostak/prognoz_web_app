@@ -1,17 +1,17 @@
-import { Component, OnDestroy, OnInit }         from '@angular/core';
-import { FormBuilder, FormGroup, Validators }   from '@angular/forms';
-import { DomSanitizer }                         from '@angular/platform-browser';
-import { ActivatedRoute, Params }               from '@angular/router';
-import { Subscription }                         from 'rxjs/Subscription';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { DomSanitizer } from '@angular/platform-browser';
+import { ActivatedRoute, Params } from '@angular/router';
+import { Subscription } from 'rxjs/Subscription';
 
-import { AuthService }                          from '../../core/auth.service';
-import { CurrentStateService }                  from '../../core/current-state.service';
-import { environment }                          from '../../../environments/environment';
-import { GuestbookMessage }                     from '../../shared/models/guestbook-message.model';
-import { GuestbookService }                     from '../shared/guestbook.service';
-import { NotificationsService }                 from 'angular2-notifications';
-import { TitleService }                         from '../../core/title.service';
-import { User }                                 from '../../shared/models/user.model';
+import { AuthService } from '../../core/auth.service';
+import { CurrentStateService } from '../../core/current-state.service';
+import { environment } from '../../../environments/environment';
+import { GuestbookMessage } from '../../shared/models/guestbook-message.model';
+import { GuestbookService } from '../shared/guestbook.service';
+import { NotificationsService } from 'angular2-notifications';
+import { TitleService } from '../../core/title.service';
+import { User } from '../../shared/models/user.model';
 
 declare const $: any;
 
@@ -21,7 +21,6 @@ declare const $: any;
     styleUrls: ['./guestbook-page.component.css']
 })
 export class GuestbookPageComponent implements OnInit, OnDestroy {
-
     constructor(
         private activatedRoute: ActivatedRoute,
         private authService: AuthService,
@@ -31,7 +30,7 @@ export class GuestbookPageComponent implements OnInit, OnDestroy {
         private guestbookService: GuestbookService,
         private notificationService: NotificationsService,
         private titleService: TitleService
-    ) { }
+    ) {}
 
     addGuestbookMessageForm: FormGroup;
     authenticatedUser: User = this.currentStateService.user;
@@ -41,9 +40,9 @@ export class GuestbookPageComponent implements OnInit, OnDestroy {
     errorGuestbookMessages: string | Array<string>;
     guestbookMessages: GuestbookMessage[];
     lastPage: number;
-    path: string = '/guestbook/page/';
+    path = '/guestbook/page/';
     perPage: number;
-    spinnerButton: boolean = false;
+    spinnerButton = false;
     total: number;
     userImageDefault: string = environment.imageUserDefault;
     userImagesUrl: string = environment.apiImageUsers;
@@ -64,8 +63,8 @@ export class GuestbookPageComponent implements OnInit, OnDestroy {
                         this.perPage = response.per_page;
                         this.total = response.total;
                         this.guestbookMessages = response.data;
-                        let userId = this.authenticatedUser ? this.authenticatedUser.id.toString() : '';
-                        this.addGuestbookMessageForm.patchValue({user_id: userId});
+                        const userId = this.authenticatedUser ? this.authenticatedUser.id.toString() : '';
+                        this.addGuestbookMessageForm.patchValue({ user_id: userId });
                         $(() => $('[data-toggle="tooltip"]').tooltip());
                     }
                 },
@@ -91,27 +90,26 @@ export class GuestbookPageComponent implements OnInit, OnDestroy {
         });
         this.userSubscription = this.authService.getUser.subscribe(response => {
             this.authenticatedUser = response;
-            this.addGuestbookMessageForm.patchValue({user_id: (response ? response.id : '')});
+            this.addGuestbookMessageForm.patchValue({ user_id: response ? response.id : '' });
         });
         this.getGuestbookMessagesData();
     }
 
     onSubmit() {
         this.spinnerButton = true;
-        this.guestbookService.createGuestbookMessage(this.addGuestbookMessageForm.value)
-            .subscribe(
-                response => {
-                    this.getGuestbookMessagesData();
-                    this.spinnerButton = false;
-                    this.addGuestbookMessageForm.reset({user_id: this.authenticatedUser.id});
-                    this.notificationService.success('Успішно', 'Повідомлення додано');
-                },
-                errors => {
-                    for (let error of errors) {
-                        this.notificationService.error('Помилка', error);
-                    }
-                    this.spinnerButton = false;
+        this.guestbookService.createGuestbookMessage(this.addGuestbookMessageForm.value).subscribe(
+            response => {
+                this.getGuestbookMessagesData();
+                this.spinnerButton = false;
+                this.addGuestbookMessageForm.reset({ user_id: this.authenticatedUser.id });
+                this.notificationService.success('Успішно', 'Повідомлення додано');
+            },
+            errors => {
+                for (const error of errors) {
+                    this.notificationService.error('Помилка', error);
                 }
-            );
+                this.spinnerButton = false;
+            }
+        );
     }
 }

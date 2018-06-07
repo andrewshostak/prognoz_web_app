@@ -1,38 +1,35 @@
-import { Location }                             from '@angular/common';
-import { Component, OnInit }                    from '@angular/core';
-import { FormBuilder, FormGroup, Validators }   from '@angular/forms';
-import { ActivatedRoute, Router, Params }       from '@angular/router';
+import { Location } from '@angular/common';
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute, Router, Params } from '@angular/router';
 
-import { Club }                                 from '../../../shared/models/club.model';
-import { ClubService }                          from '../../../core/club.service';
-import { environment }                          from '../../../../environments/environment';
-import { ImageService }                         from '../../../core/image.service';
-import { NotificationsService }                 from 'angular2-notifications';
+import { Club } from '../../../shared/models/club.model';
+import { ClubService } from '../../../core/club.service';
+import { environment } from '../../../../environments/environment';
+import { ImageService } from '../../../core/image.service';
+import { NotificationsService } from 'angular2-notifications';
 
 @Component({
-  selector: 'app-club-edit',
-  templateUrl: './club-edit.component.html',
-  styleUrls: ['./club-edit.component.css']
+    selector: 'app-club-edit',
+    templateUrl: './club-edit.component.html',
+    styleUrls: ['./club-edit.component.css']
 })
 export class ClubEditComponent implements OnInit {
-
     constructor(
         private activatedRoute: ActivatedRoute,
         private clubService: ClubService,
         private formBuilder: FormBuilder,
         private imageService: ImageService,
         private location: Location,
-        private notificationService: NotificationsService,
+        private notificationService: NotificationsService
     ) {
-        imageService.uploadedImage$.subscribe(
-            response => {
-                this.clubEditForm.patchValue({image: response});
-                this.errorImage = null;
-            }
-        );
-        imageService.uploadError$.subscribe(
-            response => { this.errorImage = response }
-        );
+        imageService.uploadedImage$.subscribe(response => {
+            this.clubEditForm.patchValue({ image: response });
+            this.errorImage = null;
+        });
+        imageService.uploadError$.subscribe(response => {
+            this.errorImage = response;
+        });
     }
 
     club: Club;
@@ -42,7 +39,7 @@ export class ClubEditComponent implements OnInit {
     errorClub: string | Array<string>;
     errorClubs: string | Array<string>;
     errorImage: string;
-    spinnerButton: boolean = false;
+    spinnerButton = false;
 
     fileChange(event) {
         this.imageService.fileChange(event, environment.imageSettings.club);
@@ -65,7 +62,9 @@ export class ClubEditComponent implements OnInit {
 
     onSubmit() {
         this.spinnerButton = true;
-        if (this.clubEditForm.value.parent_id === 'country') this.clubEditForm.value.parent_id = null;
+        if (this.clubEditForm.value.parent_id === 'country') {
+            this.clubEditForm.value.parent_id = null;
+        }
         this.clubService.updateClub(this.clubEditForm.value).subscribe(
             response => {
                 this.location.back();
@@ -73,7 +72,7 @@ export class ClubEditComponent implements OnInit {
                 this.spinnerButton = false;
             },
             errors => {
-                for (let error of errors) {
+                for (const error of errors) {
                     this.notificationService.error('Помилка', error);
                 }
                 this.spinnerButton = false;
@@ -99,14 +98,13 @@ export class ClubEditComponent implements OnInit {
     }
 
     private getClubsData() {
-        this.clubService.getClubs(null, 'national_teams')
-            .subscribe(
-                response => {
-                    this.clubs = response.clubs;
-                },
-                error => {
-                    this.errorClubs = error;
-                }
-            );
+        this.clubService.getClubs(null, 'national_teams').subscribe(
+            response => {
+                this.clubs = response.clubs;
+            },
+            error => {
+                this.errorClubs = error;
+            }
+        );
     }
 }

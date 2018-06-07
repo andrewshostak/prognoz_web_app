@@ -1,14 +1,14 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Subscription }                 from 'rxjs/Subscription';
+import { Subscription } from 'rxjs/Subscription';
 
-import { AuthService }                  from '../../core/auth.service';
-import { CurrentStateService }          from '../../core/current-state.service';
-import { TeamRating }                   from '../../shared/models/team-rating.model';
-import { TeamRatingUser }               from '../../shared/models/team-rating-user.model';
-import { TeamRatingService }            from '../shared/team-rating.service';
-import { TeamRatingUserService }        from '../shared/team-rating-user.service';
-import { TitleService }                 from '../../core/title.service';
-import { User }                         from '../../shared/models/user.model';
+import { AuthService } from '../../core/auth.service';
+import { CurrentStateService } from '../../core/current-state.service';
+import { TeamRating } from '../../shared/models/team-rating.model';
+import { TeamRatingUser } from '../../shared/models/team-rating-user.model';
+import { TeamRatingService } from '../shared/team-rating.service';
+import { TeamRatingUserService } from '../shared/team-rating-user.service';
+import { TitleService } from '../../core/title.service';
+import { User } from '../../shared/models/user.model';
 
 @Component({
     selector: 'app-team-rating',
@@ -16,14 +16,13 @@ import { User }                         from '../../shared/models/user.model';
     styleUrls: ['./team-rating.component.css']
 })
 export class TeamRatingComponent implements OnDestroy, OnInit {
-
     constructor(
         private authService: AuthService,
         private currentStateService: CurrentStateService,
         private teamRatingService: TeamRatingService,
         private teamRatingUserService: TeamRatingUserService,
         private titleService: TitleService
-    ) { }
+    ) {}
 
     authenticatedUser: User = this.currentStateService.user;
     errorTeamRating: string;
@@ -50,7 +49,9 @@ export class TeamRatingComponent implements OnDestroy, OnInit {
     private getTeamRatingData() {
         this.teamRatingService.getTeamRating().subscribe(
             response => {
-                if (response) this.teamRating = response;
+                if (response) {
+                    this.teamRating = response;
+                }
             },
             error => {
                 this.errorTeamRating = error;
@@ -61,7 +62,9 @@ export class TeamRatingComponent implements OnDestroy, OnInit {
     private getTeamRatingUserData() {
         this.teamRatingUserService.getTeamRatingUser().subscribe(
             response => {
-                if (response) this.teamRatingUser = response;
+                if (response) {
+                    this.teamRatingUser = response;
+                }
             },
             error => {
                 this.errorTeamRatingUser = error;

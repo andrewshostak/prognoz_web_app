@@ -1,9 +1,9 @@
 import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 
-import { environment }      from '../../../../environments/environment';
-import { Team }             from '../../models/team.model';
-import { TeamRatingUser }   from '../../models/team-rating-user.model';
-import { User }             from '../../models/user.model';
+import { environment } from '../../../../environments/environment';
+import { Team } from '../../models/team.model';
+import { TeamRatingUser } from '../../models/team-rating-user.model';
+import { User } from '../../models/user.model';
 
 @Component({
     selector: 'app-team-rating-user-table',
@@ -11,7 +11,6 @@ import { User }             from '../../models/user.model';
     styleUrls: ['./team-rating-user-table.component.css']
 })
 export class TeamRatingUserTableComponent implements OnChanges {
-
     @Input() teamRatingUser: TeamRatingUser[];
     @Input() errorTeamRatingUser: string;
     @Input() authenticatedUser: User;
@@ -27,27 +26,23 @@ export class TeamRatingUserTableComponent implements OnChanges {
     userImageDefault: string = environment.imageUserDefault;
     userImagesUrl: string = environment.apiImageUsers;
 
-    constructor() {
-    }
+    constructor() {}
 
     filterTeamRatingUser(team: Team): void {
         if (!this.teamIdsFiltered) {
             this.teamIdsFiltered = [team.id];
         } else {
-            const alreadyInFilteredTeams = this.teamIdsFiltered
-                .findIndex((teamIdFiltered) => teamIdFiltered === team.id);
-            (alreadyInFilteredTeams < 0)
-                ? this.teamIdsFiltered.push(team.id)
-                : this.teamIdsFiltered.splice(alreadyInFilteredTeams, 1);
+            const alreadyInFilteredTeams = this.teamIdsFiltered.findIndex(teamIdFiltered => teamIdFiltered === team.id);
+            alreadyInFilteredTeams < 0 ? this.teamIdsFiltered.push(team.id) : this.teamIdsFiltered.splice(alreadyInFilteredTeams, 1);
         }
         if (!this.teamIdsFiltered.length) {
             this.topScorersRating = this.topScorersRatingAll;
             this.goalkeepersRating = this.goalkeepersRatingAll;
         } else {
-            this.topScorersRating = this.topScorersRatingAll.filter((user) => {
+            this.topScorersRating = this.topScorersRatingAll.filter(user => {
                 return this.teamIdsFiltered.includes(user.team_id);
             });
-            this.goalkeepersRating = this.goalkeepersRatingAll.filter((user) => {
+            this.goalkeepersRating = this.goalkeepersRatingAll.filter(user => {
                 return this.teamIdsFiltered.includes(user.team_id);
             });
         }
@@ -64,11 +59,11 @@ export class TeamRatingUserTableComponent implements OnChanges {
                 this.topScorersRatingAll = this.topScorersRating;
                 this.goalkeepersRating = this.formTeamUserRating(changes[propName].currentValue, 'blocked');
                 this.goalkeepersRatingAll = this.goalkeepersRating;
-                changes[propName].currentValue.forEach((user) => {
+                changes[propName].currentValue.forEach(user => {
                     if (!this.teams) {
                         this.teams = [];
                     }
-                    const filteredTeamIds = this.teams.map((item) => item.id);
+                    const filteredTeamIds = this.teams.map(item => item.id);
                     if (!filteredTeamIds.includes(user.team_id)) {
                         this.teams.push(user.team);
                     }
@@ -86,7 +81,7 @@ export class TeamRatingUserTableComponent implements OnChanges {
     }
 
     private formTeamUserRating(teamRatingUser: TeamRatingUser[], column: string = 'scored'): TeamRatingUser[] {
-        let filtered = this.filterTeamUserRating(teamRatingUser, column);
+        const filtered = this.filterTeamUserRating(teamRatingUser, column);
         return this.sortTeamUserRating(filtered, column);
     }
 }

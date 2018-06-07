@@ -1,17 +1,15 @@
-import { Injectable }               from '@angular/core';
-import { HttpClient, HttpParams }   from '@angular/common/http';
-import { Observable }               from 'rxjs/Observable';
+import { Injectable } from '@angular/core';
+import { HttpClient, HttpParams } from '@angular/common/http';
+import { Observable } from 'rxjs/Observable';
 
-import { ChampionshipRating }       from '../../shared/models/championship-rating.model';
-import { ErrorHandlerService }      from '../../core/error-handler.service';
-import { environment }              from '../../../environments/environment';
-import { HeadersWithToken }         from '../../core/headers-with-token.service';
-import { RequestParams }            from '../../shared/models/request-params.model';
+import { ChampionshipRating } from '../../shared/models/championship-rating.model';
+import { ErrorHandlerService } from '../../core/error-handler.service';
+import { environment } from '../../../environments/environment';
+import { HeadersWithToken } from '../../core/headers-with-token.service';
+import { RequestParams } from '../../shared/models/request-params.model';
 
 @Injectable()
-
 export class ChampionshipRatingService {
-
     constructor(
         private errorHandlerService: ErrorHandlerService,
         private headersWithToken: HeadersWithToken,
@@ -32,9 +30,7 @@ export class ChampionshipRatingService {
                 params = params.append(requestParam.parameter, requestParam.value);
             }
         }
-        return this.httpClient
-            .get(this.championshipRatingUrl, {params: params})
-            .catch(this.errorHandlerService.handle);
+        return this.httpClient.get(this.championshipRatingUrl, { params: params }).catch(this.errorHandlerService.handle);
     }
 
     /**
@@ -45,9 +41,11 @@ export class ChampionshipRatingService {
      */
     getChampionshipRatingItem(userId: number, competitionId?: number): Observable<ChampionshipRating> {
         let params: HttpParams = new HttpParams();
-        if (competitionId) params = params.append('competition_id', competitionId.toString());
+        if (competitionId) {
+            params = params.append('competition_id', competitionId.toString());
+        }
         return this.httpClient
-            .get(`${this.championshipRatingUrl}/${userId}`, {params: params})
+            .get(`${this.championshipRatingUrl}/${userId}`, { params: params })
             .map(response => response['championship_rating'])
             .catch(this.errorHandlerService.handle);
     }
@@ -57,8 +55,6 @@ export class ChampionshipRatingService {
      * @returns {Observable<void>}
      */
     updateChampionshipRatingItems(): Observable<void> {
-        return this.headersWithToken
-            .put(this.championshipRatingUrl, {})
-            .catch(this.errorHandlerService.handle);
+        return this.headersWithToken.put(this.championshipRatingUrl, {}).catch(this.errorHandlerService.handle);
     }
 }

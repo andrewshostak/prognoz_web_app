@@ -1,29 +1,28 @@
-import { Component, OnDestroy, OnInit }         from '@angular/core';
-import { FormControl, FormGroup, Validators }   from '@angular/forms';
-import { Subscription }                         from 'rxjs/Subscription';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Subscription } from 'rxjs/Subscription';
 
-import { AuthService }                          from '../../core/auth.service';
-import { environment }                          from '../../../environments/environment';
-import { Competition }                          from '../../shared/models/competition.model';
-import { CompetitionService }                   from '../../core/competition.service';
-import { CurrentStateService }                  from '../../core/current-state.service';
-import { NotificationsService }                 from 'angular2-notifications';
-import { Team }                                 from '../../shared/models/team.model';
-import { TeamService }                          from '../shared/team.service';
-import { TeamParticipant }                      from '../../shared/models/team-participant.model';
-import { TeamParticipantService }               from '../shared/team-participant.service';
-import { TitleService }                         from '../../core/title.service';
-import { User }                                 from '../../shared/models/user.model';
+import { AuthService } from '../../core/auth.service';
+import { environment } from '../../../environments/environment';
+import { Competition } from '../../shared/models/competition.model';
+import { CompetitionService } from '../../core/competition.service';
+import { CurrentStateService } from '../../core/current-state.service';
+import { NotificationsService } from 'angular2-notifications';
+import { Team } from '../../shared/models/team.model';
+import { TeamService } from '../shared/team.service';
+import { TeamParticipant } from '../../shared/models/team-participant.model';
+import { TeamParticipantService } from '../shared/team-participant.service';
+import { TitleService } from '../../core/title.service';
+import { User } from '../../shared/models/user.model';
 
 declare var $: any;
 
 @Component({
-  selector: 'app-team-squads',
-  templateUrl: './team-squads.component.html',
-  styleUrls: ['./team-squads.component.css']
+    selector: 'app-team-squads',
+    templateUrl: './team-squads.component.html',
+    styleUrls: ['./team-squads.component.css']
 })
 export class TeamSquadsComponent implements OnDestroy, OnInit {
-
     constructor(
         private authService: AuthService,
         private competitionService: CompetitionService,
@@ -32,10 +31,10 @@ export class TeamSquadsComponent implements OnDestroy, OnInit {
         private teamService: TeamService,
         private teamParticipantService: TeamParticipantService,
         private titleService: TitleService
-    ) { }
+    ) {}
 
-    alreadyJoined: boolean = false;
-    alreadyPending: boolean = false;
+    alreadyJoined = false;
+    alreadyPending = false;
     authenticatedUser: User = this.currentStateService.user;
     clubsImagesUrl: string = environment.apiImageClubs;
     errorTeams: string;
@@ -43,10 +42,10 @@ export class TeamSquadsComponent implements OnDestroy, OnInit {
     confirmModalData: any;
     confirmModalId: string;
     confirmModalMessage: string;
-    confirmSpinnerButton: boolean = false;
+    confirmSpinnerButton = false;
     competition: Competition;
-    spinnerButton: boolean = false;
-    spinnerButtonSelect: boolean = false;
+    spinnerButton = false;
+    spinnerButtonSelect = false;
     teamImageDefault: string = environment.imageTeamDefault;
     teamCreateForm: FormGroup;
     teamsImagesUrl: string = environment.apiImageTeams;
@@ -77,7 +76,7 @@ export class TeamSquadsComponent implements OnDestroy, OnInit {
 
     confirmParticipant(teamParticipant: TeamParticipant) {
         this.confirmSpinnerButton = true;
-        let teamParticipantToChange = Object.assign({}, teamParticipant);
+        const teamParticipantToChange = Object.assign({}, teamParticipant);
         teamParticipantToChange.confirmed = true;
         teamParticipantToChange.refused = false;
         this.teamParticipantService.updateTeamParticipant(teamParticipantToChange).subscribe(
@@ -88,7 +87,7 @@ export class TeamSquadsComponent implements OnDestroy, OnInit {
                 $('#' + this.confirmModalId).modal('hide');
             },
             errors => {
-                for (let error of errors) {
+                for (const error of errors) {
                     this.notificationsService.error('Помилка', error);
                 }
                 this.confirmSpinnerButton = false;
@@ -99,7 +98,7 @@ export class TeamSquadsComponent implements OnDestroy, OnInit {
 
     createTeamCaptain(teamId: number) {
         this.spinnerButtonSelect = true;
-        let teamParticipant = {
+        const teamParticipant = {
             team_id: teamId,
             user_id: this.authenticatedUser.id,
             captain: true,
@@ -112,7 +111,7 @@ export class TeamSquadsComponent implements OnDestroy, OnInit {
                 this.spinnerButtonSelect = false;
             },
             errors => {
-                for (let error of errors) {
+                for (const error of errors) {
                     this.notificationsService.error('Помилка', error);
                 }
                 this.spinnerButtonSelect = false;
@@ -122,7 +121,7 @@ export class TeamSquadsComponent implements OnDestroy, OnInit {
 
     createTeamParticipant(team: Team) {
         this.confirmSpinnerButton = true;
-        let teamParticipant = {
+        const teamParticipant = {
             team_id: team.id,
             user_id: this.authenticatedUser.id,
             captain: false,
@@ -136,7 +135,7 @@ export class TeamSquadsComponent implements OnDestroy, OnInit {
                 $('#' + this.confirmModalId).modal('hide');
             },
             errors => {
-                for (let error of errors) {
+                for (const error of errors) {
                     this.notificationsService.error('Помилка', error);
                 }
                 this.confirmSpinnerButton = false;
@@ -162,7 +161,7 @@ export class TeamSquadsComponent implements OnDestroy, OnInit {
     }
 
     getTeamsData() {
-        const param = [{parameter: 'competition_id', value: this.competition.id.toString()}];
+        const param = [{ parameter: 'competition_id', value: this.competition.id.toString() }];
         this.teamService.getTeams(param).subscribe(
             response => {
                 this.resetTeamsData();
@@ -180,11 +179,18 @@ export class TeamSquadsComponent implements OnDestroy, OnInit {
 
     isMemberOfTeam(teams: Team[]): void {
         if (this.authenticatedUser) {
-            for (let team of teams) {
-                if (team.team_participants.filter(participant => (participant.user_id === this.authenticatedUser.id && participant.confirmed)).length >= 1) {
+            for (const team of teams) {
+                if (
+                    team.team_participants.filter(participant => participant.user_id === this.authenticatedUser.id && participant.confirmed)
+                        .length >= 1
+                ) {
                     this.alreadyJoined = true;
                 }
-                if (team.team_participants.filter(participant => (participant.user_id === this.authenticatedUser.id && (!participant.confirmed && !participant.refused))).length >= 1) {
+                if (
+                    team.team_participants.filter(
+                        participant => participant.user_id === this.authenticatedUser.id && (!participant.confirmed && !participant.refused)
+                    ).length >= 1
+                ) {
                     this.alreadyPending = true;
                 }
             }
@@ -225,22 +231,21 @@ export class TeamSquadsComponent implements OnDestroy, OnInit {
     onSubmitted(teamCreateForm: FormGroup) {
         if (teamCreateForm.valid) {
             this.spinnerButton = true;
-            this.teamService.createTeam(teamCreateForm.value)
-                .subscribe(
-                    response => {
-                        this.notificationsService.success('Успішно', 'Команду ' + response.name +' створено');
-                        $('#teamEditModal').modal('hide');
-                        this.teamCreateForm.reset({image: null});
-                        this.createTeamCaptain(response.id);
-                        this.spinnerButton = false;
-                    },
-                    errors => {
-                        for (let error of errors) {
-                            this.notificationsService.error('Помилка', error);
-                        }
-                        this.spinnerButton = false;
+            this.teamService.createTeam(teamCreateForm.value).subscribe(
+                response => {
+                    this.notificationsService.success('Успішно', 'Команду ' + response.name + ' створено');
+                    $('#teamEditModal').modal('hide');
+                    this.teamCreateForm.reset({ image: null });
+                    this.createTeamCaptain(response.id);
+                    this.spinnerButton = false;
+                },
+                errors => {
+                    for (const error of errors) {
+                        this.notificationsService.error('Помилка', error);
                     }
-                );
+                    this.spinnerButton = false;
+                }
+            );
         }
     }
 
@@ -252,7 +257,7 @@ export class TeamSquadsComponent implements OnDestroy, OnInit {
 
     refuseParticipant(teamParticipant: TeamParticipant) {
         this.confirmSpinnerButton = true;
-        let teamParticipantToChange = Object.assign({}, teamParticipant);
+        const teamParticipantToChange = Object.assign({}, teamParticipant);
         teamParticipantToChange.confirmed = false;
         teamParticipantToChange.refused = true;
         this.teamParticipantService.updateTeamParticipant(teamParticipantToChange).subscribe(
@@ -263,7 +268,7 @@ export class TeamSquadsComponent implements OnDestroy, OnInit {
                 $('#' + this.confirmModalId).modal('hide');
             },
             errors => {
-                for (let error of errors) {
+                for (const error of errors) {
                     this.notificationsService.error('Помилка', error);
                 }
                 this.confirmSpinnerButton = false;
@@ -279,14 +284,25 @@ export class TeamSquadsComponent implements OnDestroy, OnInit {
     }
 
     showJoinButton(team: Team): boolean {
-        if (!this.authenticatedUser) return false;
+        if (!this.authenticatedUser) {
+            return false;
+        }
         if (this.authenticatedUser) {
             // current number of participants greater than 4
-            if (team.team_participants.filter(participant => participant.confirmed).length >= 4) return false;
+            if (team.team_participants.filter(participant => participant.confirmed).length >= 4) {
+                return false;
+            }
             // current user already joined
-            if (team.team_participants.filter(participant => participant.user_id === this.authenticatedUser.id).length >= 1) return false;
+            if (team.team_participants.filter(participant => participant.user_id === this.authenticatedUser.id).length >= 1) {
+                return false;
+            }
             // current user application already cancelled
-            if (team.team_participants.filter(participant => participant.user_id === this.authenticatedUser.id && participant.refused).length >= 1 ) return false;
+            if (
+                team.team_participants.filter(participant => participant.user_id === this.authenticatedUser.id && participant.refused)
+                    .length >= 1
+            ) {
+                return false;
+            }
         }
 
         return true;

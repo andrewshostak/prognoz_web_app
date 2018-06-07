@@ -1,28 +1,26 @@
-import { Location }                             from '@angular/common';
-import { Component, OnDestroy, OnInit }         from '@angular/core';
-import { FormBuilder, FormGroup, Validators }   from '@angular/forms';
-import { DomSanitizer }                         from '@angular/platform-browser';
-import { ActivatedRoute, Params }               from '@angular/router';
-import { Subscription }                         from 'rxjs/Subscription';
+import { Location } from '@angular/common';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { DomSanitizer } from '@angular/platform-browser';
+import { ActivatedRoute, Params } from '@angular/router';
+import { Subscription } from 'rxjs/Subscription';
 
-import { AuthService }                          from '../../core/auth.service';
-import { CommentService }                       from '../shared/comment.service';
-import { CurrentStateService }                  from '../../core/current-state.service';
-import { environment }                          from '../../../environments/environment';
-import { NotificationsService }                 from 'angular2-notifications';
-import { News }                                 from '../../shared/models/news.model';
-import { NewsService }                          from '../shared/news.service';
-import { TitleService }                         from '../../core/title.service';
-import { User }                                 from '../../shared/models/user.model';
+import { AuthService } from '../../core/auth.service';
+import { CommentService } from '../shared/comment.service';
+import { CurrentStateService } from '../../core/current-state.service';
+import { environment } from '../../../environments/environment';
+import { NotificationsService } from 'angular2-notifications';
+import { News } from '../../shared/models/news.model';
+import { NewsService } from '../shared/news.service';
+import { TitleService } from '../../core/title.service';
+import { User } from '../../shared/models/user.model';
 
 @Component({
     selector: 'app-news-datail',
     templateUrl: './news-detail.component.html',
     styleUrls: ['./news-detail.component.css']
 })
-
 export class NewsDetailComponent implements OnInit, OnDestroy {
-
     constructor(
         private activatedRoute: ActivatedRoute,
         private authService: AuthService,
@@ -41,7 +39,7 @@ export class NewsDetailComponent implements OnInit, OnDestroy {
     errorNews: string | Array<string>;
     news: News;
     newsImagesUrl: string = environment.apiImageNews;
-    spinnerButton: boolean = false;
+    spinnerButton = false;
     userImageDefault: string = environment.imageUserDefault;
     userImagesUrl: string = environment.apiImageUsers;
     userSubscription: Subscription;
@@ -68,7 +66,7 @@ export class NewsDetailComponent implements OnInit, OnDestroy {
         });
         this.userSubscription = this.authService.getUser.subscribe(response => {
             this.authenticatedUser = response;
-            this.addCommentForm.patchValue({user_id: (response ? response.id : '')});
+            this.addCommentForm.patchValue({ user_id: response ? response.id : '' });
         });
         this.activatedRoute.params.forEach((params: Params) => {
             this.newsService.getNewsItem(+params['id']).subscribe(
@@ -76,8 +74,8 @@ export class NewsDetailComponent implements OnInit, OnDestroy {
                     if (response) {
                         this.news = response;
                         this.titleService.setTitle(this.news.title);
-                        let userId = this.authenticatedUser ? this.authenticatedUser.id.toString() : '';
-                        this.addCommentForm.patchValue({news_id: this.news.id, user_id: userId});
+                        const userId = this.authenticatedUser ? this.authenticatedUser.id.toString() : '';
+                        this.addCommentForm.patchValue({ news_id: this.news.id, user_id: userId });
                     }
                 },
                 error => {
@@ -91,20 +89,20 @@ export class NewsDetailComponent implements OnInit, OnDestroy {
         this.spinnerButton = true;
         this.commentService.createComment(value).subscribe(
             response => {
-                this.newsService.getNewsItem(value.news_id)
-                    .subscribe(
-                        response => {
-                            this.news = response;
-                        },
-                        error => {
-                            this.errorNews = error;
-                        });
+                this.newsService.getNewsItem(value.news_id).subscribe(
+                    response => {
+                        this.news = response;
+                    },
+                    error => {
+                        this.errorNews = error;
+                    }
+                );
                 this.notificationService.success('Успішно', 'Новий коментар додано');
-                this.addCommentForm.reset({news_id: this.news.id, user_id: this.authenticatedUser.id});
+                this.addCommentForm.reset({ news_id: this.news.id, user_id: this.authenticatedUser.id });
                 this.spinnerButton = false;
             },
             errors => {
-                for (let error of errors) {
+                for (const error of errors) {
                     this.notificationService.error('Помилка', error);
                 }
                 this.spinnerButton = false;

@@ -1,39 +1,36 @@
-import { Component, OnInit }                    from '@angular/core';
-import { FormControl, FormGroup, Validators }   from '@angular/forms';
-import { Router }                               from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 
-import { environment }                          from '../../../../environments/environment';
-import { ImageService }                         from '../../../core/image.service';
-import { NotificationsService }                 from 'angular2-notifications';
-import { NewsService }                          from '../../../news/shared/news.service';
+import { environment } from '../../../../environments/environment';
+import { ImageService } from '../../../core/image.service';
+import { NotificationsService } from 'angular2-notifications';
+import { NewsService } from '../../../news/shared/news.service';
 
 @Component({
-  selector: 'app-news-create',
-  templateUrl: './news-create.component.html',
-  styleUrls: ['./news-create.component.css']
+    selector: 'app-news-create',
+    templateUrl: './news-create.component.html',
+    styleUrls: ['./news-create.component.css']
 })
 export class NewsCreateComponent implements OnInit {
-
     constructor(
         private imageService: ImageService,
         private notificationService: NotificationsService,
         private newsService: NewsService,
         private router: Router
     ) {
-        imageService.uploadedImage$.subscribe(
-            response => {
-                this.newsCreateForm.patchValue({image: response});
-                this.errorImage = null;
-            }
-        );
-        imageService.uploadError$.subscribe(
-            response => { this.errorImage = response }
-        );
+        imageService.uploadedImage$.subscribe(response => {
+            this.newsCreateForm.patchValue({ image: response });
+            this.errorImage = null;
+        });
+        imageService.uploadError$.subscribe(response => {
+            this.errorImage = response;
+        });
     }
 
     errorImage: string;
     newsCreateForm: FormGroup;
-    spinnerButton: boolean = false;
+    spinnerButton = false;
 
     fileChange(event) {
         this.imageService.fileChange(event, environment.imageSettings.news);
@@ -57,8 +54,8 @@ export class NewsCreateComponent implements OnInit {
                 this.spinnerButton = false;
             },
             errors => {
-                for (let error of errors) {
-                   this.notificationService.error('Помилка', error);
+                for (const error of errors) {
+                    this.notificationService.error('Помилка', error);
                 }
                 this.spinnerButton = false;
             }

@@ -1,9 +1,9 @@
-import { Component, OnInit }    from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
-import { environment }          from '../../../../environments/environment';
+import { environment } from '../../../../environments/environment';
 import { NotificationsService } from 'angular2-notifications';
-import { TeamMatchService }     from '../../../team/shared/team-match.service';
-import { TeamMatch }            from '../../../shared/models/team-match.model';
+import { TeamMatchService } from '../../../team/shared/team-match.service';
+import { TeamMatch } from '../../../shared/models/team-match.model';
 
 @Component({
     selector: 'app-team-match-edit-ended',
@@ -11,11 +11,7 @@ import { TeamMatch }            from '../../../shared/models/team-match.model';
     styleUrls: ['./team-match-edit-ended.component.css']
 })
 export class TeamMatchEditEndedComponent implements OnInit {
-
-    constructor(
-        private notificationService: NotificationsService,
-        private teamMatchService: TeamMatchService,
-    ) {}
+    constructor(private notificationService: NotificationsService, private teamMatchService: TeamMatchService) {}
 
     clubsImagesUrl: string = environment.apiImageClubs;
     errorTeamMatches: string;
@@ -53,7 +49,7 @@ export class TeamMatchEditEndedComponent implements OnInit {
     }
 
     private getTeamMatchesData() {
-        const param = [{parameter: 'filter', value: 'ended'}];
+        const param = [{ parameter: 'filter', value: 'ended' }];
         this.teamMatchService.getTeamMatches(param).subscribe(
             response => {
                 if (response) {
@@ -67,7 +63,7 @@ export class TeamMatchEditEndedComponent implements OnInit {
     }
 
     private validateResult(score) {
-        let regExp = /^[0-9]$/;
+        const regExp = /^[0-9]$/;
         return regExp.test(score);
     }
 }

@@ -1,17 +1,17 @@
-import { Component, OnDestroy, OnInit }         from '@angular/core';
-import { FormControl, FormGroup, Validators }   from '@angular/forms';
-import { ActivatedRoute, Params }               from '@angular/router';
-import { Subscription }                         from 'rxjs/Subscription';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute, Params } from '@angular/router';
+import { Subscription } from 'rxjs/Subscription';
 
-import { AuthService }                          from '../../core/auth.service';
-import { CurrentStateService }                  from '../../core/current-state.service';
-import { NotificationsService }                 from 'angular2-notifications';
-import { Team }                                 from '../../shared/models/team.model';
-import { TeamService }                          from '../shared/team.service';
-import { TeamTeamMatch }                        from '../../shared/models/team-team-match.model';
-import { TeamTeamMatchService }                 from '../shared/team-team-match.service';
-import { TitleService }                         from '../../core/title.service';
-import { User }                                 from '../../shared/models/user.model';
+import { AuthService } from '../../core/auth.service';
+import { CurrentStateService } from '../../core/current-state.service';
+import { NotificationsService } from 'angular2-notifications';
+import { Team } from '../../shared/models/team.model';
+import { TeamService } from '../shared/team.service';
+import { TeamTeamMatch } from '../../shared/models/team-team-match.model';
+import { TeamTeamMatchService } from '../shared/team-team-match.service';
+import { TitleService } from '../../core/title.service';
+import { User } from '../../shared/models/user.model';
 
 declare var $: any;
 
@@ -21,7 +21,6 @@ declare var $: any;
     styleUrls: ['./team-my.component.css']
 })
 export class TeamMyComponent implements OnInit, OnDestroy {
-
     constructor(
         private activatedRoute: ActivatedRoute,
         private authService: AuthService,
@@ -30,20 +29,20 @@ export class TeamMyComponent implements OnInit, OnDestroy {
         private teamService: TeamService,
         private teamTeamMatchService: TeamTeamMatchService,
         private titleService: TitleService
-    ) { }
+    ) {}
 
     authenticatedUser: User = this.currentStateService.user;
     errorTeam: string;
     errorTeamTeamMatches: string;
-    isCaptain: boolean = false;
+    isCaptain = false;
     nextRound: string;
-    noAccess: string = 'Доступ заборонено. Увійдіть на сайт для перегляду цієї сторінки.';
-    path: string = '/team/my/round/';
+    noAccess = 'Доступ заборонено. Увійдіть на сайт для перегляду цієї сторінки.';
+    path = '/team/my/round/';
     previousRound: string;
-    spinnerButtonTeamEditForm: boolean = false;
+    spinnerButtonTeamEditForm = false;
     team: Team;
     teamEditForm: FormGroup;
-    teamEditFormHasUnsavedChanges: boolean = false;
+    teamEditFormHasUnsavedChanges = false;
     teamTeamMatches: TeamTeamMatch[];
     userSubscription: Subscription;
 
@@ -102,7 +101,9 @@ export class TeamMyComponent implements OnInit, OnDestroy {
             teamEditForm.value.id = this.team.id;
             this.teamService.updateTeam(teamEditForm.value).subscribe(
                 response => {
-                    if (response) this.team = Object.assign({}, response);
+                    if (response) {
+                        this.team = Object.assign({}, response);
+                    }
                     $('#teamEditModal').modal('hide');
                     this.notificationsService.success('Успішно', 'Команду редаговано');
                     this.spinnerButtonTeamEditForm = false;
@@ -118,7 +119,7 @@ export class TeamMyComponent implements OnInit, OnDestroy {
     }
 
     private getTeamData() {
-        let param = [{parameter: 'user_id', value: this.authenticatedUser.id.toString()}];
+        const param = [{ parameter: 'user_id', value: this.authenticatedUser.id.toString() }];
         this.teamService.getTeam(null, param).subscribe(
             response => {
                 this.resetTeamData();

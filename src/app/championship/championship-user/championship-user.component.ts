@@ -1,24 +1,23 @@
-import { Component, OnDestroy, OnInit }         from '@angular/core';
-import { ActivatedRoute, Params }               from '@angular/router';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { ActivatedRoute, Params } from '@angular/router';
 
-import { ChampionshipPrediction }               from '../../shared/models/championship-prediction.model';
-import { ChampionshipPredictionService }        from '../shared/championship-prediction.service';
-import { ChampionshipRating }                   from '../../shared/models/championship-rating.model';
-import { ChampionshipRatingService }            from '../shared/championship-rating.service';
-import { HelperService }                        from '../../core/helper.service';
-import { TitleService }                         from '../../core/title.service';
-import { User }                                 from '../../shared/models/user.model';
-import { UserService }                          from '../../core/user.service';
+import { ChampionshipPrediction } from '../../shared/models/championship-prediction.model';
+import { ChampionshipPredictionService } from '../shared/championship-prediction.service';
+import { ChampionshipRating } from '../../shared/models/championship-rating.model';
+import { ChampionshipRatingService } from '../shared/championship-rating.service';
+import { HelperService } from '../../core/helper.service';
+import { TitleService } from '../../core/title.service';
+import { User } from '../../shared/models/user.model';
+import { UserService } from '../../core/user.service';
 
 declare const $: any;
 
 @Component({
-  selector: 'app-championship-user',
-  templateUrl: './championship-user.component.html',
-  styleUrls: ['./championship-user.component.css']
+    selector: 'app-championship-user',
+    templateUrl: './championship-user.component.html',
+    styleUrls: ['./championship-user.component.css']
 })
 export class ChampionshipUserComponent implements OnInit, OnDestroy {
-
     constructor(
         private activatedRoute: ActivatedRoute,
         private championshipPredictionService: ChampionshipPredictionService,
@@ -26,7 +25,7 @@ export class ChampionshipUserComponent implements OnInit, OnDestroy {
         public helperService: HelperService,
         private titleService: TitleService,
         private userService: UserService
-    ) { }
+    ) {}
 
     championshipPredictions: ChampionshipPrediction[];
     championshipRatingItem: ChampionshipRating;
@@ -48,7 +47,7 @@ export class ChampionshipUserComponent implements OnInit, OnDestroy {
     }
 
     private getChampionshipPredictionsData(userId: number) {
-        let param = [{parameter: 'user_id', value: userId.toString()}];
+        const param = [{ parameter: 'user_id', value: userId.toString() }];
         this.championshipPredictionService.getChampionshipPredictions(param).subscribe(
             response => {
                 if (response) {

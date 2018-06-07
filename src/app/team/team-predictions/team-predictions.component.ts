@@ -1,17 +1,17 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { ActivatedRoute, Params }       from '@angular/router';
-import { Subscription }                 from 'rxjs/Subscription';
+import { ActivatedRoute, Params } from '@angular/router';
+import { Subscription } from 'rxjs/Subscription';
 
-import { AuthService }                  from '../../core/auth.service';
-import { CurrentStateService }          from '../../core/current-state.service';
-import { TeamMatch }                    from '../../shared/models/team-match.model';
-import { TeamMatchService }             from '../shared/team-match.service';
-import { TeamTeamMatch }                from '../../shared/models/team-team-match.model';
-import { TeamTeamMatchService }         from '../shared/team-team-match.service';
-import { TeamPrediction }               from '../../shared/models/team-prediction.model';
-import { TeamPredictionService }        from '../shared/team-prediction.service';
-import { TitleService }                 from '../../core/title.service';
-import { User }                         from '../../shared/models/user.model';
+import { AuthService } from '../../core/auth.service';
+import { CurrentStateService } from '../../core/current-state.service';
+import { TeamMatch } from '../../shared/models/team-match.model';
+import { TeamMatchService } from '../shared/team-match.service';
+import { TeamTeamMatch } from '../../shared/models/team-team-match.model';
+import { TeamTeamMatchService } from '../shared/team-team-match.service';
+import { TeamPrediction } from '../../shared/models/team-prediction.model';
+import { TeamPredictionService } from '../shared/team-prediction.service';
+import { TitleService } from '../../core/title.service';
+import { User } from '../../shared/models/user.model';
 
 @Component({
     selector: 'app-team-predictions',
@@ -19,7 +19,6 @@ import { User }                         from '../../shared/models/user.model';
     styleUrls: ['./team-predictions.component.css']
 })
 export class TeamPredictionsComponent implements OnInit, OnDestroy {
-
     constructor(
         private activatedRoute: ActivatedRoute,
         private authService: AuthService,
@@ -28,7 +27,7 @@ export class TeamPredictionsComponent implements OnInit, OnDestroy {
         private teamTeamMatchService: TeamTeamMatchService,
         private teamPredictionService: TeamPredictionService,
         private titleService: TitleService
-    ) { }
+    ) {}
 
     authenticatedUser: User = this.currentStateService.user;
     blockedTeamMatchFirst: TeamMatch = null;
@@ -38,9 +37,9 @@ export class TeamPredictionsComponent implements OnInit, OnDestroy {
     errorTeamPredictions: string;
     isGoalkeeper: boolean;
     nextRound: string;
-    noAccess: string = 'Доступ заборонено. Увійдіть на сайт для перегляду цієї сторінки.';
+    noAccess = 'Доступ заборонено. Увійдіть на сайт для перегляду цієї сторінки.';
     oppositeTeamId: number;
-    path: string = '/team/predictions/round/';
+    path = '/team/predictions/round/';
     previousRound: string;
     round: number;
     teamMatches: TeamMatch[];
@@ -49,8 +48,10 @@ export class TeamPredictionsComponent implements OnInit, OnDestroy {
     userSubscription: Subscription;
 
     getMyTeamMatchesData(round?: number) {
-        let param = [{parameter: 'filter', value: 'opponents'}];
-        if (round) param.push({parameter: 'round', value: round.toString()});
+        const param = [{ parameter: 'filter', value: 'opponents' }];
+        if (round) {
+            param.push({ parameter: 'round', value: round.toString() });
+        }
         this.teamMatchService.getTeamMatchesAuthUser(param).subscribe(
             response => {
                 this.resetTeamMatchesData();
@@ -69,7 +70,7 @@ export class TeamPredictionsComponent implements OnInit, OnDestroy {
     getTeamGoalkeeperData() {
         if (this.teamTeamMatches && this.authenticatedUser) {
             this.getMyTeamMatchesData(this.round);
-            for (let teamTeamMatch of this.teamTeamMatches) {
+            for (const teamTeamMatch of this.teamTeamMatches) {
                 if (this.authenticatedUser.id === teamTeamMatch.home_team_goalkeeper_id) {
                     this.oppositeTeamId = teamTeamMatch.away_team_id;
                     this.isGoalkeeper = true;
@@ -118,7 +119,7 @@ export class TeamPredictionsComponent implements OnInit, OnDestroy {
     }
 
     setBlockedMatches(teamMatches: TeamMatch[]) {
-        for (let teamMatch of teamMatches) {
+        for (const teamMatch of teamMatches) {
             if (teamMatch.team_predictions && teamMatch.team_predictions[0] && teamMatch.team_predictions[0].blocked_by) {
                 if (!this.blockedTeamMatchFirst) {
                     this.blockedTeamMatchFirst = teamMatch;
@@ -148,19 +149,18 @@ export class TeamPredictionsComponent implements OnInit, OnDestroy {
     }
 
     private getTeamPredictionsData(round?: number) {
-        this.teamPredictionService.getTeamPredictions(round ? [{parameter: 'round', value: round.toString()}] : null)
-            .subscribe(
-                response => {
-                    this.resetTeamPredictionsData();
-                    if (response) {
-                        this.teamPredictions = response.team_predictions;
-                    }
-                },
-                error => {
-                    this.resetTeamPredictionsData();
-                    this.errorTeamPredictions = error;
+        this.teamPredictionService.getTeamPredictions(round ? [{ parameter: 'round', value: round.toString() }] : null).subscribe(
+            response => {
+                this.resetTeamPredictionsData();
+                if (response) {
+                    this.teamPredictions = response.team_predictions;
                 }
-            );
+            },
+            error => {
+                this.resetTeamPredictionsData();
+                this.errorTeamPredictions = error;
+            }
+        );
     }
 
     private resetTeamPredictionsData(): void {

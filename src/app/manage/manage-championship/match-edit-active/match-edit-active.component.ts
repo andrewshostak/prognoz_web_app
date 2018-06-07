@@ -1,12 +1,12 @@
-import { Component, OnInit }                    from '@angular/core';
-import { FormBuilder, FormGroup, Validators }   from '@angular/forms';
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
-import { ChampionshipMatch }                    from '../../../shared/models/championship-match.model';
-import { ChampionshipMatchService }             from '../../../championship/shared/championship-match.service';
-import { Club }                                 from '../../../shared/models/club.model';
-import { ClubService }                          from '../../../core/club.service';
-import { environment }                          from '../../../../environments/environment';
-import { NotificationsService }                 from 'angular2-notifications';
+import { ChampionshipMatch } from '../../../shared/models/championship-match.model';
+import { ChampionshipMatchService } from '../../../championship/shared/championship-match.service';
+import { Club } from '../../../shared/models/club.model';
+import { ClubService } from '../../../core/club.service';
+import { environment } from '../../../../environments/environment';
+import { NotificationsService } from 'angular2-notifications';
 
 @Component({
     selector: 'app-match-edit-active',
@@ -14,13 +14,12 @@ import { NotificationsService }                 from 'angular2-notifications';
     styleUrls: ['./match-edit-active.component.css']
 })
 export class MatchEditActiveComponent implements OnInit {
-
     constructor(
         private formBuilder: FormBuilder,
         private notificationService: NotificationsService,
         private championshipMatchService: ChampionshipMatchService,
         private clubService: ClubService
-    ) { }
+    ) {}
 
     championshipMatchEditActiveForm: FormGroup;
     championshipMatches: ChampionshipMatch[];
@@ -29,7 +28,7 @@ export class MatchEditActiveComponent implements OnInit {
     errorChampionshipMatches: string;
     errorClubs: string | Array<string>;
     selectedMatch: ChampionshipMatch;
-    spinnerButton: boolean = false;
+    spinnerButton = false;
 
     ngOnInit() {
         this.championshipMatchEditActiveForm = this.formBuilder.group({
@@ -55,27 +54,26 @@ export class MatchEditActiveComponent implements OnInit {
     onSubmit() {
         if (this.selectedMatch.id) {
             this.spinnerButton = true;
-            this.championshipMatchService.updateChampionshipMatch(this.championshipMatchEditActiveForm.value)
-                .subscribe(
-                    response => {
-                        this.spinnerButton = false;
-                        this.selectedMatch = response;
+            this.championshipMatchService.updateChampionshipMatch(this.championshipMatchEditActiveForm.value).subscribe(
+                response => {
+                    this.spinnerButton = false;
+                    this.selectedMatch = response;
 
-                        this.getChampionshipMatchesData();
-                        this.notificationService.success('Успішно', 'Матч змінено');
-                    },
-                    error => {
-                        this.spinnerButton = false;
-                        this.notificationService.error('Помилка', error);
-                    }
-                );
+                    this.getChampionshipMatchesData();
+                    this.notificationService.success('Успішно', 'Матч змінено');
+                },
+                error => {
+                    this.spinnerButton = false;
+                    this.notificationService.error('Помилка', error);
+                }
+            );
         }
     }
 
     swapClubs() {
-        let t1_id = this.championshipMatchEditActiveForm.value.t1_id;
-        let t2_id = this.championshipMatchEditActiveForm.value.t2_id;
-        this.championshipMatchEditActiveForm.patchValue({t1_id: t2_id, t2_id: t1_id});
+        const t1_id = this.championshipMatchEditActiveForm.value.t1_id;
+        const t2_id = this.championshipMatchEditActiveForm.value.t2_id;
+        this.championshipMatchEditActiveForm.patchValue({ t1_id: t2_id, t2_id: t1_id });
     }
 
     resetForm() {
@@ -94,7 +92,7 @@ export class MatchEditActiveComponent implements OnInit {
     }
 
     private getChampionshipMatchesData() {
-        let param = [{parameter: 'filter', value: 'active'}];
+        const param = [{ parameter: 'filter', value: 'active' }];
         this.championshipMatchService.getChampionshipMatches(param).subscribe(
             response => {
                 if (response) {

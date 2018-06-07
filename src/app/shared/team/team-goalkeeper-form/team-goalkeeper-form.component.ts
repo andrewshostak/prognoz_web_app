@@ -1,10 +1,10 @@
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
-import { FormBuilder, FormGroup, Validators }                                       from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
-import { NotificationsService }                                                     from 'angular2-notifications';
-import { TeamMatch }                                                                from '../../models/team-match.model';
-import { TeamPredictionService }                                                    from '../../../team/shared/team-prediction.service';
-import { User }                                                                     from '../../models/user.model';
+import { NotificationsService } from 'angular2-notifications';
+import { TeamMatch } from '../../models/team-match.model';
+import { TeamPredictionService } from '../../../team/shared/team-prediction.service';
+import { User } from '../../models/user.model';
 
 @Component({
     selector: 'app-team-goalkeeper-form',
@@ -12,7 +12,6 @@ import { User }                                                                 
     styleUrls: ['./team-goalkeeper-form.component.css']
 })
 export class TeamGoalkeeperFormComponent implements OnInit, OnChanges {
-
     @Input() blockedTeamMatch: TeamMatch;
     @Input() round: number;
     @Input() teamMatches: TeamMatch[];
@@ -29,17 +28,17 @@ export class TeamGoalkeeperFormComponent implements OnInit, OnChanges {
         private formBuilder: FormBuilder,
         private notificationService: NotificationsService,
         private teamPredictionService: TeamPredictionService
-    ) { }
+    ) {}
 
     matchHasPrediction(teamMatch: TeamMatch): boolean {
         return teamMatch.team_predictions && teamMatch.team_predictions[0];
     }
 
     ngOnChanges(changes: SimpleChanges) {
-        for(const propName in changes) {
+        for (const propName in changes) {
             if (!changes[propName].firstChange && propName === 'blockedTeamMatch') {
                 if (changes[propName].currentValue) {
-                    this.teamGoalkeeperForm.patchValue({team_match_id: changes[propName].currentValue.id});
+                    this.teamGoalkeeperForm.patchValue({ team_match_id: changes[propName].currentValue.id });
                 }
             }
             if (!changes[propName].firstChange && propName === 'teamMatches') {
@@ -65,10 +64,10 @@ export class TeamGoalkeeperFormComponent implements OnInit, OnChanges {
     onSubmit() {
         if (this.teamGoalkeeperForm.valid) {
             this.spinnerButton = true;
-            let selectedTeamMatch = this.teamMatches.find((teamMatch) => {
+            const selectedTeamMatch = this.teamMatches.find(teamMatch => {
                 return teamMatch.id === parseInt(this.teamGoalkeeperForm.value.team_match_id);
             });
-            let teamPrediction = {
+            const teamPrediction = {
                 id: this.matchHasPrediction(selectedTeamMatch) ? selectedTeamMatch.team_predictions[0].id : null,
                 team_id: this.oppositeTeamId,
                 team_match_id: selectedTeamMatch.id,

@@ -1,11 +1,11 @@
-import { Component, EventEmitter, Input, OnInit, Output }   from '@angular/core';
-import { FormBuilder, FormGroup, Validators }               from '@angular/forms';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
-import { environment }                                      from '../../../../environments/environment';
-import { HelperService }                                    from '../../../core/helper.service';
-import { NotificationsService }                             from 'angular2-notifications';
-import { TeamPrediction }                                   from '../../models/team-prediction.model';
-import { TeamPredictionService }                            from '../../../team/shared/team-prediction.service';
+import { environment } from '../../../../environments/environment';
+import { HelperService } from '../../../core/helper.service';
+import { NotificationsService } from 'angular2-notifications';
+import { TeamPrediction } from '../../models/team-prediction.model';
+import { TeamPredictionService } from '../../../team/shared/team-prediction.service';
 
 @Component({
     selector: 'app-team-prediction-form',
@@ -13,7 +13,6 @@ import { TeamPredictionService }                            from '../../../team/
     styleUrls: ['./team-prediction-form.component.css']
 })
 export class TeamPredictionFormComponent implements OnInit {
-
     @Input() teamPrediction: TeamPrediction;
     @Output() teamPredictionUpdated = new EventEmitter<any>();
 
@@ -26,7 +25,7 @@ export class TeamPredictionFormComponent implements OnInit {
         private formBuilder: FormBuilder,
         private notificationService: NotificationsService,
         private teamPredictionService: TeamPredictionService
-    ) { }
+    ) {}
 
     ngOnInit() {
         this.teamPredictionUpdateForm = new FormGroup({});
@@ -41,24 +40,24 @@ export class TeamPredictionFormComponent implements OnInit {
     onSubmit() {
         if (this.teamPredictionUpdateForm.valid) {
             this.spinnerButton = true;
-            let teamPredictionToUpdate = {
+            const teamPredictionToUpdate = {
                 id: this.teamPrediction.id,
                 team_match_id: this.teamPrediction.team_match_id,
                 team_id: this.teamPrediction.team_id,
                 home: this.teamPredictionUpdateForm.value.home,
                 away: this.teamPredictionUpdateForm.value.away
             };
-            this.teamPredictionService.updateTeamPrediction(teamPredictionToUpdate)
-                .subscribe(
-                    response => {
-                        this.teamPredictionUpdated.emit();
-                        this.notificationService.success('Успішно', 'Прогноз прийнято');
-                        this.spinnerButton = false;
-                    },
-                    errors => {
-                        errors.forEach(error => this.notificationService.error('Помилка', error));
-                        this.spinnerButton = false;
-                    });
+            this.teamPredictionService.updateTeamPrediction(teamPredictionToUpdate).subscribe(
+                response => {
+                    this.teamPredictionUpdated.emit();
+                    this.notificationService.success('Успішно', 'Прогноз прийнято');
+                    this.spinnerButton = false;
+                },
+                errors => {
+                    errors.forEach(error => this.notificationService.error('Помилка', error));
+                    this.spinnerButton = false;
+                }
+            );
         }
     }
 }

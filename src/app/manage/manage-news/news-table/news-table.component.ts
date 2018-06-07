@@ -1,24 +1,23 @@
-import { Component, OnInit }              from '@angular/core';
-import { ActivatedRoute, Params }         from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Params } from '@angular/router';
 
-import { NotificationsService }           from 'angular2-notifications';
-import { News }                           from '../../../shared/models/news.model';
-import { NewsService }                    from '../../../news/shared/news.service';
+import { NotificationsService } from 'angular2-notifications';
+import { News } from '../../../shared/models/news.model';
+import { NewsService } from '../../../news/shared/news.service';
 
 declare var $: any;
 
 @Component({
-  selector: 'app-news-table',
-  templateUrl: './news-table.component.html',
-  styleUrls: ['./news-table.component.css']
+    selector: 'app-news-table',
+    templateUrl: './news-table.component.html',
+    styleUrls: ['./news-table.component.css']
 })
 export class NewsTableComponent implements OnInit {
-
     constructor(
         private activatedRoute: ActivatedRoute,
         private notificationService: NotificationsService,
         private newsService: NewsService
-    ) { }
+    ) {}
 
     confirmModalData: any;
     confirmModalId: string;
@@ -28,7 +27,7 @@ export class NewsTableComponent implements OnInit {
     errorNews: string | Array<string>;
     news: News[];
     lastPage: number;
-    path: string = '/manage/news/page/';
+    path = '/manage/news/page/';
     perPage: number;
     total: number;
 
@@ -51,7 +50,7 @@ export class NewsTableComponent implements OnInit {
                 $('#' + this.confirmModalId).modal('hide');
             },
             errors => {
-                for (let error of errors) {
+                for (const error of errors) {
                     this.notificationService.error('Помилка', error);
                 }
                 this.confirmSpinnerButton = false;

@@ -1,15 +1,13 @@
-import { Injectable }               from '@angular/core';
-import { FormGroup }                from '@angular/forms';
+import { Injectable } from '@angular/core';
+import { FormGroup } from '@angular/forms';
 
-import { ChampionshipPrediction }   from '../shared/models/championship-prediction.model';
-import { TeamMatch }                from '../shared/models/team-match.model';
-import { ChampionshipMatch }        from '../shared/models/championship-match.model';
+import { ChampionshipPrediction } from '../shared/models/championship-prediction.model';
+import { TeamMatch } from '../shared/models/team-match.model';
+import { ChampionshipMatch } from '../shared/models/championship-match.model';
 
 @Injectable()
-
 export class HelperService {
-
-    constructor() { }
+    constructor() {}
 
     /**
      * Check if score is present
@@ -18,7 +16,7 @@ export class HelperService {
      * @returns {boolean}
      */
     isScore(home: number, away: number): boolean {
-        if ((home != null) && (away != null)) {
+        if (home != null && away != null) {
             return true;
         }
         return false;
@@ -41,7 +39,7 @@ export class HelperService {
      * @param predictAway
      * @returns {number}
      */
-    getUserPointsOnMatch(resultHome: number, resultAway:number , predictHome:number , predictAway:number) {
+    getUserPointsOnMatch(resultHome: number, resultAway: number, predictHome: number, predictAway: number) {
         let points = 0;
         switch (true) {
             // home team wins
@@ -49,11 +47,11 @@ export class HelperService {
                 if (predictHome > predictAway) {
                     switch (true) {
                         // full guessed (3 points)
-                        case ((resultHome === predictHome) && (resultAway === predictAway)):
+                        case resultHome === predictHome && resultAway === predictAway:
                             points = 3;
                             break;
                         // guessed goal difference
-                        case ((resultHome - predictHome) === (resultAway - predictAway)):
+                        case resultHome - predictHome === resultAway - predictAway:
                             points = 2;
                             break;
                         // guessed match winner
@@ -68,14 +66,14 @@ export class HelperService {
                 if (predictHome < predictAway) {
                     switch (true) {
                         // full guessed (3 points)
-                        case ((resultHome === predictHome) && (resultAway === predictAway)):
+                        case resultHome === predictHome && resultAway === predictAway:
                             points = 3;
                             break;
-                            // guessed goal difference
-                        case ((resultHome - predictHome) === (resultAway - predictAway)):
+                        // guessed goal difference
+                        case resultHome - predictHome === resultAway - predictAway:
                             points = 2;
                             break;
-                            // guessed match winner
+                        // guessed match winner
                         default:
                             points = 1;
                             break;
@@ -86,11 +84,11 @@ export class HelperService {
                 if (predictHome === predictAway) {
                     switch (true) {
                         // full guessed (3 points)
-                        case ((resultHome === predictHome) && (resultAway === predictAway)):
+                        case resultHome === predictHome && resultAway === predictAway:
                             points = 3;
                             break;
                         // guessed goal difference
-                        case ((resultHome - predictHome) === (resultAway - predictAway)):
+                        case resultHome - predictHome === resultAway - predictAway:
                             points = 2;
                             break;
                     }
@@ -120,7 +118,7 @@ export class HelperService {
         if (!items.length) {
             return distinctItems;
         }
-        items.forEach((item) => {
+        items.forEach(item => {
             if (!distinctItems.find(distinctItem => distinctItem[key] === item[key])) {
                 distinctItems.push(item);
             }
@@ -136,7 +134,7 @@ export class HelperService {
      */
     groupBy(list: any[], keyGetter) {
         const map = new Map();
-        list.forEach((item) => {
+        list.forEach(item => {
             const key = keyGetter(item);
             const collection = map.get(key);
             if (!collection) {
@@ -165,7 +163,7 @@ export class HelperService {
      * @returns {string}
      */
     showScore(home, away, noScore: string) {
-        if ((home != null) && (away != null)) {
+        if (home != null && away != null) {
             return home + ' : ' + away;
         }
 
@@ -179,20 +177,24 @@ export class HelperService {
      * @returns {ChampionshipPrediction[]}
      */
     createChampionshipPredictionsArray(championshipPredictionsForm: FormGroup): ChampionshipPrediction[] {
-        let championshipPredictionsToUpdate: ChampionshipPrediction[] = [];
-        for (let championshipPrediction in championshipPredictionsForm.value) {
-            let championshipMatchId = parseInt(championshipPrediction.split('_')[0]);
+        const championshipPredictionsToUpdate: ChampionshipPrediction[] = [];
+        for (const championshipPrediction in championshipPredictionsForm.value) {
+            const championshipMatchId = parseInt(championshipPrediction.split('_')[0]);
             // If there is no predictions on match
-            if ((championshipPredictionsForm.value[championshipMatchId + '_home'] === null) &&
-                (championshipPredictionsForm.value[championshipMatchId + '_away'] === null)) {
+            if (
+                championshipPredictionsForm.value[championshipMatchId + '_home'] === null &&
+                championshipPredictionsForm.value[championshipMatchId + '_away'] === null
+            ) {
                 continue;
             }
             // I don't know why I did that, but it works:
-            let currentMatch = championshipPredictionsToUpdate.find(myObj => myObj.match_id === championshipMatchId);
+            const currentMatch = championshipPredictionsToUpdate.find(myObj => myObj.match_id === championshipMatchId);
             if (!currentMatch) {
                 // If there is prediction only on home team
-                if ((championshipPredictionsForm.value[championshipMatchId + '_home'] !== null) &&
-                    (championshipPredictionsForm.value[championshipMatchId + '_away'] === null)) {
+                if (
+                    championshipPredictionsForm.value[championshipMatchId + '_home'] !== null &&
+                    championshipPredictionsForm.value[championshipMatchId + '_away'] === null
+                ) {
                     championshipPredictionsToUpdate.push({
                         match_id: championshipMatchId,
                         home: championshipPredictionsForm.value[championshipMatchId + '_home'],
@@ -201,8 +203,10 @@ export class HelperService {
                     continue;
                 }
                 // If there is prediction only on away team
-                if ((championshipPredictionsForm.value[championshipMatchId + '_home'] === null) &&
-                    (championshipPredictionsForm.value[championshipMatchId + '_away'] !== null)) {
+                if (
+                    championshipPredictionsForm.value[championshipMatchId + '_home'] === null &&
+                    championshipPredictionsForm.value[championshipMatchId + '_away'] !== null
+                ) {
                     championshipPredictionsToUpdate.push({
                         match_id: championshipMatchId,
                         home: 0,
@@ -227,14 +231,19 @@ export class HelperService {
      * @param championshipPrediction
      * @returns {boolean}
      */
-    isChampionshipMatchGuessed(championshipMatch: ChampionshipMatch,
-                               championshipPrediction: ChampionshipPrediction): boolean {
+    isChampionshipMatchGuessed(championshipMatch: ChampionshipMatch, championshipPrediction: ChampionshipPrediction): boolean {
         if (!championshipMatch.ended) {
             return false;
         }
         if (this.isScore(championshipPrediction.home, championshipPrediction.away)) {
-            if (this.getUserPointsOnMatch(championshipMatch.home, championshipMatch.away,
-                    championshipPrediction.home, championshipPrediction.away) === 3) {
+            if (
+                this.getUserPointsOnMatch(
+                    championshipMatch.home,
+                    championshipMatch.away,
+                    championshipPrediction.home,
+                    championshipPrediction.away
+                ) === 3
+            ) {
                 return true;
             }
         }
@@ -249,10 +258,14 @@ export class HelperService {
      * @returns {boolean}
      */
     isTeamMatchGuessed(teamMatch: TeamMatch, teamId: number): boolean {
-        if (!teamMatch.ended) return false;
+        if (!teamMatch.ended) {
+            return false;
+        }
         if (teamMatch.team_predictions) {
-            let teamPrediction = teamMatch.team_predictions.find((teamPrediction) => teamId === teamPrediction.team_id);
-            if (!teamPrediction) return false;
+            const teamPrediction = teamMatch.team_predictions.find(teamPrediction => teamId === teamPrediction.team_id);
+            if (!teamPrediction) {
+                return false;
+            }
             if (this.getUserPointsOnMatch(teamMatch.home, teamMatch.away, teamPrediction.home, teamPrediction.away) === 3) {
                 return true;
             }
@@ -268,11 +281,17 @@ export class HelperService {
      * @returns {boolean}
      */
     isTeamMatchBlocked(teamMatch: TeamMatch, teamId: number): boolean {
-        if (!teamMatch.ended) return false;
+        if (!teamMatch.ended) {
+            return false;
+        }
         if (teamMatch.team_predictions) {
-            let teamPrediction = teamMatch.team_predictions.find((teamPrediction) => teamId === teamPrediction.team_id);
-            if (!teamPrediction) return false;
-            if (teamPrediction.blocked_by) return true;
+            const teamPrediction = teamMatch.team_predictions.find(teamPrediction => teamId === teamPrediction.team_id);
+            if (!teamPrediction) {
+                return false;
+            }
+            if (teamPrediction.blocked_by) {
+                return true;
+            }
         }
 
         return false;

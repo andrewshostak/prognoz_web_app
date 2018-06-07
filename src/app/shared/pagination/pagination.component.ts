@@ -1,13 +1,12 @@
 import { Component, Input, OnChanges, SimpleChange } from '@angular/core';
-import { Router }                                    from '@angular/router';
+import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-pagination',
-  templateUrl: './pagination.component.html',
-  styleUrls: ['./pagination.component.css']
+    selector: 'app-pagination',
+    templateUrl: './pagination.component.html',
+    styleUrls: ['./pagination.component.css']
 })
 export class PaginationComponent implements OnChanges {
-
     @Input() totalItems: number;
     @Input() currentPage: number;
     @Input() pageSize: number;
@@ -15,20 +14,18 @@ export class PaginationComponent implements OnChanges {
 
     pager: any = {};
 
-    constructor(
-        private router: Router
-    ) {}
+    constructor(private router: Router) {}
 
-    ngOnChanges(changes: {[propKey: string]: SimpleChange}) {
+    ngOnChanges(changes: { [propKey: string]: SimpleChange }) {
         if (this.totalItems) {
             this.pager = this.getPage(this.totalItems, this.currentPage, this.pageSize);
         }
     }
 
     private getPage(totalItems: number, current: number, perPage: number) {
-        let currentPage = current || 1;
-        let pageSize = perPage || 10;
-        let totalPages = Math.ceil(totalItems / pageSize);
+        const currentPage = current || 1;
+        const pageSize = perPage || 10;
+        const totalPages = Math.ceil(totalItems / pageSize);
         let startPage, endPage;
 
         if (totalPages <= 10) {
@@ -47,10 +44,10 @@ export class PaginationComponent implements OnChanges {
             }
         }
 
-        let startIndex = (currentPage - 1) * pageSize;
-        let endIndex = Math.min(startIndex + pageSize - 1, totalItems - 1);
+        const startIndex = (currentPage - 1) * pageSize;
+        const endIndex = Math.min(startIndex + pageSize - 1, totalItems - 1);
 
-        let pages = [];
+        const pages = [];
         for (let i = startPage; i < endPage + 1; i++) {
             pages.push(i);
         }

@@ -1,12 +1,12 @@
-import { Component, OnInit }                    from '@angular/core';
-import { FormBuilder, FormGroup, Validators }   from '@angular/forms';
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
-import { Club }                                 from '../../../shared/models/club.model';
-import { ClubService }                          from '../../../core/club.service';
-import { environment }                          from '../../../../environments/environment';
-import { TeamMatch }                            from '../../../shared/models/team-match.model';
-import { TeamMatchService }                     from '../../../team/shared/team-match.service';
-import { NotificationsService }                 from 'angular2-notifications';
+import { Club } from '../../../shared/models/club.model';
+import { ClubService } from '../../../core/club.service';
+import { environment } from '../../../../environments/environment';
+import { TeamMatch } from '../../../shared/models/team-match.model';
+import { TeamMatchService } from '../../../team/shared/team-match.service';
+import { NotificationsService } from 'angular2-notifications';
 
 @Component({
     selector: 'app-team-match-edit-active',
@@ -14,20 +14,19 @@ import { NotificationsService }                 from 'angular2-notifications';
     styleUrls: ['./team-match-edit-active.component.css']
 })
 export class TeamMatchEditActiveComponent implements OnInit {
-
     constructor(
         private clubService: ClubService,
         private formBuilder: FormBuilder,
         private notificationService: NotificationsService,
-        private teamMatchService: TeamMatchService,
-    ) { }
+        private teamMatchService: TeamMatchService
+    ) {}
 
     clubs: Club[];
     clubsImagesUrl: string = environment.apiImageClubs;
     errorClubs: string;
     errorTeamMatches: string;
     selectedMatch: TeamMatch;
-    spinnerButton: boolean = false;
+    spinnerButton = false;
     teamMatchEditActiveForm: FormGroup;
     teamMatches: TeamMatch[];
 
@@ -55,26 +54,25 @@ export class TeamMatchEditActiveComponent implements OnInit {
     onSubmit() {
         if (this.teamMatchEditActiveForm.valid && this.selectedMatch) {
             this.spinnerButton = true;
-            this.teamMatchService.updateTeamMatch(this.teamMatchEditActiveForm.value)
-                .subscribe(
-                    response => {
-                        this.selectedMatch = response;
-                        this.getTeamMatchesData();
-                        this.notificationService.success('Успішно', 'Матч змінено');
-                        this.spinnerButton = false;
-                    },
-                    errors => {
-                        errors.forEach(error => this.notificationService.error('Помилка', error));
-                        this.spinnerButton = false;
-                    }
-                );
+            this.teamMatchService.updateTeamMatch(this.teamMatchEditActiveForm.value).subscribe(
+                response => {
+                    this.selectedMatch = response;
+                    this.getTeamMatchesData();
+                    this.notificationService.success('Успішно', 'Матч змінено');
+                    this.spinnerButton = false;
+                },
+                errors => {
+                    errors.forEach(error => this.notificationService.error('Помилка', error));
+                    this.spinnerButton = false;
+                }
+            );
         }
     }
 
     swapClubs() {
-        let t1_id = this.teamMatchEditActiveForm.value.t1_id;
-        let t2_id = this.teamMatchEditActiveForm.value.t2_id;
-        this.teamMatchEditActiveForm.patchValue({t1_id: t2_id, t2_id: t1_id});
+        const t1_id = this.teamMatchEditActiveForm.value.t1_id;
+        const t2_id = this.teamMatchEditActiveForm.value.t2_id;
+        this.teamMatchEditActiveForm.patchValue({ t1_id: t2_id, t2_id: t1_id });
     }
 
     resetForm() {
@@ -93,7 +91,7 @@ export class TeamMatchEditActiveComponent implements OnInit {
     }
 
     private getTeamMatchesData() {
-        let param = [{parameter: 'filter', value: 'active'}];
+        const param = [{ parameter: 'filter', value: 'active' }];
         this.teamMatchService.getTeamMatches(param).subscribe(
             response => {
                 if (response) {

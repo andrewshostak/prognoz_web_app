@@ -1,31 +1,25 @@
-import { Component, OnInit }                from '@angular/core';
-import { ActivatedRoute, Params }           from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Params } from '@angular/router';
 
-import { environment }                      from '../../../environments/environment';
-import { News }                             from '../../shared/models/news.model';
-import { NewsService }                      from '../shared/news.service';
-import { TitleService }                     from '../../core/title.service';
+import { environment } from '../../../environments/environment';
+import { News } from '../../shared/models/news.model';
+import { NewsService } from '../shared/news.service';
+import { TitleService } from '../../core/title.service';
 
 @Component({
-  selector: 'app-news-list',
-  templateUrl: './news-list.component.html',
-  styleUrls: ['./news-list.component.css']
+    selector: 'app-news-list',
+    templateUrl: './news-list.component.html',
+    styleUrls: ['./news-list.component.css']
 })
-
 export class NewsListComponent implements OnInit {
-
-    constructor(
-        private activatedRoute: ActivatedRoute,
-        private newsService: NewsService,
-        private titleService: TitleService
-    ) { }
+    constructor(private activatedRoute: ActivatedRoute, private newsService: NewsService, private titleService: TitleService) {}
 
     currentPage: number;
     errorNews: string | Array<string>;
     news: News[];
     lastPage: number;
     newsImagesUrl: string = environment.apiImageNews;
-    path: string = '/news/page/';
+    path = '/news/page/';
     perPage: number;
     total: number;
 

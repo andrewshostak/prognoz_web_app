@@ -1,9 +1,9 @@
-import { Component, OnInit }                    from '@angular/core';
-import { FormControl, FormGroup, Validators }   from '@angular/forms';
-import { Router }                               from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 
-import { NotificationsService }                 from 'angular2-notifications';
-import { SeasonService }                        from '../../../core/season.service';
+import { NotificationsService } from 'angular2-notifications';
+import { SeasonService } from '../../../core/season.service';
 
 @Component({
     selector: 'app-season-create',
@@ -11,15 +11,10 @@ import { SeasonService }                        from '../../../core/season.servi
     styleUrls: ['./season-create.component.css']
 })
 export class SeasonCreateComponent implements OnInit {
-
-    constructor(
-        private notificationService: NotificationsService,
-        private router: Router,
-        private seasonService: SeasonService
-    ) { }
+    constructor(private notificationService: NotificationsService, private router: Router, private seasonService: SeasonService) {}
 
     seasonCreateForm: FormGroup;
-    spinnerButton: boolean = false;
+    spinnerButton = false;
 
     ngOnInit() {
         this.seasonCreateForm = new FormGroup({
@@ -36,12 +31,11 @@ export class SeasonCreateComponent implements OnInit {
                 this.spinnerButton = false;
             },
             errors => {
-                for (let error of errors) {
-                  this.notificationService.error('Помилка', error);
+                for (const error of errors) {
+                    this.notificationService.error('Помилка', error);
                 }
                 this.spinnerButton = false;
             }
         );
     }
-
 }

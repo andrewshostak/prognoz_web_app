@@ -1,18 +1,15 @@
-import { Injectable }                            from '@angular/core';
+import { Injectable } from '@angular/core';
 import { CanActivate, CanActivateChild, Router } from '@angular/router';
 
 @Injectable()
 export class ManageChampionshipGuard implements CanActivate, CanActivateChild {
-
-    constructor(
-        private router: Router
-    ) {}
+    constructor(private router: Router) {}
 
     canActivate() {
         return this.checkRole();
     }
 
-    canActivateChild(){
+    canActivateChild() {
         return this.checkRole();
     }
 
@@ -22,9 +19,9 @@ export class ManageChampionshipGuard implements CanActivate, CanActivateChild {
      */
     checkRole(): boolean {
         if (!!localStorage.getItem('roles') && !!localStorage.getItem('auth_token')) {
-            let userRoles = JSON.parse(localStorage.getItem('roles'));
-            let allowedRoles = ['admin', 'championship_editor'];
-            for (let role in userRoles) {
+            const userRoles = JSON.parse(localStorage.getItem('roles'));
+            const allowedRoles = ['admin', 'championship_editor'];
+            for (const role in userRoles) {
                 if (allowedRoles.indexOf(userRoles[role]) > -1) {
                     return true;
                 }

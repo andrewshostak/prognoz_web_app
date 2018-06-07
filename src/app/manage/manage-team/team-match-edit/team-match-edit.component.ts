@@ -1,9 +1,9 @@
-import { Component, OnInit }    from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
-import { environment }          from '../../../../environments/environment';
+import { environment } from '../../../../environments/environment';
 import { NotificationsService } from 'angular2-notifications';
-import { TeamMatch }            from '../../../shared/models/team-match.model';
-import { TeamMatchService }     from '../../../team/shared/team-match.service';
+import { TeamMatch } from '../../../shared/models/team-match.model';
+import { TeamMatchService } from '../../../team/shared/team-match.service';
 
 @Component({
     selector: 'app-team-match-edit',
@@ -11,17 +11,13 @@ import { TeamMatchService }     from '../../../team/shared/team-match.service';
     styleUrls: ['./team-match-edit.component.css']
 })
 export class TeamMatchEditComponent implements OnInit {
-
     clubsImagesUrl: string = environment.apiImageClubs;
     errorTeamMatches: string;
     spinnerButton: any = {};
     teamMatches: TeamMatch[];
     updatedMatches: any = {};
 
-    constructor(
-        private teamMatchService: TeamMatchService,
-        private notificationService: NotificationsService
-    ) { }
+    constructor(private teamMatchService: TeamMatchService, private notificationService: NotificationsService) {}
 
     ngOnInit() {
         this.getTeamMatchesData();
@@ -33,7 +29,7 @@ export class TeamMatchEditComponent implements OnInit {
             return;
         }
         this.spinnerButton['match_' + teamMatch.id] = true;
-        let teamMatchToUpdate = new TeamMatch();
+        const teamMatchToUpdate = new TeamMatch();
         teamMatchToUpdate.id = teamMatch.id;
         teamMatchToUpdate.home = teamMatch.home;
         teamMatchToUpdate.away = teamMatch.away;
@@ -52,10 +48,12 @@ export class TeamMatchEditComponent implements OnInit {
     }
 
     private getTeamMatchesData(): void {
-        let param = [{parameter: 'filter', value: 'active'}];
+        const param = [{ parameter: 'filter', value: 'active' }];
         this.teamMatchService.getTeamMatches(param).subscribe(
             response => {
-                if (response) this.teamMatches = response.team_matches;
+                if (response) {
+                    this.teamMatches = response.team_matches;
+                }
             },
             error => {
                 this.errorTeamMatches = error;
@@ -64,7 +62,7 @@ export class TeamMatchEditComponent implements OnInit {
     }
 
     private validateResult(score) {
-        let regExp = /^[0-9]$/;
+        const regExp = /^[0-9]$/;
         return regExp.test(score);
     }
 }

@@ -1,8 +1,8 @@
-import { Component, OnInit }    from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
-import { Competition }          from '../../shared/models/competition.model';
-import { CompetitionService }   from '../../core/competition.service';
-import { environment }          from '../../../environments/environment';
+import { Competition } from '../../shared/models/competition.model';
+import { CompetitionService } from '../../core/competition.service';
+import { environment } from '../../../environments/environment';
 import { NotificationsService } from 'angular2-notifications';
 
 declare var $: any;
@@ -13,18 +13,14 @@ declare var $: any;
     styleUrls: ['./manage-team.component.css']
 })
 export class ManageTeamComponent implements OnInit {
-
     errorCompetition: string;
     competition: Competition;
     confirmModalData: any;
     confirmModalId: string;
     confirmModalMessage: string;
-    confirmSpinnerButton: boolean = false;
+    confirmSpinnerButton = false;
 
-    constructor(
-        private competitionService: CompetitionService,
-        private notificationService: NotificationsService
-    ) { }
+    constructor(private competitionService: CompetitionService, private notificationService: NotificationsService) {}
 
     confirmModalSubmit(data: any) {
         switch (this.confirmModalId) {
@@ -41,7 +37,7 @@ export class ManageTeamComponent implements OnInit {
         if (this.competition) {
             if (!this.competition.active_round) {
                 return 1;
-            } else if (this.competition.active_round === (this.competition.number_of_teams * 2 - 2)) {
+            } else if (this.competition.active_round === this.competition.number_of_teams * 2 - 2) {
                 return null;
             } else {
                 return this.competition.active_round + 1;
@@ -52,15 +48,16 @@ export class ManageTeamComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.competitionService.getCompetitions(null, environment.tournaments.team.id, null, true)
-            .subscribe(
-                response => {
-                    if (response) this.competition = response.competition;
-                },
-                error => {
-                    this.errorCompetition = error;
+        this.competitionService.getCompetitions(null, environment.tournaments.team.id, null, true).subscribe(
+            response => {
+                if (response) {
+                    this.competition = response.competition;
                 }
-            );
+            },
+            error => {
+                this.errorCompetition = error;
+            }
+        );
     }
 
     startDraw(competition: Competition) {

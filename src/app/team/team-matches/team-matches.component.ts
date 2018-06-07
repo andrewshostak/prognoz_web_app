@@ -1,16 +1,16 @@
-import { Component, OnDestroy, OnInit }     from '@angular/core';
-import { ActivatedRoute, Params, Router }   from '@angular/router';
-import { Subscription }                     from 'rxjs/Subscription';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { ActivatedRoute, Params, Router } from '@angular/router';
+import { Subscription } from 'rxjs/Subscription';
 
-import { AuthService }                      from '../../core/auth.service';
-import { Competition }                      from '../../shared/models/competition.model';
-import { CompetitionService }               from '../../core/competition.service';
-import { CurrentStateService }              from '../../core/current-state.service';
-import { environment }                      from '../../../environments/environment';
-import { TeamTeamMatch }                    from '../../shared/models/team-team-match.model';
-import { TeamTeamMatchService }             from '../shared/team-team-match.service';
-import { TitleService }                     from '../../core/title.service';
-import { User }                             from '../../shared/models/user.model';
+import { AuthService } from '../../core/auth.service';
+import { Competition } from '../../shared/models/competition.model';
+import { CompetitionService } from '../../core/competition.service';
+import { CurrentStateService } from '../../core/current-state.service';
+import { environment } from '../../../environments/environment';
+import { TeamTeamMatch } from '../../shared/models/team-team-match.model';
+import { TeamTeamMatchService } from '../shared/team-team-match.service';
+import { TitleService } from '../../core/title.service';
+import { User } from '../../shared/models/user.model';
 
 @Component({
     selector: 'app-team-matches',
@@ -18,7 +18,6 @@ import { User }                             from '../../shared/models/user.model
     styleUrls: ['./team-matches.component.css']
 })
 export class TeamMatchesComponent implements OnInit, OnDestroy {
-
     constructor(
         private activatedRoute: ActivatedRoute,
         private authService: AuthService,
@@ -27,7 +26,7 @@ export class TeamMatchesComponent implements OnInit, OnDestroy {
         private router: Router,
         private teamTeamMatchService: TeamTeamMatchService,
         private titleService: TitleService
-    ) { }
+    ) {}
 
     authenticatedUser: User = this.currentStateService.user;
     competition: Competition;
@@ -35,7 +34,7 @@ export class TeamMatchesComponent implements OnInit, OnDestroy {
     errorTeamTeamMatches: string;
     nextRound: string;
     previousRound: string;
-    path: string = '/team/matches/round/';
+    path = '/team/matches/round/';
     round: number;
     teamTeamMatches: TeamTeamMatch[];
     userSubscription: Subscription;
@@ -80,21 +79,20 @@ export class TeamMatchesComponent implements OnInit, OnDestroy {
     }
 
     private getCompetitionData() {
-        this.competitionService.getCompetitions(null, environment.tournaments.team.id, null, true)
-            .subscribe(
-                response => {
-                    if (response) {
-                        this.competition = response.competition;
-                        if (this.competition.stated) {
-                            this.router.navigate(['/team/squads']);
-                        }
-                        this.getTeamTeamMatchesData(response.competition.round);
+        this.competitionService.getCompetitions(null, environment.tournaments.team.id, null, true).subscribe(
+            response => {
+                if (response) {
+                    this.competition = response.competition;
+                    if (this.competition.stated) {
+                        this.router.navigate(['/team/squads']);
                     }
-                },
-                error => {
-                    this.errorCompetition = error;
+                    this.getTeamTeamMatchesData(response.competition.round);
                 }
-            );
+            },
+            error => {
+                this.errorCompetition = error;
+            }
+        );
     }
 
     private resetTeamTeamMatchData(): void {

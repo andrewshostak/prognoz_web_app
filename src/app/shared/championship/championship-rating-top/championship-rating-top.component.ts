@@ -1,21 +1,17 @@
-import { Component, OnInit }         from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
-import { ChampionshipRating }        from '../../models/championship-rating.model';
+import { ChampionshipRating } from '../../models/championship-rating.model';
 import { ChampionshipRatingService } from '../../../championship/shared/championship-rating.service';
-import { environment }               from '../../../../environments/environment';
-import { HelperService }             from '../../../core/helper.service';
+import { environment } from '../../../../environments/environment';
+import { HelperService } from '../../../core/helper.service';
 
 @Component({
-  selector: 'app-championship-rating-top',
-  templateUrl: './championship-rating-top.component.html',
-  styleUrls: ['./championship-rating-top.component.css']
+    selector: 'app-championship-rating-top',
+    templateUrl: './championship-rating-top.component.html',
+    styleUrls: ['./championship-rating-top.component.css']
 })
 export class ChampionshipRatingTopComponent implements OnInit {
-
-    constructor(
-        private championshipRatingService: ChampionshipRatingService,
-        public helperService: HelperService
-    ) { }
+    constructor(private championshipRatingService: ChampionshipRatingService, public helperService: HelperService) {}
 
     championshipRatingItems: ChampionshipRating[];
     errorRating: string;
@@ -25,9 +21,9 @@ export class ChampionshipRatingTopComponent implements OnInit {
     ngOnInit() {
         this.topRating();
     }
-  
+
     topRating() {
-        let param = [{parameter: 'limit', value: '5'}];
+        const param = [{ parameter: 'limit', value: '5' }];
         this.championshipRatingService.getChampionshipRatingItems(param).subscribe(
             response => {
                 if (response) {

@@ -1,35 +1,34 @@
-import { Component, OnDestroy, OnInit }         from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 
-import { ChampionshipMatch }                    from '../../../shared/models/championship-match.model';
-import { ChampionshipMatchService }             from '../../../championship/shared/championship-match.service';
-import { ChampionshipRatingService }            from '../../../championship/shared/championship-rating.service';
-import { Club }                                 from '../../../shared/models/club.model';
-import { ClubService }                          from '../../../core/club.service';
-import { environment }                          from '../../../../environments/environment';
-import { NotificationsService }                 from 'angular2-notifications';
+import { ChampionshipMatch } from '../../../shared/models/championship-match.model';
+import { ChampionshipMatchService } from '../../../championship/shared/championship-match.service';
+import { ChampionshipRatingService } from '../../../championship/shared/championship-rating.service';
+import { Club } from '../../../shared/models/club.model';
+import { ClubService } from '../../../core/club.service';
+import { environment } from '../../../../environments/environment';
+import { NotificationsService } from 'angular2-notifications';
 
 @Component({
-  selector: 'app-match-edit-ended',
-  templateUrl: './match-edit-ended.component.html',
-  styleUrls: ['./match-edit-ended.component.css']
+    selector: 'app-match-edit-ended',
+    templateUrl: './match-edit-ended.component.html',
+    styleUrls: ['./match-edit-ended.component.css']
 })
 export class MatchEditEndedComponent implements OnInit, OnDestroy {
-
     constructor(
         private notificationService: NotificationsService,
         private championshipMatchService: ChampionshipMatchService,
         private championshipRatingService: ChampionshipRatingService,
         private clubService: ClubService
-    ) { }
+    ) {}
 
     championshipMatches: ChampionshipMatch[];
     clubs: Club[];
     clubsImagesUrl: string = environment.apiImageClubs;
     errorChampionshipMatches: string;
     errorClubs: string | Array<string>;
-    isUpdatedMatches: boolean = false;
+    isUpdatedMatches = false;
     spinnerButton: any = {};
-    spinnerUpdateRatingButton: boolean = false;
+    spinnerUpdateRatingButton = false;
     updatedMatches: any = {};
 
     ngOnDestroy() {
@@ -49,7 +48,7 @@ export class MatchEditEndedComponent implements OnInit, OnDestroy {
             return;
         }
         this.spinnerButton['match_' + match.id] = true;
-        let championshipMatch = new ChampionshipMatch;
+        const championshipMatch = new ChampionshipMatch();
         championshipMatch.id = match.id;
         championshipMatch.t1_id = match.t1_id;
         championshipMatch.t2_id = match.t2_id;
@@ -64,7 +63,7 @@ export class MatchEditEndedComponent implements OnInit, OnDestroy {
             },
             errors => {
                 this.spinnerButton['match_' + match.id] = false;
-                for (let error of errors) {
+                for (const error of errors) {
                     this.notificationService.error('Помилка', error);
                 }
             }
@@ -87,7 +86,7 @@ export class MatchEditEndedComponent implements OnInit, OnDestroy {
     }
 
     private getChampionshipMatchesData() {
-        let param = [{parameter: 'filter', value: 'ended'}];
+        const param = [{ parameter: 'filter', value: 'ended' }];
         this.championshipMatchService.getChampionshipMatches(param).subscribe(
             response => {
                 if (response) {
@@ -112,7 +111,7 @@ export class MatchEditEndedComponent implements OnInit, OnDestroy {
     }
 
     private validateResult(score) {
-        let regExp = /^[0-9]$/;
+        const regExp = /^[0-9]$/;
         return regExp.test(score);
     }
 }

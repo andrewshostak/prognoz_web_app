@@ -1,26 +1,25 @@
-import { Component, OnInit }                    from '@angular/core';
-import { FormBuilder, FormGroup, Validators }   from '@angular/forms';
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
-import { ChampionshipMatch }                    from '../../../shared/models/championship-match.model';
-import { ChampionshipMatchService }             from '../../../championship/shared/championship-match.service';
-import { Club }                                 from '../../../shared/models/club.model';
-import { ClubService }                          from '../../../core/club.service';
-import { environment }                          from '../../../../environments/environment';
-import { NotificationsService }                 from 'angular2-notifications';
+import { ChampionshipMatch } from '../../../shared/models/championship-match.model';
+import { ChampionshipMatchService } from '../../../championship/shared/championship-match.service';
+import { Club } from '../../../shared/models/club.model';
+import { ClubService } from '../../../core/club.service';
+import { environment } from '../../../../environments/environment';
+import { NotificationsService } from 'angular2-notifications';
 
 @Component({
-  selector: 'app-match-create',
-  templateUrl: './match-create.component.html',
-  styleUrls: ['./match-create.component.css']
+    selector: 'app-match-create',
+    templateUrl: './match-create.component.html',
+    styleUrls: ['./match-create.component.css']
 })
 export class MatchCreateComponent implements OnInit {
-
     constructor(
         private championshipMatchService: ChampionshipMatchService,
         private clubService: ClubService,
         private formBuilder: FormBuilder,
         private notificationService: NotificationsService
-    ) { }
+    ) {}
 
     addedMatches: Array<ChampionshipMatch> = [];
     championshipMatchCreateForm: FormGroup;
@@ -29,7 +28,7 @@ export class MatchCreateComponent implements OnInit {
     error: string | Array<string>;
     errorClubs: string | Array<string>;
     lastEnteredDate: string;
-    spinnerButton: boolean = false;
+    spinnerButton = false;
 
     ngOnInit() {
         this.championshipMatchCreateForm = this.formBuilder.group({
@@ -53,13 +52,13 @@ export class MatchCreateComponent implements OnInit {
             response => {
                 this.lastEnteredDate = response.starts_at;
                 this.resetForm();
-                this.championshipMatchCreateForm.patchValue({starts_at: this.lastEnteredDate});
+                this.championshipMatchCreateForm.patchValue({ starts_at: this.lastEnteredDate });
                 this.addedMatches.push(response);
                 this.notificationService.success('Успішно', 'Матч додано!');
                 this.spinnerButton = false;
             },
             errors => {
-                for (let error of errors) {
+                for (const error of errors) {
                     this.notificationService.error('Помилка', error);
                 }
                 this.spinnerButton = false;
@@ -72,8 +71,8 @@ export class MatchCreateComponent implements OnInit {
     }
 
     swapClubs() {
-        let t1_id = this.championshipMatchCreateForm.value.t1_id;
-        let t2_id = this.championshipMatchCreateForm.value.t2_id;
-        this.championshipMatchCreateForm.patchValue({t1_id: t2_id, t2_id: t1_id});
+        const t1_id = this.championshipMatchCreateForm.value.t1_id;
+        const t2_id = this.championshipMatchCreateForm.value.t2_id;
+        this.championshipMatchCreateForm.patchValue({ t1_id: t2_id, t2_id: t1_id });
     }
 }

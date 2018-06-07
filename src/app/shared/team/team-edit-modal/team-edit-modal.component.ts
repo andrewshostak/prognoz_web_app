@@ -1,12 +1,12 @@
-import { Component, EventEmitter, Input, OnInit, Output }   from '@angular/core';
-import { FormControl, FormGroup, Validators }               from '@angular/forms';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 
-import { Club }                                             from '../../models/club.model';
-import { ClubService }                                      from '../../../core/club.service';
-import { environment }                                      from '../../../../environments/environment';
-import { ImageService }                                     from '../../../core/image.service';
-import { NotificationsService }                             from 'angular2-notifications';
-import { Team }                                             from '../../models/team.model';
+import { Club } from '../../models/club.model';
+import { ClubService } from '../../../core/club.service';
+import { environment } from '../../../../environments/environment';
+import { ImageService } from '../../../core/image.service';
+import { NotificationsService } from 'angular2-notifications';
+import { Team } from '../../models/team.model';
 
 declare var $: any;
 
@@ -16,29 +16,20 @@ declare var $: any;
     styleUrls: ['./team-edit-modal.component.css']
 })
 export class TeamEditModalComponent implements OnInit {
-
-    @Input() hasUnsavedChanges: boolean = false;
+    @Input() hasUnsavedChanges = false;
     @Input() team: Team = null;
     @Input() spinnerButton: boolean;
     @Input() teamForm: FormGroup;
     @Output() onSubmitted = new EventEmitter<FormGroup>();
 
-    constructor(
-        private clubService: ClubService,
-        private imageService: ImageService,
-        private notificationService: NotificationsService
-    ) {
-        imageService.uploadedImage$.subscribe(
-            response => {
-                this.teamForm.patchValue({image: response});
-                this.errorImage = null;
-            }
-        );
-        imageService.uploadError$.subscribe(
-            response => {
-                this.errorImage = response;
-            }
-        );
+    constructor(private clubService: ClubService, private imageService: ImageService, private notificationService: NotificationsService) {
+        imageService.uploadedImage$.subscribe(response => {
+            this.teamForm.patchValue({ image: response });
+            this.errorImage = null;
+        });
+        imageService.uploadError$.subscribe(response => {
+            this.errorImage = response;
+        });
     }
 
     clubs: Club[];
@@ -61,7 +52,7 @@ export class TeamEditModalComponent implements OnInit {
 
     ngOnInit() {
         this.getClubsData();
-        $('#teamEditModal').on('hidden.bs.modal', (e) => {
+        $('#teamEditModal').on('hidden.bs.modal', e => {
             this.resetTeamForm();
         });
     }
@@ -84,16 +75,15 @@ export class TeamEditModalComponent implements OnInit {
     }
 
     private getClubsData() {
-        this.clubService.getClubs(null, 'clubs')
-            .subscribe(
-                response => {
-                    if (response) {
-                        this.clubs = response.clubs;
-                    }
-                },
-                error => {
-                    this.errorClubs = error;
+        this.clubService.getClubs(null, 'clubs').subscribe(
+            response => {
+                if (response) {
+                    this.clubs = response.clubs;
                 }
-            );
+            },
+            error => {
+                this.errorClubs = error;
+            }
+        );
     }
 }

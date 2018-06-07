@@ -1,20 +1,19 @@
-import { Component, OnInit }                    from '@angular/core';
-import { FormBuilder, FormGroup, Validators }   from '@angular/forms';
-import { ActivatedRoute, Router, Params }       from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute, Router, Params } from '@angular/router';
 
-import { environment }                          from '../../../../environments/environment';
-import { ImageService }                         from '../../../core/image.service';
-import { NotificationsService }                 from 'angular2-notifications';
-import { News }                                 from '../../../shared/models/news.model';
-import { NewsService }                          from '../../../news/shared/news.service';
+import { environment } from '../../../../environments/environment';
+import { ImageService } from '../../../core/image.service';
+import { NotificationsService } from 'angular2-notifications';
+import { News } from '../../../shared/models/news.model';
+import { NewsService } from '../../../news/shared/news.service';
 
 @Component({
-  selector: 'app-news-edit',
-  templateUrl: './news-edit.component.html',
-  styleUrls: ['./news-edit.component.css']
+    selector: 'app-news-edit',
+    templateUrl: './news-edit.component.html',
+    styleUrls: ['./news-edit.component.css']
 })
 export class NewsEditComponent implements OnInit {
-
     constructor(
         private activatedRoute: ActivatedRoute,
         private formBuilder: FormBuilder,
@@ -23,15 +22,13 @@ export class NewsEditComponent implements OnInit {
         private newsService: NewsService,
         private router: Router
     ) {
-        imageService.uploadedImage$.subscribe(
-            response => {
-                this.newsEditForm.patchValue({image: response});
-                this.errorImage = null;
-            }
-        );
-        imageService.uploadError$.subscribe(
-            response => { this.errorImage = response }
-        );
+        imageService.uploadedImage$.subscribe(response => {
+            this.newsEditForm.patchValue({ image: response });
+            this.errorImage = null;
+        });
+        imageService.uploadError$.subscribe(response => {
+            this.errorImage = response;
+        });
     }
 
     errorImage: string;
@@ -39,7 +36,7 @@ export class NewsEditComponent implements OnInit {
     news: News;
     newsEditForm: FormGroup;
     newsImagesUrl = environment.apiImageNews;
-    spinnerButton: boolean = false;
+    spinnerButton = false;
 
     fileChange(event) {
         this.imageService.fileChange(event, environment.imageSettings.news);
@@ -69,7 +66,8 @@ export class NewsEditComponent implements OnInit {
                 },
                 error => {
                     this.errorNews = error;
-                });
+                }
+            );
         });
     }
 
@@ -82,7 +80,7 @@ export class NewsEditComponent implements OnInit {
                 this.spinnerButton = false;
             },
             errors => {
-                for (let error of errors) {
+                for (const error of errors) {
                     this.notificationService.error('Помилка', error);
                 }
                 this.spinnerButton = false;
