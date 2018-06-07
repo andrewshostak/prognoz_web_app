@@ -49,7 +49,7 @@ export class CupApplicationsComponent implements OnInit, OnDestroy {
         id?: number
     };
     userImageDefault: string;
-    userImagesUrl: string;
+    userImagesUrl:  string;
     userSubscription: Subscription;
 
     attachApplicationsToCompetitions(): void {
@@ -62,6 +62,8 @@ export class CupApplicationsComponent implements OnInit, OnDestroy {
     }
 
     confirmApplication(cupApplication: CupApplication): void {
+        if (true) console.log('remove this');
+        //test comment
         const updateRequestData = { competition_id: cupApplication.competition_id, receiver_id: this.authenticatedUser.id, confirmed: true };
         this.confirmModalService.show(
             () => {
