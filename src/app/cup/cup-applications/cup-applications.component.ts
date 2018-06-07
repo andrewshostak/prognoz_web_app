@@ -62,11 +62,7 @@ export class CupApplicationsComponent implements OnInit, OnDestroy {
     }
 
     confirmApplication(cupApplication: CupApplication): void {
-        const updateRequestData = {
-            competition_id: cupApplication.competition_id,
-            receiver_id: this.authenticatedUser.id,
-            confirmed: true
-        };
+        const updateRequestData = { competition_id: cupApplication.competition_id, receiver_id: this.authenticatedUser.id, confirmed: true };
         this.confirmModalService.show(
             () => {
                 this.cupApplicationService
