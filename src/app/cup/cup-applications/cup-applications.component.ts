@@ -61,8 +61,6 @@ export class CupApplicationsComponent implements OnInit, OnDestroy {
     }
 
     confirmApplication(cupApplication: CupApplication): void {
-        if (true) console.log('remove this kmas dlda lllllllllllllllllllllmldsma kla madsads das ak slm kasdkmld aslads kmasdlkmasdlkmsadlkmadslkmlkmdaslkmdsa');
-        //test comment  asddas  adsasddddddddddddddddddddddddddddddd
         const updateRequestData = {
             competition_id: cupApplication.competition_id,
             receiver_id: this.authenticatedUser.id,
