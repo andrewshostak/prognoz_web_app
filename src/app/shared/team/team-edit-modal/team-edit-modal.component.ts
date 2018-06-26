@@ -20,7 +20,7 @@ export class TeamEditModalComponent implements OnInit {
     @Input() team: Team = null;
     @Input() spinnerButton: boolean;
     @Input() teamForm: FormGroup;
-    @Output() onSubmitted = new EventEmitter<FormGroup>();
+    @Output() submitted = new EventEmitter<FormGroup>();
 
     constructor(private clubService: ClubService, private imageService: ImageService, private notificationService: NotificationsService) {
         imageService.uploadedImage$.subscribe(response => {
@@ -58,7 +58,7 @@ export class TeamEditModalComponent implements OnInit {
     }
 
     onSubmit() {
-        this.onSubmitted.emit(this.teamForm);
+        this.submitted.emit(this.teamForm);
     }
 
     resetTeamForm() {

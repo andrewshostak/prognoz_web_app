@@ -31,8 +31,7 @@ export class ChampionshipCompetitionWinnersComponent implements OnInit {
             this.competitionService.getCompetition(params['competitionId']).subscribe(
                 response => {
                     this.resetCompetitionWinnerData();
-                    // husky test
-                    if (response.tournament_id != environment.tournaments.championship.id) {
+                    if (response.tournament_id !== environment.tournaments.championship.id) {
                         this.router.navigate(['/404']);
                     }
                     this.competition = response;

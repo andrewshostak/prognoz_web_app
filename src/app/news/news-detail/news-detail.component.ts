@@ -88,7 +88,7 @@ export class NewsDetailComponent implements OnInit, OnDestroy {
     onSubmit(value, valid) {
         this.spinnerButton = true;
         this.commentService.createComment(value).subscribe(
-            response => {
+            () => {
                 this.newsService.getNewsItem(value.news_id).subscribe(
                     response => {
                         this.news = response;

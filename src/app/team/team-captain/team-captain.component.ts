@@ -77,7 +77,7 @@ export class TeamCaptainComponent implements OnInit, OnDestroy {
     getPredictionDetails(teamMatch: TeamMatch, teamId: number): { name: string; prediction: string; predicted_at: string } {
         // not the same function as in team-team-match-card component - no is predictable check
         if (teamMatch.team_predictions) {
-            const teamPrediction = teamMatch.team_predictions.find(teamPrediction => teamId === teamPrediction.team_id);
+            const teamPrediction = teamMatch.team_predictions.find(prediction => teamId === prediction.team_id);
             if (teamPrediction) {
                 return {
                     name: teamPrediction.user ? teamPrediction.user.name : '-',

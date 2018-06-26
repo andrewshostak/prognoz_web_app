@@ -1,17 +1,13 @@
-import { Injectable }       from '@angular/core';
+import { Injectable } from '@angular/core';
 
-import { AuthService }      from './auth.service';
-import { PusherService }    from './pusher.service';
-import { Subject }          from 'rxjs/Subject';
-import { User }             from '../shared/models/user.model';
+import { AuthService } from './auth.service';
+import { PusherService } from './pusher.service';
+import { Subject } from 'rxjs/Subject';
+import { User } from '../shared/models/user.model';
 
 @Injectable()
 export class CurrentStateService {
-
-    constructor(
-        private authService: AuthService,
-        private pusherService: PusherService
-    ) {
+    constructor(private authService: AuthService, private pusherService: PusherService) {
         this.authService.getUser.subscribe(response => {
             this.user = response;
             this.getOnlineUsers(response);
@@ -33,7 +29,7 @@ export class CurrentStateService {
      * @param userInfo
      */
     private addOnlineUser(userId: string, userInfo: User): void {
-        this.onlineUsers.push({id: parseInt(userId), name: userInfo.name});
+        this.onlineUsers.push({ id: parseInt(userId, 10), name: userInfo.name });
     }
 
     /**
@@ -46,24 +42,23 @@ export class CurrentStateService {
             this.pusherInstance = this.pusherService.createInstance();
             const subscription = this.pusherService.subscribeToChannel(this.pusherInstance, 'presence-users');
 
-            this.pusherService.bindEvent(subscription, 'pusher:subscription_succeeded', (members) => {
+            this.pusherService.bindEvent(subscription, 'pusher:subscription_succeeded', members => {
                 this.clearOnlineUsersList();
-                members.each((member) => {
+                members.each(member => {
                     this.addOnlineUser(member.id, member.info);
                     this.onlineUserObservable.next();
                 });
             });
 
-            this.pusherService.bindEvent(subscription, 'pusher:member_added', (member) => {
+            this.pusherService.bindEvent(subscription, 'pusher:member_added', member => {
                 this.addOnlineUser(member.id, member.info);
                 this.onlineUserObservable.next();
             });
 
-            this.pusherService.bindEvent(subscription, 'pusher:member_removed', (member) => {
+            this.pusherService.bindEvent(subscription, 'pusher:member_removed', member => {
                 this.removeOnlineUser(member.id);
                 this.onlineUserObservable.next();
             });
-
         } else if (this.pusherInstance) {
             this.pusherInstance.disconnect();
             this.clearOnlineUsersList();
@@ -76,7 +71,7 @@ export class CurrentStateService {
      * @param userId
      */
     private removeOnlineUser(userId): void {
-        userId = parseInt(userId);
+        userId = parseInt(userId, 10);
         this.onlineUsers = this.onlineUsers.filter(user => user.id !== userId);
     }
 

@@ -103,16 +103,16 @@
 <app-team-edit-modal *ngIf="authenticatedUser"
                      [spinnerButton]="spinnerButton"
                      [teamForm]="teamCreateForm"
-                     (onSubmitted)="onSubmitted($event)">
+                     (submitted)="onSubmitted($event)">
 </app-team-edit-modal>
 <app-team-select-modal *ngIf="authenticatedUser"
                        [authenticatedUser]="authenticatedUser"
                        [spinnerButton]="spinnerButtonSelect"
-                       (onSubmitted)="onSubmittedSelect($event)">
+                       (submitted)="onSubmittedSelect($event)">
 </app-team-select-modal>
 <app-confirm-modal [data]="confirmModalData"
                    [modalId]="confirmModalId"
                    [message]="confirmModalMessage"
                    [spinnerButton]="confirmSpinnerButton"
-                   (onConfirmed)="confirmModalSubmit($event)">
+                   (confirmed)="confirmModalSubmit($event)">
 </app-confirm-modal>

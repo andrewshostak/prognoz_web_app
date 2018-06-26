@@ -1,18 +1,18 @@
-import { Component, OnDestroy, OnInit }                     from '@angular/core';
-import { FormArray, FormControl, FormGroup, Validators }    from '@angular/forms';
-import { Router }                                           from '@angular/router';
-import { Subscription }                                     from 'rxjs/Subscription';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { Subscription } from 'rxjs/Subscription';
 
-import { AuthService }                                      from '../core/auth.service';
-import { Club }                                             from '../shared/models/club.model';
-import { ClubService }                                      from '../core/club.service';
-import { CurrentStateService }                              from '../core/current-state.service';
-import { environment }                                      from '../../environments/environment';
-import { ImageService }                                     from '../core/image.service';
-import { NotificationsService }                             from 'angular2-notifications';
-import { TitleService }                                     from '../core/title.service';
-import { User }                                             from '../shared/models/user.model';
-import { UserService }                                      from '../core/user.service';
+import { AuthService } from '../core/auth.service';
+import { Club } from '../shared/models/club.model';
+import { ClubService } from '../core/club.service';
+import { CurrentStateService } from '../core/current-state.service';
+import { environment } from '../../environments/environment';
+import { ImageService } from '../core/image.service';
+import { NotificationsService } from 'angular2-notifications';
+import { TitleService } from '../core/title.service';
+import { User } from '../shared/models/user.model';
+import { UserService } from '../core/user.service';
 
 @Component({
     selector: 'app-me',
@@ -20,7 +20,6 @@ import { UserService }                                      from '../core/user.s
     styleUrls: ['./me.component.css']
 })
 export class MeComponent implements OnInit, OnDestroy {
-
     constructor(
         private authService: AuthService,
         private clubService: ClubService,
@@ -31,15 +30,13 @@ export class MeComponent implements OnInit, OnDestroy {
         private titleService: TitleService,
         private userService: UserService
     ) {
-        imageService.uploadedImage$.subscribe(
-            response => {
-                this.userEditForm.patchValue({image: response});
-                this.errorImage = null;
-            }
-        );
-        imageService.uploadError$.subscribe(
-            response => { this.errorImage = response }
-        );
+        imageService.uploadedImage$.subscribe(response => {
+            this.userEditForm.patchValue({ image: response });
+            this.errorImage = null;
+        });
+        imageService.uploadError$.subscribe(response => {
+            this.errorImage = response;
+        });
     }
 
     authenticatedUser: User = Object.assign({}, this.currentStateService.user);
@@ -59,10 +56,12 @@ export class MeComponent implements OnInit, OnDestroy {
     }
 
     addClub(): void {
-        this.clubUser.push(new FormGroup({
-            club_id: new FormControl(null, [Validators.required]),
-            main: new FormControl(this.clubUser.length ? 0 : 1)
-        }));
+        this.clubUser.push(
+            new FormGroup({
+                club_id: new FormControl(null, [Validators.required]),
+                main: new FormControl(this.clubUser.length ? 0 : 1)
+            })
+        );
     }
 
     disableAddClubButton(): boolean {
@@ -75,7 +74,7 @@ export class MeComponent implements OnInit, OnDestroy {
     }
 
     findClub(clubId: number): Club {
-        return this.clubs.find((club) => {
+        return this.clubs.find(club => {
             return club.id.toString() === clubId.toString();
         });
     }
@@ -123,7 +122,7 @@ export class MeComponent implements OnInit, OnDestroy {
     onSelectMainClub(index: number): void {
         this.clubUser.controls.forEach((item, i) => {
             if (index !== i) {
-                item.patchValue({main: 0});
+                item.patchValue({ main: 0 });
             }
         });
     }
@@ -141,36 +140,38 @@ export class MeComponent implements OnInit, OnDestroy {
 
     setMain(index: number = 0): void {
         if (this.clubUser.length) {
-            this.clubUser.at(index).patchValue({main: 1});
+            this.clubUser.at(index).patchValue({ main: 1 });
         }
     }
 
     private getClubsData() {
-        this.clubService.getClubs(null, 'clubs')
-            .subscribe(
-                response => {
-                    if (response) {
-                        this.clubs = response.clubs;
-                    }
-                },
-                error => {
-                    this.errorClubs = error;
+        this.clubService.getClubs(null, 'clubs').subscribe(
+            response => {
+                if (response) {
+                    this.clubs = response.clubs;
                 }
-            );
+            },
+            error => {
+                this.errorClubs = error;
+            }
+        );
     }
 
     private resetData(): void {
         this.errorImage = null;
-        this.userEditForm = new FormGroup({
-            id: new FormControl(this.authenticatedUser.id),
-            first_name: new FormControl(this.authenticatedUser.first_name, [Validators.maxLength(50)]),
-            hometown: new FormControl(this.authenticatedUser.hometown, [Validators.maxLength(50)]),
-            image: new FormControl(''),
-            club_user: new FormArray([]),
-        }, this.validateClubUser);
+        this.userEditForm = new FormGroup(
+            {
+                id: new FormControl(this.authenticatedUser.id),
+                first_name: new FormControl(this.authenticatedUser.first_name, [Validators.maxLength(50)]),
+                hometown: new FormControl(this.authenticatedUser.hometown, [Validators.maxLength(50)]),
+                image: new FormControl(''),
+                club_user: new FormArray([])
+            },
+            this.validateClubUser
+        );
 
         if (this.authenticatedUser.clubs) {
-            this.authenticatedUser.clubs.forEach((club) => {
+            this.authenticatedUser.clubs.forEach(club => {
                 this.clubUser.push(
                     new FormGroup({
                         club_id: new FormControl(club.id.toString(), [Validators.required]),
@@ -191,7 +192,7 @@ export class MeComponent implements OnInit, OnDestroy {
 
         for (const i in clubUser.controls) {
             if (clubUser.controls[i]) {
-                const control = clubUser.at(parseInt(i)).get('club_id');
+                const control = clubUser.at(parseInt(i, 10)).get('club_id');
                 if (!control || !control.value) {
                     return null;
                 }

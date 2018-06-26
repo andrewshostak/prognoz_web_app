@@ -14,7 +14,7 @@ import { User } from '../../models/user.model';
 export class TeamSelectModalComponent implements OnInit {
     @Input() authenticatedUser: User;
     @Input() spinnerButton: boolean;
-    @Output() onSubmitted = new EventEmitter<FormGroup>();
+    @Output() submitted = new EventEmitter<FormGroup>();
 
     errorTeams: string;
     noTeams = 'Ви не є капітаном жодної з команд.';
@@ -43,7 +43,7 @@ export class TeamSelectModalComponent implements OnInit {
 
     onSubmit() {
         if (this.teamSelectForm.valid) {
-            this.onSubmitted.emit(this.teamSelectForm);
+            this.submitted.emit(this.teamSelectForm);
         }
     }
 }

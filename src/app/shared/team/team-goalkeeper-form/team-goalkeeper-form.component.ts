@@ -35,7 +35,7 @@ export class TeamGoalkeeperFormComponent implements OnInit, OnChanges {
     }
 
     ngOnChanges(changes: SimpleChanges) {
-        for (const propName in changes) {
+        for (const propName of Object.keys(changes)) {
             if (!changes[propName].firstChange && propName === 'blockedTeamMatch') {
                 if (changes[propName].currentValue) {
                     this.teamGoalkeeperForm.patchValue({ team_match_id: changes[propName].currentValue.id });
@@ -65,7 +65,7 @@ export class TeamGoalkeeperFormComponent implements OnInit, OnChanges {
         if (this.teamGoalkeeperForm.valid) {
             this.spinnerButton = true;
             const selectedTeamMatch = this.teamMatches.find(teamMatch => {
-                return teamMatch.id === parseInt(this.teamGoalkeeperForm.value.team_match_id);
+                return teamMatch.id === parseInt(this.teamGoalkeeperForm.value.team_match_id, 10);
             });
             const teamPrediction = {
                 id: this.matchHasPrediction(selectedTeamMatch) ? selectedTeamMatch.team_predictions[0].id : null,

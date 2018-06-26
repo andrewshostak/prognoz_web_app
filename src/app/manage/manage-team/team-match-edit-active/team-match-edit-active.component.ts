@@ -42,7 +42,7 @@ export class TeamMatchEditActiveComponent implements OnInit {
     }
 
     onChange(id) {
-        this.selectedMatch = this.teamMatches.find(myObj => myObj.id == id);
+        this.selectedMatch = this.teamMatches.find(match => match.id === id);
         this.teamMatchEditActiveForm.patchValue({
             id: this.selectedMatch.id,
             t1_id: this.selectedMatch.t1_id,

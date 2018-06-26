@@ -178,8 +178,8 @@ export class HelperService {
      */
     createChampionshipPredictionsArray(championshipPredictionsForm: FormGroup): ChampionshipPrediction[] {
         const championshipPredictionsToUpdate: ChampionshipPrediction[] = [];
-        for (const championshipPrediction in championshipPredictionsForm.value) {
-            const championshipMatchId = parseInt(championshipPrediction.split('_')[0]);
+        for (const championshipPrediction of Object.keys(championshipPredictionsForm.value)) {
+            const championshipMatchId = parseInt(championshipPrediction.split('_')[0], 10);
             // If there is no predictions on match
             if (
                 championshipPredictionsForm.value[championshipMatchId + '_home'] === null &&
@@ -262,7 +262,7 @@ export class HelperService {
             return false;
         }
         if (teamMatch.team_predictions) {
-            const teamPrediction = teamMatch.team_predictions.find(teamPrediction => teamId === teamPrediction.team_id);
+            const teamPrediction = teamMatch.team_predictions.find(prediction => teamId === prediction.team_id);
             if (!teamPrediction) {
                 return false;
             }
@@ -285,7 +285,7 @@ export class HelperService {
             return false;
         }
         if (teamMatch.team_predictions) {
-            const teamPrediction = teamMatch.team_predictions.find(teamPrediction => teamId === teamPrediction.team_id);
+            const teamPrediction = teamMatch.team_predictions.find(prediction => teamId === prediction.team_id);
             if (!teamPrediction) {
                 return false;
             }
