@@ -1,0 +1,4 @@
+.round-nav-disabled {
+    pointer-events: none;
+    cursor: not-allowed;
+}

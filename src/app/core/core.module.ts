@@ -47,11 +47,9 @@ import { FormValidatorService } from '@services/form-validator.service';
     providers: [
         AuthService,
         ClubService,
-
         ChampionshipMatchService,
         ChampionshipPredictionService,
         ChampionshipRatingService,
-
         CompetitionService,
         ConfirmModalService,
         CupCupMatchService,
@@ -66,7 +64,6 @@ import { FormValidatorService } from '@services/form-validator.service';
         ImageService,
         PusherService,
         SeasonService,
-
         TeamMatchService,
         TeamParticipantService,
         TeamPredictionService,
@@ -74,7 +71,6 @@ import { FormValidatorService } from '@services/form-validator.service';
         TeamRatingUserService,
         TeamService,
         TeamTeamMatchService,
-
         TitleService,
         TournamentService,
         UserService,
