@@ -9,7 +9,6 @@ import { ChampionshipLastResultsComponent } from './shared/championship-last-res
 import { ChampionshipMatchComponent } from './championship-match/championship-match.component';
 import { ChampionshipMatchPredictableComponent } from './shared/championship-match-predictable/championship-match-predictable.component';
 import { ChampionshipMatchPredictionsTableComponent } from './shared/championship-match-predictions-table/championship-match-predictions-table.component';
-import { ChampionshipNavigationComponent } from './shared/championship-navigation/championship-navigation.component';
 import { ChampionshipPredictionsComponent } from './championship-predictions/championship-predictions.component';
 import { ChampionshipRatingComponent } from './championship-rating/championship-rating.component';
 import { ChampionshipRatingTopComponent } from './shared/championship-rating-top/championship-rating-top.component';
@@ -29,7 +28,6 @@ import { SharedModule } from '../shared/shared.module';
         ChampionshipMatchComponent,
         ChampionshipMatchPredictableComponent,
         ChampionshipMatchPredictionsTableComponent,
-        ChampionshipNavigationComponent,
         ChampionshipPredictionsComponent,
         ChampionshipRatingComponent,
         ChampionshipRatingTopComponent,

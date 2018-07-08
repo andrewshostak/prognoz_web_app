@@ -10,7 +10,6 @@ import { TeamEditModalComponent } from './shared/team-edit-modal/team-edit-modal
 import { TeamGoalkeeperFormComponent } from './shared/team-goalkeeper-form/team-goalkeeper-form.component';
 import { TeamMatchesComponent } from './team-matches/team-matches.component';
 import { TeamMyComponent } from './team-my/team-my.component';
-import { TeamNavigationComponent } from './shared/team-navigation/team-navigation.component';
 import { TeamPredictionFormComponent } from './shared/team-prediction-form/team-prediction-form.component';
 import { TeamPredictionsComponent } from './team-predictions/team-predictions.component';
 import { TeamRatingComponent } from './team-rating/team-rating.component';
@@ -34,7 +33,6 @@ import { TeamTeamMatchCardComponent } from './shared/team-team-match-card/team-t
         TeamGoalkeeperFormComponent,
         TeamMatchesComponent,
         TeamMyComponent,
-        TeamNavigationComponent,
         TeamPredictionFormComponent,
         TeamPredictionsComponent,
         TeamRatingComponent,

@@ -8,7 +8,6 @@ import { CupApplicationsComponent } from './cup-applications/cup-applications.co
 import { CupComponent } from './cup.component';
 import { CupCupMatchComponent } from './cup-cup-match/cup-cup-match.component';
 import { CupCupMatchesComponent } from './cup-cup-matches/cup-cup-matches.component';
-import { CupNavigationComponent } from './shared/cup-navigation/cup-navigation.component';
 import { CupPredictionFormComponent } from './shared/cup-prediction-form/cup-prediction-form.component';
 import { CupPredictionsComponent } from './cup-predictions/cup-predictions.component';
 import { CupRatingComponent } from './cup-rating/cup-rating.component';
@@ -29,7 +28,6 @@ import { CupRulesComponent } from './cup-rules/cup-rules.component';
         CupApplicationsComponent,
         CupCupMatchesComponent,
         CupCupMatchComponent,
-        CupNavigationComponent,
         CupPredictionFormComponent,
         CupPredictionsComponent,
         CupRatingComponent,
