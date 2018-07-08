@@ -12,16 +12,12 @@ import { ChampionshipMatchPredictionsTableComponent } from './shared/championshi
 import { ChampionshipNavigationComponent } from './shared/championship-navigation/championship-navigation.component';
 import { ChampionshipPredictionsComponent } from './championship-predictions/championship-predictions.component';
 import { ChampionshipRatingComponent } from './championship-rating/championship-rating.component';
-import { ChampionshipRatingTableComponent } from './shared/championship-rating-table/championship-rating-table.component';
 import { ChampionshipRatingTopComponent } from './shared/championship-rating-top/championship-rating-top.component';
 import { ChampionshipResultsComponent } from './championship-results/championship-results.component';
-import { ChampionshipResultsTableComponent } from './shared/championship-results-table/championship-results-table.component';
 import { ChampionshipRoutingModule } from './championship-routing.module';
 import { ChampionshipRulesComponent } from './championship-rules/championship-rules.component';
 import { ChampionshipSeasonsModule } from './championship-seasons/championship-seasons.module';
 import { ChampionshipUserComponent } from './championship-user/championship-user.component';
-import { ChampionshipUserPredictionsTableComponent } from './shared/championship-user-predictions-table/championship-user-predictions-table.component';
-import { ChampionshipUserRatingDetailsComponent } from './shared/championship-user-rating-details/championship-user-rating-details.component';
 import { SharedModule } from '../shared/shared.module';
 
 @NgModule({
@@ -36,14 +32,10 @@ import { SharedModule } from '../shared/shared.module';
         ChampionshipNavigationComponent,
         ChampionshipPredictionsComponent,
         ChampionshipRatingComponent,
-        ChampionshipRatingTableComponent,
         ChampionshipRatingTopComponent,
         ChampionshipResultsComponent,
-        ChampionshipResultsTableComponent,
         ChampionshipRulesComponent,
-        ChampionshipUserComponent,
-        ChampionshipUserPredictionsTableComponent,
-        ChampionshipUserRatingDetailsComponent
+        ChampionshipUserComponent
     ],
     exports: [ChampionshipComponent]
 })

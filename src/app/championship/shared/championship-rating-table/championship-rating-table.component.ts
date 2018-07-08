@@ -1,8 +1,8 @@
 import { Component, Input, OnChanges, OnDestroy, SimpleChanges } from '@angular/core';
 
-import { ChampionshipRating } from '../../../shared/models/championship/championship-rating.model';
+import { ChampionshipRating } from '@models/championship/championship-rating.model';
 import { environment } from '@env';
-import { HelperService } from '../../../core/services/helper.service';
+import { HelperService } from '@services/helper.service';
 
 declare const $: any;
 

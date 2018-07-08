@@ -13,12 +13,19 @@ import { OnlineUsersListComponent } from './components/online-users-list/online-
 import { SpinnerButtonComponent } from './components/spinner-button/spinner-button.component';
 import { SpinnerComponent } from './components/spinner/spinner.component';
 import { PaginationComponent } from './components/pagination/pagination.component';
-import { SimpleNotificationsModule } from 'angular2-notifications';
 import { TimePipe } from './pipes/time.pipe';
+import { ChampionshipRatingTableComponent } from '../championship/shared/championship-rating-table/championship-rating-table.component';
+import { ChampionshipResultsTableComponent } from '../championship/shared/championship-results-table/championship-results-table.component';
+import { ChampionshipUserRatingDetailsComponent } from './components/championship/championship-user-rating-details/championship-user-rating-details.component';
+import { ChampionshipUserPredictionsTableComponent } from './components/championship/championship-user-predictions-table/championship-user-predictions-table.component';
 
 @NgModule({
-    imports: [CommonModule, RouterModule, ChartsModule, ReactiveFormsModule, SimpleNotificationsModule],
+    imports: [CommonModule, RouterModule, ChartsModule, ReactiveFormsModule],
     declarations: [
+        ChampionshipRatingTableComponent,
+        ChampionshipResultsTableComponent,
+        ChampionshipUserPredictionsTableComponent,
+        ChampionshipUserRatingDetailsComponent,
         ConfirmModalComponent,
         ConfirmModalNewComponent,
         ErrorComponent,
@@ -31,6 +38,10 @@ import { TimePipe } from './pipes/time.pipe';
         TimePipe
     ],
     exports: [
+        ChampionshipRatingTableComponent,
+        ChampionshipResultsTableComponent,
+        ChampionshipUserPredictionsTableComponent,
+        ChampionshipUserRatingDetailsComponent,
         ConfirmModalComponent,
         ConfirmModalNewComponent,
         ErrorComponent,

@@ -1,12 +1,12 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 
-import { Club } from '../../../shared/models/club.model';
-import { ClubService } from '../../../core/services/club.service';
+import { Club } from '@models/club.model';
+import { ClubService } from '@services/club.service';
 import { environment } from '@env';
-import { ImageService } from '../../../core/services/image.service';
+import { ImageService } from '@services/image.service';
 import { NotificationsService } from 'angular2-notifications';
-import { Team } from '../../../shared/models/team/team.model';
+import { Team } from '@models/team/team.model';
 
 declare var $: any;
 

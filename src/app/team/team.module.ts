@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { SharedModule } from '../shared/shared.module';
+import { SimpleNotificationsModule } from 'angular2-notifications';
 import { TeamCaptainComponent } from './team-captain/team-captain.component';
 import { TeamComponent } from './team.component';
 import { TeamEditModalComponent } from './shared/team-edit-modal/team-edit-modal.component';
@@ -25,7 +26,7 @@ import { TeamSquadsComponent } from './team-squads/team-squads.component';
 import { TeamTeamMatchCardComponent } from './shared/team-team-match-card/team-team-match-card.component';
 
 @NgModule({
-    imports: [CommonModule, FormsModule, ReactiveFormsModule, SharedModule, TeamRoutingModule],
+    imports: [CommonModule, FormsModule, ReactiveFormsModule, SharedModule, SimpleNotificationsModule, TeamRoutingModule],
     declarations: [
         TeamCaptainComponent,
         TeamComponent,

@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 
 import { environment } from '@env';
-import { User } from '../../models/user.model';
-import { UserService } from '../../../core/services/user.service';
+import { User } from '@models/user.model';
+import { UserService } from '@services/user.service';
 
 @Component({
     selector: 'app-last-user',

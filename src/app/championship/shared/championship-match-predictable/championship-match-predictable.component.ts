@@ -1,8 +1,8 @@
 import { ChangeDetectorRef, Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 
-import { ChampionshipMatch } from '../../../shared/models/championship/championship-match.model';
-import { ChampionshipMatchService } from '../../../core/services/championship/championship-match.service';
+import { ChampionshipMatch } from '@models/championship/championship-match.model';
+import { ChampionshipMatchService } from '@services/championship/championship-match.service';
 import { environment } from '@env';
 
 declare var $: any;

@@ -3,7 +3,7 @@ import { Subscription } from 'rxjs/Subscription';
 
 import { AuthService } from '@services/auth.service';
 import { CupRating } from '@models/cup/cup-rating.model';
-import { CupRatingService } from './cup-rating.service';
+import { CupRatingService } from '@services/cup/cup-rating.service';
 import { CurrentStateService } from '@services/current-state.service';
 import { Season } from '@models/season.model';
 import { SeasonService } from '@services/season.service';

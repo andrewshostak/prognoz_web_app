@@ -1,9 +1,9 @@
 import { Component, Input } from '@angular/core';
 
 import { environment } from '@env';
-import { TeamRating } from '../../../shared/models/team/team-rating.model';
-import { User } from '../../../shared/models/user.model';
-import { HelperService } from '../../../core/services/helper.service';
+import { TeamRating } from '@models/team/team-rating.model';
+import { User } from '@models/user.model';
+import { HelperService } from '@services/helper.service';
 
 @Component({
     selector: 'app-team-rating-table',

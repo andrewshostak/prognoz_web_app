@@ -1,8 +1,8 @@
 import { Component, Input } from '@angular/core';
 
-import { ChampionshipRating } from '../../../shared/models/championship/championship-rating.model';
+import { ChampionshipRating } from '@models/championship/championship-rating.model';
 import { environment } from '@env';
-import { User } from '../../../shared/models/user.model';
+import { User } from '@models/user.model';
 
 @Component({
     selector: 'app-championship-user-rating-details',

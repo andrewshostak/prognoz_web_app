@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 
-import { TeamMatch } from '../../../shared/models/team/team-match.model';
+import { TeamMatch } from '@models/team/team-match.model';
 
 @Component({
     selector: 'app-team-results-table',

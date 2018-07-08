@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 
 import { CupRatingGroup } from '@models/cup/cup-rating-group.model';
-import { CupRatingService } from '../cup-rating/cup-rating.service';
+import { CupRatingService } from '@services/cup/cup-rating.service';
 import { environment } from '@env';
 import { HelperService } from '@services/helper.service';
 import { Subscription } from 'rxjs/Subscription';

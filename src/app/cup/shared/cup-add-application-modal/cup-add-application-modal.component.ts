@@ -2,7 +2,7 @@ import { AfterViewInit, Component, ElementRef, EventEmitter, Input, OnChanges, O
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 import { Competition } from '@models/competition.model';
-import { CupApplicationService } from '../../cup-applications/cup-application.service';
+import { CupApplicationService } from '@services/cup/cup-application.service';
 import { environment } from '@env';
 import { HelperService } from '@services/helper.service';
 import { NotificationsService } from 'angular2-notifications';

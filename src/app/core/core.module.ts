@@ -11,9 +11,11 @@ import { ChampionshipRatingService } from '@services/championship/championship-r
 import { ClubService } from '@services/club.service';
 import { CompetitionService } from '@services/competition.service';
 import { ConfirmModalService } from '@services/confirm-modal.service';
+import { CupApplicationService } from '@services/cup/cup-application.service';
 import { CupCupMatchService } from '@services/cup/cup-cup-match.service';
 import { CupMatchService } from '@services/cup/cup-match.service';
 import { CupPredictionService } from '@services/cup/cup-prediction.service';
+import { CupRatingService } from '@services/cup/cup-rating.service';
 import { CupStageService } from '@services/cup/cup-stage.service';
 import { CupStageTypeService } from '@services/cup/cup-stage-type.service';
 import { CurrentStateService } from '@services/current-state.service';
@@ -52,9 +54,11 @@ import { FormValidatorService } from '@services/form-validator.service';
         ChampionshipRatingService,
         CompetitionService,
         ConfirmModalService,
+        CupApplicationService,
         CupCupMatchService,
         CupMatchService,
         CupPredictionService,
+        CupRatingService,
         CupStageService,
         CupStageTypeService,
         CurrentStateService,

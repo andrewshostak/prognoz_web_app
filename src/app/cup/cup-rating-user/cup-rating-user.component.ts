@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 
 import { CupRating } from '@models/cup/cup-rating.model';
-import { CupRatingService } from '../cup-rating/cup-rating.service';
+import { CupRatingService } from '@services/cup/cup-rating.service';
 import { Subscription } from 'rxjs/Subscription';
 import { TitleService } from '@services/title.service';
 

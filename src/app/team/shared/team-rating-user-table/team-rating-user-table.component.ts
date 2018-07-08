@@ -1,9 +1,9 @@
 import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 
 import { environment } from '@env';
-import { Team } from '../../../shared/models/team/team.model';
-import { TeamRatingUser } from '../../../shared/models/team/team-rating-user.model';
-import { User } from '../../../shared/models/user.model';
+import { Team } from '@models/team/team.model';
+import { TeamRatingUser } from '@models/team/team-rating-user.model';
+import { User } from '@models/user.model';
 
 @Component({
     selector: 'app-team-rating-user-table',

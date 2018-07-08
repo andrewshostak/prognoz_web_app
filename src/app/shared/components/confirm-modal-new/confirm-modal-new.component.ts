@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
-import { ConfirmModalService } from '../../../core/services/confirm-modal.service';
+import { ConfirmModalService } from '@services/confirm-modal.service';
 
 declare const $: any;
 
