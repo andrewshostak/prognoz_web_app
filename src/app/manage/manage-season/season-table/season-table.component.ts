@@ -1,18 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 
-import { Season }            from '../../../shared/models/season.model';
-import { SeasonService }     from '../../../core/season.service';
+import { Season } from '@models/season.model';
+import { SeasonService } from '@services/season.service';
 
 @Component({
-  selector: 'app-season-table',
-  templateUrl: './season-table.component.html',
-  styleUrls: ['./season-table.component.css']
+    selector: 'app-season-table',
+    templateUrl: './season-table.component.html',
+    styleUrls: ['./season-table.component.css']
 })
 export class SeasonTableComponent implements OnInit {
-
-    constructor(
-        private seasonService: SeasonService
-    ) { }
+    constructor(private seasonService: SeasonService) {}
 
     errorSeasons: string | Array<string>;
     seasons: Season[];
@@ -29,5 +26,4 @@ export class SeasonTableComponent implements OnInit {
             }
         );
     }
-
 }

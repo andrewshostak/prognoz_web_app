@@ -1,14 +1,14 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 
-import { ChampionshipPrediction } from '../../shared/models/championship-prediction.model';
-import { ChampionshipPredictionService } from '../shared/championship-prediction.service';
-import { ChampionshipRating } from '../../shared/models/championship-rating.model';
-import { ChampionshipRatingService } from '../shared/championship-rating.service';
-import { HelperService } from '../../core/helper.service';
-import { TitleService } from '../../core/title.service';
-import { User } from '../../shared/models/user.model';
-import { UserService } from '../../core/user.service';
+import { ChampionshipPrediction } from '@models/championship/championship-prediction.model';
+import { ChampionshipPredictionService } from '@services/championship/championship-prediction.service';
+import { ChampionshipRating } from '@models/championship/championship-rating.model';
+import { ChampionshipRatingService } from '@services/championship/championship-rating.service';
+import { HelperService } from '@services/helper.service';
+import { TitleService } from '@services/title.service';
+import { User } from '@models/user.model';
+import { UserService } from '@services/user.service';
 
 declare const $: any;
 

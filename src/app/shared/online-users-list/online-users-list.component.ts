@@ -1,8 +1,8 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 
-import { User }                         from '../models/user.model';
-import { CurrentStateService }          from '../../core/current-state.service';
-import { Subscription }                 from 'rxjs/Subscription';
+import { User } from '@models/user.model';
+import { CurrentStateService } from '@services/current-state.service';
+import { Subscription } from 'rxjs/Subscription';
 
 @Component({
     selector: 'app-online-users-list',
@@ -10,10 +10,7 @@ import { Subscription }                 from 'rxjs/Subscription';
     styleUrls: ['./online-users-list.component.css']
 })
 export class OnlineUsersListComponent implements OnDestroy, OnInit {
-
-    constructor(
-        private currentStateService: CurrentStateService
-    ) { }
+    constructor(private currentStateService: CurrentStateService) {}
 
     users: User[] = [];
     onlineUserSubscription: Subscription;

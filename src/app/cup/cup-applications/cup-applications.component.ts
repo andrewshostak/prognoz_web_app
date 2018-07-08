@@ -1,19 +1,19 @@
 import { Component, ElementRef, OnDestroy, OnInit } from '@angular/core';
 
-import { AuthService } from '../../core/auth.service';
-import { Competition } from '../../shared/models/competition.model';
-import { CompetitionService } from '../../core/competition.service';
-import { ConfirmModalService } from '../../core/confirm-modal.service';
+import { AuthService } from '@services/auth.service';
+import { Competition } from '@models/competition.model';
+import { CompetitionService } from '@services/competition.service';
+import { ConfirmModalService } from '@services/confirm-modal.service';
 import { CupApplicationService } from './cup-application.service';
-import { CupApplication } from '../../shared/models/cup-application.model';
-import { CurrentStateService } from '../../core/current-state.service';
-import { environment } from '../../../environments/environment';
+import { CupApplication } from '@models/cup/cup-application.model';
+import { CurrentStateService } from '@services/current-state.service';
+import { environment } from '@env';
 import { forkJoin } from 'rxjs/observable/forkJoin';
-import { HelperService } from '../../core/helper.service';
+import { HelperService } from '@services/helper.service';
 import { NotificationsService } from 'angular2-notifications';
 import { Subscription } from 'rxjs/Subscription';
-import { TitleService } from '../../core/title.service';
-import { User } from '../../shared/models/user.model';
+import { TitleService } from '@services/title.service';
+import { User } from '@models/user.model';
 
 declare const $: any;
 

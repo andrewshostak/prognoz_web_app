@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 
-import { AuthService } from '../auth.service';
+import { AuthService } from '@services/auth.service';
 import { NotificationsService } from 'angular2-notifications';
-import { User } from '../../shared/models/user.model';
+import { User } from '@models/user.model';
 
 @Component({
     selector: 'app-header',

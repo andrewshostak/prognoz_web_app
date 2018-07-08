@@ -1,20 +1,16 @@
-import { Component, OnInit }   from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
-import { Season }              from '../../shared/models/season.model';
-import { SeasonService }       from '../../core/season.service';
-import { TitleService }        from '../../core/title.service';
+import { Season } from '@models/season.model';
+import { SeasonService } from '@services/season.service';
+import { TitleService } from '@services/title.service';
 
 @Component({
-  selector: 'app-championship-seasons',
-  templateUrl: './championship-seasons.component.html',
-  styleUrls: ['./championship-seasons.component.css']
+    selector: 'app-championship-seasons',
+    templateUrl: './championship-seasons.component.html',
+    styleUrls: ['./championship-seasons.component.css']
 })
 export class ChampionshipSeasonsComponent implements OnInit {
-
-    constructor(
-        private seasonService: SeasonService,
-        private titleService: TitleService
-    ) { }
+    constructor(private seasonService: SeasonService, private titleService: TitleService) {}
 
     errorSeasons: string | Array<string>;
     seasons: Season[];

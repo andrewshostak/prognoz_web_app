@@ -2,9 +2,9 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs/Subscription';
 
-import { Team } from '../../models/team.model';
-import { TeamService } from '../../../team/shared/team.service';
-import { User } from '../../models/user.model';
+import { Team } from '@models/team/team.model';
+import { TeamService } from '@services/team/team.service';
+import { User } from '@models/user.model';
 
 @Component({
     selector: 'app-team-select-modal',

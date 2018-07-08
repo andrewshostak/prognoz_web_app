@@ -1,9 +1,9 @@
 import { Component, Input } from '@angular/core';
 
-import { environment }      from '../../../../environments/environment';
-import { TeamRating }       from '../../models/team-rating.model';
-import { User }             from '../../models/user.model';
-import { HelperService }    from '../../../core/helper.service';
+import { environment } from '@env';
+import { TeamRating } from '@models/team/team-rating.model';
+import { User } from '@models/user.model';
+import { HelperService } from '@services/helper.service';
 
 @Component({
     selector: 'app-team-rating-table',
@@ -11,7 +11,6 @@ import { HelperService }    from '../../../core/helper.service';
     styleUrls: ['./team-rating-table.component.css']
 })
 export class TeamRatingTableComponent {
-
     @Input() teamRating: TeamRating[];
     @Input() errorTeamRating: string;
     @Input() authenticatedUser: User;
@@ -19,7 +18,5 @@ export class TeamRatingTableComponent {
     teamImageDefault: string = environment.imageTeamDefault;
     teamImagesUrl: string = environment.apiImageTeams;
 
-    constructor(
-        public helperService: HelperService
-    ) {}
+    constructor(public helperService: HelperService) {}
 }

@@ -2,12 +2,12 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 import { Subscription } from 'rxjs/Subscription';
 
-import { AuthService } from '../../../core/auth.service';
-import { ChampionshipRating } from '../../../shared/models/championship-rating.model';
-import { ChampionshipRatingService } from '../../shared/championship-rating.service';
-import { CurrentStateService } from '../../../core/current-state.service';
-import { User } from '../../../shared/models/user.model';
-import { TitleService } from '../../../core/title.service';
+import { AuthService } from '@services/auth.service';
+import { ChampionshipRating } from '@models/championship/championship-rating.model';
+import { ChampionshipRatingService } from '@services/championship/championship-rating.service';
+import { CurrentStateService } from '@services/current-state.service';
+import { User } from '@models/user.model';
+import { TitleService } from '@services/title.service';
 
 @Component({
     selector: 'app-championship-season-rating',

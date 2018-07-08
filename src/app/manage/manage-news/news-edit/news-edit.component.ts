@@ -2,10 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router, Params } from '@angular/router';
 
-import { environment } from '../../../../environments/environment';
-import { ImageService } from '../../../core/image.service';
+import { environment } from '@env';
+import { ImageService } from '@services/image.service';
 import { NotificationsService } from 'angular2-notifications';
-import { News } from '../../../shared/models/news.model';
+import { News } from '@models/news.model';
 import { NewsService } from '../../../news/shared/news.service';
 
 @Component({

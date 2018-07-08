@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 
-import { Competition } from '../../../shared/models/competition.model';
-import { CompetitionService } from '../../../core/competition.service';
+import { Competition } from '@models/competition.model';
+import { CompetitionService } from '@services/competition.service';
 
 @Component({
     selector: 'app-competition-table',

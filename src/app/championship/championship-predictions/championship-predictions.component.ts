@@ -2,16 +2,16 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Subscription } from 'rxjs/Subscription';
 
-import { AuthService } from '../../core/auth.service';
-import { ChampionshipMatch } from '../../shared/models/championship-match.model';
-import { ChampionshipMatchService } from '../shared/championship-match.service';
-import { ChampionshipPredictionService } from '../shared/championship-prediction.service';
-import { CurrentStateService } from '../../core/current-state.service';
-import { environment } from '../../../environments/environment';
-import { HelperService } from '../../core/helper.service';
+import { AuthService } from '@services/auth.service';
+import { ChampionshipMatch } from '@models/championship/championship-match.model';
+import { ChampionshipMatchService } from '@services/championship/championship-match.service';
+import { ChampionshipPredictionService } from '@services/championship/championship-prediction.service';
+import { CurrentStateService } from '@services/current-state.service';
+import { environment } from '@env';
+import { HelperService } from '@services/helper.service';
 import { NotificationsService } from 'angular2-notifications';
-import { TitleService } from '../../core/title.service';
-import { User } from '../../shared/models/user.model';
+import { TitleService } from '@services/title.service';
+import { User } from '@models/user.model';
 
 @Component({
     selector: 'app-championship-predictions',

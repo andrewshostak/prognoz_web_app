@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 
 import { NotificationsService } from 'angular2-notifications';
-import { News } from '../../../shared/models/news.model';
+import { News } from '@models/news.model';
 import { NewsService } from '../../../news/shared/news.service';
 
 declare var $: any;

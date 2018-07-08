@@ -1,20 +1,19 @@
-import { Injectable }               from '@angular/core';
-import { HttpClient, HttpParams }   from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { HttpClient, HttpParams } from '@angular/common/http';
 
-import { CupPrediction }            from '../../../shared/models/cup-prediction.model';
-import { environment }              from '../../../../environments/environment';
-import { ErrorHandlerService }      from '../../error-handler.service';
-import { HeadersWithToken }         from '../../headers-with-token.service';
-import { Observable }               from 'rxjs/Observable';
+import { CupPrediction } from '@models/cup/cup-prediction.model';
+import { environment } from '@env';
+import { ErrorHandlerService } from '@services/error-handler.service';
+import { HeadersWithToken } from '@services/headers-with-token.service';
+import { Observable } from 'rxjs/Observable';
 
 @Injectable()
 export class CupPredictionService {
-
     constructor(
         private errorHandlerService: ErrorHandlerService,
         private headersWithToken: HeadersWithToken,
         private httpClient: HttpClient
-    ) { }
+    ) {}
 
     private cupPredictionUrl = `${environment.apiUrl}cup/predictions`;
 
@@ -33,7 +32,7 @@ export class CupPredictionService {
             params = params.append('user_id', userId.toString());
         }
         return this.httpClient
-            .get(this.cupPredictionUrl, {params})
+            .get(this.cupPredictionUrl, { params })
             .map(response => response['cup_predictions'])
             .catch(this.errorHandlerService.handle);
     }

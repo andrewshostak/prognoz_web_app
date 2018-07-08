@@ -3,19 +3,19 @@ import { NgForm } from '@angular/forms';
 import { ActivatedRoute, Params } from '@angular/router';
 import { Subscription } from 'rxjs/Subscription';
 
-import { AuthService } from '../../core/auth.service';
-import { CurrentStateService } from '../../core/current-state.service';
-import { environment } from '../../../environments/environment';
-import { HelperService } from '../../core/helper.service';
+import { AuthService } from '@services/auth.service';
+import { CurrentStateService } from '@services/current-state.service';
+import { environment } from '@env';
+import { HelperService } from '@services/helper.service';
 import { NotificationsService } from 'angular2-notifications';
-import { TeamMatch } from '../../shared/models/team-match.model';
-import { TeamMatchService } from '../shared/team-match.service';
-import { TeamParticipant } from '../../shared/models/team-participant.model';
-import { TeamParticipantService } from '../shared/team-participant.service';
-import { TeamPredictionService } from '../shared/team-prediction.service';
-import { TeamTeamMatch } from '../../shared/models/team-team-match.model';
-import { TeamTeamMatchService } from '../shared/team-team-match.service';
-import { User } from '../../shared/models/user.model';
+import { TeamMatch } from '@models/team/team-match.model';
+import { TeamMatchService } from '@services/team/team-match.service';
+import { TeamParticipant } from '@models/team/team-participant.model';
+import { TeamParticipantService } from '@services/team/team-participant.service';
+import { TeamPredictionService } from '@services/team/team-prediction.service';
+import { TeamTeamMatch } from '@models/team/team-team-match.model';
+import { TeamTeamMatchService } from '@services/team/team-team-match.service';
+import { User } from '@models/user.model';
 
 @Component({
     selector: 'app-team-captain',

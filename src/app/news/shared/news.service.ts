@@ -1,16 +1,14 @@
-import { Injectable }               from '@angular/core';
-import { HttpClient, HttpParams }   from '@angular/common/http';
-import { Observable }               from 'rxjs/Observable';
+import { Injectable } from '@angular/core';
+import { HttpClient, HttpParams } from '@angular/common/http';
+import { Observable } from 'rxjs/Observable';
 
-import { environment }          from '../../../environments/environment';
-import { ErrorHandlerService }  from '../../core/error-handler.service';
-import { HeadersWithToken }     from '../../core/headers-with-token.service';
-import { News }                 from '../../shared/models/news.model';
+import { environment } from '@env';
+import { ErrorHandlerService } from '@services/error-handler.service';
+import { HeadersWithToken } from '@services/headers-with-token.service';
+import { News } from '@models/news.model';
 
 @Injectable()
-
 export class NewsService {
-
     constructor(
         private errorHandlerService: ErrorHandlerService,
         private headersWithToken: HeadersWithToken,
@@ -26,9 +24,7 @@ export class NewsService {
      */
     getNews(page: number = 1): Observable<any> {
         const params = new HttpParams().set('page', page.toString());
-        return this.httpClient
-            .get(this.newsUrl, {params: params})
-            .catch(this.errorHandlerService.handle);
+        return this.httpClient.get(this.newsUrl, { params: params }).catch(this.errorHandlerService.handle);
     }
 
     /**
@@ -49,9 +45,7 @@ export class NewsService {
      * @returns {Observable<void>}
      */
     deleteNewsItem(id: number): Observable<void> {
-        return this.headersWithToken
-            .delete(`${this.newsUrl}/${id}`)
-            .catch(this.errorHandlerService.handle);
+        return this.headersWithToken.delete(`${this.newsUrl}/${id}`).catch(this.errorHandlerService.handle);
     }
 
     /**

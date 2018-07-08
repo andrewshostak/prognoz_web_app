@@ -1,20 +1,16 @@
-import { Component, OnInit }    from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import './rxjs-operators';
 
-import { CurrentStateService }  from './core/current-state.service';
-import { Options }              from 'angular2-notifications';
+import { CurrentStateService } from '@services/current-state.service';
+import { Options } from 'angular2-notifications';
 
 @Component({
     selector: 'app-root',
     templateUrl: './app.component.html',
     styleUrls: ['./app.component.css']
 })
-
 export class AppComponent implements OnInit {
-
-    constructor(
-        private currentStateService: CurrentStateService
-    ) {}
+    constructor(private currentStateService: CurrentStateService) {}
 
     options: Options;
 

@@ -1,28 +1,27 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Subscription }                 from 'rxjs/Subscription';
+import { Subscription } from 'rxjs/Subscription';
 
-import { AuthService }                  from '../../core/auth.service';
-import { ChampionshipRating }           from '../../shared/models/championship-rating.model';
-import { ChampionshipRatingService }    from '../shared/championship-rating.service';
-import { CurrentStateService }          from '../../core/current-state.service';
-import { HelperService }                from '../../core/helper.service';
-import { TitleService }                 from '../../core/title.service';
-import { User }                         from '../../shared/models/user.model';
+import { AuthService } from '@services/auth.service';
+import { ChampionshipRating } from '@models/championship/championship-rating.model';
+import { ChampionshipRatingService } from '@services/championship/championship-rating.service';
+import { CurrentStateService } from '@services/current-state.service';
+import { HelperService } from '@services/helper.service';
+import { TitleService } from '@services/title.service';
+import { User } from '@models/user.model';
 
 @Component({
-  selector: 'app-championship-rating',
-  templateUrl: './championship-rating.component.html',
-  styleUrls: ['./championship-rating.component.css']
+    selector: 'app-championship-rating',
+    templateUrl: './championship-rating.component.html',
+    styleUrls: ['./championship-rating.component.css']
 })
 export class ChampionshipRatingComponent implements OnInit, OnDestroy {
-
     constructor(
         private authService: AuthService,
         private championshipRatingService: ChampionshipRatingService,
         private currentStateService: CurrentStateService,
         public helperService: HelperService,
         private titleService: TitleService
-    ) { }
+    ) {}
 
     authenticatedUser: User = this.currentStateService.user;
     championshipRatingItems: ChampionshipRating[];

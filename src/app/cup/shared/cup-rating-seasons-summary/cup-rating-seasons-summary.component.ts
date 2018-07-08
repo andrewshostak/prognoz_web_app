@@ -1,20 +1,17 @@
-import { Component, Input, OnDestroy, OnInit, ElementRef, OnChanges, SimpleChanges }    from '@angular/core';
+import { Component, Input, OnDestroy, OnInit, ElementRef, OnChanges, SimpleChanges } from '@angular/core';
 
-import { CupRating }                                                                    from '../../../shared/models/cup-rating.model';
-import { environment }                                                                  from '../../../../environments/environment';
+import { CupRating } from '@models/cup/cup-rating.model';
+import { environment } from '@env';
 
 declare const $: any;
 
 @Component({
-  selector: 'app-cup-rating-seasons-summary',
-  templateUrl: './cup-rating-seasons-summary.component.html',
-  styleUrls: ['./cup-rating-seasons-summary.component.css']
+    selector: 'app-cup-rating-seasons-summary',
+    templateUrl: './cup-rating-seasons-summary.component.html',
+    styleUrls: ['./cup-rating-seasons-summary.component.css']
 })
 export class CupRatingSeasonsSummaryComponent implements OnInit, OnDestroy, OnChanges {
-
-    constructor(
-        private elementRef: ElementRef
-    ) { }
+    constructor(private elementRef: ElementRef) {}
 
     @Input() cupRating: CupRating;
 
@@ -38,11 +35,7 @@ export class CupRatingSeasonsSummaryComponent implements OnInit, OnDestroy, OnCh
                 $(() => $(this.elementRef.nativeElement.querySelectorAll('[data-toggle="tooltip"]')).tooltip());
                 const cupRating = simpleChanges[propName].currentValue;
                 this.winDrawLossChartLabels = [];
-                this.winDrawLossChartData = [
-                    {data: [], label: 'Виграші'},
-                    {data: [], label: 'Нічиї'},
-                    {data: [], label: 'Програші'},
-                ];
+                this.winDrawLossChartData = [{ data: [], label: 'Виграші' }, { data: [], label: 'Нічиї' }, { data: [], label: 'Програші' }];
                 if (cupRating.before_previous_season) {
                     this.winDrawLossChartLabels.push(cupRating.before_previous_season.season.title);
                     this.winDrawLossChartData[0].data.push(cupRating.before_previous_season.win);
@@ -70,23 +63,20 @@ export class CupRatingSeasonsSummaryComponent implements OnInit, OnDestroy, OnCh
         this.userImageDefault = environment.imageUserDefault;
         this.userImagesUrl = environment.apiImageUsers;
         this.winDrawLossChartType = 'bar';
-        this.winDrawLossChartColors = [
-            {backgroundColor: '#28a745'},
-            {backgroundColor: '#ffc107'},
-            {backgroundColor: '#dc3545'}
-        ];
+        this.winDrawLossChartColors = [{ backgroundColor: '#28a745' }, { backgroundColor: '#ffc107' }, { backgroundColor: '#dc3545' }];
         this.winDrawLossChartLegend = true;
         this.winDrawLossChartOptions = {
             responsive: true,
             scales: {
-                yAxes: [{
-                    ticks: {
-                        beginAtZero: true,
-                        stepSize: 1
+                yAxes: [
+                    {
+                        ticks: {
+                            beginAtZero: true,
+                            stepSize: 1
+                        }
                     }
-                }]
+                ]
             }
         };
     }
-
 }

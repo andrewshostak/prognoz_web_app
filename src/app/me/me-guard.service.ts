@@ -1,15 +1,11 @@
-import { Injectable }           from '@angular/core';
-import { CanActivate, Router }  from '@angular/router';
+import { Injectable } from '@angular/core';
+import { CanActivate, Router } from '@angular/router';
 
-import { CurrentStateService }  from '../core/current-state.service';
+import { CurrentStateService } from '@services/current-state.service';
 
 @Injectable()
 export class MeGuard implements CanActivate {
-
-    constructor(
-        private currentStateService: CurrentStateService,
-        private router: Router
-    ) {}
+    constructor(private currentStateService: CurrentStateService, private router: Router) {}
 
     canActivate() {
         return this.checkRoles();

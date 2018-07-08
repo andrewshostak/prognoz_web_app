@@ -3,10 +3,10 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router, Params } from '@angular/router';
 
-import { Club } from '../../../shared/models/club.model';
-import { ClubService } from '../../../core/club.service';
-import { environment } from '../../../../environments/environment';
-import { ImageService } from '../../../core/image.service';
+import { Club } from '@models/club.model';
+import { ClubService } from '@services/club.service';
+import { environment } from '@env';
+import { ImageService } from '@services/image.service';
 import { NotificationsService } from 'angular2-notifications';
 
 @Component({

@@ -1,22 +1,17 @@
-import { Component, OnInit }      from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 
-import { TeamMatch }              from '../../shared/models/team-match.model';
-import { TeamMatchService }       from '../shared/team-match.service';
-import { TitleService }           from '../../core/title.service';
+import { TeamMatch } from '@models/team/team-match.model';
+import { TeamMatchService } from '@services/team/team-match.service';
+import { TitleService } from '@services/title.service';
 
 @Component({
-  selector: 'app-team-results',
-  templateUrl: './team-results.component.html',
-  styleUrls: ['./team-results.component.css']
+    selector: 'app-team-results',
+    templateUrl: './team-results.component.html',
+    styleUrls: ['./team-results.component.css']
 })
 export class TeamResultsComponent implements OnInit {
-
-    constructor(
-        private activatedRoute: ActivatedRoute,
-        private titleService: TitleService,
-        private teamMatchSevice: TeamMatchService
-    ) { }
+    constructor(private activatedRoute: ActivatedRoute, private titleService: TitleService, private teamMatchSevice: TeamMatchService) {}
 
     errorTeamMatches: string;
     nextRound: string;
@@ -34,9 +29,9 @@ export class TeamResultsComponent implements OnInit {
     }
 
     getTeamMatchesData(round?: number) {
-        const param = [{parameter: 'filter', value: 'round'}];
+        const param = [{ parameter: 'filter', value: 'round' }];
         if (round) {
-            param.push({parameter: 'page', value: round.toString()});
+            param.push({ parameter: 'page', value: round.toString() });
         }
         this.teamMatchSevice.getTeamMatches(param).subscribe(
             response => {

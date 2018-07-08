@@ -1,27 +1,26 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 
-import { AuthService }                  from '../../core/auth.service';
-import { CupMatch }                     from '../../shared/models/cup-match.model';
-import { CupMatchService }              from '../../core/services/cup/cup-match.service';
-import { CupPrediction }                from '../../shared/models/cup-prediction.model';
-import { CurrentStateService }          from '../../core/current-state.service';
-import { Subscription }                 from 'rxjs/Subscription';
-import { TitleService }                 from '../../core/title.service';
-import { User }                         from '../../shared/models/user.model';
+import { AuthService } from '@services/auth.service';
+import { CupMatch } from '@models/cup/cup-match.model';
+import { CupMatchService } from '@services/cup/cup-match.service';
+import { CupPrediction } from '@models/cup/cup-prediction.model';
+import { CurrentStateService } from '@services/current-state.service';
+import { Subscription } from 'rxjs/Subscription';
+import { TitleService } from '@services/title.service';
+import { User } from '@models/user.model';
 
 @Component({
-  selector: 'app-cup-predictions',
-  templateUrl: './cup-predictions.component.html',
-  styleUrls: ['./cup-predictions.component.css']
+    selector: 'app-cup-predictions',
+    templateUrl: './cup-predictions.component.html',
+    styleUrls: ['./cup-predictions.component.css']
 })
 export class CupPredictionsComponent implements OnDestroy, OnInit {
-
     constructor(
         private authService: AuthService,
         private cupMatchService: CupMatchService,
         private currentStateService: CurrentStateService,
         private titleService: TitleService
-    ) { }
+    ) {}
 
     authenticatedUser: User;
     cupMatches: CupMatch[];
@@ -29,11 +28,11 @@ export class CupPredictionsComponent implements OnDestroy, OnInit {
     noAccess: string;
     userSubscription: Subscription;
 
-    cupPredictionUpdated(event: {cupMatchId: number, cupPrediction?: CupPrediction, errors?: string[]}): void {
+    cupPredictionUpdated(event: { cupMatchId: number; cupPrediction?: CupPrediction; errors?: string[] }): void {
         if (event.errors && event.errors.includes('Помилка: Час для прогнозування вже вийшов')) {
-            this.cupMatches = this.cupMatches.filter((cupMatch) => cupMatch.id !== event.cupMatchId);
+            this.cupMatches = this.cupMatches.filter(cupMatch => cupMatch.id !== event.cupMatchId);
         } else if (event.cupPrediction) {
-            const cupMatchIndex = this.cupMatches.findIndex((cupMatch) => cupMatch.id === event.cupMatchId);
+            const cupMatchIndex = this.cupMatches.findIndex(cupMatch => cupMatch.id === event.cupMatchId);
             if (cupMatchIndex > -1) {
                 const updated = this.cupMatches[cupMatchIndex];
                 updated.cup_predictions = [event.cupPrediction];
@@ -75,5 +74,4 @@ export class CupPredictionsComponent implements OnDestroy, OnInit {
             }
         );
     }
-
 }

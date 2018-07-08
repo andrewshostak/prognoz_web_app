@@ -1,9 +1,9 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 
-import { ChampionshipMatch } from '../../../shared/models/championship-match.model';
-import { ChampionshipMatchService } from '../../../championship/shared/championship-match.service';
-import { ChampionshipRatingService } from '../../../championship/shared/championship-rating.service';
-import { environment } from '../../../../environments/environment';
+import { ChampionshipMatch } from '@models/championship/championship-match.model';
+import { ChampionshipMatchService } from '@services/championship/championship-match.service';
+import { ChampionshipRatingService } from '@services/championship/championship-rating.service';
+import { environment } from '@env';
 import { NotificationsService } from 'angular2-notifications';
 
 @Component({

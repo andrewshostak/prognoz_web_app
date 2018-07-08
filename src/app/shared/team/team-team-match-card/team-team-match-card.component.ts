@@ -1,12 +1,12 @@
 import { AfterViewInit, Component, Input, ChangeDetectorRef, OnDestroy } from '@angular/core';
 
-import { environment } from '../../../../environments/environment';
-import { HelperService } from '../../../core/helper.service';
-import { TeamMatch } from '../../models/team-match.model';
-import { TeamMatchService } from '../../../team/shared/team-match.service';
-import { TeamTeamMatch } from '../../models/team-team-match.model';
+import { environment } from '@env';
+import { HelperService } from '@services/helper.service';
+import { TeamMatch } from '@models/team/team-match.model';
+import { TeamMatchService } from '@services/team/team-match.service';
+import { TeamTeamMatch } from '@models/team/team-team-match.model';
 import { TimePipe } from '../../pipes/time.pipe';
-import { User } from '../../models/user.model';
+import { User } from '@models/user.model';
 
 declare const $: any;
 

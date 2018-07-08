@@ -2,9 +2,9 @@ import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChange
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import { NotificationsService } from 'angular2-notifications';
-import { TeamMatch } from '../../models/team-match.model';
-import { TeamPredictionService } from '../../../team/shared/team-prediction.service';
-import { User } from '../../models/user.model';
+import { TeamMatch } from '@models/team/team-match.model';
+import { TeamPredictionService } from '@services/team/team-prediction.service';
+import { User } from '@models/user.model';
 
 @Component({
     selector: 'app-team-goalkeeper-form',

@@ -1,6 +1,6 @@
-import { Component, OnInit }    from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
-import { ConfirmModalService }  from '../../core/confirm-modal.service';
+import { ConfirmModalService } from '@services/confirm-modal.service';
 
 declare const $: any;
 
@@ -10,10 +10,7 @@ declare const $: any;
     styleUrls: ['./confirm-modal-new.component.css']
 })
 export class ConfirmModalNewComponent implements OnInit {
-
-    constructor(
-        private confirmModalService: ConfirmModalService,
-    ) {}
+    constructor(private confirmModalService: ConfirmModalService) {}
 
     defaultMessage: string;
     onConfirm: () => void;

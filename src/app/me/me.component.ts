@@ -3,16 +3,16 @@ import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs/Subscription';
 
-import { AuthService } from '../core/auth.service';
-import { Club } from '../shared/models/club.model';
-import { ClubService } from '../core/club.service';
-import { CurrentStateService } from '../core/current-state.service';
-import { environment } from '../../environments/environment';
-import { ImageService } from '../core/image.service';
+import { AuthService } from '@services/auth.service';
+import { Club } from '@models/club.model';
+import { ClubService } from '@services/club.service';
+import { CurrentStateService } from '@services/current-state.service';
+import { environment } from '@env';
+import { ImageService } from '@services/image.service';
 import { NotificationsService } from 'angular2-notifications';
-import { TitleService } from '../core/title.service';
-import { User } from '../shared/models/user.model';
-import { UserService } from '../core/user.service';
+import { TitleService } from '@services/title.service';
+import { User } from '@models/user.model';
+import { UserService } from '@services/user.service';
 
 @Component({
     selector: 'app-me',

@@ -1,21 +1,16 @@
-import { Component, OnInit }        from '@angular/core';
-import { ActivatedRoute, Params }   from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Params } from '@angular/router';
 
-import { Competition }              from '../../../shared/models/competition.model';
-import { CompetitionService }       from '../../../core/competition.service';
-
+import { Competition } from '@models/competition.model';
+import { CompetitionService } from '@services/competition.service';
 
 @Component({
-  selector: 'app-competition-edit',
-  templateUrl: './competition-edit.component.html',
-  styleUrls: ['./competition-edit.component.css']
+    selector: 'app-competition-edit',
+    templateUrl: './competition-edit.component.html',
+    styleUrls: ['./competition-edit.component.css']
 })
 export class CompetitionEditComponent implements OnInit {
-
-    constructor(
-        private activatedRoute: ActivatedRoute,
-        private competitionService: CompetitionService,
-    ) { }
+    constructor(private activatedRoute: ActivatedRoute, private competitionService: CompetitionService) {}
 
     competition: Competition;
     errorCompetition: string;

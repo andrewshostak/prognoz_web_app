@@ -1,28 +1,27 @@
-import { Component, ElementRef, OnDestroy, OnInit, ViewChild }  from '@angular/core';
-import { ActivatedRoute, Params }                               from '@angular/router';
+import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { ActivatedRoute, Params } from '@angular/router';
 
-import { CupCupMatch }                  from '../../shared/models/cup-cup-match.model';
-import { CupCupMatchService }           from '../../core/services/cup/cup-cup-match.service';
-import { CupMatch }                     from '../../shared/models/cup-match.model';
-import { CupMatchService }              from '../../core/services/cup/cup-match.service';
-import { CupPrediction }                from '../../shared/models/cup-prediction.model';
-import { CupPredictionService }         from '../../core/services/cup/cup-prediction.service';
-import { environment }                  from '../../../environments/environment';
-import { forkJoin }                     from 'rxjs/observable/forkJoin';
-import { HelperService }                from '../../core/helper.service';
-import { Subscription }                 from 'rxjs/Subscription';
-import { TimePipe }                     from '../../shared/pipes/time.pipe';
-import { TitleService }                 from '../../core/title.service';
+import { CupCupMatch } from '@models/cup/cup-cup-match.model';
+import { CupCupMatchService } from '@services/cup/cup-cup-match.service';
+import { CupMatch } from '@models/cup/cup-match.model';
+import { CupMatchService } from '@services/cup/cup-match.service';
+import { CupPrediction } from '@models/cup/cup-prediction.model';
+import { CupPredictionService } from '@services/cup/cup-prediction.service';
+import { environment } from '@env';
+import { forkJoin } from 'rxjs/observable/forkJoin';
+import { HelperService } from '@services/helper.service';
+import { Subscription } from 'rxjs/Subscription';
+import { TimePipe } from '../../shared/pipes/time.pipe';
+import { TitleService } from '@services/title.service';
 
 declare const $: any;
 
 @Component({
-  selector: 'app-cup-cup-match',
-  templateUrl: './cup-cup-match.component.html',
-  styleUrls: ['./cup-cup-match.component.css']
+    selector: 'app-cup-cup-match',
+    templateUrl: './cup-cup-match.component.html',
+    styleUrls: ['./cup-cup-match.component.css']
 })
 export class CupCupMatchComponent implements OnDestroy, OnInit {
-
     constructor(
         private activatedRoute: ActivatedRoute,
         private cupCupMatchService: CupCupMatchService,
@@ -31,7 +30,7 @@ export class CupCupMatchComponent implements OnDestroy, OnInit {
         private helperService: HelperService,
         private timePipe: TimePipe,
         private titleService: TitleService
-    ) { }
+    ) {}
 
     @ViewChild('cupCupMatchElement') cupCupMatchElement: ElementRef;
 
@@ -111,50 +110,44 @@ export class CupCupMatchComponent implements OnDestroy, OnInit {
     }
 
     private getCupMatchesData(cupStageId: number): void {
-        this.cupMatchService.getCupMatches(
-            null,
-            null,
-            null,
-            null,
-            null,
-            cupStageId
-        ).subscribe(
+        this.cupMatchService.getCupMatches(null, null, null, null, null, cupStageId).subscribe(
             response => {
                 this.errorCupMatches = null;
                 if (response && response.cup_matches) {
                     this.cupMatches = response.cup_matches;
-                    const cupPredictionsHome = this.cupPredictionService
-                        .getCupPredictions(this.cupCupMatch.id, this.cupCupMatch.home_user_id);
-                    const cupPredictionsAway = this.cupPredictionService
-                        .getCupPredictions(this.cupCupMatch.id, this.cupCupMatch.away_user_id);
+                    const cupPredictionsHome = this.cupPredictionService.getCupPredictions(
+                        this.cupCupMatch.id,
+                        this.cupCupMatch.home_user_id
+                    );
+                    const cupPredictionsAway = this.cupPredictionService.getCupPredictions(
+                        this.cupCupMatch.id,
+                        this.cupCupMatch.away_user_id
+                    );
 
                     forkJoin([cupPredictionsHome, cupPredictionsAway], (home, away) => {
                         return { home, away };
-                    }).subscribe(
-                        r => {
-                            this.numberOfHomePredictions = 0;
-                            this.numberOfAwayPredictions = 0;
-                            this.errorCupPredictions = null;
-                            this.cupMatches = this.cupMatches.map((cupMatch) => {
-                                const homePrediction = r.home ? r.home.find((prediction) => prediction.cup_match_id === cupMatch.id) : null;
-                                const awayPrediction = r.away ? r.away.find((prediction) => prediction.cup_match_id === cupMatch.id) : null;
-                                cupMatch.home_prediction = this.getCupPrediction(cupMatch, homePrediction);
-                                cupMatch.away_prediction = this.getCupPrediction(cupMatch, awayPrediction);
-                                cupMatch.home_prediction_created_at = this.getCupPredictionTime(cupMatch, homePrediction);
-                                cupMatch.away_prediction_created_at = this.getCupPredictionTime(cupMatch, awayPrediction);
-                                if (homePrediction) {
-                                    this.numberOfHomePredictions++;
-                                }
-                                if (awayPrediction) {
-                                    this.numberOfAwayPredictions++;
-                                }
-                                return cupMatch;
-                            });
-                            this.cupPredictionsRequestsEnded = true;
-                            $(() => $('[data-toggle="tooltip"]').tooltip());
-                        },
-                        error => this.errorCupPredictions = error
-                    );
+                    }).subscribe(r => {
+                        this.numberOfHomePredictions = 0;
+                        this.numberOfAwayPredictions = 0;
+                        this.errorCupPredictions = null;
+                        this.cupMatches = this.cupMatches.map(cupMatch => {
+                            const homePrediction = r.home ? r.home.find(prediction => prediction.cup_match_id === cupMatch.id) : null;
+                            const awayPrediction = r.away ? r.away.find(prediction => prediction.cup_match_id === cupMatch.id) : null;
+                            cupMatch.home_prediction = this.getCupPrediction(cupMatch, homePrediction);
+                            cupMatch.away_prediction = this.getCupPrediction(cupMatch, awayPrediction);
+                            cupMatch.home_prediction_created_at = this.getCupPredictionTime(cupMatch, homePrediction);
+                            cupMatch.away_prediction_created_at = this.getCupPredictionTime(cupMatch, awayPrediction);
+                            if (homePrediction) {
+                                this.numberOfHomePredictions++;
+                            }
+                            if (awayPrediction) {
+                                this.numberOfAwayPredictions++;
+                            }
+                            return cupMatch;
+                        });
+                        this.cupPredictionsRequestsEnded = true;
+                        $(() => $('[data-toggle="tooltip"]').tooltip());
+                    }, error => (this.errorCupPredictions = error));
                 }
             },
             error => {

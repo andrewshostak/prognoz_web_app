@@ -1,26 +1,25 @@
-import { Component, EventEmitter, Input, OnInit, Output }   from '@angular/core';
-import { FormControl, FormGroup, Validators }               from '@angular/forms';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 
-import { CupMatch }                                         from '../../../shared/models/cup-match.model';
-import { CupPrediction }                                    from '../../../shared/models/cup-prediction.model';
-import { CupPredictionService }                             from '../../../core/services/cup/cup-prediction.service';
-import { environment }                                      from '../../../../environments/environment';
-import { HelperService }                                    from '../../../core/helper.service';
-import { NotificationsService }                             from 'angular2-notifications';
-import { User }                                             from '../../../shared/models/user.model';
+import { CupMatch } from '@models/cup/cup-match.model';
+import { CupPrediction } from '@models/cup/cup-prediction.model';
+import { CupPredictionService } from '@services/cup/cup-prediction.service';
+import { environment } from '@env';
+import { HelperService } from '@services/helper.service';
+import { NotificationsService } from 'angular2-notifications';
+import { User } from '@models/user.model';
 
 @Component({
-  selector: 'app-cup-prediction-form',
-  templateUrl: './cup-prediction-form.component.html',
-  styleUrls: ['./cup-prediction-form.component.css']
+    selector: 'app-cup-prediction-form',
+    templateUrl: './cup-prediction-form.component.html',
+    styleUrls: ['./cup-prediction-form.component.css']
 })
 export class CupPredictionFormComponent implements OnInit {
-
     constructor(
         private cupPredictionService: CupPredictionService,
         private helperService: HelperService,
-        private notificationsService: NotificationsService,
-    ) { }
+        private notificationsService: NotificationsService
+    ) {}
 
     clubsImagesUrl: string = environment.apiImageClubs;
     cupPredictionForm: FormGroup;
@@ -29,7 +28,7 @@ export class CupPredictionFormComponent implements OnInit {
 
     @Input() authenticatedUser: User;
     @Input() cupMatch: CupMatch;
-    @Output() cupPredictionUpdated = new EventEmitter<{cupMatchId: number, cupPrediction?: CupPrediction, errors?: string[]}>();
+    @Output() cupPredictionUpdated = new EventEmitter<{ cupMatchId: number; cupPrediction?: CupPrediction; errors?: string[] }>();
 
     isScore(home: number, away: number): boolean {
         return this.helperService.isScore(home, away);
@@ -65,28 +64,25 @@ export class CupPredictionFormComponent implements OnInit {
             const cupPredictionToUpdate = Object.assign({}, this.cupPrediction);
             cupPredictionToUpdate.home = this.cupPredictionForm.get('home').value;
             cupPredictionToUpdate.away = this.cupPredictionForm.get('away').value;
-            this.cupPredictionService
-                .updateCupPrediction(cupPredictionToUpdate)
-                .subscribe(
-                    response => {
-                        this.cupPredictionUpdated.emit({
-                            cupMatchId: this.cupMatch.id,
-                            cupPrediction: response
-                        });
-                        this.notificationsService.success('Успішно', 'Прогноз прийнято');
-                        this.spinnerButton = false;
-                    },
-                    errors => {
-                        this.cupPredictionUpdated.emit({
-                            cupMatchId: this.cupMatch.id,
-                            cupPrediction: null,
-                            errors: errors
-                        });
-                        errors.forEach(error => this.notificationsService.error('Помилка', error));
-                        this.spinnerButton = false;
-                    }
-                );
+            this.cupPredictionService.updateCupPrediction(cupPredictionToUpdate).subscribe(
+                response => {
+                    this.cupPredictionUpdated.emit({
+                        cupMatchId: this.cupMatch.id,
+                        cupPrediction: response
+                    });
+                    this.notificationsService.success('Успішно', 'Прогноз прийнято');
+                    this.spinnerButton = false;
+                },
+                errors => {
+                    this.cupPredictionUpdated.emit({
+                        cupMatchId: this.cupMatch.id,
+                        cupPrediction: null,
+                        errors: errors
+                    });
+                    errors.forEach(error => this.notificationsService.error('Помилка', error));
+                    this.spinnerButton = false;
+                }
+            );
         }
     }
-
 }

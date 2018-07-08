@@ -1,20 +1,16 @@
-import { Component, OnInit }        from '@angular/core';
-import { ActivatedRoute, Params }   from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Params } from '@angular/router';
 
-import { CupStage }                 from '../../../../shared/models/cup-stage.model';
-import { CupStageService }          from '../../../../core/services/cup/cup-stage.service';
+import { CupStage } from '@models/cup/cup-stage.model';
+import { CupStageService } from '@services/cup/cup-stage.service';
 
 @Component({
-  selector: 'app-cup-stage-edit',
-  templateUrl: './cup-stage-edit.component.html',
-  styleUrls: ['./cup-stage-edit.component.css']
+    selector: 'app-cup-stage-edit',
+    templateUrl: './cup-stage-edit.component.html',
+    styleUrls: ['./cup-stage-edit.component.css']
 })
 export class CupStageEditComponent implements OnInit {
-
-    constructor(
-        private activatedRoute: ActivatedRoute,
-        private cupStageService: CupStageService
-    ) { }
+    constructor(private activatedRoute: ActivatedRoute, private cupStageService: CupStageService) {}
 
     cupStage: CupStage;
     errorCupStage: string;
@@ -35,5 +31,4 @@ export class CupStageEditComponent implements OnInit {
             }
         );
     }
-
 }

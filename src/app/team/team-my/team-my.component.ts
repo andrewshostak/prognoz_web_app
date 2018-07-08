@@ -3,15 +3,15 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Params } from '@angular/router';
 import { Subscription } from 'rxjs/Subscription';
 
-import { AuthService } from '../../core/auth.service';
-import { CurrentStateService } from '../../core/current-state.service';
+import { AuthService } from '@services/auth.service';
+import { CurrentStateService } from '@services/current-state.service';
 import { NotificationsService } from 'angular2-notifications';
-import { Team } from '../../shared/models/team.model';
-import { TeamService } from '../shared/team.service';
-import { TeamTeamMatch } from '../../shared/models/team-team-match.model';
-import { TeamTeamMatchService } from '../shared/team-team-match.service';
-import { TitleService } from '../../core/title.service';
-import { User } from '../../shared/models/user.model';
+import { Team } from '@models/team/team.model';
+import { TeamService } from '@services/team/team.service';
+import { TeamTeamMatch } from '@models/team/team-team-match.model';
+import { TeamTeamMatchService } from '@services/team/team-team-match.service';
+import { TitleService } from '@services/title.service';
+import { User } from '@models/user.model';
 
 declare var $: any;
 

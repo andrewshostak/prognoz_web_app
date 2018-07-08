@@ -1,10 +1,10 @@
 import { Component, ElementRef, Input, OnChanges, OnDestroy, SimpleChanges } from '@angular/core';
 
-import { CupRating } from '../../../shared/models/cup-rating.model';
-import { environment } from '../../../../environments/environment';
-import { HelperService } from '../../../core/helper.service';
-import { User } from '../../../shared/models/user.model';
-import { Season } from '../../../shared/models/season.model';
+import { CupRating } from '@models/cup/cup-rating.model';
+import { environment } from '@env';
+import { HelperService } from '@services/helper.service';
+import { User } from '@models/user.model';
+import { Season } from '@models/season.model';
 
 declare const $: any;
 

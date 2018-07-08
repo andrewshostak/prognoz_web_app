@@ -1,26 +1,25 @@
-import { Component, OnInit }        from '@angular/core';
-import { ActivatedRoute, Params }   from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Params } from '@angular/router';
 
-import { CupRatingGroup }           from '../../shared/models/cup-rating-group.model';
-import { CupRatingService }         from '../cup-rating/cup-rating.service';
-import { environment}               from '../../../environments/environment';
-import { HelperService }            from '../../core/helper.service';
-import { Subscription }             from 'rxjs/Subscription';
-import { TitleService }             from '../../core/title.service';
+import { CupRatingGroup } from '@models/cup/cup-rating-group.model';
+import { CupRatingService } from '../cup-rating/cup-rating.service';
+import { environment } from '@env';
+import { HelperService } from '@services/helper.service';
+import { Subscription } from 'rxjs/Subscription';
+import { TitleService } from '@services/title.service';
 
 @Component({
-  selector: 'app-cup-rating-group',
-  templateUrl: './cup-rating-group.component.html',
-  styleUrls: ['./cup-rating-group.component.css']
+    selector: 'app-cup-rating-group',
+    templateUrl: './cup-rating-group.component.html',
+    styleUrls: ['./cup-rating-group.component.css']
 })
 export class CupRatingGroupComponent implements OnInit {
-
     constructor(
         private activatedRoute: ActivatedRoute,
         private cupRatingService: CupRatingService,
         private helperService: HelperService,
         private titleService: TitleService
-    ) { }
+    ) {}
 
     activatedRouteSubscription: Subscription;
     competitionId: number;
@@ -37,10 +36,7 @@ export class CupRatingGroupComponent implements OnInit {
             this.competitionId = params['competitionId'];
             this.groupNumber = params['groupNumber'];
             this.titleService.setTitle(`Рейтинг групи ${this.groupNumber} - Кубок`);
-            this.cupRatingService.getCupRatingGroup(
-                this.competitionId,
-                this.groupNumber
-            ).subscribe(
+            this.cupRatingService.getCupRatingGroup(this.competitionId, this.groupNumber).subscribe(
                 response => {
                     this.cupRatingGroup = response;
                 },

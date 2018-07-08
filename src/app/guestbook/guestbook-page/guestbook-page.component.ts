@@ -4,14 +4,14 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { ActivatedRoute, Params } from '@angular/router';
 import { Subscription } from 'rxjs/Subscription';
 
-import { AuthService } from '../../core/auth.service';
-import { CurrentStateService } from '../../core/current-state.service';
-import { environment } from '../../../environments/environment';
-import { GuestbookMessage } from '../../shared/models/guestbook-message.model';
+import { AuthService } from '@services/auth.service';
+import { CurrentStateService } from '@services/current-state.service';
+import { environment } from '@env';
+import { GuestbookMessage } from '@models/guestbook-message.model';
 import { GuestbookService } from '../shared/guestbook.service';
 import { NotificationsService } from 'angular2-notifications';
-import { TitleService } from '../../core/title.service';
-import { User } from '../../shared/models/user.model';
+import { TitleService } from '@services/title.service';
+import { User } from '@models/user.model';
 
 declare const $: any;
 

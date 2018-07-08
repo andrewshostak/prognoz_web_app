@@ -5,15 +5,15 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { ActivatedRoute, Params } from '@angular/router';
 import { Subscription } from 'rxjs/Subscription';
 
-import { AuthService } from '../../core/auth.service';
+import { AuthService } from '@services/auth.service';
 import { CommentService } from '../shared/comment.service';
-import { CurrentStateService } from '../../core/current-state.service';
-import { environment } from '../../../environments/environment';
+import { CurrentStateService } from '@services/current-state.service';
+import { environment } from '@env';
 import { NotificationsService } from 'angular2-notifications';
-import { News } from '../../shared/models/news.model';
+import { News } from '@models/news.model';
 import { NewsService } from '../shared/news.service';
-import { TitleService } from '../../core/title.service';
-import { User } from '../../shared/models/user.model';
+import { TitleService } from '@services/title.service';
+import { User } from '@models/user.model';
 
 @Component({
     selector: 'app-news-datail',

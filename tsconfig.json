@@ -12,7 +12,10 @@
         "lib": ["es2017", "dom"],
         "baseUrl": "src",
         "paths": {
-            "@utils/*": ["app/shared/utils/*"]
+            "@utils/*": ["app/shared/utils/*"],
+            "@env": ["environments/environment"],
+            "@services/*": ["app/core/services/*"],
+            "@models/*": ["app/shared/models/*"]
         }
     }
 }

@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 
-import { ChampionshipMatch } from '../../../../shared/models/championship-match.model';
-import { ChampionshipMatchService } from '../../../shared/championship-match.service';
-import { TitleService } from '../../../../core/title.service';
+import { ChampionshipMatch } from '@models/championship/championship-match.model';
+import { ChampionshipMatchService } from '@services/championship/championship-match.service';
+import { TitleService } from '@services/title.service';
 
 @Component({
     selector: 'app-championship-competition-results',

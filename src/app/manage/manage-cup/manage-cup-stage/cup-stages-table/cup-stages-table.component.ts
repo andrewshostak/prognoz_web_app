@@ -1,25 +1,24 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { ActivatedRoute, Params }       from '@angular/router';
+import { ActivatedRoute, Params } from '@angular/router';
 
-import { ConfirmModalService }          from '../../../../core/confirm-modal.service';
-import { CupStage }                     from '../../../../shared/models/cup-stage.model';
-import { CupStageService }              from '../../../../core/services/cup/cup-stage.service';
-import { NotificationsService }         from 'angular2-notifications';
-import { Subscription }                 from 'rxjs/Subscription';
+import { ConfirmModalService } from '@services/confirm-modal.service';
+import { CupStage } from '@models/cup/cup-stage.model';
+import { CupStageService } from '@services/cup/cup-stage.service';
+import { NotificationsService } from 'angular2-notifications';
+import { Subscription } from 'rxjs/Subscription';
 
 @Component({
-  selector: 'app-cup-stages-table',
-  templateUrl: './cup-stages-table.component.html',
-  styleUrls: ['./cup-stages-table.component.css']
+    selector: 'app-cup-stages-table',
+    templateUrl: './cup-stages-table.component.html',
+    styleUrls: ['./cup-stages-table.component.css']
 })
 export class CupStagesTableComponent implements OnInit, OnDestroy {
-
     constructor(
         private activatedRoute: ActivatedRoute,
         private confirmModalService: ConfirmModalService,
         private cupStageService: CupStageService,
         private notificationsService: NotificationsService
-    ) { }
+    ) {}
 
     activatedRouteSubscription: Subscription;
     cupStages: CupStage[];
@@ -31,26 +30,22 @@ export class CupStagesTableComponent implements OnInit, OnDestroy {
     total: number;
 
     deleteCupStage(cupStage: CupStage): void {
-        this.confirmModalService.show(
-            () => {
-                this.cupStageService.deleteCupStage(cupStage.id)
-                    .subscribe(
-                        response => {
-                            this.confirmModalService.hide();
-                            this.total--;
-                            this.cupStages = this.cupStages
-                                .filter(stage => stage.id !== cupStage.id);
-                            this.notificationsService.success('Успішно', cupStage.title + ' видалено');
-                        },
-                        errors => {
-                            this.confirmModalService.hide();
-                            for (const error of errors) {
-                                this.notificationsService.error('Помилка', error);
-                            }
-                        });
-            },
-            `Видалити ${cupStage.title}?`
-        );
+        this.confirmModalService.show(() => {
+            this.cupStageService.deleteCupStage(cupStage.id).subscribe(
+                response => {
+                    this.confirmModalService.hide();
+                    this.total--;
+                    this.cupStages = this.cupStages.filter(stage => stage.id !== cupStage.id);
+                    this.notificationsService.success('Успішно', cupStage.title + ' видалено');
+                },
+                errors => {
+                    this.confirmModalService.hide();
+                    for (const error of errors) {
+                        this.notificationsService.error('Помилка', error);
+                    }
+                }
+            );
+        }, `Видалити ${cupStage.title}?`);
     }
 
     ngOnDestroy() {
@@ -61,21 +56,19 @@ export class CupStagesTableComponent implements OnInit, OnDestroy {
 
     ngOnInit() {
         this.path = '/manage/cup/stages/page/';
-        this.activatedRouteSubscription = this.activatedRoute.params
-            .subscribe((params: Params) => {
-                this.cupStageService.getCupStages(params['number']).subscribe(
-                    response => {
-                        this.currentPage = response.current_page;
-                        this.lastPage = response.last_page;
-                        this.perPage = response.per_page;
-                        this.total = response.total;
-                        this.cupStages = response.data;
-                    },
-                    error => {
-                        this.errorCupStages = error;
-                    }
-                );
-            });
+        this.activatedRouteSubscription = this.activatedRoute.params.subscribe((params: Params) => {
+            this.cupStageService.getCupStages(params['number']).subscribe(
+                response => {
+                    this.currentPage = response.current_page;
+                    this.lastPage = response.last_page;
+                    this.perPage = response.per_page;
+                    this.total = response.total;
+                    this.cupStages = response.data;
+                },
+                error => {
+                    this.errorCupStages = error;
+                }
+            );
+        });
     }
-
 }

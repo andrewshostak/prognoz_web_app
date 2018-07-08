@@ -1,20 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 
-import { CupMatchService } from '../../../../core/services/cup/cup-match.service';
-import { CupMatch } from '../../../../shared/models/cup-match.model';
+import { CupMatchService } from '@services/cup/cup-match.service';
+import { CupMatch } from '@models/cup/cup-match.model';
 
 @Component({
-  selector: 'app-cup-match-edit',
-  templateUrl: './cup-match-edit.component.html',
-  styleUrls: ['./cup-match-edit.component.css']
+    selector: 'app-cup-match-edit',
+    templateUrl: './cup-match-edit.component.html',
+    styleUrls: ['./cup-match-edit.component.css']
 })
 export class CupMatchEditComponent implements OnInit {
-
-    constructor(
-        private activatedRoute: ActivatedRoute,
-        private cupMatchService: CupMatchService
-    ) { }
+    constructor(private activatedRoute: ActivatedRoute, private cupMatchService: CupMatchService) {}
 
     cupMatch: CupMatch;
     errorCupMatch: string;
@@ -35,5 +31,4 @@ export class CupMatchEditComponent implements OnInit {
             }
         );
     }
-
 }

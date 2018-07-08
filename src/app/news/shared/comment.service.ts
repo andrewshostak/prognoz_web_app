@@ -1,19 +1,14 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 
-import { Comment } from '../../shared/models/comment.model';
-import { environment } from '../../../environments/environment';
-import { ErrorHandlerService } from '../../core/error-handler.service';
-import { HeadersWithToken } from '../../core/headers-with-token.service';
+import { Comment } from '@models/comment.model';
+import { environment } from '@env';
+import { ErrorHandlerService } from '@services/error-handler.service';
+import { HeadersWithToken } from '@services/headers-with-token.service';
 
 @Injectable()
-
 export class CommentService {
-
-    constructor(
-        private errorHandlerService: ErrorHandlerService,
-        private headersWithToken: HeadersWithToken
-    ) {}
+    constructor(private errorHandlerService: ErrorHandlerService, private headersWithToken: HeadersWithToken) {}
 
     private commentUrl = environment.apiUrl + 'comment';
 

@@ -1,21 +1,20 @@
-import { Injectable }               from '@angular/core';
-import { HttpClient, HttpParams }   from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { HttpClient, HttpParams } from '@angular/common/http';
 
-import { CupMatch }                 from '../../../shared/models/cup-match.model';
-import { environment }              from '../../../../environments/environment';
-import { ErrorHandlerService }      from '../../error-handler.service';
-import { HeadersWithToken }         from '../../headers-with-token.service';
-import { isNullOrUndefined }        from 'util';
-import { Observable }               from 'rxjs/Observable';
+import { CupMatch } from '@models/cup/cup-match.model';
+import { environment } from '@env';
+import { ErrorHandlerService } from '@services/error-handler.service';
+import { HeadersWithToken } from '@services/headers-with-token.service';
+import { isNullOrUndefined } from 'util';
+import { Observable } from 'rxjs/Observable';
 
 @Injectable()
 export class CupMatchService {
-
     constructor(
         private errorHandlerService: ErrorHandlerService,
         private headersWithToken: HeadersWithToken,
         private httpClient: HttpClient
-    ) { }
+    ) {}
 
     private cupMatchUrl = `${environment.apiUrl}cup/matches`;
 
@@ -56,9 +55,7 @@ export class CupMatchService {
         if (!isNullOrUndefined(cupStageId)) {
             params = params.append('cup_stage_id', cupStageId.toString());
         }
-        return this.httpClient
-            .get(this.cupMatchUrl, {params})
-            .catch(this.errorHandlerService.handle);
+        return this.httpClient.get(this.cupMatchUrl, { params }).catch(this.errorHandlerService.handle);
     }
 
     /**
@@ -115,8 +112,6 @@ export class CupMatchService {
      * @returns {Observable<void>}
      */
     deleteCupMatch(cupMatchId: number): Observable<void> {
-        return this.headersWithToken
-            .delete(`${this.cupMatchUrl}/${cupMatchId}`)
-            .catch(this.errorHandlerService.handle);
+        return this.headersWithToken.delete(`${this.cupMatchUrl}/${cupMatchId}`).catch(this.errorHandlerService.handle);
     }
 }

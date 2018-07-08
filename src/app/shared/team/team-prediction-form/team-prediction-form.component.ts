@@ -1,11 +1,11 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
-import { environment } from '../../../../environments/environment';
-import { HelperService } from '../../../core/helper.service';
+import { environment } from '@env';
+import { HelperService } from '@services/helper.service';
 import { NotificationsService } from 'angular2-notifications';
-import { TeamPrediction } from '../../models/team-prediction.model';
-import { TeamPredictionService } from '../../../team/shared/team-prediction.service';
+import { TeamPrediction } from '@models/team/team-prediction.model';
+import { TeamPredictionService } from '@services/team/team-prediction.service';
 
 @Component({
     selector: 'app-team-prediction-form',

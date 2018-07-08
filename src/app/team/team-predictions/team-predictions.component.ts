@@ -2,16 +2,16 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 import { Subscription } from 'rxjs/Subscription';
 
-import { AuthService } from '../../core/auth.service';
-import { CurrentStateService } from '../../core/current-state.service';
-import { TeamMatch } from '../../shared/models/team-match.model';
-import { TeamMatchService } from '../shared/team-match.service';
-import { TeamTeamMatch } from '../../shared/models/team-team-match.model';
-import { TeamTeamMatchService } from '../shared/team-team-match.service';
-import { TeamPrediction } from '../../shared/models/team-prediction.model';
-import { TeamPredictionService } from '../shared/team-prediction.service';
-import { TitleService } from '../../core/title.service';
-import { User } from '../../shared/models/user.model';
+import { AuthService } from '@services/auth.service';
+import { CurrentStateService } from '@services/current-state.service';
+import { TeamMatch } from '@models/team/team-match.model';
+import { TeamMatchService } from '@services/team/team-match.service';
+import { TeamTeamMatch } from '@models/team/team-team-match.model';
+import { TeamTeamMatchService } from '@services/team/team-team-match.service';
+import { TeamPrediction } from '@models/team/team-prediction.model';
+import { TeamPredictionService } from '@services/team/team-prediction.service';
+import { TitleService } from '@services/title.service';
+import { User } from '@models/user.model';
 
 @Component({
     selector: 'app-team-predictions',

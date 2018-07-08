@@ -1,14 +1,14 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs/Subscription';
 
-import { AuthService } from '../../core/auth.service';
-import { CurrentStateService } from '../../core/current-state.service';
-import { TeamRating } from '../../shared/models/team-rating.model';
-import { TeamRatingUser } from '../../shared/models/team-rating-user.model';
-import { TeamRatingService } from '../shared/team-rating.service';
-import { TeamRatingUserService } from '../shared/team-rating-user.service';
-import { TitleService } from '../../core/title.service';
-import { User } from '../../shared/models/user.model';
+import { AuthService } from '@services/auth.service';
+import { CurrentStateService } from '@services/current-state.service';
+import { TeamRating } from '@models/team/team-rating.model';
+import { TeamRatingUser } from '@models/team/team-rating-user.model';
+import { TeamRatingService } from '@services/team/team-rating.service';
+import { TeamRatingUserService } from '@services/team/team-rating-user.service';
+import { TitleService } from '@services/title.service';
+import { User } from '@models/user.model';
 
 @Component({
     selector: 'app-team-rating',

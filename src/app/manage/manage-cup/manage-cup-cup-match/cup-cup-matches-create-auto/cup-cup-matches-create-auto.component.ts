@@ -1,24 +1,23 @@
-import { Component, OnInit }                    from '@angular/core';
-import { FormControl, FormGroup, Validators }   from '@angular/forms';
+import { Component, OnInit } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 
-import { CupCupMatch }          from '../../../../shared/models/cup-cup-match.model';
-import { CupCupMatchService }   from '../../../../core/services/cup/cup-cup-match.service';
-import { CupStage }             from '../../../../shared/models/cup-stage.model';
-import { CupStageService }      from '../../../../core/services/cup/cup-stage.service';
+import { CupCupMatch } from '@models/cup/cup-cup-match.model';
+import { CupCupMatchService } from '@services/cup/cup-cup-match.service';
+import { CupStage } from '@models/cup/cup-stage.model';
+import { CupStageService } from '@services/cup/cup-stage.service';
 import { NotificationsService } from 'angular2-notifications';
 
 @Component({
-  selector: 'app-cup-cup-matches-create-auto',
-  templateUrl: './cup-cup-matches-create-auto.component.html',
-  styleUrls: ['./cup-cup-matches-create-auto.component.css']
+    selector: 'app-cup-cup-matches-create-auto',
+    templateUrl: './cup-cup-matches-create-auto.component.html',
+    styleUrls: ['./cup-cup-matches-create-auto.component.css']
 })
 export class CupCupMatchesCreateAutoComponent implements OnInit {
-
     constructor(
         private cupCupMatchService: CupCupMatchService,
         private cupStageService: CupStageService,
         private notificationsService: NotificationsService
-    ) { }
+    ) {}
 
     cupStages: CupStage[];
     cupCupMatchAutoForm: FormGroup;
@@ -27,7 +26,7 @@ export class CupCupMatchesCreateAutoComponent implements OnInit {
 
     ngOnInit() {
         this.cupCupMatchAutoForm = new FormGroup({
-            type: new FormControl({value: 'auto', disabled: true}, [Validators.required]),
+            type: new FormControl({ value: 'auto', disabled: true }, [Validators.required]),
             to: new FormControl('', [Validators.required]),
             number_of_matches: new FormControl(null, [Validators.min(1)])
         });
@@ -57,7 +56,6 @@ export class CupCupMatchesCreateAutoComponent implements OnInit {
     }
 
     resetCupCupMatchAutoForm(): void {
-        this.cupCupMatchAutoForm.reset({type: 'auto'});
+        this.cupCupMatchAutoForm.reset({ type: 'auto' });
     }
-
 }

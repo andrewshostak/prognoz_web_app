@@ -1,20 +1,19 @@
-import { Injectable }           from '@angular/core';
-import { HttpClient }           from '@angular/common/http';
-import { Observable }           from 'rxjs/Observable';
+import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs/Observable';
 
-import { CupApplication }       from '../../shared/models/cup-application.model';
-import { ErrorHandlerService }  from '../../core/error-handler.service';
-import { environment }          from '../../../environments/environment';
-import { HeadersWithToken }     from '../../core/headers-with-token.service';
+import { CupApplication } from '@models/cup/cup-application.model';
+import { ErrorHandlerService } from '@services/error-handler.service';
+import { environment } from '@env';
+import { HeadersWithToken } from '@services/headers-with-token.service';
 
 @Injectable()
 export class CupApplicationService {
-
     constructor(
         private errorHandlerService: ErrorHandlerService,
         private headersWithToken: HeadersWithToken,
         private httpClient: HttpClient
-    ) { }
+    ) {}
 
     private cupApplicationUrl = environment.apiUrl + 'cup/applications';
 
@@ -47,9 +46,7 @@ export class CupApplicationService {
      * @returns {Observable<CupApplication>}
      */
     createCupApplication(cupApplication: CupApplication): Observable<CupApplication> {
-        return this.headersWithToken
-            .post(this.cupApplicationUrl, cupApplication)
-            .catch(this.errorHandlerService.handle);
+        return this.headersWithToken.post(this.cupApplicationUrl, cupApplication).catch(this.errorHandlerService.handle);
     }
 
     /**
@@ -58,8 +55,6 @@ export class CupApplicationService {
      * @returns {Observable<void>}
      */
     deleteCupApplication(cupApplicationId: number): Observable<void> {
-        return this.headersWithToken
-            .delete(`${this.cupApplicationUrl}/${cupApplicationId}`)
-            .catch(this.errorHandlerService.handle);
+        return this.headersWithToken.delete(`${this.cupApplicationUrl}/${cupApplicationId}`).catch(this.errorHandlerService.handle);
     }
 }

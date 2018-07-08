@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
-import { Club } from '../../../shared/models/club.model';
-import { ClubService } from '../../../core/club.service';
+import { Club } from '@models/club.model';
+import { ClubService } from '@services/club.service';
 import { NotificationsService } from 'angular2-notifications';
-import { TeamMatch } from '../../../shared/models/team-match.model';
-import { TeamMatchService } from '../../../team/shared/team-match.service';
+import { TeamMatch } from '@models/team/team-match.model';
+import { TeamMatchService } from '@services/team/team-match.service';
 
 @Component({
     selector: 'app-team-match-create',

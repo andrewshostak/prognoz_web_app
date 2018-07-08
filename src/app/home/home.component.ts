@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 
-import { ChampionshipMatch } from '../shared/models/championship-match.model';
-import { ChampionshipMatchService } from '../championship/shared/championship-match.service';
-import { environment } from '../../environments/environment';
-import { News } from '../shared/models/news.model';
+import { ChampionshipMatch } from '@models/championship/championship-match.model';
+import { ChampionshipMatchService } from '@services/championship/championship-match.service';
+import { environment } from '@env';
+import { News } from '@models/news.model';
 import { NewsService } from '../news/shared/news.service';
-import { TitleService } from '../core/title.service';
+import { TitleService } from '@services/title.service';
 
 @Component({
     selector: 'app-home',

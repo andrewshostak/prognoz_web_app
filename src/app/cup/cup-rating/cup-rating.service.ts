@@ -1,19 +1,15 @@
-import { Injectable }           from '@angular/core';
-import { HttpClient }           from '@angular/common/http';
-import { Observable }           from 'rxjs/Observable';
+import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs/Observable';
 
-import { CupRating }            from '../../shared/models/cup-rating.model';
-import { CupRatingGroup }       from '../../shared/models/cup-rating-group.model';
-import { ErrorHandlerService }  from '../../core/error-handler.service';
-import { environment }          from '../../../environments/environment';
+import { CupRating } from '@models/cup/cup-rating.model';
+import { CupRatingGroup } from '@models/cup/cup-rating-group.model';
+import { ErrorHandlerService } from '@services/error-handler.service';
+import { environment } from '@env';
 
 @Injectable()
 export class CupRatingService {
-
-    constructor(
-        private errorHandlerService: ErrorHandlerService,
-        private httpClient: HttpClient
-    ) { }
+    constructor(private errorHandlerService: ErrorHandlerService, private httpClient: HttpClient) {}
 
     private cupRatingUrl = environment.apiUrl + 'cup/rating';
 
@@ -22,9 +18,7 @@ export class CupRatingService {
      * @returns {Observable<CupRating[]>}
      */
     getCupRating(): Observable<CupRating[]> {
-        return this.httpClient
-            .get(this.cupRatingUrl)
-            .catch(this.errorHandlerService.handle);
+        return this.httpClient.get(this.cupRatingUrl).catch(this.errorHandlerService.handle);
     }
 
     /**
@@ -33,9 +27,7 @@ export class CupRatingService {
      * @returns {Observable<CupRating>}
      */
     getCupRatingUser(userId: number): Observable<CupRating> {
-        return this.httpClient
-            .get(`${this.cupRatingUrl}/${userId}`)
-            .catch(this.errorHandlerService.handle);
+        return this.httpClient.get(`${this.cupRatingUrl}/${userId}`).catch(this.errorHandlerService.handle);
     }
 
     /**

@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 
-import { Club } from '../../../shared/models/club.model';
-import { ClubService } from '../../../core/club.service';
-import { ConfirmModalService } from '../../../core/confirm-modal.service';
-import { environment } from '../../../../environments/environment';
+import { Club } from '@models/club.model';
+import { ClubService } from '@services/club.service';
+import { ConfirmModalService } from '@services/confirm-modal.service';
+import { environment } from '@env';
 import { NotificationsService } from 'angular2-notifications';
 
 @Component({

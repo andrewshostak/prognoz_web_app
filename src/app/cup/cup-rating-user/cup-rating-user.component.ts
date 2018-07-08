@@ -1,23 +1,18 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { ActivatedRoute, Params }       from '@angular/router';
+import { ActivatedRoute, Params } from '@angular/router';
 
-import { CupRating }                    from '../../shared/models/cup-rating.model';
-import { CupRatingService }             from '../cup-rating/cup-rating.service';
-import { Subscription }                 from 'rxjs/Subscription';
-import { TitleService }                 from '../../core/title.service';
+import { CupRating } from '@models/cup/cup-rating.model';
+import { CupRatingService } from '../cup-rating/cup-rating.service';
+import { Subscription } from 'rxjs/Subscription';
+import { TitleService } from '@services/title.service';
 
 @Component({
-  selector: 'app-cup-rating-user',
-  templateUrl: './cup-rating-user.component.html',
-  styleUrls: ['./cup-rating-user.component.css']
+    selector: 'app-cup-rating-user',
+    templateUrl: './cup-rating-user.component.html',
+    styleUrls: ['./cup-rating-user.component.css']
 })
 export class CupRatingUserComponent implements OnInit, OnDestroy {
-
-    constructor(
-        private activatedRoute: ActivatedRoute,
-        private cupRatingService: CupRatingService,
-        private titleService: TitleService
-    ) { }
+    constructor(private activatedRoute: ActivatedRoute, private cupRatingService: CupRatingService, private titleService: TitleService) {}
 
     activatedRouteSubscription: Subscription;
     cupRating: CupRating;

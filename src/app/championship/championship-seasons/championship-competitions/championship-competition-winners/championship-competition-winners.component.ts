@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 
-import { Competition } from '../../../../shared/models/competition.model';
-import { CompetitionService } from '../../../../core/competition.service';
-import { environment } from '../../../../../environments/environment';
-import { TitleService } from '../../../../core/title.service';
+import { Competition } from '@models/competition.model';
+import { CompetitionService } from '@services/competition.service';
+import { environment } from '@env';
+import { TitleService } from '@services/title.service';
 
 @Component({
     selector: 'app-championship-competition-winners',

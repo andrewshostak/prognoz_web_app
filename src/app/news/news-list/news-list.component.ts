@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 
-import { environment } from '../../../environments/environment';
-import { News } from '../../shared/models/news.model';
+import { environment } from '@env';
+import { News } from '@models/news.model';
 import { NewsService } from '../shared/news.service';
-import { TitleService } from '../../core/title.service';
+import { TitleService } from '@services/title.service';
 
 @Component({
     selector: 'app-news-list',

@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 
-import { ChampionshipRating } from '../../models/championship-rating.model';
-import { ChampionshipRatingService } from '../../../championship/shared/championship-rating.service';
-import { environment } from '../../../../environments/environment';
-import { HelperService } from '../../../core/helper.service';
+import { ChampionshipRating } from '@models/championship/championship-rating.model';
+import { ChampionshipRatingService } from '@services/championship/championship-rating.service';
+import { environment } from '@env';
+import { HelperService } from '@services/helper.service';
 
 @Component({
     selector: 'app-championship-rating-top',

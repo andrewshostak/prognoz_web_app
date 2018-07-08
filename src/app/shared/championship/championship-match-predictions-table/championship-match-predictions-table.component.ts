@@ -1,21 +1,17 @@
-import { Component, Input }   from '@angular/core';
+import { Component, Input } from '@angular/core';
 
-import { ChampionshipMatch }  from '../../models/championship-match.model';
-import { HelperService }      from '../../../core/helper.service';
-import { User }               from '../../models/user.model';
+import { ChampionshipMatch } from '@models/championship/championship-match.model';
+import { HelperService } from '@services/helper.service';
+import { User } from '@models/user.model';
 
 @Component({
-  selector: 'app-championship-match-predictions-table',
-  templateUrl: './championship-match-predictions-table.component.html',
-  styleUrls: ['./championship-match-predictions-table.component.css']
+    selector: 'app-championship-match-predictions-table',
+    templateUrl: './championship-match-predictions-table.component.html',
+    styleUrls: ['./championship-match-predictions-table.component.css']
 })
 export class ChampionshipMatchPredictionsTableComponent {
+    @Input() match: ChampionshipMatch;
+    @Input() authenticatedUser: User;
 
-  @Input() match: ChampionshipMatch;
-  @Input() authenticatedUser: User;
-
-  constructor(
-      public helperService: HelperService
-  ) { }
-
+    constructor(public helperService: HelperService) {}
 }
