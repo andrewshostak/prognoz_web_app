@@ -4,6 +4,8 @@ import { ActivatedRoute, Params } from '@angular/router';
 import { ConfirmModalService } from '@services/confirm-modal.service';
 import { CupCupMatch } from '@models/cup/cup-cup-match.model';
 import { CupCupMatchService } from '@services/cup/cup-cup-match.service';
+import { environment } from '@env';
+import { HelperService } from '@services/helper.service';
 import { NotificationsService } from 'angular2-notifications';
 import { Subscription } from 'rxjs/Subscription';
 
@@ -17,6 +19,7 @@ export class CupCupMatchesTableComponent implements OnDestroy, OnInit {
         private activatedRoute: ActivatedRoute,
         private confirmModalService: ConfirmModalService,
         private cupCupMatchService: CupCupMatchService,
+        private helperService: HelperService,
         private notificationsService: NotificationsService
     ) {}
 
@@ -28,6 +31,8 @@ export class CupCupMatchesTableComponent implements OnDestroy, OnInit {
     path: string;
     perPage: number;
     total: number;
+    userImageDefault: string;
+    userImagesUrl: string;
 
     deleteCupCupMatch(cupCupMatch: CupCupMatch): void {
         this.confirmModalService.show(() => {
@@ -49,6 +54,10 @@ export class CupCupMatchesTableComponent implements OnDestroy, OnInit {
         });
     }
 
+    isScore(cupCupMatch: CupCupMatch): boolean {
+        return this.helperService.isScore(cupCupMatch.home, cupCupMatch.away);
+    }
+
     ngOnDestroy() {
         if (!this.activatedRouteSubscription.closed) {
             this.activatedRouteSubscription.unsubscribe();
@@ -57,6 +66,8 @@ export class CupCupMatchesTableComponent implements OnDestroy, OnInit {
 
     ngOnInit() {
         this.path = '/manage/cup/cup-matches/page/';
+        this.userImagesUrl = environment.apiImageUsers;
+        this.userImageDefault = environment.imageUserDefault;
         this.activatedRouteSubscription = this.activatedRoute.params.subscribe((params: Params) => {
             this.cupCupMatchService.getCupCupMatches(null, null, params['number'], null, 'id', 'desc').subscribe(
                 response => {

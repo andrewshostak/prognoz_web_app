@@ -3,6 +3,11 @@ import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 
+import { ChampionshipLastResultsComponent } from './components/championship/championship-last-results/championship-last-results.component';
+import { ChampionshipRatingTableComponent } from './components/championship/championship-rating-table/championship-rating-table.component';
+import { ChampionshipResultsTableComponent } from './components/championship/championship-results-table/championship-results-table.component';
+import { ChampionshipUserRatingDetailsComponent } from './components/championship/championship-user-rating-details/championship-user-rating-details.component';
+import { ChampionshipUserPredictionsTableComponent } from './components/championship/championship-user-predictions-table/championship-user-predictions-table.component';
 import { ChartsModule } from 'ng2-charts';
 import { ConfirmModalComponent } from './components/confirm-modal/confirm-modal.component';
 import { ConfirmModalNewComponent } from './components/confirm-modal-new/confirm-modal-new.component';
@@ -15,14 +20,11 @@ import { PaginationComponent } from './components/pagination/pagination.componen
 import { SpinnerButtonComponent } from './components/spinner-button/spinner-button.component';
 import { SpinnerComponent } from './components/spinner/spinner.component';
 import { TimePipe } from './pipes/time.pipe';
-import { ChampionshipRatingTableComponent } from '../championship/shared/championship-rating-table/championship-rating-table.component';
-import { ChampionshipResultsTableComponent } from '../championship/shared/championship-results-table/championship-results-table.component';
-import { ChampionshipUserRatingDetailsComponent } from './components/championship/championship-user-rating-details/championship-user-rating-details.component';
-import { ChampionshipUserPredictionsTableComponent } from './components/championship/championship-user-predictions-table/championship-user-predictions-table.component';
 
 @NgModule({
     imports: [CommonModule, RouterModule, ChartsModule, ReactiveFormsModule],
     declarations: [
+        ChampionshipLastResultsComponent,
         ChampionshipRatingTableComponent,
         ChampionshipResultsTableComponent,
         ChampionshipUserPredictionsTableComponent,
@@ -40,6 +42,7 @@ import { ChampionshipUserPredictionsTableComponent } from './components/champion
         TimePipe
     ],
     exports: [
+        ChampionshipLastResultsComponent,
         ChampionshipRatingTableComponent,
         ChampionshipResultsTableComponent,
         ChampionshipUserPredictionsTableComponent,

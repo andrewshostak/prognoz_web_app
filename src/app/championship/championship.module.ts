@@ -5,7 +5,6 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { ChartsModule } from 'ng2-charts/ng2-charts';
 import { ChampionshipComponent } from './championship.component';
 import { ChampionshipHomeComponent } from './championship-home/championship-home.component';
-import { ChampionshipLastResultsComponent } from './shared/championship-last-results/championship-last-results.component';
 import { ChampionshipMatchComponent } from './championship-match/championship-match.component';
 import { ChampionshipMatchPredictableComponent } from './shared/championship-match-predictable/championship-match-predictable.component';
 import { ChampionshipMatchPredictionsTableComponent } from './shared/championship-match-predictions-table/championship-match-predictions-table.component';
@@ -24,7 +23,6 @@ import { SharedModule } from '../shared/shared.module';
     declarations: [
         ChampionshipComponent,
         ChampionshipHomeComponent,
-        ChampionshipLastResultsComponent,
         ChampionshipMatchComponent,
         ChampionshipMatchPredictableComponent,
         ChampionshipMatchPredictionsTableComponent,

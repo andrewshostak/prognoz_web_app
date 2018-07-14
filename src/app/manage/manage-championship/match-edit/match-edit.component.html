@@ -30,9 +30,11 @@
                             </span>
                         </th>
                         <td class="d-none d-md-table-cell">
-                            <img class="small-image" src="{{clubsImagesUrl}}{{championshipMatch.club_first.image}}" alt="{{championshipMatch.club_first.link}}">
+                            <img class="small-image"
+                                 [attr.src]="clubsImagesUrl + championshipMatch.club_first.image">
                             <small class="text-muted">{{championshipMatch.starts_at}}</small>
-                            <img class="small-image" src="{{clubsImagesUrl}}{{championshipMatch.club_second.image}}" alt="{{championshipMatch.club_second.link}}"><br>
+                            <img class="small-image"
+                                 [attr.src]="clubsImagesUrl + championshipMatch.club_second.image"><br>
                             <strong>{{championshipMatch.club_first.title}}</strong> - <strong>{{championshipMatch.club_second.title}}</strong>
                         </td>
                         <td class="align-middle text-center">

@@ -6,43 +6,41 @@
     </div>
     <div *ngIf="cupMatches" class="row">
         <div class="col-12">
-            <div class="table-responsive">
-                <table class="table table-bordered table-striped table-hover">
-                    <thead>
+            <div class="table-responsive bg-white">
+                <table class="table table-bordered table-striped table-hover mb-0">
+                    <thead class="thead-dark">
                     <tr>
-                        <th scope="col">Id</th>
-                        <th scope="col">Команди</th>
-                        <th scope="col">Час початку</th>
-                        <th scope="col" class="text-center" title="Кількість стадій">С.</th>
+                        <th scope="col" class="d-none d-md-table-cell">Id</th>
+                        <th scope="col">Матч</th>
+                        <th scope="col" class="text-center d-none d-md-table-cell" title="Кількість стадій">С.</th>
+                        <th scope="col" class="text-center">Результат</th>
+                        <th scope="col" class="text-center" title="Добавити результат">
+                            <i class="fa fa-plus-circle" aria-hidden="true"></i>
+                        </th>
+                        <th scope="col" class="text-center d-none d-lg-table-cell" title="Кількість прогнозів">К.</th>
+                        <th scope="col" class="text-center d-none d-lg-table-cell" title="Кількість вгаданих результатів">
+                            <i class="fa fa-soccer-ball-o" aria-hidden="true"></i>
+                        </th>
+                        <th scope="col" class="text-center d-none d-lg-table-cell" title="Очки / КС">О/КС</th>
                         <th scope="col" class="text-center" title="Активний">А.</th>
                         <th scope="col" class="text-center" title="Завершений">З.</th>
-                        <th scope="col" class="text-center">Результат</th>
                         <th scope="col">Дія</th>
                     </tr>
                     </thead>
                     <tbody>
                     <tr *ngFor="let cupMatch of cupMatches">
-                        <th scope="row" class="text-center align-middle">{{cupMatch.id}}</th>
+                        <th scope="row" class="text-center align-middle d-none d-md-table-cell">{{cupMatch.id}}</th>
                         <td class="text-nowrap align-middle">
-                            <img [attr.src]="clubImagesUrl + cupMatch.club_first.image"
-                                 [attr.alt]="cupMatch.club_first.title"
-                                 class="small-image">
-                            {{cupMatch.club_first.title}} - {{cupMatch.club_second.title}}
-                            <img [attr.src]="clubImagesUrl + cupMatch.club_second.image"
-                                 [attr.alt]="cupMatch.club_second.title"
-                                 class="small-image">
+                            <img class="small-image"
+                                 [attr.src]="clubImagesUrl + cupMatch.club_first.image">
+                            <small class="text-muted">{{cupMatch.starts_at}}</small>
+                            <img class="small-image"
+                                 [attr.src]="clubImagesUrl + cupMatch.club_second.image"><br>
+                            <strong>{{cupMatch.club_first.title}}</strong> - <strong>{{cupMatch.club_second.title}}</strong>
+
                         </td>
-                        <td class="text-nowrap align-middle">{{cupMatch.starts_at}}</td>
-                        <td class="text-center align-middle">{{cupMatch.cup_stages.length}}</td>
-                        <td class="text-center align-middle">
-                            <i *ngIf="cupMatch.active" class="text-success fa fa-check-circle fa-lg" aria-hidden="true"></i>
-                            <i *ngIf="!cupMatch.active" class="text-danger fa fa-times fa-lg" aria-hidden="true"></i>
-                        </td>
-                        <td class="text-center align-middle">
-                            <i *ngIf="cupMatch.ended" class="text-success fa fa-check-circle fa-lg" aria-hidden="true"></i>
-                            <i *ngIf="!cupMatch.ended" class="text-danger fa fa-times fa-lg" aria-hidden="true"></i>
-                        </td>
-                        <td class="text-nowrap">
+                        <td class="text-center align-middle d-none d-md-table-cell">{{cupMatch.cup_stages.length}}</td>
+                        <td class="text-nowrap align-middle">
                             <div class="form-row">
                                 <div class="col">
                                     <input type="number"
@@ -62,12 +60,35 @@
                                            [disabled]="cupMatch.ended"
                                            [(ngModel)]="cupMatch.away">
                                 </div>
-                                <div [hidden]="cupMatch.ended" class="col">
-                                    <button type="button" class="btn btn-sm btn-primary" (click)="addResult(cupMatch)">
-                                        <i class="fa fa-plus-circle" aria-hidden="true"></i>
-                                    </button>
-                                </div>
                             </div>
+                        </td>
+                        <td class="align-middle">
+                            <div class="col">
+                                <button type="button"
+                                        class="btn btn-sm btn-block"
+                                        [disabled]="cupMatch.ended"
+                                        [ngClass]="cupMatch.ended ? 'btn-outline-secondary' : 'btn-primary'"
+                                        (click)="addResult(cupMatch)">
+                                    <i class="fa" [ngClass]="cupMatch.ended ? 'fa-ban' : 'fa-plus-circle'" aria-hidden="true"></i>
+                                </button>
+                            </div>
+                        </td>
+                        <td class="text-center align-middle d-none d-lg-table-cell font-weight-bold">
+                            {{cupMatch.predictions}}
+                        </td>
+                        <td class="text-center align-middle d-none d-lg-table-cell" [ngClass]="{'table-danger': cupMatch.guessed === 0}">
+                            {{cupMatch.guessed}}
+                        </td>
+                        <td class="text-center align-middle d-none d-lg-table-cell">
+                            {{cupMatch.ended ? cupMatch.points + ' / ' + cupMatch.dc_sum : ''}}
+                        </td>
+                        <td class="text-center align-middle">
+                            <i *ngIf="cupMatch.active" class="text-success fa fa-check-circle fa-lg" aria-hidden="true"></i>
+                            <i *ngIf="!cupMatch.active" class="text-danger fa fa-times fa-lg" aria-hidden="true"></i>
+                        </td>
+                        <td class="text-center align-middle">
+                            <i *ngIf="cupMatch.ended" class="text-success fa fa-check-circle fa-lg" aria-hidden="true"></i>
+                            <i *ngIf="!cupMatch.ended" class="text-danger fa fa-times fa-lg" aria-hidden="true"></i>
                         </td>
                         <td class="text-nowrap text-center">
                             <button *ngIf="!matchHasEndedStages(cupMatch); else noActionButton" routerLink="/manage/cup/matches/{{cupMatch.id}}/edit" type="button" class="btn btn-sm btn-warning">

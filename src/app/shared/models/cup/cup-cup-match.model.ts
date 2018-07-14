@@ -24,6 +24,7 @@ export class CupCupMatch {
         cup_stage_type: {
             title: string;
         };
+        ended: boolean;
     };
     home_user: {
         name: string;
