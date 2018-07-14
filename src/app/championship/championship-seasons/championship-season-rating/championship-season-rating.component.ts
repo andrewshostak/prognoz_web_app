@@ -12,7 +12,7 @@ import { TitleService } from '@services/title.service';
 @Component({
     selector: 'app-championship-season-rating',
     templateUrl: './championship-season-rating.component.html',
-    styleUrls: ['./championship-season-rating.component.css']
+    styleUrls: ['./championship-season-rating.component.scss']
 })
 export class ChampionshipSeasonRatingComponent implements OnInit, OnDestroy {
     constructor(

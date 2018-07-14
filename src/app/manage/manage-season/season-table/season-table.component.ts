@@ -6,7 +6,7 @@ import { SeasonService } from '@services/season.service';
 @Component({
     selector: 'app-season-table',
     templateUrl: './season-table.component.html',
-    styleUrls: ['./season-table.component.css']
+    styleUrls: ['./season-table.component.scss']
 })
 export class SeasonTableComponent implements OnInit {
     constructor(private seasonService: SeasonService) {}

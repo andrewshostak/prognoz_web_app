@@ -5,7 +5,7 @@ import { ChampionshipMatch } from '../../../models/championship/championship-mat
 @Component({
     selector: 'app-championship-results-table',
     templateUrl: './championship-results-table.component.html',
-    styleUrls: ['./championship-results-table.component.css']
+    styleUrls: ['./championship-results-table.component.scss']
 })
 export class ChampionshipResultsTableComponent {
     @Input() results: ChampionshipMatch[];

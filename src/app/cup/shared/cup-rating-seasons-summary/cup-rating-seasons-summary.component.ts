@@ -8,7 +8,7 @@ declare const $: any;
 @Component({
     selector: 'app-cup-rating-seasons-summary',
     templateUrl: './cup-rating-seasons-summary.component.html',
-    styleUrls: ['./cup-rating-seasons-summary.component.css']
+    styleUrls: ['./cup-rating-seasons-summary.component.scss']
 })
 export class CupRatingSeasonsSummaryComponent implements OnInit, OnDestroy, OnChanges {
     constructor(private elementRef: ElementRef) {}

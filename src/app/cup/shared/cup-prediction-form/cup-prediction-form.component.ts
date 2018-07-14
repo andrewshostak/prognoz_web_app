@@ -12,7 +12,7 @@ import { User } from '@models/user.model';
 @Component({
     selector: 'app-cup-prediction-form',
     templateUrl: './cup-prediction-form.component.html',
-    styleUrls: ['./cup-prediction-form.component.css']
+    styleUrls: ['./cup-prediction-form.component.scss']
 })
 export class CupPredictionFormComponent implements OnInit {
     constructor(

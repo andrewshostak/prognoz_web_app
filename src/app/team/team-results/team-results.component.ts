@@ -8,7 +8,7 @@ import { TitleService } from '@services/title.service';
 @Component({
     selector: 'app-team-results',
     templateUrl: './team-results.component.html',
-    styleUrls: ['./team-results.component.css']
+    styleUrls: ['./team-results.component.scss']
 })
 export class TeamResultsComponent implements OnInit {
     constructor(private activatedRoute: ActivatedRoute, private titleService: TitleService, private teamMatchSevice: TeamMatchService) {}

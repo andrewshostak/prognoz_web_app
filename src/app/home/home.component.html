@@ -2,7 +2,7 @@
 <div class="d-none d-md-block">
     <!-- error -->
     <app-error *ngIf="errorChampionshipMatches" [message]="errorChampionshipMatches"></app-error>
-    <div *ngIf="championshipMatches" id="carousel" class="carousel slide bg-black" data-ride="carousel">
+    <div *ngIf="championshipMatches" id="carousel" class="carousel slide" data-ride="carousel">
         <div class="carousel-inner" role="listbox">
             <div *ngFor="let championshipMatch of championshipMatches; let i = index;" class="carousel-item" [class.active]="i === 0">
                 <div class="container">

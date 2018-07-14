@@ -11,7 +11,7 @@ import { NewsService } from '../../../news/shared/news.service';
 @Component({
     selector: 'app-news-edit',
     templateUrl: './news-edit.component.html',
-    styleUrls: ['./news-edit.component.css']
+    styleUrls: ['./news-edit.component.scss']
 })
 export class NewsEditComponent implements OnInit {
     constructor(

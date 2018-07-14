@@ -12,7 +12,7 @@ import { User } from '@models/user.model';
 @Component({
     selector: 'app-cup-predictions',
     templateUrl: './cup-predictions.component.html',
-    styleUrls: ['./cup-predictions.component.css']
+    styleUrls: ['./cup-predictions.component.scss']
 })
 export class CupPredictionsComponent implements OnDestroy, OnInit {
     constructor(

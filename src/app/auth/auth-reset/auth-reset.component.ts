@@ -11,7 +11,7 @@ import { User } from '@models/user.model';
 @Component({
     selector: 'app-auth-reset',
     templateUrl: './auth-reset.component.html',
-    styleUrls: ['./auth-reset.component.css']
+    styleUrls: ['./auth-reset.component.scss']
 })
 export class AuthResetComponent implements OnInit {
     constructor(

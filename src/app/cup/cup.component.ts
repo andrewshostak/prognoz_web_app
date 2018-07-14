@@ -5,7 +5,7 @@ import { NavigationItem } from '@models/navigation-item.model';
 @Component({
     selector: 'app-cup',
     templateUrl: './cup.component.html',
-    styleUrls: ['./cup.component.css']
+    styleUrls: ['./cup.component.scss']
 })
 export class CupComponent {
     navigationItems: NavigationItem[] = [

@@ -7,7 +7,7 @@ declare const $: any;
 @Component({
     selector: 'app-confirm-modal-new',
     templateUrl: './confirm-modal-new.component.html',
-    styleUrls: ['./confirm-modal-new.component.css']
+    styleUrls: ['./confirm-modal-new.component.scss']
 })
 export class ConfirmModalNewComponent implements OnInit {
     constructor(private confirmModalService: ConfirmModalService) {}

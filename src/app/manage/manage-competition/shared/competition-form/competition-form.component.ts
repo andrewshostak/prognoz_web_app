@@ -15,7 +15,7 @@ import { FormValidatorService } from '@services/form-validator.service';
 @Component({
     selector: 'app-competition-form',
     templateUrl: './competition-form.component.html',
-    styleUrls: ['./competition-form.component.css']
+    styleUrls: ['./competition-form.component.scss']
 })
 export class CompetitionFormComponent implements OnChanges, OnInit {
     constructor(

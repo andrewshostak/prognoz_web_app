@@ -13,7 +13,7 @@ import { User } from '@models/user.model';
 @Component({
     selector: 'app-team-rating',
     templateUrl: './team-rating.component.html',
-    styleUrls: ['./team-rating.component.css']
+    styleUrls: ['./team-rating.component.scss']
 })
 export class TeamRatingComponent implements OnDestroy, OnInit {
     constructor(

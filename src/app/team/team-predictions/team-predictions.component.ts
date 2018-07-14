@@ -16,7 +16,7 @@ import { User } from '@models/user.model';
 @Component({
     selector: 'app-team-predictions',
     templateUrl: './team-predictions.component.html',
-    styleUrls: ['./team-predictions.component.css']
+    styleUrls: ['./team-predictions.component.scss']
 })
 export class TeamPredictionsComponent implements OnInit, OnDestroy {
     constructor(

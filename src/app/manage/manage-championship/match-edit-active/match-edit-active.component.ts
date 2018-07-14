@@ -11,7 +11,7 @@ import { NotificationsService } from 'angular2-notifications';
 @Component({
     selector: 'app-match-edit-active',
     templateUrl: './match-edit-active.component.html',
-    styleUrls: ['./match-edit-active.component.css']
+    styleUrls: ['./match-edit-active.component.scss']
 })
 export class MatchEditActiveComponent implements OnInit {
     constructor(
@@ -42,6 +42,7 @@ export class MatchEditActiveComponent implements OnInit {
     }
 
     onChange(id) {
+        id = parseInt(id, 10);
         this.selectedMatch = this.championshipMatches.find(match => match.id === id);
         this.championshipMatchEditActiveForm.patchValue({
             id: this.selectedMatch.id,

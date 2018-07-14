@@ -9,7 +9,7 @@ import { User } from '@models/user.model';
 @Component({
     selector: 'app-team-select-modal',
     templateUrl: './team-select-modal.component.html',
-    styleUrls: ['./team-select-modal.component.css']
+    styleUrls: ['./team-select-modal.component.scss']
 })
 export class TeamSelectModalComponent implements OnInit {
     @Input() authenticatedUser: User;

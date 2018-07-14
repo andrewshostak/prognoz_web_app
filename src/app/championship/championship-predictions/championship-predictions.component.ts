@@ -16,7 +16,7 @@ import { User } from '@models/user.model';
 @Component({
     selector: 'app-championship-predictions',
     templateUrl: './championship-predictions.component.html',
-    styleUrls: ['./championship-predictions.component.css']
+    styleUrls: ['./championship-predictions.component.scss']
 })
 export class ChampionshipPredictionsComponent implements OnInit, OnDestroy {
     constructor(

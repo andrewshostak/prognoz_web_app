@@ -5,7 +5,7 @@ import { TeamTeamMatch } from '@models/team/team-team-match.model';
 @Component({
     selector: 'app-team-round-navigation',
     templateUrl: './team-round-navigation.component.html',
-    styleUrls: ['./team-round-navigation.component.css']
+    styleUrls: ['./team-round-navigation.component.scss']
 })
 export class TeamRoundNavigationComponent {
     @Input() teamTeamMatches: TeamTeamMatch[];

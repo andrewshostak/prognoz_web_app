@@ -13,7 +13,7 @@ declare var $: any;
 @Component({
     selector: 'app-team-edit-modal',
     templateUrl: './team-edit-modal.component.html',
-    styleUrls: ['./team-edit-modal.component.css']
+    styleUrls: ['./team-edit-modal.component.scss']
 })
 export class TeamEditModalComponent implements OnInit {
     @Input() hasUnsavedChanges = false;

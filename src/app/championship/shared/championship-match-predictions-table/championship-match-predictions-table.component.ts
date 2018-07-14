@@ -7,7 +7,7 @@ import { User } from '@models/user.model';
 @Component({
     selector: 'app-championship-match-predictions-table',
     templateUrl: './championship-match-predictions-table.component.html',
-    styleUrls: ['./championship-match-predictions-table.component.css']
+    styleUrls: ['./championship-match-predictions-table.component.scss']
 })
 export class ChampionshipMatchPredictionsTableComponent {
     @Input() match: ChampionshipMatch;

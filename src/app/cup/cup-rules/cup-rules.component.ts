@@ -7,7 +7,7 @@ import { CupStageTypeService } from '@services/cup/cup-stage-type.service';
 @Component({
     selector: 'app-cup-rules',
     templateUrl: './cup-rules.component.html',
-    styleUrls: ['./cup-rules.component.css']
+    styleUrls: ['./cup-rules.component.scss']
 })
 export class CupRulesComponent implements OnInit {
     constructor(private cupStageTypeService: CupStageTypeService, private titleService: TitleService) {}

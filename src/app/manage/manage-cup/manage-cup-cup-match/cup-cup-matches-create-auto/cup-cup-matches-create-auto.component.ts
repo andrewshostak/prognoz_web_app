@@ -10,7 +10,7 @@ import { NotificationsService } from 'angular2-notifications';
 @Component({
     selector: 'app-cup-cup-matches-create-auto',
     templateUrl: './cup-cup-matches-create-auto.component.html',
-    styleUrls: ['./cup-cup-matches-create-auto.component.css']
+    styleUrls: ['./cup-cup-matches-create-auto.component.scss']
 })
 export class CupCupMatchesCreateAutoComponent implements OnInit {
     constructor(

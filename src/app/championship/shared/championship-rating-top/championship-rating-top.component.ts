@@ -8,7 +8,7 @@ import { HelperService } from '@services/helper.service';
 @Component({
     selector: 'app-championship-rating-top',
     templateUrl: './championship-rating-top.component.html',
-    styleUrls: ['./championship-rating-top.component.css']
+    styleUrls: ['./championship-rating-top.component.scss']
 })
 export class ChampionshipRatingTopComponent implements OnInit {
     constructor(private championshipRatingService: ChampionshipRatingService, public helperService: HelperService) {}

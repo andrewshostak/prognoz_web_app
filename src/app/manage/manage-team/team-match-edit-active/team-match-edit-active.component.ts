@@ -11,7 +11,7 @@ import { NotificationsService } from 'angular2-notifications';
 @Component({
     selector: 'app-team-match-edit-active',
     templateUrl: './team-match-edit-active.component.html',
-    styleUrls: ['./team-match-edit-active.component.css']
+    styleUrls: ['./team-match-edit-active.component.scss']
 })
 export class TeamMatchEditActiveComponent implements OnInit {
     constructor(

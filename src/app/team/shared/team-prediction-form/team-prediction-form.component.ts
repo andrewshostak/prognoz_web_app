@@ -10,7 +10,7 @@ import { TeamPredictionService } from '@services/team/team-prediction.service';
 @Component({
     selector: 'app-team-prediction-form',
     templateUrl: './team-prediction-form.component.html',
-    styleUrls: ['./team-prediction-form.component.css']
+    styleUrls: ['./team-prediction-form.component.scss']
 })
 export class TeamPredictionFormComponent implements OnInit {
     @Input() teamPrediction: TeamPrediction;

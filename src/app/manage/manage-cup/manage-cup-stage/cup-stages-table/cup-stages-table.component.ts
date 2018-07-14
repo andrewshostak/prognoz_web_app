@@ -10,7 +10,7 @@ import { Subscription } from 'rxjs/Subscription';
 @Component({
     selector: 'app-cup-stages-table',
     templateUrl: './cup-stages-table.component.html',
-    styleUrls: ['./cup-stages-table.component.css']
+    styleUrls: ['./cup-stages-table.component.scss']
 })
 export class CupStagesTableComponent implements OnInit, OnDestroy {
     constructor(

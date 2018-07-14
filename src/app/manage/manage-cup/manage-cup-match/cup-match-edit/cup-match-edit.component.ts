@@ -7,7 +7,7 @@ import { CupMatch } from '@models/cup/cup-match.model';
 @Component({
     selector: 'app-cup-match-edit',
     templateUrl: './cup-match-edit.component.html',
-    styleUrls: ['./cup-match-edit.component.css']
+    styleUrls: ['./cup-match-edit.component.scss']
 })
 export class CupMatchEditComponent implements OnInit {
     constructor(private activatedRoute: ActivatedRoute, private cupMatchService: CupMatchService) {}

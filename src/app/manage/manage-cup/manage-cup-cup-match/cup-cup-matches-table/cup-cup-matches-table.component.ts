@@ -12,7 +12,7 @@ import { Subscription } from 'rxjs/Subscription';
 @Component({
     selector: 'app-cup-cup-matches-table',
     templateUrl: './cup-cup-matches-table.component.html',
-    styleUrls: ['./cup-cup-matches-table.component.css']
+    styleUrls: ['./cup-cup-matches-table.component.scss']
 })
 export class CupCupMatchesTableComponent implements OnDestroy, OnInit {
     constructor(

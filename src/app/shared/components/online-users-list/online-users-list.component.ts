@@ -7,7 +7,7 @@ import { Subscription } from 'rxjs/Subscription';
 @Component({
     selector: 'app-online-users-list',
     templateUrl: './online-users-list.component.html',
-    styleUrls: ['./online-users-list.component.css']
+    styleUrls: ['./online-users-list.component.scss']
 })
 export class OnlineUsersListComponent implements OnDestroy, OnInit {
     constructor(private currentStateService: CurrentStateService) {}

@@ -11,7 +11,7 @@ import { NotificationsService } from 'angular2-notifications';
 @Component({
     selector: 'app-match-edit-ended',
     templateUrl: './match-edit-ended.component.html',
-    styleUrls: ['./match-edit-ended.component.css']
+    styleUrls: ['./match-edit-ended.component.scss']
 })
 export class MatchEditEndedComponent implements OnInit, OnDestroy {
     constructor(

@@ -5,7 +5,7 @@ import { TitleService } from '@services/title.service';
 @Component({
     selector: 'app-team-rules',
     templateUrl: './team-rules.component.html',
-    styleUrls: ['./team-rules.component.css']
+    styleUrls: ['./team-rules.component.scss']
 })
 export class TeamRulesComponent implements OnInit {
     constructor(private titleService: TitleService) {}

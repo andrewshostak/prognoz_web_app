@@ -14,7 +14,7 @@ import { UserService } from '@services/user.service';
 @Component({
     selector: 'app-cup-cup-match-form',
     templateUrl: './cup-cup-match-form.component.html',
-    styleUrls: ['./cup-cup-match-form.component.css']
+    styleUrls: ['./cup-cup-match-form.component.scss']
 })
 export class CupCupMatchFormComponent implements OnChanges, OnInit {
     constructor(

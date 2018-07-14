@@ -15,7 +15,7 @@ declare const $: any;
 @Component({
     selector: 'app-championship-user',
     templateUrl: './championship-user.component.html',
-    styleUrls: ['./championship-user.component.css']
+    styleUrls: ['./championship-user.component.scss']
 })
 export class ChampionshipUserComponent implements OnInit, OnDestroy {
     constructor(

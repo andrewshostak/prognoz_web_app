@@ -10,7 +10,7 @@ import { User } from '@models/user.model';
 @Component({
     selector: 'app-auth-recovery',
     templateUrl: './auth-recovery.component.html',
-    styleUrls: ['./auth-recovery.component.css']
+    styleUrls: ['./auth-recovery.component.scss']
 })
 export class AuthRecoveryComponent implements OnInit {
     constructor(

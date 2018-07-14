@@ -11,7 +11,7 @@ declare const $: any;
 @Component({
     selector: 'app-cup-rating-table',
     templateUrl: './cup-rating-table.component.html',
-    styleUrls: ['./cup-rating-table.component.css']
+    styleUrls: ['./cup-rating-table.component.scss']
 })
 export class CupRatingTableComponent implements OnChanges, OnDestroy {
     constructor(private elementRef: ElementRef, public helperService: HelperService) {}

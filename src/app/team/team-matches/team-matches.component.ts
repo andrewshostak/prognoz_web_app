@@ -15,7 +15,7 @@ import { User } from '@models/user.model';
 @Component({
     selector: 'app-team-matches',
     templateUrl: './team-matches.component.html',
-    styleUrls: ['./team-matches.component.css']
+    styleUrls: ['./team-matches.component.scss']
 })
 export class TeamMatchesComponent implements OnInit, OnDestroy {
     constructor(

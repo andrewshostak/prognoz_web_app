@@ -16,7 +16,7 @@ import { patchSimpleChangeValuesInForm } from '@utils/patch-simple-change-values
 @Component({
     selector: 'app-cup-match-form',
     templateUrl: './cup-match-form.component.html',
-    styleUrls: ['./cup-match-form.component.css']
+    styleUrls: ['./cup-match-form.component.scss']
 })
 export class CupMatchFormComponent implements OnChanges, OnInit {
     constructor(

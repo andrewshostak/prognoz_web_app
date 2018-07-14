@@ -8,7 +8,7 @@ import { TeamMatch } from '@models/team/team-match.model';
 @Component({
     selector: 'app-team-match-edit-ended',
     templateUrl: './team-match-edit-ended.component.html',
-    styleUrls: ['./team-match-edit-ended.component.css']
+    styleUrls: ['./team-match-edit-ended.component.scss']
 })
 export class TeamMatchEditEndedComponent implements OnInit {
     constructor(private notificationService: NotificationsService, private teamMatchService: TeamMatchService) {}

@@ -14,7 +14,7 @@ declare const $: any;
 @Component({
     selector: 'app-cup-add-application-modal',
     templateUrl: './cup-add-application-modal.component.html',
-    styleUrls: ['./cup-add-application-modal.component.css']
+    styleUrls: ['./cup-add-application-modal.component.scss']
 })
 export class CupAddApplicationModalComponent implements AfterViewInit, OnInit, OnChanges {
     constructor(

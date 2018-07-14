@@ -11,7 +11,7 @@ import { User } from '@models/user.model';
 @Component({
     selector: 'app-auth-signup',
     templateUrl: './auth-signup.component.html',
-    styleUrls: ['./auth-signup.component.css']
+    styleUrls: ['./auth-signup.component.scss']
 })
 export class AuthSignupComponent implements OnInit {
     constructor(

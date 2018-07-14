@@ -12,7 +12,7 @@ import { User } from '@models/user.model';
 @Component({
     selector: 'app-championship-competition-rating',
     templateUrl: './championship-competition-rating.component.html',
-    styleUrls: ['./championship-competition-rating.component.css']
+    styleUrls: ['./championship-competition-rating.component.scss']
 })
 export class ChampionshipCompetitionRatingComponent implements OnInit, OnDestroy {
     constructor(

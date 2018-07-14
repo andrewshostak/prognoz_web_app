@@ -7,7 +7,7 @@ import { CompetitionService } from '@services/competition.service';
 @Component({
     selector: 'app-competition-table',
     templateUrl: './competition-table.component.html',
-    styleUrls: ['./competition-table.component.css']
+    styleUrls: ['./competition-table.component.scss']
 })
 export class CompetitionTableComponent implements OnInit {
     constructor(private activatedRoute: ActivatedRoute, private competitionService: CompetitionService) {}

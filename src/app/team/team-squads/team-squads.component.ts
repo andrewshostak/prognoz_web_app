@@ -20,7 +20,7 @@ declare var $: any;
 @Component({
     selector: 'app-team-squads',
     templateUrl: './team-squads.component.html',
-    styleUrls: ['./team-squads.component.css']
+    styleUrls: ['./team-squads.component.scss']
 })
 export class TeamSquadsComponent implements OnDestroy, OnInit {
     constructor(

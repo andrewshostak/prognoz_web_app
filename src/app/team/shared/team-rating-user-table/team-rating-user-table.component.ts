@@ -8,7 +8,7 @@ import { User } from '@models/user.model';
 @Component({
     selector: 'app-team-rating-user-table',
     templateUrl: './team-rating-user-table.component.html',
-    styleUrls: ['./team-rating-user-table.component.css']
+    styleUrls: ['./team-rating-user-table.component.scss']
 })
 export class TeamRatingUserTableComponent implements OnChanges {
     @Input() teamRatingUser: TeamRatingUser[];

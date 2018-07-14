@@ -1,0 +1,10 @@
+@import '~bootstrap/scss/functions', '~bootstrap/scss/variables';
+
+.clubs {
+    border: 1px solid $gray-400;
+
+    .club-selected {
+        border: 1px solid $gray-400;
+        background-color: $gray-200;
+    }
+}

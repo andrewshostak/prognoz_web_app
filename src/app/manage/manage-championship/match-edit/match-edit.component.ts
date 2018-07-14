@@ -9,7 +9,7 @@ import { NotificationsService } from 'angular2-notifications';
 @Component({
     selector: 'app-match-edit',
     templateUrl: './match-edit.component.html',
-    styleUrls: ['./match-edit.component.css']
+    styleUrls: ['./match-edit.component.scss']
 })
 export class MatchEditComponent implements OnInit, OnDestroy {
     constructor(

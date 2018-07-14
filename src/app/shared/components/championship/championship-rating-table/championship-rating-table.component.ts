@@ -9,7 +9,7 @@ declare const $: any;
 @Component({
     selector: 'app-championship-rating-table',
     templateUrl: './championship-rating-table.component.html',
-    styleUrls: ['./championship-rating-table.component.css']
+    styleUrls: ['./championship-rating-table.component.scss']
 })
 export class ChampionshipRatingTableComponent implements OnChanges, OnDestroy {
     @Input() rating: ChampionshipRating[];

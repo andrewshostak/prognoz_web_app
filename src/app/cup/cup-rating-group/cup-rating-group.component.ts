@@ -11,7 +11,7 @@ import { TitleService } from '@services/title.service';
 @Component({
     selector: 'app-cup-rating-group',
     templateUrl: './cup-rating-group.component.html',
-    styleUrls: ['./cup-rating-group.component.css']
+    styleUrls: ['./cup-rating-group.component.scss']
 })
 export class CupRatingGroupComponent implements OnInit {
     constructor(

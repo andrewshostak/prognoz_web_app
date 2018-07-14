@@ -10,7 +10,7 @@ declare var $: any;
 @Component({
     selector: 'app-manage-team',
     templateUrl: './manage-team.component.html',
-    styleUrls: ['./manage-team.component.css']
+    styleUrls: ['./manage-team.component.scss']
 })
 export class ManageTeamComponent implements OnInit {
     errorCompetition: string;

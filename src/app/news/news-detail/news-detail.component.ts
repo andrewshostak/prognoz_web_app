@@ -18,7 +18,7 @@ import { User } from '@models/user.model';
 @Component({
     selector: 'app-news-datail',
     templateUrl: './news-detail.component.html',
-    styleUrls: ['./news-detail.component.css']
+    styleUrls: ['./news-detail.component.scss']
 })
 export class NewsDetailComponent implements OnInit, OnDestroy {
     constructor(

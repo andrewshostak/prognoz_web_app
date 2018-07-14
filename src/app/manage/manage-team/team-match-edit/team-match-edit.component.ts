@@ -8,7 +8,7 @@ import { TeamMatchService } from '@services/team/team-match.service';
 @Component({
     selector: 'app-team-match-edit',
     templateUrl: './team-match-edit.component.html',
-    styleUrls: ['./team-match-edit.component.css']
+    styleUrls: ['./team-match-edit.component.scss']
 })
 export class TeamMatchEditComponent implements OnInit {
     clubsImagesUrl: string = environment.apiImageClubs;

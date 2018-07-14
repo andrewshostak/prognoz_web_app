@@ -8,7 +8,7 @@ import { SeasonService } from '@services/season.service';
 @Component({
     selector: 'app-season-create',
     templateUrl: './season-create.component.html',
-    styleUrls: ['./season-create.component.css']
+    styleUrls: ['./season-create.component.scss']
 })
 export class SeasonCreateComponent implements OnInit {
     constructor(private notificationService: NotificationsService, private router: Router, private seasonService: SeasonService) {}

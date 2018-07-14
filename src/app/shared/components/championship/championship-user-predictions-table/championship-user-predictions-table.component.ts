@@ -6,7 +6,7 @@ import { HelperService } from '@services/helper.service';
 @Component({
     selector: 'app-championship-user-predictions-table',
     templateUrl: './championship-user-predictions-table.component.html',
-    styleUrls: ['./championship-user-predictions-table.component.css']
+    styleUrls: ['./championship-user-predictions-table.component.scss']
 })
 export class ChampionshipUserPredictionsTableComponent {
     @Input() predictions: ChampionshipPrediction[];

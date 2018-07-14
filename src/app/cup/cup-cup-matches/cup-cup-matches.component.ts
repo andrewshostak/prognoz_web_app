@@ -22,7 +22,7 @@ import { User } from '@models/user.model';
 @Component({
     selector: 'app-cup-cup-matches',
     templateUrl: './cup-cup-matches.component.html',
-    styleUrls: ['./cup-cup-matches.component.css']
+    styleUrls: ['./cup-cup-matches.component.scss']
 })
 export class CupCupMatchesComponent implements OnInit, OnDestroy {
     constructor(

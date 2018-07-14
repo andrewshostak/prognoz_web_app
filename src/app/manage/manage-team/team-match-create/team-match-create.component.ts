@@ -10,7 +10,7 @@ import { TeamMatchService } from '@services/team/team-match.service';
 @Component({
     selector: 'app-team-match-create',
     templateUrl: './team-match-create.component.html',
-    styleUrls: ['./team-match-create.component.css']
+    styleUrls: ['./team-match-create.component.scss']
 })
 export class TeamMatchCreateComponent implements OnInit {
     constructor(

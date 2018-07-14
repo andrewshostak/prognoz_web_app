@@ -9,7 +9,7 @@ import { User } from '@models/user.model';
 @Component({
     selector: 'app-team-goalkeeper-form',
     templateUrl: './team-goalkeeper-form.component.html',
-    styleUrls: ['./team-goalkeeper-form.component.css']
+    styleUrls: ['./team-goalkeeper-form.component.scss']
 })
 export class TeamGoalkeeperFormComponent implements OnInit, OnChanges {
     @Input() blockedTeamMatch: TeamMatch;

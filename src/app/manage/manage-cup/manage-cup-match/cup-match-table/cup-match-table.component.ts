@@ -11,7 +11,7 @@ import { Subscription } from 'rxjs/Subscription';
 @Component({
     selector: 'app-cup-match-table',
     templateUrl: './cup-match-table.component.html',
-    styleUrls: ['./cup-match-table.component.css']
+    styleUrls: ['./cup-match-table.component.scss']
 })
 export class CupMatchTableComponent implements OnInit, OnDestroy {
     constructor(

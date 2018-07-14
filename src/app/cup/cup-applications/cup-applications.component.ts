@@ -20,7 +20,7 @@ declare const $: any;
 @Component({
     selector: 'app-cup-applications',
     templateUrl: './cup-applications.component.html',
-    styleUrls: ['./cup-applications.component.css']
+    styleUrls: ['./cup-applications.component.scss']
 })
 export class CupApplicationsComponent implements OnInit, OnDestroy {
     constructor(

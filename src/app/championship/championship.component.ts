@@ -5,7 +5,7 @@ import { NavigationItem } from '@models/navigation-item.model';
 @Component({
     selector: 'app-championship',
     templateUrl: './championship.component.html',
-    styleUrls: ['./championship.component.css']
+    styleUrls: ['./championship.component.scss']
 })
 export class ChampionshipComponent {
     navigationItems: NavigationItem[] = [

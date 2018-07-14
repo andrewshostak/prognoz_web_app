@@ -18,7 +18,7 @@ declare const $: any;
 @Component({
     selector: 'app-guestbook-page',
     templateUrl: './guestbook-page.component.html',
-    styleUrls: ['./guestbook-page.component.css']
+    styleUrls: ['./guestbook-page.component.scss']
 })
 export class GuestbookPageComponent implements OnInit, OnDestroy {
     constructor(

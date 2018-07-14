@@ -8,7 +8,7 @@ import { HelperService } from '@services/helper.service';
 @Component({
     selector: 'app-team-rating-table',
     templateUrl: './team-rating-table.component.html',
-    styleUrls: ['./team-rating-table.component.css']
+    styleUrls: ['./team-rating-table.component.scss']
 })
 export class TeamRatingTableComponent {
     @Input() teamRating: TeamRating[];

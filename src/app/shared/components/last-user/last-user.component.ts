@@ -7,7 +7,7 @@ import { UserService } from '@services/user.service';
 @Component({
     selector: 'app-last-user',
     templateUrl: './last-user.component.html',
-    styleUrls: ['./last-user.component.css']
+    styleUrls: ['./last-user.component.scss']
 })
 export class LastUserComponent implements OnInit {
     constructor(private userService: UserService) {}

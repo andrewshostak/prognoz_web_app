@@ -9,7 +9,7 @@ import { TitleService } from '@services/title.service';
 @Component({
     selector: 'app-cup-rating-user',
     templateUrl: './cup-rating-user.component.html',
-    styleUrls: ['./cup-rating-user.component.css']
+    styleUrls: ['./cup-rating-user.component.scss']
 })
 export class CupRatingUserComponent implements OnInit, OnDestroy {
     constructor(private activatedRoute: ActivatedRoute, private cupRatingService: CupRatingService, private titleService: TitleService) {}

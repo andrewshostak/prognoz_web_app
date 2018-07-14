@@ -19,7 +19,7 @@ import { User } from '@models/user.model';
 @Component({
     selector: 'app-championship-home',
     templateUrl: './championship-home.component.html',
-    styleUrls: ['./championship-home.component.css']
+    styleUrls: ['./championship-home.component.scss']
 })
 export class ChampionshipHomeComponent implements OnInit, OnDestroy {
     constructor(

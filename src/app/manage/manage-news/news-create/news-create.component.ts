@@ -10,7 +10,7 @@ import { NewsService } from '../../../news/shared/news.service';
 @Component({
     selector: 'app-news-create',
     templateUrl: './news-create.component.html',
-    styleUrls: ['./news-create.component.css']
+    styleUrls: ['./news-create.component.scss']
 })
 export class NewsCreateComponent implements OnInit {
     constructor(

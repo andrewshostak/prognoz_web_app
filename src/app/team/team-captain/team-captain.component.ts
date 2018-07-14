@@ -20,7 +20,7 @@ import { User } from '@models/user.model';
 @Component({
     selector: 'app-team-captain',
     templateUrl: './team-captain.component.html',
-    styleUrls: ['./team-captain.component.css']
+    styleUrls: ['./team-captain.component.scss']
 })
 export class TeamCaptainComponent implements OnInit, OnDestroy {
     authenticatedUser: User = this.currentStateService.user;

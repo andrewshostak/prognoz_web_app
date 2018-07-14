@@ -7,7 +7,7 @@ import { environment } from '@env';
 @Component({
     selector: 'app-championship-last-results',
     templateUrl: './championship-last-results.component.html',
-    styleUrls: ['./championship-last-results.component.css']
+    styleUrls: ['./championship-last-results.component.scss']
 })
 export class ChampionshipLastResultsComponent implements OnInit {
     constructor(private championshipMatchService: ChampionshipMatchService) {}

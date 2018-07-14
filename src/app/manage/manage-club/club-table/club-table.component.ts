@@ -10,7 +10,7 @@ import { NotificationsService } from 'angular2-notifications';
 @Component({
     selector: 'app-club-table',
     templateUrl: './club-table.component.html',
-    styleUrls: ['./club-table.component.css']
+    styleUrls: ['./club-table.component.scss']
 })
 export class ClubTableComponent implements OnInit {
     constructor(

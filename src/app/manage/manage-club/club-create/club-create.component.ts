@@ -11,7 +11,7 @@ import { NotificationsService } from 'angular2-notifications';
 @Component({
     selector: 'app-club-create',
     templateUrl: './club-create.component.html',
-    styleUrls: ['./club-create.component.css']
+    styleUrls: ['./club-create.component.scss']
 })
 export class ClubCreateComponent implements OnInit {
     constructor(

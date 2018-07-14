@@ -18,7 +18,7 @@ declare var $: any;
 @Component({
     selector: 'app-team-my',
     templateUrl: './team-my.component.html',
-    styleUrls: ['./team-my.component.css']
+    styleUrls: ['./team-my.component.scss']
 })
 export class TeamMyComponent implements OnInit, OnDestroy {
     constructor(

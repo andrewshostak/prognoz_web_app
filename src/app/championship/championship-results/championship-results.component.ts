@@ -8,7 +8,7 @@ import { TitleService } from '@services/title.service';
 @Component({
     selector: 'app-championship-results',
     templateUrl: './championship-results.component.html',
-    styleUrls: ['./championship-results.component.css']
+    styleUrls: ['./championship-results.component.scss']
 })
 export class ChampionshipResultsComponent implements OnInit {
     constructor(private championshipMatchService: ChampionshipMatchService, private titleService: TitleService) {}

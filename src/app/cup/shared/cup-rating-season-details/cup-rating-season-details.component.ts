@@ -5,7 +5,7 @@ import { CupRating } from '@models/cup/cup-rating.model';
 @Component({
     selector: 'app-cup-rating-season-details',
     templateUrl: './cup-rating-season-details.component.html',
-    styleUrls: ['./cup-rating-season-details.component.css']
+    styleUrls: ['./cup-rating-season-details.component.scss']
 })
 export class CupRatingSeasonDetailsComponent implements OnInit, OnChanges {
     constructor() {}

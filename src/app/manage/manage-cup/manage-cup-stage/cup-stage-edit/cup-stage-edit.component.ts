@@ -7,7 +7,7 @@ import { CupStageService } from '@services/cup/cup-stage.service';
 @Component({
     selector: 'app-cup-stage-edit',
     templateUrl: './cup-stage-edit.component.html',
-    styleUrls: ['./cup-stage-edit.component.css']
+    styleUrls: ['./cup-stage-edit.component.scss']
 })
 export class CupStageEditComponent implements OnInit {
     constructor(private activatedRoute: ActivatedRoute, private cupStageService: CupStageService) {}

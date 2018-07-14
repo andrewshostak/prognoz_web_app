@@ -5,7 +5,7 @@ import { NavigationItem } from '@models/navigation-item.model';
 @Component({
     selector: 'app-team',
     templateUrl: './team.component.html',
-    styleUrls: ['./team.component.css']
+    styleUrls: ['./team.component.scss']
 })
 export class TeamComponent {
     navigationItems: NavigationItem[] = [

@@ -10,7 +10,7 @@ declare var $: any;
 @Component({
     selector: 'app-championship-match-predictable',
     templateUrl: './championship-match-predictable.component.html',
-    styleUrls: ['./championship-match-predictable.component.css']
+    styleUrls: ['./championship-match-predictable.component.scss']
 })
 export class ChampionshipMatchPredictableComponent implements OnChanges {
     @Input() match: ChampionshipMatch;

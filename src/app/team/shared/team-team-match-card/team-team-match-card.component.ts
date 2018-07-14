@@ -13,7 +13,7 @@ declare const $: any;
 @Component({
     selector: 'app-team-team-match-card',
     templateUrl: './team-team-match-card.component.html',
-    styleUrls: ['./team-team-match-card.component.css']
+    styleUrls: ['./team-team-match-card.component.scss']
 })
 export class TeamTeamMatchCardComponent implements AfterViewInit, OnDestroy {
     constructor(

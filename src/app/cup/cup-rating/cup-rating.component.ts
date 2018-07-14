@@ -13,7 +13,7 @@ import { User } from '@models/user.model';
 @Component({
     selector: 'app-cup-rating',
     templateUrl: './cup-rating.component.html',
-    styleUrls: ['./cup-rating.component.css']
+    styleUrls: ['./cup-rating.component.scss']
 })
 export class CupRatingComponent implements OnInit, OnDestroy {
     constructor(

@@ -9,7 +9,7 @@ import { TitleService } from '@services/title.service';
 @Component({
     selector: 'app-news-list',
     templateUrl: './news-list.component.html',
-    styleUrls: ['./news-list.component.css']
+    styleUrls: ['./news-list.component.scss']
 })
 export class NewsListComponent implements OnInit {
     constructor(private activatedRoute: ActivatedRoute, private newsService: NewsService, private titleService: TitleService) {}

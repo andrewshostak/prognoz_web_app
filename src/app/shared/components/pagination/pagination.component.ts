@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 @Component({
     selector: 'app-pagination',
     templateUrl: './pagination.component.html',
-    styleUrls: ['./pagination.component.css']
+    styleUrls: ['./pagination.component.scss']
 })
 export class PaginationComponent implements OnChanges {
     @Input() totalItems: number;
