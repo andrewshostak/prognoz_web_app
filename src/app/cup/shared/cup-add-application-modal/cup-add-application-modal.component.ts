@@ -1,10 +1,10 @@
 import { AfterViewInit, Component, ElementRef, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 
+import { AuthService } from '@services/auth.service';
 import { Competition } from '@models/competition.model';
 import { CupApplicationService } from '@services/cup/cup-application.service';
 import { environment } from '@env';
-import { HelperService } from '@services/helper.service';
 import { NotificationsService } from 'angular2-notifications';
 import { User } from '@models/user.model';
 import { UserService } from '@services/user.service';
@@ -18,9 +18,9 @@ declare const $: any;
 })
 export class CupAddApplicationModalComponent implements AfterViewInit, OnInit, OnChanges {
     constructor(
+        private authService: AuthService,
         private cupApplicationService: CupApplicationService,
         private elementRef: ElementRef,
-        private helperService: HelperService,
         private notificationsService: NotificationsService,
         private userService: UserService
     ) {}
@@ -58,7 +58,7 @@ export class CupAddApplicationModalComponent implements AfterViewInit, OnInit, O
     }
 
     hasModeratorRights(): boolean {
-        return this.helperService.hasRole('admin') || this.helperService.hasRole('cup_editor');
+        return this.authService.hasRole('admin') || this.authService.hasRole('cup_editor');
     }
 
     isFriendlyCompetition(): boolean {

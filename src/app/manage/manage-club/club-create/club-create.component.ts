@@ -17,7 +17,7 @@ export class ClubCreateComponent implements OnInit {
     constructor(
         private clubService: ClubService,
         private imageService: ImageService,
-        private notificationService: NotificationsService,
+        private notificationsService: NotificationsService,
         private router: Router
     ) {
         imageService.uploadedImage$.subscribe(response => {
@@ -65,12 +65,12 @@ export class ClubCreateComponent implements OnInit {
         this.clubService.createClub(this.clubCreateForm.value).subscribe(
             response => {
                 this.router.navigate(['/manage/clubs']);
-                this.notificationService.success('Успішно', 'Команду ' + response.title + ' створено!');
+                this.notificationsService.success('Успішно', 'Команду ' + response.title + ' створено!');
                 this.spinnerButton = false;
             },
             errors => {
                 for (const error of errors) {
-                    this.notificationService.error('Помилка', error);
+                    this.notificationsService.error('Помилка', error);
                 }
                 this.spinnerButton = false;
             }

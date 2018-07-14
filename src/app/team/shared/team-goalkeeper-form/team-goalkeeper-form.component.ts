@@ -26,7 +26,7 @@ export class TeamGoalkeeperFormComponent implements OnInit, OnChanges {
 
     constructor(
         private formBuilder: FormBuilder,
-        private notificationService: NotificationsService,
+        private notificationsService: NotificationsService,
         private teamPredictionService: TeamPredictionService
     ) {}
 
@@ -76,12 +76,12 @@ export class TeamGoalkeeperFormComponent implements OnInit, OnChanges {
             };
             this.teamPredictionService.updateTeamPrediction(teamPrediction).subscribe(
                 response => {
-                    this.notificationService.success('Успішно', 'Матч заблоковано');
+                    this.notificationsService.success('Успішно', 'Матч заблоковано');
                     this.reloadData.emit();
                     this.spinnerButton = false;
                 },
                 errors => {
-                    errors.forEach(error => this.notificationService.error('Помилка', error));
+                    errors.forEach(error => this.notificationsService.error('Помилка', error));
                     this.reloadData.emit();
                     this.spinnerButton = false;
                 }

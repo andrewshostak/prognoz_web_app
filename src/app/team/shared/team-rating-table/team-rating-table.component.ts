@@ -3,7 +3,7 @@ import { Component, Input } from '@angular/core';
 import { environment } from '@env';
 import { TeamRating } from '@models/team/team-rating.model';
 import { User } from '@models/user.model';
-import { HelperService } from '@services/helper.service';
+import { UtilsService } from '@services/utils.service';
 
 @Component({
     selector: 'app-team-rating-table',
@@ -17,6 +17,5 @@ export class TeamRatingTableComponent {
 
     teamImageDefault: string = environment.imageTeamDefault;
     teamImagesUrl: string = environment.apiImageTeams;
-
-    constructor(public helperService: HelperService) {}
+    makeUnsigned = UtilsService.makeUnsigned;
 }

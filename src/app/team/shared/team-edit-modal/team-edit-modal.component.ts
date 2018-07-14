@@ -22,7 +22,7 @@ export class TeamEditModalComponent implements OnInit {
     @Input() teamForm: FormGroup;
     @Output() submitted = new EventEmitter<FormGroup>();
 
-    constructor(private clubService: ClubService, private imageService: ImageService, private notificationService: NotificationsService) {
+    constructor(private clubService: ClubService, private imageService: ImageService, private notificationsService: NotificationsService) {
         imageService.uploadedImage$.subscribe(response => {
             this.teamForm.patchValue({ image: response });
             this.errorImage = null;

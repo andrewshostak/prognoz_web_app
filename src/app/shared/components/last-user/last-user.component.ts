@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { environment } from '@env';
 import { User } from '@models/user.model';
 import { UserService } from '@services/user.service';
+import { UtilsService } from '@services/utils.service';
 
 @Component({
     selector: 'app-last-user',
@@ -16,10 +17,7 @@ export class LastUserComponent implements OnInit {
     lastUser: User;
     userImageDefault: string = environment.imageUserDefault;
     userImagesUrl: string = environment.apiImageUsers;
-
-    getHometown(hometown: string | null) {
-        return hometown ? '(' + hometown + ')' : '';
-    }
+    getHomeCityInBrackets = UtilsService.getHomeCityInBrackets;
 
     ngOnInit() {
         this.userService.getUsers(1, 'created_at', 'desc').subscribe(

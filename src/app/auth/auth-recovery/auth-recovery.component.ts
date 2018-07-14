@@ -16,7 +16,7 @@ export class AuthRecoveryComponent implements OnInit {
     constructor(
         private authService: AuthService,
         private currentStateService: CurrentStateService,
-        private notificationService: NotificationsService,
+        private notificationsService: NotificationsService,
         private titleService: TitleService
     ) {}
 
@@ -39,13 +39,13 @@ export class AuthRecoveryComponent implements OnInit {
             this.spinnerButton = true;
             this.authService.recovery(this.recoveryForm.value.email).subscribe(
                 response => {
-                    this.notificationService.success('Успішно', 'Подальші інструкції відправлено на ваш email', { timeOut: 0 });
+                    this.notificationsService.success('Успішно', 'Подальші інструкції відправлено на ваш email', { timeOut: 0 });
                     this.recoveryForm.get('email').disable();
                     this.spinnerButton = false;
                 },
                 errors => {
                     for (const error of errors) {
-                        this.notificationService.error('Помилка', error);
+                        this.notificationsService.error('Помилка', error);
                     }
                     this.spinnerButton = false;
                 }

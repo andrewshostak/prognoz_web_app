@@ -16,7 +16,7 @@ import { NotificationsService } from 'angular2-notifications';
 export class MatchEditActiveComponent implements OnInit {
     constructor(
         private formBuilder: FormBuilder,
-        private notificationService: NotificationsService,
+        private notificationsService: NotificationsService,
         private championshipMatchService: ChampionshipMatchService,
         private clubService: ClubService
     ) {}
@@ -61,11 +61,11 @@ export class MatchEditActiveComponent implements OnInit {
                     this.selectedMatch = response;
 
                     this.getChampionshipMatchesData();
-                    this.notificationService.success('Успішно', 'Матч змінено');
+                    this.notificationsService.success('Успішно', 'Матч змінено');
                 },
                 error => {
                     this.spinnerButton = false;
-                    this.notificationService.error('Помилка', error);
+                    this.notificationsService.error('Помилка', error);
                 }
             );
         }

@@ -17,7 +17,7 @@ export class TeamMatchEditComponent implements OnInit {
     teamMatches: TeamMatch[];
     updatedMatches: any = {};
 
-    constructor(private teamMatchService: TeamMatchService, private notificationService: NotificationsService) {}
+    constructor(private teamMatchService: TeamMatchService, private notificationsService: NotificationsService) {}
 
     ngOnInit() {
         this.getTeamMatchesData();
@@ -25,7 +25,7 @@ export class TeamMatchEditComponent implements OnInit {
 
     onSubmit(teamMatch: TeamMatch) {
         if (!this.validateResult(teamMatch.home) || !this.validateResult(teamMatch.away)) {
-            this.notificationService.error('Помилка', 'Результат в матчі ' + teamMatch.id + ' введено неправильно');
+            this.notificationsService.error('Помилка', 'Результат в матчі ' + teamMatch.id + ' введено неправильно');
             return;
         }
         this.spinnerButton['match_' + teamMatch.id] = true;
@@ -38,11 +38,11 @@ export class TeamMatchEditComponent implements OnInit {
             response => {
                 this.spinnerButton['match_' + teamMatch.id] = false;
                 this.updatedMatches['match_' + teamMatch.id] = response;
-                this.notificationService.success('Успішно', 'Результат в матчі ' + response.id + ' добавлено!');
+                this.notificationsService.success('Успішно', 'Результат в матчі ' + response.id + ' добавлено!');
             },
             errors => {
                 this.spinnerButton['match_' + teamMatch.id] = false;
-                errors.forEach(error => this.notificationService.error('Помилка', error));
+                errors.forEach(error => this.notificationsService.error('Помилка', error));
             }
         );
     }

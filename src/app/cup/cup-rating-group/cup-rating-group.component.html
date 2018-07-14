@@ -25,7 +25,7 @@
                          src="{{userImagesUrl}}{{cupRatingGroupItem.user.image || userImageDefault}}"
                          alt="{{cupRatingGroupItem.user.name}}">
                     <strong>{{cupRatingGroupItem.user.name}}</strong>
-                    {{getHometown(cupRatingGroupItem.user.hometown)}}
+                    {{getHomeCityInBrackets(cupRatingGroupItem.user.hometown)}}
                 </td>
                 <td class="text-center">{{cupRatingGroupItem.win + cupRatingGroupItem.draw + cupRatingGroupItem.loss}}</td>
                 <td class="text-center">{{cupRatingGroupItem.win}}</td>

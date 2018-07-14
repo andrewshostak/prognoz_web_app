@@ -21,7 +21,7 @@ export class ClubEditComponent implements OnInit {
         private formBuilder: FormBuilder,
         private imageService: ImageService,
         private location: Location,
-        private notificationService: NotificationsService
+        private notificationsService: NotificationsService
     ) {
         imageService.uploadedImage$.subscribe(response => {
             this.clubEditForm.patchValue({ image: response });
@@ -68,12 +68,12 @@ export class ClubEditComponent implements OnInit {
         this.clubService.updateClub(this.clubEditForm.value).subscribe(
             response => {
                 this.location.back();
-                this.notificationService.success('Успішно', 'Дані команди змінено!');
+                this.notificationsService.success('Успішно', 'Дані команди змінено!');
                 this.spinnerButton = false;
             },
             errors => {
                 for (const error of errors) {
-                    this.notificationService.error('Помилка', error);
+                    this.notificationsService.error('Помилка', error);
                 }
                 this.spinnerButton = false;
             }

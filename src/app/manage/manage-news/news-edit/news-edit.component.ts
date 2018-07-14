@@ -18,7 +18,7 @@ export class NewsEditComponent implements OnInit {
         private activatedRoute: ActivatedRoute,
         private formBuilder: FormBuilder,
         private imageService: ImageService,
-        private notificationService: NotificationsService,
+        private notificationsService: NotificationsService,
         private newsService: NewsService,
         private router: Router
     ) {
@@ -76,12 +76,12 @@ export class NewsEditComponent implements OnInit {
         this.newsService.updateNewsItem(this.newsEditForm.value).subscribe(
             response => {
                 this.router.navigate(['/news/' + this.news.id]);
-                this.notificationService.success('Успішно', 'Новину змінено!');
+                this.notificationsService.success('Успішно', 'Новину змінено!');
                 this.spinnerButton = false;
             },
             errors => {
                 for (const error of errors) {
-                    this.notificationService.error('Помилка', error);
+                    this.notificationsService.error('Помилка', error);
                 }
                 this.spinnerButton = false;
             }

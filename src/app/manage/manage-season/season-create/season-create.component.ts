@@ -11,7 +11,7 @@ import { SeasonService } from '@services/season.service';
     styleUrls: ['./season-create.component.scss']
 })
 export class SeasonCreateComponent implements OnInit {
-    constructor(private notificationService: NotificationsService, private router: Router, private seasonService: SeasonService) {}
+    constructor(private notificationsService: NotificationsService, private router: Router, private seasonService: SeasonService) {}
 
     seasonCreateForm: FormGroup;
     spinnerButton = false;
@@ -27,12 +27,12 @@ export class SeasonCreateComponent implements OnInit {
         this.seasonService.createSeason(this.seasonCreateForm.value).subscribe(
             response => {
                 this.router.navigate(['/manage/seasons']);
-                this.notificationService.success('Успішно', 'Сезон створено!');
+                this.notificationsService.success('Успішно', 'Сезон створено!');
                 this.spinnerButton = false;
             },
             errors => {
                 for (const error of errors) {
-                    this.notificationService.error('Помилка', error);
+                    this.notificationsService.error('Помилка', error);
                 }
                 this.spinnerButton = false;
             }

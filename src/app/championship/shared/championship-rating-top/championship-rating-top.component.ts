@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { ChampionshipRating } from '@models/championship/championship-rating.model';
 import { ChampionshipRatingService } from '@services/championship/championship-rating.service';
 import { environment } from '@env';
-import { HelperService } from '@services/helper.service';
+import { UtilsService } from '@services/utils.service';
 
 @Component({
     selector: 'app-championship-rating-top',
@@ -11,12 +11,13 @@ import { HelperService } from '@services/helper.service';
     styleUrls: ['./championship-rating-top.component.scss']
 })
 export class ChampionshipRatingTopComponent implements OnInit {
-    constructor(private championshipRatingService: ChampionshipRatingService, public helperService: HelperService) {}
+    constructor(private championshipRatingService: ChampionshipRatingService) {}
 
     championshipRatingItems: ChampionshipRating[];
     errorRating: string;
     userImageDefault: string = environment.imageUserDefault;
     userImagesUrl: string = environment.apiImageUsers;
+    getHomeCityInBrackets = UtilsService.getHomeCityInBrackets;
 
     ngOnInit() {
         this.topRating();

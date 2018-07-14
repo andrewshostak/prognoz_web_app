@@ -5,9 +5,9 @@ import { ConfirmModalService } from '@services/confirm-modal.service';
 import { CupCupMatch } from '@models/cup/cup-cup-match.model';
 import { CupCupMatchService } from '@services/cup/cup-cup-match.service';
 import { environment } from '@env';
-import { HelperService } from '@services/helper.service';
 import { NotificationsService } from 'angular2-notifications';
 import { Subscription } from 'rxjs/Subscription';
+import { UtilsService } from '@services/utils.service';
 
 @Component({
     selector: 'app-cup-cup-matches-table',
@@ -19,7 +19,6 @@ export class CupCupMatchesTableComponent implements OnDestroy, OnInit {
         private activatedRoute: ActivatedRoute,
         private confirmModalService: ConfirmModalService,
         private cupCupMatchService: CupCupMatchService,
-        private helperService: HelperService,
         private notificationsService: NotificationsService
     ) {}
 
@@ -33,6 +32,7 @@ export class CupCupMatchesTableComponent implements OnDestroy, OnInit {
     total: number;
     userImageDefault: string;
     userImagesUrl: string;
+    isScore = UtilsService.isScore;
 
     deleteCupCupMatch(cupCupMatch: CupCupMatch): void {
         this.confirmModalService.show(() => {
@@ -52,10 +52,6 @@ export class CupCupMatchesTableComponent implements OnDestroy, OnInit {
                 }
             );
         });
-    }
-
-    isScore(cupCupMatch: CupCupMatch): boolean {
-        return this.helperService.isScore(cupCupMatch.home, cupCupMatch.away);
     }
 
     ngOnDestroy() {

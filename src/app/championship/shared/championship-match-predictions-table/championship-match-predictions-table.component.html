@@ -16,16 +16,16 @@
             routerLink="/championship/users/{{predict.user_id}}"
             class="cursor-pointer"
             [ngClass]="{'table-active': authenticatedUser && (predict.user.id === authenticatedUser.id),
-                        'table-success': helperService.isChampionshipMatchGuessed(match, predict)}">
+                        'table-success': isChampionshipMatchGuessed(match, predict)}">
             <th scope="row" class="text-center">{{i + 1}}.</th>
             <td class="text-left">{{predict.user.name}}</td>
             <td class="text-center d-none d-sm-table-cell">{{predict.updated_at | time:'YYYY-MM-DD HH:mm'}}</td>
             <td class="text-center">
-                {{helperService.showScore(predict.home, predict.away, '?')}}
+                {{showScoresOrString(predict.home, predict.away, '?')}}
             </td>
             <td class="text-center">
                 <strong>
-                    {{helperService.isScore(match.home, match.away) ? helperService.getUserPointsOnMatch(match.home, match.away, predict.home, predict.away) : '-'}}
+                    {{isScore(match.home, match.away) ? getUserPointsOnMatch(match.home, match.away, predict.home, predict.away) : '-'}}
                 </strong>
             </td>
         </tr>

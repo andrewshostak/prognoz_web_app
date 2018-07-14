@@ -28,7 +28,7 @@ export class GuestbookPageComponent implements OnInit, OnDestroy {
         private domSanitizer: DomSanitizer,
         private formBuilder: FormBuilder,
         private guestbookService: GuestbookService,
-        private notificationService: NotificationsService,
+        private notificationsService: NotificationsService,
         private titleService: TitleService
     ) {}
 
@@ -102,11 +102,11 @@ export class GuestbookPageComponent implements OnInit, OnDestroy {
                 this.getGuestbookMessagesData();
                 this.spinnerButton = false;
                 this.addGuestbookMessageForm.reset({ user_id: this.authenticatedUser.id });
-                this.notificationService.success('Успішно', 'Повідомлення додано');
+                this.notificationsService.success('Успішно', 'Повідомлення додано');
             },
             errors => {
                 for (const error of errors) {
-                    this.notificationService.error('Помилка', error);
+                    this.notificationsService.error('Помилка', error);
                 }
                 this.spinnerButton = false;
             }

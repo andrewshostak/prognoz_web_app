@@ -1,8 +1,9 @@
 import { Component, Input } from '@angular/core';
 
+import { ChampionshipService } from '@services/championship/championship.service';
 import { ChampionshipMatch } from '@models/championship/championship-match.model';
-import { HelperService } from '@services/helper.service';
 import { User } from '@models/user.model';
+import { UtilsService } from '@services/utils.service';
 
 @Component({
     selector: 'app-championship-match-predictions-table',
@@ -13,5 +14,8 @@ export class ChampionshipMatchPredictionsTableComponent {
     @Input() match: ChampionshipMatch;
     @Input() authenticatedUser: User;
 
-    constructor(public helperService: HelperService) {}
+    getUserPointsOnMatch = ChampionshipService.getUserPointsOnMatch;
+    isChampionshipMatchGuessed = ChampionshipService.isChampionshipMatchGuessed;
+    isScore = UtilsService.isScore;
+    showScoresOrString = UtilsService.showScoresOrString;
 }

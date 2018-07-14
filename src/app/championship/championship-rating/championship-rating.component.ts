@@ -5,7 +5,6 @@ import { AuthService } from '@services/auth.service';
 import { ChampionshipRating } from '@models/championship/championship-rating.model';
 import { ChampionshipRatingService } from '@services/championship/championship-rating.service';
 import { CurrentStateService } from '@services/current-state.service';
-import { HelperService } from '@services/helper.service';
 import { TitleService } from '@services/title.service';
 import { User } from '@models/user.model';
 
@@ -19,7 +18,6 @@ export class ChampionshipRatingComponent implements OnInit, OnDestroy {
         private authService: AuthService,
         private championshipRatingService: ChampionshipRatingService,
         private currentStateService: CurrentStateService,
-        public helperService: HelperService,
         private titleService: TitleService
     ) {}
 

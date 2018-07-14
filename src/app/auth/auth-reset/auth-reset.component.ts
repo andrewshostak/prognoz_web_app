@@ -18,7 +18,7 @@ export class AuthResetComponent implements OnInit {
         private activatedRoute: ActivatedRoute,
         private authService: AuthService,
         private currentStateService: CurrentStateService,
-        private notificationService: NotificationsService,
+        private notificationsService: NotificationsService,
         private router: Router,
         private titleService: TitleService
     ) {}
@@ -46,7 +46,7 @@ export class AuthResetComponent implements OnInit {
             this.spinnerButton = true;
             this.authService.reset(this.resetForm.value).subscribe(
                 response => {
-                    this.notificationService.success(
+                    this.notificationsService.success(
                         'Успішно',
                         'Відновлення паролю пройшло успішно. Тепер ви можете виконати вхід на сайт.',
                         { timeOut: 0 }
@@ -56,7 +56,7 @@ export class AuthResetComponent implements OnInit {
                 },
                 errors => {
                     for (const error of errors) {
-                        this.notificationService.error('Помилка', error);
+                        this.notificationsService.error('Помилка', error);
                     }
                     this.spinnerButton = false;
                 }

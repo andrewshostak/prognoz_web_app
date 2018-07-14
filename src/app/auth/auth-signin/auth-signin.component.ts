@@ -17,7 +17,7 @@ export class AuthSigninComponent implements OnInit {
     constructor(
         private authService: AuthService,
         private currentStateService: CurrentStateService,
-        private notificationService: NotificationsService,
+        private notificationsService: NotificationsService,
         private router: Router,
         private titleService: TitleService
     ) {}
@@ -40,13 +40,13 @@ export class AuthSigninComponent implements OnInit {
             this.spinnerButton = true;
             this.authService.signIn(this.signInForm.value.name, this.signInForm.value.password).subscribe(
                 response => {
-                    this.notificationService.success('Успішно', 'Вхід виконано успішно');
+                    this.notificationsService.success('Успішно', 'Вхід виконано успішно');
                     this.spinnerButton = false;
                     this.router.navigate(['/championship/predictions']);
                 },
                 errors => {
                     for (const error of errors) {
-                        this.notificationService.error('Помилка', error);
+                        this.notificationsService.error('Помилка', error);
                     }
                     this.spinnerButton = false;
                 }

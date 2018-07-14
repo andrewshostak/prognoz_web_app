@@ -39,7 +39,7 @@
             <!-- down moving -->
             <td *ngIf="ratingItem.moving < 0" class="text-center text-danger">
                 <i class="fa fa-arrow-circle-down" aria-hidden="true"></i>
-                <strong>{{helperService.makeUnsigned(ratingItem.moving)}}</strong>
+                <strong>{{makeUnsigned(ratingItem.moving)}}</strong>
             </td>
             <td class="text-center p-1">
                 <img *ngIf="ratingItem.user?.main_club?.length"
@@ -53,7 +53,7 @@
             </td>
             <td class="text-left">
                 <strong>{{ratingItem.user.name}}</strong>
-                <span class="d-none d-sm-inline">{{helperService.getHometown(ratingItem.user.hometown)}}</span>
+                <span class="d-none d-sm-inline">{{getHomeCityInBrackets(ratingItem.user.hometown)}}</span>
             </td>
             <td class="text-center d-none d-sm-table-cell">{{ratingItem.x2}}</td>
             <td class="text-center">{{ratingItem.x3}}</td>

@@ -17,7 +17,7 @@ export class TeamMatchEditActiveComponent implements OnInit {
     constructor(
         private clubService: ClubService,
         private formBuilder: FormBuilder,
-        private notificationService: NotificationsService,
+        private notificationsService: NotificationsService,
         private teamMatchService: TeamMatchService
     ) {}
 
@@ -58,11 +58,11 @@ export class TeamMatchEditActiveComponent implements OnInit {
                 response => {
                     this.selectedMatch = response;
                     this.getTeamMatchesData();
-                    this.notificationService.success('Успішно', 'Матч змінено');
+                    this.notificationsService.success('Успішно', 'Матч змінено');
                     this.spinnerButton = false;
                 },
                 errors => {
-                    errors.forEach(error => this.notificationService.error('Помилка', error));
+                    errors.forEach(error => this.notificationsService.error('Помилка', error));
                     this.spinnerButton = false;
                 }
             );

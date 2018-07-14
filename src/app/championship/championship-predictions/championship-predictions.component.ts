@@ -6,9 +6,9 @@ import { AuthService } from '@services/auth.service';
 import { ChampionshipMatch } from '@models/championship/championship-match.model';
 import { ChampionshipMatchService } from '@services/championship/championship-match.service';
 import { ChampionshipPredictionService } from '@services/championship/championship-prediction.service';
+import { ChampionshipService } from '@services/championship/championship.service';
 import { CurrentStateService } from '@services/current-state.service';
 import { environment } from '@env';
-import { HelperService } from '@services/helper.service';
 import { NotificationsService } from 'angular2-notifications';
 import { TitleService } from '@services/title.service';
 import { User } from '@models/user.model';
@@ -23,9 +23,9 @@ export class ChampionshipPredictionsComponent implements OnInit, OnDestroy {
         private authService: AuthService,
         private championshipMatchService: ChampionshipMatchService,
         private championshipPredictionService: ChampionshipPredictionService,
+        private championshipService: ChampionshipService,
         private currentStateService: CurrentStateService,
-        private helperService: HelperService,
-        private notificationService: NotificationsService,
+        private notificationsService: NotificationsService,
         private titleService: TitleService
     ) {}
 
@@ -55,16 +55,18 @@ export class ChampionshipPredictionsComponent implements OnInit, OnDestroy {
 
     onSubmit() {
         this.spinnerButton = true;
-        const championshipPredictionsToUpdate = this.helperService.createChampionshipPredictionsArray(this.championshipPredictionsForm);
+        const championshipPredictionsToUpdate = this.championshipService.createChampionshipPredictionsArray(
+            this.championshipPredictionsForm
+        );
         this.championshipPredictionService.updateChampionshipPredictions(championshipPredictionsToUpdate).subscribe(
             response => {
                 this.spinnerButton = false;
-                this.notificationService.success('Успішно', 'Прогнози прийнято');
+                this.notificationsService.success('Успішно', 'Прогнози прийнято');
                 this.getChampionshipMatchesData();
             },
             error => {
                 this.spinnerButton = false;
-                this.notificationService.error('Помилка', error);
+                this.notificationsService.error('Помилка', error);
             }
         );
     }

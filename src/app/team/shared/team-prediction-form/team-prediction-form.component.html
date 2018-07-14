@@ -3,8 +3,8 @@
         <!-- form block -->
         <div class="col-12 col-md-10 mb-2">
             <div class="row align-items-center p-md-1 rounded bg-white black-shadow black-border h-100"
-                 [ngClass]="{'green-inset-and-black-shadow': helperService.isScore(teamPrediction.home, teamPrediction.away),
-                            'red-inset-and-black-shadow': !helperService.isScore(teamPrediction.home, teamPrediction.away)}">
+                 [ngClass]="{'green-inset-and-black-shadow': isScore(teamPrediction.home, teamPrediction.away),
+                            'red-inset-and-black-shadow': !isScore(teamPrediction.home, teamPrediction.away)}">
                 <!-- home club logo -->
                 <div class="d-none d-lg-block col-md-2">
                     <img class="img-fluid" src="{{clubsImagesUrl}}{{teamPrediction.team_match.club_first.image}}" alt="{{teamPrediction.team_match.club_first.title}}"
@@ -12,8 +12,8 @@
                 </div>
                 <!-- club names, starts_at, inputs -->
                 <div class="col-12 col-md-12 col-lg-8 bg-dark rounded"
-                     [ngClass]="{'green-shadow': helperService.isScore(teamPrediction.home, teamPrediction.away),
-                                'red-shadow': !helperService.isScore(teamPrediction.home, teamPrediction.away)}">
+                     [ngClass]="{'green-shadow': isScore(teamPrediction.home, teamPrediction.away),
+                                'red-shadow': !isScore(teamPrediction.home, teamPrediction.away)}">
                     <div class="row">
                         <div class="col-12 text-center text-white">
                             {{teamPrediction.team_match.starts_at | time:'dddd HH:mm'}}
@@ -41,7 +41,7 @@
                             </div>
                             <!-- if team match is not predictable -->
                             <div *ngIf="!teamPrediction.team_match.is_predictable">
-                                <strong>{{helperService.showScore(teamPrediction.home, teamPrediction.away, '- : -')}}</strong>
+                                <strong>{{showScoresOrString(teamPrediction.home, teamPrediction.away, '- : -')}}</strong>
                             </div>
                         </div>
                         <div class="col-6 col-sm-4 col-md-3 col-lg-4 order-2 order-sm-3 text-left text-sm-center text-white">
@@ -61,23 +61,23 @@
             <!-- submit button -->
             <button *ngIf="!spinnerButton && teamPrediction.team_match.is_predictable"
                     class="btn btn-block full-height"
-                    [ngClass]="{'btn-outline-primary': helperService.isScore(teamPrediction.home, teamPrediction.away),
-                                'btn-primary': !helperService.isScore(teamPrediction.home, teamPrediction.away)}"
+                    [ngClass]="{'btn-outline-primary': isScore(teamPrediction.home, teamPrediction.away),
+                                'btn-primary': !isScore(teamPrediction.home, teamPrediction.away)}"
                     type="submit">
                 <!-- md lg xl -->
-                <i [hidden]="helperService.isScore(teamPrediction.home, teamPrediction.away)" class="fa fa-check-circle-o fa-2x d-none d-md-block" aria-hidden="true"></i>
-                <i [hidden]="!helperService.isScore(teamPrediction.home, teamPrediction.away)" class="fa fa-pencil-square-o fa-2x d-none d-md-block" aria-hidden="true"></i>
+                <i [hidden]="isScore(teamPrediction.home, teamPrediction.away)" class="fa fa-check-circle-o fa-2x d-none d-md-block" aria-hidden="true"></i>
+                <i [hidden]="!isScore(teamPrediction.home, teamPrediction.away)" class="fa fa-pencil-square-o fa-2x d-none d-md-block" aria-hidden="true"></i>
                 <!-- xs sm -->
-                <i [hidden]="helperService.isScore(teamPrediction.home, teamPrediction.away)" class="fa fa-check-circle-o fa-lg d-md-none" aria-hidden="true"></i>
-                <i [hidden]="!helperService.isScore(teamPrediction.home, teamPrediction.away)" class="fa fa-pencil-square-o fa-lg d-md-none" aria-hidden="true"></i>
+                <i [hidden]="isScore(teamPrediction.home, teamPrediction.away)" class="fa fa-check-circle-o fa-lg d-md-none" aria-hidden="true"></i>
+                <i [hidden]="!isScore(teamPrediction.home, teamPrediction.away)" class="fa fa-pencil-square-o fa-lg d-md-none" aria-hidden="true"></i>
                 <!-- lg xl -->
                 <br class="d-none d-lg-block">
                 <small class="d-none d-lg-block">
-                    {{helperService.isScore(teamPrediction.home, teamPrediction.away) ? 'Змінити' : 'Зберегти'}}
+                    {{isScore(teamPrediction.home, teamPrediction.away) ? 'Змінити' : 'Зберегти'}}
                 </small>
                 <!-- xs sm -->
                 <span class="d-md-none">
-                    {{helperService.isScore(teamPrediction.home, teamPrediction.away) ? 'Змінити прогноз' : 'Зберегти прогноз'}}
+                    {{isScore(teamPrediction.home, teamPrediction.away) ? 'Змінити прогноз' : 'Зберегти прогноз'}}
                 </span>
             </button>
             <!-- disabled button -->

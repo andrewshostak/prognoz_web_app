@@ -2,7 +2,7 @@ import { Component, Input, OnChanges, OnDestroy, SimpleChanges } from '@angular/
 
 import { ChampionshipRating } from '@models/championship/championship-rating.model';
 import { environment } from '@env';
-import { HelperService } from '@services/helper.service';
+import { UtilsService } from '@services/utils.service';
 
 declare const $: any;
 
@@ -17,8 +17,8 @@ export class ChampionshipRatingTableComponent implements OnChanges, OnDestroy {
     @Input() authenticatedUser: any;
 
     clubsImagesUrl: string = environment.apiImageClubs;
-
-    constructor(public helperService: HelperService) {}
+    getHomeCityInBrackets = UtilsService.getHomeCityInBrackets;
+    makeUnsigned = UtilsService.makeUnsigned;
 
     ngOnChanges(changes: SimpleChanges) {
         for (const propName in changes) {

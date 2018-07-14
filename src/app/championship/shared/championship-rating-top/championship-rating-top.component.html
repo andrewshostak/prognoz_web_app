@@ -10,7 +10,7 @@
     </div>
     <div class="card-body pt-0 cursor-pointer" routerLink="/championship/users/{{championshipRatingItems[0].user_id}}">
         <p class="card-text text-center">
-            <strong>{{championshipRatingItems[0].user.name}}</strong> {{helperService.getHometown(championshipRatingItems[0].user.hometown)}}
+            <strong>{{championshipRatingItems[0].user.name}}</strong> {{getHomeCityInBrackets(championshipRatingItems[0].user.hometown)}}
         </p>
     </div>
 </div>

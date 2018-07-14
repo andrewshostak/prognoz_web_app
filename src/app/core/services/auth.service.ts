@@ -6,6 +6,7 @@ import { environment } from '@env';
 import { ErrorHandlerService } from '@services/error-handler.service';
 import { HeadersWithToken } from '@services/headers-with-token.service';
 import { User } from '@models/user.model';
+import { UtilsService } from '@services/utils.service';
 
 @Injectable()
 export class AuthService {
@@ -22,6 +23,21 @@ export class AuthService {
     private authUrl = environment.apiUrl + 'auth/';
     public getUser: Observable<any>;
     private userObserver: any;
+
+    /**
+     * Authenticated user has role
+     * @param {string} role
+     * @returns {boolean}
+     */
+    hasRole(role: string): boolean {
+        const userRoles = UtilsService.getItemFromLocalStorage('roles');
+        if (userRoles && userRoles.length) {
+            if (userRoles.includes(role)) {
+                return true;
+            }
+        }
+        return false;
+    }
 
     /**
      * Update user data if token and old user data is present in localStorage.
@@ -41,6 +57,14 @@ export class AuthService {
                 }
             );
         }
+    }
+
+    /**
+     * Check if token and user data exists in localStorage
+     * @returns {boolean}
+     */
+    isUserAndTokenInLocalStorage() {
+        return !!localStorage.getItem('auth_token') && !!localStorage.getItem('user');
     }
 
     /**
@@ -66,21 +90,6 @@ export class AuthService {
     }
 
     /**
-     * Sends unvalidate token request
-     * @returns {Observable<any>}
-     */
-    logout(): Observable<any> {
-        return this.headersWithToken
-            .post(this.authUrl + 'logout', {})
-            .map(response => {
-                localStorage.clear();
-                this.userObserver.next(null);
-                return response;
-            })
-            .catch(this.errorHandlerService.handle);
-    }
-
-    /**
      * Sends registration request
      * @param user
      * @returns {Observable<any>}
@@ -96,6 +105,21 @@ export class AuthService {
                     this.userObserver.next(response['user']);
                 }
                 return response['user'];
+            })
+            .catch(this.errorHandlerService.handle);
+    }
+
+    /**
+     * Sends unvalidate token request
+     * @returns {Observable<any>}
+     */
+    logout(): Observable<any> {
+        return this.headersWithToken
+            .post(this.authUrl + 'logout', {})
+            .map(response => {
+                localStorage.clear();
+                this.userObserver.next(null);
+                return response;
             })
             .catch(this.errorHandlerService.handle);
     }
@@ -128,14 +152,6 @@ export class AuthService {
      */
     private refresh(): Observable<any> {
         return this.headersWithToken.get(this.authUrl + 'refresh').catch(this.errorHandlerService.handle);
-    }
-
-    /**
-     * Check if token and user data exists in localStorage
-     * @returns {boolean}
-     */
-    isUserAndTokenInLocalStorage() {
-        return !!localStorage.getItem('auth_token') && !!localStorage.getItem('user');
     }
 
     /**

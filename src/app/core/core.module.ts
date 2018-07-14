@@ -5,6 +5,7 @@ import { RouterModule } from '@angular/router';
 
 import { AccessDeniedComponent } from './access-denied/access-denied.component';
 import { AuthService } from '@services/auth.service';
+import { ChampionshipService } from '@services/championship/championship.service';
 import { ChampionshipMatchService } from '@services/championship/championship-match.service';
 import { ChampionshipPredictionService } from '@services/championship/championship-prediction.service';
 import { ChampionshipRatingService } from '@services/championship/championship-rating.service';
@@ -21,9 +22,9 @@ import { CupStageTypeService } from '@services/cup/cup-stage-type.service';
 import { CurrentStateService } from '@services/current-state.service';
 import { ErrorHandlerService } from '@services/error-handler.service';
 import { FooterComponent } from './footer/footer.component';
+import { FormValidatorService } from '@services/form-validator.service';
 import { HeaderComponent } from './header/header.component';
 import { HeadersWithToken } from '@services/headers-with-token.service';
-import { HelperService } from '@services/helper.service';
 import { ImageService } from '@services/image.service';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { PusherService } from '@services/pusher.service';
@@ -40,7 +41,7 @@ import { TeamTeamMatchService } from '@services/team/team-team-match.service';
 import { TournamentService } from '@services/tournament.service';
 import { TitleService } from '@services/title.service';
 import { UserService } from '@services/user.service';
-import { FormValidatorService } from '@services/form-validator.service';
+import { UtilsService } from '@services/utils.service';
 
 @NgModule({
     imports: [CommonModule, ReactiveFormsModule, RouterModule, SharedModule],
@@ -49,6 +50,7 @@ import { FormValidatorService } from '@services/form-validator.service';
     providers: [
         AuthService,
         ClubService,
+        ChampionshipService,
         ChampionshipMatchService,
         ChampionshipPredictionService,
         ChampionshipRatingService,
@@ -63,8 +65,8 @@ import { FormValidatorService } from '@services/form-validator.service';
         CupStageTypeService,
         CurrentStateService,
         ErrorHandlerService,
+        FormValidatorService,
         HeadersWithToken,
-        HelperService,
         ImageService,
         PusherService,
         SeasonService,
@@ -78,7 +80,7 @@ import { FormValidatorService } from '@services/form-validator.service';
         TitleService,
         TournamentService,
         UserService,
-        FormValidatorService
+        UtilsService
     ]
 })
 export class CoreModule {

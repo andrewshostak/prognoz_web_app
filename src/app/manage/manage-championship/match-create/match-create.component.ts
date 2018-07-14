@@ -18,7 +18,7 @@ export class MatchCreateComponent implements OnInit {
         private championshipMatchService: ChampionshipMatchService,
         private clubService: ClubService,
         private formBuilder: FormBuilder,
-        private notificationService: NotificationsService
+        private notificationsService: NotificationsService
     ) {}
 
     addedMatches: Array<ChampionshipMatch> = [];
@@ -54,12 +54,12 @@ export class MatchCreateComponent implements OnInit {
                 this.resetForm();
                 this.championshipMatchCreateForm.patchValue({ starts_at: this.lastEnteredDate });
                 this.addedMatches.push(response);
-                this.notificationService.success('Успішно', 'Матч додано!');
+                this.notificationsService.success('Успішно', 'Матч додано!');
                 this.spinnerButton = false;
             },
             errors => {
                 for (const error of errors) {
-                    this.notificationService.error('Помилка', error);
+                    this.notificationsService.error('Помилка', error);
                 }
                 this.spinnerButton = false;
             }

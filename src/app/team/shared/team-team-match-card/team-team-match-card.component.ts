@@ -1,12 +1,13 @@
 import { AfterViewInit, Component, Input, ChangeDetectorRef, OnDestroy } from '@angular/core';
 
 import { environment } from '@env';
-import { HelperService } from '@services/helper.service';
+import { TeamCompetitionService } from '@services/team/team-competition.service';
 import { TeamMatch } from '@models/team/team-match.model';
 import { TeamMatchService } from '@services/team/team-match.service';
 import { TeamTeamMatch } from '@models/team/team-team-match.model';
 import { TimePipe } from '../../../shared/pipes/time.pipe';
 import { User } from '@models/user.model';
+import { UtilsService } from '@services/utils.service';
 
 declare const $: any;
 
@@ -16,12 +17,7 @@ declare const $: any;
     styleUrls: ['./team-team-match-card.component.scss']
 })
 export class TeamTeamMatchCardComponent implements AfterViewInit, OnDestroy {
-    constructor(
-        private teamMatchService: TeamMatchService,
-        public helperService: HelperService,
-        private changeDetectorRef: ChangeDetectorRef,
-        private timePipe: TimePipe
-    ) {}
+    constructor(private teamMatchService: TeamMatchService, private changeDetectorRef: ChangeDetectorRef, private timePipe: TimePipe) {}
 
     @Input() teamTeamMatch: TeamTeamMatch;
     @Input() round: number;
@@ -29,7 +25,10 @@ export class TeamTeamMatchCardComponent implements AfterViewInit, OnDestroy {
     clubsImagesUrl: string = environment.apiImageClubs;
     errorTeamMatches: string;
     expandedTeamMatch: boolean;
+    isTeamMatchBlocked = TeamCompetitionService.isTeamMatchBlocked;
+    isTeamMatchGuessed = TeamCompetitionService.isTeamMatchBlocked;
     noTeamMatches = 'Цей раунд ще не почався / матчів не знайдено';
+    showScoresOrString = UtilsService.showScoresOrString;
     spinnerTeamMatches: boolean;
     teamImageDefault: string = environment.imageTeamDefault;
     teamsImagesUrl: string = environment.apiImageTeams;
@@ -68,7 +67,7 @@ export class TeamTeamMatchCardComponent implements AfterViewInit, OnDestroy {
             if (teamPrediction) {
                 return {
                     user: teamPrediction.user || null,
-                    prediction: this.helperService.isScore(teamPrediction.home, teamPrediction.away)
+                    prediction: UtilsService.isScore(teamPrediction.home, teamPrediction.away)
                         ? {
                               home: teamPrediction.home,
                               away: teamPrediction.away,
@@ -92,7 +91,7 @@ export class TeamTeamMatchCardComponent implements AfterViewInit, OnDestroy {
         } else if (teamMatch.team_predictions) {
             const teamPrediction = teamMatch.team_predictions.find(prediction => teamId === prediction.team_id);
             if (teamPrediction) {
-                if (!this.helperService.isScore(teamPrediction.home, teamPrediction.away)) {
+                if (!UtilsService.isScore(teamPrediction.home, teamPrediction.away)) {
                     return 'Прогноз не зроблено';
                 }
                 const date = this.timePipe.transform(teamPrediction.predicted_at, 'YYYY-MM-DD HH:mm');

@@ -20,7 +20,7 @@ export class ManageTeamComponent implements OnInit {
     confirmModalMessage: string;
     confirmSpinnerButton = false;
 
-    constructor(private competitionService: CompetitionService, private notificationService: NotificationsService) {}
+    constructor(private competitionService: CompetitionService, private notificationsService: NotificationsService) {}
 
     confirmModalSubmit(data: any) {
         switch (this.confirmModalId) {
@@ -67,12 +67,12 @@ export class ManageTeamComponent implements OnInit {
         competitionToUpdate.active = true;
         this.competitionService.updateCompetition(competitionToUpdate, competitionToUpdate.id).subscribe(
             response => {
-                this.notificationService.success('Успішно', 'Жеребкування календаря проведено');
+                this.notificationsService.success('Успішно', 'Жеребкування календаря проведено');
                 this.confirmSpinnerButton = false;
                 $('#' + this.confirmModalId).modal('hide');
             },
             errors => {
-                errors.forEach(error => this.notificationService.error('Помилка', error));
+                errors.forEach(error => this.notificationsService.error('Помилка', error));
                 this.confirmSpinnerButton = false;
                 $('#' + this.confirmModalId).modal('hide');
             }
@@ -91,12 +91,12 @@ export class ManageTeamComponent implements OnInit {
         competitionToUpdate.active_round = this.nextRoundNumber();
         this.competitionService.updateCompetition(competitionToUpdate, competitionToUpdate.id).subscribe(
             response => {
-                this.notificationService.success('Успішно', 'Наступний раунд розпочато');
+                this.notificationsService.success('Успішно', 'Наступний раунд розпочато');
                 this.confirmSpinnerButton = false;
                 $('#' + this.confirmModalId).modal('hide');
             },
             errors => {
-                errors.forEach(error => this.notificationService.error('Помилка', error));
+                errors.forEach(error => this.notificationsService.error('Помилка', error));
                 this.confirmSpinnerButton = false;
                 $('#' + this.confirmModalId).modal('hide');
             }

@@ -25,7 +25,7 @@ export class MeComponent implements OnInit, OnDestroy {
         private clubService: ClubService,
         private currentStateService: CurrentStateService,
         private imageService: ImageService,
-        private notificationService: NotificationsService,
+        private notificationsService: NotificationsService,
         private router: Router,
         private titleService: TitleService,
         private userService: UserService
@@ -107,12 +107,12 @@ export class MeComponent implements OnInit, OnDestroy {
         this.userService.updateUser(this.userEditForm.value).subscribe(
             response => {
                 this.authService.initializeUser();
-                this.notificationService.success('Успішно', 'Ваш профіль змінено!');
+                this.notificationsService.success('Успішно', 'Ваш профіль змінено!');
                 this.spinnerButton = false;
                 this.hasUnsavedChanges = false;
             },
             errors => {
-                errors.forEach(error => this.notificationService.error('Помилка', error));
+                errors.forEach(error => this.notificationsService.error('Помилка', error));
                 this.hasUnsavedChanges = false;
                 this.spinnerButton = false;
             }

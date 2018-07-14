@@ -7,9 +7,9 @@ import { CupCupMatchService } from '@services/cup/cup-cup-match.service';
 import { CupStage } from '@models/cup/cup-stage.model';
 import { CupStageService } from '@services/cup/cup-stage.service';
 import { NotificationsService } from 'angular2-notifications';
-import { patchSimpleChangeValuesInForm } from '@utils/patch-simple-change-values-in-form';
 import { User } from '@models/user.model';
 import { UserService } from '@services/user.service';
+import { UtilsService } from '@services/utils.service';
 
 @Component({
     selector: 'app-cup-cup-match-form',
@@ -34,7 +34,7 @@ export class CupCupMatchFormComponent implements OnChanges, OnInit {
     users: User[];
 
     ngOnChanges(simpleChanges: SimpleChanges) {
-        patchSimpleChangeValuesInForm(simpleChanges, this.cupCupMatchForm, 'cupCupMatch');
+        UtilsService.patchSimpleChangeValuesInForm(simpleChanges, this.cupCupMatchForm, 'cupCupMatch');
     }
 
     ngOnInit() {

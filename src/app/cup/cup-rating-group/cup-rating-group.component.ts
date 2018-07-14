@@ -4,9 +4,9 @@ import { ActivatedRoute, Params } from '@angular/router';
 import { CupRatingGroup } from '@models/cup/cup-rating-group.model';
 import { CupRatingService } from '@services/cup/cup-rating.service';
 import { environment } from '@env';
-import { HelperService } from '@services/helper.service';
 import { Subscription } from 'rxjs/Subscription';
 import { TitleService } from '@services/title.service';
+import { UtilsService } from '@services/utils.service';
 
 @Component({
     selector: 'app-cup-rating-group',
@@ -14,17 +14,13 @@ import { TitleService } from '@services/title.service';
     styleUrls: ['./cup-rating-group.component.scss']
 })
 export class CupRatingGroupComponent implements OnInit {
-    constructor(
-        private activatedRoute: ActivatedRoute,
-        private cupRatingService: CupRatingService,
-        private helperService: HelperService,
-        private titleService: TitleService
-    ) {}
+    constructor(private activatedRoute: ActivatedRoute, private cupRatingService: CupRatingService, private titleService: TitleService) {}
 
     activatedRouteSubscription: Subscription;
     competitionId: number;
     cupRatingGroup: CupRatingGroup[];
     errorRatingGroup: string;
+    getHomeCityInBrackets = UtilsService.getHomeCityInBrackets;
     groupNumber: number;
     userImageDefault: string;
     userImagesUrl: string;
@@ -45,9 +41,5 @@ export class CupRatingGroupComponent implements OnInit {
                 }
             );
         });
-    }
-
-    getHometown(hometown: string): string {
-        return this.helperService.getHometown(hometown);
     }
 }

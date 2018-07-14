@@ -15,7 +15,7 @@ declare var $: any;
 export class NewsTableComponent implements OnInit {
     constructor(
         private activatedRoute: ActivatedRoute,
-        private notificationService: NotificationsService,
+        private notificationsService: NotificationsService,
         private newsService: NewsService
     ) {}
 
@@ -45,13 +45,13 @@ export class NewsTableComponent implements OnInit {
             response => {
                 this.total--;
                 this.news = this.news.filter(n => n !== news);
-                this.notificationService.success('Успішно', news.title + ' видалено');
+                this.notificationsService.success('Успішно', news.title + ' видалено');
                 this.confirmSpinnerButton = false;
                 $('#' + this.confirmModalId).modal('hide');
             },
             errors => {
                 for (const error of errors) {
-                    this.notificationService.error('Помилка', error);
+                    this.notificationsService.error('Помилка', error);
                 }
                 this.confirmSpinnerButton = false;
                 $('#' + this.confirmModalId).modal('hide');

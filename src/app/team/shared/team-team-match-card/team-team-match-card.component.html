@@ -13,7 +13,7 @@
                      alt="{{teamTeamMatch.home_team.name}}">
             </div>
             <div class="col-4 col-sm-2 text-center">
-                <strong>{{helperService.showScore(teamTeamMatch.home, teamTeamMatch.away, 'vs')}}</strong>
+                <strong>{{showScoresOrString(teamTeamMatch.home, teamTeamMatch.away, 'vs')}}</strong>
                 <br class="d-sm-none">
                 <i [hidden]="expandedTeamMatch || spinnerTeamMatches" class="fa fa-chevron-down fa-lg text-primary d-sm-none"></i>
                 <i [hidden]="!expandedTeamMatch || spinnerTeamMatches" class="fa fa-chevron-up fa-lg text-primary d-sm-none"></i>
@@ -112,11 +112,11 @@
                             data-toggle="tooltip"
                             data-placement="right"
                             title="{{getTitle(teamMatch, teamTeamMatch.home_team_id)}}"
-                            [ngClass]="{'bg-success': helperService.isTeamMatchGuessed(teamMatch, teamTeamMatch.home_team_id) &&
-                                                     !helperService.isTeamMatchBlocked(teamMatch, teamTeamMatch.home_team_id),
-                                        'bg-danger': helperService.isTeamMatchBlocked(teamMatch, teamTeamMatch.home_team_id),
-                                        'text-white': helperService.isTeamMatchBlocked(teamMatch, teamTeamMatch.home_team_id) ||
-                                                    helperService.isTeamMatchGuessed(teamMatch, teamTeamMatch.home_team_id)}">
+                            [ngClass]="{'bg-success': isTeamMatchGuessed(teamMatch, teamTeamMatch.home_team_id) &&
+                                                     !isTeamMatchBlocked(teamMatch, teamTeamMatch.home_team_id),
+                                        'bg-danger': isTeamMatchBlocked(teamMatch, teamTeamMatch.home_team_id),
+                                        'text-white': isTeamMatchBlocked(teamMatch, teamTeamMatch.home_team_id) ||
+                                                    isTeamMatchGuessed(teamMatch, teamTeamMatch.home_team_id)}">
                             <table class="w-100">
                                 <tr *ngIf="!isTeamMatchPredictable(teamMatch)" class="text-center bg-transparent">
                                     <td class="w-50 border-left-0 border-top-0 border-bottom-0 text-nowrap align-middle">
@@ -138,16 +138,16 @@
                             </table>
                         </td>
                         <td class="align-middle text-right">
-                            <span *ngIf="helperService.isTeamMatchGuessed(teamMatch, teamTeamMatch.home_team_id) && !helperService.isTeamMatchBlocked(teamMatch, teamTeamMatch.home_team_id)"
+                            <span *ngIf="isTeamMatchGuessed(teamMatch, teamTeamMatch.home_team_id) && !isTeamMatchBlocked(teamMatch, teamTeamMatch.home_team_id)"
                                   class="pull-left text-success d-none d-lg-inline">
                                 <i class="fa fa-lg fa-check-circle-o" aria-hidden="true"></i>
                             </span>
-                            <span *ngIf="!helperService.isTeamMatchGuessed(teamMatch, teamTeamMatch.home_team_id) && helperService.isTeamMatchBlocked(teamMatch, teamTeamMatch.home_team_id)"
+                            <span *ngIf="!isTeamMatchGuessed(teamMatch, teamTeamMatch.home_team_id) && isTeamMatchBlocked(teamMatch, teamTeamMatch.home_team_id)"
                                   class="pull-left text-danger d-none d-lg-inline"
                                   title="">
                                 <i class="fa fa-lg fa-lock" aria-hidden="true"></i>
                             </span>
-                            <span *ngIf="helperService.isTeamMatchGuessed(teamMatch, teamTeamMatch.home_team_id) && helperService.isTeamMatchBlocked(teamMatch, teamTeamMatch.home_team_id)"
+                            <span *ngIf="isTeamMatchGuessed(teamMatch, teamTeamMatch.home_team_id) && isTeamMatchBlocked(teamMatch, teamTeamMatch.home_team_id)"
                                   class="pull-left d-none d-lg-inline">
                                 <span class="fa-stack">
                                     <i class="fa fa-check-circle fa-stack-1x text-success"></i>
@@ -160,22 +160,22 @@
                                  title="{{teamMatch.club_first.title}}">
                         </td>
                         <td class="align-middle text-center">
-                            <strong>{{helperService.showScore(teamMatch.home, teamMatch.away, 'vs')}}</strong>
+                            <strong>{{showScoresOrString(teamMatch.home, teamMatch.away, 'vs')}}</strong>
                         </td>
                         <td class="align-middle text-left">
                             <img class="small-image" src="{{clubsImagesUrl}}{{teamMatch.club_second.image}}" alt="{{teamMatch.club_second.title}}"
                                  title="{{teamMatch.club_second.title}}">
                             <small class="d-none d-lg-inline d-xl-none">{{teamMatch.club_second.title}}</small>
                             <span class="d-none d-xl-inline">{{teamMatch.club_second.title}}</span>
-                            <span *ngIf="helperService.isTeamMatchGuessed(teamMatch, teamTeamMatch.away_team_id) && !helperService.isTeamMatchBlocked(teamMatch, teamTeamMatch.away_team_id)"
+                            <span *ngIf="isTeamMatchGuessed(teamMatch, teamTeamMatch.away_team_id) && !isTeamMatchBlocked(teamMatch, teamTeamMatch.away_team_id)"
                                   class="pull-right text-success d-none d-lg-inline">
                                 <i class="fa fa-lg fa-check-circle-o" aria-hidden="true"></i>
                             </span>
-                            <span *ngIf="!helperService.isTeamMatchGuessed(teamMatch, teamTeamMatch.away_team_id) && helperService.isTeamMatchBlocked(teamMatch, teamTeamMatch.away_team_id)"
+                            <span *ngIf="!isTeamMatchGuessed(teamMatch, teamTeamMatch.away_team_id) && isTeamMatchBlocked(teamMatch, teamTeamMatch.away_team_id)"
                                   class="pull-right text-danger d-none d-lg-inline">
                                 <i class="fa fa-lg fa-lock" aria-hidden="true"></i>
                             </span>
-                            <span *ngIf="helperService.isTeamMatchGuessed(teamMatch, teamTeamMatch.away_team_id) && helperService.isTeamMatchBlocked(teamMatch, teamTeamMatch.away_team_id)"
+                            <span *ngIf="isTeamMatchGuessed(teamMatch, teamTeamMatch.away_team_id) && isTeamMatchBlocked(teamMatch, teamTeamMatch.away_team_id)"
                                   class="pull-right d-none d-lg-inline">
                                 <span class="fa-stack">
                                     <i class="fa fa-check-circle fa-stack-1x text-success"></i>
@@ -188,11 +188,11 @@
                             data-toggle="tooltip"
                             data-placement="left"
                             title="{{getTitle(teamMatch, teamTeamMatch.away_team_id)}}"
-                            [ngClass]="{'bg-success': helperService.isTeamMatchGuessed(teamMatch, teamTeamMatch.away_team_id) &&
-                                                    !helperService.isTeamMatchBlocked(teamMatch, teamTeamMatch.away_team_id),
-                                        'bg-danger': helperService.isTeamMatchBlocked(teamMatch, teamTeamMatch.away_team_id),
-                                        'text-white': helperService.isTeamMatchBlocked(teamMatch, teamTeamMatch.away_team_id) ||
-                                                    helperService.isTeamMatchGuessed(teamMatch, teamTeamMatch.away_team_id)}">
+                            [ngClass]="{'bg-success': isTeamMatchGuessed(teamMatch, teamTeamMatch.away_team_id) &&
+                                                    !isTeamMatchBlocked(teamMatch, teamTeamMatch.away_team_id),
+                                        'bg-danger': isTeamMatchBlocked(teamMatch, teamTeamMatch.away_team_id),
+                                        'text-white': isTeamMatchBlocked(teamMatch, teamTeamMatch.away_team_id) ||
+                                                    isTeamMatchGuessed(teamMatch, teamTeamMatch.away_team_id)}">
                             <table class="w-100">
                                 <tr *ngIf="!isTeamMatchPredictable(teamMatch)" class="text-center bg-transparent">
                                     <td class="w-50 border-left-0 border-top-0 border-bottom-0 align-middle">

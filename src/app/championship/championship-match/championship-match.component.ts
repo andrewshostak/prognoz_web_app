@@ -8,7 +8,6 @@ import { ChampionshipMatch } from '@models/championship/championship-match.model
 import { ChampionshipMatchService } from '@services/championship/championship-match.service';
 import { CurrentStateService } from '@services/current-state.service';
 import { environment } from '@env';
-import { HelperService } from '@services/helper.service';
 import { TitleService } from '@services/title.service';
 import { User } from '@models/user.model';
 
@@ -23,7 +22,6 @@ export class ChampionshipMatchComponent implements OnInit, OnDestroy {
         private authService: AuthService,
         private championshipMatchService: ChampionshipMatchService,
         private currentStateService: CurrentStateService,
-        public helperService: HelperService,
         private location: Location,
         private titleService: TitleService
     ) {}

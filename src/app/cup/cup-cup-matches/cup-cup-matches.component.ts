@@ -12,12 +12,12 @@ import { CupStageService } from '@services/cup/cup-stage.service';
 import { CurrentStateService } from '@services/current-state.service';
 import { environment } from '@env';
 import { isNullOrUndefined } from 'util';
-import { HelperService } from '@services/helper.service';
 import { Season } from '@models/season.model';
 import { SeasonService } from '@services/season.service';
 import { Subscription } from 'rxjs/Subscription';
 import { TitleService } from '@services/title.service';
 import { User } from '@models/user.model';
+import { UtilsService } from '@services/utils.service';
 
 @Component({
     selector: 'app-cup-cup-matches',
@@ -32,7 +32,6 @@ export class CupCupMatchesComponent implements OnInit, OnDestroy {
         private cupCupMatchService: CupCupMatchService,
         private cupStageService: CupStageService,
         private currentStateService: CurrentStateService,
-        private helperService: HelperService,
         private seasonService: SeasonService,
         private titleService: TitleService,
         private router: Router
@@ -135,14 +134,14 @@ export class CupCupMatchesComponent implements OnInit, OnDestroy {
 
     private prepareViewData(response: CupCupMatch[]): void {
         const allCupStages = response.map(item => item.cup_stage);
-        this.cupStagesWithCupCupMatches = <CupStage[]>this.helperService.getDistinctItems(allCupStages);
-        const grouped = this.helperService.groupBy(response, cupCupMatch => cupCupMatch.cup_stage_id);
+        this.cupStagesWithCupCupMatches = <CupStage[]>UtilsService.getDistinctItemsOfArray(allCupStages);
+        const grouped = UtilsService.groupBy(response, cupCupMatch => cupCupMatch.cup_stage_id);
         this.cupStagesWithCupCupMatches.map(cupStage => {
             return (cupStage.cup_cup_matches = grouped.get(cupStage.id));
         });
         this.cupStagesWithCupCupMatches.forEach(cupStage => {
             cupStage.cup_matches = cupStage.cup_cup_matches.map(cupCupMatch => {
-                cupCupMatch.score = this.helperService.showScore(cupCupMatch.home, cupCupMatch.away, 'vs');
+                cupCupMatch.score = UtilsService.showScoresOrString(cupCupMatch.home, cupCupMatch.away, 'vs');
                 return cupCupMatch;
             });
         });

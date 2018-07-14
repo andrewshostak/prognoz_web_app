@@ -3,7 +3,6 @@ import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Location } from '@angular/common';
 
 import { ConfirmModalService } from '@services/confirm-modal.service';
-import { clearFormArray } from '@utils/clear-form-array';
 import { Club } from '@models/club.model';
 import { ClubService } from '@services/club.service';
 import { CupMatch } from '@models/cup/cup-match.model';
@@ -11,7 +10,7 @@ import { CupMatchService } from '@services/cup/cup-match.service';
 import { CupStage } from '@models/cup/cup-stage.model';
 import { CupStageService } from '@services/cup/cup-stage.service';
 import { NotificationsService } from 'angular2-notifications';
-import { patchSimpleChangeValuesInForm } from '@utils/patch-simple-change-values-in-form';
+import { UtilsService } from '@services/utils.service';
 
 @Component({
     selector: 'app-cup-match-form',
@@ -49,7 +48,7 @@ export class CupMatchFormComponent implements OnChanges, OnInit {
     }
 
     ngOnChanges(simpleChanges: SimpleChanges) {
-        patchSimpleChangeValuesInForm(simpleChanges, this.cupMatchForm, 'cupMatch', (formGroup, field, value) => {
+        UtilsService.patchSimpleChangeValuesInForm(simpleChanges, this.cupMatchForm, 'cupMatch', (formGroup, field, value) => {
             if (field === 'cup_stages') {
                 this.clearCupStagesFormArray();
                 if (value.length) {
@@ -111,7 +110,7 @@ export class CupMatchFormComponent implements OnChanges, OnInit {
     }
 
     private clearCupStagesFormArray(): void {
-        clearFormArray(this.cupStagesFormArray);
+        UtilsService.clearFormArray(this.cupStagesFormArray);
     }
 
     private createCupMatch(cupMatch: CupMatch): void {

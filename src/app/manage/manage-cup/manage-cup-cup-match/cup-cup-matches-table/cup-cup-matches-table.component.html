@@ -38,16 +38,16 @@
                                      src="{{userImagesUrl}}{{cupCupMatch.away_user.image || userImageDefault}}">
                             </td>
                             <td class="text-nowrap align-middle font-weight-bold">
-                                {{isScore(cupCupMatch) ? cupCupMatch.home + ':' + cupCupMatch.away : ''}}
+                                {{isScore(cupCupMatch.home, cupCupMatch.away) ? cupCupMatch.home + ':' + cupCupMatch.away : ''}}
                             </td>
                             <td class="text-nowrap align-middle">
                                 {{cupCupMatch.ended ? cupCupMatch.home_rating_points + ' / ' + cupCupMatch.away_rating_points : ''}}
                             </td>
                             <td class="text-nowrap align-middle">
-                                {{isScore(cupCupMatch) ? cupCupMatch.home_points + ' / ' + cupCupMatch.away_points : ''}}
+                                {{isScore(cupCupMatch.home, cupCupMatch.away) ? cupCupMatch.home_points + ' / ' + cupCupMatch.away_points : ''}}
                             </td>
                             <td class="text-nowrap align-middle">
-                                {{isScore(cupCupMatch) ? cupCupMatch.home_dc_sum + ' / ' + cupCupMatch.away_dc_sum : ''}}
+                                {{isScore(cupCupMatch.home, cupCupMatch.away) ? cupCupMatch.home_dc_sum + ' / ' + cupCupMatch.away_dc_sum : ''}}
                             </td>
                             <td class="align-middle">
                                 <i *ngIf="cupCupMatch.active" class="text-success fa fa-check-circle fa-lg" aria-hidden="true"></i>

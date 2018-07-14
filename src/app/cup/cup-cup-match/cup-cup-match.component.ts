@@ -9,10 +9,10 @@ import { CupPrediction } from '@models/cup/cup-prediction.model';
 import { CupPredictionService } from '@services/cup/cup-prediction.service';
 import { environment } from '@env';
 import { forkJoin } from 'rxjs/observable/forkJoin';
-import { HelperService } from '@services/helper.service';
 import { Subscription } from 'rxjs/Subscription';
 import { TimePipe } from '../../shared/pipes/time.pipe';
 import { TitleService } from '@services/title.service';
+import { UtilsService } from '@services/utils.service';
 
 declare const $: any;
 
@@ -27,7 +27,6 @@ export class CupCupMatchComponent implements OnDestroy, OnInit {
         private cupCupMatchService: CupCupMatchService,
         private cupMatchService: CupMatchService,
         private cupPredictionService: CupPredictionService,
-        private helperService: HelperService,
         private timePipe: TimePipe,
         private titleService: TitleService
     ) {}
@@ -45,6 +44,7 @@ export class CupCupMatchComponent implements OnDestroy, OnInit {
     numberOfHomePredictions: number;
     numberOfAwayPredictions: number;
     numberOfMatchesInStage: number;
+    showScoresOrString = UtilsService.showScoresOrString;
     userImageDefault: string;
     userImagesUrl: string;
 
@@ -53,7 +53,7 @@ export class CupCupMatchComponent implements OnDestroy, OnInit {
             return '?';
         }
         if (cupPrediction) {
-            return this.helperService.showScore(cupPrediction.home, cupPrediction.away, '-');
+            return this.showScoresOrString(cupPrediction.home, cupPrediction.away, '-');
         }
         return '-';
     }
@@ -73,7 +73,7 @@ export class CupCupMatchComponent implements OnDestroy, OnInit {
         if (cupMatch.is_predictable || cupMatch.active || prediction === '-') {
             return false;
         }
-        return this.showScore(cupMatch) === prediction;
+        return this.showScoresOrString(cupMatch.home, cupMatch.away, '') === prediction;
     }
 
     ngOnDestroy() {
@@ -92,7 +92,7 @@ export class CupCupMatchComponent implements OnDestroy, OnInit {
             this.cupCupMatchService.getCupCupMatch(params['cupCupMatchId']).subscribe(
                 response => {
                     this.cupCupMatch = response;
-                    this.cupCupMatch.score = this.helperService.showScore(this.cupCupMatch.home, this.cupCupMatch.away, 'vs');
+                    this.cupCupMatch.score = this.showScoresOrString(this.cupCupMatch.home, this.cupCupMatch.away, 'vs');
                     this.titleService.setTitle(`${response.home_user.name} vs ${response.away_user.name} - Кубок`);
                     this.errorCupCupMatch = null;
                     this.getCupMatchesData(this.cupCupMatch.cup_stage_id);
@@ -103,10 +103,6 @@ export class CupCupMatchComponent implements OnDestroy, OnInit {
                 }
             );
         });
-    }
-
-    showScore(cupMatch: CupMatch): string {
-        return this.helperService.showScore(cupMatch.home, cupMatch.away, 'vs');
     }
 
     private getCupMatchesData(cupStageId: number): void {

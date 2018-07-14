@@ -4,13 +4,13 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 import { Competition } from '@models/competition.model';
 import { CompetitionService } from '@services/competition.service';
+import { FormValidatorService } from '@services/form-validator.service';
 import { NotificationsService } from 'angular2-notifications';
-import { patchSimpleChangeValuesInForm } from '@utils/patch-simple-change-values-in-form';
 import { Season } from '@models/season.model';
 import { SeasonService } from '@services/season.service';
 import { Tournament } from '@models/tournament.model';
 import { TournamentService } from '@services/tournament.service';
-import { FormValidatorService } from '@services/form-validator.service';
+import { UtilsService } from '@services/utils.service';
 
 @Component({
     selector: 'app-competition-form',
@@ -48,7 +48,7 @@ export class CompetitionFormComponent implements OnChanges, OnInit {
     }
 
     ngOnChanges(simpleChanges: SimpleChanges) {
-        patchSimpleChangeValuesInForm(simpleChanges, this.competitionForm, 'competition');
+        UtilsService.patchSimpleChangeValuesInForm(simpleChanges, this.competitionForm, 'competition');
     }
 
     ngOnInit() {

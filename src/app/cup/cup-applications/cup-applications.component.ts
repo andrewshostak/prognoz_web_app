@@ -9,11 +9,11 @@ import { CupApplication } from '@models/cup/cup-application.model';
 import { CurrentStateService } from '@services/current-state.service';
 import { environment } from '@env';
 import { forkJoin } from 'rxjs/observable/forkJoin';
-import { HelperService } from '@services/helper.service';
 import { NotificationsService } from 'angular2-notifications';
 import { Subscription } from 'rxjs/Subscription';
 import { TitleService } from '@services/title.service';
 import { User } from '@models/user.model';
+import { UtilsService } from '@services/utils.service';
 
 declare const $: any;
 
@@ -30,8 +30,7 @@ export class CupApplicationsComponent implements OnInit, OnDestroy {
         private cupApplicationService: CupApplicationService,
         private currentStateService: CurrentStateService,
         private elementRef: ElementRef,
-        private helperService: HelperService,
-        private notificationService: NotificationsService,
+        private notificationsService: NotificationsService,
         private titleService: TitleService
     ) {}
 
@@ -53,7 +52,7 @@ export class CupApplicationsComponent implements OnInit, OnDestroy {
 
     attachApplicationsToCompetitions(): void {
         if (this.competitions.length && !this.noCupApplications()) {
-            const grouped = this.helperService.groupBy(this.cupApplications, cupApplication => cupApplication.competition_id);
+            const grouped = UtilsService.groupBy(this.cupApplications, cupApplication => cupApplication.competition_id);
             this.competitions.map(competition => {
                 return (competition.cup_applications = grouped.get(competition.id));
             });
@@ -71,12 +70,12 @@ export class CupApplicationsComponent implements OnInit, OnDestroy {
                 () => {
                     this.getApplicationsAndCompetitions();
                     this.confirmModalService.hide();
-                    this.notificationService.success('Успішно', 'Заявку підтверджено');
+                    this.notificationsService.success('Успішно', 'Заявку підтверджено');
                 },
                 error => {
                     this.getApplicationsAndCompetitions();
                     this.confirmModalService.hide();
-                    this.notificationService.error('Помилка', error);
+                    this.notificationsService.error('Помилка', error);
                 }
             );
         }, `Підтвердити заявку ${cupApplication.applicant.name}?`);
@@ -89,12 +88,12 @@ export class CupApplicationsComponent implements OnInit, OnDestroy {
                     response => {
                         this.getApplicationsAndCompetitions();
                         this.confirmModalService.hide();
-                        this.notificationService.success('Успішно', 'Заявку видалено');
+                        this.notificationsService.success('Успішно', 'Заявку видалено');
                     },
                     error => {
                         this.getApplicationsAndCompetitions();
                         this.confirmModalService.hide();
-                        this.notificationService.error('Помилка', error);
+                        this.notificationsService.error('Помилка', error);
                     }
                 );
             }, `Видалити заявку ${cupApplication.applicant.name}?`);
@@ -148,7 +147,7 @@ export class CupApplicationsComponent implements OnInit, OnDestroy {
     }
 
     hasModeratorRights(): boolean {
-        return this.helperService.hasRole('admin') || this.helperService.hasRole('cup_editor');
+        return this.authService.hasRole('admin') || this.authService.hasRole('cup_editor');
     }
 
     hasConfirmedRequisitionAsReceiver(receiver: User): boolean {
@@ -242,12 +241,12 @@ export class CupApplicationsComponent implements OnInit, OnDestroy {
                 () => {
                     this.getApplicationsAndCompetitions();
                     this.confirmModalService.hide();
-                    this.notificationService.success('Успішно', 'Заявку відхилено');
+                    this.notificationsService.success('Успішно', 'Заявку відхилено');
                 },
                 error => {
                     this.getApplicationsAndCompetitions();
                     this.confirmModalService.hide();
-                    this.notificationService.error('Помилка', error);
+                    this.notificationsService.error('Помилка', error);
                 }
             );
         }, `Відхилити заявку ${cupApplication.applicant.name}?`);

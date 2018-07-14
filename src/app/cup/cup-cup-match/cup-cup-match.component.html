@@ -66,7 +66,7 @@
                                  title="{{cupMatch.club_first.title}}">
                         </td>
                         <th class="text-center text-nowrap">
-                            {{showScore(cupMatch)}}
+                            {{showScoresOrString(cupMatch.home, cupMatch.away, 'vs')}}
                         </th>
                         <td class="text-left text-nowrap">
                             <img class="small-image" src="{{clubsImagesUrl}}{{cupMatch.club_second.image}}" alt="{{cupMatch.club_second.title}}"

@@ -6,8 +6,8 @@ import { Subscription } from 'rxjs/Subscription';
 import { AuthService } from '@services/auth.service';
 import { CurrentStateService } from '@services/current-state.service';
 import { environment } from '@env';
-import { HelperService } from '@services/helper.service';
 import { NotificationsService } from 'angular2-notifications';
+import { TeamCompetitionService } from '@services/team/team-competition.service';
 import { TeamMatch } from '@models/team/team-match.model';
 import { TeamMatchService } from '@services/team/team-match.service';
 import { TeamParticipant } from '@models/team/team-participant.model';
@@ -16,6 +16,7 @@ import { TeamPredictionService } from '@services/team/team-prediction.service';
 import { TeamTeamMatch } from '@models/team/team-team-match.model';
 import { TeamTeamMatchService } from '@services/team/team-team-match.service';
 import { User } from '@models/user.model';
+import { UtilsService } from '@services/utils.service';
 
 @Component({
     selector: 'app-team-captain',
@@ -31,8 +32,11 @@ export class TeamCaptainComponent implements OnInit, OnDestroy {
     errorTeamParticipants: string;
     errorTeamTeamMatches: string;
     goalkeeperId: number;
+    isTeamMatchBlocked = TeamCompetitionService.isTeamMatchBlocked;
+    isTeamMatchGuessed = TeamCompetitionService.isTeamMatchGuessed;
     isCaptain = false;
     round: number;
+    showScoresOrString = UtilsService.showScoresOrString;
     spinnerButton: any = {};
     spinnerButtonGoalkeeper = false;
     teamEnvironment = environment.tournaments.team;
@@ -48,8 +52,7 @@ export class TeamCaptainComponent implements OnInit, OnDestroy {
         private activatedRoute: ActivatedRoute,
         private authService: AuthService,
         private currentStateService: CurrentStateService,
-        public helperService: HelperService,
-        private notificationService: NotificationsService,
+        private notificationsService: NotificationsService,
         private teamMatchService: TeamMatchService,
         private teamParticipantService: TeamParticipantService,
         private teamPredictionService: TeamPredictionService,
@@ -81,10 +84,10 @@ export class TeamCaptainComponent implements OnInit, OnDestroy {
             if (teamPrediction) {
                 return {
                     name: teamPrediction.user ? teamPrediction.user.name : '-',
-                    prediction: this.helperService.isScore(teamPrediction.home, teamPrediction.away)
+                    prediction: UtilsService.isScore(teamPrediction.home, teamPrediction.away)
                         ? `${teamPrediction.home} : ${teamPrediction.away}`
                         : '-',
-                    predicted_at: this.helperService.isScore(teamPrediction.home, teamPrediction.away) ? teamPrediction.predicted_at : '-'
+                    predicted_at: UtilsService.isScore(teamPrediction.home, teamPrediction.away) ? teamPrediction.predicted_at : '-'
                 };
             }
         }
@@ -138,11 +141,11 @@ export class TeamCaptainComponent implements OnInit, OnDestroy {
                         this.teamTeamMatch = response;
                         this.goalkeeperId = teamGoalkeeperForm.value.goalkeeper_id;
                     }
-                    this.notificationService.success('Успішно', 'Воротаря змінено');
+                    this.notificationsService.success('Успішно', 'Воротаря змінено');
                     this.spinnerButtonGoalkeeper = false;
                 },
                 errors => {
-                    errors.forEach(error => this.notificationService.error('Помилка', error));
+                    errors.forEach(error => this.notificationsService.error('Помилка', error));
                     this.spinnerButtonGoalkeeper = false;
                 }
             );
@@ -160,12 +163,12 @@ export class TeamCaptainComponent implements OnInit, OnDestroy {
             };
             this.teamPredictionService.updateTeamPrediction(teamPrediction).subscribe(
                 response => {
-                    this.notificationService.success('Успішно', 'Прогнозиста вибрано');
+                    this.notificationsService.success('Успішно', 'Прогнозиста вибрано');
                     this.getMyTeamMatchesData(this.round);
                     this.spinnerButton['team_match_' + teamMatch.id] = false;
                 },
                 errors => {
-                    errors.forEach(error => this.notificationService.error('Помилка', error));
+                    errors.forEach(error => this.notificationsService.error('Помилка', error));
                     this.spinnerButton['team_match_' + teamMatch.id] = false;
                 }
             );

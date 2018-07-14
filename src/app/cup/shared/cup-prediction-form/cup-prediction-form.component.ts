@@ -5,9 +5,9 @@ import { CupMatch } from '@models/cup/cup-match.model';
 import { CupPrediction } from '@models/cup/cup-prediction.model';
 import { CupPredictionService } from '@services/cup/cup-prediction.service';
 import { environment } from '@env';
-import { HelperService } from '@services/helper.service';
 import { NotificationsService } from 'angular2-notifications';
 import { User } from '@models/user.model';
+import { UtilsService } from '@services/utils.service';
 
 @Component({
     selector: 'app-cup-prediction-form',
@@ -15,24 +15,17 @@ import { User } from '@models/user.model';
     styleUrls: ['./cup-prediction-form.component.scss']
 })
 export class CupPredictionFormComponent implements OnInit {
-    constructor(
-        private cupPredictionService: CupPredictionService,
-        private helperService: HelperService,
-        private notificationsService: NotificationsService
-    ) {}
+    constructor(private cupPredictionService: CupPredictionService, private notificationsService: NotificationsService) {}
 
     clubsImagesUrl: string = environment.apiImageClubs;
     cupPredictionForm: FormGroup;
     spinnerButton: boolean;
     cupPrediction: CupPrediction;
+    isScore = UtilsService.isScore;
 
     @Input() authenticatedUser: User;
     @Input() cupMatch: CupMatch;
     @Output() cupPredictionUpdated = new EventEmitter<{ cupMatchId: number; cupPrediction?: CupPrediction; errors?: string[] }>();
-
-    isScore(home: number, away: number): boolean {
-        return this.helperService.isScore(home, away);
-    }
 
     ngOnInit() {
         this.cupPrediction = this.cupMatch.cup_predictions[0] || {

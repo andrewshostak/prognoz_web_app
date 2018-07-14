@@ -7,14 +7,15 @@ import { ChampionshipMatch } from '@models/championship/championship-match.model
 import { ChampionshipMatchService } from '@services/championship/championship-match.service';
 import { ChampionshipPrediction } from '@models/championship/championship-prediction.model';
 import { ChampionshipPredictionService } from '@services/championship/championship-prediction.service';
+import { ChampionshipService } from '@services/championship/championship.service';
 import { ChampionshipRating } from '@models/championship/championship-rating.model';
 import { ChampionshipRatingService } from '@services/championship/championship-rating.service';
 import { CurrentStateService } from '@services/current-state.service';
 import { environment } from '@env';
-import { HelperService } from '@services/helper.service';
 import { NotificationsService } from 'angular2-notifications';
 import { TitleService } from '@services/title.service';
 import { User } from '@models/user.model';
+import { UtilsService } from '@services/utils.service';
 
 @Component({
     selector: 'app-championship-home',
@@ -26,10 +27,10 @@ export class ChampionshipHomeComponent implements OnInit, OnDestroy {
         private authService: AuthService,
         private championshipMatchService: ChampionshipMatchService,
         private championshipPredictionService: ChampionshipPredictionService,
+        private championshipService: ChampionshipService,
         private championshipRatingService: ChampionshipRatingService,
         private currentStateService: CurrentStateService,
-        public helperService: HelperService,
-        private notificationService: NotificationsService,
+        private notificationsService: NotificationsService,
         private titleService: TitleService
     ) {}
 
@@ -42,6 +43,7 @@ export class ChampionshipHomeComponent implements OnInit, OnDestroy {
     errorChampionshipMatches: string;
     errorChampionshipPredictions: string;
     errorChampionshipRating: string;
+    getHomeCityInBrackets = UtilsService.getHomeCityInBrackets;
     spinnerButton = false;
     userImageDefault: string = environment.imageUserDefault;
     userImagesUrl: string = environment.apiImageUsers;
@@ -122,17 +124,19 @@ export class ChampionshipHomeComponent implements OnInit, OnDestroy {
 
     onSubmit() {
         this.spinnerButton = true;
-        const championshipPredictionsToUpdate = this.helperService.createChampionshipPredictionsArray(this.championshipPredictionsForm);
+        const championshipPredictionsToUpdate = this.championshipService.createChampionshipPredictionsArray(
+            this.championshipPredictionsForm
+        );
         this.championshipPredictionService.updateChampionshipPredictions(championshipPredictionsToUpdate).subscribe(
             response => {
                 this.spinnerButton = false;
-                this.notificationService.success('Успішно', 'Прогнози прийнято');
+                this.notificationsService.success('Успішно', 'Прогнози прийнято');
                 this.getChampionshipMatchesData();
                 this.getChampionshipPredictionsData();
             },
             error => {
                 this.spinnerButton = false;
-                this.notificationService.error('Помилка', error);
+                this.notificationsService.error('Помилка', error);
             }
         );
     }

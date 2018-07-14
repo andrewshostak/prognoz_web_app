@@ -1,7 +1,8 @@
 import { Component, Input } from '@angular/core';
 
 import { ChampionshipPrediction } from '@models/championship/championship-prediction.model';
-import { HelperService } from '@services/helper.service';
+import { ChampionshipService } from '@services/championship/championship.service';
+import { UtilsService } from '@services/utils.service';
 
 @Component({
     selector: 'app-championship-user-predictions-table',
@@ -12,5 +13,8 @@ export class ChampionshipUserPredictionsTableComponent {
     @Input() predictions: ChampionshipPrediction[];
     @Input() error: string;
 
-    constructor(public helperService: HelperService) {}
+    getUserPointsOnMatch = ChampionshipService.getUserPointsOnMatch;
+    isChampionshipMatchGuessed = ChampionshipService.isChampionshipMatchGuessed;
+    isScore = UtilsService.isScore;
+    showScoresOrString = UtilsService.showScoresOrString;
 }

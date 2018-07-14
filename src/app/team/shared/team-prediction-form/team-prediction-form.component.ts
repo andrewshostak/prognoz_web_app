@@ -2,10 +2,10 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import { environment } from '@env';
-import { HelperService } from '@services/helper.service';
 import { NotificationsService } from 'angular2-notifications';
 import { TeamPrediction } from '@models/team/team-prediction.model';
 import { TeamPredictionService } from '@services/team/team-prediction.service';
+import { UtilsService } from '@services/utils.service';
 
 @Component({
     selector: 'app-team-prediction-form',
@@ -17,13 +17,14 @@ export class TeamPredictionFormComponent implements OnInit {
     @Output() teamPredictionUpdated = new EventEmitter<any>();
 
     clubsImagesUrl: string = environment.apiImageClubs;
-    teamPredictionUpdateForm: FormGroup;
+    isScore = UtilsService.isScore;
+    showScoresOrString = UtilsService.showScoresOrString;
     spinnerButton: boolean;
+    teamPredictionUpdateForm: FormGroup;
 
     constructor(
-        public helperService: HelperService,
         private formBuilder: FormBuilder,
-        private notificationService: NotificationsService,
+        private notificationsService: NotificationsService,
         private teamPredictionService: TeamPredictionService
     ) {}
 
@@ -50,11 +51,11 @@ export class TeamPredictionFormComponent implements OnInit {
             this.teamPredictionService.updateTeamPrediction(teamPredictionToUpdate).subscribe(
                 response => {
                     this.teamPredictionUpdated.emit();
-                    this.notificationService.success('Успішно', 'Прогноз прийнято');
+                    this.notificationsService.success('Успішно', 'Прогноз прийнято');
                     this.spinnerButton = false;
                 },
                 errors => {
-                    errors.forEach(error => this.notificationService.error('Помилка', error));
+                    errors.forEach(error => this.notificationsService.error('Помилка', error));
                     this.spinnerButton = false;
                 }
             );

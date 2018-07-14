@@ -17,7 +17,7 @@ export class ClubTableComponent implements OnInit {
         private activatedRoute: ActivatedRoute,
         private clubService: ClubService,
         private confirmModalService: ConfirmModalService,
-        private notificationService: NotificationsService
+        private notificationsService: NotificationsService
     ) {}
 
     clubs: Club[];
@@ -36,12 +36,12 @@ export class ClubTableComponent implements OnInit {
                     this.confirmModalService.hide();
                     this.total--;
                     this.clubs = this.clubs.filter(n => n !== club);
-                    this.notificationService.success('Успішно', club.title + ' видалено');
+                    this.notificationsService.success('Успішно', club.title + ' видалено');
                 },
                 errors => {
                     this.confirmModalService.hide();
                     for (const error of errors) {
-                        this.notificationService.error('Помилка', error);
+                        this.notificationsService.error('Помилка', error);
                     }
                 }
             );

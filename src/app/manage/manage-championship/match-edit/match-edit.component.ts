@@ -15,7 +15,7 @@ export class MatchEditComponent implements OnInit, OnDestroy {
     constructor(
         private championshipMatchService: ChampionshipMatchService,
         private championshipRatingService: ChampionshipRatingService,
-        private notificationService: NotificationsService
+        private notificationsService: NotificationsService
     ) {}
 
     championshipMatches: ChampionshipMatch[];
@@ -48,7 +48,7 @@ export class MatchEditComponent implements OnInit, OnDestroy {
 
     onSubmit(match: ChampionshipMatch) {
         if (!this.validateResult(match.home) || !this.validateResult(match.away)) {
-            this.notificationService.error('Помилка', 'Результат в матчі ' + match.id + ' введено неправильно');
+            this.notificationsService.error('Помилка', 'Результат в матчі ' + match.id + ' введено неправильно');
             return;
         }
         this.spinnerButton['match_' + match.id] = true;
@@ -61,12 +61,12 @@ export class MatchEditComponent implements OnInit, OnDestroy {
                 this.spinnerButton['match_' + match.id] = false;
                 this.updatedMatches['match_' + match.id] = response;
                 this.isUpdatedMatches = true;
-                this.notificationService.success('Успішно', 'Результат в матчі ' + response.id + ' добавлено!');
+                this.notificationsService.success('Успішно', 'Результат в матчі ' + response.id + ' добавлено!');
             },
             errors => {
                 this.spinnerButton['match_' + match.id] = false;
                 for (const error of errors) {
-                    this.notificationService.error('Помилка', error);
+                    this.notificationsService.error('Помилка', error);
                 }
             }
         );
@@ -77,11 +77,11 @@ export class MatchEditComponent implements OnInit, OnDestroy {
         this.championshipRatingService.updateChampionshipRatingItems().subscribe(
             response => {
                 this.isUpdatedMatches = false;
-                this.notificationService.success('Успішно', 'Рейтинг оновлено');
+                this.notificationsService.success('Успішно', 'Рейтинг оновлено');
                 this.spinnerUpdateRatingButton = false;
             },
             error => {
-                this.notificationService.error('Помилка', 'Оновити рейтинг не вдалось');
+                this.notificationsService.error('Помилка', 'Оновити рейтинг не вдалось');
                 this.spinnerUpdateRatingButton = false;
             }
         );

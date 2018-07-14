@@ -15,7 +15,7 @@ import { NewsService } from '../../../news/shared/news.service';
 export class NewsCreateComponent implements OnInit {
     constructor(
         private imageService: ImageService,
-        private notificationService: NotificationsService,
+        private notificationsService: NotificationsService,
         private newsService: NewsService,
         private router: Router
     ) {
@@ -50,12 +50,12 @@ export class NewsCreateComponent implements OnInit {
         this.newsService.createNewsItem(this.newsCreateForm.value).subscribe(
             response => {
                 this.router.navigate(['/news/' + response.id]);
-                this.notificationService.success('Успішно', 'Новину створено!');
+                this.notificationsService.success('Успішно', 'Новину створено!');
                 this.spinnerButton = false;
             },
             errors => {
                 for (const error of errors) {
-                    this.notificationService.error('Помилка', error);
+                    this.notificationsService.error('Помилка', error);
                 }
                 this.spinnerButton = false;
             }

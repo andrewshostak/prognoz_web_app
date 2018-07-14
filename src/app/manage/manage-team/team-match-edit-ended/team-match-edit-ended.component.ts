@@ -11,7 +11,7 @@ import { TeamMatch } from '@models/team/team-match.model';
     styleUrls: ['./team-match-edit-ended.component.scss']
 })
 export class TeamMatchEditEndedComponent implements OnInit {
-    constructor(private notificationService: NotificationsService, private teamMatchService: TeamMatchService) {}
+    constructor(private notificationsService: NotificationsService, private teamMatchService: TeamMatchService) {}
 
     clubsImagesUrl: string = environment.apiImageClubs;
     errorTeamMatches: string;
@@ -25,7 +25,7 @@ export class TeamMatchEditEndedComponent implements OnInit {
 
     onSubmit(teamMatch: TeamMatch) {
         if (!this.validateResult(teamMatch.home) || !this.validateResult(teamMatch.away)) {
-            this.notificationService.error('Помилка', 'Результат в матчі ' + teamMatch.id + ' введено неправильно');
+            this.notificationsService.error('Помилка', 'Результат в матчі ' + teamMatch.id + ' введено неправильно');
             return;
         }
         this.spinnerButton['match_' + teamMatch.id] = true;
@@ -39,11 +39,11 @@ export class TeamMatchEditEndedComponent implements OnInit {
             response => {
                 this.spinnerButton['match_' + teamMatch.id] = false;
                 this.updatedMatches['match_' + teamMatch.id] = response;
-                this.notificationService.success('Успішно', 'Результат в матчі ' + response.id + ' змінено!');
+                this.notificationsService.success('Успішно', 'Результат в матчі ' + response.id + ' змінено!');
             },
             errors => {
                 this.spinnerButton['match_' + teamMatch.id] = false;
-                errors.forEach(error => this.notificationService.error('Помилка', error));
+                errors.forEach(error => this.notificationsService.error('Помилка', error));
             }
         );
     }

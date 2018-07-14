@@ -29,7 +29,7 @@ export class NewsDetailComponent implements OnInit, OnDestroy {
         private domSanitizer: DomSanitizer,
         private formBuilder: FormBuilder,
         private location: Location,
-        private notificationService: NotificationsService,
+        private notificationsService: NotificationsService,
         private newsService: NewsService,
         private titleService: TitleService
     ) {}
@@ -97,13 +97,13 @@ export class NewsDetailComponent implements OnInit, OnDestroy {
                         this.errorNews = error;
                     }
                 );
-                this.notificationService.success('Успішно', 'Новий коментар додано');
+                this.notificationsService.success('Успішно', 'Новий коментар додано');
                 this.addCommentForm.reset({ news_id: this.news.id, user_id: this.authenticatedUser.id });
                 this.spinnerButton = false;
             },
             errors => {
                 for (const error of errors) {
-                    this.notificationService.error('Помилка', error);
+                    this.notificationsService.error('Помилка', error);
                 }
                 this.spinnerButton = false;
             }
