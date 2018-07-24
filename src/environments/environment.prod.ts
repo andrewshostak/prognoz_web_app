@@ -1,11 +1,11 @@
 export const environment = {
     production: true,
-    apiUrl: 'http://46.101.159.170/api/',
-    apiImageNews: 'http://46.101.159.170/img/news/',
-    apiImageClubs: 'http://46.101.159.170/img/clubs/',
-    apiImageUsers: 'http://46.101.159.170/img/users/',
-    apiImageAwards: 'http://46.101.159.170/img/awards/',
-    apiImageTeams: 'http://46.101.159.170/img/teams/',
+    apiUrl: 'https://api.prognoz.org.ua/api/',
+    apiImageNews: 'https://api.prognoz.org.ua/img/news/',
+    apiImageClubs: 'https://api.prognoz.org.ua/img/clubs/',
+    apiImageUsers: 'https://api.prognoz.org.ua/img/users/',
+    apiImageAwards: 'https://api.prognoz.org.ua/img/awards/',
+    apiImageTeams: 'https://api.prognoz.org.ua/img/teams/',
     imageUserDefault: 'default.png',
     imageTeamDefault: 'default.jpeg',
     imageSettings: {
