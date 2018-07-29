@@ -57,12 +57,6 @@ jobs:
           command:
             npm run build --prod --aot
 
-      # Post build (gzipping)
-      - run:
-          name: Postbuild
-          command:
-            npm run postbuild
-
       # Cache the dist folder for the deploy job
       - save_cache:
           key: v1-dist-{{ .Environment.CIRCLE_BRANCH }}-{{ .Environment.CIRCLE_SHA1 }}
