@@ -12,7 +12,7 @@
         "tslint-check": "tslint-config-prettier-check ./tslint.json",
         "format:fix": "pretty-quick --staged",
         "precommit": "run-s format:fix lint",
-        "postbuild": "cd ./dist && gzip -k *.js && gzip -k *.css"
+        "postbuild": "cd ./dist && gzip -k *.js && if [ -f *.css ]; then gzip -k *.css; fi"
     },
     "private": true,
     "dependencies": {
