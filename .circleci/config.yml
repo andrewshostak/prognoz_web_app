@@ -72,7 +72,7 @@ jobs:
       - run:
           name: Deploy over ssh
           command: |
-            scp -r dist root@46.101.159.170:/var/www/tmp-ui
+            scp -r ~/prognoz_v2_angular/dist root@46.101.159.170:/var/www/tmp-ui
 
 workflows:
   version: 2
