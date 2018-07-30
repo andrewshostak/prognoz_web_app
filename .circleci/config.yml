@@ -75,10 +75,6 @@ jobs:
 workflows:
   version: 2
 
-  branches:
-    only:
-      - master
-
   build-and-deploy:
     jobs:
       - build
