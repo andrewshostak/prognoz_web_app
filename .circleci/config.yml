@@ -60,6 +60,8 @@ jobs:
             - dist
 
   deploy:
+    working_directory: ~/prognoz_v2_angular
+
     machine:
       enabled: true
 
