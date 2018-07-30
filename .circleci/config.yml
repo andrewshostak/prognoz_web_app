@@ -82,4 +82,4 @@ workflows:
   build-and-deploy:
     jobs:
       - build
-      - deploy:
+      - deploy
