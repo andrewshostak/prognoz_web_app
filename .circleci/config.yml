@@ -60,14 +60,10 @@ jobs:
             - dist
 
   deploy:
-    docker:
-      # specify the version you desire here
-      - image: circleci/node:10-browsers
+    working_directory: ~/dist
 
-#    working_directory: ~/prognoz_v2_angular
-
-#    machine:
-#      enabled: true
+    machine:
+      enabled: true
 
     steps:
       - add_ssh_keys:
