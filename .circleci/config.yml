@@ -16,10 +16,6 @@ jobs:
 
     working_directory: ~/prognoz_v2_angular
 
-    branches:
-      only:
-        - master
-
     steps:
       - checkout
 
@@ -78,6 +74,10 @@ jobs:
 
 workflows:
   version: 2
+
+  branches:
+    only:
+      - master
 
   build-and-deploy:
     jobs:
