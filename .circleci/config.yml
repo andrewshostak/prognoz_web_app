@@ -76,12 +76,12 @@ jobs:
           command: |
             scp -r ~/prognoz_v2_angular/* root@46.101.159.170:/var/www/tmp-ui
 
-workflows:
-  version: 2
-
-  build-and-deploy:
-    jobs:
-      - build
-      - deploy:
-          requires:
-            - build
+#workflows:
+#  version: 2
+#
+#  build-and-deploy:
+#    jobs:
+#      - build
+#      - deploy:
+#          requires:
+#            - build
