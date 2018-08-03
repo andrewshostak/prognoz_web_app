@@ -9,10 +9,6 @@ jobs:
 
     docker:
       - image: circleci/node:10-browsers
-        environment:
-          SSH_USER: root
-          SSH_ADDRESS: 46.101.159.170
-          SSH_PATH: /var/www/tmp-ui
 
     steps:
       - checkout
@@ -62,6 +58,10 @@ jobs:
 
     machine:
       enabled: true
+      environment:
+        SSH_USER: root
+        SSH_ADDRESS: 46.101.159.170
+        SSH_PATH: /var/www/tmp-ui
 
     steps:
       - add_ssh_keys:
