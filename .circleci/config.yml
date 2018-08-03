@@ -9,6 +9,10 @@ jobs:
 
     docker:
       - image: circleci/node:10-browsers
+        environment:
+          SSH_USER: root
+          SSH_ADDRESS: 46.101.159.170
+          SSH_PATH: /var/www/tmp-ui
 
     steps:
       - checkout
@@ -58,10 +62,6 @@ jobs:
 
     machine:
       enabled: true
-      environment:
-        SSH_USER: root
-        SSH_ADDRESS: 46.101.159.170
-        SSH_PATH: /var/www/tmp-ui
 
     steps:
       - add_ssh_keys:
@@ -74,7 +74,7 @@ jobs:
       - run:
           name: Deploy over ssh
           command: |
-            scp -r ~/prognoz_v2_angular/dist $SSH_USER@SSH_ADDRESS:$SSH_PATH
+            scp -r ~/prognoz_v2_angular/dist $SSH_USER@$SSH_ADDRESS:$SSH_PATH
 
 workflows:
   version: 2
