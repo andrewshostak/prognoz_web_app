@@ -44,8 +44,7 @@ jobs:
       # Build project
       - run:
           name: Building
-          command:
-            npm run build --prod --aot
+          command: ng build --prod --aot
 
       # Cache the dist folder for the deploy job
       - save_cache:
@@ -71,6 +70,10 @@ jobs:
           name: Deploy over ssh
           command: |
             scp -r ~/prognoz_v2_angular/dist root@46.101.159.170:/var/www/tmp-ui
+      - run:
+          name: Change rights
+          command: |
+            ssh root@46.101.159.170 'sudo chown -R root:www-data /var/www/tmp-ui/'
 
 workflows:
   version: 2
