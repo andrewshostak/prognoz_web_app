@@ -44,7 +44,7 @@ jobs:
       # Build project
       - run:
           name: Building
-          command: ng build --prod --aot
+          command: npm run build -- --prod --aot
 
       # Cache the dist folder for the deploy job
       - save_cache:
