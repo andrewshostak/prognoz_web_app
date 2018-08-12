@@ -1,0 +1,55 @@
+<div class="mt-2">
+    <app-error *ngIf="errorCompetitions" [message]="errorCompetitions"></app-error>
+    <div *ngIf="competitions">
+        <button *ngFor="let competition of competitions"
+                (click)="navigate(competition)"
+                class="btn mr-2 mb-2"
+                [ngClass]="isSelected(competition) ? 'btn-primary' : 'btn-outline-primary'"
+                type="button">
+            {{competition.title}}
+        </button>
+        <button class="btn btn-secondary mb-2"
+                (click)="getFilterData()"
+                type="button"
+                data-toggle="collapse"
+                data-target="#filterCard"
+                aria-expanded="false"
+                aria-controls="filterCard">
+            Попередні змагання
+        </button>
+        <div class="collapse" id="filterCard">
+            <div class="card black-shadow mb-2">
+                <div class="card-body">
+                    <form novalidate [formGroup]="filterTeamCompetitionsForm">
+                        <div class="form-row">
+                            <div *ngIf="seasons"
+                                 class="form-group col-12 col-md-6">
+                                <label for="season_id" class="font-weight-bold">Сезон:</label>
+                                <select id="season_id"
+                                        class="form-control"
+                                        formControlName="season_id">
+                                    <option *ngFor="let season of seasons" [value]="season.id">{{season.title}}</option>
+                                </select>
+                            </div>
+                            <div *ngIf="archiveCompetitions"
+                                 class="form-group col-12 col-md-6">
+                                <label for="competition_id" class="font-weight-bold">Змагання:</label>
+                                <select id="competition_id"
+                                        class="form-control"
+                                        formControlName="competition_id">
+                                    <option *ngFor="let competition of archiveCompetitions" [value]="competition.id">{{competition.title}}</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <button class="btn btn-outline-danger" type="button" (click)="resetTeamCompetitionsFormFilters()">
+                                Скинути параметри пошуку
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<router-outlet></router-outlet>

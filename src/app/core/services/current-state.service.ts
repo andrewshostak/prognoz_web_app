@@ -19,8 +19,20 @@ export class CurrentStateService {
     pusherInstance: any;
     user: User;
 
+    private selectedTeamCompetitionId: number;
+
+    set teamCompetitionId(teamCompetitionId: number) {
+        this.selectedTeamCompetitionId = teamCompetitionId;
+        localStorage.setItem('selectedTeamCompetitionId', JSON.stringify(teamCompetitionId));
+    }
+
+    get teamCompetitionId(): number {
+        return this.selectedTeamCompetitionId;
+    }
+
     initialize(): void {
         this.authService.initializeUser();
+        this.selectedTeamCompetitionId = this.getSelectedTeamCompetitionId();
     }
 
     /**
@@ -30,6 +42,13 @@ export class CurrentStateService {
      */
     private addOnlineUser(userId: string, userInfo: User): void {
         this.onlineUsers.push({ id: parseInt(userId, 10), name: userInfo.name });
+    }
+
+    /**
+     * Cleat users online list
+     */
+    private clearOnlineUsersList(): void {
+        this.onlineUsers = [];
     }
 
     /**
@@ -67,15 +86,24 @@ export class CurrentStateService {
     }
 
     /**
+     * Get selected team competition id from local storage
+     * @returns {number}
+     */
+    private getSelectedTeamCompetitionId(): number {
+        const selectedTeamCompetitionId = localStorage.getItem('selectedTeamCompetitionId');
+        if (!selectedTeamCompetitionId) {
+            return null;
+        }
+
+        return parseInt(selectedTeamCompetitionId, 10);
+    }
+
+    /**
      * Remove online user from list
      * @param userId
      */
     private removeOnlineUser(userId): void {
         userId = parseInt(userId, 10);
         this.onlineUsers = this.onlineUsers.filter(user => user.id !== userId);
-    }
-
-    private clearOnlineUsersList(): void {
-        this.onlineUsers = [];
     }
 }

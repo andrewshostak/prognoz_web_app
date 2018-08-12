@@ -5,6 +5,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from '../shared/shared.module';
 import { SimpleNotificationsModule } from 'angular2-notifications';
 import { TeamCaptainComponent } from './team-captain/team-captain.component';
+import { TeamCompetitionSelectComponent } from './team-competition-select/team-competition-select.component';
 import { TeamComponent } from './team.component';
 import { TeamEditModalComponent } from './shared/team-edit-modal/team-edit-modal.component';
 import { TeamGoalkeeperFormComponent } from './shared/team-goalkeeper-form/team-goalkeeper-form.component';
@@ -28,6 +29,7 @@ import { TeamTeamMatchCardComponent } from './shared/team-team-match-card/team-t
     imports: [CommonModule, FormsModule, ReactiveFormsModule, SharedModule, SimpleNotificationsModule, TeamRoutingModule],
     declarations: [
         TeamCaptainComponent,
+        TeamCompetitionSelectComponent,
         TeamComponent,
         TeamEditModalComponent,
         TeamGoalkeeperFormComponent,
