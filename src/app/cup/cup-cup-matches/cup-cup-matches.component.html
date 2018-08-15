@@ -64,7 +64,7 @@
                     <div class="row">
                         <div class="col-5">
                             <div class="d-flex flex-row justify-content-end h-100">
-                                <div class="d-flex flex-column text-right justify-content-center">
+                                <div class="d-flex flex-column text-right justify-content-center match-participant-info">
                                     <strong>{{cupCupMatch.home_user.name}}</strong>
                                     <small class="text-muted hometown">
                                         {{cupCupMatch.home_user.hometown ? '(' + cupCupMatch.home_user.hometown + ')' : ''}}
@@ -84,7 +84,7 @@
                         </div>
                         <div class="col-5">
                             <div class="d-flex flex-row h-100">
-                                <div class="d-flex flex-column justify-content-center mr-2">
+                                <div class="d-flex flex-column justify-content-center mr-2 match-participant-info">
                                     <img class="small-image rounded-circle d-none d-sm-inline"
                                          src="{{userImagesUrl}}{{cupCupMatch.away_user.image || userImageDefault}}"
                                          alt="{{cupCupMatch.away_user.name}}">
@@ -96,6 +96,12 @@
                                     </small>
                                 </div>
                             </div>
+                        </div>
+                        <div *ngIf="cupCupMatch.group_number" class="d-none d-sm-block position-absolute group-number" [attr.title]="'Матч групи №' + cupCupMatch.group_number">
+                            <span class="fa-stack">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <strong class="fa-stack-1x">{{cupCupMatch.group_number}}</strong>
+                            </span>
                         </div>
                     </div>
                 </li>
