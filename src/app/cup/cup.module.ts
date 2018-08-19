@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { ChartsModule } from 'ng2-charts';
 import { CupAddApplicationModalComponent } from './shared/cup-add-application-modal/cup-add-application-modal.component';
@@ -21,7 +21,7 @@ import { SharedModule } from '../shared/shared.module';
 import { CupRulesComponent } from './cup-rules/cup-rules.component';
 
 @NgModule({
-    imports: [CommonModule, ChartsModule, CupRoutingModule, ReactiveFormsModule, SharedModule],
+    imports: [CommonModule, ChartsModule, CupRoutingModule, FormsModule, ReactiveFormsModule, SharedModule],
     declarations: [
         CupComponent,
         CupAddApplicationModalComponent,

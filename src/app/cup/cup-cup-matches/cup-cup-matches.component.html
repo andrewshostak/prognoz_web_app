@@ -23,22 +23,24 @@
                                 <option *ngFor="let season of seasons" [value]="season.id">{{season.title}}</option>
                             </select>
                         </div>
-                        <div *ngIf="competitions"
+                        <div *ngIf="seasonsCompetitions[filterCupCupMatchesForm.get('season_id').value]"
                              class="form-group col-12 col-md-4">
                             <label for="competition_id" class="font-weight-bold">Змагання:</label>
                             <select id="competition_id"
                                     class="form-control"
                                     formControlName="competition_id">
-                                <option *ngFor="let competition of competitions" [value]="competition.id">{{competition.title}}</option>
+                                <option [value]="0">Виберіть змагання</option>
+                                <option *ngFor="let competition of seasonsCompetitions[filterCupCupMatchesForm.get('season_id').value]" [value]="competition.id">{{competition.title}}</option>
                             </select>
                         </div>
-                        <div *ngIf="cupStages"
+                        <div *ngIf="competitionsCupStages[filterCupCupMatchesForm.get('competition_id').value]"
                              class="form-group col-12 col-md-4">
                             <label for="cup_stage_id" class="font-weight-bold">Стадія:</label>
                             <select id="cup_stage_id"
                                     class="form-control"
                                     formControlName="cup_stage_id">
-                                <option *ngFor="let cupStage of cupStages" [value]="cupStage.id">{{cupStage.title}} ({{cupStage.round}})</option>
+                                <option [value]="0">Виберіть стадію</option>
+                                <option *ngFor="let cupStage of competitionsCupStages[filterCupCupMatchesForm.get('competition_id').value]" [value]="cupStage.id">{{cupStage.title}}</option>
                             </select>
                         </div>
                     </div>
@@ -54,7 +56,40 @@
     <div *ngFor="let cupStage of cupStagesWithCupCupMatches" class="mb-2">
         <div class="card black-shadow">
             <div class="card-header">
-                <strong>{{cupStage.competition.title}}: </strong>{{cupStage.title}}
+                <div class="row">
+                    <div class="col-12 col-md-6 col-lg-8 d-flex align-items-center">
+                        <strong>{{cupStage.competition.title}}: </strong>
+                        <span *ngIf="!competitionsCupStages[cupStage.competition_id.toString()]">
+                        {{cupStage.title}}
+                    </span>
+                    </div>
+                    <div class="col-12 col-md-6 col-lg-4 d-flex align-items-center">
+                        <div *ngIf="competitionsCupStages[cupStage.competition_id.toString()]"
+                             class="input-group input-group-sm">
+                            <div class="input-group-prepend">
+                                <button (click)="previousStage(cupStage.competition_id, cupStageSelect.value)"
+                                        class="btn btn-outline-primary"
+                                        type="button">
+                                    <i class="fa fa-caret-left" aria-hidden="true"></i>
+                                </button>
+                            </div>
+                            <select class="custom-select form-control-sm"
+                                    id="cup-stage-select"
+                                    [(ngModel)]="cupStage.id"
+                                    #cupStageSelect
+                                    (ngModelChange)="cupStageChanged($event)">
+                                <option *ngFor="let cupStage of competitionsCupStages[cupStage.competition_id.toString()]" [value]="cupStage.id">{{cupStage.title}}</option>
+                            </select>
+                            <div class="input-group-append">
+                                <button (click)="nextStage(cupStage.competition_id, cupStageSelect.value)"
+                                        class="btn btn-outline-primary"
+                                        type="button">
+                                    <i class="fa fa-caret-right" aria-hidden="true"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
             <ul class="list-group list-group-flush">
                 <li *ngFor="let cupCupMatch of cupStage.cup_cup_matches"

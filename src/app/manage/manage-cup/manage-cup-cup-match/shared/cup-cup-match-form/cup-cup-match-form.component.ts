@@ -58,6 +58,13 @@ export class CupCupMatchFormComponent implements OnChanges, OnInit {
         this.cupCupMatchForm.reset();
     }
 
+    swapUsers(): void {
+        this.cupCupMatchForm.patchValue({
+            home_user_id: this.cupCupMatchForm.get('away_user_id').value,
+            away_user_id: this.cupCupMatchForm.get('home_user_id').value
+        });
+    }
+
     private getCupStagesData(): void {
         this.cupStageService.getCupStages(null, false, false).subscribe(
             response => {
