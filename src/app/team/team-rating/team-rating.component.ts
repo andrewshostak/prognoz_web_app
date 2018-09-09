@@ -27,6 +27,7 @@ export class TeamRatingComponent implements OnDestroy, OnInit {
         private titleService: TitleService
     ) {}
 
+    activatedRouteSubscription: Subscription;
     authenticatedUser: User = this.currentStateService.user;
     competitionId: number;
     errorTeamRating: string;
@@ -36,6 +37,9 @@ export class TeamRatingComponent implements OnDestroy, OnInit {
     userSubscription: Subscription;
 
     ngOnDestroy() {
+        if (!this.activatedRouteSubscription.closed) {
+            this.activatedRouteSubscription.unsubscribe();
+        }
         if (!this.userSubscription.closed) {
             this.userSubscription.unsubscribe();
         }
@@ -46,7 +50,7 @@ export class TeamRatingComponent implements OnDestroy, OnInit {
         this.userSubscription = this.authService.getUser.subscribe(response => {
             this.authenticatedUser = response;
         });
-        this.activatedRoute.parent.params.subscribe((params: Params) => {
+        this.activatedRouteSubscription = this.activatedRoute.parent.params.subscribe((params: Params) => {
             this.competitionId = params['competitionId'];
             this.getTeamRatingData();
             this.getTeamRatingUserData();

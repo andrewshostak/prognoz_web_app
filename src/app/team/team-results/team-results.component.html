@@ -2,13 +2,12 @@
   Результати:
   <button class="btn btn-sm btn-outline-secondary cursor-pointer"
           title="Оновити"
-          (click)="getTeamMatchesData(round)">
+          (click)="getTeamMatchesData(competitionId, round)">
     <i class="fa fa-refresh fa-fw" aria-hidden="true"></i>
   </button>
 </h2>
-<!-- error team matches -->
 <app-team-round-navigation *ngIf="teamMatches"
-                           [teamTeamMatches]="teamMatches"
+                           [matches]="teamMatches"
                            [nextRound]="nextRound"
                            [previousRound]="previousRound"
                            [path]="path">
