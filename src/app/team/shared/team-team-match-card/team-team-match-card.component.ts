@@ -21,12 +21,13 @@ export class TeamTeamMatchCardComponent implements AfterViewInit, OnDestroy {
 
     @Input() teamTeamMatch: TeamTeamMatch;
     @Input() round: number;
+    @Input() competitionId: number;
 
     clubsImagesUrl: string = environment.apiImageClubs;
     errorTeamMatches: string;
     expandedTeamMatch: boolean;
     isTeamMatchBlocked = TeamCompetitionService.isTeamMatchBlocked;
-    isTeamMatchGuessed = TeamCompetitionService.isTeamMatchBlocked;
+    isTeamMatchGuessed = TeamCompetitionService.isTeamMatchGuessed;
     noTeamMatches = 'Цей раунд ще не почався / матчів не знайдено';
     showScoresOrString = UtilsService.showScoresOrString;
     spinnerTeamMatches: boolean;
@@ -38,7 +39,10 @@ export class TeamTeamMatchCardComponent implements AfterViewInit, OnDestroy {
 
     getTeamMatchesData(teamTeamMatch: TeamTeamMatch) {
         this.spinnerTeamMatches = true;
-        const param = [{ parameter: 'filter', value: 'team-team-match' }];
+        const param = [
+            { parameter: 'filter', value: 'team-team-match' },
+            { parameter: 'competition_id', value: this.competitionId.toString() }
+        ];
         param.push({ parameter: 'home_team_id', value: teamTeamMatch.home_team_id.toString() });
         param.push({ parameter: 'away_team_id', value: teamTeamMatch.away_team_id.toString() });
         if (this.round) {

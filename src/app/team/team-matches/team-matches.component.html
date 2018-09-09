@@ -20,6 +20,7 @@
     <div class="col-12 black-shadow">
         <app-team-team-match-card *ngFor="let teamTeamMatch of teamTeamMatches"
                                   [teamTeamMatch]="teamTeamMatch"
+                                  [competitionId]="competitionId"
                                   [round]="round">
         </app-team-team-match-card>
     </div>

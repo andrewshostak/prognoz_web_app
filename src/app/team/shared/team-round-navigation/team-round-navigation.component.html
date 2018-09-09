@@ -1,4 +1,4 @@
-<div class="row mb-2 mt-2 no-gutters blue-shadow">
+<div *ngIf="matches && matches.length" class="row mb-2 mt-2 no-gutters blue-shadow">
     <div class="col-3 col-md-3 col-lg-2">
         <div [ngClass]="{'round-nav-disabled text-muted': !previousRound, 'text-primary': previousRound}"
              class="card cursor-pointer full-height list-group-item-action"
