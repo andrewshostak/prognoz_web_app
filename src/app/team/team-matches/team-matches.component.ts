@@ -95,7 +95,7 @@ export class TeamMatchesComponent implements OnInit, OnDestroy {
                 }
 
                 if (response.competition.stated) {
-                    this.router.navigate(['/team/squads']);
+                    this.router.navigate(['/team', 'competitions', response.competition.id, 'squads']);
                     return;
                 }
 
