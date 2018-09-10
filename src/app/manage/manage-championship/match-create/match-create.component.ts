@@ -71,8 +71,9 @@ export class MatchCreateComponent implements OnInit {
     }
 
     swapClubs() {
-        const t1_id = this.championshipMatchCreateForm.value.t1_id;
-        const t2_id = this.championshipMatchCreateForm.value.t2_id;
-        this.championshipMatchCreateForm.patchValue({ t1_id: t2_id, t2_id: t1_id });
+        this.championshipMatchCreateForm.patchValue({
+            t1_id: this.championshipMatchCreateForm.get('t2_id').value,
+            t2_id: this.championshipMatchCreateForm.get('t1_id').value
+        });
     }
 }

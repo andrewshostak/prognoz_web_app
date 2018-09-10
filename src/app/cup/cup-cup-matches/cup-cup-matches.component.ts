@@ -39,18 +39,22 @@ export class CupCupMatchesComponent implements OnInit, OnDestroy {
 
     authenticatedUser: User = this.currentStateService.user;
     activatedRouteSubscription: Subscription;
-    competitions: Competition[];
+    competitionsCupStages: { [competitionId: string]: CupStage[] };
     cupStagesWithCupCupMatches: CupStage[];
-    cupStages: CupStage[];
     errorCompetitions: string;
     errorCupCupMatches: string;
     errorCupStages: string;
     errorSeasons: string;
     filterCupCupMatchesForm: FormGroup;
     seasons: Season[];
+    seasonsCompetitions: { [seasonId: string]: Competition[] };
     userImageDefault: string;
     userImagesUrl: string;
     userSubscription: Subscription;
+
+    cupStageChanged(cupStageId): void {
+        this.router.navigate(['/cup', 'cup-matches', { cup_stage_id: cupStageId }]);
+    }
 
     currentUserCupCupMatch(cupCupMatch): boolean {
         if (!this.authenticatedUser) {
@@ -63,6 +67,17 @@ export class CupCupMatchesComponent implements OnInit, OnDestroy {
         if (!this.seasons) {
             this.getSeasonsData();
         }
+    }
+
+    nextStage(selectedCompetitionId: number, selectedCupStageId: string): void {
+        const competitionId = selectedCompetitionId.toString();
+        const index = this.competitionsCupStages[competitionId].findIndex(cupStage => cupStage.id.toString() === selectedCupStageId);
+
+        if (index === this.competitionsCupStages[competitionId].length - 1 || !this.competitionsCupStages[competitionId][index + 1]) {
+            return;
+        }
+
+        this.router.navigate(['/cup', 'cup-matches', { cup_stage_id: this.competitionsCupStages[competitionId][index + 1].id }]);
     }
 
     ngOnDestroy() {
@@ -79,6 +94,8 @@ export class CupCupMatchesComponent implements OnInit, OnDestroy {
         this.titleService.setTitle('Матчі - Кубок');
         this.userImageDefault = environment.imageUserDefault;
         this.userImagesUrl = environment.apiImageUsers;
+        this.competitionsCupStages = {};
+        this.seasonsCompetitions = {};
         this.filterCupCupMatchesForm = new FormGroup({
             active: new FormControl(''),
             season_id: new FormControl(''),
@@ -105,58 +122,57 @@ export class CupCupMatchesComponent implements OnInit, OnDestroy {
         });
         this.filterCupCupMatchesForm.get('active').valueChanges.subscribe(value => {
             if (value) {
-                this.router.navigate(['/cup/cup-matches', { active: 1 }]);
+                this.router.navigate(['/cup', 'cup-matches', { active: 1 }]);
             }
         });
         this.filterCupCupMatchesForm.get('season_id').valueChanges.subscribe(value => {
-            this.competitions = null;
-            if (value) {
+            this.filterCupCupMatchesForm.get('competition_id').setValue('0');
+            if (value && !this.seasonsCompetitions[value]) {
                 this.getCompetitionsData();
             }
         });
         this.filterCupCupMatchesForm.get('competition_id').valueChanges.subscribe(value => {
-            this.cupStages = null;
-            if (value) {
+            this.filterCupCupMatchesForm.get('cup_stage_id').setValue('0');
+            if (value && value !== '0' && !this.competitionsCupStages[value]) {
                 this.getCupStages();
             }
         });
         this.filterCupCupMatchesForm.get('cup_stage_id').valueChanges.subscribe(value => {
-            if (value) {
+            if (value && value !== '0') {
                 this.filterCupCupMatchesForm.patchValue({ active: 0 });
-                this.router.navigate(['/cup/cup-matches', { cup_stage_id: value }]);
+                this.router.navigate(['/cup', 'cup-matches', { cup_stage_id: value }]);
             }
         });
+    }
+
+    previousStage(selectedCompetitionId: number, selectedCupStageId: string): void {
+        const competitionId = selectedCompetitionId.toString();
+        const index = this.competitionsCupStages[competitionId].findIndex(cupStage => cupStage.id.toString() === selectedCupStageId);
+
+        if (index === 0 || !this.competitionsCupStages[competitionId][index - 1]) {
+            return;
+        }
+
+        this.router.navigate(['/cup', 'cup-matches', { cup_stage_id: this.competitionsCupStages[competitionId][index - 1].id }]);
     }
 
     resetCupCupMatchesFormFilters(): void {
         this.filterCupCupMatchesForm.reset({ active: 1 });
     }
 
-    private prepareViewData(response: CupCupMatch[]): void {
-        const allCupStages = response.map(item => item.cup_stage);
-        this.cupStagesWithCupCupMatches = <CupStage[]>UtilsService.getDistinctItemsOfArray(allCupStages);
-        const grouped = UtilsService.groupBy(response, cupCupMatch => cupCupMatch.cup_stage_id);
-        this.cupStagesWithCupCupMatches.map(cupStage => {
-            return (cupStage.cup_cup_matches = grouped.get(cupStage.id));
-        });
-        this.cupStagesWithCupCupMatches.forEach(cupStage => {
-            cupStage.cup_matches = cupStage.cup_cup_matches.map(cupCupMatch => {
-                cupCupMatch.score = UtilsService.showScoresOrString(cupCupMatch.home, cupCupMatch.away, 'vs');
-                return cupCupMatch;
-            });
-        });
-    }
-
-    private getCupStages(): void {
-        this.cupStageService.getCupStages(null, null, null, this.filterCupCupMatchesForm.get('competition_id').value).subscribe(
+    private getCupStages(selectedCompetitionId?: number): void {
+        const competitionId = selectedCompetitionId
+            ? selectedCompetitionId.toString()
+            : this.filterCupCupMatchesForm.get('competition_id').value;
+        this.cupStageService.getCupStages(null, null, null, competitionId).subscribe(
             response => {
                 this.errorCupStages = null;
                 if (response) {
-                    this.cupStages = response.cup_stages;
+                    this.competitionsCupStages[competitionId] = response.cup_stages.sort((a, b) => a.id - b.id);
                 }
             },
             error => {
-                this.cupStages = null;
+                this.competitionsCupStages[competitionId] = null;
                 this.errorCupStages = error;
             }
         );
@@ -168,13 +184,12 @@ export class CupCupMatchesComponent implements OnInit, OnDestroy {
             .subscribe(
                 response => {
                     this.errorCompetitions = null;
-                    this.cupStages = null;
                     if (response) {
-                        this.competitions = response.competitions;
+                        this.seasonsCompetitions[this.filterCupCupMatchesForm.get('season_id').value] = response.competitions;
                     }
                 },
                 error => {
-                    this.competitions = null;
+                    this.seasonsCompetitions[this.filterCupCupMatchesForm.get('season_id').value] = null;
                     this.errorCompetitions = error;
                 }
             );
@@ -193,5 +208,23 @@ export class CupCupMatchesComponent implements OnInit, OnDestroy {
                 this.errorSeasons = error;
             }
         );
+    }
+
+    private prepareViewData(response: CupCupMatch[]): void {
+        const allCupStages = response.map(item => item.cup_stage);
+        this.cupStagesWithCupCupMatches = <CupStage[]>UtilsService.getDistinctItemsOfArray(allCupStages);
+        const grouped = UtilsService.groupBy(response, cupCupMatch => cupCupMatch.cup_stage_id);
+        this.cupStagesWithCupCupMatches.map(cupStage => {
+            return (cupStage.cup_cup_matches = grouped.get(cupStage.id));
+        });
+        this.cupStagesWithCupCupMatches.forEach(cupStage => {
+            if (!this.competitionsCupStages[cupStage.competition_id.toString()]) {
+                this.getCupStages(cupStage.competition_id);
+            }
+            cupStage.cup_matches = cupStage.cup_cup_matches.map(cupCupMatch => {
+                cupCupMatch.score = UtilsService.showScoresOrString(cupCupMatch.home, cupCupMatch.away, 'vs');
+                return cupCupMatch;
+            });
+        });
     }
 }

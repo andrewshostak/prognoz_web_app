@@ -6,7 +6,7 @@
         <select id="cup_stage_id"
                 class="form-control"
                 formControlName="cup_stage_id">
-            <option *ngFor="let cupStage of cupStages" [value]="cupStage.id">{{cupStage.title}}</option>
+            <option *ngFor="let cupStage of cupStages" [value]="cupStage.id">{{cupStage.title}} ({{cupStage.competition.title}})</option>
         </select>
         <div *ngIf="cupCupMatchForm.get('cup_stage_id').hasError('required') && cupCupMatchForm.get('cup_stage_id').touched">
             <small>Кубкова стадія обов'язкова</small>
@@ -24,6 +24,11 @@
         <div *ngIf="cupCupMatchForm.get('home_user_id').hasError('required') && cupCupMatchForm.get('home_user_id').touched">
             <small>Гравець 1 обов'язковий</small>
         </div>
+    </div>
+    <div class="form-group">
+        <button type="button" class="btn btn-block btn-info" (click)="swapUsers()">
+            <i class="fa fa-arrows-v" aria-hidden="true"></i> Поміняти місцями
+        </button>
     </div>
     <div *ngIf="users"
          class="form-group"
@@ -44,7 +49,7 @@
         <input type="number"
                id="group_number"
                class="form-control"
-               formContolName="group_number">
+               formControlName="group_number">
         <div *ngIf="cupCupMatchForm.get('group_number').hasError('min') && cupCupMatchForm.get('group_number').touched">
             <small>Мінімальний номер групи - 1</small>
         </div>

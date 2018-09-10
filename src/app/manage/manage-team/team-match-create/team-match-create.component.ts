@@ -68,8 +68,9 @@ export class TeamMatchCreateComponent implements OnInit {
     }
 
     swapClubs() {
-        const t1_id = this.teamMatchCreateForm.value.t1_id;
-        const t2_id = this.teamMatchCreateForm.value.t2_id;
-        this.teamMatchCreateForm.patchValue({ t1_id: t2_id, t2_id: t1_id });
+        this.teamMatchCreateForm.patchValue({
+            t1_id: this.teamMatchCreateForm.get('t2_id').value,
+            t2_id: this.teamMatchCreateForm.get('t1_id').value
+        });
     }
 }

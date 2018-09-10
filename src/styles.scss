@@ -41,6 +41,15 @@ body {
         cursor: pointer;
     }
 
+    .group-number {
+        .fa {
+            color: $gray-300;
+        }
+        strong {
+            color: $white;
+        }
+    }
+
     form {
         .form-group-invalid-custom {
             color: $danger;

@@ -70,9 +70,10 @@ export class TeamMatchEditActiveComponent implements OnInit {
     }
 
     swapClubs() {
-        const t1_id = this.teamMatchEditActiveForm.value.t1_id;
-        const t2_id = this.teamMatchEditActiveForm.value.t2_id;
-        this.teamMatchEditActiveForm.patchValue({ t1_id: t2_id, t2_id: t1_id });
+        this.teamMatchEditActiveForm.patchValue({
+            t1_id: this.teamMatchEditActiveForm.get('t2_id').value,
+            t2_id: this.teamMatchEditActiveForm.get('t1_id').value
+        });
     }
 
     resetForm() {

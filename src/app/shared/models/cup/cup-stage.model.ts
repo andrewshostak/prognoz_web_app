@@ -30,5 +30,6 @@ export class CupStage {
         home: number;
         away: number;
         score: string;
+        group_number: number;
     }[];
 }
