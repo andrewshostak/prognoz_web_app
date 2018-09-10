@@ -2,7 +2,7 @@
     <div class="col-12 col-sm-6 col-md-5">
         <h2>Рейтинг команд: </h2>
     </div>
-    <div class="col-12 col-sm-6 col-md-7 text-right">
+    <div *ngIf="teamRating.length" class="col-12 col-sm-6 col-md-7 text-right">
         <small class="text-muted">Рейтинг після {{teamRating[0].win + teamRating[0].draw + teamRating[0].loss}} туру</small>
     </div>
 </div>
@@ -14,7 +14,7 @@
         <thead class="thead-dark">
             <tr>
                 <th class="text-center">№</th>
-                <th class="text-center d-none d-lg-table-cell th-moving-icons" title="Переміщення в рейтингу">
+                <th class="text-center d-none d-lg-table-cell th-moving-icons text-nowrap" title="Переміщення в рейтингу">
                     <i class="fa fa-arrow-circle-down text-danger" aria-hidden="true"></i>
                     <i class="fa fa-circle-o" aria-hidden="true"></i>
                     <i class="fa fa-arrow-circle-up text-success" aria-hidden="true"></i>

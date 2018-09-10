@@ -1,6 +1,7 @@
 import { Component, Input } from '@angular/core';
 
 import { TeamTeamMatch } from '@models/team/team-team-match.model';
+import { TeamMatch } from '@models/team/team-match.model';
 
 @Component({
     selector: 'app-team-round-navigation',
@@ -8,7 +9,7 @@ import { TeamTeamMatch } from '@models/team/team-team-match.model';
     styleUrls: ['./team-round-navigation.component.scss']
 })
 export class TeamRoundNavigationComponent {
-    @Input() teamTeamMatches: TeamTeamMatch[];
+    @Input() matches: TeamTeamMatch[] | TeamMatch[];
     @Input() nextRound: boolean;
     @Input() previousRound: boolean;
     @Input() path: string;

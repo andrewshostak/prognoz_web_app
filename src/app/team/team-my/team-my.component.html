@@ -1,10 +1,10 @@
-<h2>Моя команда: </h2>
+<h2>Моя команда {{team ? '- ' + team.name : ''}}: </h2>
 <button *ngIf="authenticatedUser && isCaptain" type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#teamEditModal">
     Редагувати команду
 </button>
 <div *ngIf="authenticatedUser">
     <app-team-round-navigation *ngIf="teamTeamMatches"
-                               [teamTeamMatches]="teamTeamMatches"
+                               [matches]="teamTeamMatches"
                                [nextRound]="nextRound"
                                [previousRound]="previousRound"
                                [path]="path">

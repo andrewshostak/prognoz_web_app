@@ -5,6 +5,7 @@ import { Observable } from 'rxjs/Observable';
 import { environment } from '@env';
 import { ErrorHandlerService } from '@services/error-handler.service';
 import { HeadersWithToken } from '@services/headers-with-token.service';
+import { RequestParams } from '@models/request-params.model';
 import { TeamTeamMatch } from '@models/team/team-team-match.model';
 
 @Injectable()
@@ -19,13 +20,15 @@ export class TeamTeamMatchService {
 
     /**
      * Get all matches
-     * @param page
      * @returns {Observable<any>}
+     * @param requestParams
      */
-    getTeamTeamMatches(page?: number): Observable<any> {
+    getTeamTeamMatches(requestParams?: RequestParams[]): Observable<any> {
         let params: HttpParams = new HttpParams();
-        if (page) {
-            params = params.append('page', page.toString());
+        if (requestParams) {
+            for (const requestParam of requestParams) {
+                params = params.append(requestParam.parameter, requestParam.value);
+            }
         }
         return this.httpClient.get(this.teamTeamMatchUrl, { params: params }).catch(this.errorHandlerService.handle);
     }

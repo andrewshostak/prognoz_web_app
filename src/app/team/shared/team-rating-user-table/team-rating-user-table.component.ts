@@ -59,10 +59,9 @@ export class TeamRatingUserTableComponent implements OnChanges {
                 this.topScorersRatingAll = this.topScorersRating;
                 this.goalkeepersRating = this.formTeamUserRating(changes[propName].currentValue, 'blocked');
                 this.goalkeepersRatingAll = this.goalkeepersRating;
+                this.teamIdsFiltered = [];
+                this.teams = [];
                 changes[propName].currentValue.forEach(user => {
-                    if (!this.teams) {
-                        this.teams = [];
-                    }
                     const filteredTeamIds = this.teams.map(item => item.id);
                     if (!filteredTeamIds.includes(user.team_id)) {
                         this.teams.push(user.team);

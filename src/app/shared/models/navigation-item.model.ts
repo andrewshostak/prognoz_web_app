@@ -1,4 +1,4 @@
 export class NavigationItem {
-    link: any[] | string;
+    link: any[];
     title: string;
 }
