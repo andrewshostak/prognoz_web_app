@@ -1,9 +1,10 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { ActivatedRoute, Params } from '@angular/router';
+import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { Subscription } from 'rxjs/Subscription';
 
 import { AuthService } from '@services/auth.service';
 import { CurrentStateService } from '@services/current-state.service';
+import { RequestParams } from '@models/request-params.model';
 import { TeamMatch } from '@models/team/team-match.model';
 import { TeamMatchService } from '@services/team/team-match.service';
 import { TeamTeamMatch } from '@models/team/team-team-match.model';
@@ -23,15 +24,19 @@ export class TeamPredictionsComponent implements OnInit, OnDestroy {
         private activatedRoute: ActivatedRoute,
         private authService: AuthService,
         private currentStateService: CurrentStateService,
+        private router: Router,
         private teamMatchService: TeamMatchService,
         private teamTeamMatchService: TeamTeamMatchService,
         private teamPredictionService: TeamPredictionService,
         private titleService: TitleService
-    ) {}
+    ) {
+        this.subscribeToRouterEvents();
+    }
 
     authenticatedUser: User = this.currentStateService.user;
     blockedTeamMatchFirst: TeamMatch = null;
     blockedTeamMatchSecond: TeamMatch = null;
+    competitionId: number;
     errorTeamMatches: string;
     errorTeamTeamMatches: string;
     errorTeamPredictions: string;
@@ -39,29 +44,34 @@ export class TeamPredictionsComponent implements OnInit, OnDestroy {
     nextRound: string;
     noAccess = 'Доступ заборонено. Увійдіть на сайт для перегляду цієї сторінки.';
     oppositeTeamId: number;
-    path = '/team/predictions/round/';
+    path: string;
     previousRound: string;
     round: number;
+    routerEventsSubscription: Subscription;
     teamMatches: TeamMatch[];
     teamTeamMatches: TeamTeamMatch[];
     teamPredictions: TeamPrediction[];
     userSubscription: Subscription;
 
-    getMyTeamMatchesData(round?: number) {
-        const param = [{ parameter: 'filter', value: 'opponents' }];
+    getMyTeamMatchesData(competitionId: number, round?: number) {
+        const param = [{ parameter: 'filter', value: 'opponents' }, { parameter: 'competition_id', value: this.competitionId.toString() }];
         if (round) {
             param.push({ parameter: 'round', value: round.toString() });
         }
         this.teamMatchService.getTeamMatchesAuthUser(param).subscribe(
             response => {
-                this.resetTeamMatchesData();
-                if (response) {
-                    this.teamMatches = response.team_matches;
-                    this.setBlockedMatches(response.team_matches);
+                this.errorTeamMatches = null;
+                if (!response) {
+                    this.teamMatches = null;
+                    return;
                 }
+
+                this.teamMatches = response.team_matches;
+                this.setBlockedMatches(response.team_matches);
             },
             error => {
-                this.resetTeamMatchesData();
+                this.teamMatches = null;
+                this.resetTeamGoalkeeperData();
                 this.errorTeamMatches = error;
             }
         );
@@ -69,7 +79,7 @@ export class TeamPredictionsComponent implements OnInit, OnDestroy {
 
     getTeamGoalkeeperData() {
         if (this.teamTeamMatches && this.authenticatedUser) {
-            this.getMyTeamMatchesData(this.round);
+            this.getMyTeamMatchesData(this.competitionId, this.round);
             for (const teamTeamMatch of this.teamTeamMatches) {
                 if (this.authenticatedUser.id === teamTeamMatch.home_team_goalkeeper_id) {
                     this.oppositeTeamId = teamTeamMatch.away_team_id;
@@ -83,6 +93,9 @@ export class TeamPredictionsComponent implements OnInit, OnDestroy {
     }
 
     ngOnDestroy() {
+        if (!this.routerEventsSubscription.closed) {
+            this.routerEventsSubscription.unsubscribe();
+        }
         if (!this.userSubscription.closed) {
             this.userSubscription.unsubscribe();
         }
@@ -94,28 +107,19 @@ export class TeamPredictionsComponent implements OnInit, OnDestroy {
             this.authenticatedUser = response;
             this.resetTeamGoalkeeperData();
             if (response) {
-                this.getTeamTeamMatchesData(this.round);
-                this.getTeamPredictionsData(this.round || null);
-            }
-        });
-
-        this.activatedRoute.params.subscribe((params: Params) => {
-            this.round = params['round'] || null;
-            this.resetTeamGoalkeeperData();
-            if (this.authenticatedUser) {
-                this.getTeamTeamMatchesData(params['round']);
-                this.getTeamPredictionsData(params['round'] || null);
+                this.getTeamTeamMatchesData(this.competitionId, this.round);
+                this.getTeamPredictionsData(this.competitionId, this.round);
             }
         });
     }
 
     reloadTeamGoalkeeperData(): void {
         this.resetTeamGoalkeeperData();
-        this.getTeamTeamMatchesData(this.round);
+        this.getTeamTeamMatchesData(this.competitionId, this.round);
     }
 
     reloadTeamPredictionsData() {
-        this.getTeamPredictionsData(this.round);
+        this.getTeamPredictionsData(this.competitionId, this.round);
     }
 
     setBlockedMatches(teamMatches: TeamMatch[]) {
@@ -130,47 +134,55 @@ export class TeamPredictionsComponent implements OnInit, OnDestroy {
         }
     }
 
-    private getTeamTeamMatchesData(round?: number) {
-        this.teamTeamMatchService.getTeamTeamMatches(round).subscribe(
+    private getTeamTeamMatchesData(competitionId: number, round?: number) {
+        const params: RequestParams[] = [{ parameter: 'competition_id', value: competitionId.toString() }];
+        if (round) {
+            params.push({ parameter: 'page', value: round.toString() });
+        }
+        this.teamTeamMatchService.getTeamTeamMatches(params).subscribe(
             response => {
-                this.resetTeamMatchesData();
-                if (response) {
-                    this.teamTeamMatches = response.data;
-                    this.nextRound = response.next_page_url;
-                    this.previousRound = response.prev_page_url;
-                    this.getTeamGoalkeeperData();
+                this.errorTeamTeamMatches = null;
+                if (!response) {
+                    this.teamTeamMatches = null;
+                    this.previousRound = null;
+                    this.teamTeamMatches = null;
+                    return;
                 }
+
+                this.teamTeamMatches = response.data;
+                this.nextRound = response.next_page_url;
+                this.previousRound = response.prev_page_url;
+                this.getTeamGoalkeeperData();
             },
             error => {
-                this.resetTeamMatchesData();
+                this.nextRound = null;
+                this.previousRound = null;
+                this.teamTeamMatches = null;
                 this.errorTeamTeamMatches = error;
             }
         );
     }
 
-    private getTeamPredictionsData(round?: number) {
-        this.teamPredictionService.getTeamPredictions(round ? [{ parameter: 'round', value: round.toString() }] : null).subscribe(
+    private getTeamPredictionsData(competitionId: number, round?: number) {
+        const params: RequestParams[] = [{ parameter: 'competition_id', value: competitionId.toString() }];
+        if (round) {
+            params.push({ parameter: 'round', value: round.toString() });
+        }
+        this.teamPredictionService.getTeamPredictions(params).subscribe(
             response => {
-                this.resetTeamPredictionsData();
-                if (response) {
-                    this.teamPredictions = response.team_predictions;
+                this.errorTeamPredictions = null;
+                if (!response || !response.team_predictions) {
+                    this.teamPredictions = null;
+                    return;
                 }
+
+                this.teamPredictions = response.team_predictions;
             },
             error => {
-                this.resetTeamPredictionsData();
+                this.teamPredictions = null;
                 this.errorTeamPredictions = error;
             }
         );
-    }
-
-    private resetTeamPredictionsData(): void {
-        this.teamPredictions = null;
-        this.errorTeamPredictions = null;
-    }
-
-    private resetTeamMatchesData(): void {
-        this.teamMatches = null;
-        this.errorTeamMatches = null;
     }
 
     private resetTeamGoalkeeperData(): void {
@@ -178,5 +190,45 @@ export class TeamPredictionsComponent implements OnInit, OnDestroy {
         this.blockedTeamMatchSecond = null;
         this.isGoalkeeper = false;
         this.oppositeTeamId = null;
+    }
+
+    private setPath(competitionId: number): void {
+        this.path = `/team/competitions/${competitionId}/predictions/round/`;
+    }
+
+    private subscribeToRouterEvents(): void {
+        this.routerEventsSubscription = this.router.events.subscribe(event => {
+            if (event instanceof NavigationEnd) {
+                this.urlChanged(event.url);
+            }
+        });
+    }
+
+    private urlChanged(url: string): void {
+        const urlAsArray = url.split('/');
+
+        const temporaryCompetitionsIndex = urlAsArray.findIndex(item => item === 'competitions');
+        if (temporaryCompetitionsIndex > -1) {
+            this.competitionId = parseInt(urlAsArray[temporaryCompetitionsIndex + 1], 10);
+        }
+
+        const temporaryRoundIndex = urlAsArray.findIndex(item => item === 'round');
+        if (temporaryRoundIndex > -1) {
+            this.round = parseInt(urlAsArray[temporaryRoundIndex + 1], 10);
+        }
+
+        if (!this.competitionId) {
+            return;
+        }
+
+        this.setPath(this.competitionId);
+
+        if (!this.authenticatedUser) {
+            return;
+        }
+
+        this.resetTeamGoalkeeperData();
+        this.getTeamTeamMatchesData(this.competitionId, this.round);
+        this.getTeamPredictionsData(this.competitionId, this.round);
     }
 }
