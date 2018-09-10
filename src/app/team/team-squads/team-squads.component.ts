@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { Subscription } from 'rxjs/Subscription';
+import { ActivatedRoute, Params } from '@angular/router';
 
 import { AuthService } from '@services/auth.service';
 import { environment } from '@env';
@@ -8,6 +8,7 @@ import { Competition } from '@models/competition.model';
 import { CompetitionService } from '@services/competition.service';
 import { CurrentStateService } from '@services/current-state.service';
 import { NotificationsService } from 'angular2-notifications';
+import { Subscription } from 'rxjs/Subscription';
 import { Team } from '@models/team/team.model';
 import { TeamService } from '@services/team/team.service';
 import { TeamParticipant } from '@models/team/team-participant.model';
@@ -24,6 +25,7 @@ declare var $: any;
 })
 export class TeamSquadsComponent implements OnDestroy, OnInit {
     constructor(
+        private activatedRoute: ActivatedRoute,
         private authService: AuthService,
         private competitionService: CompetitionService,
         private currentStateService: CurrentStateService,
@@ -33,10 +35,12 @@ export class TeamSquadsComponent implements OnDestroy, OnInit {
         private titleService: TitleService
     ) {}
 
+    activatedRouteSubscription: Subscription;
     alreadyJoined = false;
     alreadyPending = false;
     authenticatedUser: User = this.currentStateService.user;
     clubsImagesUrl: string = environment.apiImageClubs;
+    competitionId: number;
     errorTeams: string;
     errorCompetition: string;
     confirmModalData: any;
@@ -145,11 +149,11 @@ export class TeamSquadsComponent implements OnDestroy, OnInit {
     }
 
     getCompetitionData() {
-        this.competitionService.getCompetitions(null, environment.tournaments.team.id, null, true).subscribe(
+        this.competitionService.getCompetition(this.competitionId).subscribe(
             response => {
                 this.resetCompetitionData();
                 if (response) {
-                    this.competition = response.competition;
+                    this.competition = response;
                     this.getTeamsData();
                 }
             },
@@ -204,6 +208,9 @@ export class TeamSquadsComponent implements OnDestroy, OnInit {
     }
 
     ngOnDestroy() {
+        if (!this.activatedRouteSubscription.closed) {
+            this.activatedRouteSubscription.unsubscribe();
+        }
         if (!this.userSubscription.closed) {
             this.userSubscription.unsubscribe();
         }
@@ -221,6 +228,10 @@ export class TeamSquadsComponent implements OnDestroy, OnInit {
             image: new FormControl(null, []),
             caption: new FormControl(null, [Validators.maxLength(140)]),
             club_id: new FormControl(null, [])
+        });
+        this.activatedRouteSubscription = this.activatedRoute.parent.params.subscribe((params: Params) => {
+            this.competitionId = params['competitionId'];
+            this.getCompetitionData();
         });
     }
 

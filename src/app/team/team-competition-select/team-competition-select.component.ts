@@ -65,7 +65,7 @@ export class TeamCompetitionSelectComponent implements OnInit {
         this.competitionService.getCompetitions(null, environment.tournaments.team.id, null, null, true, true).subscribe(
             response => {
                 this.errorCompetitions = null;
-                if (response.competitions && response.competitions.length) {
+                if (response && response.competitions && response.competitions.length) {
                     this.competitions = response.competitions;
                     if (this.getRouterUrlAsArray().includes('get-active') && !this.currentStateService.teamCompetitionId) {
                         this.router.navigate(['/team', 'competitions', response.competitions[0].id, 'matches']);
