@@ -222,7 +222,6 @@ export class TeamSquadsComponent implements OnDestroy, OnInit {
             this.authenticatedUser = response;
             this.getCompetitionData();
         });
-        this.getCompetitionData();
         this.teamCreateForm = new FormGroup({
             name: new FormControl('', [Validators.required, Validators.minLength(3), Validators.maxLength(30)]),
             image: new FormControl(null, []),
@@ -230,6 +229,9 @@ export class TeamSquadsComponent implements OnDestroy, OnInit {
             club_id: new FormControl(null, [])
         });
         this.activatedRouteSubscription = this.activatedRoute.parent.params.subscribe((params: Params) => {
+            if (params['competitionId'] === 'get-active') {
+                return;
+            }
             this.competitionId = params['competitionId'];
             this.getCompetitionData();
         });

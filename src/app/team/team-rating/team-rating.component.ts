@@ -51,6 +51,9 @@ export class TeamRatingComponent implements OnDestroy, OnInit {
             this.authenticatedUser = response;
         });
         this.activatedRouteSubscription = this.activatedRoute.parent.params.subscribe((params: Params) => {
+            if (params['competitionId'] === 'get-active') {
+                return;
+            }
             this.competitionId = params['competitionId'];
             this.getTeamRatingData();
             this.getTeamRatingUserData();

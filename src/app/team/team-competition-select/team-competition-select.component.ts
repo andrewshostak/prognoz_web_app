@@ -70,6 +70,8 @@ export class TeamCompetitionSelectComponent implements OnInit {
                     if (this.getRouterUrlAsArray().includes('get-active') && !this.currentStateService.teamCompetitionId) {
                         this.router.navigate(['/team', 'competitions', response.competitions[0].id, 'matches']);
                     }
+                } else {
+                    this.getLastEndedTeamCompetitions(1);
                 }
             },
             error => {
@@ -139,5 +141,23 @@ export class TeamCompetitionSelectComponent implements OnInit {
 
     private getTeamCompetitionIdFromUrl(): number {
         return parseInt(this.getRouterUrlAsArray()[3], 10);
+    }
+
+    private getLastEndedTeamCompetitions(limit: number): void {
+        this.competitionService.getCompetitions(null, environment.tournaments.team.id, null, null, null, null, true, 1).subscribe(
+            response => {
+                this.errorCompetitions = null;
+                if (response && response.competitions && response.competitions.length) {
+                    this.competitions = response.competitions;
+                    if (this.getRouterUrlAsArray().includes('get-active') && !this.currentStateService.teamCompetitionId) {
+                        this.router.navigate(['/team', 'competitions', response.competitions[0].id, 'matches']);
+                    }
+                }
+            },
+            error => {
+                this.competitions = null;
+                this.errorCompetitions = error;
+            }
+        );
     }
 }

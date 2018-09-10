@@ -27,6 +27,7 @@ export class CompetitionService {
      * @param stated
      * @param active
      * @param ended
+     * @param limit
      * @returns {Observable<any>}
      */
     getCompetitions(
@@ -36,7 +37,8 @@ export class CompetitionService {
         state?: boolean,
         stated?: boolean,
         active?: boolean,
-        ended?: boolean
+        ended?: boolean,
+        limit?: number
     ): Observable<any> {
         let params: HttpParams = new HttpParams();
         if (page) {
@@ -59,6 +61,9 @@ export class CompetitionService {
         }
         if (!isNullOrUndefined(ended)) {
             params = params.append('ended', (ended ? 1 : 0).toString());
+        }
+        if (limit) {
+            params = params.append('limit', limit.toString());
         }
         return this.httpClient.get(this.competitionUrl, { params: params }).catch(this.errorHandlerService.handle);
     }
