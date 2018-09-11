@@ -6,5 +6,15 @@ export class TeamParticipant {
     captain: boolean;
     confirmed: boolean;
     refused?: boolean;
-    user?: any;
+    ended?: boolean;
+    user?: {
+        name: string;
+        image: string;
+    };
+    team?: {
+        name: string;
+    };
+    competition?: {
+        title: string;
+    };
 }

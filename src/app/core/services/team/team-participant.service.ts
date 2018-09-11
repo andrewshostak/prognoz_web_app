@@ -34,6 +34,18 @@ export class TeamParticipantService {
     }
 
     /**
+     * Get Team participant
+     * @param {number} teamParticipantId
+     * @returns {Observable<TeamParticipant>}
+     */
+    getTeamParticipant(teamParticipantId: number): Observable<TeamParticipant> {
+        return this.httpClient
+            .get(`${this.teamParticipantUrl}/${teamParticipantId}`)
+            .map(response => response['team_participant'])
+            .catch(this.errorHandlerService.handle);
+    }
+
+    /**
      * Get participants for captain
      * @param requestParams
      * @returns {Observable<any>}
@@ -68,5 +80,14 @@ export class TeamParticipantService {
             .put(`${this.teamParticipantUrl}/${teamParticipant.id}`, teamParticipant)
             .map(response => response['team_participant'])
             .catch(this.errorHandlerService.handle);
+    }
+
+    /**
+     * Delete team participant
+     * @param {number} teamParticipantId
+     * @returns {Observable<void>}
+     */
+    deleteTeamParticipant(teamParticipantId: number): Observable<void> {
+        return this.headersWithToken.delete(`${this.teamParticipantUrl}/${teamParticipantId}`).catch(this.errorHandlerService.handle);
     }
 }
