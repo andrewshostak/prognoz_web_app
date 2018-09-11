@@ -86,20 +86,15 @@ export class TeamMatchesComponent implements OnInit, OnDestroy {
     }
 
     private getCompetitionData() {
-        this.competitionService.getCompetitions(null, environment.tournaments.team.id, null, true).subscribe(
+        this.competitionService.getCompetition(this.competitionId).subscribe(
             response => {
                 this.errorCompetition = null;
-                if (!response || !response.competition) {
-                    this.getTeamTeamMatchesData(this.competitionId, this.round);
+                if (response.stated) {
+                    this.router.navigate(['/team', 'competitions', response.id, 'squads']);
                     return;
                 }
 
-                if (response.competition.stated) {
-                    this.router.navigate(['/team', 'competitions', response.competition.id, 'squads']);
-                    return;
-                }
-
-                this.getTeamTeamMatchesData(this.competitionId, response.competition.round);
+                this.getTeamTeamMatchesData(this.competitionId, response.active_round);
             },
             error => {
                 this.errorCompetition = error;

@@ -10,16 +10,17 @@
         </div>
     </div>
     <!-- error competition -->
-    <app-error *ngIf="errorCompetition" [message]="errorCompetition"></app-error>
-    <div *ngIf="competition" class="row mb-2">
+    <app-error *ngIf="errorCompetitions" [message]="errorCompetitions"></app-error>
+    <div *ngIf="competitions" class="row mb-2">
         <div class="col-6">
             <div class="card p-2">
-                <button type="button"
-                        class="btn btn-success mb-2 mb-md-0"
-                        (click)="startDrawConfirmModalOpen()"
+                <button *ngFor="let competition of competitions"
+                        type="button"
+                        class="btn btn-success mb-2"
+                        (click)="startDrawConfirmModalOpen(competition)"
                         data-toggle="modal"
                         data-target="#startDrawConfirmModal">
-                    Провести жеребкування календаря
+                    {{competition.title}}: Провести жеребкування календаря
                 </button>
                 <ul class="list-group">
                     <li class="list-group-item">
@@ -33,12 +34,13 @@
         </div>
         <div class="col-6">
             <div class="card p-2">
-                <button type="button"
-                        class="btn btn-success mb-2 mb-md-0"
-                        (click)="startNextRoundConfirmModalOpen()"
+                <button *ngFor="let competition of competitions"
+                        type="button"
+                        class="btn btn-success mb-2"
+                        (click)="startNextRoundConfirmModalOpen(competition)"
                         data-toggle="modal"
                         data-target="#startNextRoundConfirmModal">
-                    Розпочати наступний тур - {{nextRoundNumber()}}
+                    {{competition.title}}: Розпочати наступний тур - {{nextRoundNumber(competition)}}
                 </button>
                 <ul class="list-group">
                     <li class="list-group-item">

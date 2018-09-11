@@ -13,8 +13,8 @@ declare var $: any;
     styleUrls: ['./manage-team.component.scss']
 })
 export class ManageTeamComponent implements OnInit {
-    errorCompetition: string;
-    competition: Competition;
+    errorCompetitions: string;
+    competitions: Competition[];
     confirmModalData: any;
     confirmModalId: string;
     confirmModalMessage: string;
@@ -33,14 +33,14 @@ export class ManageTeamComponent implements OnInit {
         }
     }
 
-    nextRoundNumber() {
-        if (this.competition) {
-            if (!this.competition.active_round) {
+    nextRoundNumber(competition: Competition): number {
+        if (competition) {
+            if (!competition.active_round) {
                 return 1;
-            } else if (this.competition.active_round === this.competition.number_of_teams * 2 - 2) {
+            } else if (competition.active_round === competition.number_of_teams * 2 - 2) {
                 return null;
             } else {
-                return this.competition.active_round + 1;
+                return competition.active_round + 1;
             }
         }
 
@@ -48,14 +48,14 @@ export class ManageTeamComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.competitionService.getCompetitions(null, environment.tournaments.team.id, null, true).subscribe(
+        this.competitionService.getCompetitions(null, environment.tournaments.team.id, null, null, true, true).subscribe(
             response => {
                 if (response) {
-                    this.competition = response.competition;
+                    this.competitions = response.competitions;
                 }
             },
             error => {
-                this.errorCompetition = error;
+                this.errorCompetitions = error;
             }
         );
     }
@@ -79,16 +79,16 @@ export class ManageTeamComponent implements OnInit {
         );
     }
 
-    startDrawConfirmModalOpen() {
+    startDrawConfirmModalOpen(competition: Competition): void {
         this.confirmModalMessage = 'Ви справді хочете провести жеребкування календаря?';
         this.confirmModalId = 'startDrawConfirmModal';
-        this.confirmModalData = this.competition;
+        this.confirmModalData = competition;
     }
 
     startNextRound(competition: Competition) {
         this.confirmSpinnerButton = true;
         const competitionToUpdate = Object.assign({}, competition);
-        competitionToUpdate.active_round = this.nextRoundNumber();
+        competitionToUpdate.active_round = this.nextRoundNumber(competition);
         this.competitionService.updateCompetition(competitionToUpdate, competitionToUpdate.id).subscribe(
             response => {
                 this.notificationsService.success('Успішно', 'Наступний раунд розпочато');
@@ -103,9 +103,9 @@ export class ManageTeamComponent implements OnInit {
         );
     }
 
-    startNextRoundConfirmModalOpen() {
+    startNextRoundConfirmModalOpen(competition: Competition): void {
         this.confirmModalMessage = 'Ви справді хочете розпочати наступний раунд?';
         this.confirmModalId = 'startNextRoundConfirmModal';
-        this.confirmModalData = this.competition;
+        this.confirmModalData = competition;
     }
 }
