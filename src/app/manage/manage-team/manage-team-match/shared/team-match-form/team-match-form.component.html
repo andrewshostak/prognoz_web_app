@@ -1,0 +1,188 @@
+<form novalidate [formGroup]="teamMatchForm" (ngSubmit)="onSubmit()">
+    <div *ngIf="clubs"
+         class="form-group"
+         [class.form-group-invalid-custom]="teamMatchForm.get('t1_id').invalid && teamMatchForm.get('t1_id').touched">
+        <label for="t1_id" class="font-weight-bold">Господарі:</label>
+        <select id="t1_id"
+                class="form-control"
+                formControlName="t1_id">
+            <option *ngFor="let club of clubs" [value]="club.id">{{club.title}}</option>
+        </select>
+        <div *ngIf="teamMatchForm.get('t1_id').hasError('required') && teamMatchForm.get('t1_id').touched">
+            <small>Вибір першої команди обов'язковий</small>
+        </div>
+    </div>
+    <div *ngIf="clubs"
+         class="form-group"
+         [class.form-group-invalid-custom]="teamMatchForm.get('t2_id').invalid && teamMatchForm.get('t2_id').touched">
+        <label for="t2_id" class="font-weight-bold">Гості:</label>
+        <select id="t2_id"
+                class="form-control"
+                formControlName="t2_id">
+            <option *ngFor="let club of clubs" [value]="club.id">{{club.title}}</option>
+        </select>
+        <div *ngIf="teamMatchForm.get('t2_id').hasError('required') && teamMatchForm.get('t2_id').touched">
+            <small>Вибір другої команди обов'язковий</small>
+        </div>
+    </div>
+    <div class="row mb-2">
+        <div class="col-6 text-center">
+            <div class="form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input"
+                           type="checkbox"
+                           formControlName="active">
+                    <strong>Активний</strong>
+                </label>
+            </div>
+        </div>
+        <div class="col-6 text-center">
+            <div class="form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input"
+                           type="checkbox"
+                           formControlName="ended">
+                    <strong>Завершений</strong>
+                </label>
+            </div>
+        </div>
+    </div>
+    <div class="form-group"
+         [class.form-group-invalid-custom]="teamMatchForm.get('starts_at').invalid && teamMatchForm.get('starts_at').touched">
+        <label for="starts_at" class="font-weight-bold">Час початку мату:</label>
+        <input type="text"
+               id="starts_at"
+               class="form-control"
+               formControlName="starts_at">
+        <div *ngIf="teamMatchForm.get('starts_at').hasError('required') && teamMatchForm.get('starts_at').touched">
+            <small>Вибір часу початку матчу обов'язковий.</small>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-6">
+            <div class="form-group"
+                 [class.form-group-invalid-custom]="teamMatchForm.get('home').invalid && teamMatchForm.get('home').touched">
+                <label for="home" class="font-weight-bold">Результат першої команди:</label>
+                <input type="number"
+                       id="home"
+                       class="form-control"
+                       formControlName="home">
+                <div *ngIf="teamMatchForm.get('home').hasError('maxLength') && teamMatchForm.get('home').touched">
+                    <small>Максимальна довжина: 1</small>
+                </div>
+                <div *ngIf="teamMatchForm.get('home').hasError('min') && teamMatchForm.get('home').touched">
+                    <small>Мінімальне значення: 0</small>
+                </div>
+                <div *ngIf="teamMatchForm.get('home').hasError('max') && teamMatchForm.get('home').touched">
+                    <small>Максимальне значення: 9</small>
+                </div>
+            </div>
+        </div>
+        <div class="col-6">
+            <div class="form-group"
+                 [class.form-group-invalid-custom]="teamMatchForm.get('away').invalid && teamMatchForm.get('away').touched">
+                <label for="away" class="font-weight-bold">Результат другої команди:</label>
+                <input type="number"
+                       id="away"
+                       class="form-control"
+                       formControlName="away">
+                <div *ngIf="teamMatchForm.get('away').hasError('maxLength') && teamMatchForm.get('away').touched">
+                    <small>Максимальна довжина: 1</small>
+                </div>
+                <div *ngIf="teamMatchForm.get('away').hasError('min') && teamMatchForm.get('away').touched">
+                    <small>Мінімальне значення: 0</small>
+                </div>
+                <div *ngIf="teamMatchForm.get('away').hasError('max') && teamMatchForm.get('away').touched">
+                    <small>Максимальне значення: 9</small>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div *ngIf="competitions" formArrayName="competitions" class="mb-2">
+        <label class="font-weight-bold">Змагання ({{competitionsFormArray.controls.length}}) | Раунд | Номер в раунді | Номер в змаганні:</label>
+        <div *ngFor="let competitionFormGroup of competitionsFormArray.controls; let i = index;"
+             [formGroup]="competitionFormGroup"
+             class="form-row mb-2">
+            <div class="col d-flex align-items-center justify-content-end">
+                {{i + 1}}.
+            </div>
+            <div class="col-4">
+                <div class="form-group mb-0"
+                     [class.form-group-invalid-custom]="competitionFormGroup.get('competition_id').invalid && competitionFormGroup.get('competition_id').touched">
+                    <select id="competition_id"
+                            class="form-control"
+                            formControlName="competition_id">
+                        <option *ngFor="let competition of competitions" [value]="competition.id">
+                            {{competition.title}}
+                        </option>
+                    </select>
+                    <div *ngIf="competitionFormGroup.get('competition_id').hasError('required') && competitionFormGroup.get('competition_id').touched">
+                        <small>Виберіть змагання зі списку або видаліть це поле</small>
+                    </div>
+                </div>
+            </div>
+            <div class="col-2">
+                <div class="form-group mb-0"
+                     [class.form-group-invalid-custom]="competitionFormGroup.get('round').invalid && competitionFormGroup.get('round').touched">
+                    <input type="number"
+                           id="round"
+                           class="form-control"
+                           formControlName="round">
+                    <div *ngIf="competitionFormGroup.get('round').hasError('required') && competitionFormGroup.get('round').touched">
+                        <small>Раунд обов'язковий</small>
+                    </div>
+                    <div *ngIf="competitionFormGroup.get('round').hasError('min') && competitionFormGroup.get('round').touched">
+                        <small>Мінімальне значення: 1</small>
+                    </div>
+                </div>
+            </div>
+            <div class="col-2">
+                <div class="form-group mb-0"
+                     [class.form-group-invalid-custom]="competitionFormGroup.get('number_in_round').invalid && competitionFormGroup.get('number_in_round').touched">
+                    <input type="number"
+                           id="number_in_round"
+                           class="form-control"
+                           formControlName="number_in_round">
+                    <div *ngIf="competitionFormGroup.get('number_in_round').hasError('required') && competitionFormGroup.get('number_in_round').touched">
+                        <small>Номер в раунді обов'язковий</small>
+                    </div>
+                    <div *ngIf="competitionFormGroup.get('number_in_round').hasError('min') && competitionFormGroup.get('number_in_round').touched">
+                        <small>Мінімальне значення: 1</small>
+                    </div>
+                </div>
+            </div>
+            <div class="col-2">
+                <div class="form-group mb-0"
+                     [class.form-group-invalid-custom]="competitionFormGroup.get('number_in_competition').invalid && competitionFormGroup.get('number_in_competition').touched">
+                    <input type="number"
+                           id="number_in_competition"
+                           class="form-control"
+                           formControlName="number_in_competition">
+                    <div *ngIf="competitionFormGroup.get('number_in_competition').hasError('required') && competitionFormGroup.get('number_in_competition').touched">
+                        <small>Номер в раунді обов'язковий</small>
+                    </div>
+                    <div *ngIf="competitionFormGroup.get('number_in_competition').hasError('min') && competitionFormGroup.get('number_in_competition').touched">
+                        <small>Мінімальне значення: 1</small>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <button type="button"
+                        title="Видалити"
+                        class="btn btn-danger"
+                        (click)="removeCompetition(i)">
+                    <i class="fa fa-trash" aria-hidden="true"></i>
+                </button>
+            </div>
+        </div>
+        <div>
+            <button type="button" class="btn btn-outline-success" (click)="addCompetition()">Добавити</button>
+        </div>
+    </div>
+    <div class="d-flex justify-content-between">
+        <button type="button" class="btn btn-outline-danger" (click)="resetTeamMatchForm()">Відмінити зміни</button>
+        <button type="submit" class="btn btn-primary">{{teamMatch ? 'Змінити' : 'Зберегти'}}</button>
+    </div>
+</form>
+<app-error *ngIf="errorCompetitions" [message]="errorCompetitions"></app-error>
+<app-error *ngIf="errorClubs" [message]="errorClubs"></app-error>

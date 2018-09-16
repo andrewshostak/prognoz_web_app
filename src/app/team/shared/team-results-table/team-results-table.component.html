@@ -26,9 +26,9 @@
         </tr>
     </thead>
     <tbody>
-        <tr *ngFor="let teamMatch of teamMatches"
+        <tr *ngFor="let teamMatch of teamMatches; let i = index;"
             [ngClass]="{'table-danger': !teamMatch.guessed && teamMatch.ended}">
-            <th scope="row" class="text-center d-table-cell">{{teamMatch.number_in_round}}.</th>
+            <th scope="row" class="text-center d-table-cell">{{i + 1}}.</th>
             <td class="text-nowrap">{{teamMatch.club_first.title}} - {{teamMatch.club_second.title}}</td>
             <td [hidden]="teamMatch.active" class="text-center d-table-cell">{{teamMatch.predictions}}</td>
             <td [hidden]="teamMatch.active" class="text-center d-table-cell text-nowrap"

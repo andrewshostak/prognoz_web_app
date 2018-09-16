@@ -1,0 +1,135 @@
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <h2 class="h2">Таблиця командних матчів:</h2>
+        </div>
+    </div>
+    <div *ngIf="teamMatches" class="row">
+        <div class="col-12">
+            <div class="table-responsive bg-white">
+                <table class="table table-bordered table-striped table-hover mb-0">
+                    <thead class="thead-dark">
+                    <tr>
+                        <th scope="col">Id</th>
+                        <th scope="col">Матч</th>
+                        <th scope="col" class="text-center" title="Кількість змагань">
+                            <table class="table table-sm mb-0">
+                                <tr>
+                                    <td class="table-dark" title="Раунд"><b>Р</b></td>
+                                    <td class="table-dark" title="Номер в раунді">НР</td>
+                                    <td class="table-dark" title="Номер в змаганні">НЗ</td>
+                                </tr>
+                            </table>
+                        </th>
+                        <th scope="col" class="text-center">Результат</th>
+                        <th scope="col" class="text-center" title="Добавити результат">
+                            <i class="fa fa-plus-circle" aria-hidden="true"></i>
+                        </th>
+                        <th scope="col" class="text-center" title="Кількість прогнозів">К.</th>
+                        <th scope="col" class="text-center" title="Кількість вгаданих результатів">
+                            <i class="fa fa-soccer-ball-o" aria-hidden="true"></i>
+                        </th>
+                        <th scope="col" class="text-center" title="Кількість заблокованих результатів">
+                            <i class="fa fa-lock" aria-hidden="true"></i>
+                        </th>
+                        <th scope="col" class="text-center" title="Очки / КС">О/КС</th>
+                        <th scope="col" class="text-center" title="Статус: Активний / Завершений">С.</th>
+                        <th scope="col">Дія</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr *ngFor="let teamMatch of teamMatches">
+                        <th scope="row" class="align-middle">{{teamMatch.id}}</th>
+                        <td class="text-nowrap align-middle">
+                            <img class="small-image"
+                                 [attr.src]="clubImagesUrl + teamMatch.club_first.image">
+                            <small class="text-muted">{{teamMatch.starts_at}}</small>
+                            <img class="small-image"
+                                 [attr.src]="clubImagesUrl + teamMatch.club_second.image"><br>
+                            <strong>{{teamMatch.club_first.title}}</strong> - <strong>{{teamMatch.club_second.title}}</strong>
+                        </td>
+                        <td class="text-center text-nowrap align-middle">
+                            <table class="table table-sm mb-0">
+                                <tr *ngFor="let competition of teamMatch.competitions" [attr.title]="competition.title">
+                                    <td><b>{{competition.pivot.round}}</b></td>
+                                    <td>{{competition.pivot.number_in_round}}</td>
+                                    <td>{{competition.pivot.number_in_competition}}</td>
+                                </tr>
+                            </table>
+                        </td>
+                        <td class="text-nowrap align-middle">
+                            <div class="form-row">
+                                <div class="col">
+                                    <input type="number"
+                                           class="form-control form-control-sm"
+                                           min="0"
+                                           max="9"
+                                           maxlength="1"
+                                           [disabled]="teamMatch.ended"
+                                           [(ngModel)]="teamMatch.home">
+                                </div>
+                                <div class="col">
+                                    <input type="number"
+                                           class="form-control form-control-sm"
+                                           min="0"
+                                           max="9"
+                                           maxlength="1"
+                                           [disabled]="teamMatch.ended"
+                                           [(ngModel)]="teamMatch.away">
+                                </div>
+                            </div>
+                        </td>
+                        <td class="align-middle">
+                            <div class="col">
+                                <button type="button"
+                                        class="btn btn-sm btn-block"
+                                        [disabled]="teamMatch.ended"
+                                        [ngClass]="teamMatch.ended ? 'btn-outline-secondary' : 'btn-primary'"
+                                        (click)="addResult(teamMatch)">
+                                    <i class="fa" [ngClass]="teamMatch.ended ? 'fa-ban' : 'fa-plus-circle'"></i>
+                                </button>
+                            </div>
+                        </td>
+                        <td class="text-center align-middle">{{teamMatch.predictions}}</td>
+                        <td class="text-center align-middle" [ngClass]="{'table-danger': teamMatch.guessed === 0}">{{teamMatch.guessed}}</td>
+                        <td class="text-center align-middle" [ngClass]="{'table-danger': teamMatch.blocked === 0}">{{teamMatch.blocked}}</td>
+                        <td class="text-center align-middle" [ngClass]="{'table-danger': teamMatch.points === 0}">
+                            {{teamMatch.ended ? teamMatch.points + ' / ' + teamMatch.dc : ''}}
+                        </td>
+                        <td class="align-middle">
+                            <i *ngIf="teamMatch.active" class="text-success fa fa-check-circle fa-lg" aria-hidden="true"></i>
+                            <i *ngIf="teamMatch.ended" class="text-danger fa fa-times fa-lg" aria-hidden="true"></i>
+                        </td>
+                        <td class="align-middle text-nowrap">
+                            <button *ngIf="!teamMatchHasEndedCompetitions(teamMatch); else noActionButton"
+                                    routerLink="/manage/team/matches/{{teamMatch.id}}/edit"
+                                    type="button"
+                                    class="btn btn-sm btn-warning">
+                                <i class="fa fa-pencil-square-o fa-lg" aria-hidden="true"></i>
+                            </button>
+                            <ng-template #noActionButton>
+                                <button disabled class="btn btn-sm btn-outline-secondary">
+                                    <i class="fa fa-ban fa-lg" aria-hidden="true"></i>
+                                </button>
+                            </ng-template>
+                            <button type="button"
+                                    [hidden]="teamMatch.ended"
+                                    class="btn btn-sm btn-danger"
+                                    (click)="deleteTeamMatch(teamMatch)">
+                                <i class="fa fa-trash-o fa-lg" aria-hidden="true"></i>
+                            </button>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <app-error *ngIf="errorTeamMatches" [message]="errorTeamMatches"></app-error>
+    <app-pagination *ngIf="teamMatches"
+                    [totalItems]="total"
+                    [currentPage]="currentPage"
+                    [pageSize]="perPage"
+                    [path]="path">
+    </app-pagination>
+</div>

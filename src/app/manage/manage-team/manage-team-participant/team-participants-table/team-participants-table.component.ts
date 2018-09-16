@@ -47,7 +47,7 @@ export class TeamParticipantsTableComponent implements OnDestroy, OnInit {
                     errors.for(error => this.notificationsService.error('Помилка', error));
                 }
             );
-        });
+        }, `Видалити заявку ${teamParticipant.user.name}?`);
     }
 
     ngOnDestroy() {

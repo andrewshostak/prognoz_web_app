@@ -115,7 +115,7 @@ export class CupMatchFormComponent implements OnChanges, OnInit {
 
     private createCupMatch(cupMatch: CupMatch): void {
         this.cupMatchService.createCupMatch(cupMatch).subscribe(
-            response => {
+            () => {
                 this.notificationsService.success('Успішно', 'Кубковий матч створено');
                 this.clearCupStagesFormArray();
                 this.cupMatchForm.reset({ starts_at: cupMatch.starts_at });

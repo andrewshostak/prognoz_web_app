@@ -30,7 +30,7 @@ export class TeamParticipantService {
                 params = params.append(requestParam.parameter, requestParam.value);
             }
         }
-        return this.httpClient.get(this.teamParticipantUrl, { params: params }).catch(this.errorHandlerService.handle);
+        return this.headersWithToken.get(this.teamParticipantUrl, params).catch(this.errorHandlerService.handle);
     }
 
     /**

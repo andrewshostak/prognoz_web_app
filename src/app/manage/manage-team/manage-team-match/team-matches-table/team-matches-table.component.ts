@@ -2,42 +2,43 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 
 import { ConfirmModalService } from '@services/confirm-modal.service';
-import { CupMatch } from '@models/cup/cup-match.model';
-import { CupMatchService } from '@services/cup/cup-match.service';
 import { environment } from '@env';
 import { NotificationsService } from 'angular2-notifications';
+import { RequestParams } from '@models/request-params.model';
 import { Subscription } from 'rxjs/Subscription';
+import { TeamMatch } from '@models/team/team-match.model';
+import { TeamMatchService } from '@services/team/team-match.service';
 
 @Component({
-    selector: 'app-cup-match-table',
-    templateUrl: './cup-match-table.component.html',
-    styleUrls: ['./cup-match-table.component.scss']
+    selector: 'app-team-matches-table',
+    templateUrl: './team-matches-table.component.html',
+    styleUrls: ['./team-matches-table.component.scss']
 })
-export class CupMatchTableComponent implements OnDestroy, OnInit {
+export class TeamMatchesTableComponent implements OnDestroy, OnInit {
     constructor(
         private activatedRoute: ActivatedRoute,
         private confirmModalService: ConfirmModalService,
-        private cupMatchService: CupMatchService,
+        private teamMatchService: TeamMatchService,
         private notificationsService: NotificationsService
     ) {}
 
     activatedRouteSubscription: Subscription;
-    cupMatches: CupMatch[];
     currentPage: number;
     clubImagesUrl: string;
-    errorCupMatches: string;
+    errorTeamMatches: string;
     lastPage: number;
     path: string;
     perPage: number;
+    teamMatches: TeamMatch[];
     total: number;
 
-    addResult(cupMatch: CupMatch): void {
-        this.cupMatchService.updateCupMatch(cupMatch, cupMatch.id).subscribe(
+    addResult(teamMatch: TeamMatch): void {
+        this.teamMatchService.updateTeamMatch(teamMatch).subscribe(
             response => {
                 this.notificationsService.success('Успішно', 'Результат в матчі ' + response.id + ' добавлено!');
-                const index = this.cupMatches.findIndex(item => item.id === cupMatch.id);
+                const index = this.teamMatches.findIndex(item => item.id === teamMatch.id);
                 if (index > -1) {
-                    this.cupMatches[index] = response;
+                    this.teamMatches[index] = response;
                 }
             },
             errors => {
@@ -46,20 +47,16 @@ export class CupMatchTableComponent implements OnDestroy, OnInit {
         );
     }
 
-    cupMatchHasEndedStages(cupMatch: CupMatch): boolean {
-        return cupMatch.cup_stages.some(cupStage => cupStage.ended);
-    }
-
-    deleteCupMatch(cupMatch: CupMatch): void {
+    deleteTeamMatch(teamMatch: TeamMatch): void {
         this.confirmModalService.show(() => {
-            this.cupMatchService.deleteCupMatch(cupMatch.id).subscribe(
+            this.teamMatchService.deleteTeamMatch(teamMatch.id).subscribe(
                 () => {
                     this.confirmModalService.hide();
                     this.total--;
-                    this.cupMatches = this.cupMatches.filter(match => match.id !== cupMatch.id);
+                    this.teamMatches = this.teamMatches.filter(match => match.id !== teamMatch.id);
                     this.notificationsService.success(
                         'Успішно',
-                        `Матч ${cupMatch.club_first.title} - ${cupMatch.club_second.title} видалено`
+                        `Матч ${teamMatch.club_first.title} - ${teamMatch.club_second.title} видалено`
                     );
                 },
                 errors => {
@@ -67,7 +64,11 @@ export class CupMatchTableComponent implements OnDestroy, OnInit {
                     errors.forEach(error => this.notificationsService.error('Помилка', error));
                 }
             );
-        }, `Видалити ${cupMatch.club_first.title} - ${cupMatch.club_second.title}?`);
+        }, `Видалити ${teamMatch.club_first.title} - ${teamMatch.club_second.title}?`);
+    }
+
+    teamMatchHasEndedCompetitions(teamMatch: TeamMatch): boolean {
+        return teamMatch.competitions.some(competition => competition.ended);
     }
 
     ngOnDestroy() {
@@ -78,18 +79,19 @@ export class CupMatchTableComponent implements OnDestroy, OnInit {
 
     ngOnInit() {
         this.clubImagesUrl = environment.apiImageClubs;
-        this.path = '/manage/cup/matches/page/';
+        this.path = '/manage/team/matches/page/';
         this.activatedRouteSubscription = this.activatedRoute.params.subscribe((params: Params) => {
-            this.cupMatchService.getCupMatches(params.number, null, null, 'starts_at', 'desc').subscribe(
+            const requestParams: RequestParams[] = [{ parameter: 'page', value: params.number }];
+            this.teamMatchService.getTeamMatches(requestParams).subscribe(
                 response => {
                     this.currentPage = response.current_page;
-                    this.lastPage = response.last_page;
+                    this.lastPage = response.lastPage;
                     this.perPage = response.per_page;
                     this.total = response.total;
-                    this.cupMatches = response.data;
+                    this.teamMatches = response.data;
                 },
                 error => {
-                    this.errorCupMatches = error;
+                    this.errorTeamMatches = error;
                 }
             );
         });

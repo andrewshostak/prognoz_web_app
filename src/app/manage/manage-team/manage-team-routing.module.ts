@@ -3,14 +3,14 @@ import { RouterModule, Routes } from '@angular/router';
 
 import { ManageTeamComponent } from './manage-team.component';
 import { ManageTeamGuard } from './shared/manage-team-guard.service';
+import { ManageTeamMatchComponent } from './manage-team-match/manage-team-match.component';
 import { ManageTeamParticipantComponent } from './manage-team-participant/manage-team-participant.component';
-import { TeamMatchCreateComponent } from './team-match-create/team-match-create.component';
-import { TeamMatchEditActiveComponent } from './team-match-edit-active/team-match-edit-active.component';
-import { TeamMatchEditComponent } from './team-match-edit/team-match-edit.component';
-import { TeamMatchEditEndedComponent } from './team-match-edit-ended/team-match-edit-ended.component';
+import { TeamMatchesTableComponent } from './manage-team-match/team-matches-table/team-matches-table.component';
 import { TeamParticipantCreateComponent } from './manage-team-participant/team-participant-create/team-participant-create.component';
 import { TeamParticipantEditComponent } from './manage-team-participant/team-participant-edit/team-participant-edit.component';
 import { TeamParticipantsTableComponent } from './manage-team-participant/team-participants-table/team-participants-table.component';
+import { TeamMatchCreateComponent } from './manage-team-match/team-match-create/team-match-create.component';
+import { TeamMatchEditComponent } from './manage-team-match/team-match-edit/team-match-edit.component';
 
 const routes: Routes = [
     {
@@ -29,13 +29,13 @@ const routes: Routes = [
                 ]
             },
             {
-                path: '',
-                canActivateChild: [ManageTeamGuard],
+                path: 'matches',
+                component: ManageTeamMatchComponent,
                 children: [
-                    { path: 'matches/create', component: TeamMatchCreateComponent },
-                    { path: 'matches/edit/active', component: TeamMatchEditActiveComponent },
-                    { path: 'matches/edit', component: TeamMatchEditComponent },
-                    { path: 'matches/edit/ended', component: TeamMatchEditEndedComponent }
+                    { path: 'page/:number', component: TeamMatchesTableComponent },
+                    { path: 'create', component: TeamMatchCreateComponent },
+                    { path: ':id/edit', component: TeamMatchEditComponent },
+                    { path: '', redirectTo: 'page/1', pathMatch: 'full' }
                 ]
             }
         ]

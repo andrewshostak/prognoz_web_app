@@ -22,8 +22,7 @@
                             <i class="fa fa-soccer-ball-o" aria-hidden="true"></i>
                         </th>
                         <th scope="col" class="text-center d-none d-lg-table-cell" title="Очки / КС">О/КС</th>
-                        <th scope="col" class="text-center" title="Активний">А.</th>
-                        <th scope="col" class="text-center" title="Завершений">З.</th>
+                        <th scope="col" class="text-center" title="Статус: Активний / Завершений">С.</th>
                         <th scope="col">Дія</th>
                     </tr>
                     </thead>
@@ -37,7 +36,6 @@
                             <img class="small-image"
                                  [attr.src]="clubImagesUrl + cupMatch.club_second.image"><br>
                             <strong>{{cupMatch.club_first.title}}</strong> - <strong>{{cupMatch.club_second.title}}</strong>
-
                         </td>
                         <td class="text-center align-middle d-none d-md-table-cell">{{cupMatch.cup_stages.length}}</td>
                         <td class="text-nowrap align-middle">
@@ -84,14 +82,13 @@
                         </td>
                         <td class="text-center align-middle">
                             <i *ngIf="cupMatch.active" class="text-success fa fa-check-circle fa-lg" aria-hidden="true"></i>
-                            <i *ngIf="!cupMatch.active" class="text-danger fa fa-times fa-lg" aria-hidden="true"></i>
-                        </td>
-                        <td class="text-center align-middle">
-                            <i *ngIf="cupMatch.ended" class="text-success fa fa-check-circle fa-lg" aria-hidden="true"></i>
-                            <i *ngIf="!cupMatch.ended" class="text-danger fa fa-times fa-lg" aria-hidden="true"></i>
+                            <i *ngIf="cupMatch.ended" class="text-danger fa fa-times fa-lg" aria-hidden="true"></i>
                         </td>
                         <td class="text-nowrap text-center">
-                            <button *ngIf="!matchHasEndedStages(cupMatch); else noActionButton" routerLink="/manage/cup/matches/{{cupMatch.id}}/edit" type="button" class="btn btn-sm btn-warning">
+                            <button *ngIf="!cupMatchHasEndedStages(cupMatch); else noActionButton"
+                                    routerLink="/manage/cup/matches/{{cupMatch.id}}/edit"
+                                    type="button"
+                                    class="btn btn-sm btn-warning">
                                 <i class="fa fa-pencil-square-o fa-lg" aria-hidden="true"></i>
                             </button>
                             <ng-template #noActionButton>
@@ -99,7 +96,10 @@
                                     <i class="fa fa-ban fa-lg" aria-hidden="true"></i>
                                 </button>
                             </ng-template>
-                            <button type="button" [hidden]="cupMatch.ended" class="btn btn-sm btn-danger" (click)="deleteCupMatch(cupMatch)">
+                            <button type="button"
+                                    [hidden]="cupMatch.ended"
+                                    class="btn btn-sm btn-danger"
+                                    (click)="deleteCupMatch(cupMatch)">
                                 <i class="fa fa-trash-o fa-lg" aria-hidden="true"></i>
                             </button>
                         </td>

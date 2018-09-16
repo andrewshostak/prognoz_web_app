@@ -1,13 +1,10 @@
 export class TeamMatch {
     id: number;
     competition_id: number;
-    round: number;
     t1_id: number;
     t2_id: number;
     home: number;
     away: number;
-    number_in_competition: number;
-    number_in_round: number;
     starts_at: string;
     predictions: number;
     points: number;
@@ -20,4 +17,14 @@ export class TeamMatch {
     club_first: any;
     club_second: any;
     team_predictions: any;
+    competitions?: {
+        id: number;
+        ended: boolean;
+        pivot: {
+            competition_id: number;
+            number_in_competition: number;
+            number_in_round: number;
+            round: number;
+        };
+    }[];
 }

@@ -17,7 +17,7 @@ export class CupMatchEditComponent implements OnInit {
 
     ngOnInit() {
         this.activatedRoute.params.forEach((params: Params) => {
-            this.getCupMatchData(params['id']);
+            this.getCupMatchData(params.id);
         });
     }
 

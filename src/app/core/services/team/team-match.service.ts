@@ -60,6 +60,18 @@ export class TeamMatchService {
     }
 
     /**
+     * Get team match
+     * @param {number} teamMatchId
+     * @returns {Observable<TeamMatch>}
+     */
+    getTeamMatch(teamMatchId: number): Observable<TeamMatch> {
+        return this.httpClient
+            .get(`${this.teamMatchUrl}/${teamMatchId}`)
+            .map(response => response['team_match'])
+            .catch(this.errorHandlerService.handle);
+    }
+
+    /**
      * Update team match
      * @param teamMatch
      * @returns {Observable<TeamMatch>}
@@ -69,5 +81,14 @@ export class TeamMatchService {
             .put(`${this.teamMatchUrl}/${teamMatch.id}`, teamMatch)
             .map(response => response['team_match'])
             .catch(this.errorHandlerService.handle);
+    }
+
+    /**
+     * Delete team match
+     * @param {number} teamMatchId
+     * @returns {Observable<void>}
+     */
+    deleteTeamMatch(teamMatchId: number): Observable<void> {
+        return this.headersWithToken.delete(`${this.teamMatchUrl}/${teamMatchId}`).catch(this.errorHandlerService.handle);
     }
 }

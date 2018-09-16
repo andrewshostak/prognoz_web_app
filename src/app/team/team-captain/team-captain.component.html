@@ -26,9 +26,9 @@
             </tr>
         </thead>
         <tbody>
-            <tr *ngFor="let teamMatch of teamMatches"
+            <tr *ngFor="let teamMatch of teamMatches; let i = index;"
                 [ngClass]="{'table-active': matchHasPrediction(teamMatch) && teamMatch.team_predictions[0].user_id === authenticatedUser.id}">
-                <th scope="row" class="text-center align-middle">{{teamMatch.number_in_round}}.</th>
+                <th scope="row" class="text-center align-middle">{{i + 1}}.</th>
                 <td>
                     <table class="table table-bordered table-sm mb-0">
                         <tr [ngClass]="{'table-success': isTeamMatchGuessed(teamMatch, teamParticipants[0].team_id),
