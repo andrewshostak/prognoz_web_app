@@ -106,7 +106,8 @@ export class TeamSquadsComponent implements OnDestroy, OnInit {
             team_id: teamId,
             user_id: this.authenticatedUser.id,
             captain: true,
-            confirmed: true
+            confirmed: true,
+            competition_id: this.competitionId
         };
         this.teamParticipantService.createTeamParticipant(teamParticipant).subscribe(
             response => {
@@ -129,7 +130,8 @@ export class TeamSquadsComponent implements OnDestroy, OnInit {
             team_id: team.id,
             user_id: this.authenticatedUser.id,
             captain: false,
-            confirmed: false
+            confirmed: false,
+            competition_id: this.competitionId
         };
         this.teamParticipantService.createTeamParticipant(teamParticipant).subscribe(
             response => {
