@@ -24,7 +24,7 @@
                             <select id="to"
                                     class="form-control"
                                     formControlName="to">
-                                <option *ngFor="let cupStage of cupStages" [value]="cupStage.id">{{cupStage.title}}</option>
+                                <option *ngFor="let cupStage of cupStages" [value]="cupStage.id">{{cupStage.title}} - {{cupStage.competition.title}}</option>
                             </select>
                             <div *ngIf="cupCupMatchAutoForm.get('to').hasError('required') && cupCupMatchAutoForm.get('to').touched">
                                 <small>Кубкова стадія обов'язкова</small>
