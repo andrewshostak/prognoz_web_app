@@ -71,9 +71,11 @@ export class TeamCaptainComponent implements OnInit, OnDestroy {
                 if (this.currentTeamId === teamTeamMatch.home_team_id) {
                     this.teamTeamMatch = teamTeamMatch;
                     this.goalkeeperId = teamTeamMatch.home_team_goalkeeper_id;
+                    break;
                 } else if (this.currentTeamId === teamTeamMatch.away_team_id) {
                     this.teamTeamMatch = teamTeamMatch;
                     this.goalkeeperId = teamTeamMatch.away_team_goalkeeper_id;
+                    break;
                 }
             }
         }
@@ -245,8 +247,8 @@ export class TeamCaptainComponent implements OnInit, OnDestroy {
                     return;
                 }
 
-                this.getCurrentTeamTeamMatch();
                 this.teamTeamMatches = response.data;
+                this.getCurrentTeamTeamMatch();
             },
             error => {
                 this.teamTeamMatches = null;
