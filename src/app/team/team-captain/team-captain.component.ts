@@ -235,7 +235,7 @@ export class TeamCaptainComponent implements OnInit, OnDestroy {
     private getTeamTeamMatchesData(competitionId: number, round?: number) {
         const params: RequestParams[] = [{ parameter: 'competition_id', value: competitionId.toString() }];
         if (round) {
-            params.push({ parameter: 'round', value: round.toString() });
+            params.push({ parameter: 'page', value: round.toString() });
         }
         this.teamTeamMatchService.getTeamTeamMatches(params).subscribe(
             response => {
