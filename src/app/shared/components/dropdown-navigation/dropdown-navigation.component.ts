@@ -54,7 +54,7 @@ export class DropdownNavigationComponent implements OnInit {
             return;
         }
 
-        this.router.navigate([`${this.navigationPath}/${id}`]);
+        this.router.navigate(this.navigationPath.concat(id));
     }
 
     navigateToCupMatchesByStage(path: any[], id: number): void {

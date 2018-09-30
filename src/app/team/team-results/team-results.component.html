@@ -6,11 +6,11 @@
     <i class="fa fa-refresh fa-fw" aria-hidden="true"></i>
   </button>
 </h2>
-<app-team-round-navigation *ngIf="teamMatches"
-                           [matches]="teamMatches"
-                           [nextRound]="nextRound"
-                           [previousRound]="previousRound"
-                           [path]="path">
-</app-team-round-navigation>
+<div class="mb-2">
+    <app-dropdown-navigation [dropdownItems]="roundsArray"
+                             [selectedId]="round"
+                             [navigationPath]="['/team', 'competitions', competitionId, 'results', 'round']">
+    </app-dropdown-navigation>
+</div>
 <app-team-results-table [teamMatches]="teamMatches" [error]="errorTeamMatches">
 </app-team-results-table>

@@ -84,4 +84,14 @@ export class UtilsService {
                 }
             });
     }
+
+    static createRoundsArray(numberOfTeams: number): { id: number; title: string }[] {
+        const numberOfRounds = numberOfTeams * 2 - 2;
+        const roundsArray: { id: number; title: string }[] = [];
+        for (let i = 1; i <= numberOfRounds; i++) {
+            roundsArray.push({ id: i, title: 'Тур ' + i });
+        }
+
+        return roundsArray;
+    }
 }

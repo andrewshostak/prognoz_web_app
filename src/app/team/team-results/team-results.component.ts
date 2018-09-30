@@ -1,11 +1,14 @@
 import { Component, OnDestroy } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 
+import { Competition } from '@models/competition.model';
+import { CompetitionService } from '@services/competition.service';
 import { RequestParams } from '@models/request-params.model';
 import { Subscription } from 'rxjs/Subscription';
 import { TeamMatch } from '@models/team/team-match.model';
 import { TeamMatchService } from '@services/team/team-match.service';
 import { TitleService } from '@services/title.service';
+import { UtilsService } from '@services/utils.service';
 
 @Component({
     selector: 'app-team-results',
@@ -13,20 +16,39 @@ import { TitleService } from '@services/title.service';
     styleUrls: ['./team-results.component.scss']
 })
 export class TeamResultsComponent implements OnDestroy {
-    constructor(private router: Router, private titleService: TitleService, private teamMatchService: TeamMatchService) {
+    constructor(
+        private competitionService: CompetitionService,
+        private router: Router,
+        private titleService: TitleService,
+        private teamMatchService: TeamMatchService
+    ) {
         this.subscribeToRouterEvents();
     }
 
+    competition: Competition;
     competitionId: number;
     errorTeamMatches: string;
-    nextRound: string;
-    path: string;
-    previousRound: string;
-    round: number;
+    errorCompetition: string;
+    round = 1;
+    roundsArray: { id: number; title: string }[];
     routerEventsSubscription: Subscription;
     teamMatches: TeamMatch[];
 
-    getTeamMatchesData(competitionId: number, round?: number) {
+    getCompetitionData(competitionId: number): void {
+        this.competitionService.getCompetition(competitionId).subscribe(
+            response => {
+                this.errorCompetition = null;
+                this.competition = response;
+                this.roundsArray = UtilsService.createRoundsArray(this.competition.number_of_teams);
+            },
+            error => {
+                this.competition = null;
+                this.errorCompetition = error;
+            }
+        );
+    }
+
+    getTeamMatchesData(competitionId: number, round?: number): void {
         const params: RequestParams[] = [
             { parameter: 'filter', value: 'round' },
             { parameter: 'competition_id', value: competitionId.toString() }
@@ -38,8 +60,8 @@ export class TeamResultsComponent implements OnDestroy {
             response => {
                 if (response) {
                     this.teamMatches = response.data;
-                    this.nextRound = response.next_page_url;
-                    this.previousRound = response.prev_page_url;
+                } else {
+                    this.teamMatches = null;
                 }
                 this.errorTeamMatches = null;
             },
@@ -58,10 +80,6 @@ export class TeamResultsComponent implements OnDestroy {
 
     private setPageTitle(): void {
         this.titleService.setTitle(`Результати ${this.round ? this.round + ' туру' : 'поточного туру'} - Командний`);
-    }
-
-    private setPath(competitionId: number): void {
-        this.path = `/team/competitions/${competitionId}/results/round/`;
     }
 
     private subscribeToRouterEvents(): void {
@@ -85,8 +103,10 @@ export class TeamResultsComponent implements OnDestroy {
                     return;
                 }
 
-                this.setPath(this.competitionId);
                 this.getTeamMatchesData(this.competitionId, this.round);
+                if (!this.competition || (this.competition && this.competition.id !== this.competitionId)) {
+                    this.getCompetitionData(this.competitionId);
+                }
             }
         });
     }
