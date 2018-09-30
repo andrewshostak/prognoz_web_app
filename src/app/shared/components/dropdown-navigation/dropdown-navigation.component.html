@@ -1,0 +1,29 @@
+<div class="input-group" [formGroup]="form"[ngClass]="formSize ? 'input-group-' + formSize : ''">
+    <div class="input-group-prepend">
+        <button type="button"
+                class="btn"
+                (click)="previous()"
+                [ngClass]="isFirst() ? 'btn-outline-secondary' : 'btn-outline-primary'"
+                [disabled]="isFirst()">
+            <i class="fa fa-caret-left" aria-hidden="true"></i>
+        </button>
+    </div>
+    <select class="custom-select"
+            [ngClass]="formSize ? 'form-control-' + formSize : ''"
+            id="id"
+            formControlName="id">
+        <option *ngFor="let dropdownItem of dropdownItems"
+                [value]="dropdownItem.id">
+            {{dropdownItem.title}}
+        </option>
+    </select>
+    <div class="input-group-append">
+        <button type="button"
+                class="btn"
+                (click)="next()"
+                [ngClass]="isLast() ? 'btn-outline-secondary' : 'btn-outline-primary'"
+                [disabled]="isLast()">
+            <i class="fa fa-caret-right" aria-hidden="true"></i>
+        </button>
+    </div>
+</div>

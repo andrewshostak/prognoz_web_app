@@ -11,6 +11,7 @@ import { ChampionshipUserPredictionsTableComponent } from './components/champion
 import { ChartsModule } from 'ng2-charts';
 import { ConfirmModalComponent } from './components/confirm-modal/confirm-modal.component';
 import { ConfirmModalNewComponent } from './components/confirm-modal-new/confirm-modal-new.component';
+import { DropdownNavigationComponent } from './components/dropdown-navigation/dropdown-navigation.component';
 import { ErrorComponent } from './components/error/error.component';
 import { InfoComponent } from './components/info/info.component';
 import { LastUserComponent } from './components/last-user/last-user.component';
@@ -31,6 +32,7 @@ import { TimePipe } from './pipes/time.pipe';
         ChampionshipUserRatingDetailsComponent,
         ConfirmModalComponent,
         ConfirmModalNewComponent,
+        DropdownNavigationComponent,
         ErrorComponent,
         InfoComponent,
         LastUserComponent,
@@ -49,6 +51,7 @@ import { TimePipe } from './pipes/time.pipe';
         ChampionshipUserRatingDetailsComponent,
         ConfirmModalComponent,
         ConfirmModalNewComponent,
+        DropdownNavigationComponent,
         ErrorComponent,
         InfoComponent,
         LastUserComponent,

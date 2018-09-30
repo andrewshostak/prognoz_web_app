@@ -64,30 +64,11 @@
                     </span>
                     </div>
                     <div class="col-12 col-md-6 col-lg-4 d-flex align-items-center">
-                        <div *ngIf="competitionsCupStages[cupStage.competition_id.toString()]"
-                             class="input-group input-group-sm">
-                            <div class="input-group-prepend">
-                                <button (click)="previousStage(cupStage.competition_id, cupStageSelect.value)"
-                                        class="btn btn-outline-primary"
-                                        type="button">
-                                    <i class="fa fa-caret-left" aria-hidden="true"></i>
-                                </button>
-                            </div>
-                            <select class="custom-select form-control-sm"
-                                    id="cup-stage-select"
-                                    [(ngModel)]="cupStage.id"
-                                    #cupStageSelect
-                                    (ngModelChange)="cupStageChanged($event)">
-                                <option *ngFor="let cupStage of competitionsCupStages[cupStage.competition_id.toString()]" [value]="cupStage.id">{{cupStage.title}}</option>
-                            </select>
-                            <div class="input-group-append">
-                                <button (click)="nextStage(cupStage.competition_id, cupStageSelect.value)"
-                                        class="btn btn-outline-primary"
-                                        type="button">
-                                    <i class="fa fa-caret-right" aria-hidden="true"></i>
-                                </button>
-                            </div>
-                        </div>
+                        <app-dropdown-navigation [dropdownItems]="competitionsCupStages[cupStage.competition_id.toString()]"
+                                                 [selectedId]="cupStage.id"
+                                                 [navigationPath]="['/cup', 'cup-matches', { cup_stage_id: ':id' }]"
+                                                 [formSize]="'sm'">
+                        </app-dropdown-navigation>
                     </div>
                 </div>
             </div>

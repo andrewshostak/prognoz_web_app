@@ -52,10 +52,6 @@ export class CupCupMatchesComponent implements OnInit, OnDestroy {
     userImagesUrl: string;
     userSubscription: Subscription;
 
-    cupStageChanged(cupStageId): void {
-        this.router.navigate(['/cup', 'cup-matches', { cup_stage_id: cupStageId }]);
-    }
-
     currentUserCupCupMatch(cupCupMatch): boolean {
         if (!this.authenticatedUser) {
             return false;
@@ -67,17 +63,6 @@ export class CupCupMatchesComponent implements OnInit, OnDestroy {
         if (!this.seasons) {
             this.getSeasonsData();
         }
-    }
-
-    nextStage(selectedCompetitionId: number, selectedCupStageId: string): void {
-        const competitionId = selectedCompetitionId.toString();
-        const index = this.competitionsCupStages[competitionId].findIndex(cupStage => cupStage.id.toString() === selectedCupStageId);
-
-        if (index === this.competitionsCupStages[competitionId].length - 1 || !this.competitionsCupStages[competitionId][index + 1]) {
-            return;
-        }
-
-        this.router.navigate(['/cup', 'cup-matches', { cup_stage_id: this.competitionsCupStages[competitionId][index + 1].id }]);
     }
 
     ngOnDestroy() {
@@ -143,17 +128,6 @@ export class CupCupMatchesComponent implements OnInit, OnDestroy {
                 this.router.navigate(['/cup', 'cup-matches', { cup_stage_id: value }]);
             }
         });
-    }
-
-    previousStage(selectedCompetitionId: number, selectedCupStageId: string): void {
-        const competitionId = selectedCompetitionId.toString();
-        const index = this.competitionsCupStages[competitionId].findIndex(cupStage => cupStage.id.toString() === selectedCupStageId);
-
-        if (index === 0 || !this.competitionsCupStages[competitionId][index - 1]) {
-            return;
-        }
-
-        this.router.navigate(['/cup', 'cup-matches', { cup_stage_id: this.competitionsCupStages[competitionId][index - 1].id }]);
     }
 
     resetCupCupMatchesFormFilters(): void {
