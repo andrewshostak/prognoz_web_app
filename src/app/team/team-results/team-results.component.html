@@ -9,7 +9,8 @@
 <div *ngIf="roundsArray && round" class="mb-2">
     <app-dropdown-navigation [dropdownItems]="roundsArray"
                              [selectedId]="round"
-                             [navigationPath]="['/team', 'competitions', competitionId, 'results', 'round']">
+                             [navigationPath]="['/team', 'competitions', competitionId, 'results', 'round']"
+                             [formSize]="'lg'">
     </app-dropdown-navigation>
 </div>
 <app-team-results-table [teamMatches]="teamMatches" [error]="errorTeamMatches">

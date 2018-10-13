@@ -5,12 +5,12 @@ import { Subscription } from 'rxjs/Subscription';
 import { AuthService } from '@services/auth.service';
 import { CompetitionService } from '@services/competition.service';
 import { CurrentStateService } from '@services/current-state.service';
-import { environment } from '@env';
 import { RequestParams } from '@models/request-params.model';
 import { TeamTeamMatch } from '@models/team/team-team-match.model';
 import { TeamTeamMatchService } from '@services/team/team-team-match.service';
 import { TitleService } from '@services/title.service';
 import { User } from '@models/user.model';
+import { UtilsService } from '@services/utils.service';
 
 @Component({
     selector: 'app-team-matches',
@@ -34,13 +34,38 @@ export class TeamMatchesComponent implements OnInit, OnDestroy {
     competitionId: number;
     errorCompetition: string;
     errorTeamTeamMatches: string;
-    nextRound: string;
-    previousRound: string;
-    path: string;
     routerEventsSubscription: Subscription;
     round: number;
+    roundsArray: { id: number; title: string }[];
     teamTeamMatches: TeamTeamMatch[];
     userSubscription: Subscription;
+
+    getTeamTeamMatchesData(competitionId: number, round?: number) {
+        const params: RequestParams[] = [{ parameter: 'competition_id', value: competitionId.toString() }];
+        if (round) {
+            params.push({ parameter: 'page', value: round.toString() });
+        }
+        this.teamTeamMatchService.getTeamTeamMatches(params).subscribe(
+            response => {
+                this.errorTeamTeamMatches = null;
+                if (!response) {
+                    this.teamTeamMatches = null;
+                    return;
+                }
+
+                if (!this.round) {
+                    this.round = response.current_page;
+                }
+
+                this.teamTeamMatches = response.data;
+                this.roundsArray = UtilsService.createRoundsArrayFromTeamsQuantity(response.per_page * 2);
+            },
+            error => {
+                this.teamTeamMatches = null;
+                this.errorTeamTeamMatches = error;
+            }
+        );
+    }
 
     ngOnDestroy() {
         if (!this.routerEventsSubscription.closed) {
@@ -57,57 +82,8 @@ export class TeamMatchesComponent implements OnInit, OnDestroy {
         });
     }
 
-    getTeamTeamMatchesData(competitionId: number, round?: number) {
-        const params: RequestParams[] = [{ parameter: 'competition_id', value: competitionId.toString() }];
-        if (round) {
-            params.push({ parameter: 'page', value: round.toString() });
-        }
-        this.teamTeamMatchService.getTeamTeamMatches(params).subscribe(
-            response => {
-                this.errorTeamTeamMatches = null;
-                if (!response) {
-                    this.teamTeamMatches = null;
-                    this.nextRound = null;
-                    this.previousRound = null;
-                    return;
-                }
-
-                this.teamTeamMatches = response.data;
-                this.nextRound = response.next_page_url;
-                this.previousRound = response.prev_page_url;
-            },
-            error => {
-                this.teamTeamMatches = null;
-                this.nextRound = null;
-                this.previousRound = null;
-                this.errorTeamTeamMatches = error;
-            }
-        );
-    }
-
-    private getCompetitionData() {
-        this.competitionService.getCompetition(this.competitionId).subscribe(
-            response => {
-                this.errorCompetition = null;
-                if (response.stated) {
-                    this.router.navigate(['/team', 'competitions', response.id, 'squads']);
-                    return;
-                }
-
-                this.getTeamTeamMatchesData(this.competitionId, response.active_round);
-            },
-            error => {
-                this.errorCompetition = error;
-            }
-        );
-    }
-
     private setPageTitle(): void {
         this.titleService.setTitle(`Матчі ${this.round ? this.round + ' туру' : 'поточного туру'} - Командний`);
-    }
-
-    private setPath(competitionId: number): void {
-        this.path = `/team/competitions/${competitionId}/matches/round/`;
     }
 
     private subscribeToRouterEvents(): void {
@@ -128,13 +104,6 @@ export class TeamMatchesComponent implements OnInit, OnDestroy {
                 this.setPageTitle();
 
                 if (!this.competitionId) {
-                    return;
-                }
-
-                this.setPath(this.competitionId);
-
-                if (!this.round) {
-                    this.getCompetitionData();
                     return;
                 }
 

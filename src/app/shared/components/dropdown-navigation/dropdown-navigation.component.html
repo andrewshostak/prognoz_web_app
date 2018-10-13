@@ -1,14 +1,15 @@
-<div class="input-group" [formGroup]="form"[ngClass]="formSize ? 'input-group-' + formSize : ''">
-    <div class="input-group-prepend">
+<div class="input-group blue-shadow rounded" [formGroup]="form" [ngClass]="formSize ? 'input-group-' + formSize : ''">
+    <div class="input-group-prepend bg-white rounded">
         <button type="button"
                 class="btn"
                 (click)="previous()"
                 [ngClass]="isFirst() ? 'btn-outline-secondary' : 'btn-outline-primary'"
                 [disabled]="isFirst()">
-            <i class="fa fa-caret-left" aria-hidden="true"></i>
+            <i class="fa fa-chevron-circle-left" aria-hidden="true"></i>
+            <small [hidden]="formSize === 'sm'" class="d-none d-lg-inline font-weight-bold">Попередній</small>
         </button>
     </div>
-    <select class="custom-select"
+    <select class="custom-select border border-primary"
             [ngClass]="formSize ? 'form-control-' + formSize : ''"
             id="id"
             formControlName="id">
@@ -17,13 +18,14 @@
             {{dropdownItem.title}}
         </option>
     </select>
-    <div class="input-group-append">
+    <div class="input-group-append bg-white rounded">
         <button type="button"
                 class="btn"
                 (click)="next()"
                 [ngClass]="isLast() ? 'btn-outline-secondary' : 'btn-outline-primary'"
                 [disabled]="isLast()">
-            <i class="fa fa-caret-right" aria-hidden="true"></i>
+            <small [hidden]="formSize === 'sm'" class="d-none d-lg-inline font-weight-bold">Наступний</small>
+            <i class="fa fa-chevron-circle-right" aria-hidden="true"></i>
         </button>
     </div>
 </div>

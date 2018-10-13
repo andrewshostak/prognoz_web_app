@@ -1,7 +1,6 @@
 import { Component, OnDestroy } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 
-import { Competition } from '@models/competition.model';
 import { CompetitionService } from '@services/competition.service';
 import { RequestParams } from '@models/request-params.model';
 import { Subscription } from 'rxjs/Subscription';
@@ -25,28 +24,12 @@ export class TeamResultsComponent implements OnDestroy {
         this.subscribeToRouterEvents();
     }
 
-    competition: Competition;
     competitionId: number;
     errorTeamMatches: string;
-    errorCompetition: string;
     round: number;
     roundsArray: { id: number; title: string }[];
     routerEventsSubscription: Subscription;
     teamMatches: TeamMatch[];
-
-    getCompetitionData(competitionId: number): void {
-        this.competitionService.getCompetition(competitionId).subscribe(
-            response => {
-                this.errorCompetition = null;
-                this.competition = response;
-                this.roundsArray = UtilsService.createRoundsArray(this.competition.number_of_teams);
-            },
-            error => {
-                this.competition = null;
-                this.errorCompetition = error;
-            }
-        );
-    }
 
     getTeamMatchesData(competitionId: number, round?: number): void {
         const params: RequestParams[] = [
@@ -58,13 +41,18 @@ export class TeamResultsComponent implements OnDestroy {
         }
         this.teamMatchService.getTeamMatches(params).subscribe(
             response => {
-                if (response) {
-                    this.round = response.current_page;
-                    this.teamMatches = response.data;
-                } else {
-                    this.teamMatches = null;
-                }
                 this.errorTeamMatches = null;
+                if (!response) {
+                    this.teamMatches = null;
+                    return;
+                }
+
+                if (!this.round) {
+                    this.round = response.current_page;
+                }
+
+                this.teamMatches = response.data;
+                this.roundsArray = UtilsService.createRoundsArray(response.last_page);
             },
             error => {
                 this.errorTeamMatches = error;
@@ -105,9 +93,6 @@ export class TeamResultsComponent implements OnDestroy {
                 }
 
                 this.getTeamMatchesData(this.competitionId, this.round);
-                if (!this.competition || (this.competition && this.competition.id !== this.competitionId)) {
-                    this.getCompetitionData(this.competitionId);
-                }
             }
         });
     }

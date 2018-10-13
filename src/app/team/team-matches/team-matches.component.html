@@ -8,12 +8,13 @@
 </h2>
 <!-- error competition -->
 <app-error *ngIf="errorCompetition" [message]="errorCompetition"></app-error>
-<app-team-round-navigation *ngIf="teamTeamMatches"
-                           [matches]="teamTeamMatches"
-                           [nextRound]="nextRound"
-                           [previousRound]="previousRound"
-                           [path]="path">
-</app-team-round-navigation>
+<div *ngIf="roundsArray && round" class="mb-2">
+    <app-dropdown-navigation [dropdownItems]="roundsArray"
+                             [selectedId]="round"
+                             [navigationPath]="['/', 'team', 'competitions', competitionId, 'matches', 'round']"
+                             [formSize]="'lg'">
+    </app-dropdown-navigation>
+</div>
 <!-- error team matches -->
 <app-error *ngIf="errorTeamTeamMatches" [message]="errorTeamTeamMatches"></app-error>
 <div *ngIf="teamTeamMatches" class="row no-gutters black-shadow mb-1">

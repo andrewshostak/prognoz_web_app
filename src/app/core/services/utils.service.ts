@@ -85,13 +85,15 @@ export class UtilsService {
             });
     }
 
-    static createRoundsArray(numberOfTeams: number): { id: number; title: string }[] {
+    static createRoundsArrayFromTeamsQuantity(numberOfTeams: number): { id: number; title: string }[] {
         const numberOfRounds = numberOfTeams * 2 - 2;
-        const roundsArray: { id: number; title: string }[] = [];
-        for (let i = 1; i <= numberOfRounds; i++) {
-            roundsArray.push({ id: i, title: 'Тур ' + i });
-        }
+        return this.createRoundsArray(numberOfRounds);
+    }
 
-        return roundsArray;
+    static createRoundsArray(numberOfRounds: number): { id: number; title: string }[] {
+        return Array.from({ length: numberOfRounds }).map((item, index) => {
+            const round = ++index;
+            return { id: round, title: `Тур ${round}` };
+        });
     }
 }
