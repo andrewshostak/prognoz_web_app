@@ -29,7 +29,7 @@ export class TeamResultsComponent implements OnDestroy {
     competitionId: number;
     errorTeamMatches: string;
     errorCompetition: string;
-    round = 1;
+    round: number;
     roundsArray: { id: number; title: string }[];
     routerEventsSubscription: Subscription;
     teamMatches: TeamMatch[];
@@ -59,6 +59,7 @@ export class TeamResultsComponent implements OnDestroy {
         this.teamMatchService.getTeamMatches(params).subscribe(
             response => {
                 if (response) {
+                    this.round = response.current_page;
                     this.teamMatches = response.data;
                 } else {
                     this.teamMatches = null;
