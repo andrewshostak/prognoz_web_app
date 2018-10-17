@@ -18,6 +18,7 @@ import { LastUserComponent } from './components/last-user/last-user.component';
 import { NavigationComponent } from './components/navigation/navigation.component';
 import { OnlineUsersListComponent } from './components/online-users-list/online-users-list.component';
 import { PaginationComponent } from './components/pagination/pagination.component';
+import { SocialMedialLinksComponent } from './components/social-medial-links/social-medial-links.component';
 import { SpinnerButtonComponent } from './components/spinner-button/spinner-button.component';
 import { SpinnerComponent } from './components/spinner/spinner.component';
 import { TimePipe } from './pipes/time.pipe';
@@ -39,6 +40,7 @@ import { TimePipe } from './pipes/time.pipe';
         NavigationComponent,
         OnlineUsersListComponent,
         PaginationComponent,
+        SocialMedialLinksComponent,
         SpinnerComponent,
         SpinnerButtonComponent,
         TimePipe
@@ -58,6 +60,7 @@ import { TimePipe } from './pipes/time.pipe';
         NavigationComponent,
         OnlineUsersListComponent,
         PaginationComponent,
+        SocialMedialLinksComponent,
         SpinnerComponent,
         SpinnerButtonComponent,
         TimePipe
