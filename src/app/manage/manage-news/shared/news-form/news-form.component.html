@@ -1,0 +1,82 @@
+<form novalidate [formGroup]="newsForm" (ngSubmit)="onSubmit()" class="bg-dark p-2 rounded">
+    <!-- title -->
+    <div class="form-group"
+         [class.form-group-invalid-custom]="newsForm.get('title').invalid && newsForm.get('title').touched">
+        <label class="form-control-label" for="title"><strong>Заголовок:</strong></label>
+        <input type="text"
+               id="title"
+               placeholder="Введіть заголовок новини"
+               class="form-control"
+               formControlName="title">
+        <div *ngIf="newsForm.get('title').hasError('required') && newsForm.get('title').touched">
+            <small>Заголовок новини обов'язковий</small>
+        </div>
+        <div *ngIf="newsForm.get('title').hasError('minlength') && newsForm.get('title').touched">
+            <small>Заголовок повинен бути більшим ніж 10 символів</small>
+        </div>
+        <div *ngIf="newsForm.get('title').hasError('maxlength') && newsForm.get('title').touched">
+            <small>Заголовок перевищує сто символів</small>
+        </div>
+    </div>
+    <!-- body -->
+    <div class="form-group"
+         [class.form-group-invalid-custom]="newsForm.get('body').invalid && newsForm.get('body').touched">
+        <label class="form-control-label" for="body"><strong>Текст:</strong></label>
+        <quill-editor #editor
+                      id="body"
+                      placeholder="Введіть текст новини"
+                      [formControl]="newsForm.controls['body']"
+                      [modules]="editorModules">
+        </quill-editor>
+        <div *ngIf="newsForm.get('body').hasError('required') && newsForm.get('body').touched">
+            <small>Текст новини обов'язковий</small>
+        </div>
+        <div *ngIf="newsForm.get('body').hasError('minlength') && newsForm.get('body').touched">
+            <small>Текст новини повинен бути більшим ніж 50 символів</small>
+        </div>
+        <div *ngIf="newsForm.get('body').hasError('maxlength') && newsForm.get('body').touched">
+            <small>Текст новини перевищує 3000 символів</small>
+        </div>
+    </div>
+    <!-- tournament -->
+    <div class="form-group" [class.form-group-invalid-custom]="newsForm.get('tournament_id').invalid && newsForm.get('tournament_id').touched">
+        <label class="form-control-label" for="tournament_id"><strong>Категорія:</strong></label>
+        <select id="tournament_id"
+                class="form-control"
+                formControlName="tournament_id">
+            <option [ngValue]="null">Інше</option>
+            <option value="1">Чемпіонат</option>
+            <option value="2">Кубок</option>
+            <option value="3">Командний</option>
+        </select>
+        <div *ngIf="newsForm.get('tournament_id').hasError('required') && newsForm.get('tournament_id').touched">
+            <small>Вибір категорії обов'язковий</small>
+        </div>
+    </div>
+    <!-- image -->
+    <div *ngIf="news; else imageUploadInfo;">
+        <div class="text-center mb-2">
+            <img class="img-fluid" src="{{newsImagesUrl}}{{news.image}}" alt="{{news.title}}">
+        </div>
+        <app-info [message]="'При зміні зображення ваш браузер всеодно деякий час буде відображати попереднє.'"></app-info>
+    </div>
+    <ng-template #imageUploadInfo>
+        <app-info [message]="'Завантажте зображення в форматі 1:1 (квадратне) для кращого відображення на сайті.'"></app-info>
+    </ng-template>
+    <div class="form-group" [class.form-group-invalid-custom]="errorImage">
+        <label class="form-control-label" for="image"><strong>{{news ? 'Змінити зображення' : 'Зображення'}}:</strong></label>
+        <input type="file"
+               id="image"
+               placeholder="Завантажте зображення для новини"
+               class="form-control"
+               (change)="fileChange($event)"
+               accept=".png,.jpg,.gif,.jpeg">
+        <div *ngIf="errorImage">
+            <small>{{errorImage}}</small>
+        </div>
+    </div>
+    <!-- submit button -->
+    <button [hidden]="spinnerButton" [disabled]="newsForm.invalid || errorImage" type="submit" class="btn btn-primary">Змінити</button>
+    <!-- spinner button -->
+    <app-spinner-button [hidden]="!spinnerButton"></app-spinner-button>
+</form>

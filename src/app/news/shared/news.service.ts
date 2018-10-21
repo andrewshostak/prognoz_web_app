@@ -63,11 +63,12 @@ export class NewsService {
     /**
      * Update one news item
      * @param news
+     * @param newsId
      * @returns {Observable<News>}
      */
-    updateNewsItem(news: News): Observable<News> {
+    updateNewsItem(news: News, newsId: number): Observable<News> {
         return this.headersWithToken
-            .put(`${this.newsUrl}/${news.id}`, news)
+            .put(`${this.newsUrl}/${newsId}`, news)
             .map(response => response['news'])
             .catch(this.errorHandlerService.handle);
     }

@@ -119,6 +119,12 @@ body {
             left: -7px;
         }
     }
+
+    .ql-container,
+    .ql-toolbar {
+        background-color: $white;
+        color: $black;
+    }
 }
 
 [hidden] {

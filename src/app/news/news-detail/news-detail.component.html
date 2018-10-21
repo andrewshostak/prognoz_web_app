@@ -15,7 +15,7 @@
                     <h4 class="card-header">{{news.title}}</h4>
                     <img class="card-img-top img-fluid p-sm-2" src="{{newsImagesUrl}}{{news.image}}" alt="{{news.title}}">
                     <div class="card-body">
-                        <p class="card-text">Категорія: {{news.tournament ? news.tournament.title : 'Робота сайту'}}</p>
+                        <p class="card-text">Категорія: {{news.tournament ? news.tournament.title : 'Інше'}}</p>
                         <p class="card-text" [innerHtml]="assembleHTMLItem(news.body)"></p>
                     </div>
                     <div class="card-footer">

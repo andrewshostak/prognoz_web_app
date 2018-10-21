@@ -7,84 +7,9 @@
     <!-- error -->
     <app-error *ngIf="errorNews" [message]="errorNews"></app-error>
     <!-- news edit form -->
-    <div *ngIf="news" class="row">
-        <div class="col-12 col-sm-10 offset-sm-1 col-md-8 offset-md-2 col-lg-6 offset-lg-3 text-white">
-            <form novalidate [formGroup]="newsEditForm" (ngSubmit)="onSubmit(newsEditForm)" class="bg-dark p-2 rounded">
-                <input type="hidden" formControlName="id">
-                <!-- title -->
-                <div class="form-group"
-                     [class.form-group-invalid-custom]="newsEditForm.get('title').invalid && newsEditForm.get('title').touched">
-                     <label class="form-control-label" for="title"><strong>Заголовок:</strong></label>
-                     <input type="text"
-                            id="title"
-                            placeholder="Введіть заголовок новини"
-                            class="form-control"
-                            formControlName="title">
-                     <div *ngIf="newsEditForm.get('title').hasError('required') && newsEditForm.get('title').touched">
-                         <small>Заголовок новини обов'язковий</small>
-                     </div>
-                     <div *ngIf="newsEditForm.get('title').hasError('minlength') && newsEditForm.get('title').touched">
-                         <small>Заголовок повинен бути більшим ніж 10 символів</small>
-                     </div>
-                     <div *ngIf="newsEditForm.get('title').hasError('maxlength') && newsEditForm.get('title').touched">
-                         <small>Заголовок перевищує сто символів</small>
-                     </div>
-                </div>
-                <!-- body -->
-                <div class="form-group"
-                     [class.form-group-invalid-custom]="newsEditForm.get('body').invalid && newsEditForm.get('body').touched">
-                    <label class="form-control-label" for="body"><strong>Текст:</strong></label>
-                    <textarea id="body"
-                              placeholder="Введіть текст новини"
-                              class="form-control"
-                              formControlName="body"
-                              rows="3">
-                    </textarea>
-                    <div *ngIf="newsEditForm.get('body').hasError('required') && newsEditForm.get('body').touched">
-                        <small>Текст новини обов'язковий</small>
-                    </div>
-                    <div *ngIf="newsEditForm.get('body').hasError('minlength') && newsEditForm.get('body').touched">
-                        <small>Текст новини повинен бути більшим ніж 50 символів</small>
-                    </div>
-                    <div *ngIf="newsEditForm.get('body').hasError('maxlength') && newsEditForm.get('body').touched">
-                        <small>Текст новини перевищує 3000 символів</small>
-                    </div>
-                </div>
-                <!-- tournament -->
-                <div class="form-group" [class.form-group-invalid-custom]="newsEditForm.get('tournament_id').invalid && newsEditForm.get('tournament_id').touched">
-                    <label class="form-control-label" for="tournament_id"><strong>Категорія:</strong></label>
-                    <select id="tournament_id"
-                            class="form-control"
-                            formControlName="tournament_id">
-                        <option value="1">Чемпіонат</option>
-                        <option value="2">Кубок</option>
-                        <option value="3">Командний</option>
-                    </select>
-                    <div *ngIf="newsEditForm.get('tournament_id').hasError('required') && newsEditForm.get('tournament_id').touched">
-                        <small>Вибір категорії обов'язковий</small>
-                    </div>
-                </div>
-                <!-- image -->
-                <div *ngIf="news">
-                    <img class="img-fluid" src="{{newsImagesUrl}}{{news.image}}" alt="{{news.title}}">
-                </div>
-                <div class="form-group" [class.form-group-invalid-custom]="errorImage">
-                    <label class="form-control-label" for="image"><strong>Зображення:</strong></label>
-                    <input type="file"
-                         id="image"
-                         placeholder="Завантажте зображення для новини"
-                         class="form-control"
-                         (change)="fileChange($event)"
-                         accept=".png,.jpg,.gif,.jpeg">
-                    <div *ngIf="errorImage">
-                        <small>{{errorImage}}</small>
-                    </div>
-                </div>
-                <!-- submit button -->
-                <button [hidden]="spinnerButton" [disabled]="newsEditForm.invalid || errorImage" type="submit" class="btn btn-primary">Змінити</button>
-                <!-- spinner button -->
-                <app-spinner-button [hidden]="!spinnerButton"></app-spinner-button>
-            </form>
+    <div class="row">
+        <div class="col-12 col-sm-10 offset-sm-1 col-md-8 offset-md-2 text-white">
+            <app-news-form [news]="news"></app-news-form>
         </div>
     </div>
 </div>

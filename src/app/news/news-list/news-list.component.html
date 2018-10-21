@@ -12,7 +12,7 @@
             <div class="card-columns">
                 <div *ngFor="let one of news" class="card mb-0 mb-sm-2 black-shadow">
                     <ul class="list-group list-group-flush">
-                        <li class="list-group-item">Категорія: {{one.tournament ? one.tournament.title : 'Робота сайту'}}</li>
+                        <li class="list-group-item">Категорія: {{one.tournament ? one.tournament.title : 'Інше'}}</li>
                     </ul>
                     <img class="card-img-top img-fluid p-sm-2" src="{{newsImagesUrl}}{{one.image}}" alt="{{one.title}}">
                     <div class="card-body">
