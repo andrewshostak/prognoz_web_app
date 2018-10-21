@@ -1,85 +1,100 @@
-<div class="container">
+<div class="row">
+    <div class="col">
+        <h2>Новина:</h2>
+    </div>
+</div>
+<!-- error -->
+<app-error *ngIf="errorNews" [message]="errorNews"></app-error>
+<!-- news, comments, form -->
+<div *ngIf="news">
+    <!-- news -->
     <div class="row">
         <div class="col">
-            <h2>Новина:</h2>
-        </div>
-    </div>
-    <!-- error -->
-    <app-error *ngIf="errorNews" [message]="errorNews"></app-error>
-    <!-- news, comments, form -->
-    <div *ngIf="news">
-        <!-- news -->
-        <div class="row">
-            <div class="col col-md-10 offset-md-1 col-lg-8 offset-lg-2 col-xl-8 offset-xl-2">
-                <div class="card mb-sm-2 black-shadow">
-                    <h4 class="card-header">{{news.title}}</h4>
-                    <img class="card-img-top img-fluid p-sm-2" src="{{newsImagesUrl}}{{news.image}}" alt="{{news.title}}">
-                    <div class="card-body">
-                        <p class="card-text">Категорія: {{news.tournament ? news.tournament.title : 'Інше'}}</p>
-                        <p class="card-text" [innerHtml]="assembleHTMLItem(news.body)"></p>
+            <div class="card mb-2 black-shadow">
+                <h4 class="card-header">{{news.title}}</h4>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-12 col-sm-6 text-center bg-light">
+                            <img class="img-fluid rounded" src="{{newsImagesUrl}}{{news.image}}" alt="{{news.title}}">
+                        </div>
+                        <div class="col-12 col-sm-6 mt-2 mt-md-0">
+                            <p>
+                                <i>Автор:</i>
+                                <img *ngIf="news.author_id"
+                                     class="rounded-circle small-image mr-1"
+                                     src="{{userImagesUrl}}{{news.author.image || userImageDefault}}"
+                                     alt="{{news.author.name}}">
+                                <strong>{{news.author_id ? news.author.name : '-'}}</strong>
+                            </p>
+                            <p>
+                                <i>Категорія:</i>
+                                <strong>{{news.tournament ? news.tournament.title : 'Інше'}}</strong>
+                            </p>
+                            <p>
+                                <i>Додано:</i>
+                                <strong>{{news.created_at | time:'YYYY-MM-DD HH:mm'}}</strong>
+                            </p>
+                            <p>
+                                <i>Коментарі:</i>
+                                <strong>{{comments ? comments.length : 0}}</strong>
+                            </p>
+                            <p>
+                                <button type="button" class="btn btn-sm btn-outline-secondary" (click)="scrollTo('#addCommentForm')">
+                                    <i class="fa fa-plus-circle" aria-hidden="true"></i> Добавити
+                                </button>
+                            </p>
+                        </div>
                     </div>
-                    <div class="card-footer">
-                        <p class="card-text"><small class="text-muted">{{news.created_at | time:'fromNow'}}</small></p>
-                    </div>
+                </div>
+                <div class="card-body">
+                    <p class="card-text" [innerHtml]="assembleHTMLItem(news.body)"></p>
+                </div>
+                <div class="card-footer">
+                    <p class="card-text"><small class="text-muted">{{news.created_at | time:'fromNow'}}</small></p>
                 </div>
             </div>
         </div>
-        <!-- comments -->
-        <div *ngIf="news.comments && news.comments.length" class="row">
-            <div class="col col-md-10 offset-md-1 col-lg-8 offset-lg-2 col-xl-8 offset-xl-2">
-                <div *ngFor="let comment of news.comments" class="card mb-sm-2 black-shadow">
-                    <div class="card-body">
-                        <div class="h4 card-title">
-                            <img class="rounded small-image" src="{{userImagesUrl}}{{comment.user.image || userImageDefault}}" alt="{{comment.user.name}}">
-                            {{comment.user.name}}
-                        </div>
-                        <div class="card-text">
-                            <div [innerHtml]="assembleHTMLItem(comment.body)"></div>
-                        </div>
-                        <p class="card-text"><small class="text-muted">{{comment.created_at | time:'calendar'}}</small></p>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- form for adding comments -->
-        <div *ngIf="authenticatedUser && news" class="row">
-            <div class="col col-md-10 offset-md-1 col-lg-8 offset-lg-2 col-xl-8 offset-xl-2 text-white">
-                <form [formGroup]="addCommentForm" (ngSubmit)="onSubmit(addCommentForm.value)" novalidate class="bg-dark p-2 rounded">
-                    <input type="hidden" name="user_id" formControlName="user_id">
-                    <input type="hidden" name="news_id" formControlName="news_id">
-                    <div class="form-group"
-                         [class.form-group-invalid-custom]="addCommentForm.get('body').invalid && (addCommentForm.get('body').touched || !addCommentForm.get('body').pristine)">
-                        <label class="form-control-label" for="body"><strong>Добавити коментар:</strong></label>
-                        <textarea id="body"
-                                  placeholder="Напишіть щось..."
-                                  class="form-control"
-                                  rows="3"
-                                  formControlName="body">
-                        </textarea>
-                        <div *ngIf="addCommentForm.get('body').hasError('required') && (addCommentForm.get('body').touched || !addCommentForm.get('body').pristine)">
-                            <small>Текст коментаря обов'язковий.</small>
-                        </div>
-                        <div *ngIf="addCommentForm.get('body').hasError('minlength') && !addCommentForm.get('body').pristine">
-                            <small>Текст коментаря повинен бути більшим ніж 10 символів.</small>
-                        </div>
-                        <div *ngIf="addCommentForm.get('body').hasError('maxlength') && !addCommentForm.get('body').pristine">
-                            <small>Текст коментаря перевищує 1000 символів.</small>
-                        </div>
-                    </div>
-                    <button [disabled]="addCommentForm.invalid"
-                            [hidden]="spinnerButton"
-                            type="submit"
-                            class="btn btn-primary">Добавити</button>
-                    <!-- spinner button -->
-                    <app-spinner-button [hidden]="!spinnerButton"></app-spinner-button>
-                </form>
+    </div>
+    <!-- comments -->
+    <div *ngIf="comments && comments.length" class="row">
+        <div class="col">
+            <div *ngFor="let comment of comments">
+                <app-user-message [message]="comment"></app-user-message>
             </div>
         </div>
     </div>
-    <!-- previous page button -->
-    <div class="row">
-        <div class="col text-center mt-2">
-            <a (click)="goBack()" class="btn btn-outline-secondary btn-lg">Назад</a>
+    <!-- form for adding comments -->
+    <div *ngIf="authenticatedUser && news" class="row">
+        <div class="col text-white">
+            <form [formGroup]="addCommentForm" (ngSubmit)="onSubmit()" novalidate class="bg-dark p-2 rounded" id="addCommentForm">
+                <input type="hidden" name="user_id" formControlName="user_id">
+                <input type="hidden" name="news_id" formControlName="news_id">
+                <div class="form-group"
+                     [class.form-group-invalid-custom]="addCommentForm.get('body').invalid && (addCommentForm.get('body').touched || !addCommentForm.get('body').pristine)">
+                    <label class="form-control-label" for="body"><strong>Добавити коментар:</strong></label>
+                    <textarea id="body"
+                              placeholder="Напишіть щось..."
+                              class="form-control"
+                              rows="3"
+                              formControlName="body">
+                    </textarea>
+                    <div *ngIf="addCommentForm.get('body').hasError('required') && (addCommentForm.get('body').touched || !addCommentForm.get('body').pristine)">
+                        <small>Текст коментаря обов'язковий.</small>
+                    </div>
+                    <div *ngIf="addCommentForm.get('body').hasError('minlength') && !addCommentForm.get('body').pristine">
+                        <small>Текст коментаря повинен бути більшим ніж 10 символів.</small>
+                    </div>
+                    <div *ngIf="addCommentForm.get('body').hasError('maxlength') && !addCommentForm.get('body').pristine">
+                        <small>Текст коментаря перевищує 1000 символів.</small>
+                    </div>
+                </div>
+                <button [disabled]="addCommentForm.invalid"
+                        [hidden]="spinnerButton"
+                        type="submit"
+                        class="btn btn-primary">Добавити</button>
+                <!-- spinner button -->
+                <app-spinner-button [hidden]="!spinnerButton"></app-spinner-button>
+            </form>
         </div>
     </div>
 </div>

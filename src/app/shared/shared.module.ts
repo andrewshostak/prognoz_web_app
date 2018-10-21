@@ -22,6 +22,7 @@ import { SocialMedialLinksComponent } from './components/social-medial-links/soc
 import { SpinnerButtonComponent } from './components/spinner-button/spinner-button.component';
 import { SpinnerComponent } from './components/spinner/spinner.component';
 import { TimePipe } from './pipes/time.pipe';
+import { UserMessageComponent } from './components/user-message/user-message.component';
 
 @NgModule({
     imports: [CommonModule, RouterModule, ChartsModule, ReactiveFormsModule],
@@ -43,7 +44,8 @@ import { TimePipe } from './pipes/time.pipe';
         SocialMedialLinksComponent,
         SpinnerComponent,
         SpinnerButtonComponent,
-        TimePipe
+        TimePipe,
+        UserMessageComponent
     ],
     exports: [
         ChampionshipLastResultsComponent,
@@ -63,7 +65,8 @@ import { TimePipe } from './pipes/time.pipe';
         SocialMedialLinksComponent,
         SpinnerComponent,
         SpinnerButtonComponent,
-        TimePipe
+        TimePipe,
+        UserMessageComponent
     ],
     providers: [TimePipe]
 })

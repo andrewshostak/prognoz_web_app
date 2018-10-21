@@ -76,7 +76,9 @@
         </div>
     </div>
     <!-- submit button -->
-    <button [hidden]="spinnerButton" [disabled]="newsForm.invalid || errorImage" type="submit" class="btn btn-primary">Змінити</button>
+    <button [hidden]="spinnerButton" [disabled]="newsForm.invalid || errorImage" type="submit" class="btn btn-primary">
+        {{news ? 'Змінити' : 'Створити'}}
+    </button>
     <!-- spinner button -->
     <app-spinner-button [hidden]="!spinnerButton"></app-spinner-button>
 </form>

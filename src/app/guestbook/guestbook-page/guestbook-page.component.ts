@@ -1,19 +1,15 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { DomSanitizer } from '@angular/platform-browser';
 import { ActivatedRoute, Params } from '@angular/router';
 import { Subscription } from 'rxjs/Subscription';
 
 import { AuthService } from '@services/auth.service';
 import { CurrentStateService } from '@services/current-state.service';
-import { environment } from '@env';
 import { GuestbookMessage } from '@models/guestbook-message.model';
 import { GuestbookService } from '../shared/guestbook.service';
 import { NotificationsService } from 'angular2-notifications';
 import { TitleService } from '@services/title.service';
 import { User } from '@models/user.model';
-
-declare const $: any;
 
 @Component({
     selector: 'app-guestbook-page',
@@ -25,7 +21,6 @@ export class GuestbookPageComponent implements OnInit, OnDestroy {
         private activatedRoute: ActivatedRoute,
         private authService: AuthService,
         private currentStateService: CurrentStateService,
-        private domSanitizer: DomSanitizer,
         private formBuilder: FormBuilder,
         private guestbookService: GuestbookService,
         private notificationsService: NotificationsService,
@@ -34,8 +29,6 @@ export class GuestbookPageComponent implements OnInit, OnDestroy {
 
     addGuestbookMessageForm: FormGroup;
     authenticatedUser: User = this.currentStateService.user;
-    awardsImagesUrl: string = environment.apiImageAwards;
-    clubImagesUrl: string = environment.apiImageClubs;
     currentPage: number;
     errorGuestbookMessages: string | Array<string>;
     guestbookMessages: GuestbookMessage[];
@@ -44,13 +37,7 @@ export class GuestbookPageComponent implements OnInit, OnDestroy {
     perPage: number;
     spinnerButton = false;
     total: number;
-    userImageDefault: string = environment.imageUserDefault;
-    userImagesUrl: string = environment.apiImageUsers;
     userSubscription: Subscription;
-
-    assembleHTMLItem(message: string) {
-        return this.domSanitizer.bypassSecurityTrustHtml(message);
-    }
 
     getGuestbookMessagesData() {
         this.activatedRoute.params.subscribe((params: Params) => {
@@ -65,7 +52,6 @@ export class GuestbookPageComponent implements OnInit, OnDestroy {
                         this.guestbookMessages = response.data;
                         const userId = this.authenticatedUser ? this.authenticatedUser.id.toString() : '';
                         this.addGuestbookMessageForm.patchValue({ user_id: userId });
-                        $(() => $('[data-toggle="tooltip"]').tooltip());
                     }
                 },
                 error => {
@@ -79,7 +65,6 @@ export class GuestbookPageComponent implements OnInit, OnDestroy {
         if (!this.userSubscription.closed) {
             this.userSubscription.unsubscribe();
         }
-        $('[data-toggle="tooltip"]').tooltip('dispose');
     }
 
     ngOnInit() {
