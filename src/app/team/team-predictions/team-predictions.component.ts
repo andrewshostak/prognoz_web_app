@@ -13,6 +13,7 @@ import { TeamPrediction } from '@models/team/team-prediction.model';
 import { TeamPredictionService } from '@services/team/team-prediction.service';
 import { TitleService } from '@services/title.service';
 import { User } from '@models/user.model';
+import { UtilsService } from '@services/utils.service';
 
 @Component({
     selector: 'app-team-predictions',
@@ -41,12 +42,10 @@ export class TeamPredictionsComponent implements OnInit, OnDestroy {
     errorTeamTeamMatches: string;
     errorTeamPredictions: string;
     isGoalkeeper: boolean;
-    nextRound: string;
     noAccess = 'Доступ заборонено. Увійдіть на сайт для перегляду цієї сторінки.';
     oppositeTeamId: number;
-    path: string;
-    previousRound: string;
     round: number;
+    roundsArray: { id: number; title: string }[];
     routerEventsSubscription: Subscription;
     teamMatches: TeamMatch[];
     teamTeamMatches: TeamTeamMatch[];
@@ -144,19 +143,18 @@ export class TeamPredictionsComponent implements OnInit, OnDestroy {
                 this.errorTeamTeamMatches = null;
                 if (!response) {
                     this.teamTeamMatches = null;
-                    this.previousRound = null;
-                    this.teamTeamMatches = null;
                     return;
                 }
 
+                if (!this.round) {
+                    this.round = response.current_page;
+                }
+
                 this.teamTeamMatches = response.data;
-                this.nextRound = response.next_page_url;
-                this.previousRound = response.prev_page_url;
+                this.roundsArray = UtilsService.createRoundsArrayFromTeamsQuantity(response.per_page * 2);
                 this.getTeamGoalkeeperData();
             },
             error => {
-                this.nextRound = null;
-                this.previousRound = null;
                 this.teamTeamMatches = null;
                 this.errorTeamTeamMatches = error;
             }
@@ -192,10 +190,6 @@ export class TeamPredictionsComponent implements OnInit, OnDestroy {
         this.oppositeTeamId = null;
     }
 
-    private setPath(competitionId: number): void {
-        this.path = `/team/competitions/${competitionId}/predictions/round/`;
-    }
-
     private subscribeToRouterEvents(): void {
         this.routerEventsSubscription = this.router.events.subscribe(event => {
             if (event instanceof NavigationEnd) {
@@ -220,8 +214,6 @@ export class TeamPredictionsComponent implements OnInit, OnDestroy {
         if (!this.competitionId) {
             return;
         }
-
-        this.setPath(this.competitionId);
 
         if (!this.authenticatedUser) {
             return;

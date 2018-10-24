@@ -1,10 +1,11 @@
 <h2>Прогнози:</h2>
-<app-team-round-navigation *ngIf="teamTeamMatches"
-                           [matches]="teamTeamMatches"
-                           [nextRound]="nextRound"
-                           [previousRound]="previousRound"
-                           [path]="path">
-</app-team-round-navigation>
+<div *ngIf="teamTeamMatches" class="mb-2">
+    <app-dropdown-navigation [dropdownItems]="roundsArray"
+                             [selectedId]="round"
+                             [navigationPath]="['/team', 'competitions', competitionId, 'predictions', 'round']"
+                             [formSize]="'lg'">
+    </app-dropdown-navigation>
+</div>
 <!-- error team predictions -->
 <app-error *ngIf="errorTeamPredictions" [message]="errorTeamPredictions" [additionalInfo]="false"></app-error>
 <!-- predictions -->
