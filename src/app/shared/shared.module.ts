@@ -14,6 +14,7 @@ import { ConfirmModalNewComponent } from './components/confirm-modal-new/confirm
 import { DropdownNavigationComponent } from './components/dropdown-navigation/dropdown-navigation.component';
 import { ErrorComponent } from './components/error/error.component';
 import { InfoComponent } from './components/info/info.component';
+import { LastCommentsComponent } from './components/last-comments/last-comments.component';
 import { LastUserComponent } from './components/last-user/last-user.component';
 import { NavigationComponent } from './components/navigation/navigation.component';
 import { OnlineUsersListComponent } from './components/online-users-list/online-users-list.component';
@@ -37,6 +38,7 @@ import { UserMessageComponent } from './components/user-message/user-message.com
         DropdownNavigationComponent,
         ErrorComponent,
         InfoComponent,
+        LastCommentsComponent,
         LastUserComponent,
         NavigationComponent,
         OnlineUsersListComponent,
@@ -58,6 +60,7 @@ import { UserMessageComponent } from './components/user-message/user-message.com
         DropdownNavigationComponent,
         ErrorComponent,
         InfoComponent,
+        LastCommentsComponent,
         LastUserComponent,
         NavigationComponent,
         OnlineUsersListComponent,

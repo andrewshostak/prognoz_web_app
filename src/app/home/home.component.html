@@ -101,7 +101,12 @@
     <!-- more news button -->
     <div *ngIf="news && news" class="row">
         <div class="col text-center mt-2">
-            <a routerLink="news" class="btn btn-outline-secondary btn-lg">Більше новин</a>
+            <a routerLink="news" class="btn btn-outline-primary btn-lg">Більше новин</a>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col mt-2">
+            <app-last-comments [limitTo]="0"></app-last-comments>
         </div>
     </div>
 </div>

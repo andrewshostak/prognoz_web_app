@@ -1,0 +1,12 @@
+<div *ngIf="comments" class="card black-shadow mb-2 mt-2">
+    <h4 class="card-header text-xs-center">Останні коментарі:</h4>
+    <div class="list-group list-group-flush">
+        <a *ngFor="let comment of comments"
+           [routerLink]="['/news', comment.news_id]"
+           class="list-group-item list-group-item-action flex-column align-items-start">
+            <strong class="mb-1">{{comment.user.name}}:</strong>
+            <p class="mb-1" [innerHtml]="shortenText(comment.body)"></p>
+            <small class="text-muted">{{comment.created_at | time:'calendar'}}</small>
+        </a>
+    </div>
+</div>
