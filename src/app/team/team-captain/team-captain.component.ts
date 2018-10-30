@@ -148,7 +148,6 @@ export class TeamCaptainComponent implements OnInit, OnDestroy {
                 errors => {
                     errors.forEach(error => this.notificationsService.error('Помилка', error));
                     this.spinnerButtonGoalkeeper = false;
-                    this.teamTeamMatch = null;
                 }
             );
         }
