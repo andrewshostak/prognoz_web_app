@@ -1,53 +1,16 @@
 <!-- top navbar: form and buttons -->
 <nav class="navbar navbar-expand navbar-dark bg-dark">
     <a class="navbar-brand mr-auto d-none d-md-block" routerLink="/">Prognoz.org.ua</a>
-    <!-- authentication form(large screens) -->
-    <form *ngIf="!user"
-          novalidate
-          [formGroup]="headerSignInForm"
-          (ngSubmit)="onSubmit()"
-          class="form-inline d-none d-lg-block">
-        <!-- name -->
-        <label class="sr-only" for="header-name">Ім'я</label>
-        <input formControlName="name"
-               type="text"
-               class="form-control header-input"
-               id="header-name"
-               placeholder="Ім'я">
-        <!-- password -->
-        <label class="sr-only" for="header-password">Пароль</label>
-        <input formControlName="password"
-               type="password"
-               class="form-control header-input"
-               id="header-password"
-               placeholder="Пароль">
-        <!-- sign up and recovery buttons -->
-        <div class="btn-group" role="group" aria-label="header-buttons">
-            <!-- sign in button -->
-            <button [hidden]="spinnerButton" [disabled]="headerSignInForm.invalid" type="submit" class="btn btn-outline-light">
-                <i class="fa fa-sign-in" aria-hidden="true"></i> Вхід
-            </button>
-            <!-- sign in spinner -->
-            <app-spinner-button [hidden]="!spinnerButton"></app-spinner-button>
-            <button [disabled]="spinnerButton" routerLink="signup" type="button" class="btn btn-outline-light">
-                <i class="fa fa-user-plus" aria-hidden="true"></i> Реєстрація
-            </button>
-            <button [disabled]="spinnerButton" routerLink="recovery" type="button" class="btn btn-outline-light">
-                <i class="fa fa-question-circle" aria-hidden="true"></i> Забули пароль
-            </button>
-        </div>
-    </form>
-    <!-- sign in, sign up, recovery buttons(small screens) -->
-    <div *ngIf="!user" class="form-inline ml-auto d-lg-none ml-2">
+    <div *ngIf="!user" class="form-inline ml-auto ml-2">
         <div class="btn-group ml-2" role="group" aria-label="header-buttons">
             <button routerLink="/signin" class="btn btn-light">
                 <i class="fa fa-sign-in" aria-hidden="true"></i> Вхід
             </button>
             <button routerLink="/signup" class="btn btn-outline-light">
-                <i class="fa fa-user-plus" aria-hidden="true"></i> <span class="d-none d-sm-inline">Реєстрація</span>
+                <i class="fa fa-user-plus" aria-hidden="true"></i> Реєстрація
             </button>
             <button routerLink="/recovery" class="btn btn-outline-light">
-                <i class="fa fa-question-circle" aria-hidden="true"></i>
+                <i class="fa fa-question-circle" aria-hidden="true"></i> <span class="d-none d-sm-inline">Забули пароль</span>
             </button>
         </div>
     </div>
