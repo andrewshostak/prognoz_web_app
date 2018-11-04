@@ -3,12 +3,13 @@
     Редагувати команду
 </button>
 <div *ngIf="authenticatedUser">
-    <app-team-round-navigation *ngIf="teamTeamMatches"
-                               [matches]="teamTeamMatches"
-                               [nextRound]="nextRound"
-                               [previousRound]="previousRound"
-                               [path]="path">
-    </app-team-round-navigation>
+    <div *ngIf="roundsArray && round" class="mt-2 mb-2">
+        <app-dropdown-navigation [dropdownItems]="roundsArray"
+                                 [selectedId]="round"
+                                 [navigationPath]="['/', 'team', 'competitions', competitionId, 'my', 'round']"
+                                 [formSize]="'lg'">
+        </app-dropdown-navigation>
+    </div>
     <app-team-captain></app-team-captain>
 </div>
 <app-error *ngIf="!authenticatedUser" [message]="noAccess" [additionalInfo]="false"></app-error>

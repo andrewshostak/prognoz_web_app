@@ -15,6 +15,7 @@ import { TeamTeamMatch } from '@models/team/team-team-match.model';
 import { TeamTeamMatchService } from '@services/team/team-team-match.service';
 import { TitleService } from '@services/title.service';
 import { User } from '@models/user.model';
+import { UtilsService } from '@services/utils.service';
 
 declare var $: any;
 
@@ -43,12 +44,10 @@ export class TeamMyComponent implements OnInit, OnDestroy {
     errorTeamMatches: string;
     errorTeamTeamMatches: string;
     isCaptain = false;
-    nextRound: string;
     noAccess = 'Доступ заборонено. Увійдіть на сайт для перегляду цієї сторінки.';
-    path: string;
-    previousRound: string;
     routerEventsSubscription: Subscription;
     round: number;
+    roundsArray: { id: number; title: string }[];
     spinnerButtonTeamEditForm = false;
     team: Team;
     teamEditForm: FormGroup;
@@ -66,20 +65,20 @@ export class TeamMyComponent implements OnInit, OnDestroy {
             response => {
                 this.errorTeamTeamMatches = null;
                 if (!response) {
-                    this.previousRound = null;
-                    this.nextRound = null;
                     this.teamTeamMatches = null;
                     return;
                 }
+
+                if (!this.round) {
+                    this.round = response.current_page;
+                }
+
                 this.teamTeamMatches = response.data;
-                this.nextRound = response.next_page_url;
-                this.previousRound = response.prev_page_url;
+                this.roundsArray = UtilsService.createRoundsArrayFromTeamsQuantity(response.per_page * 2);
             },
             error => {
                 this.errorTeamTeamMatches = error;
                 this.teamTeamMatches = null;
-                this.nextRound = null;
-                this.previousRound = null;
             }
         );
     }
@@ -169,10 +168,6 @@ export class TeamMyComponent implements OnInit, OnDestroy {
         );
     }
 
-    private setPath(competitionId: number): void {
-        this.path = `/team/competitions/${competitionId}/my/round/`;
-    }
-
     private subscribeToRouterEvents(): void {
         this.routerEventsSubscription = this.router.events.subscribe(event => {
             if (event instanceof NavigationEnd) {
@@ -197,8 +192,6 @@ export class TeamMyComponent implements OnInit, OnDestroy {
         if (!this.competitionId) {
             return;
         }
-
-        this.setPath(this.competitionId);
 
         if (!this.authenticatedUser) {
             return;

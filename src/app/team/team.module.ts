@@ -18,7 +18,6 @@ import { TeamRatingTableComponent } from './shared/team-rating-table/team-rating
 import { TeamRatingUserTableComponent } from './shared/team-rating-user-table/team-rating-user-table.component';
 import { TeamResultsComponent } from './team-results/team-results.component';
 import { TeamResultsTableComponent } from './shared/team-results-table/team-results-table.component';
-import { TeamRoundNavigationComponent } from './shared/team-round-navigation/team-round-navigation.component';
 import { TeamRoutingModule } from './team-routing.module';
 import { TeamRulesComponent } from './team-rules/team-rules.component';
 import { TeamSelectModalComponent } from './shared/team-select-modal/team-select-modal.component';
@@ -42,7 +41,6 @@ import { TeamTeamMatchCardComponent } from './shared/team-team-match-card/team-t
         TeamRatingUserTableComponent,
         TeamResultsComponent,
         TeamResultsTableComponent,
-        TeamRoundNavigationComponent,
         TeamRulesComponent,
         TeamSelectModalComponent,
         TeamSquadsComponent,
