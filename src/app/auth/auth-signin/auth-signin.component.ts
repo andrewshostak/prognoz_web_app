@@ -23,12 +23,12 @@ export class AuthSigninComponent implements OnInit {
     ) {}
 
     signInForm: FormGroup;
-    spinnerButton = false;
-    user: User = this.currentStateService.user;
+    spinnerButton: boolean;
+    user: User;
 
     ngOnInit() {
         this.titleService.setTitle('Вхід');
-        this.authService.getUser.subscribe(response => (this.user = response));
+        this.user = this.currentStateService.getUser();
         this.signInForm = new FormGroup({
             name: new FormControl('', [Validators.required, Validators.minLength(3)]),
             password: new FormControl('', [Validators.required])
@@ -39,7 +39,7 @@ export class AuthSigninComponent implements OnInit {
         if (this.signInForm.valid) {
             this.spinnerButton = true;
             this.authService.signIn(this.signInForm.value.name, this.signInForm.value.password).subscribe(
-                response => {
+                () => {
                     this.notificationsService.success('Успішно', 'Вхід виконано успішно');
                     this.spinnerButton = false;
                     this.router.navigate(['/championship/predictions']);

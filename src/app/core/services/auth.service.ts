@@ -114,14 +114,9 @@ export class AuthService {
      * @returns {Observable<any>}
      */
     logout(): Observable<any> {
-        return this.headersWithToken
-            .post(this.authUrl + 'logout', {})
-            .map(response => {
-                localStorage.clear();
-                this.userObserver.next(null);
-                return response;
-            })
-            .catch(this.errorHandlerService.handle);
+        localStorage.clear();
+        this.userObserver.next(null);
+        return this.headersWithToken.post(this.authUrl + 'logout', {}).catch(this.errorHandlerService.handle);
     }
 
     /**

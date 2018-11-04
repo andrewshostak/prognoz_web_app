@@ -4,6 +4,7 @@ import { AuthService } from '@services/auth.service';
 import { PusherService } from '@services/pusher.service';
 import { Subject } from 'rxjs/Subject';
 import { User } from '@models/user.model';
+import { UtilsService } from '@services/utils.service';
 
 @Injectable()
 export class CurrentStateService {
@@ -28,6 +29,14 @@ export class CurrentStateService {
 
     get teamCompetitionId(): number {
         return this.selectedTeamCompetitionId;
+    }
+
+    getUser(): User {
+        if (!this.user) {
+            return UtilsService.getItemFromLocalStorage('user');
+        }
+
+        return this.user;
     }
 
     initialize(): void {
