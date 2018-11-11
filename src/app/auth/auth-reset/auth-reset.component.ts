@@ -25,11 +25,11 @@ export class AuthResetComponent implements OnInit {
 
     resetForm: FormGroup;
     spinnerButton = false;
-    user: User = this.currentStateService.user;
+    user: User;
 
     ngOnInit() {
         this.titleService.setTitle('Зміна паролю');
-        this.authService.getUser.subscribe(response => (this.user = response));
+        this.user = this.currentStateService.getUser();
         const emailRegex = '^[a-z0-9]+(.[_a-z0-9]+)*@[a-z0-9-]+(.[a-z0-9-]+)*(.[a-z]{2,15})$';
         this.activatedRoute.params.subscribe((params: Params) => {
             this.resetForm = new FormGroup({
@@ -45,7 +45,7 @@ export class AuthResetComponent implements OnInit {
         if (this.resetForm.valid) {
             this.spinnerButton = true;
             this.authService.reset(this.resetForm.value).subscribe(
-                response => {
+                () => {
                     this.notificationsService.success(
                         'Успішно',
                         'Відновлення паролю пройшло успішно. Тепер ви можете виконати вхід на сайт.',

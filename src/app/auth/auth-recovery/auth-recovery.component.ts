@@ -23,11 +23,11 @@ export class AuthRecoveryComponent implements OnInit {
     captchaValidity: boolean;
     recoveryForm: FormGroup;
     spinnerButton: boolean;
-    user: User = this.currentStateService.user;
+    user: User;
 
     ngOnInit() {
         this.titleService.setTitle('Відновлення паролю');
-        this.authService.getUser.subscribe(response => (this.user = response));
+        this.user = this.currentStateService.getUser();
         const emailRegex = '^[a-z0-9]+(.[_a-z0-9]+)*@[a-z0-9-]+(.[a-z0-9-]+)*(.[a-z]{2,15})$';
         this.recoveryForm = new FormGroup({
             email: new FormControl('', [Validators.required, Validators.pattern(emailRegex)])
@@ -38,7 +38,7 @@ export class AuthRecoveryComponent implements OnInit {
         if (this.recoveryForm.valid && this.captchaValidity) {
             this.spinnerButton = true;
             this.authService.recovery(this.recoveryForm.value.email).subscribe(
-                response => {
+                () => {
                     this.notificationsService.success('Успішно', 'Подальші інструкції відправлено на ваш email', { timeOut: 0 });
                     this.recoveryForm.get('email').disable();
                     this.spinnerButton = false;
