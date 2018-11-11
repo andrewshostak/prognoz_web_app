@@ -2,7 +2,6 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { Subscription } from 'rxjs/Subscription';
 
-import { AuthService } from '@services/auth.service';
 import { CompetitionService } from '@services/competition.service';
 import { CurrentStateService } from '@services/current-state.service';
 import { RequestParams } from '@models/request-params.model';
@@ -20,7 +19,6 @@ import { UtilsService } from '@services/utils.service';
 export class TeamMatchesComponent implements OnInit, OnDestroy {
     constructor(
         private activatedRoute: ActivatedRoute,
-        private authService: AuthService,
         private competitionService: CompetitionService,
         private currentStateService: CurrentStateService,
         private router: Router,
@@ -30,7 +28,7 @@ export class TeamMatchesComponent implements OnInit, OnDestroy {
         this.subscribeToRouterEvents();
     }
 
-    authenticatedUser: User = this.currentStateService.user;
+    authenticatedUser: User;
     competitionId: number;
     errorCompetition: string;
     errorTeamTeamMatches: string;
@@ -38,7 +36,6 @@ export class TeamMatchesComponent implements OnInit, OnDestroy {
     round: number;
     roundsArray: { id: number; title: string }[];
     teamTeamMatches: TeamTeamMatch[];
-    userSubscription: Subscription;
 
     getTeamTeamMatchesData(competitionId: number, round?: number) {
         const params: RequestParams[] = [{ parameter: 'competition_id', value: competitionId.toString() }];
@@ -71,15 +68,10 @@ export class TeamMatchesComponent implements OnInit, OnDestroy {
         if (!this.routerEventsSubscription.closed) {
             this.routerEventsSubscription.unsubscribe();
         }
-        if (!this.userSubscription.closed) {
-            this.userSubscription.unsubscribe();
-        }
     }
 
     ngOnInit() {
-        this.userSubscription = this.authService.getUser.subscribe(response => {
-            this.authenticatedUser = response;
-        });
+        this.authenticatedUser = this.currentStateService.getUser();
     }
 
     private setPageTitle(): void {

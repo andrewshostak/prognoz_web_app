@@ -1,9 +1,7 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Params } from '@angular/router';
-import { Subscription } from 'rxjs/Subscription';
 
-import { AuthService } from '@services/auth.service';
 import { CurrentStateService } from '@services/current-state.service';
 import { GuestbookMessage } from '@models/guestbook-message.model';
 import { GuestbookService } from '../shared/guestbook.service';
@@ -16,10 +14,9 @@ import { User } from '@models/user.model';
     templateUrl: './guestbook-page.component.html',
     styleUrls: ['./guestbook-page.component.scss']
 })
-export class GuestbookPageComponent implements OnInit, OnDestroy {
+export class GuestbookPageComponent implements OnInit {
     constructor(
         private activatedRoute: ActivatedRoute,
-        private authService: AuthService,
         private currentStateService: CurrentStateService,
         private formBuilder: FormBuilder,
         private guestbookService: GuestbookService,
@@ -28,7 +25,7 @@ export class GuestbookPageComponent implements OnInit, OnDestroy {
     ) {}
 
     addGuestbookMessageForm: FormGroup;
-    authenticatedUser: User = this.currentStateService.user;
+    authenticatedUser: User;
     currentPage: number;
     errorGuestbookMessages: string | Array<string>;
     guestbookMessages: GuestbookMessage[];
@@ -37,7 +34,6 @@ export class GuestbookPageComponent implements OnInit, OnDestroy {
     perPage: number;
     spinnerButton = false;
     total: number;
-    userSubscription: Subscription;
 
     getGuestbookMessagesData() {
         this.activatedRoute.params.subscribe((params: Params) => {
@@ -61,29 +57,21 @@ export class GuestbookPageComponent implements OnInit, OnDestroy {
         });
     }
 
-    ngOnDestroy() {
-        if (!this.userSubscription.closed) {
-            this.userSubscription.unsubscribe();
-        }
-    }
-
     ngOnInit() {
         this.titleService.setTitle('Гостьова');
         this.addGuestbookMessageForm = this.formBuilder.group({
             user_id: ['', [Validators.required]],
             body: ['', [Validators.required, Validators.minLength(10), Validators.maxLength(1000)]]
         });
-        this.userSubscription = this.authService.getUser.subscribe(response => {
-            this.authenticatedUser = response;
-            this.addGuestbookMessageForm.patchValue({ user_id: response ? response.id : '' });
-        });
+        this.authenticatedUser = this.currentStateService.getUser();
+        this.addGuestbookMessageForm.patchValue({ user_id: this.authenticatedUser ? this.authenticatedUser.id : '' });
         this.getGuestbookMessagesData();
     }
 
     onSubmit() {
         this.spinnerButton = true;
         this.guestbookService.createGuestbookMessage(this.addGuestbookMessageForm.value).subscribe(
-            response => {
+            () => {
                 this.getGuestbookMessagesData();
                 this.spinnerButton = false;
                 this.addGuestbookMessageForm.reset({ user_id: this.authenticatedUser.id });

@@ -1,8 +1,6 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
-import { Subscription } from 'rxjs/Subscription';
 
-import { AuthService } from '@services/auth.service';
 import { ChampionshipMatch } from '@models/championship/championship-match.model';
 import { ChampionshipMatchService } from '@services/championship/championship-match.service';
 import { ChampionshipPrediction } from '@models/championship/championship-prediction.model';
@@ -22,9 +20,8 @@ import { UtilsService } from '@services/utils.service';
     templateUrl: './championship-home.component.html',
     styleUrls: ['./championship-home.component.scss']
 })
-export class ChampionshipHomeComponent implements OnInit, OnDestroy {
+export class ChampionshipHomeComponent implements OnInit {
     constructor(
-        private authService: AuthService,
         private championshipMatchService: ChampionshipMatchService,
         private championshipPredictionService: ChampionshipPredictionService,
         private championshipService: ChampionshipService,
@@ -34,7 +31,7 @@ export class ChampionshipHomeComponent implements OnInit, OnDestroy {
         private titleService: TitleService
     ) {}
 
-    authenticatedUser: User = this.currentStateService.user;
+    authenticatedUser: User;
     championshipMatches: ChampionshipMatch[];
     championshipPredictions: ChampionshipPrediction[];
     championshipPredictionsForm: FormGroup;
@@ -47,7 +44,6 @@ export class ChampionshipHomeComponent implements OnInit, OnDestroy {
     spinnerButton = false;
     userImageDefault: string = environment.imageUserDefault;
     userImagesUrl: string = environment.apiImageUsers;
-    userSubscription: Subscription;
 
     getChampionshipMatchesData() {
         const param = [{ parameter: 'filter', value: 'predictable' }, { parameter: 'coming', value: 'true' }];
@@ -104,18 +100,9 @@ export class ChampionshipHomeComponent implements OnInit, OnDestroy {
         );
     }
 
-    ngOnDestroy() {
-        if (!this.userSubscription.closed) {
-            this.userSubscription.unsubscribe();
-        }
-    }
-
     ngOnInit() {
         this.titleService.setTitle('Найближчі матчі, останні прогнози і топ-рейтингу - Чемпіонат');
-        this.userSubscription = this.authService.getUser.subscribe(response => {
-            this.authenticatedUser = response;
-            this.getChampionshipMatchesData();
-        });
+        this.authenticatedUser = this.currentStateService.getUser();
         this.championshipPredictionsForm = new FormGroup({});
         this.getChampionshipMatchesData();
         this.getChampionshipRatingData();
@@ -128,7 +115,7 @@ export class ChampionshipHomeComponent implements OnInit, OnDestroy {
             this.championshipPredictionsForm
         );
         this.championshipPredictionService.updateChampionshipPredictions(championshipPredictionsToUpdate).subscribe(
-            response => {
+            () => {
                 this.spinnerButton = false;
                 this.notificationsService.success('Успішно', 'Прогнози прийнято');
                 this.getChampionshipMatchesData();

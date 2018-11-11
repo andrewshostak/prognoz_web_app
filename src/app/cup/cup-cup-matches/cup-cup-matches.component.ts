@@ -2,7 +2,6 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { FormControl, FormGroup } from '@angular/forms';
 
-import { AuthService } from '@services/auth.service';
 import { Competition } from '@models/competition.model';
 import { CompetitionService } from '@services/competition.service';
 import { CupCupMatch } from '@models/cup/cup-cup-match.model';
@@ -27,7 +26,6 @@ import { UtilsService } from '@services/utils.service';
 export class CupCupMatchesComponent implements OnInit, OnDestroy {
     constructor(
         private activatedRoute: ActivatedRoute,
-        private authService: AuthService,
         private competitionService: CompetitionService,
         private cupCupMatchService: CupCupMatchService,
         private cupStageService: CupStageService,
@@ -37,7 +35,7 @@ export class CupCupMatchesComponent implements OnInit, OnDestroy {
         private router: Router
     ) {}
 
-    authenticatedUser: User = this.currentStateService.user;
+    authenticatedUser: User;
     activatedRouteSubscription: Subscription;
     competitionsCupStages: { [competitionId: string]: CupStage[] };
     cupStagesWithCupCupMatches: CupStage[];
@@ -50,7 +48,6 @@ export class CupCupMatchesComponent implements OnInit, OnDestroy {
     seasonsCompetitions: { [seasonId: string]: Competition[] };
     userImageDefault: string;
     userImagesUrl: string;
-    userSubscription: Subscription;
 
     currentUserCupCupMatch(cupCupMatch): boolean {
         if (!this.authenticatedUser) {
@@ -66,19 +63,16 @@ export class CupCupMatchesComponent implements OnInit, OnDestroy {
     }
 
     ngOnDestroy() {
-        this.userSubscription.unsubscribe();
         if (!this.activatedRouteSubscription.closed) {
             this.activatedRouteSubscription.unsubscribe();
         }
     }
 
     ngOnInit() {
-        this.userSubscription = this.authService.getUser.subscribe(response => {
-            this.authenticatedUser = response;
-        });
         this.titleService.setTitle('Матчі - Кубок');
         this.userImageDefault = environment.imageUserDefault;
         this.userImagesUrl = environment.apiImageUsers;
+        this.authenticatedUser = this.currentStateService.getUser();
         this.competitionsCupStages = {};
         this.seasonsCompetitions = {};
         this.filterCupCupMatchesForm = new FormGroup({

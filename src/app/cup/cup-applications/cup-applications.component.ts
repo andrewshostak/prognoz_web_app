@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnDestroy, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit } from '@angular/core';
 
 import { AuthService } from '@services/auth.service';
 import { Competition } from '@models/competition.model';
@@ -10,7 +10,6 @@ import { CurrentStateService } from '@services/current-state.service';
 import { environment } from '@env';
 import { forkJoin } from 'rxjs/observable/forkJoin';
 import { NotificationsService } from 'angular2-notifications';
-import { Subscription } from 'rxjs/Subscription';
 import { TitleService } from '@services/title.service';
 import { User } from '@models/user.model';
 import { UtilsService } from '@services/utils.service';
@@ -22,7 +21,7 @@ declare const $: any;
     templateUrl: './cup-applications.component.html',
     styleUrls: ['./cup-applications.component.scss']
 })
-export class CupApplicationsComponent implements OnInit, OnDestroy {
+export class CupApplicationsComponent implements OnInit {
     constructor(
         private authService: AuthService,
         private competitionService: CompetitionService,
@@ -48,7 +47,6 @@ export class CupApplicationsComponent implements OnInit, OnDestroy {
     };
     userImageDefault: string;
     userImagesUrl: string;
-    userSubscription: Subscription;
 
     attachApplicationsToCompetitions(): void {
         if (this.competitions.length && !this.noCupApplications()) {
@@ -185,20 +183,11 @@ export class CupApplicationsComponent implements OnInit, OnDestroy {
         });
     }
 
-    ngOnDestroy() {
-        if (!this.userSubscription.closed) {
-            this.userSubscription.unsubscribe();
-        }
-    }
-
     ngOnInit() {
         this.titleService.setTitle('Заявки / Учасники - Кубок');
         this.userImageDefault = environment.imageUserDefault;
         this.userImagesUrl = environment.apiImageUsers;
-        this.authenticatedUser = this.currentStateService.user;
-        this.userSubscription = this.authService.getUser.subscribe(response => {
-            this.authenticatedUser = response;
-        });
+        this.authenticatedUser = this.currentStateService.getUser();
         this.getApplicationsAndCompetitions();
     }
 

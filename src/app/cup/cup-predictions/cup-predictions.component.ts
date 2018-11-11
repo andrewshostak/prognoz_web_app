@@ -1,11 +1,9 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
-import { AuthService } from '@services/auth.service';
 import { CupMatch } from '@models/cup/cup-match.model';
 import { CupMatchService } from '@services/cup/cup-match.service';
 import { CupPrediction } from '@models/cup/cup-prediction.model';
 import { CurrentStateService } from '@services/current-state.service';
-import { Subscription } from 'rxjs/Subscription';
 import { TitleService } from '@services/title.service';
 import { User } from '@models/user.model';
 
@@ -14,9 +12,8 @@ import { User } from '@models/user.model';
     templateUrl: './cup-predictions.component.html',
     styleUrls: ['./cup-predictions.component.scss']
 })
-export class CupPredictionsComponent implements OnDestroy, OnInit {
+export class CupPredictionsComponent implements OnInit {
     constructor(
-        private authService: AuthService,
         private cupMatchService: CupMatchService,
         private currentStateService: CurrentStateService,
         private titleService: TitleService
@@ -26,7 +23,6 @@ export class CupPredictionsComponent implements OnDestroy, OnInit {
     cupMatches: CupMatch[];
     errorCupMatches: string;
     noAccess: string;
-    userSubscription: Subscription;
 
     cupPredictionUpdated(event: { cupMatchId: number; cupPrediction?: CupPrediction; errors?: string[] }): void {
         if (event.errors && event.errors.includes('Помилка: Час для прогнозування вже вийшов')) {
@@ -41,27 +37,15 @@ export class CupPredictionsComponent implements OnDestroy, OnInit {
         }
     }
 
-    ngOnDestroy() {
-        if (!this.userSubscription.closed) {
-            this.userSubscription.unsubscribe();
-        }
-    }
-
     ngOnInit() {
         this.noAccess = 'Доступ заборонено. Увійдіть на сайт для перегляду цієї сторінки.';
         this.titleService.setTitle('Зробити прогнози - Кубок');
-        this.authenticatedUser = this.currentStateService.user;
+        this.authenticatedUser = this.currentStateService.getUser();
         if (this.authenticatedUser) {
             this.getCupMatchesPredictableData();
+        } else {
+            this.cupMatches = null;
         }
-        this.userSubscription = this.authService.getUser.subscribe(response => {
-            this.authenticatedUser = response;
-            if (this.authenticatedUser) {
-                this.getCupMatchesPredictableData();
-            } else {
-                this.cupMatches = null;
-            }
-        });
     }
 
     getCupMatchesPredictableData(): void {

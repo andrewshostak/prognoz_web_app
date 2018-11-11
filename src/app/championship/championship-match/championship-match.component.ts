@@ -1,9 +1,7 @@
 import { Location } from '@angular/common';
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
-import { Subscription } from 'rxjs/Subscription';
 
-import { AuthService } from '@services/auth.service';
 import { ChampionshipMatch } from '@models/championship/championship-match.model';
 import { ChampionshipMatchService } from '@services/championship/championship-match.service';
 import { CurrentStateService } from '@services/current-state.service';
@@ -16,36 +14,26 @@ import { User } from '@models/user.model';
     templateUrl: './championship-match.component.html',
     styleUrls: ['./championship-match.component.scss']
 })
-export class ChampionshipMatchComponent implements OnInit, OnDestroy {
+export class ChampionshipMatchComponent implements OnInit {
     constructor(
         private activatedRoute: ActivatedRoute,
-        private authService: AuthService,
         private championshipMatchService: ChampionshipMatchService,
         private currentStateService: CurrentStateService,
         private location: Location,
         private titleService: TitleService
     ) {}
 
-    authenticatedUser: User = this.currentStateService.user;
+    authenticatedUser: User;
     championshipMatch: ChampionshipMatch;
     clubsImagesUrl: string = environment.apiImageClubs;
     errorChampionshipMatch: string;
-    userSubscription: Subscription;
 
     goBack() {
         this.location.back();
     }
 
-    ngOnDestroy() {
-        if (!this.userSubscription.closed) {
-            this.userSubscription.unsubscribe();
-        }
-    }
-
     ngOnInit() {
-        this.userSubscription = this.authService.getUser.subscribe(response => {
-            this.authenticatedUser = response;
-        });
+        this.authenticatedUser = this.currentStateService.getUser();
         this.activatedRoute.params.forEach((params: Params) => {
             this.getChampionshipMatchData(params['id']);
         });

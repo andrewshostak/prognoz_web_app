@@ -1,7 +1,5 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Subscription } from 'rxjs/Subscription';
+import { Component, OnInit } from '@angular/core';
 
-import { AuthService } from '@services/auth.service';
 import { ChampionshipRating } from '@models/championship/championship-rating.model';
 import { ChampionshipRatingService } from '@services/championship/championship-rating.service';
 import { CurrentStateService } from '@services/current-state.service';
@@ -13,30 +11,20 @@ import { User } from '@models/user.model';
     templateUrl: './championship-rating.component.html',
     styleUrls: ['./championship-rating.component.scss']
 })
-export class ChampionshipRatingComponent implements OnInit, OnDestroy {
+export class ChampionshipRatingComponent implements OnInit {
     constructor(
-        private authService: AuthService,
         private championshipRatingService: ChampionshipRatingService,
         private currentStateService: CurrentStateService,
         private titleService: TitleService
     ) {}
 
-    authenticatedUser: User = this.currentStateService.user;
+    authenticatedUser: User;
     championshipRatingItems: ChampionshipRating[];
     errorChampionshipRating: string;
-    userSubscription: Subscription;
-
-    ngOnDestroy() {
-        if (!this.userSubscription.closed) {
-            this.userSubscription.unsubscribe();
-        }
-    }
 
     ngOnInit() {
         this.titleService.setTitle('Рейтинг гравців - Чемпіонат');
-        this.userSubscription = this.authService.getUser.subscribe(response => {
-            this.authenticatedUser = response;
-        });
+        this.authenticatedUser = this.currentStateService.getUser();
         this.championshipRatingService.getChampionshipRatingItems().subscribe(
             response => {
                 if (response) {

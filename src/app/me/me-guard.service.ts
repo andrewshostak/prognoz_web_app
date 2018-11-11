@@ -16,7 +16,7 @@ export class MeGuard implements CanActivate {
      * @returns {boolean}
      */
     checkRoles(): boolean {
-        if (this.currentStateService.user) {
+        if (this.currentStateService.getUser()) {
             return true;
         }
         this.router.navigate(['/403']);

@@ -3,7 +3,6 @@ import { NgForm } from '@angular/forms';
 import { Router, NavigationEnd } from '@angular/router';
 import { Subscription } from 'rxjs/Subscription';
 
-import { AuthService } from '@services/auth.service';
 import { CurrentStateService } from '@services/current-state.service';
 import { environment } from '@env';
 import { NotificationsService } from 'angular2-notifications';
@@ -25,7 +24,19 @@ import { UtilsService } from '@services/utils.service';
     styleUrls: ['./team-captain.component.scss']
 })
 export class TeamCaptainComponent implements OnInit, OnDestroy {
-    authenticatedUser: User = this.currentStateService.user;
+    constructor(
+        private currentStateService: CurrentStateService,
+        private notificationsService: NotificationsService,
+        private router: Router,
+        private teamMatchService: TeamMatchService,
+        private teamParticipantService: TeamParticipantService,
+        private teamPredictionService: TeamPredictionService,
+        private teamTeamMatchService: TeamTeamMatchService
+    ) {
+        this.subscribeToRouterEvents();
+    }
+
+    authenticatedUser: User;
     availableTeamParticipants: any;
     clubsImagesUrl: string = environment.apiImageClubs;
     competitionId: number;
@@ -49,21 +60,6 @@ export class TeamCaptainComponent implements OnInit, OnDestroy {
     teamTeamMatches: TeamTeamMatch[];
     userImageDefault: string = environment.imageUserDefault;
     userImagesUrl: string = environment.apiImageUsers;
-    userSubscription: Subscription;
-
-    constructor(
-        private authService: AuthService,
-        private currentStateService: CurrentStateService,
-        private notificationsService: NotificationsService,
-        private router: Router,
-        private teamMatchService: TeamMatchService,
-        private teamParticipantService: TeamParticipantService,
-        private teamPredictionService: TeamPredictionService,
-        private teamTeamMatchService: TeamTeamMatchService
-    ) {
-        this.urlChanged(this.router.url);
-        this.subscribeToRouterEvents();
-    }
 
     getCurrentTeamTeamMatch() {
         if (this.teamTeamMatches && this.currentTeamId) {
@@ -106,20 +102,11 @@ export class TeamCaptainComponent implements OnInit, OnDestroy {
         if (!this.routerEventsSubscription.closed) {
             this.routerEventsSubscription.unsubscribe();
         }
-        if (!this.userSubscription.closed) {
-            this.userSubscription.unsubscribe();
-        }
     }
 
     ngOnInit() {
-        this.userSubscription = this.authService.getUser.subscribe(response => {
-            this.authenticatedUser = response;
-            if (response && this.competitionId) {
-                this.getMyTeamMatchesData(this.competitionId, this.round);
-                this.getTeamParticipantsData(this.competitionId);
-                this.getTeamTeamMatchesData(this.competitionId, this.round);
-            }
-        });
+        this.authenticatedUser = this.currentStateService.getUser();
+        this.urlChanged(this.router.url);
     }
 
     setTeamTeamMatchGoalkeeper(teamGoalkeeperForm: NgForm) {

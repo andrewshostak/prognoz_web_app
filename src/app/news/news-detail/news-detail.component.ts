@@ -1,11 +1,9 @@
 import { Location } from '@angular/common';
-import { Component, ElementRef, OnDestroy, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { DomSanitizer } from '@angular/platform-browser';
 import { ActivatedRoute, Params } from '@angular/router';
-import { Subscription } from 'rxjs/Subscription';
 
-import { AuthService } from '@services/auth.service';
 import { Comment } from '@models/comment.model';
 import { CommentService } from '../shared/comment.service';
 import { CurrentStateService } from '@services/current-state.service';
@@ -22,10 +20,9 @@ import { User } from '@models/user.model';
     templateUrl: './news-detail.component.html',
     styleUrls: ['./news-detail.component.scss']
 })
-export class NewsDetailComponent implements OnInit, OnDestroy {
+export class NewsDetailComponent implements OnInit {
     constructor(
         private activatedRoute: ActivatedRoute,
-        private authService: AuthService,
         private commentService: CommentService,
         private currentStateService: CurrentStateService,
         private domSanitizer: DomSanitizer,
@@ -38,7 +35,7 @@ export class NewsDetailComponent implements OnInit, OnDestroy {
     ) {}
 
     addCommentForm: FormGroup;
-    authenticatedUser: User = this.currentStateService.user;
+    authenticatedUser: User;
     comments: Comment[];
     errorComments: string;
     errorNews: string;
@@ -47,7 +44,6 @@ export class NewsDetailComponent implements OnInit, OnDestroy {
     spinnerButton = false;
     userImageDefault: string = environment.imageUserDefault;
     userImagesUrl: string = environment.apiImageUsers;
-    userSubscription: Subscription;
 
     assembleHTMLItem(message: string) {
         return this.domSanitizer.bypassSecurityTrustHtml(message);
@@ -69,22 +65,14 @@ export class NewsDetailComponent implements OnInit, OnDestroy {
         );
     }
 
-    ngOnDestroy() {
-        if (!this.userSubscription.closed) {
-            this.userSubscription.unsubscribe();
-        }
-    }
-
     ngOnInit() {
         this.addCommentForm = this.formBuilder.group({
             user_id: ['', [Validators.required]],
             news_id: ['', [Validators.required]],
             body: ['', [Validators.required, Validators.minLength(10), Validators.maxLength(1000)]]
         });
-        this.userSubscription = this.authService.getUser.subscribe(response => {
-            this.authenticatedUser = response;
-            this.addCommentForm.patchValue({ user_id: response ? response.id : '' });
-        });
+        this.authenticatedUser = this.currentStateService.getUser();
+        this.addCommentForm.patchValue({ user_id: this.currentStateService.getUser() ? this.currentStateService.getUser().id : '' });
         this.activatedRoute.params.forEach((params: Params) => {
             this.getNewsData(+params['id']);
             this.getComments(+params['id']);

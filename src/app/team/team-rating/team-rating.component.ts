@@ -1,7 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 
-import { AuthService } from '@services/auth.service';
 import { CurrentStateService } from '@services/current-state.service';
 import { Subscription } from 'rxjs/Subscription';
 import { TeamRating } from '@models/team/team-rating.model';
@@ -19,7 +18,6 @@ import { RequestParams } from '@models/request-params.model';
 })
 export class TeamRatingComponent implements OnDestroy, OnInit {
     constructor(
-        private authService: AuthService,
         private activatedRoute: ActivatedRoute,
         private currentStateService: CurrentStateService,
         private teamRatingService: TeamRatingService,
@@ -28,28 +26,22 @@ export class TeamRatingComponent implements OnDestroy, OnInit {
     ) {}
 
     activatedRouteSubscription: Subscription;
-    authenticatedUser: User = this.currentStateService.user;
+    authenticatedUser: User;
     competitionId: number;
     errorTeamRating: string;
     errorTeamRatingUser: string;
     teamRating: TeamRating[];
     teamRatingUser: TeamRatingUser[];
-    userSubscription: Subscription;
 
     ngOnDestroy() {
         if (!this.activatedRouteSubscription.closed) {
             this.activatedRouteSubscription.unsubscribe();
         }
-        if (!this.userSubscription.closed) {
-            this.userSubscription.unsubscribe();
-        }
     }
 
     ngOnInit() {
         this.titleService.setTitle('Рейтинг команд, бомбардирів і воротарів - Командний');
-        this.userSubscription = this.authService.getUser.subscribe(response => {
-            this.authenticatedUser = response;
-        });
+        this.authenticatedUser = this.currentStateService.getUser();
         this.activatedRouteSubscription = this.activatedRoute.parent.params.subscribe((params: Params) => {
             if (params['competitionId'] === 'get-active') {
                 return;

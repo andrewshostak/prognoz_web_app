@@ -2,7 +2,6 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { Subscription } from 'rxjs/Subscription';
 
-import { AuthService } from '@services/auth.service';
 import { CurrentStateService } from '@services/current-state.service';
 import { RequestParams } from '@models/request-params.model';
 import { TeamMatch } from '@models/team/team-match.model';
@@ -23,7 +22,6 @@ import { UtilsService } from '@services/utils.service';
 export class TeamPredictionsComponent implements OnInit, OnDestroy {
     constructor(
         private activatedRoute: ActivatedRoute,
-        private authService: AuthService,
         private currentStateService: CurrentStateService,
         private router: Router,
         private teamMatchService: TeamMatchService,
@@ -34,7 +32,7 @@ export class TeamPredictionsComponent implements OnInit, OnDestroy {
         this.subscribeToRouterEvents();
     }
 
-    authenticatedUser: User = this.currentStateService.user;
+    authenticatedUser: User;
     blockedTeamMatchFirst: TeamMatch = null;
     blockedTeamMatchSecond: TeamMatch = null;
     competitionId: number;
@@ -50,7 +48,6 @@ export class TeamPredictionsComponent implements OnInit, OnDestroy {
     teamMatches: TeamMatch[];
     teamTeamMatches: TeamTeamMatch[];
     teamPredictions: TeamPrediction[];
-    userSubscription: Subscription;
 
     getMyTeamMatchesData(competitionId: number, round?: number) {
         const param = [{ parameter: 'filter', value: 'opponents' }, { parameter: 'competition_id', value: this.competitionId.toString() }];
@@ -95,21 +92,12 @@ export class TeamPredictionsComponent implements OnInit, OnDestroy {
         if (!this.routerEventsSubscription.closed) {
             this.routerEventsSubscription.unsubscribe();
         }
-        if (!this.userSubscription.closed) {
-            this.userSubscription.unsubscribe();
-        }
     }
 
     ngOnInit() {
         this.titleService.setTitle('Зробити прогнози - Командний');
-        this.userSubscription = this.authService.getUser.subscribe(response => {
-            this.authenticatedUser = response;
-            this.resetTeamGoalkeeperData();
-            if (response) {
-                this.getTeamTeamMatchesData(this.competitionId, this.round);
-                this.getTeamPredictionsData(this.competitionId, this.round);
-            }
-        });
+        this.authenticatedUser = this.currentStateService.getUser();
+        this.urlChanged(this.router.url);
     }
 
     reloadTeamGoalkeeperData(): void {

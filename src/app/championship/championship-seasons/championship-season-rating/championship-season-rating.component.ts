@@ -1,8 +1,6 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
-import { Subscription } from 'rxjs/Subscription';
 
-import { AuthService } from '@services/auth.service';
 import { ChampionshipRating } from '@models/championship/championship-rating.model';
 import { ChampionshipRatingService } from '@services/championship/championship-rating.service';
 import { CurrentStateService } from '@services/current-state.service';
@@ -14,30 +12,20 @@ import { TitleService } from '@services/title.service';
     templateUrl: './championship-season-rating.component.html',
     styleUrls: ['./championship-season-rating.component.scss']
 })
-export class ChampionshipSeasonRatingComponent implements OnInit, OnDestroy {
+export class ChampionshipSeasonRatingComponent implements OnInit {
     constructor(
         private activatedRoute: ActivatedRoute,
-        private authService: AuthService,
         private championshipRatingService: ChampionshipRatingService,
         private currentStateService: CurrentStateService,
         private titleService: TitleService
     ) {}
 
-    authenticatedUser: User = this.currentStateService.user;
+    authenticatedUser: User;
     championshipRatingItems: ChampionshipRating[];
     errorRating: string;
-    userSubscription: Subscription;
-
-    ngOnDestroy() {
-        if (!this.userSubscription.closed) {
-            this.userSubscription.unsubscribe();
-        }
-    }
 
     ngOnInit() {
-        this.userSubscription = this.authService.getUser.subscribe(response => {
-            this.authenticatedUser = response;
-        });
+        this.authenticatedUser = this.currentStateService.getUser();
         this.activatedRoute.params.forEach((params: Params) => {
             this.titleService.setTitle(`Рейтинг гравців в сезоні ${params['id']} - Чемпіонат`);
             const param = [{ parameter: 'season_id', value: <string>params['id'] }];

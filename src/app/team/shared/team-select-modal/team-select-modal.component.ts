@@ -20,7 +20,6 @@ export class TeamSelectModalComponent implements OnInit {
     noTeams = 'Ви не є капітаном жодної з команд.';
     teamSelectForm: FormGroup;
     teams: Team[];
-    userSubscription: Subscription;
 
     constructor(private teamService: TeamService) {}
 

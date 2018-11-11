@@ -1,8 +1,6 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
-import { Subscription } from 'rxjs/Subscription';
 
-import { AuthService } from '@services/auth.service';
 import { ChampionshipMatch } from '@models/championship/championship-match.model';
 import { ChampionshipMatchService } from '@services/championship/championship-match.service';
 import { ChampionshipPredictionService } from '@services/championship/championship-prediction.service';
@@ -18,9 +16,8 @@ import { User } from '@models/user.model';
     templateUrl: './championship-predictions.component.html',
     styleUrls: ['./championship-predictions.component.scss']
 })
-export class ChampionshipPredictionsComponent implements OnInit, OnDestroy {
+export class ChampionshipPredictionsComponent implements OnInit {
     constructor(
-        private authService: AuthService,
         private championshipMatchService: ChampionshipMatchService,
         private championshipPredictionService: ChampionshipPredictionService,
         private championshipService: ChampionshipService,
@@ -29,26 +26,17 @@ export class ChampionshipPredictionsComponent implements OnInit, OnDestroy {
         private titleService: TitleService
     ) {}
 
-    authenticatedUser: User = this.currentStateService.user;
+    authenticatedUser: User;
     championshipMatches: ChampionshipMatch[];
     championshipPredictionsForm: FormGroup;
     clubsImagesUrl: string = environment.apiImageClubs;
     errorChampionshipMatches: string;
     spinnerButton = false;
-    userSubscription: Subscription;
-
-    ngOnDestroy() {
-        if (!this.userSubscription.closed) {
-            this.userSubscription.unsubscribe();
-        }
-    }
 
     ngOnInit() {
         this.titleService.setTitle('Зробити прогнози - Чемпіонат');
-        this.userSubscription = this.authService.getUser.subscribe(response => {
-            this.authenticatedUser = response;
-            this.getChampionshipMatchesData();
-        });
+        this.authenticatedUser = this.currentStateService.getUser();
+        this.getChampionshipMatchesData();
         this.championshipPredictionsForm = new FormGroup({});
         this.getChampionshipMatchesData();
     }

@@ -3,7 +3,6 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router, NavigationEnd } from '@angular/router';
 import { Subscription } from 'rxjs/Subscription';
 
-import { AuthService } from '@services/auth.service';
 import { CurrentStateService } from '@services/current-state.service';
 import { NotificationsService } from 'angular2-notifications';
 import { RequestParams } from '@models/request-params.model';
@@ -26,7 +25,6 @@ declare var $: any;
 })
 export class TeamMyComponent implements OnInit, OnDestroy {
     constructor(
-        private authService: AuthService,
         private currentStateService: CurrentStateService,
         private notificationsService: NotificationsService,
         private router: Router,
@@ -38,7 +36,7 @@ export class TeamMyComponent implements OnInit, OnDestroy {
         this.subscribeToRouterEvents();
     }
 
-    authenticatedUser: User = this.currentStateService.user;
+    authenticatedUser: User;
     competitionId: number;
     errorTeam: string;
     errorTeamMatches: string;
@@ -54,7 +52,6 @@ export class TeamMyComponent implements OnInit, OnDestroy {
     teamEditFormHasUnsavedChanges = false;
     teamMatches: TeamMatch[];
     teamTeamMatches: TeamTeamMatch[];
-    userSubscription: Subscription;
 
     getTeamTeamMatchesData(competitionId: number, round?: number) {
         const params: RequestParams[] = [{ parameter: 'competition_id', value: this.competitionId.toString() }];
@@ -87,22 +84,12 @@ export class TeamMyComponent implements OnInit, OnDestroy {
         if (!this.routerEventsSubscription.closed) {
             this.routerEventsSubscription.unsubscribe();
         }
-        if (!this.userSubscription.closed) {
-            this.userSubscription.unsubscribe();
-        }
     }
 
     ngOnInit() {
         this.titleService.setTitle('Вибір статегії і воротаря - Командний');
-        this.userSubscription = this.authService.getUser.subscribe(response => {
-            this.authenticatedUser = response;
-            if (response && this.competitionId) {
-                this.getTeamData(this.competitionId);
-                this.getTeamTeamMatchesData(this.competitionId, this.round);
-            } else {
-                this.isCaptain = false;
-            }
-        });
+        this.authenticatedUser = this.currentStateService.getUser();
+        this.urlChanged(this.router.url);
 
         this.teamEditForm = new FormGroup({
             name: new FormControl('', [Validators.required, Validators.minLength(3), Validators.maxLength(30)]),

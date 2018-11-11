@@ -1,7 +1,6 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { Subscription } from 'rxjs/Subscription';
 
 import { AuthService } from '@services/auth.service';
 import { Club } from '@models/club.model';
@@ -19,7 +18,7 @@ import { UserService } from '@services/user.service';
     templateUrl: './me.component.html',
     styleUrls: ['./me.component.scss']
 })
-export class MeComponent implements OnInit, OnDestroy {
+export class MeComponent implements OnInit {
     constructor(
         private authService: AuthService,
         private clubService: ClubService,
@@ -39,7 +38,7 @@ export class MeComponent implements OnInit, OnDestroy {
         });
     }
 
-    authenticatedUser: User = Object.assign({}, this.currentStateService.user);
+    authenticatedUser: User;
     clubs: Club[];
     clubsImagesUrl: string = environment.apiImageClubs;
     errorClubs: string;
@@ -49,7 +48,6 @@ export class MeComponent implements OnInit, OnDestroy {
     userEditForm: FormGroup;
     userImageDefault: string = environment.imageUserDefault;
     userImagesUrl: string = environment.apiImageUsers;
-    userSubscription: Subscription;
 
     get clubUser(): FormArray {
         return <FormArray>this.userEditForm.controls.club_user;
@@ -79,34 +77,27 @@ export class MeComponent implements OnInit, OnDestroy {
         });
     }
 
-    ngOnDestroy() {
-        if (!this.userSubscription.closed) {
-            this.userSubscription.unsubscribe();
-        }
-    }
-
     ngOnInit() {
+        if (!this.currentStateService.getUser()) {
+            this.router.navigate(['/403']);
+        }
         this.getClubsData();
-        this.userSubscription = this.authService.getUser.subscribe(response => {
-            if (!response) {
-                this.router.navigate(['/403']);
-            }
-            this.authenticatedUser = Object.assign({}, response);
-        });
+        this.authenticatedUser = Object.assign({}, this.currentStateService.getUser());
         this.resetData();
         this.titleService.setTitle('Редагувати профіль');
     }
 
     onCancel(): void {
-        this.authenticatedUser = Object.assign({}, this.currentStateService.user);
+        this.authenticatedUser = Object.assign({}, this.currentStateService.getUser());
         this.resetData();
     }
 
     onSubmit() {
         this.spinnerButton = true;
         this.userService.updateUser(this.userEditForm.value).subscribe(
-            response => {
+            () => {
                 this.authService.initializeUser();
+                this.authenticatedUser = Object.assign({}, this.currentStateService.getUser());
                 this.notificationsService.success('Успішно', 'Ваш профіль змінено!');
                 this.spinnerButton = false;
                 this.hasUnsavedChanges = false;

@@ -2,7 +2,6 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Params } from '@angular/router';
 
-import { AuthService } from '@services/auth.service';
 import { environment } from '@env';
 import { Competition } from '@models/competition.model';
 import { CompetitionService } from '@services/competition.service';
@@ -26,7 +25,6 @@ declare var $: any;
 export class TeamSquadsComponent implements OnDestroy, OnInit {
     constructor(
         private activatedRoute: ActivatedRoute,
-        private authService: AuthService,
         private competitionService: CompetitionService,
         private currentStateService: CurrentStateService,
         private notificationsService: NotificationsService,
@@ -38,7 +36,7 @@ export class TeamSquadsComponent implements OnDestroy, OnInit {
     activatedRouteSubscription: Subscription;
     alreadyJoined = false;
     alreadyPending = false;
-    authenticatedUser: User = this.currentStateService.user;
+    authenticatedUser: User;
     clubsImagesUrl: string = environment.apiImageClubs;
     competitionId: number;
     errorTeams: string;
@@ -56,7 +54,6 @@ export class TeamSquadsComponent implements OnDestroy, OnInit {
     teams: Team[];
     userImageDefault: string = environment.imageUserDefault;
     userImagesUrl: string = environment.apiImageUsers;
-    userSubscription: Subscription;
 
     confirmModalSubmit(data: any) {
         switch (this.confirmModalId) {
@@ -213,17 +210,12 @@ export class TeamSquadsComponent implements OnDestroy, OnInit {
         if (!this.activatedRouteSubscription.closed) {
             this.activatedRouteSubscription.unsubscribe();
         }
-        if (!this.userSubscription.closed) {
-            this.userSubscription.unsubscribe();
-        }
     }
 
     ngOnInit() {
         this.titleService.setTitle('Заявки на участь / склади команд - Командний');
-        this.userSubscription = this.authService.getUser.subscribe(response => {
-            this.authenticatedUser = response;
-            this.getCompetitionData();
-        });
+        this.authenticatedUser = this.currentStateService.getUser();
+        this.getCompetitionData();
         this.teamCreateForm = new FormGroup({
             name: new FormControl('', [Validators.required, Validators.minLength(3), Validators.maxLength(30)]),
             image: new FormControl(null, []),

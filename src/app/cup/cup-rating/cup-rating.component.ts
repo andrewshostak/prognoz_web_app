@@ -1,7 +1,5 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Subscription } from 'rxjs/Subscription';
+import { Component, OnInit } from '@angular/core';
 
-import { AuthService } from '@services/auth.service';
 import { CupRating } from '@models/cup/cup-rating.model';
 import { CupRatingService } from '@services/cup/cup-rating.service';
 import { CurrentStateService } from '@services/current-state.service';
@@ -15,9 +13,8 @@ import { User } from '@models/user.model';
     templateUrl: './cup-rating.component.html',
     styleUrls: ['./cup-rating.component.scss']
 })
-export class CupRatingComponent implements OnInit, OnDestroy {
+export class CupRatingComponent implements OnInit {
     constructor(
-        private authService: AuthService,
         private cupRatingService: CupRatingService,
         private currentStateService: CurrentStateService,
         private seasonService: SeasonService,
@@ -28,20 +25,11 @@ export class CupRatingComponent implements OnInit, OnDestroy {
     cupRating: CupRating[];
     seasons: Season[];
     errorCupRating: string;
-    userSubscription: Subscription;
-
-    ngOnDestroy() {
-        if (!this.userSubscription.closed) {
-            this.userSubscription.unsubscribe();
-        }
-    }
 
     ngOnInit() {
-        this.authenticatedUser = this.currentStateService.user;
+        this.authenticatedUser = this.currentStateService.getUser();
         this.titleService.setTitle('Рейтинг гравців - Кубок');
-        this.userSubscription = this.authService.getUser.subscribe(response => {
-            this.authenticatedUser = response;
-        });
+        this.authenticatedUser = this.currentStateService.getUser();
         this.cupRatingService.getCupRating().subscribe(
             response => {
                 this.cupRating = response.map(cupRatingItem => {
