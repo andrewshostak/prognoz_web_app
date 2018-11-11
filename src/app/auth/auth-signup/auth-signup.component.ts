@@ -25,11 +25,11 @@ export class AuthSignupComponent implements OnInit {
     captchaValidity: boolean;
     signUpForm: FormGroup;
     spinnerButton: boolean;
-    user: User = this.currentStateService.user;
+    user: User;
 
     ngOnInit() {
         this.titleService.setTitle('Реєстрація');
-        this.authService.getUser.subscribe(response => (this.user = response));
+        this.user = this.currentStateService.getUser();
         const emailRegex = '^[a-z0-9]+(.[_a-z0-9]+)*@[a-z0-9-]+(.[a-z0-9-]+)*(.[a-z]{2,15})$';
         this.signUpForm = new FormGroup({
             name: new FormControl('', [Validators.required, Validators.minLength(3), Validators.maxLength(50)]),
