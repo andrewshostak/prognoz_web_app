@@ -1,7 +1,6 @@
 import { Component, Input } from '@angular/core';
 
 import { ChampionshipRating } from '@models/championship/championship-rating.model';
-import { environment } from '@env';
 import { User } from '@models/user.model';
 
 @Component({
@@ -14,9 +13,4 @@ export class ChampionshipUserRatingDetailsComponent {
     @Input() errorUser: string;
     @Input() errorChampionshipRating: string;
     @Input() user: User;
-
-    awardsImagesUrl: string = environment.apiImageAwards;
-    clubImagesUrl: string = environment.apiImageClubs;
-    userImageDefault: string = environment.imageUserDefault;
-    userImagesUrl: string = environment.apiImageUsers;
 }

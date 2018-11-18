@@ -24,7 +24,7 @@
                 <strong>{{match.club_second.title}}</strong>
             </div>
             <!-- expandable statistic -->
-            <div class="collapse col-12 mb-2" [attr.id]="'collapseMatch' + match.id">
+            <div class="col-12 mb-2" [hidden]="isCollapsed">
                 <div class="card text-center">
                     <div class="card-header">
                         Статистика
@@ -52,10 +52,6 @@
     </div>
     <!-- expand-collapse indicator -->
     <div class="collapse-expand-indicator cursor-pointer"
-         data-toggle="collapse"
-         [attr.data-target]="'#collapseMatch' + match.id"
-         aria-expanded="false"
-         [attr.aria-controls]="'collapseMatch' + match.id"
          (click)="getChampionshipMatchStatisticData(match); isCollapsed = !isCollapsed;">
         <span [hidden]="!isCollapsed || spinnerStatistic" class="fa-stack">
             <i class="fa fa-circle fa-stack-2x fa-inverse" aria-hidden="true"></i>
@@ -117,7 +113,7 @@
                 <strong><label [attr.for]="match.id + '_away'">{{match.club_second.title}}</label></strong>
             </div>
             <!-- expandable statistic -->
-            <div class="collapse col-12 mb-2 order-4" [attr.id]="'collapseMatch' + match.id">
+            <div class="col-12 mb-2 order-4" [hidden]="isCollapsed">
                 <div class="card text-center">
                     <div class="card-header">
                         Статистика
@@ -144,10 +140,6 @@
     </div>
     <!-- expand-collapse indicator -->
     <div class="collapse-expand-indicator cursor-pointer"
-         data-toggle="collapse"
-         [attr.data-target]="'#collapseMatch' + match.id"
-         aria-expanded="false"
-         [attr.aria-controls]="'collapseMatch' + match.id"
          (click)="getChampionshipMatchStatisticData(match); isCollapsed = !isCollapsed;">
         <span [hidden]="!isCollapsed || spinnerStatistic" class="fa-stack">
             <i class="fa fa-circle fa-stack-2x fa-inverse" aria-hidden="true"></i>

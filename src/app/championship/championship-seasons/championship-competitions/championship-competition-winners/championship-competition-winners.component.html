@@ -9,10 +9,8 @@
                 <div *ngFor="let winner of competition.winners | slice:0:3"
                      class="card text-center mb-2 mb-sm-0">
                     <div routerLink="../users/{{winner.user_id}}" class="card-header cursor-pointer">
-                        <img class="rounded-circle small-image mr-2"
-                             src="{{userImagesUrl}}{{winner.user.image || userImageDefault}}"
-                             alt="{{winner.user.name}}">
-                        <strong class="align-middle">{{winner.user.name}}</strong>
+                        <app-user-logo-with-tooltip [user]="winner.user"></app-user-logo-with-tooltip>
+                        <strong class="align-middle ml-2">{{winner.user.name}}</strong>
                     </div>
                     <div class="card-body">
                         <img class="img-fluid p-2"
