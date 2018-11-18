@@ -47,13 +47,14 @@ export class AuthService {
         if (this.isUserAndTokenInLocalStorage()) {
             this.refresh().subscribe(
                 response => {
-                    this.updateUserInLocalStorage(response.user);
-                    this.updateRolesInLocalStorage(response.roles);
+                    this.updateItemInLocalStorage('user', response.user);
+                    this.updateItemInLocalStorage('roles', response.roles);
                     this.userObserver.next(response.user);
                 },
-                error => {
-                    this.updateUserInLocalStorage();
-                    this.updateRolesInLocalStorage();
+                () => {
+                    this.updateItemInLocalStorage('user');
+                    this.updateItemInLocalStorage('roles');
+                    this.updateItemInLocalStorage('auth_token');
                 }
             );
         }
@@ -80,8 +81,8 @@ export class AuthService {
             .map(response => {
                 if (response['token']) {
                     this.setTokenToLocalStorage(response['token']);
-                    this.updateUserInLocalStorage(response['user']);
-                    this.updateRolesInLocalStorage(response['roles']);
+                    this.updateItemInLocalStorage('user', response['user']);
+                    this.updateItemInLocalStorage('roles', response['roles']);
                     this.userObserver.next(response['user']);
                 }
                 return response['user'];
@@ -101,7 +102,7 @@ export class AuthService {
             .map(response => {
                 if (response['token']) {
                     this.setTokenToLocalStorage(response['token']);
-                    this.updateUserInLocalStorage(response['user']);
+                    this.updateItemInLocalStorage('user', response['user']);
                     this.userObserver.next(response['user']);
                 }
                 return response['user'];
@@ -114,7 +115,6 @@ export class AuthService {
      * @returns {Observable<any>}
      */
     logout(): Observable<any> {
-        localStorage.clear();
         this.userObserver.next(null);
         return this.headersWithToken.post(this.authUrl + 'logout', {}).catch(this.errorHandlerService.handle);
     }
@@ -149,29 +149,11 @@ export class AuthService {
         return this.headersWithToken.get(this.authUrl + 'refresh').catch(this.errorHandlerService.handle);
     }
 
-    /**
-     * Update user data in localStorage
-     * or remove it if function has no arguments
-     * @param user
-     */
-    private updateUserInLocalStorage(user?: any) {
-        if (!!user) {
-            localStorage.setItem('user', JSON.stringify(user));
+    private updateItemInLocalStorage(key: string, value?: any): void {
+        if (!!value) {
+            localStorage.setItem(key, JSON.stringify(value));
         } else {
-            localStorage.removeItem('user');
-        }
-    }
-
-    /**
-     * Update roles array in localStorage
-     * or remove it if function has no arguments
-     * @param roles
-     */
-    private updateRolesInLocalStorage(roles?: Array<string>) {
-        if (!!roles) {
-            localStorage.setItem('roles', JSON.stringify(roles));
-        } else {
-            localStorage.removeItem('roles');
+            localStorage.removeItem(key);
         }
     }
 

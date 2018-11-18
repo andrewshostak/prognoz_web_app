@@ -19,9 +19,11 @@ export class HeaderComponent implements OnInit {
         this.router.navigate(['/']);
         this.authService.logout().subscribe(
             () => {
+                localStorage.clear();
                 this.notificationsService.info('Успішно', 'Ви вийшли зі свого аккаунту');
             },
             () => {
+                localStorage.clear();
                 this.notificationsService.info('Успішно', 'Ви вийшли зі свого аккаунту');
             }
         );
