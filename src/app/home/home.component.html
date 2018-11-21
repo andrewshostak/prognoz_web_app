@@ -2,75 +2,65 @@
 <div class="d-none d-md-block">
     <!-- error -->
     <app-error *ngIf="errorChampionshipMatches" [message]="errorChampionshipMatches"></app-error>
-    <div *ngIf="championshipMatches" id="carousel" class="carousel slide" data-ride="carousel">
-        <div class="carousel-inner" role="listbox">
-            <div *ngFor="let championshipMatch of championshipMatches; let i = index;" class="carousel-item" [class.active]="i === 0">
-                <div class="container">
-                    <div class="row">
-                        <!-- first club -->
-                        <div class="col-md-5">
-                            <div class="row align-items-center">
-                                <!-- title -->
-                                <div class="col text-center cursor-pointer" routerLink="/championship/predictions">
-                                    <div class="row align-items-center title-block">
-                                        <div class="col">
-                                            <h2 class="bg-dark p-2 rounded">{{championshipMatch.club_first.title}}</h2>
-                                        </div>
+    <ngb-carousel *ngIf="championshipMatches" id="carousel">
+        <ng-template *ngFor="let championshipMatch of championshipMatches; let i = index;" ngbSlide>
+            <div class="container">
+                <div class="row">
+                    <!-- first club -->
+                    <div class="col-md-5">
+                        <div class="row align-items-center">
+                            <!-- title -->
+                            <div class="col text-center cursor-pointer" routerLink="/championship/predictions">
+                                <div class="row align-items-center title-block">
+                                    <div class="col">
+                                        <h2 class="bg-dark p-2 rounded">{{championshipMatch.club_first.title}}</h2>
                                     </div>
                                 </div>
-                                <!-- image -->
-                                <div class="col-12 cursor-pointer" routerLink="/championship/predictions">
-                                    <div class="row align-items-center logo-block p-4">
-                                        <div class="col logo"
-                                             [style.background-image]="'url(' + clubsImagesUrl + championshipMatch.club_first.image + ')'">
-                                        </div>
+                            </div>
+                            <!-- image -->
+                            <div class="col-12 cursor-pointer" routerLink="/championship/predictions">
+                                <div class="row align-items-center logo-block p-4">
+                                    <div class="col logo"
+                                         [style.background-image]="'url(' + clubsImagesUrl + championshipMatch.club_first.image + ')'">
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <!-- versus -->
-                        <div class="col-md-2">
-                            <div class="row align-items-center">
-                                <div class="col vs"></div>
-                            </div>
+                    </div>
+                    <!-- versus -->
+                    <div class="col-md-2">
+                        <div class="row align-items-center">
+                            <div class="col vs"></div>
                         </div>
-                        <!-- second club -->
-                        <div class="col-md-5">
-                            <div class="row">
-                                <!-- title -->
-                                <div class="col text-center cursor-pointer" routerLink="/championship/predictions">
-                                    <div class="row align-items-center title-block">
-                                        <div class="col">
-                                            <h2 class="bg-dark p-2 rounded">{{championshipMatch.club_second.title}}</h2>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- image -->
-                                <div class="col-12 cursor-pointer" routerLink="/championship/predictions">
-                                    <div class="row align-items-center logo-block p-4">
-                                        <div class="col logo"
-                                             [style.background-image]="'url(' + clubsImagesUrl + championshipMatch.club_second.image + ')'">
-                                        </div>
+                    </div>
+                    <!-- second club -->
+                    <div class="col-md-5">
+                        <div class="row">
+                            <!-- title -->
+                            <div class="col text-center cursor-pointer" routerLink="/championship/predictions">
+                                <div class="row align-items-center title-block">
+                                    <div class="col">
+                                        <h2 class="bg-dark p-2 rounded">{{championshipMatch.club_second.title}}</h2>
                                     </div>
                                 </div>
                             </div>
+                            <!-- image -->
+                            <div class="col-12 cursor-pointer" routerLink="/championship/predictions">
+                                <div class="row align-items-center logo-block p-4">
+                                    <div class="col logo"
+                                         [style.background-image]="'url(' + clubsImagesUrl + championshipMatch.club_second.image + ')'">
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                        <div class="carousel-caption d-none d-md-block">
-                            <h3 class="bg-dark p-2 rounded">{{championshipMatch.starts_at | time:'calendar'}}</h3>
-                        </div>
+                    </div>
+                    <div class="carousel-caption d-none d-md-block">
+                        <h3 class="bg-dark p-2 rounded">{{championshipMatch.starts_at | time:'calendar'}}</h3>
                     </div>
                 </div>
             </div>
-        </div>
-        <a class="carousel-control-prev" href="#carousel" role="button" data-slide="prev">
-            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-            <span class="sr-only">Previous</span>
-        </a>
-        <a class="carousel-control-next" href="#carousel" role="button" data-slide="next">
-            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-            <span class="sr-only">Next</span>
-        </a>
-    </div>
+        </ng-template>
+    </ngb-carousel>
 </div>
 <!-- last news -->
 <div class="container">
