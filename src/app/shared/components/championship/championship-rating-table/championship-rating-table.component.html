@@ -42,14 +42,8 @@
                 <strong>{{makeUnsigned(ratingItem.moving)}}</strong>
             </td>
             <td class="text-center p-1">
-                <img *ngIf="ratingItem.user?.main_club?.length"
-                     data-toggle="tooltip"
-                     data-placement="left"
-                     data-html="true"
-                     title="<img src='{{clubsImagesUrl + ratingItem.user.main_club[0].image}}' alt='{{ratingItem.user.main_club[0].title}}' class='img-fluid p-2'>"
-                     [attr.src]="clubsImagesUrl + ratingItem.user.main_club[0].image"
-                     [attr.alt]="ratingItem.user.main_club[0].title"
-                     class="small-image">
+                <app-club-logo-with-tooltip *ngIf="ratingItem.user?.main_club?.length" [club]="ratingItem.user.main_club[0]">
+                </app-club-logo-with-tooltip>
             </td>
             <td class="text-left">
                 <strong>{{ratingItem.user.name}}</strong>
