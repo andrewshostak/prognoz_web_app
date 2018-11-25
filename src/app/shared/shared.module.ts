@@ -28,6 +28,7 @@ import { TimePipe } from './pipes/time.pipe';
 import { UserLogoWithTooltipComponent } from './components/tooltips/user-logo-with-tooltip/user-logo-with-tooltip.component';
 import { UserMessageComponent } from './components/user-message/user-message.component';
 import { WinLogoWithTooltipComponent } from './components/tooltips/win-logo-with-tooltip/win-logo-with-tooltip.component';
+import { ConfirmationModalComponent } from './components/confirmation-modal/confirmation-modal.component';
 
 @NgModule({
     imports: [CommonModule, RouterModule, ChartsModule, ReactiveFormsModule, NgbTooltipModule],
@@ -40,6 +41,7 @@ import { WinLogoWithTooltipComponent } from './components/tooltips/win-logo-with
         ClubLogoWithTooltipComponent,
         ConfirmModalComponent,
         ConfirmModalNewComponent,
+        ConfirmationModalComponent,
         DropdownNavigationComponent,
         ErrorComponent,
         InfoComponent,
@@ -65,6 +67,7 @@ import { WinLogoWithTooltipComponent } from './components/tooltips/win-logo-with
         ClubLogoWithTooltipComponent,
         ConfirmModalComponent,
         ConfirmModalNewComponent,
+        ConfirmationModalComponent,
         DropdownNavigationComponent,
         ErrorComponent,
         InfoComponent,
