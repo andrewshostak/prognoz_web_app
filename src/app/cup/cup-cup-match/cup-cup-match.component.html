@@ -50,11 +50,11 @@
                 <table class="table table-bordered table-striped table-sm">
                     <tr *ngFor="let cupMatch of cupMatches">
                         <td class="text-center text-nowrap"
-                            data-toggle="tooltip"
-                            data-placement="right"
-                            [title]="cupMatch.home_prediction_created_at"
                             [ngClass]="{'bg-success text-white': isCupMatchGuessed(cupMatch, cupMatch.home_prediction)}">
-                            {{cupMatch.home_prediction}}
+                            <app-prediction-with-tooltip [componentText]="cupMatch.home_prediction"
+                                                         [tooltipText]="cupMatch.home_prediction_created_at"
+                                                         [placement]="'right'">
+                            </app-prediction-with-tooltip>
                         </td>
                         <td class="text-right text-nowrap">
                             <span *ngIf="isCupMatchGuessed(cupMatch, cupMatch.home_prediction)"
@@ -62,15 +62,13 @@
                                 <i class="fa fa-lg fa-check-circle-o" aria-hidden="true"></i>
                             </span>
                             <span class="d-none d-sm-inline">{{cupMatch.club_first.title}}</span>
-                            <img class="small-image" src="{{clubsImagesUrl}}{{cupMatch.club_first.image}}" alt="{{cupMatch.club_first.title}}"
-                                 title="{{cupMatch.club_first.title}}">
+                            <app-club-logo-with-tooltip [club]="cupMatch.club_first"></app-club-logo-with-tooltip>
                         </td>
                         <th class="text-center text-nowrap">
                             {{showScoresOrString(cupMatch.home, cupMatch.away, 'vs')}}
                         </th>
                         <td class="text-left text-nowrap">
-                            <img class="small-image" src="{{clubsImagesUrl}}{{cupMatch.club_second.image}}" alt="{{cupMatch.club_second.title}}"
-                                 title="{{cupMatch.club_second.title}}">
+                            <app-club-logo-with-tooltip [club]="cupMatch.club_second"></app-club-logo-with-tooltip>
                             <span class="d-none d-sm-inline">{{cupMatch.club_second.title}}</span>
                             <span *ngIf="isCupMatchGuessed(cupMatch, cupMatch.away_prediction)"
                                   class="pull-right text-success d-none d-lg-inline">
@@ -78,11 +76,11 @@
                             </span>
                         </td>
                         <td class="text-center text-nowrap"
-                            data-toggle="tooltip"
-                            data-placement="left"
-                            [title]="cupMatch.away_prediction_created_at"
                             [ngClass]="{'bg-success text-white': isCupMatchGuessed(cupMatch, cupMatch.away_prediction)}">
-                            {{cupMatch.away_prediction}}
+                            <app-prediction-with-tooltip [componentText]="cupMatch.away_prediction"
+                                                         [tooltipText]="cupMatch.away_prediction_created_at"
+                                                         [placement]="'left'">
+                            </app-prediction-with-tooltip>
                         </td>
                     </tr>
                 </table>

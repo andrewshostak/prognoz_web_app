@@ -21,6 +21,7 @@ import { NavigationComponent } from './components/navigation/navigation.componen
 import { NgbTooltipModule } from '@ng-bootstrap/ng-bootstrap';
 import { OnlineUsersListComponent } from './components/online-users-list/online-users-list.component';
 import { PaginationComponent } from './components/pagination/pagination.component';
+import { PredictionWithTooltipComponent } from './components/tooltips/prediction-with-tooltip/prediction-with-tooltip.component';
 import { SocialMedialLinksComponent } from './components/social-medial-links/social-medial-links.component';
 import { SpinnerButtonComponent } from './components/spinner-button/spinner-button.component';
 import { SpinnerComponent } from './components/spinner/spinner.component';
@@ -50,6 +51,7 @@ import { ConfirmationModalComponent } from './components/confirmation-modal/conf
         NavigationComponent,
         OnlineUsersListComponent,
         PaginationComponent,
+        PredictionWithTooltipComponent,
         SocialMedialLinksComponent,
         SpinnerComponent,
         SpinnerButtonComponent,
@@ -76,6 +78,7 @@ import { ConfirmationModalComponent } from './components/confirmation-modal/conf
         NavigationComponent,
         OnlineUsersListComponent,
         PaginationComponent,
+        PredictionWithTooltipComponent,
         SocialMedialLinksComponent,
         SpinnerComponent,
         SpinnerButtonComponent,
