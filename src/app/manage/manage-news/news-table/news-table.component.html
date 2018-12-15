@@ -38,9 +38,7 @@
                             </button>
                             <button type="button"
                                     class="btn btn-outline-danger"
-                                    (click)="deleteNewsConfirmModalOpen(one)"
-                                    data-toggle="modal"
-                                    data-target="#deleteNewsConfirmModal">
+                                    (click)="openConfirmModal(confirmModal, one)">
                                 <i class="fa fa-trash" aria-hidden="true"></i>
                             </button>
                         </td>
@@ -58,9 +56,9 @@
                     [path]="path">
     </app-pagination>
 </div>
-<app-confirm-modal [data]="confirmModalData"
-                   [modalId]="confirmModalId"
-                   [message]="confirmModalMessage"
-                   [spinnerButton]="confirmSpinnerButton"
-                   (confirmed)="confirmModalSubmit($event)">
-</app-confirm-modal>
+<ng-template #confirmModal let-c="close">
+    <app-confirmation-modal [close]="c"
+                            [message]="confirmModalMessage"
+                            (confirmed)="deleteNewsItem(selectedNews)">
+    </app-confirmation-modal>
+</ng-template>
