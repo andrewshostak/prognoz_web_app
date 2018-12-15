@@ -3,8 +3,8 @@ import { ActivatedRoute, Params } from '@angular/router';
 
 import { Club } from '@models/club.model';
 import { ClubService } from '@services/club.service';
-import { ConfirmModalService } from '@services/confirm-modal.service';
 import { environment } from '@env';
+import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { NotificationsService } from 'angular2-notifications';
 
 @Component({
@@ -16,36 +16,37 @@ export class ClubTableComponent implements OnInit {
     constructor(
         private activatedRoute: ActivatedRoute,
         private clubService: ClubService,
-        private confirmModalService: ConfirmModalService,
+        private ngbModalService: NgbModal,
         private notificationsService: NotificationsService
     ) {}
 
     clubs: Club[];
     clubsImagesUrl: string = environment.apiImageClubs;
+    confirmModalMessage: string;
+    confirmModalReference: NgbModalRef;
     currentPage: number;
     errorClubs: string | Array<string>;
     lastPage: number;
     path = '/manage/clubs/page/';
     perPage: number;
+    selectedClub: Club;
     total: number;
 
-    deleteClub(club: Club): void {
-        this.confirmModalService.show(() => {
-            this.clubService.deleteClub(club.id).subscribe(
-                response => {
-                    this.confirmModalService.hide();
-                    this.total--;
-                    this.clubs = this.clubs.filter(n => n !== club);
-                    this.notificationsService.success('Успішно', club.title + ' видалено');
-                },
-                errors => {
-                    this.confirmModalService.hide();
-                    for (const error of errors) {
-                        this.notificationsService.error('Помилка', error);
-                    }
+    deleteClub(): void {
+        this.clubService.deleteClub(this.selectedClub.id).subscribe(
+            () => {
+                this.confirmModalReference.close();
+                this.total--;
+                this.clubs = this.clubs.filter(n => n.id !== this.selectedClub.id);
+                this.notificationsService.success('Успішно', this.selectedClub.title + ' видалено');
+            },
+            errors => {
+                this.confirmModalReference.close();
+                for (const error of errors) {
+                    this.notificationsService.error('Помилка', error);
                 }
-            );
-        }, `Видалити ${club.title}?`);
+            }
+        );
     }
 
     ngOnInit() {
@@ -66,5 +67,12 @@ export class ClubTableComponent implements OnInit {
                 }
             );
         });
+    }
+
+    openConfirmModal(content: NgbModalRef, club: Club): void {
+        this.confirmModalMessage = `Видалити ${club.title}?`;
+        this.selectedClub = club;
+        this.confirmModalReference = this.ngbModalService.open(content);
+        this.confirmModalReference.result.then(() => (this.selectedClub = null), () => (this.selectedClub = null));
     }
 }

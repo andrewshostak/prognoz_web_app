@@ -48,9 +48,7 @@
                             </a>
                             <button type="button"
                                     class="btn btn-sm btn-outline-danger"
-                                    (click)="deleteClub(club)"
-                                    data-toggle="modal"
-                                    data-target="#deleteClubConfirmModal">
+                                    (click)="openConfirmModal(confirmModal, club)">
                                 <i class="fa fa-trash-o fa-lg" aria-hidden="true"></i>
                             </button>
                         </td>
@@ -66,3 +64,9 @@
                     [path]="path">
     </app-pagination>
 </div>
+<ng-template #confirmModal let-c="close">
+    <app-confirmation-modal [close]="c"
+                            [message]="confirmModalMessage"
+                            (confirmed)="deleteClub()">
+    </app-confirmation-modal>
+</ng-template>
