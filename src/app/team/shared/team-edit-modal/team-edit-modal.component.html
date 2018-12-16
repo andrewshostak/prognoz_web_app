@@ -1,106 +1,101 @@
-<div class="modal fade" id="teamEditModal" tabindex="-1" role="dialog" aria-labelledby="teamEditModalLabel"
-     aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <form novalidate [formGroup]="teamForm" (ngSubmit)="onSubmit()" class="p-2">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="teamEditModalLabel">Створити команду</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <!-- error -->
-                    <app-error *ngIf="errorClubs" [message]="errorClubs"></app-error>
-                    <div *ngIf="clubs" class="container-fluid">
-                        <div class="row">
-                            <div class="col">
-                                <!-- name -->
-                                <div class="form-group"
-                                     [class.form-group-invalid-custom]="teamForm.get('name').invalid && teamForm.get('name').touched">
-                                    <label class="form-control-label" for="name"><strong>Назва:</strong></label>
-                                    <input type="text"
-                                           id="name"
-                                           placeholder="Введіть назву команди"
-                                           class="form-control"
-                                           formControlName="name">
-                                    <div *ngIf="teamForm.get('name').hasError('required') && teamForm.get('name').touched">
-                                        <small>Назва команди обов'язкова</small>
-                                    </div>
-                                    <div *ngIf="teamForm.get('name').hasError('minlength') && teamForm.get('name').touched">
-                                        <small>Назва повинна бути більша ніж 3 символи</small>
-                                    </div>
-                                    <div *ngIf="teamForm.get('name').hasError('maxlength') && teamForm.get('name').touched">
-                                        <small>Назва перевищує 30 символів</small>
-                                    </div>
-                                </div>
-                                <!-- new/old card -->
-                                <div class="card">
-                                    <!-- old image -->
-                                    <div *ngIf="!teamForm.value.image && team" class="text-center">
-                                        <img class="img-fluid rounded p-2" src="{{teamImagesUrl}}{{team.image || teamImageDefault}}" alt="{{teamForm.get('name')}}">
-                                    </div>
-                                    <!-- if upload new image -->
-                                    <div *ngIf="teamForm.value.image" class="text-center">
-                                        <img class="img-fluid rounded p-2" src="{{teamForm.value.image}}" alt="{{teamForm.get('name')}}">
-                                    </div>
-                                    <!-- help text after new avatar image uploaded -->
-                                    <div *ngIf="teamForm.value.image && !errorImage && hasUnsavedChanges" class="alert alert-info ml-2 mr-2 mb-2" role="alert">
-                                        <small>Натисніть <strong>"Зберегти"</strong> щоб зберегти це зображення для вашої команди.</small><br>
-                                        <small>Натисніть <strong>"Скасувати"</strong> для відміни.</small>
-                                    </div>
-                                </div>
-                                <!-- image -->
-                                <div class="form-group" [class.form-group-invalid-custom]="errorImage">
-                                    <label class="form-control-label" for="image"><strong>Зображення:</strong></label>
-                                    <input type="file"
-                                           id="image"
-                                           placeholder="Завантажте зображення для команди"
-                                           class="form-control"
-                                           (change)="fileChange($event)"
-                                           accept=".png,.jpg,.gif,.jpeg">
-                                    <div *ngIf="errorImage">
-                                        <small>{{errorImage}}</small>
-                                    </div>
-                                </div>
-                                <!-- caption -->
-                                <div class="form-group"
-                                     [class.form-group-invalid-custom]="teamForm.get('caption').invalid && (teamForm.get('caption').touched || !teamForm.get('caption').pristine)">
-                                    <label class="form-control-label" for="caption"><strong>Добавити коментар:</strong></label>
-                                    <textarea id="caption"
-                                              placeholder="Напишіть щось про свою команду..."
-                                              class="form-control"
-                                              rows="3"
-                                              formControlName="caption">
-                                    </textarea>
-                                    <div *ngIf="teamForm.get('caption').hasError('maxlength') && !teamForm.get('caption').pristine">
-                                        <small>Текст статусу команди перевищує 140 символів.</small>
-                                    </div>
-                                </div>
-                                <!-- club_id -->
-                                <div class="form-group">
-                                    <label class="form-control-label" for="club_id"><strong>Клуб:</strong></label>
-                                    <select id="club_id"
-                                            class="form-control"
-                                            formControlName="club_id">
-                                        <option *ngFor="let club of clubs" [value]="club.id">{{club.title}}</option>
-                                    </select>
-                                </div>
+<div class="modal-content">
+    <form novalidate [formGroup]="teamForm" (ngSubmit)="onSubmit()" class="p-2">
+        <div class="modal-header">
+            <h5 class="modal-title" id="teamEditModalLabel">{{ team ? 'Редагувати команду' : 'Створити команду'}}</h5>
+            <button type="button" class="close" aria-label="Close" (click)="close()">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            <!-- error -->
+            <app-error *ngIf="errorClubs" [message]="errorClubs"></app-error>
+            <div *ngIf="clubs" class="container-fluid">
+                <div class="row">
+                    <div class="col">
+                        <!-- name -->
+                        <div class="form-group"
+                             [class.form-group-invalid-custom]="teamForm.get('name').invalid && teamForm.get('name').touched">
+                            <label class="form-control-label" for="name"><strong>Назва:</strong></label>
+                            <input type="text"
+                                   id="name"
+                                   placeholder="Введіть назву команди"
+                                   class="form-control"
+                                   formControlName="name">
+                            <div *ngIf="teamForm.get('name').hasError('required') && teamForm.get('name').touched">
+                                <small>Назва команди обов'язкова</small>
                             </div>
+                            <div *ngIf="teamForm.get('name').hasError('minlength') && teamForm.get('name').touched">
+                                <small>Назва повинна бути більша ніж 3 символи</small>
+                            </div>
+                            <div *ngIf="teamForm.get('name').hasError('maxlength') && teamForm.get('name').touched">
+                                <small>Назва перевищує 30 символів</small>
+                            </div>
+                        </div>
+                        <!-- new/old card -->
+                        <div class="card">
+                            <!-- old image -->
+                            <div *ngIf="!teamForm.value.image && team" class="text-center">
+                                <img class="img-fluid rounded p-2" src="{{teamImagesUrl}}{{team.image || teamImageDefault}}" alt="{{teamForm.get('name')}}">
+                            </div>
+                            <!-- if upload new image -->
+                            <div *ngIf="teamForm.value.image" class="text-center">
+                                <img class="img-fluid rounded p-2" src="{{teamForm.value.image}}" alt="{{teamForm.get('name')}}">
+                            </div>
+                            <!-- help text after new avatar image uploaded -->
+                            <div *ngIf="teamForm.value.image && !errorImage && hasUnsavedChanges" class="alert alert-info ml-2 mr-2 mb-2" role="alert">
+                                <small>Натисніть <strong>"Зберегти"</strong> щоб зберегти це зображення для вашої команди.</small><br>
+                                <small>Натисніть <strong>"Скасувати"</strong> для відміни.</small>
+                            </div>
+                        </div>
+                        <!-- image -->
+                        <div class="form-group" [class.form-group-invalid-custom]="errorImage">
+                            <label class="form-control-label" for="image"><strong>Зображення:</strong></label>
+                            <input type="file"
+                                   id="image"
+                                   placeholder="Завантажте зображення для команди"
+                                   class="form-control"
+                                   (change)="fileChange($event)"
+                                   accept=".png,.jpg,.gif,.jpeg">
+                            <div *ngIf="errorImage">
+                                <small>{{errorImage}}</small>
+                            </div>
+                        </div>
+                        <!-- caption -->
+                        <div class="form-group"
+                             [class.form-group-invalid-custom]="teamForm.get('caption').invalid && (teamForm.get('caption').touched || !teamForm.get('caption').pristine)">
+                            <label class="form-control-label" for="caption"><strong>Добавити коментар:</strong></label>
+                            <textarea id="caption"
+                                      placeholder="Напишіть щось про свою команду..."
+                                      class="form-control"
+                                      rows="3"
+                                      formControlName="caption">
+                            </textarea>
+                            <div *ngIf="teamForm.get('caption').hasError('maxlength') && !teamForm.get('caption').pristine">
+                                <small>Текст статусу команди перевищує 140 символів.</small>
+                            </div>
+                        </div>
+                        <!-- club_id -->
+                        <div class="form-group">
+                            <label class="form-control-label" for="club_id"><strong>Клуб:</strong></label>
+                            <select id="club_id"
+                                    class="form-control"
+                                    formControlName="club_id">
+                                <option *ngFor="let club of clubs" [value]="club.id">{{club.title}}</option>
+                            </select>
                         </div>
                     </div>
                 </div>
-                <div class="modal-footer">
-                    <button (click)="resetTeamForm()" type="button" class="btn btn-secondary" data-dismiss="modal">Скасувати</button>
-                    <button [disabled]="teamForm.invalid || errorImage"
-                            [hidden]="spinnerButton"
-                            type="submit"
-                            class="btn btn-primary">Зберегти
-                    </button>
-                    <app-spinner-button [hidden]="!spinnerButton"></app-spinner-button>
-                </div>
-            </form>
-            <simple-notifications [options]="options"></simple-notifications>
+            </div>
         </div>
-    </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" (click)="close()">Скасувати</button>
+            <button [disabled]="teamForm.invalid || errorImage"
+                    [hidden]="spinnerButton"
+                    type="submit"
+                    class="btn btn-primary">Зберегти
+            </button>
+            <app-spinner-button [hidden]="!spinnerButton"></app-spinner-button>
+        </div>
+    </form>
+    <simple-notifications [options]="options"></simple-notifications>
 </div>

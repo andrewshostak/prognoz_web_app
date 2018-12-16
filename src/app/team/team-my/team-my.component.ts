@@ -4,6 +4,7 @@ import { Router, NavigationEnd } from '@angular/router';
 import { Subscription } from 'rxjs/Subscription';
 
 import { CurrentStateService } from '@services/current-state.service';
+import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { NotificationsService } from 'angular2-notifications';
 import { RequestParams } from '@models/request-params.model';
 import { Team } from '@models/team/team.model';
@@ -26,6 +27,7 @@ declare var $: any;
 export class TeamMyComponent implements OnInit, OnDestroy {
     constructor(
         private currentStateService: CurrentStateService,
+        private ngbModalService: NgbModal,
         private notificationsService: NotificationsService,
         private router: Router,
         private teamMatchService: TeamMatchService,
@@ -43,6 +45,7 @@ export class TeamMyComponent implements OnInit, OnDestroy {
     errorTeamTeamMatches: string;
     isCaptain = false;
     noAccess = 'Доступ заборонено. Увійдіть на сайт для перегляду цієї сторінки.';
+    openedModalReference: NgbModalRef;
     routerEventsSubscription: Subscription;
     round: number;
     roundsArray: { id: number; title: string }[];
@@ -108,7 +111,7 @@ export class TeamMyComponent implements OnInit, OnDestroy {
                     if (response) {
                         this.team = Object.assign({}, response);
                     }
-                    $('#teamEditModal').modal('hide');
+                    this.openedModalReference.close();
                     this.notificationsService.success('Успішно', 'Команду редаговано');
                     this.spinnerButtonTeamEditForm = false;
                     this.teamEditFormHasUnsavedChanges = false;
@@ -120,6 +123,14 @@ export class TeamMyComponent implements OnInit, OnDestroy {
                 }
             );
         }
+    }
+
+    openTeamEditModal(content: NgbModalRef): void {
+        this.openedModalReference = this.ngbModalService.open(content);
+        this.openedModalReference.result.then(
+            () => (this.teamEditFormHasUnsavedChanges = false),
+            () => (this.teamEditFormHasUnsavedChanges = false)
+        );
     }
 
     private getTeamData(competitionId: number) {

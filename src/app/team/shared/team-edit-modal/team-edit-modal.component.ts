@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormGroup } from '@angular/forms';
 
 import { Club } from '@models/club.model';
 import { ClubService } from '@services/club.service';
@@ -8,14 +8,13 @@ import { ImageService } from '@services/image.service';
 import { NotificationsService } from 'angular2-notifications';
 import { Team } from '@models/team/team.model';
 
-declare var $: any;
-
 @Component({
     selector: 'app-team-edit-modal',
     templateUrl: './team-edit-modal.component.html',
     styleUrls: ['./team-edit-modal.component.scss']
 })
 export class TeamEditModalComponent implements OnInit {
+    @Input() close: () => void;
     @Input() hasUnsavedChanges = false;
     @Input() team: Team = null;
     @Input() spinnerButton: boolean;
@@ -52,16 +51,6 @@ export class TeamEditModalComponent implements OnInit {
 
     ngOnInit() {
         this.getClubsData();
-        $('#teamEditModal').on('hidden.bs.modal', e => {
-            this.resetTeamForm();
-        });
-    }
-
-    onSubmit() {
-        this.submitted.emit(this.teamForm);
-    }
-
-    resetTeamForm() {
         if (!this.team) {
             this.teamForm.reset();
         } else {
@@ -72,6 +61,10 @@ export class TeamEditModalComponent implements OnInit {
                 image: null
             });
         }
+    }
+
+    onSubmit() {
+        this.submitted.emit(this.teamForm);
     }
 
     private getClubsData() {
