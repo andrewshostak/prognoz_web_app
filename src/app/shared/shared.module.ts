@@ -11,7 +11,6 @@ import { ChampionshipUserPredictionsTableComponent } from './components/champion
 import { ChartsModule } from 'ng2-charts';
 import { ClubLogoWithTooltipComponent } from './components/tooltips/club-logo-with-tooltip/club-logo-with-tooltip.component';
 import { ConfirmModalComponent } from './components/confirm-modal/confirm-modal.component';
-import { ConfirmModalNewComponent } from './components/confirm-modal-new/confirm-modal-new.component';
 import { DropdownNavigationComponent } from './components/dropdown-navigation/dropdown-navigation.component';
 import { ErrorComponent } from './components/error/error.component';
 import { InfoComponent } from './components/info/info.component';
@@ -41,7 +40,6 @@ import { ConfirmationModalComponent } from './components/confirmation-modal/conf
         ChampionshipUserRatingDetailsComponent,
         ClubLogoWithTooltipComponent,
         ConfirmModalComponent,
-        ConfirmModalNewComponent,
         ConfirmationModalComponent,
         DropdownNavigationComponent,
         ErrorComponent,
@@ -68,7 +66,6 @@ import { ConfirmationModalComponent } from './components/confirmation-modal/conf
         ChampionshipUserRatingDetailsComponent,
         ClubLogoWithTooltipComponent,
         ConfirmModalComponent,
-        ConfirmModalNewComponent,
         ConfirmationModalComponent,
         DropdownNavigationComponent,
         ErrorComponent,
