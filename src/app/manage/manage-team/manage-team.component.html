@@ -17,9 +17,7 @@
                 <button *ngFor="let competition of competitions"
                         type="button"
                         class="btn btn-success mb-2"
-                        (click)="startDrawConfirmModalOpen(competition)"
-                        data-toggle="modal"
-                        data-target="#startDrawConfirmModal">
+                        (click)="openStartDrawConfirmModal(confirmModal, competition)">
                     {{competition.title}}: Провести жеребкування календаря
                 </button>
                 <ul class="list-group">
@@ -37,9 +35,7 @@
                 <button *ngFor="let competition of competitions"
                         type="button"
                         class="btn btn-success mb-2"
-                        (click)="startNextRoundConfirmModalOpen(competition)"
-                        data-toggle="modal"
-                        data-target="#startNextRoundConfirmModal">
+                        (click)="openStartNextRoundConfirmModal(confirmModal, competition)">
                     {{competition.title}}: Розпочати наступний тур - {{nextRoundNumber(competition)}}
                 </button>
                 <ul class="list-group">
@@ -70,9 +66,9 @@
     </div>
 </div>
 <router-outlet></router-outlet>
-<app-confirm-modal [data]="confirmModalData"
-                   [modalId]="confirmModalId"
-                   [message]="confirmModalMessage"
-                   [spinnerButton]="confirmSpinnerButton"
-                   (confirmed)="confirmModalSubmit($event)">
-</app-confirm-modal>
+<ng-template #confirmModal let-c="close">
+    <app-confirmation-modal [close]="c"
+                            [message]="confirmModalMessage"
+                            (confirmed)="confirmModalSubmit($event)">
+    </app-confirmation-modal>
+</ng-template>
