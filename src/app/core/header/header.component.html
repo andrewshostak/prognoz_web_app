@@ -41,10 +41,10 @@
 </div>
 <!-- main-navigation -->
 <nav class="navbar navbar-expand-sm navbar-dark bg-dark mb-2">
-    <button class="navbar-toggler cursor-pointer" type="button" data-toggle="collapse" data-target="#main-navigation" aria-controls="main-navigation" aria-expanded="false" aria-label="Toggle navigation">
+    <button class="navbar-toggler cursor-pointer" type="button" (click)="collapsed = !collapsed">
         <span class="navbar-toggler-icon"></span>
     </button>
-    <div class="collapse navbar-collapse justify-content-center" id="main-navigation">
+    <div [hidden]="collapsed" class="navbar-collapse justify-content-center">
         <ul class="nav navbar-nav">
             <li class="nav-item text-center">
                 <strong>

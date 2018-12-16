@@ -14,6 +14,7 @@ export class HeaderComponent implements OnInit {
     constructor(private authService: AuthService, private notificationsService: NotificationsService, private router: Router) {}
 
     user: User;
+    collapsed: boolean;
 
     logout() {
         this.router.navigate(['/']);
