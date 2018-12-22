@@ -7,10 +7,10 @@
 <!-- create / make team stated button -->
 <div *ngIf="authenticatedUser && !alreadyJoined && !alreadyPending && competition && competition.stated" class="row mb-2">
     <div class="col">
-        <button type="button" class="btn btn-primary mb-2 mb-sm-0" data-toggle="modal" data-target="#teamEditModal">
+        <button type="button" class="btn btn-primary mb-2 mb-sm-0" (click)="openTeamEditModal(teamEditModal)">
             Створити нову команду
         </button>
-        <button type="button" class="btn btn-outline-primary mb-2 mb-sm-0" data-toggle="modal" data-target="#teamSelectModal">
+        <button type="button" class="btn btn-outline-primary mb-2 mb-sm-0" (click)=openTeamSelectModal(teamSelectModal)>
             Заявити команду
         </button>
     </div>
@@ -48,7 +48,7 @@
                             </div>
                         </div>
                         <div *ngIf="showJoinButton(team) && !alreadyJoined && competition && competition.stated" class="card-footer text-center">
-                            <button class="btn btn-primary" (click)="joinTeamModalOpen(team)" data-toggle="modal" data-target="#joinTeamConfirmModal">
+                            <button class="btn btn-primary" (click)="openTeamJoiningConfirmModal(confirmModal, team)">
                                 Приєднатись
                             </button>
                         </div>
@@ -73,11 +73,11 @@
                                 && !participant.confirmed && !participant.refused
                                 && competition && competition.stated">
                         <div class="btn-group" role="group" aria-label="Confirm or refuse">
-                            <button type="button" class="btn btn-sm btn-success" title="Прийняти заявку" (click)="confirmParticipantModalOpen(participant)" data-toggle="modal" data-target="#confirmTeamParticipantConfirmModal">
+                            <button type="button" class="btn btn-sm btn-success" title="Прийняти заявку" (click)="openConfirmParticipantConfirmModal(confirmModal, participant)">
                                 <i aria-hidden="true" class="d-lg-none fa fa-lg fa-check-circle-o"></i>
                                 <span class="d-none d-lg-block">Прийняти</span>
                             </button>
-                            <button type="button" class="btn btn-sm btn-danger" title="Відхилити заявку" (click)="refuseParticipantModalOpen(participant)" data-toggle="modal" data-target="#refuseTeamParticipantConfirmModal">
+                            <button type="button" class="btn btn-sm btn-danger" title="Відхилити заявку" (click)="openRefuseParticipantConfirmModal(confirmModal, participant)">
                                 <i aria-hidden="true" class="d-lg-none fa fa-lg fa-times-circle-o"></i>
                                 <span class="d-none d-lg-block">Відхилити</span>
                             </button>
@@ -100,19 +100,22 @@
         </tbody>
     </table>
 </div>
-<app-team-edit-modal *ngIf="authenticatedUser"
-                     [spinnerButton]="spinnerButton"
-                     [teamForm]="teamCreateForm"
-                     (submitted)="onSubmitted($event)">
-</app-team-edit-modal>
-<app-team-select-modal *ngIf="authenticatedUser"
-                       [authenticatedUser]="authenticatedUser"
-                       [spinnerButton]="spinnerButtonSelect"
-                       (submitted)="onSubmittedSelect($event)">
-</app-team-select-modal>
-<app-confirm-modal [data]="confirmModalData"
-                   [modalId]="confirmModalId"
-                   [message]="confirmModalMessage"
-                   [spinnerButton]="confirmSpinnerButton"
-                   (confirmed)="confirmModalSubmit($event)">
-</app-confirm-modal>
+<ng-template #teamEditModal let-c="close">
+    <app-team-edit-modal [close]="c"
+                         [spinnerButton]="spinnerButton"
+                         [teamForm]="teamCreateForm"
+                         (submitted)="onSubmitted($event)">
+    </app-team-edit-modal>
+</ng-template>
+<ng-template #teamSelectModal let-c="close">
+    <app-team-select-modal [authenticatedUser]="authenticatedUser"
+                           [spinnerButton]="spinnerButtonSelect"
+                           (submitted)="onSubmittedSelect($event)">
+    </app-team-select-modal>
+</ng-template>
+<ng-template #confirmModal let-c="close">
+    <app-confirmation-modal [close]="c"
+                            [message]="confirmModalMessage"
+                            (confirmed)="confirmModalSubmit($event)">
+    </app-confirmation-modal>
+</ng-template>

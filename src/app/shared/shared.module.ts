@@ -10,7 +10,7 @@ import { ChampionshipUserRatingDetailsComponent } from './components/championshi
 import { ChampionshipUserPredictionsTableComponent } from './components/championship/championship-user-predictions-table/championship-user-predictions-table.component';
 import { ChartsModule } from 'ng2-charts';
 import { ClubLogoWithTooltipComponent } from './components/tooltips/club-logo-with-tooltip/club-logo-with-tooltip.component';
-import { ConfirmModalComponent } from './components/confirm-modal/confirm-modal.component';
+import { ConfirmationModalComponent } from './components/confirmation-modal/confirmation-modal.component';
 import { DropdownNavigationComponent } from './components/dropdown-navigation/dropdown-navigation.component';
 import { ErrorComponent } from './components/error/error.component';
 import { InfoComponent } from './components/info/info.component';
@@ -28,7 +28,6 @@ import { TimePipe } from './pipes/time.pipe';
 import { UserLogoWithTooltipComponent } from './components/tooltips/user-logo-with-tooltip/user-logo-with-tooltip.component';
 import { UserMessageComponent } from './components/user-message/user-message.component';
 import { WinLogoWithTooltipComponent } from './components/tooltips/win-logo-with-tooltip/win-logo-with-tooltip.component';
-import { ConfirmationModalComponent } from './components/confirmation-modal/confirmation-modal.component';
 
 @NgModule({
     imports: [CommonModule, RouterModule, ChartsModule, ReactiveFormsModule, NgbTooltipModule],
@@ -39,7 +38,6 @@ import { ConfirmationModalComponent } from './components/confirmation-modal/conf
         ChampionshipUserPredictionsTableComponent,
         ChampionshipUserRatingDetailsComponent,
         ClubLogoWithTooltipComponent,
-        ConfirmModalComponent,
         ConfirmationModalComponent,
         DropdownNavigationComponent,
         ErrorComponent,
@@ -65,7 +63,6 @@ import { ConfirmationModalComponent } from './components/confirmation-modal/conf
         ChampionshipUserPredictionsTableComponent,
         ChampionshipUserRatingDetailsComponent,
         ClubLogoWithTooltipComponent,
-        ConfirmModalComponent,
         ConfirmationModalComponent,
         DropdownNavigationComponent,
         ErrorComponent,

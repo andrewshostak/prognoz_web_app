@@ -17,8 +17,6 @@ import { TitleService } from '@services/title.service';
 import { User } from '@models/user.model';
 import { UtilsService } from '@services/utils.service';
 
-declare var $: any;
-
 @Component({
     selector: 'app-team-my',
     templateUrl: './team-my.component.html',
