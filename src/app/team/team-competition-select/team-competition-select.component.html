@@ -11,15 +11,11 @@
     </div>
     <div>
         <button class="btn btn-secondary mb-2"
-                (click)="getFilterData()"
-                type="button"
-                data-toggle="collapse"
-                data-target="#filterCard"
-                aria-expanded="false"
-                aria-controls="filterCard">
+                (click)="toggleFilterCardVisibility()"
+                type="button">
             Попередні змагання
         </button>
-        <div class="collapse" id="filterCard">
+        <div [hidden]="!filterCardExpanded">
             <div class="card black-shadow mb-2">
                 <div class="card-body">
                     <form novalidate [formGroup]="filterTeamCompetitionsForm">
