@@ -61,7 +61,7 @@
                                 <button [hidden]="cupCupMatch.ended" routerLink="/manage/cup/cup-matches/{{cupCupMatch.id}}/edit" type="button" class="btn btn-sm btn-warning">
                                     <i class="fa fa-pencil-square-o fa-lg" aria-hidden="true"></i>
                                 </button>
-                                <button [hidden]="cupCupMatch.ended" type="button" class="btn btn-sm btn-danger" (click)="deleteCupCupMatch(cupCupMatch)">
+                                <button [hidden]="cupCupMatch.ended" type="button" class="btn btn-sm btn-danger" (click)="openConfirmModal(confirmModal, cupCupMatch)">
                                     <i class="fa fa-trash-o fa-lg" aria-hidden="true"></i>
                                 </button>
                                 <button [hidden]="!cupCupMatch.ended" disabled class="btn btn-sm btn-outline-secondary">
@@ -82,3 +82,9 @@
                     [path]="path">
     </app-pagination>
 </div>
+<ng-template #confirmModal let-c="close">
+    <app-confirmation-modal [close]="c"
+                            [message]="confirmModalMessage"
+                            (confirmed)="confirmModalSubmit($event)">
+    </app-confirmation-modal>
+</ng-template>

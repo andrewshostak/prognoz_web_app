@@ -3,7 +3,6 @@ import { Component, ElementRef, OnInit } from '@angular/core';
 import { AuthService } from '@services/auth.service';
 import { Competition } from '@models/competition.model';
 import { CompetitionService } from '@services/competition.service';
-import { ConfirmModalService } from '@services/confirm-modal.service';
 import { CupApplicationService } from '@services/cup/cup-application.service';
 import { CupApplication } from '@models/cup/cup-application.model';
 import { CurrentStateService } from '@services/current-state.service';
@@ -24,7 +23,6 @@ export class CupApplicationsComponent implements OnInit {
     constructor(
         private authService: AuthService,
         private competitionService: CompetitionService,
-        private confirmModalService: ConfirmModalService,
         private cupApplicationService: CupApplicationService,
         private currentStateService: CurrentStateService,
         private elementRef: ElementRef,
