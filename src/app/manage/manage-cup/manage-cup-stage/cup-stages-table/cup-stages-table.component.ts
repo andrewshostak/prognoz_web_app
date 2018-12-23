@@ -21,13 +21,13 @@ export class CupStagesTableComponent implements OnInit, OnDestroy {
     ) {}
 
     activatedRouteSubscription: Subscription;
+    confirmModalMessage: string;
+    confirmModalSubmit: (event) => void;
     cupStages: CupStage[];
     currentPage: number;
     errorCupStages: string;
     lastPage: number;
     openedModalReference: NgbModalRef;
-    confirmModalMessage: string;
-    confirmModalSubmit: (event) => void;
     path: string;
     perPage: number;
     total: number;
