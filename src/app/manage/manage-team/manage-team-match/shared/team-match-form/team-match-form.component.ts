@@ -152,7 +152,9 @@ export class TeamMatchFormComponent implements OnChanges, OnInit {
     private getCompetitionsData(): void {
         this.competitionService.getCompetitions(null, environment.tournaments.team.id, null, null, null, true).subscribe(
             response => {
-                this.competitions = response.competitions;
+                if (response && response.competitions) {
+                    this.competitions = response.competitions;
+                }
             },
             error => {
                 this.errorCompetitions = error;

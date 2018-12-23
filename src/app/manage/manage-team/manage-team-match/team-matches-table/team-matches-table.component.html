@@ -115,7 +115,7 @@
                             <button type="button"
                                     [hidden]="teamMatch.ended"
                                     class="btn btn-sm btn-danger"
-                                    (click)="deleteTeamMatch(teamMatch)">
+                                    (click)="openConfirmModal(confirmModal, teamMatch)">
                                 <i class="fa fa-trash-o fa-lg" aria-hidden="true"></i>
                             </button>
                         </td>
@@ -133,3 +133,9 @@
                     [path]="path">
     </app-pagination>
 </div>
+<ng-template #confirmModal let-c="close">
+    <app-confirmation-modal [close]="c"
+                            [message]="confirmModalMessage"
+                            (confirmed)="confirmModalSubmit($event)">
+    </app-confirmation-modal>
+</ng-template>
