@@ -2,13 +2,13 @@ import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/cor
 import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Location } from '@angular/common';
 
-import { ConfirmModalService } from '@services/confirm-modal.service';
 import { Club } from '@models/club.model';
 import { ClubService } from '@services/club.service';
 import { CupMatch } from '@models/cup/cup-match.model';
 import { CupMatchService } from '@services/cup/cup-match.service';
 import { CupStage } from '@models/cup/cup-stage.model';
 import { CupStageService } from '@services/cup/cup-stage.service';
+import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { NotificationsService } from 'angular2-notifications';
 import { UtilsService } from '@services/utils.service';
 
@@ -19,21 +19,24 @@ import { UtilsService } from '@services/utils.service';
 })
 export class CupMatchFormComponent implements OnChanges, OnInit {
     constructor(
-        private confirmModalService: ConfirmModalService,
         private clubService: ClubService,
         private cupMatchService: CupMatchService,
         private cupStageService: CupStageService,
         private location: Location,
+        private ngbModalService: NgbModal,
         private notificationsService: NotificationsService
     ) {}
 
     @Input() cupMatch: CupMatch;
 
     clubs: Club[];
+    confirmModalMessage: string;
+    confirmModalSubmit: (event) => void;
     cupStages: CupStage[];
     cupMatchForm: FormGroup;
     errorClubs: string;
     errorCupStages: string;
+    openedModalReference: NgbModalRef;
 
     get cupStagesFormArray(): FormArray {
         return <FormArray>this.cupMatchForm.get('cup_stages');
@@ -91,22 +94,26 @@ export class CupMatchFormComponent implements OnChanges, OnInit {
         }
     }
 
+    openConfirmModal(content: NgbModalRef): void {
+        this.confirmModalMessage = 'Очистити форму від змін?';
+        this.confirmModalSubmit = () => this.resetCupMatchForm();
+        this.openedModalReference = this.ngbModalService.open(content);
+    }
+
     removeCupStage(index: number): void {
         this.cupStagesFormArray.removeAt(index);
     }
 
     resetCupMatchForm(): void {
-        this.confirmModalService.show(() => {
-            this.clearCupStagesFormArray();
-            this.cupMatchForm.reset();
-            if (this.cupMatch) {
-                this.cupMatch.cup_stages.forEach(cupStage => this.addCupStage(cupStage.id));
-                Object.entries(this.cupMatch).forEach(
-                    ([field, value]) => this.cupMatchForm.get(field) && this.cupMatchForm.patchValue({ [field]: value })
-                );
-            }
-            this.confirmModalService.hide();
-        }, 'Очистити форму від змін?');
+        this.clearCupStagesFormArray();
+        this.cupMatchForm.reset();
+        if (this.cupMatch) {
+            this.cupMatch.cup_stages.forEach(cupStage => this.addCupStage(cupStage.id));
+            Object.entries(this.cupMatch).forEach(
+                ([field, value]) => this.cupMatchForm.get(field) && this.cupMatchForm.patchValue({ [field]: value })
+            );
+        }
+        this.openedModalReference.close();
     }
 
     private clearCupStagesFormArray(): void {

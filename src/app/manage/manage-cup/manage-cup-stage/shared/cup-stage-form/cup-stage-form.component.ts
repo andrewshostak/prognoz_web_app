@@ -5,13 +5,13 @@ import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import { environment } from '@env';
 import { Competition } from '@models/competition.model';
 import { CompetitionService } from '@services/competition.service';
-import { ConfirmModalService } from '@services/confirm-modal.service';
 import { CupMatch } from '@models/cup/cup-match.model';
 import { CupMatchService } from '@services/cup/cup-match.service';
 import { CupStage } from '@models/cup/cup-stage.model';
 import { CupStageService } from '@services/cup/cup-stage.service';
 import { CupStageType } from '@models/cup/cup-stage-type.model';
 import { CupStageTypeService } from '@services/cup/cup-stage-type.service';
+import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { NotificationsService } from 'angular2-notifications';
 import { UtilsService } from '@services/utils.service';
 
@@ -23,11 +23,11 @@ import { UtilsService } from '@services/utils.service';
 export class CupStageFormComponent implements OnChanges, OnInit {
     constructor(
         private competitionService: CompetitionService,
-        private confirmModalService: ConfirmModalService,
         private cupMatchService: CupMatchService,
         private cupStageService: CupStageService,
         private cupStageTypeService: CupStageTypeService,
         private location: Location,
+        private ngbModalService: NgbModal,
         private notificationsService: NotificationsService
     ) {}
 
@@ -37,9 +37,12 @@ export class CupStageFormComponent implements OnChanges, OnInit {
     cupMatches: CupMatch[];
     cupStageForm: FormGroup;
     cupStageTypes: CupStageType[];
+    confirmModalMessage: string;
+    confirmModalSubmit: (event) => void;
     errorCompetitions: string;
     errorCupStageTypes: string;
     errorCupMatches: string;
+    openedModalReference: NgbModalRef;
 
     get cupMatchesFormArray(): FormArray {
         return <FormArray>this.cupStageForm.get('cup_matches');
@@ -97,24 +100,28 @@ export class CupStageFormComponent implements OnChanges, OnInit {
         }
     }
 
+    openConfirmModal(content: NgbModalRef): void {
+        this.confirmModalMessage = 'Очистити форму від змін?';
+        this.confirmModalSubmit = () => this.resetCupStageForm();
+        this.openedModalReference = this.ngbModalService.open(content);
+    }
+
     removeCupMatch(index: number): void {
         this.cupMatchesFormArray.removeAt(index);
     }
 
     resetCupStageForm(): void {
-        this.confirmModalService.show(() => {
-            this.clearCupMatchesFormArray();
-            this.cupStageForm.reset();
-            if (this.cupStage) {
-                this.cupStage.cup_matches.forEach(cupMatch => {
-                    this.addCupMatch(cupMatch.id);
-                });
-                Object.entries(this.cupStage).forEach(
-                    ([field, value]) => this.cupStageForm.get(field) && this.cupStageForm.patchValue({ [field]: value })
-                );
-            }
-            this.confirmModalService.hide();
-        }, 'Очистити форму від змін?');
+        this.clearCupMatchesFormArray();
+        this.cupStageForm.reset();
+        if (this.cupStage) {
+            this.cupStage.cup_matches.forEach(cupMatch => {
+                this.addCupMatch(cupMatch.id);
+            });
+            Object.entries(this.cupStage).forEach(
+                ([field, value]) => this.cupStageForm.get(field) && this.cupStageForm.patchValue({ [field]: value })
+            );
+        }
+        this.openedModalReference.close();
     }
 
     private clearCupMatchesFormArray(): void {

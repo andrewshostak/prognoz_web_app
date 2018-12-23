@@ -180,9 +180,15 @@
         </div>
     </div>
     <div class="d-flex justify-content-between">
-        <button type="button" class="btn btn-outline-danger" (click)="resetTeamMatchForm()">Відмінити зміни</button>
+        <button type="button" class="btn btn-outline-danger" (click)="openConfirmModal(confirmModal)">Відмінити зміни</button>
         <button type="submit" class="btn btn-primary">{{teamMatch ? 'Змінити' : 'Зберегти'}}</button>
     </div>
 </form>
 <app-error *ngIf="errorCompetitions" [message]="errorCompetitions"></app-error>
 <app-error *ngIf="errorClubs" [message]="errorClubs"></app-error>
+<ng-template #confirmModal let-c="close">
+    <app-confirmation-modal [close]="c"
+                            [message]="confirmModalMessage"
+                            (confirmed)="confirmModalSubmit($event)">
+    </app-confirmation-modal>
+</ng-template>

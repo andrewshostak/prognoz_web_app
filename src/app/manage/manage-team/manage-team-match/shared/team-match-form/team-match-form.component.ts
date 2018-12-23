@@ -6,8 +6,8 @@ import { Club } from '@models/club.model';
 import { ClubService } from '@services/club.service';
 import { Competition } from '@models/competition.model';
 import { CompetitionService } from '@services/competition.service';
-import { ConfirmModalService } from '@services/confirm-modal.service';
 import { environment } from '@env';
+import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { NotificationsService } from 'angular2-notifications';
 import { TeamMatch } from '@models/team/team-match.model';
 import { TeamMatchService } from '@services/team/team-match.service';
@@ -20,10 +20,10 @@ import { UtilsService } from '@services/utils.service';
 })
 export class TeamMatchFormComponent implements OnChanges, OnInit {
     constructor(
-        private confirmModalService: ConfirmModalService,
         private clubService: ClubService,
         private competitionService: CompetitionService,
         private location: Location,
+        private ngbModalService: NgbModal,
         private notificationsService: NotificationsService,
         private teamMatchService: TeamMatchService
     ) {}
@@ -32,9 +32,12 @@ export class TeamMatchFormComponent implements OnChanges, OnInit {
 
     clubs: Club[];
     competitions: Competition[];
-    teamMatchForm: FormGroup;
+    confirmModalMessage: string;
+    confirmModalSubmit: (event) => void;
     errorClubs: string;
     errorCompetitions: string;
+    openedModalReference: NgbModalRef;
+    teamMatchForm: FormGroup;
 
     get competitionsFormArray(): FormArray {
         return <FormArray>this.teamMatchForm.get('competitions');
@@ -104,21 +107,26 @@ export class TeamMatchFormComponent implements OnChanges, OnInit {
         }
     }
 
+    openConfirmModal(content: NgbModalRef): void {
+        this.confirmModalMessage = 'Очистити форму від змін?';
+        this.confirmModalSubmit = () => this.resetTeamMatchForm();
+        this.openedModalReference = this.ngbModalService.open(content);
+    }
+
     removeCompetition(index: number): void {
         this.competitionsFormArray.removeAt(index);
     }
 
     resetTeamMatchForm(): void {
-        this.confirmModalService.show(() => {
-            this.clearCompetitionsFormArray();
-            this.teamMatchForm.reset();
-            if (this.teamMatch) {
-                this.teamMatch.competitions.forEach(competition => this.addCompetition(competition.pivot));
-                Object.entries(this.teamMatch).forEach(
-                    ([field, value]) => this.teamMatchForm.get(field) && this.teamMatchForm.patchValue({ [field]: value })
-                );
-            }
-        }, 'Очистити форму від змін?');
+        this.clearCompetitionsFormArray();
+        this.teamMatchForm.reset();
+        if (this.teamMatch) {
+            this.teamMatch.competitions.forEach(competition => this.addCompetition(competition.pivot));
+            Object.entries(this.teamMatch).forEach(
+                ([field, value]) => this.teamMatchForm.get(field) && this.teamMatchForm.patchValue({ [field]: value })
+            );
+        }
+        this.openedModalReference.close();
     }
 
     private clearCompetitionsFormArray(): void {
