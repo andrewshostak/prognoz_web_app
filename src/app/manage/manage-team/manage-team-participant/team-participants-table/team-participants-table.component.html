@@ -47,7 +47,7 @@
                                 <button routerLink="/manage/team/participants/{{teamParticipant.id}}/edit" type="button" class="btn btn-sm btn-warning">
                                     <i class="fa fa-pencil-square-o fa-lg" aria-hidden="true"></i>
                                 </button>
-                                <button type="button" class="btn btn-sm btn-danger" (click)="deleteTeamParticipant(teamParticipant)">
+                                <button type="button" class="btn btn-sm btn-danger" (click)="openConfirmModal(confirmModal, teamParticipant)">
                                     <i class="fa fa-trash-o fa-lg" aria-hidden="true"></i>
                                 </button>
                             </td>
@@ -65,3 +65,9 @@
                     [path]="path">
     </app-pagination>
 </div>
+<ng-template #confirmModal let-c="close">
+    <app-confirmation-modal [close]="c"
+                            [message]="confirmModalMessage"
+                            (confirmed)="confirmModalSubmit($event)">
+    </app-confirmation-modal>
+</ng-template>
