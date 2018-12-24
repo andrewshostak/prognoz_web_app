@@ -108,7 +108,8 @@
     </app-team-edit-modal>
 </ng-template>
 <ng-template #teamSelectModal let-c="close">
-    <app-team-select-modal [authenticatedUser]="authenticatedUser"
+    <app-team-select-modal [close]="c"
+                           [authenticatedUser]="authenticatedUser"
                            [spinnerButton]="spinnerButtonSelect"
                            (submitted)="onSubmittedSelect($event)">
     </app-team-select-modal>

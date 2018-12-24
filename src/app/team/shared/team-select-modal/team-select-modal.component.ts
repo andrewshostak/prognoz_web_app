@@ -13,6 +13,7 @@ import { User } from '@models/user.model';
 export class TeamSelectModalComponent implements OnInit {
     @Input() authenticatedUser: User;
     @Input() spinnerButton: boolean;
+    @Input() close: () => void;
     @Output() submitted = new EventEmitter<FormGroup>();
 
     errorTeams: string;
