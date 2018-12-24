@@ -9,32 +9,38 @@ import { ChampionshipResultsTableComponent } from './components/championship/cha
 import { ChampionshipUserRatingDetailsComponent } from './components/championship/championship-user-rating-details/championship-user-rating-details.component';
 import { ChampionshipUserPredictionsTableComponent } from './components/championship/championship-user-predictions-table/championship-user-predictions-table.component';
 import { ChartsModule } from 'ng2-charts';
-import { ConfirmModalComponent } from './components/confirm-modal/confirm-modal.component';
-import { ConfirmModalNewComponent } from './components/confirm-modal-new/confirm-modal-new.component';
+import { ClubLogoWithTooltipComponent } from './components/tooltips/club-logo-with-tooltip/club-logo-with-tooltip.component';
+import { ConfirmationModalComponent } from './components/confirmation-modal/confirmation-modal.component';
+import { CustomContentWithTooltipComponent } from './components/tooltips/custom-content-with-tooltip/custom-content-with-tooltip.component';
 import { DropdownNavigationComponent } from './components/dropdown-navigation/dropdown-navigation.component';
 import { ErrorComponent } from './components/error/error.component';
 import { InfoComponent } from './components/info/info.component';
 import { LastCommentsComponent } from './components/last-comments/last-comments.component';
 import { LastUserComponent } from './components/last-user/last-user.component';
 import { NavigationComponent } from './components/navigation/navigation.component';
+import { NgbTooltipModule } from '@ng-bootstrap/ng-bootstrap';
 import { OnlineUsersListComponent } from './components/online-users-list/online-users-list.component';
 import { PaginationComponent } from './components/pagination/pagination.component';
+import { PredictionWithTooltipComponent } from './components/tooltips/prediction-with-tooltip/prediction-with-tooltip.component';
 import { SocialMedialLinksComponent } from './components/social-medial-links/social-medial-links.component';
 import { SpinnerButtonComponent } from './components/spinner-button/spinner-button.component';
 import { SpinnerComponent } from './components/spinner/spinner.component';
 import { TimePipe } from './pipes/time.pipe';
+import { UserLogoWithTooltipComponent } from './components/tooltips/user-logo-with-tooltip/user-logo-with-tooltip.component';
 import { UserMessageComponent } from './components/user-message/user-message.component';
+import { WinLogoWithTooltipComponent } from './components/tooltips/win-logo-with-tooltip/win-logo-with-tooltip.component';
 
 @NgModule({
-    imports: [CommonModule, RouterModule, ChartsModule, ReactiveFormsModule],
+    imports: [CommonModule, RouterModule, ChartsModule, ReactiveFormsModule, NgbTooltipModule],
     declarations: [
         ChampionshipLastResultsComponent,
         ChampionshipRatingTableComponent,
         ChampionshipResultsTableComponent,
         ChampionshipUserPredictionsTableComponent,
         ChampionshipUserRatingDetailsComponent,
-        ConfirmModalComponent,
-        ConfirmModalNewComponent,
+        ClubLogoWithTooltipComponent,
+        ConfirmationModalComponent,
+        CustomContentWithTooltipComponent,
         DropdownNavigationComponent,
         ErrorComponent,
         InfoComponent,
@@ -43,11 +49,14 @@ import { UserMessageComponent } from './components/user-message/user-message.com
         NavigationComponent,
         OnlineUsersListComponent,
         PaginationComponent,
+        PredictionWithTooltipComponent,
         SocialMedialLinksComponent,
         SpinnerComponent,
         SpinnerButtonComponent,
         TimePipe,
-        UserMessageComponent
+        UserLogoWithTooltipComponent,
+        UserMessageComponent,
+        WinLogoWithTooltipComponent
     ],
     exports: [
         ChampionshipLastResultsComponent,
@@ -55,8 +64,9 @@ import { UserMessageComponent } from './components/user-message/user-message.com
         ChampionshipResultsTableComponent,
         ChampionshipUserPredictionsTableComponent,
         ChampionshipUserRatingDetailsComponent,
-        ConfirmModalComponent,
-        ConfirmModalNewComponent,
+        ClubLogoWithTooltipComponent,
+        ConfirmationModalComponent,
+        CustomContentWithTooltipComponent,
         DropdownNavigationComponent,
         ErrorComponent,
         InfoComponent,
@@ -65,11 +75,14 @@ import { UserMessageComponent } from './components/user-message/user-message.com
         NavigationComponent,
         OnlineUsersListComponent,
         PaginationComponent,
+        PredictionWithTooltipComponent,
         SocialMedialLinksComponent,
         SpinnerComponent,
         SpinnerButtonComponent,
         TimePipe,
-        UserMessageComponent
+        UserLogoWithTooltipComponent,
+        UserMessageComponent,
+        WinLogoWithTooltipComponent
     ],
     providers: [TimePipe]
 })

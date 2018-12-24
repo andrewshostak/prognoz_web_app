@@ -99,7 +99,7 @@
                             <button type="button"
                                     [hidden]="cupMatch.ended"
                                     class="btn btn-sm btn-danger"
-                                    (click)="deleteCupMatch(cupMatch)">
+                                    (click)="openConfirmModal(confirmModal, cupMatch)">
                                 <i class="fa fa-trash-o fa-lg" aria-hidden="true"></i>
                             </button>
                         </td>
@@ -117,3 +117,9 @@
                     [path]="path">
     </app-pagination>
 </div>
+<ng-template #confirmModal let-c="close">
+    <app-confirmation-modal [close]="c"
+                            [message]="confirmModalMessage"
+                            (confirmed)="confirmModalSubmit($event)">
+    </app-confirmation-modal>
+</ng-template>

@@ -17,7 +17,7 @@
             <button *ngIf="hasAddApplicationAbility(competition)"
                     type="button"
                     class="btn btn-primary ml-2"
-                    (click)="openAddApplicationModal(competition)">
+                    (click)="openApplicationModal(applicationModal, competition)">
                 Подати заявку
             </button>
         </h2>
@@ -38,15 +38,11 @@
                         <tr *ngFor="let cupApplication of competition.cup_applications; let i = index;">
                             <th scope="row">{{i + 1}}.</th>
                             <td class="text-nowrap">
-                                <img class="rounded-circle small-image mr-1 mr-sm-2"
-                                     src="{{userImagesUrl}}{{cupApplication.applicant.image || userImageDefault}}"
-                                     alt="{{cupApplication.applicant.name}}">
+                                <app-user-logo-with-tooltip [user]="cupApplication.applicant"></app-user-logo-with-tooltip>
                                 {{cupApplication.applicant.name}}
                             </td>
                             <td *ngIf="isFriendlyCompetition(competition)" class="text-nowrap">
-                                <img *ngIf="cupApplication.receiver" class="rounded-circle small-image mr-1 mr-sm-2"
-                                     src="{{userImagesUrl}}{{cupApplication.receiver.image || userImageDefault}}"
-                                     alt="{{cupApplication.receiver.name}}">
+                                <app-user-logo-with-tooltip *ngIf="cupApplication.receiver" [user]="cupApplication.receiver"></app-user-logo-with-tooltip>
                                 {{cupApplication.receiver?.name || 'Будь-хто'}}
                             </td>
                             <td *ngIf="isFriendlyCompetition(competition)" class="text-nowrap">
@@ -54,11 +50,11 @@
                             </td>
                             <td class="text-center">
                                 <div *ngIf="showActionButtons(competition, cupApplication); else statusBlock;" class="text-nowrap">
-                                    <button type="button" class="btn btn-sm btn-success" (click)="confirmApplication(cupApplication)">
+                                    <button type="button" class="btn btn-sm btn-success" (click)="openAcceptApplicationConfirmModal(confirmModal, cupApplication)">
                                         <i aria-hidden="true" class="fa fa-lg fa-check-circle-o"></i>
                                         Прийняти
                                     </button>
-                                    <button *ngIf="showRefuseButton(cupApplication)" type="button" class="btn btn-sm btn-danger" (click)="refuseApplication(cupApplication)">
+                                    <button *ngIf="showRefuseButton(cupApplication)" type="button" class="btn btn-sm btn-danger" (click)="openRefuseApplicationConfirmModal(confirmModal, cupApplication)">
                                         <i aria-hidden="true" class="fa fa-lg fa-times-circle-o"></i>
                                         Відхилити
                                     </button>
@@ -80,10 +76,10 @@
                             </td>
                             <td class="text-center">
                                 <div *ngIf="showEditAndDeleteButtons(competition, cupApplication); else noActionsblock;" class="text-nowrap">
-                                    <button *ngIf="isFriendlyCompetition(competition)" type="button" class="btn btn-sm btn-outline-primary" (click)="openAddApplicationModal(competition, cupApplication)">
+                                    <button *ngIf="isFriendlyCompetition(competition)" type="button" class="btn btn-sm btn-outline-primary" (click)="openApplicationModal(applicationModal, competition, cupApplication)">
                                         <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
                                     </button>
-                                    <button type="button" class="btn btn-sm btn-outline-danger" (click)="deleteCupApplication(competition, cupApplication)">
+                                    <button type="button" class="btn btn-sm btn-outline-danger" (click)="openDeleteApplicationConfirmModal(confirmModal, cupApplication, competition)">
                                         <i class="fa fa-trash" aria-hidden="true"></i>
                                     </button>
                                 </div>
@@ -100,7 +96,16 @@
         </div>
     </div>
 </div>
-<app-cup-add-application-modal [competition]="selectedCompetitionForNewApplication"
-                               [cupApplication]="selectedCupApplication"
-                               (successfulSubmit)="getApplicationsAndCompetitions()">
-</app-cup-add-application-modal>
+<ng-template #applicationModal let-c="close">
+    <app-cup-add-application-modal [close]="c"
+                                   [competition]="selectedCompetitionForNewApplication"
+                                   [cupApplication]="selectedCupApplication"
+                                   (successfulSubmitted)="applicationModalSubmit()">
+    </app-cup-add-application-modal>
+</ng-template>
+<ng-template #confirmModal let-c="close">
+    <app-confirmation-modal [close]="c"
+                            [message]="confirmModalMessage"
+                            (confirmed)="confirmModalSubmit($event)">
+    </app-confirmation-modal>
+</ng-template>

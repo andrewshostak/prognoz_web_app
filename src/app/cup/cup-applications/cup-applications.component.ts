@@ -3,18 +3,16 @@ import { Component, ElementRef, OnInit } from '@angular/core';
 import { AuthService } from '@services/auth.service';
 import { Competition } from '@models/competition.model';
 import { CompetitionService } from '@services/competition.service';
-import { ConfirmModalService } from '@services/confirm-modal.service';
 import { CupApplicationService } from '@services/cup/cup-application.service';
 import { CupApplication } from '@models/cup/cup-application.model';
 import { CurrentStateService } from '@services/current-state.service';
 import { environment } from '@env';
 import { forkJoin } from 'rxjs/observable/forkJoin';
+import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { NotificationsService } from 'angular2-notifications';
 import { TitleService } from '@services/title.service';
 import { User } from '@models/user.model';
 import { UtilsService } from '@services/utils.service';
-
-declare const $: any;
 
 @Component({
     selector: 'app-cup-applications',
@@ -25,16 +23,20 @@ export class CupApplicationsComponent implements OnInit {
     constructor(
         private authService: AuthService,
         private competitionService: CompetitionService,
-        private confirmModalService: ConfirmModalService,
         private cupApplicationService: CupApplicationService,
         private currentStateService: CurrentStateService,
         private elementRef: ElementRef,
         private notificationsService: NotificationsService,
+        private ngbModalService: NgbModal,
         private titleService: TitleService
     ) {}
 
+    applicationModalReference: NgbModalRef;
     authenticatedUser: User;
     competitions: Competition[];
+    confirmModalReference: NgbModalRef;
+    confirmModalMessage: string;
+    confirmModalSubmit: (event) => void;
     cupApplications: CupApplication[];
     errorCupApplications: string;
     selectedCompetitionForNewApplication: Competition;
@@ -45,8 +47,13 @@ export class CupApplicationsComponent implements OnInit {
         place?: number;
         id?: number;
     };
-    userImageDefault: string;
-    userImagesUrl: string;
+
+    applicationModalSubmit(): void {
+        this.closeModal(this.applicationModalReference);
+        this.selectedCompetitionForNewApplication = null;
+        this.selectedCupApplication = null;
+        this.getApplicationsAndCompetitions();
+    }
 
     attachApplicationsToCompetitions(): void {
         if (this.competitions.length && !this.noCupApplications()) {
@@ -63,39 +70,37 @@ export class CupApplicationsComponent implements OnInit {
             receiver_id: this.authenticatedUser.id,
             confirmed: true
         };
-        this.confirmModalService.show(() => {
-            this.cupApplicationService.updateCupApplication(updateRequestData, cupApplication.id).subscribe(
-                () => {
-                    this.getApplicationsAndCompetitions();
-                    this.confirmModalService.hide();
-                    this.notificationsService.success('Успішно', 'Заявку підтверджено');
-                },
-                error => {
-                    this.getApplicationsAndCompetitions();
-                    this.confirmModalService.hide();
-                    this.notificationsService.error('Помилка', error);
-                }
-            );
-        }, `Підтвердити заявку ${cupApplication.applicant.name}?`);
+        this.cupApplicationService.updateCupApplication(updateRequestData, cupApplication.id).subscribe(
+            () => {
+                this.getApplicationsAndCompetitions();
+                this.closeModal(this.confirmModalReference);
+                this.notificationsService.success('Успішно', 'Заявку підтверджено');
+            },
+            error => {
+                this.getApplicationsAndCompetitions();
+                this.closeModal(this.confirmModalReference);
+                this.notificationsService.error('Помилка', error);
+            }
+        );
     }
 
-    deleteCupApplication(competition: Competition, cupApplication: CupApplication): void {
-        if (this.showEditAndDeleteButtons(competition, cupApplication)) {
-            this.confirmModalService.show(() => {
-                this.cupApplicationService.deleteCupApplication(cupApplication.id).subscribe(
-                    response => {
-                        this.getApplicationsAndCompetitions();
-                        this.confirmModalService.hide();
-                        this.notificationsService.success('Успішно', 'Заявку видалено');
-                    },
-                    error => {
-                        this.getApplicationsAndCompetitions();
-                        this.confirmModalService.hide();
-                        this.notificationsService.error('Помилка', error);
-                    }
-                );
-            }, `Видалити заявку ${cupApplication.applicant.name}?`);
+    deleteCupApplication(cupApplication: CupApplication, competition: Competition): void {
+        if (!this.showEditAndDeleteButtons(competition, cupApplication)) {
+            return;
         }
+
+        this.cupApplicationService.deleteCupApplication(cupApplication.id).subscribe(
+            () => {
+                this.getApplicationsAndCompetitions();
+                this.closeModal(this.confirmModalReference);
+                this.notificationsService.success('Успішно', 'Заявку видалено');
+            },
+            error => {
+                this.getApplicationsAndCompetitions();
+                this.closeModal(this.confirmModalReference);
+                this.notificationsService.error('Помилка', error);
+            }
+        );
     }
 
     getApplicationsAndCompetitions(): void {
@@ -185,8 +190,6 @@ export class CupApplicationsComponent implements OnInit {
 
     ngOnInit() {
         this.titleService.setTitle('Заявки / Учасники - Кубок');
-        this.userImageDefault = environment.imageUserDefault;
-        this.userImagesUrl = environment.apiImageUsers;
         this.authenticatedUser = this.currentStateService.getUser();
         this.getApplicationsAndCompetitions();
     }
@@ -198,7 +201,7 @@ export class CupApplicationsComponent implements OnInit {
         }
     }
 
-    openAddApplicationModal(competition: Competition, cupApplication?: CupApplication): void {
+    openApplicationModal(content: NgbModalRef, competition: Competition, cupApplication?: CupApplication): void {
         this.selectedCompetitionForNewApplication = competition;
         if (!cupApplication) {
             this.selectedCupApplication = {
@@ -217,7 +220,25 @@ export class CupApplicationsComponent implements OnInit {
                 place: cupApplication.place
             };
         }
-        $(this.elementRef.nativeElement.querySelector('#cupAddApplicationModal')).modal('show');
+        this.applicationModalReference = this.ngbModalService.open(content);
+    }
+
+    openAcceptApplicationConfirmModal(content: NgbModalRef, cupApplication: CupApplication): void {
+        this.confirmModalMessage = `Підтвердити заявку ${cupApplication.applicant.name}?`;
+        this.confirmModalSubmit = () => this.confirmApplication(cupApplication);
+        this.confirmModalReference = this.ngbModalService.open(content);
+    }
+
+    openDeleteApplicationConfirmModal(content: NgbModalRef, cupApplication: CupApplication, competition: Competition): void {
+        this.confirmModalMessage = `Видалити заявку ${cupApplication.applicant.name}?`;
+        this.confirmModalSubmit = () => this.deleteCupApplication(cupApplication, competition);
+        this.confirmModalReference = this.ngbModalService.open(content);
+    }
+
+    openRefuseApplicationConfirmModal(content: NgbModalRef, cupApplication: CupApplication): void {
+        this.confirmModalMessage = `Відхилити заявку ${cupApplication.applicant.name}?`;
+        this.confirmModalSubmit = () => this.refuseApplication(cupApplication);
+        this.confirmModalReference = this.ngbModalService.open(content);
     }
 
     refuseApplication(cupApplication: CupApplication): void {
@@ -225,20 +246,18 @@ export class CupApplicationsComponent implements OnInit {
             competition_id: cupApplication.competition_id,
             refused: true
         };
-        this.confirmModalService.show(() => {
-            this.cupApplicationService.updateCupApplication(updateRequestData, cupApplication.id).subscribe(
-                () => {
-                    this.getApplicationsAndCompetitions();
-                    this.confirmModalService.hide();
-                    this.notificationsService.success('Успішно', 'Заявку відхилено');
-                },
-                error => {
-                    this.getApplicationsAndCompetitions();
-                    this.confirmModalService.hide();
-                    this.notificationsService.error('Помилка', error);
-                }
-            );
-        }, `Відхилити заявку ${cupApplication.applicant.name}?`);
+        this.cupApplicationService.updateCupApplication(updateRequestData, cupApplication.id).subscribe(
+            () => {
+                this.getApplicationsAndCompetitions();
+                this.closeModal(this.confirmModalReference);
+                this.notificationsService.success('Успішно', 'Заявку відхилено');
+            },
+            error => {
+                this.getApplicationsAndCompetitions();
+                this.closeModal(this.confirmModalReference);
+                this.notificationsService.error('Помилка', error);
+            }
+        );
     }
 
     showActionButtons(competition: Competition, cupApplication: CupApplication): boolean {
@@ -293,6 +312,11 @@ export class CupApplicationsComponent implements OnInit {
         }
 
         return false;
+    }
+
+    private closeModal(modalReference: NgbModalRef): void {
+        modalReference.close();
+        modalReference = null;
     }
 
     private noCupApplications(): boolean {

@@ -3,9 +3,8 @@ import { Component, OnInit } from '@angular/core';
 import { Competition } from '@models/competition.model';
 import { CompetitionService } from '@services/competition.service';
 import { environment } from '@env';
+import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { NotificationsService } from 'angular2-notifications';
-
-declare var $: any;
 
 @Component({
     selector: 'app-manage-team',
@@ -13,25 +12,17 @@ declare var $: any;
     styleUrls: ['./manage-team.component.scss']
 })
 export class ManageTeamComponent implements OnInit {
-    errorCompetitions: string;
+    constructor(
+        private competitionService: CompetitionService,
+        private ngbModalService: NgbModal,
+        private notificationsService: NotificationsService
+    ) {}
+
     competitions: Competition[];
-    confirmModalData: any;
-    confirmModalId: string;
     confirmModalMessage: string;
-    confirmSpinnerButton = false;
-
-    constructor(private competitionService: CompetitionService, private notificationsService: NotificationsService) {}
-
-    confirmModalSubmit(data: any) {
-        switch (this.confirmModalId) {
-            case 'startDrawConfirmModal':
-                this.startDraw(data);
-                break;
-            case 'startNextRoundConfirmModal':
-                this.startNextRound(data);
-                break;
-        }
-    }
+    confirmModalReference: NgbModalRef;
+    confirmModalSubmit: (event) => void;
+    errorCompetitions: string;
 
     nextRoundNumber(competition: Competition): number {
         if (competition) {
@@ -60,52 +51,46 @@ export class ManageTeamComponent implements OnInit {
         );
     }
 
-    startDraw(competition: Competition) {
-        this.confirmSpinnerButton = true;
+    openStartDrawConfirmModal(content: NgbModalRef, competition: Competition): void {
+        this.confirmModalMessage = 'Ви справді хочете провести жеребкування календаря?';
+        this.confirmModalSubmit = () => this.startDraw(competition);
+        this.confirmModalReference = this.ngbModalService.open(content);
+    }
+
+    openStartNextRoundConfirmModal(content: NgbModalRef, competition: Competition): void {
+        this.confirmModalMessage = 'Ви справді хочете розпочати наступний раунд?';
+        this.confirmModalSubmit = () => this.startNextRound(competition);
+        this.confirmModalReference = this.ngbModalService.open(content);
+    }
+
+    private startDraw(competition: Competition) {
         const competitionToUpdate = Object.assign({}, competition);
         competitionToUpdate.stated = false;
         competitionToUpdate.active = true;
         this.competitionService.updateCompetition(competitionToUpdate, competitionToUpdate.id).subscribe(
-            response => {
+            () => {
+                this.confirmModalReference.close();
                 this.notificationsService.success('Успішно', 'Жеребкування календаря проведено');
-                this.confirmSpinnerButton = false;
-                $('#' + this.confirmModalId).modal('hide');
             },
             errors => {
+                this.confirmModalReference.close();
                 errors.forEach(error => this.notificationsService.error('Помилка', error));
-                this.confirmSpinnerButton = false;
-                $('#' + this.confirmModalId).modal('hide');
             }
         );
     }
 
-    startDrawConfirmModalOpen(competition: Competition): void {
-        this.confirmModalMessage = 'Ви справді хочете провести жеребкування календаря?';
-        this.confirmModalId = 'startDrawConfirmModal';
-        this.confirmModalData = competition;
-    }
-
-    startNextRound(competition: Competition) {
-        this.confirmSpinnerButton = true;
+    private startNextRound(competition: Competition) {
         const competitionToUpdate = Object.assign({}, competition);
         competitionToUpdate.active_round = this.nextRoundNumber(competition);
         this.competitionService.updateCompetition(competitionToUpdate, competitionToUpdate.id).subscribe(
-            response => {
+            () => {
+                this.confirmModalReference.close();
                 this.notificationsService.success('Успішно', 'Наступний раунд розпочато');
-                this.confirmSpinnerButton = false;
-                $('#' + this.confirmModalId).modal('hide');
             },
             errors => {
+                this.confirmModalReference.close();
                 errors.forEach(error => this.notificationsService.error('Помилка', error));
-                this.confirmSpinnerButton = false;
-                $('#' + this.confirmModalId).modal('hide');
             }
         );
-    }
-
-    startNextRoundConfirmModalOpen(competition: Competition): void {
-        this.confirmModalMessage = 'Ви справді хочете розпочати наступний раунд?';
-        this.confirmModalId = 'startNextRoundConfirmModal';
-        this.confirmModalData = competition;
     }
 }

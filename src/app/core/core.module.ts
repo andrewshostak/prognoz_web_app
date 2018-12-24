@@ -11,7 +11,6 @@ import { ChampionshipPredictionService } from '@services/championship/championsh
 import { ChampionshipRatingService } from '@services/championship/championship-rating.service';
 import { ClubService } from '@services/club.service';
 import { CompetitionService } from '@services/competition.service';
-import { ConfirmModalService } from '@services/confirm-modal.service';
 import { CupApplicationService } from '@services/cup/cup-application.service';
 import { CupCupMatchService } from '@services/cup/cup-cup-match.service';
 import { CupMatchService } from '@services/cup/cup-match.service';
@@ -55,7 +54,6 @@ import { UtilsService } from '@services/utils.service';
         ChampionshipPredictionService,
         ChampionshipRatingService,
         CompetitionService,
-        ConfirmModalService,
         CupApplicationService,
         CupCupMatchService,
         CupMatchService,

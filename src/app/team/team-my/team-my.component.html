@@ -1,5 +1,5 @@
 <h2>Моя команда {{team ? '- ' + team.name : ''}}: </h2>
-<button *ngIf="authenticatedUser && isCaptain" type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#teamEditModal">
+<button *ngIf="authenticatedUser && isCaptain" (click)="openTeamEditModal(teamEditModal)" type="button" class="btn btn-outline-primary">
     Редагувати команду
 </button>
 <div *ngIf="authenticatedUser">
@@ -13,10 +13,12 @@
     <app-team-captain></app-team-captain>
 </div>
 <app-error *ngIf="!authenticatedUser" [message]="noAccess" [additionalInfo]="false"></app-error>
-<app-team-edit-modal *ngIf="authenticatedUser"
-                     [spinnerButton]="spinnerButtonTeamEditForm"
-                     [teamForm]="teamEditForm"
-                     [hasUnsavedChanges]="teamEditFormHasUnsavedChanges"
-                     [team]="team"
-                     (submitted)="onSubmitted($event)">
-</app-team-edit-modal>
+<ng-template #teamEditModal let-c="close">
+    <app-team-edit-modal [close]="c"
+                         [spinnerButton]="spinnerButtonTeamEditForm"
+                         [teamForm]="teamEditForm"
+                         [hasUnsavedChanges]="teamEditFormHasUnsavedChanges"
+                         [team]="team"
+                         (submitted)="onSubmitted($event)">
+    </app-team-edit-modal>
+</ng-template>

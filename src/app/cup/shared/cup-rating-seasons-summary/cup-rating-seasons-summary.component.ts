@@ -1,18 +1,14 @@
-import { Component, Input, OnDestroy, OnInit, ElementRef, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, Input, OnInit, OnChanges, SimpleChanges } from '@angular/core';
 
 import { CupRating } from '@models/cup/cup-rating.model';
 import { environment } from '@env';
-
-declare const $: any;
 
 @Component({
     selector: 'app-cup-rating-seasons-summary',
     templateUrl: './cup-rating-seasons-summary.component.html',
     styleUrls: ['./cup-rating-seasons-summary.component.scss']
 })
-export class CupRatingSeasonsSummaryComponent implements OnInit, OnDestroy, OnChanges {
-    constructor(private elementRef: ElementRef) {}
-
+export class CupRatingSeasonsSummaryComponent implements OnInit, OnChanges {
     @Input() cupRating: CupRating;
 
     clubImagesUrl: string;
@@ -25,14 +21,9 @@ export class CupRatingSeasonsSummaryComponent implements OnInit, OnDestroy, OnCh
     winDrawLossChartOptions: any;
     winDrawLossChartType: string;
 
-    ngOnDestroy() {
-        $(this.elementRef.nativeElement.querySelectorAll('[data-toggle="tooltip"]')).tooltip('dispose');
-    }
-
     ngOnChanges(simpleChanges: SimpleChanges) {
         for (const propName in simpleChanges) {
             if (propName === 'cupRating' && simpleChanges[propName].currentValue) {
-                $(() => $(this.elementRef.nativeElement.querySelectorAll('[data-toggle="tooltip"]')).tooltip());
                 const cupRating = simpleChanges[propName].currentValue;
                 this.winDrawLossChartLabels = [];
                 this.winDrawLossChartData = [{ data: [], label: 'Виграші' }, { data: [], label: 'Нічиї' }, { data: [], label: 'Програші' }];

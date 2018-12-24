@@ -5,8 +5,6 @@ import { ChampionshipMatch } from '@models/championship/championship-match.model
 import { ChampionshipMatchService } from '@services/championship/championship-match.service';
 import { environment } from '@env';
 
-declare var $: any;
-
 @Component({
     selector: 'app-championship-match-predictable',
     templateUrl: './championship-match-predictable.component.html',

@@ -14,8 +14,7 @@ import { TeamParticipant } from '@models/team/team-participant.model';
 import { TeamParticipantService } from '@services/team/team-participant.service';
 import { TitleService } from '@services/title.service';
 import { User } from '@models/user.model';
-
-declare var $: any;
+import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
     selector: 'app-team-squads',
@@ -28,6 +27,7 @@ export class TeamSquadsComponent implements OnDestroy, OnInit {
         private competitionService: CompetitionService,
         private currentStateService: CurrentStateService,
         private notificationsService: NotificationsService,
+        private ngbModalService: NgbModal,
         private teamService: TeamService,
         private teamParticipantService: TeamParticipantService,
         private titleService: TitleService
@@ -39,12 +39,11 @@ export class TeamSquadsComponent implements OnDestroy, OnInit {
     authenticatedUser: User;
     clubsImagesUrl: string = environment.apiImageClubs;
     competitionId: number;
+    openedModalReference: NgbModalRef;
+    confirmModalMessage: string;
+    confirmModalSubmit: (event) => void;
     errorTeams: string;
     errorCompetition: string;
-    confirmModalData: any;
-    confirmModalId: string;
-    confirmModalMessage: string;
-    confirmSpinnerButton = false;
     competition: Competition;
     spinnerButton = false;
     spinnerButtonSelect = false;
@@ -55,44 +54,21 @@ export class TeamSquadsComponent implements OnDestroy, OnInit {
     userImageDefault: string = environment.imageUserDefault;
     userImagesUrl: string = environment.apiImageUsers;
 
-    confirmModalSubmit(data: any) {
-        switch (this.confirmModalId) {
-            case 'joinTeamConfirmModal':
-                this.createTeamParticipant(data);
-                break;
-            case 'confirmTeamParticipantConfirmModal':
-                this.confirmParticipant(data);
-                break;
-            case 'refuseTeamParticipantConfirmModal':
-                this.refuseParticipant(data);
-                break;
-        }
-    }
-
-    confirmParticipantModalOpen(teamParticipant: TeamParticipant) {
-        this.confirmModalMessage = 'Ви справді хочете підтвердити заявку ' + teamParticipant.user.name + '?';
-        this.confirmModalId = 'confirmTeamParticipantConfirmModal';
-        this.confirmModalData = teamParticipant;
-    }
-
     confirmParticipant(teamParticipant: TeamParticipant) {
-        this.confirmSpinnerButton = true;
         const teamParticipantToChange = Object.assign({}, teamParticipant);
         teamParticipantToChange.confirmed = true;
         teamParticipantToChange.refused = false;
         this.teamParticipantService.updateTeamParticipant(teamParticipantToChange).subscribe(
-            response => {
+            () => {
+                this.openedModalReference.close();
                 this.getTeamsData();
                 this.notificationsService.success('Успішно', 'Заявку в команду підтверджено');
-                this.confirmSpinnerButton = false;
-                $('#' + this.confirmModalId).modal('hide');
             },
             errors => {
+                this.openedModalReference.close();
                 for (const error of errors) {
                     this.notificationsService.error('Помилка', error);
                 }
-                this.confirmSpinnerButton = false;
-                $('#' + this.confirmModalId).modal('hide');
             }
         );
     }
@@ -107,7 +83,7 @@ export class TeamSquadsComponent implements OnDestroy, OnInit {
             competition_id: this.competitionId
         };
         this.teamParticipantService.createTeamParticipant(teamParticipant).subscribe(
-            response => {
+            () => {
                 this.getTeamsData();
                 this.notificationsService.success('Успішно', 'Заявку в команду подано');
                 this.spinnerButtonSelect = false;
@@ -122,7 +98,6 @@ export class TeamSquadsComponent implements OnDestroy, OnInit {
     }
 
     createTeamParticipant(team: Team) {
-        this.confirmSpinnerButton = true;
         const teamParticipant = {
             team_id: team.id,
             user_id: this.authenticatedUser.id,
@@ -131,18 +106,16 @@ export class TeamSquadsComponent implements OnDestroy, OnInit {
             competition_id: this.competitionId
         };
         this.teamParticipantService.createTeamParticipant(teamParticipant).subscribe(
-            response => {
+            () => {
+                this.openedModalReference.close();
                 this.getTeamsData();
                 this.notificationsService.success('Успішно', 'Заявку в команду подано');
-                this.confirmSpinnerButton = false;
-                $('#' + this.confirmModalId).modal('hide');
             },
             errors => {
+                this.openedModalReference.close();
                 for (const error of errors) {
                     this.notificationsService.error('Помилка', error);
                 }
-                this.confirmSpinnerButton = false;
-                $('#' + this.confirmModalId).modal('hide');
             }
         );
     }
@@ -200,12 +173,6 @@ export class TeamSquadsComponent implements OnDestroy, OnInit {
         }
     }
 
-    joinTeamModalOpen(team: Team) {
-        this.confirmModalMessage = 'Ви справді хочете подати заявку в команду ' + team.name + '?';
-        this.confirmModalId = 'joinTeamConfirmModal';
-        this.confirmModalData = team;
-    }
-
     ngOnDestroy() {
         if (!this.activatedRouteSubscription.closed) {
             this.activatedRouteSubscription.unsubscribe();
@@ -240,8 +207,8 @@ export class TeamSquadsComponent implements OnDestroy, OnInit {
             this.spinnerButton = true;
             this.teamService.createTeam(teamCreateForm.value).subscribe(
                 response => {
+                    this.openedModalReference.close();
                     this.notificationsService.success('Успішно', 'Команду ' + response.name + ' створено');
-                    $('#teamEditModal').modal('hide');
                     this.teamCreateForm.reset({ image: null });
                     this.createTeamCaptain(response.id);
                     this.spinnerButton = false;
@@ -259,35 +226,52 @@ export class TeamSquadsComponent implements OnDestroy, OnInit {
     onSubmittedSelect(teamSelectForm: FormGroup) {
         this.createTeamCaptain(teamSelectForm.value.team_id);
         teamSelectForm.reset();
-        $('#teamSelectModal').modal('hide');
+        this.openedModalReference.close();
+    }
+
+    openTeamJoiningConfirmModal(content: NgbModalRef, team: Team): void {
+        this.openedModalReference = this.ngbModalService.open(content);
+        this.confirmModalSubmit = () => this.createTeamParticipant(team);
+        this.confirmModalMessage = `Ви справді хочете подати заявку в команду ${team.name}?`;
+    }
+
+    openConfirmParticipantConfirmModal(content: NgbModalRef, teamParticipant: TeamParticipant): void {
+        this.openedModalReference = this.ngbModalService.open(content);
+        this.confirmModalSubmit = () => this.confirmParticipant(teamParticipant);
+        this.confirmModalMessage = `Ви справді хочете підтвердити заявку ${teamParticipant.user.name}?`;
+    }
+
+    openRefuseParticipantConfirmModal(content: NgbModalRef, teamParticipant: TeamParticipant): void {
+        this.openedModalReference = this.ngbModalService.open(content);
+        this.confirmModalSubmit = () => this.refuseParticipant(teamParticipant);
+        this.confirmModalMessage = `Ви справді хочете скасувати заявку ${teamParticipant.user.name}?`;
+    }
+
+    openTeamEditModal(content: NgbModalRef): void {
+        this.openedModalReference = this.ngbModalService.open(content);
+    }
+
+    openTeamSelectModal(content: NgbModalRef): void {
+        this.openedModalReference = this.ngbModalService.open(content);
     }
 
     refuseParticipant(teamParticipant: TeamParticipant) {
-        this.confirmSpinnerButton = true;
         const teamParticipantToChange = Object.assign({}, teamParticipant);
         teamParticipantToChange.confirmed = false;
         teamParticipantToChange.refused = true;
         this.teamParticipantService.updateTeamParticipant(teamParticipantToChange).subscribe(
-            response => {
+            () => {
+                this.openedModalReference.close();
                 this.getTeamsData();
                 this.notificationsService.success('Успішно', 'Заявку в команду скасовано');
-                this.confirmSpinnerButton = false;
-                $('#' + this.confirmModalId).modal('hide');
             },
             errors => {
+                this.openedModalReference.close();
                 for (const error of errors) {
                     this.notificationsService.error('Помилка', error);
                 }
-                this.confirmSpinnerButton = false;
-                $('#' + this.confirmModalId).modal('hide');
             }
         );
-    }
-
-    refuseParticipantModalOpen(teamParticipant: TeamParticipant) {
-        this.confirmModalMessage = 'Ви справді хочете скасувати заявку ' + teamParticipant.user.name + '?';
-        this.confirmModalId = 'refuseTeamParticipantConfirmModal';
-        this.confirmModalData = teamParticipant;
     }
 
     showJoinButton(team: Team): boolean {

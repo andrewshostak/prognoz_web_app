@@ -1,15 +1,11 @@
 <h2 class="h2">Матчі:</h2>
 <div *ngIf="cupStagesWithCupCupMatches">
     <button class="btn btn-secondary mb-2"
-            (click)="getFilterData()"
-            type="button"
-            data-toggle="collapse"
-            data-target="#filterCard"
-            aria-expanded="false"
-            aria-controls="filterCard">
+            (click)="toggleFilterCardVisibility()"
+            type="button">
         Попередні стадії
     </button>
-    <div class="collapse" id="filterCard">
+    <div [hidden]="!filterCardExpanded">
         <div class="card black-shadow mb-2">
             <div class="card-body">
                 <form novalidate [formGroup]="filterCupCupMatchesForm">
@@ -80,16 +76,14 @@
                     <div class="row">
                         <div class="col-5">
                             <div class="d-flex flex-row justify-content-end h-100">
-                                <div class="d-flex flex-column text-right justify-content-center match-participant-info">
+                                <div class="d-flex flex-column text-right justify-content-center">
                                     <strong>{{cupCupMatch.home_user.name}}</strong>
                                     <small class="text-muted hometown">
                                         {{cupCupMatch.home_user.hometown ? '(' + cupCupMatch.home_user.hometown + ')' : ''}}
                                     </small>
                                 </div>
                                 <div class="d-flex flex-column justify-content-center ml-2">
-                                    <img class="small-image rounded-circle d-none d-sm-inline"
-                                         src="{{userImagesUrl}}{{cupCupMatch.home_user.image || userImageDefault}}"
-                                         alt="{{cupCupMatch.home_user.name}}">
+                                    <app-user-logo-with-tooltip [user]="cupCupMatch.home_user"></app-user-logo-with-tooltip>
                                 </div>
                             </div>
                         </div>
@@ -100,10 +94,8 @@
                         </div>
                         <div class="col-5">
                             <div class="d-flex flex-row h-100">
-                                <div class="d-flex flex-column justify-content-center mr-2 match-participant-info">
-                                    <img class="small-image rounded-circle d-none d-sm-inline"
-                                         src="{{userImagesUrl}}{{cupCupMatch.away_user.image || userImageDefault}}"
-                                         alt="{{cupCupMatch.away_user.name}}">
+                                <div class="d-flex flex-column justify-content-center mr-2">
+                                    <app-user-logo-with-tooltip [user]="cupCupMatch.away_user"></app-user-logo-with-tooltip>
                                 </div>
                                 <div class="d-flex flex-column justify-content-center">
                                     <strong>{{cupCupMatch.away_user.name}}</strong>

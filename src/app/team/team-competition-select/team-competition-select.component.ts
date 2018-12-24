@@ -28,14 +28,9 @@ export class TeamCompetitionSelectComponent implements OnInit {
     errorArchiveCompetitions: string;
     errorCompetitions: string;
     errorSeasons: string;
+    filterCardExpanded: boolean;
     filterTeamCompetitionsForm: FormGroup;
     seasons: Season[];
-
-    getFilterData(): void {
-        if (!this.seasons) {
-            this.getSeasonsData();
-        }
-    }
 
     isSelected(competition: Competition): boolean {
         return this.getTeamCompetitionIdFromUrl() === competition.id;
@@ -101,6 +96,14 @@ export class TeamCompetitionSelectComponent implements OnInit {
 
     resetTeamCompetitionsFormFilters(): void {
         this.filterTeamCompetitionsForm.reset();
+    }
+
+    toggleFilterCardVisibility(): void {
+        this.filterCardExpanded = !this.filterCardExpanded;
+
+        if (!this.seasons && this.filterCardExpanded) {
+            this.getSeasonsData();
+        }
     }
 
     private getCompetitionsData(): void {

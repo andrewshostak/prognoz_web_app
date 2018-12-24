@@ -7,10 +7,11 @@ import { ChampionshipCompetitionsComponent } from './championship-competitions.c
 import { ChampionshipCompetitionUserComponent } from './championship-competition-user/championship-competition-user.component';
 import { ChampionshipCompetitionWinnersComponent } from './championship-competition-winners/championship-competition-winners.component';
 import { ChampionshipRoutingModule } from '../../championship-routing.module';
+import { NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
 import { SharedModule } from '../../../shared/shared.module';
 
 @NgModule({
-    imports: [CommonModule, SharedModule, ChampionshipRoutingModule],
+    imports: [CommonModule, SharedModule, ChampionshipRoutingModule, NgbDropdownModule],
     declarations: [
         ChampionshipCompetitionsComponent,
         ChampionshipCompetitionUserComponent,

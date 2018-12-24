@@ -44,7 +44,8 @@ export class CupCupMatchFormComponent implements OnChanges, OnInit {
             cup_stage_id: new FormControl('', [Validators.required]),
             home_user_id: new FormControl('', [Validators.required]),
             away_user_id: new FormControl('', [Validators.required]),
-            group_number: new FormControl(null, [Validators.min(1)])
+            group_number: new FormControl(null, [Validators.min(1)]),
+            type: new FormControl('manual', [Validators.required])
         });
     }
 

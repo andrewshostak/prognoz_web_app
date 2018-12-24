@@ -43,6 +43,7 @@ export class CupCupMatchesComponent implements OnInit, OnDestroy {
     errorCupCupMatches: string;
     errorCupStages: string;
     errorSeasons: string;
+    filterCardExpanded: boolean;
     filterCupCupMatchesForm: FormGroup;
     seasons: Season[];
     seasonsCompetitions: { [seasonId: string]: Competition[] };
@@ -54,12 +55,6 @@ export class CupCupMatchesComponent implements OnInit, OnDestroy {
             return false;
         }
         return this.authenticatedUser.id === cupCupMatch.home_user_id || this.authenticatedUser.id === cupCupMatch.away_user_id;
-    }
-
-    getFilterData(): void {
-        if (!this.seasons) {
-            this.getSeasonsData();
-        }
     }
 
     ngOnDestroy() {
@@ -126,6 +121,14 @@ export class CupCupMatchesComponent implements OnInit, OnDestroy {
 
     resetCupCupMatchesFormFilters(): void {
         this.filterCupCupMatchesForm.reset({ active: 1 });
+    }
+
+    toggleFilterCardVisibility(): void {
+        this.filterCardExpanded = !this.filterCardExpanded;
+
+        if (!this.seasons && this.filterCardExpanded) {
+            this.getSeasonsData();
+        }
     }
 
     private getCupStages(selectedCompetitionId?: number): void {

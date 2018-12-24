@@ -6,7 +6,11 @@
     <ul class="list-group list-group-flush">
         <a *ngFor="let championshipMatch of championshipMatches" routerLink="/championship/matches/{{championshipMatch.id}}" class="list-group-item cursor-pointer list-group-item-action">
             <div class="col-12 text-center">{{championshipMatch.club_first.title}} - {{championshipMatch.club_second.title}}</div>
-            <div class="col-12 text-center"><strong>{{championshipMatch.home}} : {{championshipMatch.away}}</strong></div>
+            <div class="col-12 text-center">
+                <app-club-logo-with-tooltip [club]="championshipMatch.club_first"></app-club-logo-with-tooltip>
+                <strong>{{championshipMatch.home}} : {{championshipMatch.away}}</strong>
+                <app-club-logo-with-tooltip [club]="championshipMatch.club_second"></app-club-logo-with-tooltip>
+            </div>
         </a>
     </ul>
     <div class="card-footer text-muted">

@@ -1,21 +1,14 @@
 <div class="card mb-2 black-shadow" [attr.id]="'user-message-' + message.id">
     <div class="card-header d-flex justify-content-between">
         <div>
-            <img class="rounded-circle small-image mr-1 mr-sm-2"
-                 src="{{userImagesUrl}}{{message.user.image || userImageDefault}}"
-                 alt="{{message.user.name}}">
-            <strong class="align-middle">{{message.user.name}}</strong>
+            <app-user-logo-with-tooltip [user]="message.user"></app-user-logo-with-tooltip>
+            <strong class="align-middle ml-1 ml-sm-2">{{message.user.name}}</strong>
             <small *ngIf="message.user.hometown" class="text-muted">({{message.user.hometown}})</small>
         </div>
-        <div *ngIf="message.user.clubs && message.user.clubs.length">
-            <img *ngFor="let club of message.user.clubs"
-                 data-toggle="tooltip"
-                 data-placement="bottom"
-                 data-html="true"
-                 title="<img src='{{clubImagesUrl + club.image}}' alt='{{club.title}}' class='img-fluid p-2'>"
-                 [attr.src]="clubImagesUrl + club.image"
-                 [attr.alt]="club.title"
-                 class="small-image ml-1 mr-1 ml-sm-2 mr-sm-2">
+        <div *ngIf="message.user.clubs && message.user.clubs.length" class="d-flex flex-row">
+            <div *ngFor="let club of message.user.clubs" class="ml-1 mr-1 ml-sm-2 mr-sm-2">
+                <app-club-logo-with-tooltip [club]="club"></app-club-logo-with-tooltip>
+            </div>
         </div>
     </div>
     <div class="card-body">
@@ -24,20 +17,8 @@
         </div>
     </div>
     <div class="card-footer d-flex justify-content-between align-items-center pt-1 pb-1">
-        <div>
-            <div *ngIf="message.user.winners && message.user.winners.length" class="awards bg-white rounded p-1 mr-1">
-                <img *ngFor="let win of message.user.winners"
-                     data-toggle="tooltip"
-                     data-html="true"
-                     data-placement="top"
-                     title="<img src='{{awardsImagesUrl + win.award.image}}' alt='{{win.award.title}}' class='img-fluid p-2'>
-                                    <hr class='bg-white m-1'>
-                                    <div class='font-weight-bold'>{{win.award.title}}</div>
-                                    <div>{{win.competition.title}}</div>"
-                     [attr.src]="awardsImagesUrl + win.award.image"
-                     [attr.alt]="win.award.title"
-                     class="small-image ml-1 mr-1">
-            </div>
+        <div class="border bg-white rounded p-1">
+            <app-win-logo-with-tooltip *ngFor="let win of message.user.winners" [win]="win"></app-win-logo-with-tooltip>
         </div>
         <div>
             <small class="text-muted">{{message.created_at | time:'calendar'}}</small>

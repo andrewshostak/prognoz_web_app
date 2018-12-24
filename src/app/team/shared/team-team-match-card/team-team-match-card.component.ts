@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, Input, ChangeDetectorRef, OnDestroy } from '@angular/core';
+import { Component, Input, ChangeDetectorRef } from '@angular/core';
 
 import { environment } from '@env';
 import { TeamCompetitionService } from '@services/team/team-competition.service';
@@ -9,14 +9,12 @@ import { TimePipe } from '../../../shared/pipes/time.pipe';
 import { User } from '@models/user.model';
 import { UtilsService } from '@services/utils.service';
 
-declare const $: any;
-
 @Component({
     selector: 'app-team-team-match-card',
     templateUrl: './team-team-match-card.component.html',
     styleUrls: ['./team-team-match-card.component.scss']
 })
-export class TeamTeamMatchCardComponent implements AfterViewInit, OnDestroy {
+export class TeamTeamMatchCardComponent {
     constructor(private teamMatchService: TeamMatchService, private changeDetectorRef: ChangeDetectorRef, private timePipe: TimePipe) {}
 
     @Input() teamTeamMatch: TeamTeamMatch;
@@ -24,8 +22,8 @@ export class TeamTeamMatchCardComponent implements AfterViewInit, OnDestroy {
     @Input() competitionId: number;
 
     clubsImagesUrl: string = environment.apiImageClubs;
+    detailsExpanded: boolean;
     errorTeamMatches: string;
-    expandedTeamMatch: boolean;
     isTeamMatchBlocked = TeamCompetitionService.isTeamMatchBlocked;
     isTeamMatchGuessed = TeamCompetitionService.isTeamMatchGuessed;
     noTeamMatches = 'Цей раунд ще не почався / матчів не знайдено';
@@ -54,13 +52,10 @@ export class TeamTeamMatchCardComponent implements AfterViewInit, OnDestroy {
                     this.teamMatches = response.team_matches;
                 }
                 this.spinnerTeamMatches = false;
-                $(() => $('[data-toggle="tooltip"]').tooltip());
-                this.changeDetectorRef.detectChanges();
             },
             error => {
                 this.errorTeamMatches = error;
                 this.spinnerTeamMatches = false;
-                this.changeDetectorRef.detectChanges();
             }
         );
     }
@@ -114,27 +109,12 @@ export class TeamTeamMatchCardComponent implements AfterViewInit, OnDestroy {
         return this.userImagesUrl + (user.image || this.userImageDefault);
     }
 
-    ngAfterViewInit() {
-        const id = '#collapseTeamTeamMatch' + this.teamTeamMatch.id;
-        $(id).on('hidden.bs.collapse', () => {
-            this.toggleChevron();
-            this.changeDetectorRef.detectChanges();
-        });
-        $(id).on('shown.bs.collapse', () => {
-            this.getTeamMatchesData(this.teamTeamMatch);
-        });
-        $(id).on('show.bs.collapse', () => {
-            this.toggleChevron();
+    toggleDetailsVisibility(): void {
+        if (!this.detailsExpanded) {
             this.spinnerTeamMatches = true;
-            this.changeDetectorRef.detectChanges();
-        });
-    }
+            this.getTeamMatchesData(this.teamTeamMatch);
+        }
 
-    ngOnDestroy() {
-        $('[data-toggle="tooltip"]').tooltip('dispose');
-    }
-
-    toggleChevron() {
-        this.expandedTeamMatch = !this.expandedTeamMatch;
+        this.detailsExpanded = !this.detailsExpanded;
     }
 }

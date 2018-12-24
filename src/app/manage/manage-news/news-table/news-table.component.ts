@@ -1,11 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 
-import { NotificationsService } from 'angular2-notifications';
+import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { News } from '@models/news.model';
 import { NewsService } from '../../../news/shared/news.service';
-
-declare var $: any;
+import { NotificationsService } from 'angular2-notifications';
 
 @Component({
     selector: 'app-news-table',
@@ -15,54 +14,37 @@ declare var $: any;
 export class NewsTableComponent implements OnInit {
     constructor(
         private activatedRoute: ActivatedRoute,
-        private notificationsService: NotificationsService,
-        private newsService: NewsService
+        private ngbModalService: NgbModal,
+        private newsService: NewsService,
+        private notificationsService: NotificationsService
     ) {}
 
-    confirmModalData: any;
-    confirmModalId: string;
     confirmModalMessage: string;
-    confirmSpinnerButton: boolean;
+    confirmModalReference: NgbModalRef;
     currentPage: number;
     errorNews: string | Array<string>;
     news: News[];
     lastPage: number;
     path = '/manage/news/page/';
     perPage: number;
+    selectedNews: News;
     total: number;
 
-    confirmModalSubmit(data: any) {
-        switch (this.confirmModalId) {
-            case 'deleteNewsConfirmModal':
-                this.deleteNewsItem(data);
-                break;
-        }
-    }
-
     deleteNewsItem(news: News) {
-        this.confirmSpinnerButton = true;
         this.newsService.deleteNewsItem(news.id).subscribe(
-            response => {
+            () => {
+                this.confirmModalReference.close();
                 this.total--;
-                this.news = this.news.filter(n => n !== news);
+                this.news = this.news.filter(n => n.id !== news.id);
                 this.notificationsService.success('Успішно', news.title + ' видалено');
-                this.confirmSpinnerButton = false;
-                $('#' + this.confirmModalId).modal('hide');
             },
             errors => {
+                this.confirmModalReference.close();
                 for (const error of errors) {
                     this.notificationsService.error('Помилка', error);
                 }
-                this.confirmSpinnerButton = false;
-                $('#' + this.confirmModalId).modal('hide');
             }
         );
-    }
-
-    deleteNewsConfirmModalOpen(news: News) {
-        this.confirmModalMessage = 'Ви справді хочете видалити цю новину?';
-        this.confirmModalId = 'deleteNewsConfirmModal';
-        this.confirmModalData = news;
     }
 
     ngOnInit() {
@@ -82,5 +64,12 @@ export class NewsTableComponent implements OnInit {
                 }
             );
         });
+    }
+
+    openConfirmModal(content: NgbModalRef, news: News): void {
+        this.confirmModalMessage = `Видалити ${news.title}?`;
+        this.selectedNews = news;
+        this.confirmModalReference = this.ngbModalService.open(content);
+        this.confirmModalReference.result.then(() => (this.selectedNews = null), () => (this.selectedNews = null));
     }
 }

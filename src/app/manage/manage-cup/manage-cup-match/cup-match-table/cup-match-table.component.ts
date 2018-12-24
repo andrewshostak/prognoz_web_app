@@ -1,9 +1,9 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 
-import { ConfirmModalService } from '@services/confirm-modal.service';
 import { CupMatch } from '@models/cup/cup-match.model';
 import { CupMatchService } from '@services/cup/cup-match.service';
+import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { environment } from '@env';
 import { NotificationsService } from 'angular2-notifications';
 import { Subscription } from 'rxjs/Subscription';
@@ -16,17 +16,20 @@ import { Subscription } from 'rxjs/Subscription';
 export class CupMatchTableComponent implements OnDestroy, OnInit {
     constructor(
         private activatedRoute: ActivatedRoute,
-        private confirmModalService: ConfirmModalService,
         private cupMatchService: CupMatchService,
+        private ngbModalService: NgbModal,
         private notificationsService: NotificationsService
     ) {}
 
     activatedRouteSubscription: Subscription;
     cupMatches: CupMatch[];
+    confirmModalMessage: string;
+    confirmModalSubmit: (event) => void;
     currentPage: number;
     clubImagesUrl: string;
     errorCupMatches: string;
     lastPage: number;
+    openedModalReference: NgbModalRef;
     path: string;
     perPage: number;
     total: number;
@@ -51,23 +54,18 @@ export class CupMatchTableComponent implements OnDestroy, OnInit {
     }
 
     deleteCupMatch(cupMatch: CupMatch): void {
-        this.confirmModalService.show(() => {
-            this.cupMatchService.deleteCupMatch(cupMatch.id).subscribe(
-                () => {
-                    this.confirmModalService.hide();
-                    this.total--;
-                    this.cupMatches = this.cupMatches.filter(match => match.id !== cupMatch.id);
-                    this.notificationsService.success(
-                        'Успішно',
-                        `Матч ${cupMatch.club_first.title} - ${cupMatch.club_second.title} видалено`
-                    );
-                },
-                errors => {
-                    this.confirmModalService.hide();
-                    errors.forEach(error => this.notificationsService.error('Помилка', error));
-                }
-            );
-        }, `Видалити ${cupMatch.club_first.title} - ${cupMatch.club_second.title}?`);
+        this.cupMatchService.deleteCupMatch(cupMatch.id).subscribe(
+            () => {
+                this.openedModalReference.close();
+                this.total--;
+                this.cupMatches = this.cupMatches.filter(match => match.id !== cupMatch.id);
+                this.notificationsService.success('Успішно', `Матч ${cupMatch.club_first.title} - ${cupMatch.club_second.title} видалено`);
+            },
+            errors => {
+                this.openedModalReference.close();
+                errors.forEach(error => this.notificationsService.error('Помилка', error));
+            }
+        );
     }
 
     ngOnDestroy() {
@@ -93,5 +91,11 @@ export class CupMatchTableComponent implements OnDestroy, OnInit {
                 }
             );
         });
+    }
+
+    openConfirmModal(content: NgbModalRef, cupMatch: CupMatch): void {
+        this.confirmModalMessage = `Видалити ${cupMatch.club_first.title} - ${cupMatch.club_second.title}?`;
+        this.confirmModalSubmit = () => this.deleteCupMatch(cupMatch);
+        this.openedModalReference = this.ngbModalService.open(content);
     }
 }

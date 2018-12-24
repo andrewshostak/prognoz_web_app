@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 
 import { ChampionshipPrediction } from '@models/championship/championship-prediction.model';
@@ -10,14 +10,12 @@ import { User } from '@models/user.model';
 import { UserService } from '@services/user.service';
 import { UtilsService } from '@services/utils.service';
 
-declare const $: any;
-
 @Component({
     selector: 'app-championship-user',
     templateUrl: './championship-user.component.html',
     styleUrls: ['./championship-user.component.scss']
 })
-export class ChampionshipUserComponent implements OnInit, OnDestroy {
+export class ChampionshipUserComponent implements OnInit {
     constructor(
         private activatedRoute: ActivatedRoute,
         private championshipPredictionService: ChampionshipPredictionService,
@@ -39,10 +37,6 @@ export class ChampionshipUserComponent implements OnInit, OnDestroy {
             this.getChampionshipRatingItemData(params['id']);
             this.getChampionshipPredictionsData(params['id']);
         });
-    }
-
-    ngOnDestroy() {
-        $('[data-toggle="tooltip"]').tooltip('dispose');
     }
 
     private getChampionshipPredictionsData(userId: number) {
@@ -76,7 +70,6 @@ export class ChampionshipUserComponent implements OnInit, OnDestroy {
                 this.user = response;
                 this.titleService.setTitle(`Прогнози ${this.user.name}
                     ${UtilsService.getHomeCityInBrackets(this.user.hometown)} - Чемпіонат`);
-                $(() => $('[data-toggle="tooltip"]').tooltip());
             },
             error => {
                 this.errorUser = error;

@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 import { AuthService } from '@services/auth.service';
@@ -9,14 +9,12 @@ import { NotificationsService } from 'angular2-notifications';
 import { User } from '@models/user.model';
 import { UserService } from '@services/user.service';
 
-declare const $: any;
-
 @Component({
     selector: 'app-cup-add-application-modal',
     templateUrl: './cup-add-application-modal.component.html',
     styleUrls: ['./cup-add-application-modal.component.scss']
 })
-export class CupAddApplicationModalComponent implements AfterViewInit, OnInit, OnChanges {
+export class CupAddApplicationModalComponent implements OnInit {
     constructor(
         private authService: AuthService,
         private cupApplicationService: CupApplicationService,
@@ -25,6 +23,7 @@ export class CupAddApplicationModalComponent implements AfterViewInit, OnInit, O
         private userService: UserService
     ) {}
 
+    @Input() close: () => void;
     @Input() competition: Competition;
     @Input()
     cupApplication: {
@@ -34,7 +33,7 @@ export class CupAddApplicationModalComponent implements AfterViewInit, OnInit, O
         place?: number;
         id?: number;
     };
-    @Output() successfulSubmit = new EventEmitter<void>();
+    @Output() successfulSubmitted = new EventEmitter<void>();
 
     cupAddApplicationForm: FormGroup;
     errorUsers: string;
@@ -44,10 +43,9 @@ export class CupAddApplicationModalComponent implements AfterViewInit, OnInit, O
 
     createCupApplication(): void {
         this.cupApplicationService.createCupApplication(this.cupAddApplicationForm.getRawValue()).subscribe(
-            response => {
-                $(this.elementRef.nativeElement.querySelector('#cupAddApplicationModal')).modal('hide');
+            () => {
                 this.notificationsService.success('Успішно', 'Заявку подано');
-                this.successfulSubmit.emit();
+                this.successfulSubmitted.emit();
                 this.spinnerButton = false;
             },
             errors => {
@@ -68,12 +66,6 @@ export class CupAddApplicationModalComponent implements AfterViewInit, OnInit, O
         return false;
     }
 
-    ngAfterViewInit() {
-        $(this.elementRef.nativeElement.querySelector('#cupAddApplicationModal')).on('hide.bs.modal', () => {
-            this.cupAddApplicationForm.reset();
-        });
-    }
-
     ngOnInit() {
         this.places = environment.tournaments.cup.places;
         this.userService.getUsers(null, 'name', 'asc').subscribe(
@@ -85,26 +77,13 @@ export class CupAddApplicationModalComponent implements AfterViewInit, OnInit, O
             }
         );
         this.cupAddApplicationForm = new FormGroup({
-            competition_id: new FormControl('', [Validators.required]),
-            applicant_id: new FormControl({ value: '', disabled: !this.hasModeratorRights() }, [Validators.required]),
-            receiver_id: new FormControl(null),
-            place: new FormControl('')
+            competition_id: new FormControl(this.cupApplication.competition_id, [Validators.required]),
+            applicant_id: new FormControl({ value: this.cupApplication.applicant_id, disabled: !this.hasModeratorRights() }, [
+                Validators.required
+            ]),
+            receiver_id: new FormControl(this.cupApplication.receiver_id),
+            place: new FormControl(this.cupApplication.place)
         });
-    }
-
-    ngOnChanges(simpleChanges: SimpleChanges) {
-        Object.entries(simpleChanges)
-            .filter(([propName, change]) => propName === 'cupApplication' && !change.firstChange)
-            .forEach(([propName, valueChange]) => {
-                if (valueChange.currentValue) {
-                    Object.entries(valueChange.currentValue).forEach(
-                        ([field, value]) =>
-                            this.cupAddApplicationForm.get(field) && this.cupAddApplicationForm.patchValue({ [field]: value })
-                    );
-                } else {
-                    this.cupAddApplicationForm.reset();
-                }
-            });
     }
 
     onSubmit(): void {
@@ -116,10 +95,9 @@ export class CupAddApplicationModalComponent implements AfterViewInit, OnInit, O
 
     updateCupApplication(): void {
         this.cupApplicationService.updateCupApplication(this.cupAddApplicationForm.getRawValue(), this.cupApplication.id).subscribe(
-            response => {
-                $(this.elementRef.nativeElement.querySelector('#cupAddApplicationModal')).modal('hide');
+            () => {
                 this.notificationsService.success('Успішно', 'Заявку змінено');
-                this.successfulSubmit.emit();
+                this.successfulSubmitted.emit();
                 this.spinnerButton = false;
             },
             errors => {

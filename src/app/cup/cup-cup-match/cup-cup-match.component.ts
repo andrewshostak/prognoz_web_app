@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 
 import { CupCupMatch } from '@models/cup/cup-cup-match.model';
@@ -13,8 +13,6 @@ import { Subscription } from 'rxjs/Subscription';
 import { TimePipe } from '../../shared/pipes/time.pipe';
 import { TitleService } from '@services/title.service';
 import { UtilsService } from '@services/utils.service';
-
-declare const $: any;
 
 @Component({
     selector: 'app-cup-cup-match',
@@ -31,10 +29,7 @@ export class CupCupMatchComponent implements OnDestroy, OnInit {
         private titleService: TitleService
     ) {}
 
-    @ViewChild('cupCupMatchElement') cupCupMatchElement: ElementRef;
-
     activatedRouteSubscription: Subscription;
-    clubsImagesUrl: string;
     cupCupMatch: CupCupMatch;
     cupMatches: CupMatch[];
     cupPredictionsRequestsEnded: boolean;
@@ -77,14 +72,12 @@ export class CupCupMatchComponent implements OnDestroy, OnInit {
     }
 
     ngOnDestroy() {
-        $('[data-toggle="tooltip"]').tooltip('dispose');
         if (!this.activatedRouteSubscription.closed) {
             this.activatedRouteSubscription.unsubscribe();
         }
     }
 
     ngOnInit() {
-        this.clubsImagesUrl = environment.apiImageClubs;
         this.userImageDefault = environment.imageUserDefault;
         this.userImagesUrl = environment.apiImageUsers;
         this.numberOfMatchesInStage = environment.tournaments.cup.numberOfMatchesInStage;
@@ -142,7 +135,6 @@ export class CupCupMatchComponent implements OnDestroy, OnInit {
                             return cupMatch;
                         });
                         this.cupPredictionsRequestsEnded = true;
-                        $(() => $('[data-toggle="tooltip"]').tooltip());
                     }, error => (this.errorCupPredictions = error));
                 }
             },

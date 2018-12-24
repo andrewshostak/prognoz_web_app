@@ -1,8 +1,8 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 
-import { ConfirmModalService } from '@services/confirm-modal.service';
 import { environment } from '@env';
+import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { NotificationsService } from 'angular2-notifications';
 import { Subscription } from 'rxjs/Subscription';
 import { TeamParticipant } from '@models/team/team-participant.model';
@@ -17,15 +17,18 @@ import { RequestParams } from '@models/request-params.model';
 export class TeamParticipantsTableComponent implements OnDestroy, OnInit {
     constructor(
         private activatedRoute: ActivatedRoute,
-        private confirmModalService: ConfirmModalService,
+        private ngbModalService: NgbModal,
         private notificationsService: NotificationsService,
         private teamParticipantService: TeamParticipantService
     ) {}
 
     activatedRouteSubscription: Subscription;
+    confirmModalMessage: string;
+    confirmModalSubmit: (event) => void;
     currentPage: string;
     errorTeamParticipants: string;
     lastPage: string;
+    openedModalReference: NgbModalRef;
     path: string;
     perPage: string;
     teamParticipants: TeamParticipant[];
@@ -34,20 +37,18 @@ export class TeamParticipantsTableComponent implements OnDestroy, OnInit {
     userImagesUrl: string;
 
     deleteTeamParticipant(teamParticipant: TeamParticipant): void {
-        this.confirmModalService.show(() => {
-            this.teamParticipantService.deleteTeamParticipant(teamParticipant.id).subscribe(
-                () => {
-                    this.confirmModalService.hide();
-                    this.total--;
-                    this.teamParticipants = this.teamParticipants.filter(participant => participant.id !== teamParticipant.id);
-                    this.notificationsService.success('Успішно', `Заявку / Учасника ${teamParticipant.id} видалено`);
-                },
-                errors => {
-                    this.confirmModalService.hide();
-                    errors.for(error => this.notificationsService.error('Помилка', error));
-                }
-            );
-        }, `Видалити заявку ${teamParticipant.user.name}?`);
+        this.teamParticipantService.deleteTeamParticipant(teamParticipant.id).subscribe(
+            () => {
+                this.openedModalReference.close();
+                this.total--;
+                this.teamParticipants = this.teamParticipants.filter(participant => participant.id !== teamParticipant.id);
+                this.notificationsService.success('Успішно', `Заявку / Учасника ${teamParticipant.id} видалено`);
+            },
+            errors => {
+                this.openedModalReference.close();
+                errors.for(error => this.notificationsService.error('Помилка', error));
+            }
+        );
     }
 
     ngOnDestroy() {
@@ -75,5 +76,11 @@ export class TeamParticipantsTableComponent implements OnDestroy, OnInit {
                 }
             );
         });
+    }
+
+    openConfirmModal(content: NgbModalRef, teamParticipant: TeamParticipant): void {
+        this.confirmModalMessage = `Видалити заявку ${teamParticipant.user.name}?`;
+        this.confirmModalSubmit = () => this.deleteTeamParticipant(teamParticipant);
+        this.openedModalReference = this.ngbModalService.open(content);
     }
 }
