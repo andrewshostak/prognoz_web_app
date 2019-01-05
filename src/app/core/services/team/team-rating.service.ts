@@ -1,10 +1,11 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { Observable } from 'rxjs/Observable';
 
+import { catchError, map } from 'rxjs/operators';
 import { TeamRating } from '@models/team/team-rating.model';
 import { environment } from '@env';
 import { ErrorHandlerService } from '@services/error-handler.service';
+import { Observable } from 'rxjs';
 import { RequestParams } from '@models/request-params.model';
 
 @Injectable()
@@ -25,9 +26,9 @@ export class TeamRatingService {
                 params = params.append(requestParam.parameter, requestParam.value);
             }
         }
-        return this.httpClient
-            .get(this.teamRatingUrl, { params: params })
-            .map(response => response['team_ratings'])
-            .catch(this.errorHandlerService.handle);
+        return this.httpClient.get(this.teamRatingUrl, { params: params }).pipe(
+            map(response => response['team_ratings']),
+            catchError(this.errorHandlerService.handle)
+        );
     }
 }

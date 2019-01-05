@@ -1,12 +1,13 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { Observable } from 'rxjs/Observable';
 
-import { TeamParticipant } from '@models/team/team-participant.model';
+import { catchError, map } from 'rxjs/operators';
 import { environment } from '@env';
 import { ErrorHandlerService } from '@services/error-handler.service';
 import { HeadersWithToken } from '@services/headers-with-token.service';
+import { Observable } from 'rxjs';
 import { RequestParams } from '@models/request-params.model';
+import { TeamParticipant } from '@models/team/team-participant.model';
 
 @Injectable()
 export class TeamParticipantService {
@@ -30,7 +31,7 @@ export class TeamParticipantService {
                 params = params.append(requestParam.parameter, requestParam.value);
             }
         }
-        return this.headersWithToken.get(this.teamParticipantUrl, params).catch(this.errorHandlerService.handle);
+        return this.headersWithToken.get(this.teamParticipantUrl, params).pipe(catchError(this.errorHandlerService.handle));
     }
 
     /**
@@ -39,10 +40,10 @@ export class TeamParticipantService {
      * @returns {Observable<TeamParticipant>}
      */
     getTeamParticipant(teamParticipantId: number): Observable<TeamParticipant> {
-        return this.httpClient
-            .get(`${this.teamParticipantUrl}/${teamParticipantId}`)
-            .map(response => response['team_participant'])
-            .catch(this.errorHandlerService.handle);
+        return this.httpClient.get(`${this.teamParticipantUrl}/${teamParticipantId}`).pipe(
+            map(response => response['team_participant']),
+            catchError(this.errorHandlerService.handle)
+        );
     }
 
     /**
@@ -55,7 +56,7 @@ export class TeamParticipantService {
         for (const requestParam of requestParams) {
             params = params.append(requestParam.parameter, requestParam.value);
         }
-        return this.headersWithToken.get(this.teamParticipantUrl, params).catch(this.errorHandlerService.handle);
+        return this.headersWithToken.get(this.teamParticipantUrl, params).pipe(catchError(this.errorHandlerService.handle));
     }
 
     /**
@@ -64,10 +65,10 @@ export class TeamParticipantService {
      * @returns {Observable<TeamParticipant>}
      */
     createTeamParticipant(teamParticipant: TeamParticipant): Observable<TeamParticipant> {
-        return this.headersWithToken
-            .post(this.teamParticipantUrl, teamParticipant)
-            .map(response => response['team_participant'])
-            .catch(this.errorHandlerService.handle);
+        return this.headersWithToken.post(this.teamParticipantUrl, teamParticipant).pipe(
+            map(response => response['team_participant']),
+            catchError(this.errorHandlerService.handle)
+        );
     }
 
     /**
@@ -76,10 +77,10 @@ export class TeamParticipantService {
      * @returns {Observable<TeamParticipant>}
      */
     updateTeamParticipant(teamParticipant: TeamParticipant): Observable<TeamParticipant> {
-        return this.headersWithToken
-            .put(`${this.teamParticipantUrl}/${teamParticipant.id}`, teamParticipant)
-            .map(response => response['team_participant'])
-            .catch(this.errorHandlerService.handle);
+        return this.headersWithToken.put(`${this.teamParticipantUrl}/${teamParticipant.id}`, teamParticipant).pipe(
+            map(response => response['team_participant']),
+            catchError(this.errorHandlerService.handle)
+        );
     }
 
     /**
@@ -88,6 +89,8 @@ export class TeamParticipantService {
      * @returns {Observable<void>}
      */
     deleteTeamParticipant(teamParticipantId: number): Observable<void> {
-        return this.headersWithToken.delete(`${this.teamParticipantUrl}/${teamParticipantId}`).catch(this.errorHandlerService.handle);
+        return this.headersWithToken
+            .delete(`${this.teamParticipantUrl}/${teamParticipantId}`)
+            .pipe(catchError(this.errorHandlerService.handle));
     }
 }

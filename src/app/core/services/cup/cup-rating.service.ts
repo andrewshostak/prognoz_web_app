@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 
+import { catchError } from 'rxjs/operators';
 import { CupRating } from '@models/cup/cup-rating.model';
 import { CupRatingGroup } from '@models/cup/cup-rating-group.model';
 import { ErrorHandlerService } from '@services/error-handler.service';
@@ -18,7 +19,7 @@ export class CupRatingService {
      * @returns {Observable<CupRating[]>}
      */
     getCupRating(): Observable<CupRating[]> {
-        return this.httpClient.get(this.cupRatingUrl).catch(this.errorHandlerService.handle);
+        return this.httpClient.get<CupRating[]>(this.cupRatingUrl).pipe(catchError(this.errorHandlerService.handle));
     }
 
     /**
@@ -27,7 +28,7 @@ export class CupRatingService {
      * @returns {Observable<CupRating>}
      */
     getCupRatingUser(userId: number): Observable<CupRating> {
-        return this.httpClient.get(`${this.cupRatingUrl}/${userId}`).catch(this.errorHandlerService.handle);
+        return this.httpClient.get<CupRating>(`${this.cupRatingUrl}/${userId}`).pipe(catchError(this.errorHandlerService.handle));
     }
 
     /**
@@ -38,8 +39,8 @@ export class CupRatingService {
      */
     getCupRatingGroup(competitionId: number, groupNumber: number): Observable<CupRatingGroup[]> {
         return this.httpClient
-            .get(`${environment.apiUrl}cup/${competitionId}/rating-group/${groupNumber}`)
-            .catch(this.errorHandlerService.handle);
+            .get<CupRatingGroup[]>(`${environment.apiUrl}cup/${competitionId}/rating-group/${groupNumber}`)
+            .pipe(catchError(this.errorHandlerService.handle));
     }
 
     /**
@@ -48,6 +49,8 @@ export class CupRatingService {
      * @returns {Observable<string[]>}
      */
     getCupRatingGroups(competitionId: number): Observable<number[]> {
-        return this.httpClient.get(`${environment.apiUrl}cup/${competitionId}/rating-group`).catch(this.errorHandlerService.handle);
+        return this.httpClient
+            .get<number[]>(`${environment.apiUrl}cup/${competitionId}/rating-group`)
+            .pipe(catchError(this.errorHandlerService.handle));
     }
 }

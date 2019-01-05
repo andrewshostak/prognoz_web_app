@@ -1,11 +1,12 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { Observable } from 'rxjs/Observable';
 
+import { catchError, map } from 'rxjs/operators';
 import { ChampionshipMatch } from '@models/championship/championship-match.model';
 import { environment } from '@env';
 import { ErrorHandlerService } from '@services/error-handler.service';
 import { HeadersWithToken } from '@services/headers-with-token.service';
+import { Observable } from 'rxjs';
 import { RequestParams } from '@models/request-params.model';
 
 @Injectable()
@@ -24,10 +25,10 @@ export class ChampionshipMatchService {
      * @returns {Observable<ChampionshipMatch>}
      */
     createChampionshipMatch(championshipMatch: ChampionshipMatch): Observable<ChampionshipMatch> {
-        return this.headersWithToken
-            .post(this.championshipMatchUrl, championshipMatch)
-            .map(response => response['championship_match'])
-            .catch(this.errorHandlerService.handle);
+        return this.headersWithToken.post(this.championshipMatchUrl, championshipMatch).pipe(
+            map(response => response['championship_match']),
+            catchError(this.errorHandlerService.handle)
+        );
     }
 
     /**
@@ -36,10 +37,10 @@ export class ChampionshipMatchService {
      * @returns {Observable<ChampionshipMatch>}
      */
     updateChampionshipMatch(championshipMatch: ChampionshipMatch): Observable<ChampionshipMatch> {
-        return this.headersWithToken
-            .put(`${this.championshipMatchUrl}/${championshipMatch.id}`, championshipMatch)
-            .map(response => response['championship_match'])
-            .catch(this.errorHandlerService.handle);
+        return this.headersWithToken.put(`${this.championshipMatchUrl}/${championshipMatch.id}`, championshipMatch).pipe(
+            map(response => response['championship_match']),
+            catchError(this.errorHandlerService.handle)
+        );
     }
 
     /**
@@ -55,7 +56,9 @@ export class ChampionshipMatchService {
                 params = params.append(requestParam.parameter, requestParam.value);
             }
         }
-        return this.httpClient.get(`${this.championshipMatchUrl}/${id}`, { params: params }).catch(this.errorHandlerService.handle);
+        return this.httpClient
+            .get(`${this.championshipMatchUrl}/${id}`, { params: params })
+            .pipe(catchError(this.errorHandlerService.handle));
     }
 
     /**
@@ -70,7 +73,7 @@ export class ChampionshipMatchService {
                 params = params.append(requestParam.parameter, requestParam.value);
             }
         }
-        return this.httpClient.get(this.championshipMatchUrl, { params: params }).catch(this.errorHandlerService.handle);
+        return this.httpClient.get(this.championshipMatchUrl, { params: params }).pipe(catchError(this.errorHandlerService.handle));
     }
 
     /**
@@ -86,6 +89,6 @@ export class ChampionshipMatchService {
         for (const requestParam of requestParams) {
             params = params.append(requestParam.parameter, requestParam.value);
         }
-        return this.headersWithToken.get(url, params).catch(this.errorHandlerService.handle);
+        return this.headersWithToken.get(url, params).pipe(catchError(this.errorHandlerService.handle));
     }
 }

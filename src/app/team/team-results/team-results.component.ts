@@ -3,7 +3,7 @@ import { NavigationEnd, Router } from '@angular/router';
 
 import { CompetitionService } from '@services/competition.service';
 import { RequestParams } from '@models/request-params.model';
-import { Subscription } from 'rxjs/Subscription';
+import { Subscription } from 'rxjs';
 import { TeamMatch } from '@models/team/team-match.model';
 import { TeamMatchService } from '@services/team/team-match.service';
 import { TitleService } from '@services/title.service';

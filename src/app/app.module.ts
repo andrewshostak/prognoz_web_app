@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { HttpClientModule } from '@angular/common/http';
 import { BrowserModule, Title } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
@@ -11,7 +11,8 @@ import { CoreModule } from './core/core.module';
 import { HomeModule } from './home/home.module';
 import { NewsModule } from './news/news.module';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { NgProgressModule, NgProgressInterceptor } from 'ngx-progressbar';
+import { NgProgressModule } from '@ngx-progressbar/core';
+import { NgProgressHttpModule } from '@ngx-progressbar/http';
 import { SharedModule } from './shared/shared.module';
 import { SimpleNotificationsModule } from 'angular2-notifications';
 import { TeamModule } from './team/team.module';
@@ -31,10 +32,12 @@ import { TeamModule } from './team/team.module';
         NgProgressModule,
         TeamModule,
         NewsModule,
+        NgProgressModule.forRoot(),
+        NgProgressHttpModule.forRoot(),
         SimpleNotificationsModule.forRoot(),
         SharedModule
     ],
     bootstrap: [AppComponent],
-    providers: [Title, { provide: HTTP_INTERCEPTORS, useClass: NgProgressInterceptor, multi: true }]
+    providers: [Title]
 })
 export class AppModule {}

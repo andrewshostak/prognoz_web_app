@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 
+import { catchError, map } from 'rxjs/operators';
 import { environment } from '@env';
 import { ErrorHandlerService } from '@services/error-handler.service';
 import { HeadersWithToken } from '@services/headers-with-token.service';
@@ -24,7 +25,7 @@ export class NewsService {
      */
     getNews(page: number = 1): Observable<any> {
         const params = new HttpParams().set('page', page.toString());
-        return this.httpClient.get(this.newsUrl, { params: params }).catch(this.errorHandlerService.handle);
+        return this.httpClient.get(this.newsUrl, { params: params }).pipe(catchError(this.errorHandlerService.handle));
     }
 
     /**
@@ -33,10 +34,10 @@ export class NewsService {
      * @returns {Observable<News>}
      */
     getNewsItem(id: number): Observable<News> {
-        return this.httpClient
-            .get(`${this.newsUrl}/${id}`)
-            .map(response => response['news'])
-            .catch(this.errorHandlerService.handle);
+        return this.httpClient.get(`${this.newsUrl}/${id}`).pipe(
+            map(response => response['news']),
+            catchError(this.errorHandlerService.handle)
+        );
     }
 
     /**
@@ -45,7 +46,7 @@ export class NewsService {
      * @returns {Observable<void>}
      */
     deleteNewsItem(id: number): Observable<void> {
-        return this.headersWithToken.delete(`${this.newsUrl}/${id}`).catch(this.errorHandlerService.handle);
+        return this.headersWithToken.delete(`${this.newsUrl}/${id}`).pipe(catchError(this.errorHandlerService.handle));
     }
 
     /**
@@ -54,10 +55,10 @@ export class NewsService {
      * @returns {Observable<News>}
      */
     createNewsItem(news: News): Observable<News> {
-        return this.headersWithToken
-            .post(this.newsUrl, news)
-            .map(response => response['news'])
-            .catch(this.errorHandlerService.handle);
+        return this.headersWithToken.post(this.newsUrl, news).pipe(
+            map(response => response['news']),
+            catchError(this.errorHandlerService.handle)
+        );
     }
 
     /**
@@ -67,9 +68,9 @@ export class NewsService {
      * @returns {Observable<News>}
      */
     updateNewsItem(news: News, newsId: number): Observable<News> {
-        return this.headersWithToken
-            .put(`${this.newsUrl}/${newsId}`, news)
-            .map(response => response['news'])
-            .catch(this.errorHandlerService.handle);
+        return this.headersWithToken.put(`${this.newsUrl}/${newsId}`, news).pipe(
+            map(response => response['news']),
+            catchError(this.errorHandlerService.handle)
+        );
     }
 }

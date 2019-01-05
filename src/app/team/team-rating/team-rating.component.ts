@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 
 import { CurrentStateService } from '@services/current-state.service';
-import { Subscription } from 'rxjs/Subscription';
+import { Subscription } from 'rxjs';
 import { TeamRating } from '@models/team/team-rating.model';
 import { TeamRatingUser } from '@models/team/team-rating-user.model';
 import { TeamRatingService } from '@services/team/team-rating.service';

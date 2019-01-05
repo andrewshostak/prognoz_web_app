@@ -1,11 +1,12 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { Observable } from 'rxjs/Observable';
 
+import { catchError } from 'rxjs/operators';
 import { ChampionshipPrediction } from '@models/championship/championship-prediction.model';
 import { environment } from '@env';
 import { ErrorHandlerService } from '@services/error-handler.service';
 import { HeadersWithToken } from '@services/headers-with-token.service';
+import { Observable } from 'rxjs';
 import { RequestParams } from '@models/request-params.model';
 
 @Injectable()
@@ -23,7 +24,9 @@ export class ChampionshipPredictionService {
      * @returns {Observable<any>}
      */
     updateChampionshipPredictions(championshipPredictions: ChampionshipPrediction[]): Observable<any> {
-        return this.headersWithToken.put(this.championshipPredictionUrl, championshipPredictions).catch(this.errorHandlerService.handle);
+        return this.headersWithToken
+            .put(this.championshipPredictionUrl, championshipPredictions)
+            .pipe(catchError(this.errorHandlerService.handle));
     }
 
     /**
@@ -38,6 +41,6 @@ export class ChampionshipPredictionService {
                 params = params.append(requestParam.parameter, requestParam.value);
             }
         }
-        return this.httpClient.get(this.championshipPredictionUrl, { params: params }).catch(this.errorHandlerService.handle);
+        return this.httpClient.get(this.championshipPredictionUrl, { params: params }).pipe(catchError(this.errorHandlerService.handle));
     }
 }

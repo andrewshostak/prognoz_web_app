@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 
+import { catchError, map } from 'rxjs/operators';
 import { environment } from '@env';
 import { ErrorHandlerService } from '@services/error-handler.service';
 import { HeadersWithToken } from '@services/headers-with-token.service';
@@ -22,7 +23,7 @@ export class SeasonService {
      * @returns {Observable<any>}
      */
     getSeasons(): Observable<any> {
-        return this.httpClient.get(this.seasonsUrl).catch(this.errorHandlerService.handle);
+        return this.httpClient.get<any>(this.seasonsUrl).pipe(catchError(this.errorHandlerService.handle));
     }
 
     /**
@@ -31,10 +32,10 @@ export class SeasonService {
      * @returns {Observable<Season>}
      */
     getSeason(id: number): Observable<Season> {
-        return this.httpClient
-            .get(`${this.seasonsUrl}/${id}`)
-            .map(response => response['season'])
-            .catch(this.errorHandlerService.handle);
+        return this.httpClient.get(`${this.seasonsUrl}/${id}`).pipe(
+            map(response => response['season']),
+            catchError(this.errorHandlerService.handle)
+        );
     }
 
     /**
@@ -43,10 +44,10 @@ export class SeasonService {
      * @returns {Observable<Season>}
      */
     createSeason(season: Season): Observable<Season> {
-        return this.headersWithToken
-            .post(this.seasonsUrl, season)
-            .map(response => response['season'])
-            .catch(this.errorHandlerService.handle);
+        return this.headersWithToken.post(this.seasonsUrl, season).pipe(
+            map(response => response['season']),
+            catchError(this.errorHandlerService.handle)
+        );
     }
 
     /**
@@ -55,9 +56,9 @@ export class SeasonService {
      * @returns {Observable<Season>}
      */
     updateSeason(season: Season): Observable<Season> {
-        return this.headersWithToken
-            .put(`${this.seasonsUrl}/${season.id}`, season)
-            .map(response => response['season'])
-            .catch(this.errorHandlerService.handle);
+        return this.headersWithToken.put(`${this.seasonsUrl}/${season.id}`, season).pipe(
+            map(response => response['season']),
+            catchError(this.errorHandlerService.handle)
+        );
     }
 }

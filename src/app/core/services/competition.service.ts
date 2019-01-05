@@ -1,12 +1,13 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { Observable } from 'rxjs/Observable';
 
+import { catchError, map } from 'rxjs/operators';
 import { Competition } from '@models/competition.model';
 import { ErrorHandlerService } from '@services/error-handler.service';
 import { environment } from '@env';
 import { HeadersWithToken } from '@services/headers-with-token.service';
 import { isNullOrUndefined } from 'util';
+import { Observable } from 'rxjs';
 
 @Injectable()
 export class CompetitionService {
@@ -65,7 +66,7 @@ export class CompetitionService {
         if (limit) {
             params = params.append('limit', limit.toString());
         }
-        return this.httpClient.get(this.competitionUrl, { params: params }).catch(this.errorHandlerService.handle);
+        return this.httpClient.get(this.competitionUrl, { params: params }).pipe(catchError(this.errorHandlerService.handle));
     }
 
     /**
@@ -74,10 +75,10 @@ export class CompetitionService {
      * @returns {Competition}
      */
     getCompetition(id: number): Observable<Competition> {
-        return this.httpClient
-            .get(`${this.competitionUrl}/${id}`)
-            .map(response => response['competition'])
-            .catch(this.errorHandlerService.handle);
+        return this.httpClient.get(`${this.competitionUrl}/${id}`).pipe(
+            map(response => response['competition']),
+            catchError(this.errorHandlerService.handle)
+        );
     }
 
     /**
@@ -86,10 +87,10 @@ export class CompetitionService {
      * @returns {Observable<Competition>}
      */
     createCompetition(competition: Competition): Observable<Competition> {
-        return this.headersWithToken
-            .post(this.competitionUrl, competition)
-            .map(response => response['competition'])
-            .catch(this.errorHandlerService.handle);
+        return this.headersWithToken.post(this.competitionUrl, competition).pipe(
+            map(response => response['competition']),
+            catchError(this.errorHandlerService.handle)
+        );
     }
 
     /**
@@ -98,9 +99,9 @@ export class CompetitionService {
      * @returns {Observable<Competition>}
      */
     updateCompetition(competition: Competition, competitionId: number): Observable<Competition> {
-        return this.headersWithToken
-            .put(`${this.competitionUrl}/${competitionId}`, competition)
-            .map(response => response['competition'])
-            .catch(this.errorHandlerService.handle);
+        return this.headersWithToken.put(`${this.competitionUrl}/${competitionId}`, competition).pipe(
+            map(response => response['competition']),
+            catchError(this.errorHandlerService.handle)
+        );
     }
 }

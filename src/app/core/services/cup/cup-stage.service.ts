@@ -1,12 +1,13 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 
+import { catchError, map } from 'rxjs/operators';
 import { CupStage } from '@models/cup/cup-stage.model';
 import { environment } from 'environments/environment';
 import { ErrorHandlerService } from '@services/error-handler.service';
 import { HeadersWithToken } from '@services/headers-with-token.service';
 import { isNullOrUndefined } from 'util';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 
 @Injectable()
 export class CupStageService {
@@ -40,7 +41,7 @@ export class CupStageService {
         if (!isNullOrUndefined(competitionId)) {
             params = params.append('competition_id', competitionId.toString());
         }
-        return this.httpClient.get(this.cupStageUrl, { params: params }).catch(this.errorHandlerService.handle);
+        return this.httpClient.get(this.cupStageUrl, { params: params }).pipe(catchError(this.errorHandlerService.handle));
     }
 
     /**
@@ -49,10 +50,10 @@ export class CupStageService {
      * @returns {Observable<CupStage>}
      */
     getCupStage(cupStageId: number): Observable<CupStage> {
-        return this.httpClient
-            .get(`${this.cupStageUrl}/${cupStageId}`)
-            .map(response => response['cup_stage'])
-            .catch(this.errorHandlerService.handle);
+        return this.httpClient.get(`${this.cupStageUrl}/${cupStageId}`).pipe(
+            map(response => response['cup_stage']),
+            catchError(this.errorHandlerService.handle)
+        );
     }
 
     /**
@@ -61,10 +62,10 @@ export class CupStageService {
      * @returns {Observable<CupStage>}
      */
     createCupStage(cupStage: CupStage): Observable<CupStage> {
-        return this.headersWithToken
-            .post(this.cupStageUrl, cupStage)
-            .map(response => response['cup_stage'])
-            .catch(this.errorHandlerService.handle);
+        return this.headersWithToken.post(this.cupStageUrl, cupStage).pipe(
+            map(response => response['cup_stage']),
+            catchError(this.errorHandlerService.handle)
+        );
     }
 
     /**
@@ -74,10 +75,10 @@ export class CupStageService {
      * @returns {Observable<CupStage>}
      */
     updateCupStage(cupStage: CupStage, cupStageId: number): Observable<CupStage> {
-        return this.headersWithToken
-            .put(`${this.cupStageUrl}/${cupStageId}`, cupStage)
-            .map(response => response['cup_stage'])
-            .catch(this.errorHandlerService.handle);
+        return this.headersWithToken.put(`${this.cupStageUrl}/${cupStageId}`, cupStage).pipe(
+            map(response => response['cup_stage']),
+            catchError(this.errorHandlerService.handle)
+        );
     }
 
     /**
@@ -86,6 +87,6 @@ export class CupStageService {
      * @returns {Observable<void>}
      */
     deleteCupStage(cupStageId: number): Observable<void> {
-        return this.headersWithToken.delete(`${this.cupStageUrl}/${cupStageId}`).catch(this.errorHandlerService.handle);
+        return this.headersWithToken.delete(`${this.cupStageUrl}/${cupStageId}`).pipe(catchError(this.errorHandlerService.handle));
     }
 }

@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import './rxjs-operators';
 
 import { CurrentStateService } from '@services/current-state.service';
-import { Options } from 'angular2-notifications';
+import { NotificationAnimationType, Options } from 'angular2-notifications';
 
 @Component({
     selector: 'app-root',
@@ -20,7 +19,7 @@ export class AppComponent implements OnInit {
             timeOut: 5000,
             showProgressBar: false,
             maxLength: 0,
-            animate: 'scale'
+            animate: NotificationAnimationType.Scale
         };
     }
 }

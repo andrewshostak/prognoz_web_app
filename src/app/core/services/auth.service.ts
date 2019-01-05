@@ -1,10 +1,11 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable } from 'rxjs/Observable';
 
+import { catchError, map, share } from 'rxjs/operators';
 import { environment } from '@env';
 import { ErrorHandlerService } from '@services/error-handler.service';
 import { HeadersWithToken } from '@services/headers-with-token.service';
+import { Observable } from 'rxjs';
 import { User } from '@models/user.model';
 import { UtilsService } from '@services/utils.service';
 
@@ -17,7 +18,7 @@ export class AuthService {
     ) {
         this.getUser = new Observable(observer => {
             this.userObserver = observer;
-        }).share();
+        }).pipe(share());
     }
 
     private authUrl = environment.apiUrl + 'auth/';
@@ -76,9 +77,8 @@ export class AuthService {
      */
     signIn(name, password): Observable<any> {
         const headers = new HttpHeaders().set('Content-Type', 'application/json');
-        return this.httpClient
-            .post(this.authUrl + 'signin', { name, password }, { headers: headers })
-            .map(response => {
+        return this.httpClient.post(this.authUrl + 'signin', { name, password }, { headers: headers }).pipe(
+            map(response => {
                 if (response['token']) {
                     this.setTokenToLocalStorage(response['token']);
                     this.updateItemInLocalStorage('user', response['user']);
@@ -86,8 +86,9 @@ export class AuthService {
                     this.userObserver.next(response['user']);
                 }
                 return response['user'];
-            })
-            .catch(this.errorHandlerService.handle);
+            }),
+            catchError(this.errorHandlerService.handle)
+        );
     }
 
     /**
@@ -97,17 +98,17 @@ export class AuthService {
      */
     signUp(user: User): Observable<any> {
         const headers = new HttpHeaders().set('Content-Type', 'application/json');
-        return this.httpClient
-            .post(this.authUrl + 'signup', user, { headers: headers })
-            .map(response => {
+        return this.httpClient.post(this.authUrl + 'signup', user, { headers: headers }).pipe(
+            map(response => {
                 if (response['token']) {
                     this.setTokenToLocalStorage(response['token']);
                     this.updateItemInLocalStorage('user', response['user']);
                     this.userObserver.next(response['user']);
                 }
                 return response['user'];
-            })
-            .catch(this.errorHandlerService.handle);
+            }),
+            catchError(this.errorHandlerService.handle)
+        );
     }
 
     /**
@@ -116,7 +117,7 @@ export class AuthService {
      */
     logout(): Observable<any> {
         this.userObserver.next(null);
-        return this.headersWithToken.post(this.authUrl + 'logout', {}).catch(this.errorHandlerService.handle);
+        return this.headersWithToken.post(this.authUrl + 'logout', {}).pipe(catchError(this.errorHandlerService.handle));
     }
 
     /**
@@ -128,7 +129,7 @@ export class AuthService {
         const headers = new HttpHeaders().set('Content-Type', 'application/json');
         return this.httpClient
             .post(this.authUrl + 'recovery', { email: email }, { headers: headers })
-            .catch(this.errorHandlerService.handle);
+            .pipe(catchError(this.errorHandlerService.handle));
     }
 
     /**
@@ -138,7 +139,7 @@ export class AuthService {
      */
     reset(user: User): Observable<any> {
         const headers = new HttpHeaders().set('Content-Type', 'application/json');
-        return this.httpClient.post(this.authUrl + 'reset', user, { headers: headers }).catch(this.errorHandlerService.handle);
+        return this.httpClient.post(this.authUrl + 'reset', user, { headers: headers }).pipe(catchError(this.errorHandlerService.handle));
     }
 
     /**
@@ -146,7 +147,7 @@ export class AuthService {
      * @returns {Observable<any>}
      */
     private refresh(): Observable<any> {
-        return this.headersWithToken.get(this.authUrl + 'refresh').catch(this.errorHandlerService.handle);
+        return this.headersWithToken.get(this.authUrl + 'refresh').pipe(catchError(this.errorHandlerService.handle));
     }
 
     private updateItemInLocalStorage(key: string, value?: any): void {

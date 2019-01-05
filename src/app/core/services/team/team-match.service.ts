@@ -1,12 +1,13 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { Observable } from 'rxjs/Observable';
 
+import { catchError, map } from 'rxjs/operators';
 import { environment } from '@env';
 import { ErrorHandlerService } from '@services/error-handler.service';
 import { HeadersWithToken } from '@services/headers-with-token.service';
 import { TeamMatch } from '@models/team/team-match.model';
 import { RequestParams } from '@models/request-params.model';
+import { Observable } from 'rxjs';
 
 @Injectable()
 export class TeamMatchService {
@@ -24,10 +25,10 @@ export class TeamMatchService {
      * @returns {Observable<TeamMatch>}
      */
     createTeamMatch(teamMatch: TeamMatch): Observable<TeamMatch> {
-        return this.headersWithToken
-            .post(this.teamMatchUrl, teamMatch)
-            .map(response => response['team_match'])
-            .catch(this.errorHandlerService.handle);
+        return this.headersWithToken.post(this.teamMatchUrl, teamMatch).pipe(
+            map(response => response['team_match']),
+            catchError(this.errorHandlerService.handle)
+        );
     }
 
     /**
@@ -42,7 +43,7 @@ export class TeamMatchService {
                 params = params.append(requestParam.parameter, requestParam.value);
             }
         }
-        return this.httpClient.get(this.teamMatchUrl, { params: params }).catch(this.errorHandlerService.handle);
+        return this.httpClient.get(this.teamMatchUrl, { params: params }).pipe(catchError(this.errorHandlerService.handle));
     }
 
     /**
@@ -56,7 +57,7 @@ export class TeamMatchService {
         for (const requestParam of requestParams) {
             params = params.append(requestParam.parameter, requestParam.value);
         }
-        return this.headersWithToken.get(url, params).catch(this.errorHandlerService.handle);
+        return this.headersWithToken.get(url, params).pipe(catchError(this.errorHandlerService.handle));
     }
 
     /**
@@ -65,10 +66,10 @@ export class TeamMatchService {
      * @returns {Observable<TeamMatch>}
      */
     getTeamMatch(teamMatchId: number): Observable<TeamMatch> {
-        return this.httpClient
-            .get(`${this.teamMatchUrl}/${teamMatchId}`)
-            .map(response => response['team_match'])
-            .catch(this.errorHandlerService.handle);
+        return this.httpClient.get(`${this.teamMatchUrl}/${teamMatchId}`).pipe(
+            map(response => response['team_match']),
+            catchError(this.errorHandlerService.handle)
+        );
     }
 
     /**
@@ -77,10 +78,10 @@ export class TeamMatchService {
      * @returns {Observable<TeamMatch>}
      */
     updateTeamMatch(teamMatch: TeamMatch): Observable<TeamMatch> {
-        return this.headersWithToken
-            .put(`${this.teamMatchUrl}/${teamMatch.id}`, teamMatch)
-            .map(response => response['team_match'])
-            .catch(this.errorHandlerService.handle);
+        return this.headersWithToken.put(`${this.teamMatchUrl}/${teamMatch.id}`, teamMatch).pipe(
+            map(response => response['team_match']),
+            catchError(this.errorHandlerService.handle)
+        );
     }
 
     /**
@@ -89,6 +90,6 @@ export class TeamMatchService {
      * @returns {Observable<void>}
      */
     deleteTeamMatch(teamMatchId: number): Observable<void> {
-        return this.headersWithToken.delete(`${this.teamMatchUrl}/${teamMatchId}`).catch(this.errorHandlerService.handle);
+        return this.headersWithToken.delete(`${this.teamMatchUrl}/${teamMatchId}`).pipe(catchError(this.errorHandlerService.handle));
     }
 }

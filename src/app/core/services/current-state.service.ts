@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 
 import { AuthService } from '@services/auth.service';
 import { PusherService } from '@services/pusher.service';
-import { Subject } from 'rxjs/Subject';
+import { Subject } from 'rxjs';
 import { User } from '@models/user.model';
 import { UtilsService } from '@services/utils.service';
 

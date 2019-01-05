@@ -1,11 +1,12 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 
+import { catchError, map } from 'rxjs/operators';
 import { CupPrediction } from '@models/cup/cup-prediction.model';
 import { environment } from '@env';
 import { ErrorHandlerService } from '@services/error-handler.service';
 import { HeadersWithToken } from '@services/headers-with-token.service';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 
 @Injectable()
 export class CupPredictionService {
@@ -31,10 +32,10 @@ export class CupPredictionService {
         if (userId) {
             params = params.append('user_id', userId.toString());
         }
-        return this.httpClient
-            .get(this.cupPredictionUrl, { params })
-            .map(response => response['cup_predictions'])
-            .catch(this.errorHandlerService.handle);
+        return this.httpClient.get(this.cupPredictionUrl, { params }).pipe(
+            map(response => response['cup_predictions']),
+            catchError(this.errorHandlerService.handle)
+        );
     }
 
     /**
@@ -43,9 +44,9 @@ export class CupPredictionService {
      * @returns {Observable<CupPrediction>}
      */
     updateCupPrediction(cupPrediction: CupPrediction): Observable<CupPrediction> {
-        return this.headersWithToken
-            .put(this.cupPredictionUrl, cupPrediction)
-            .map(response => response['cup_prediction'])
-            .catch(this.errorHandlerService.handle);
+        return this.headersWithToken.put(this.cupPredictionUrl, cupPrediction).pipe(
+            map(response => response['cup_prediction']),
+            catchError(this.errorHandlerService.handle)
+        );
     }
 }
