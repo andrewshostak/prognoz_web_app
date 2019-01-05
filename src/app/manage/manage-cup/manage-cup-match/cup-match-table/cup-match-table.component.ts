@@ -6,7 +6,7 @@ import { CupMatchService } from '@services/cup/cup-match.service';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { environment } from '@env';
 import { NotificationsService } from 'angular2-notifications';
-import { Subscription } from 'rxjs/Subscription';
+import { Subscription } from 'rxjs';
 
 @Component({
     selector: 'app-cup-match-table',

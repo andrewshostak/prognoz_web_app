@@ -6,7 +6,7 @@ import { CupCupMatchService } from '@services/cup/cup-cup-match.service';
 import { environment } from '@env';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { NotificationsService } from 'angular2-notifications';
-import { Subscription } from 'rxjs/Subscription';
+import { Subscription } from 'rxjs';
 import { UtilsService } from '@services/utils.service';
 
 @Component({

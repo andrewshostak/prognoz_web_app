@@ -7,7 +7,7 @@ import { Competition } from '@models/competition.model';
 import { CompetitionService } from '@services/competition.service';
 import { CurrentStateService } from '@services/current-state.service';
 import { NotificationsService } from 'angular2-notifications';
-import { Subscription } from 'rxjs/Subscription';
+import { Subscription } from 'rxjs';
 import { Team } from '@models/team/team.model';
 import { TeamService } from '@services/team/team.service';
 import { TeamParticipant } from '@models/team/team-participant.model';

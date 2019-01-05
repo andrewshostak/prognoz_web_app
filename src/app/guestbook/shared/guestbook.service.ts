@@ -1,11 +1,12 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { Observable } from 'rxjs/Observable';
 
+import { catchError, map } from 'rxjs/operators';
 import { environment } from '@env';
 import { ErrorHandlerService } from '@services/error-handler.service';
 import { GuestbookMessage } from '@models/guestbook-message.model';
 import { HeadersWithToken } from '@services/headers-with-token.service';
+import { Observable } from 'rxjs';
 
 @Injectable()
 export class GuestbookService {
@@ -25,7 +26,7 @@ export class GuestbookService {
     getGuestbookMessages(page: number = 1): Observable<any> {
         let params: HttpParams = new HttpParams();
         params = params.append('page', page.toString());
-        return this.httpClient.get(this.guestbookUrl, { params: params }).catch(this.errorHandlerService.handle);
+        return this.httpClient.get(this.guestbookUrl, { params: params }).pipe(catchError(this.errorHandlerService.handle));
     }
 
     /**
@@ -34,10 +35,10 @@ export class GuestbookService {
      * @returns {Observable<GuestbookMessage>}
      */
     createGuestbookMessage(message: GuestbookMessage): Observable<GuestbookMessage> {
-        return this.headersWithToken
-            .post(this.guestbookUrl, message)
-            .map(response => response['guestbookMessage'])
-            .catch(this.errorHandlerService.handle);
+        return this.headersWithToken.post(this.guestbookUrl, message).pipe(
+            map(response => response['guestbookMessage']),
+            catchError(this.errorHandlerService.handle)
+        );
     }
 
     /**
@@ -46,9 +47,9 @@ export class GuestbookService {
      * @returns {Observable<GuestbookMessage>}
      */
     updateGuestbookMessage(message: GuestbookMessage): Observable<GuestbookMessage> {
-        return this.headersWithToken
-            .put(`${this.guestbookUrl}/${message.id}`, message)
-            .map(response => response['guestbookMessage'])
-            .catch(this.errorHandlerService.handle);
+        return this.headersWithToken.put(`${this.guestbookUrl}/${message.id}`, message).pipe(
+            map(response => response['guestbookMessage']),
+            catchError(this.errorHandlerService.handle)
+        );
     }
 }

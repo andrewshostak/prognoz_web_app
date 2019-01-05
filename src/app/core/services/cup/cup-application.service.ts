@@ -1,11 +1,12 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs/Observable';
 
+import { catchError, map } from 'rxjs/operators';
 import { CupApplication } from '@models/cup/cup-application.model';
 import { ErrorHandlerService } from '@services/error-handler.service';
 import { environment } from '@env';
 import { HeadersWithToken } from '@services/headers-with-token.service';
+import { Observable } from 'rxjs';
 
 @Injectable()
 export class CupApplicationService {
@@ -22,10 +23,10 @@ export class CupApplicationService {
      * @returns {Observable<CupApplication[]>}
      */
     getCupApplications(): Observable<CupApplication[]> {
-        return this.httpClient
-            .get(this.cupApplicationUrl)
-            .map(response => response['cup_applications'])
-            .catch(this.errorHandlerService.handle);
+        return this.httpClient.get(this.cupApplicationUrl).pipe(
+            map(response => response['cup_applications']),
+            catchError(this.errorHandlerService.handle)
+        );
     }
 
     /**
@@ -37,7 +38,7 @@ export class CupApplicationService {
     updateCupApplication(cupApplication, cupApplicationId: number): Observable<CupApplication> {
         return this.headersWithToken
             .put(`${this.cupApplicationUrl}/${cupApplicationId}`, cupApplication)
-            .catch(this.errorHandlerService.handle);
+            .pipe(catchError(this.errorHandlerService.handle));
     }
 
     /**
@@ -46,7 +47,7 @@ export class CupApplicationService {
      * @returns {Observable<CupApplication>}
      */
     createCupApplication(cupApplication: CupApplication): Observable<CupApplication> {
-        return this.headersWithToken.post(this.cupApplicationUrl, cupApplication).catch(this.errorHandlerService.handle);
+        return this.headersWithToken.post(this.cupApplicationUrl, cupApplication).pipe(catchError(this.errorHandlerService.handle));
     }
 
     /**
@@ -55,6 +56,8 @@ export class CupApplicationService {
      * @returns {Observable<void>}
      */
     deleteCupApplication(cupApplicationId: number): Observable<void> {
-        return this.headersWithToken.delete(`${this.cupApplicationUrl}/${cupApplicationId}`).catch(this.errorHandlerService.handle);
+        return this.headersWithToken
+            .delete(`${this.cupApplicationUrl}/${cupApplicationId}`)
+            .pipe(catchError(this.errorHandlerService.handle));
     }
 }

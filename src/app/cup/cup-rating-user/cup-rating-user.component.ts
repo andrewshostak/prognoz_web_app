@@ -3,7 +3,7 @@ import { ActivatedRoute, Params } from '@angular/router';
 
 import { CupRating } from '@models/cup/cup-rating.model';
 import { CupRatingService } from '@services/cup/cup-rating.service';
-import { Subscription } from 'rxjs/Subscription';
+import { Subscription } from 'rxjs';
 import { TitleService } from '@services/title.service';
 
 @Component({

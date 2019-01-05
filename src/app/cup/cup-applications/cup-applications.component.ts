@@ -7,7 +7,7 @@ import { CupApplicationService } from '@services/cup/cup-application.service';
 import { CupApplication } from '@models/cup/cup-application.model';
 import { CurrentStateService } from '@services/current-state.service';
 import { environment } from '@env';
-import { forkJoin } from 'rxjs/observable/forkJoin';
+import { forkJoin } from 'rxjs';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { NotificationsService } from 'angular2-notifications';
 import { TitleService } from '@services/title.service';

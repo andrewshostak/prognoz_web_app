@@ -1,10 +1,11 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { Observable } from 'rxjs/Observable';
 
+import { catchError, map } from 'rxjs/operators';
 import { environment } from '@env';
 import { ErrorHandlerService } from '@services/error-handler.service';
 import { HeadersWithToken } from '@services/headers-with-token.service';
+import { Observable } from 'rxjs';
 import { User } from '@models/user.model';
 
 @Injectable()
@@ -35,7 +36,7 @@ export class UserService {
         if (sequence) {
             params = params.append('sequence', sequence);
         }
-        return this.httpClient.get(this.usersUrl, { params: params }).catch(this.errorHandlerService.handle);
+        return this.httpClient.get(this.usersUrl, { params: params }).pipe(catchError(this.errorHandlerService.handle));
     }
 
     /**
@@ -44,10 +45,10 @@ export class UserService {
      * @returns {Observable<User>}
      */
     getUser(id: number): Observable<User> {
-        return this.httpClient
-            .get(`${this.usersUrl}/${id}`)
-            .map(response => response['user'])
-            .catch(this.errorHandlerService.handle);
+        return this.httpClient.get(`${this.usersUrl}/${id}`).pipe(
+            map(response => response['user']),
+            catchError(this.errorHandlerService.handle)
+        );
     }
 
     /**
@@ -56,6 +57,6 @@ export class UserService {
      * @returns {Observable<User>}
      */
     updateUser(user: User): Observable<User> {
-        return this.headersWithToken.put(`${this.usersUrl}/${user.id}`, user).catch(this.errorHandlerService.handle);
+        return this.headersWithToken.put(`${this.usersUrl}/${user.id}`, user).pipe(catchError(this.errorHandlerService.handle));
     }
 }

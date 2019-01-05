@@ -1,12 +1,13 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { Observable } from 'rxjs/Observable';
 
+import { catchError, map } from 'rxjs/operators';
 import { environment } from '@env';
 import { ErrorHandlerService } from '@services/error-handler.service';
 import { HeadersWithToken } from '@services/headers-with-token.service';
 import { RequestParams } from '@models/request-params.model';
 import { TeamTeamMatch } from '@models/team/team-team-match.model';
+import { Observable } from 'rxjs';
 
 @Injectable()
 export class TeamTeamMatchService {
@@ -30,7 +31,7 @@ export class TeamTeamMatchService {
                 params = params.append(requestParam.parameter, requestParam.value);
             }
         }
-        return this.httpClient.get(this.teamTeamMatchUrl, { params: params }).catch(this.errorHandlerService.handle);
+        return this.httpClient.get(this.teamTeamMatchUrl, { params: params }).pipe(catchError(this.errorHandlerService.handle));
     }
 
     /**
@@ -39,9 +40,9 @@ export class TeamTeamMatchService {
      * @returns {Observable<TeamTeamMatch>}
      */
     updateTeamTeamMatch(teamTeamMatch: TeamTeamMatch): Observable<TeamTeamMatch> {
-        return this.headersWithToken
-            .put(`${this.teamTeamMatchUrl}/${teamTeamMatch.id}`, teamTeamMatch)
-            .map(response => response['team_team_match'])
-            .catch(this.errorHandlerService.handle);
+        return this.headersWithToken.put(`${this.teamTeamMatchUrl}/${teamTeamMatch.id}`, teamTeamMatch).pipe(
+            map(response => response['team_team_match']),
+            catchError(this.errorHandlerService.handle)
+        );
     }
 }

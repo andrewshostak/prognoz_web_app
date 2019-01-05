@@ -1,10 +1,11 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
+import { catchError, map } from 'rxjs/operators';
 import { CupStageType } from '@models/cup/cup-stage-type.model';
 import { environment } from '@env';
 import { ErrorHandlerService } from '@services/error-handler.service';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 
 @Injectable()
 export class CupStageTypeService {
@@ -17,9 +18,9 @@ export class CupStageTypeService {
      * @returns {Observable<CupStageType[]>}
      */
     getCupStageTypes(): Observable<CupStageType[]> {
-        return this.httpClient
-            .get(this.cupStageTypeUrl)
-            .map(response => response['cup_stage_types'])
-            .catch(this.errorHandlerService.handle);
+        return this.httpClient.get(this.cupStageTypeUrl).pipe(
+            map(response => response['cup_stage_types']),
+            catchError(this.errorHandlerService.handle)
+        );
     }
 }

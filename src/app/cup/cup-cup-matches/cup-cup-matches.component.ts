@@ -13,7 +13,7 @@ import { environment } from '@env';
 import { isNullOrUndefined } from 'util';
 import { Season } from '@models/season.model';
 import { SeasonService } from '@services/season.service';
-import { Subscription } from 'rxjs/Subscription';
+import { Subscription } from 'rxjs';
 import { TitleService } from '@services/title.service';
 import { User } from '@models/user.model';
 import { UtilsService } from '@services/utils.service';

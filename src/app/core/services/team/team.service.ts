@@ -1,11 +1,12 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { Observable } from 'rxjs/Observable';
 
+import { catchError, map } from 'rxjs/operators';
 import { Team } from '@models/team/team.model';
 import { environment } from '@env';
 import { ErrorHandlerService } from '@services/error-handler.service';
 import { HeadersWithToken } from '@services/headers-with-token.service';
+import { Observable } from 'rxjs';
 import { RequestParams } from '@models/request-params.model';
 
 @Injectable()
@@ -30,7 +31,7 @@ export class TeamService {
                 params = params.append(requestParam.parameter, requestParam.value);
             }
         }
-        return this.httpClient.get(this.teamInfoUrl, { params: params }).catch(this.errorHandlerService.handle);
+        return this.httpClient.get(this.teamInfoUrl, { params: params }).pipe(catchError(this.errorHandlerService.handle));
     }
 
     /**
@@ -47,10 +48,10 @@ export class TeamService {
                 params = params.append(requestParam.parameter, requestParam.value);
             }
         }
-        return this.httpClient
-            .get(url, { params: params })
-            .map(response => response['team'])
-            .catch(this.errorHandlerService.handle);
+        return this.httpClient.get(url, { params: params }).pipe(
+            map(response => response['team']),
+            catchError(this.errorHandlerService.handle)
+        );
     }
 
     /**
@@ -59,10 +60,10 @@ export class TeamService {
      * @returns {Observable<Team>}
      */
     createTeam(team: Team): Observable<Team> {
-        return this.headersWithToken
-            .post(this.teamInfoUrl, team)
-            .map(response => response['team'])
-            .catch(this.errorHandlerService.handle);
+        return this.headersWithToken.post(this.teamInfoUrl, team).pipe(
+            map(response => response['team']),
+            catchError(this.errorHandlerService.handle)
+        );
     }
 
     /**
@@ -71,9 +72,9 @@ export class TeamService {
      * @returns {Observable<Team>}
      */
     updateTeam(team: Team): Observable<Team> {
-        return this.headersWithToken
-            .put(`${this.teamInfoUrl}/${team.id}`, team)
-            .map(response => response['team'])
-            .catch(this.errorHandlerService.handle);
+        return this.headersWithToken.put(`${this.teamInfoUrl}/${team.id}`, team).pipe(
+            map(response => response['team']),
+            catchError(this.errorHandlerService.handle)
+        );
     }
 }

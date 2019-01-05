@@ -1,12 +1,13 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 
+import { catchError, map } from 'rxjs/operators';
 import { CupCupMatch } from '@models/cup/cup-cup-match.model';
 import { environment } from '@env';
 import { ErrorHandlerService } from '@services/error-handler.service';
 import { HeadersWithToken } from '@services/headers-with-token.service';
 import { isNullOrUndefined } from 'util';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 
 @Injectable()
 export class CupCupMatchService {
@@ -55,7 +56,7 @@ export class CupCupMatchService {
         if (!isNullOrUndefined(sequence)) {
             params = params.append('sequence', sequence);
         }
-        return this.httpClient.get(this.cupCupMatchUrl, { params: params }).catch(this.errorHandlerService.handle);
+        return this.httpClient.get(this.cupCupMatchUrl, { params: params }).pipe(catchError(this.errorHandlerService.handle));
     }
 
     /**
@@ -64,10 +65,10 @@ export class CupCupMatchService {
      * @returns {Observable<CupCupMatch>}
      */
     getCupCupMatch(cupCupMatchId: number): Observable<CupCupMatch> {
-        return this.httpClient
-            .get(`${this.cupCupMatchUrl}/${cupCupMatchId}`)
-            .map(response => response['cup_cup_match'])
-            .catch(this.errorHandlerService.handle);
+        return this.httpClient.get(`${this.cupCupMatchUrl}/${cupCupMatchId}`).pipe(
+            map(response => response['cup_cup_match']),
+            catchError(this.errorHandlerService.handle)
+        );
     }
 
     /**
@@ -76,10 +77,10 @@ export class CupCupMatchService {
      * @returns {Observable<CupCupMatch[]>}
      */
     createCupCupMatchesAuto(params: { type: 'auto' | 'manual'; to: number; number_of_matches: number }): Observable<CupCupMatch[]> {
-        return this.headersWithToken
-            .post(this.cupCupMatchUrl, params)
-            .map(response => response['cup_cup_matches'])
-            .catch(this.errorHandlerService.handle);
+        return this.headersWithToken.post(this.cupCupMatchUrl, params).pipe(
+            map(response => response['cup_cup_matches']),
+            catchError(this.errorHandlerService.handle)
+        );
     }
 
     /**
@@ -88,10 +89,10 @@ export class CupCupMatchService {
      * @returns {Observable<CupCupMatch>}
      */
     createCupCupMatch(cupCupMatch: CupCupMatch): Observable<CupCupMatch> {
-        return this.headersWithToken
-            .post(this.cupCupMatchUrl, cupCupMatch)
-            .map(response => response['cup_cup_match'])
-            .catch(this.errorHandlerService.handle);
+        return this.headersWithToken.post(this.cupCupMatchUrl, cupCupMatch).pipe(
+            map(response => response['cup_cup_match']),
+            catchError(this.errorHandlerService.handle)
+        );
     }
 
     /**
@@ -101,10 +102,10 @@ export class CupCupMatchService {
      * @returns {Observable<CupCupMatch>}
      */
     updateCupCupMatch(cupCupMatch: CupCupMatch, cupCupMatchId: number): Observable<CupCupMatch> {
-        return this.headersWithToken
-            .put(`${this.cupCupMatchUrl}/${cupCupMatchId}`, cupCupMatch)
-            .map(response => response['cup_cup_match'])
-            .catch(this.errorHandlerService.handle);
+        return this.headersWithToken.put(`${this.cupCupMatchUrl}/${cupCupMatchId}`, cupCupMatch).pipe(
+            map(response => response['cup_cup_match']),
+            catchError(this.errorHandlerService.handle)
+        );
     }
 
     /**
@@ -113,6 +114,6 @@ export class CupCupMatchService {
      * @returns {Observable<void>}
      */
     deleteCupCupMatch(cupCupMatchId: number): Observable<void> {
-        return this.headersWithToken.delete(`${this.cupCupMatchUrl}/${cupCupMatchId}`).catch(this.errorHandlerService.handle);
+        return this.headersWithToken.delete(`${this.cupCupMatchUrl}/${cupCupMatchId}`).pipe(catchError(this.errorHandlerService.handle));
     }
 }

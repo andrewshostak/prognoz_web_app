@@ -4,7 +4,7 @@ import { ActivatedRoute, Params, Router } from '@angular/router';
 import { CupRatingGroup } from '@models/cup/cup-rating-group.model';
 import { CupRatingService } from '@services/cup/cup-rating.service';
 import { environment } from '@env';
-import { Subscription } from 'rxjs/Subscription';
+import { Subscription } from 'rxjs';
 import { TitleService } from '@services/title.service';
 import { UtilsService } from '@services/utils.service';
 

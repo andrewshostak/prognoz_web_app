@@ -1,12 +1,13 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
 import { HttpParams } from '@angular/common/http';
 
+import { catchError } from 'rxjs/operators';
 import { environment } from '@env';
 import { ErrorHandlerService } from '@services/error-handler.service';
 import { HeadersWithToken } from '@services/headers-with-token.service';
 import { RequestParams } from '@models/request-params.model';
 import { TeamPrediction } from '@models/team/team-prediction.model';
+import { Observable } from 'rxjs';
 
 @Injectable()
 export class TeamPredictionService {
@@ -21,7 +22,7 @@ export class TeamPredictionService {
      */
     updateTeamPrediction(teamPrediction: TeamPrediction): Observable<TeamPrediction> {
         const url = teamPrediction.id ? `${this.teamPredictionUrl}/${teamPrediction.id}` : this.teamPredictionUrl;
-        return this.headersWithToken.put(url, teamPrediction).catch(this.errorHandlerService.handle);
+        return this.headersWithToken.put(url, teamPrediction).pipe(catchError(this.errorHandlerService.handle));
     }
 
     /**
@@ -36,6 +37,6 @@ export class TeamPredictionService {
                 params = params.append(requestParam.parameter, requestParam.value);
             }
         }
-        return this.headersWithToken.get(this.teamPredictionUrl, params).catch(this.errorHandlerService.handle);
+        return this.headersWithToken.get(this.teamPredictionUrl, params).pipe(catchError(this.errorHandlerService.handle));
     }
 }

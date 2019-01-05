@@ -4,7 +4,7 @@ import { ActivatedRoute, Params } from '@angular/router';
 import { environment } from '@env';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { NotificationsService } from 'angular2-notifications';
-import { Subscription } from 'rxjs/Subscription';
+import { Subscription } from 'rxjs';
 import { TeamParticipant } from '@models/team/team-participant.model';
 import { TeamParticipantService } from '@services/team/team-participant.service';
 import { RequestParams } from '@models/request-params.model';

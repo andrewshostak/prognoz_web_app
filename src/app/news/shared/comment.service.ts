@@ -1,11 +1,12 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 
+import { catchError, map } from 'rxjs/operators';
 import { Comment } from '@models/comment.model';
 import { environment } from '@env';
 import { ErrorHandlerService } from '@services/error-handler.service';
 import { HeadersWithToken } from '@services/headers-with-token.service';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 import { RequestParams } from '@models/request-params.model';
 
 @Injectable()
@@ -31,10 +32,10 @@ export class CommentService {
             }
         }
 
-        return this.httpClient
-            .get(this.commentUrl, { params })
-            .map(response => response['comments'])
-            .catch(this.errorHandlerService.handle);
+        return this.httpClient.get(this.commentUrl, { params }).pipe(
+            map(response => response['comments']),
+            catchError(this.errorHandlerService.handle)
+        );
     }
 
     /**
@@ -43,9 +44,9 @@ export class CommentService {
      * @returns {Observable<Comment>}
      */
     createComment(comment: Comment): Observable<Comment> {
-        return this.headersWithToken
-            .post(this.commentUrl, comment)
-            .map(response => response['comment'])
-            .catch(this.errorHandlerService.handle);
+        return this.headersWithToken.post(this.commentUrl, comment).pipe(
+            map(response => response['comment']),
+            catchError(this.errorHandlerService.handle)
+        );
     }
 }

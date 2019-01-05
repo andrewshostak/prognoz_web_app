@@ -1,11 +1,12 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { Observable } from 'rxjs/Observable';
 
+import { catchError, map } from 'rxjs/operators';
 import { ChampionshipRating } from '@models/championship/championship-rating.model';
 import { ErrorHandlerService } from '@services/error-handler.service';
 import { environment } from '@env';
 import { HeadersWithToken } from '@services/headers-with-token.service';
+import { Observable } from 'rxjs';
 import { RequestParams } from '@models/request-params.model';
 
 @Injectable()
@@ -30,7 +31,7 @@ export class ChampionshipRatingService {
                 params = params.append(requestParam.parameter, requestParam.value);
             }
         }
-        return this.httpClient.get(this.championshipRatingUrl, { params: params }).catch(this.errorHandlerService.handle);
+        return this.httpClient.get(this.championshipRatingUrl, { params: params }).pipe(catchError(this.errorHandlerService.handle));
     }
 
     /**
@@ -44,10 +45,10 @@ export class ChampionshipRatingService {
         if (competitionId) {
             params = params.append('competition_id', competitionId.toString());
         }
-        return this.httpClient
-            .get(`${this.championshipRatingUrl}/${userId}`, { params: params })
-            .map(response => response['championship_rating'])
-            .catch(this.errorHandlerService.handle);
+        return this.httpClient.get(`${this.championshipRatingUrl}/${userId}`, { params: params }).pipe(
+            map(response => response['championship_rating']),
+            catchError(this.errorHandlerService.handle)
+        );
     }
 
     /**
@@ -55,6 +56,6 @@ export class ChampionshipRatingService {
      * @returns {Observable<void>}
      */
     updateChampionshipRatingItems(): Observable<void> {
-        return this.headersWithToken.put(this.championshipRatingUrl, {}).catch(this.errorHandlerService.handle);
+        return this.headersWithToken.put(this.championshipRatingUrl, {}).pipe(catchError(this.errorHandlerService.handle));
     }
 }
