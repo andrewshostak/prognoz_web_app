@@ -42,7 +42,7 @@ jobs:
 
   build:
     parallelism: 1
-    working_directory: ~/services-configuration-ui
+    working_directory: ~/prognoz_v2_angular
     docker:
       - image: circleci/node:10-browsers
 
