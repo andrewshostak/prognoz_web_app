@@ -17,7 +17,7 @@ export class ImageService {
             if (this.validateImage(fileList[0], type)) {
                 const myReader: FileReader = new FileReader();
                 myReader.onload = e => {
-                    this.uploadedImage.next(myReader.result);
+                    this.uploadedImage.next(<string>myReader.result);
                 };
                 myReader.readAsDataURL(file);
             }
