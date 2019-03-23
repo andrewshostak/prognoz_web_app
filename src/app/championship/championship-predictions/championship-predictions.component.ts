@@ -36,7 +36,6 @@ export class ChampionshipPredictionsComponent implements OnInit {
     ngOnInit() {
         this.titleService.setTitle('Зробити прогнози - Чемпіонат');
         this.authenticatedUser = this.currentStateService.getUser();
-        this.getChampionshipMatchesData();
         this.championshipPredictionsForm = new FormGroup({});
         this.getChampionshipMatchesData();
     }

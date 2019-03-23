@@ -9,10 +9,10 @@ export const environment = {
     imageUserDefault: 'default.png',
     imageTeamDefault: 'default.jpeg',
     imageSettings: {
-        club: { maxSize: 204800, types: ['image/gif', 'image/png'] },
+        club: { maxSize: 204800, types: ['image/png'] },
         user: { maxSize: 524288, types: ['image/gif', 'image/png', 'image/jpg', 'image/jpeg'] },
         news: { maxSize: 524288, types: ['image/jpg', 'image/jpeg', 'image/png'] },
-        team: { maxSize: 524288, types: ['image/gif', 'image/png', 'image/jpg', 'image/jpeg'] }
+        team: { maxSize: 524288, types: ['image/png', 'image/jpg', 'image/jpeg'] }
     },
     tournaments: {
         championship: {
@@ -21,9 +21,9 @@ export const environment = {
         cup: {
             id: 2,
             places: [
-                {id: 1, title: 'Вдома', slug: 'home'},
-                {id: 2, title: 'На виїзді', slug: 'away'},
-                {id: 3, title: 'Будь-де', slug: 'anywhere'}
+                { id: 1, title: 'Вдома', slug: 'home' },
+                { id: 2, title: 'На виїзді', slug: 'away' },
+                { id: 3, title: 'Будь-де', slug: 'anywhere' }
             ],
             numberOfMatchesInStage: 8
         },
