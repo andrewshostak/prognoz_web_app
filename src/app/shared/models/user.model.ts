@@ -1,13 +1,14 @@
+/* tslint:disable:variable-name */
 export class User {
-    id: number;
-    name: string;
-    image: string;
-    first_name: string;
-    hometown: string;
-    created_at: string;
-    updated_at: string;
-    winners: Array<any>;
-    main_club: any;
-    clubs: any;
-    showAdministrationLink?: boolean;
+   public first_name: string;
+   public id: number;
+   public name: string;
+   public image: string;
+   public hometown: string;
+   public created_at: string;
+   public updated_at: string;
+   public winners: any[];
+   public main_club: any;
+   public clubs: any;
+   public showAdministrationLink?: boolean;
 }
