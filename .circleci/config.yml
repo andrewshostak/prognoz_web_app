@@ -14,7 +14,7 @@ jobs:
               key: node-modules-{{ arch }}-{{ checksum "package-lock.json" }}
 
          - run:
-              command: npm install
+              command: npm ci
 
          - save_cache:
               key: node-modules-{{ arch }}-{{ checksum "package-lock.json" }}
