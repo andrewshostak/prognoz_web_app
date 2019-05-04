@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Router } from '@angular/router';
 
 import { catchError, map, share } from 'rxjs/operators';
 import { environment } from '@env';
@@ -14,7 +15,8 @@ export class AuthService {
     constructor(
         private errorHandlerService: ErrorHandlerService,
         private headersWithToken: HeadersWithToken,
-        private httpClient: HttpClient
+        private httpClient: HttpClient,
+        private router: Router
     ) {
         this.getUser = new Observable(observer => {
             this.userObserver = observer;
@@ -37,6 +39,21 @@ export class AuthService {
                 return true;
             }
         }
+        return false;
+    }
+
+    // todo: use this method in all guards
+    canActivate(roles: string[]): boolean {
+        if (!!localStorage.getItem('roles') && !!localStorage.getItem('auth_token')) {
+            const userRoles = JSON.parse(localStorage.getItem('roles'));
+            for (const role in userRoles) {
+                if (roles.indexOf(userRoles[role]) > -1) {
+                    return true;
+                }
+            }
+        }
+
+        this.router.navigate(['/403']);
         return false;
     }
 
