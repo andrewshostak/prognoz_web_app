@@ -65,7 +65,7 @@ jobs:
          enabled: true
 
       steps:
-         # add fingerprint from circleci cite
+         # add fingerprint from circle-ci site
          - add_ssh_keys:
               fingerprints:
                  - 'bc:41:74:c6:5e:cf:78:9e:a6:c2:af:39:8a:f1:fd:ca'
