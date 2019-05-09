@@ -1,0 +1,17 @@
+import { Match } from '@models/match.model';
+import { PaginatedResponse } from '@models/paginated-response.model';
+import { MatchSearch } from '@models/search/match-search.model';
+import { Observable, of } from 'rxjs';
+
+export class MatchServiceMock {
+   public readonly paginatedMatchesResponse: PaginatedResponse<Match> = {
+      current_page: 2,
+      data: [{ id: 1, home_club_id: 24 }, { id: 2, ended: 2 }, { id: 3, active: 1 }],
+      per_page: 10,
+      total: 21
+   } as PaginatedResponse<Match>;
+
+   public getMatches(matchSearch: MatchSearch): Observable<PaginatedResponse<Match>> {
+      return of(this.paginatedMatchesResponse);
+   }
+}

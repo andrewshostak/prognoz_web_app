@@ -1,22 +1,22 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
-import { ManageMatchComponent } from './manage-match.component';
-import { MatchTableComponent } from './match-table/match-table.component';
-import { ManageMatchGuard } from './shared/manage-match-guard.service';
+import { ManageMatchComponent } from '@app/manage/manage-match/manage-match.component';
+import { MatchTableComponent } from '@app/manage/manage-match/match-table/match-table.component';
+import { ManageMatchGuard } from '@app/manage/manage-match/shared/manage-match-guard.service';
 
 const routes: Routes = [
-    {
-        path: 'matches',
-        component: ManageMatchComponent,
-        canActivate: [ManageMatchGuard],
-        canActivateChild: [ManageMatchGuard],
-        children: [{ path: '', component: MatchTableComponent }]
-    }
+   {
+      canActivate: [ManageMatchGuard],
+      canActivateChild: [ManageMatchGuard],
+      children: [{ path: 'page/:pageNumber', component: MatchTableComponent }, { path: '', redirectTo: 'page/1', pathMatch: 'full' }],
+      component: ManageMatchComponent,
+      path: 'matches'
+   }
 ];
 
 @NgModule({
-    imports: [RouterModule.forChild(routes)],
-    exports: [RouterModule]
+   exports: [RouterModule],
+   imports: [RouterModule.forChild(routes)]
 })
 export class ManageMatchRoutingModule {}
