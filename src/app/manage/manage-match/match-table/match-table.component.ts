@@ -19,7 +19,6 @@ export class MatchTableComponent implements OnDestroy, OnInit {
    public matches: Match[];
    public paginationData: Pagination;
 
-   // todo: check if commit fixes wrong spaces, too long lines
    constructor(private activatedRoute: ActivatedRoute, private matchService: MatchService) {}
 
    public getMatchesData(pageNumber: number): void {
