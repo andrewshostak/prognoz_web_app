@@ -93,21 +93,24 @@ workflows:
    build-and-deploy:
       jobs:
          - install_dependencies:
-             branches:
-               only:
-                 - /.*/
+             filters:
+               branches:
+                 only:
+                   - /.*/
          - lint:
               requires:
                  - install_dependencies
-              branches:
-                only:
-                  - /.*/
+              filters:
+                branches:
+                  only:
+                    - /.*/
          - build:
               requires:
                  - install_dependencies
-              branches:
-                only:
-                  - /.*/
+              filters:
+                branches:
+                  only:
+                    - /.*/
          - deploy:
               requires:
                  - build
