@@ -6,7 +6,7 @@
       "ng": "ng",
       "start": "ng serve",
       "build": "ng build",
-      "test": "ng test",
+      "test": "ng test --browsers=ChromeHeadless --watch=false",
       "lint": "tslint -p tsconfig.json",
       "pretty-quick": "pretty-quick",
       "format": "prettier --write \"src/**/*.ts\" \"src/**/*.html\" \"*.json\"",
