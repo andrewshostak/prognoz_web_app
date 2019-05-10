@@ -90,15 +90,8 @@ jobs:
 
       # copy files via scp
       - run:
-          name: Deploy over ssh
-          command: |
-            scp -r ~/prognoz_v2_angular/dist root@46.101.159.170:/var/www/tmp-ui
-
-      # change rights and move to proper folder
-      - run:
-          name: Change rights and move to files
-          command: |
-            ssh root@46.101.159.170 'sudo chown -R root:www-data /var/www/tmp-ui/ && rm -rf /var/www/ui/dist && mv /var/www/tmp-ui/dist/ /var/www/ui/dist/'
+          name: deploy
+          command: scripts/deploy.sh
 
 workflows:
   version: 2
@@ -118,9 +111,9 @@ workflows:
       - deploy:
           requires:
             - build
-          filters:
-            branches:
-              only: master
+#          filters:
+#            branches:
+#              only: master
 #@todo
 # 1. Test step
 # 2. Deploy to separate file
