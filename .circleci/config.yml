@@ -67,26 +67,43 @@ jobs:
           name: build
           command: npm run build -- --configuration=production --aot
 
-      - save_cache:
-          key: v1-dist-{{ .Environment.CIRCLE_BRANCH }}-{{ .Environment.CIRCLE_SHA1 }}
+      - run:
+          name: prepare workspace
+          command: |
+            mkdir -p workspace
+            mv dist workspace/build
+
+      - persist_to_workspace:
+          root: workspace
           paths:
-            - dist
+            - build
+
+#      - save_cache:
+#          key: v1-dist-{{ .Environment.CIRCLE_BRANCH }}-{{ .Environment.CIRCLE_SHA1 }}
+#          paths:
+#            - dist
 
   deploy:
+    parallelism: 1
     working_directory: ~/prognoz_v2_angular
+    docker:
+      - image: circleci/node:10-browsers
 
-    machine:
-      enabled: true
+#    machine:
+#      enabled: true
 
     steps:
+      - attach_workspace:
+          at: .
+
       # add fingerprint from circle-ci site
       - add_ssh_keys:
           fingerprints:
             - 'bc:41:74:c6:5e:cf:78:9e:a6:c2:af:39:8a:f1:fd:ca'
 
       # restore data from build job
-      - restore_cache:
-          key: v1-dist-{{ .Environment.CIRCLE_BRANCH }}-{{ .Environment.CIRCLE_SHA1 }}
+#      - restore_cache:
+#          key: v1-dist-{{ .Environment.CIRCLE_BRANCH }}-{{ .Environment.CIRCLE_SHA1 }}
 
       # copy files via scp
       - run:
@@ -111,6 +128,8 @@ workflows:
       - deploy:
           requires:
             - build
+            - lint
+            - test
 #          filters:
 #            branches:
 #              only: master
