@@ -71,21 +71,10 @@ jobs:
           name: build
           command: npm run build -- --configuration=production --aot
 
-#      - run:
-#          name: prepare workspace
-#          command: |
-#            mkdir -p workspace
-#            mv dist workspace/build
-
       - persist_to_workspace:
           root: .
           paths:
             - .
-
-#      - save_cache:
-#          key: v1-dist-{{ .Environment.CIRCLE_BRANCH }}-{{ .Environment.CIRCLE_SHA1 }}
-#          paths:
-#            - dist
 
   deploy:
     parallelism: 1
@@ -93,11 +82,7 @@ jobs:
     docker:
       - image: circleci/node:10-browsers
 
-#    machine:
-#      enabled: true
-
     steps:
-      # add fingerprint from circle-ci site
       - add_ssh_keys:
           fingerprints:
             - 'bc:41:74:c6:5e:cf:78:9e:a6:c2:af:39:8a:f1:fd:ca'
@@ -105,11 +90,6 @@ jobs:
       - attach_workspace:
           at: .
 
-      # restore data from build job
-#      - restore_cache:
-#          key: v1-dist-{{ .Environment.CIRCLE_BRANCH }}-{{ .Environment.CIRCLE_SHA1 }}
-
-      # copy files via scp
       - run:
           name: deploy
           command:  bash ./scripts/deploy.sh
@@ -134,13 +114,6 @@ workflows:
             - build
             - lint
             - test
-#          filters:
-#            branches:
-#              only: master
-#@todo
-# 1. Test step
-# 2. Deploy to separate file
-# 3. Change rights to separate file
-# 4. Move some values to env variables
-# 5. ? Upload codecov
-# 6. Remove comments
+          filters:
+            branches:
+              only: master
