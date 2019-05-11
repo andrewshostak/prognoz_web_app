@@ -93,13 +93,13 @@ jobs:
 #      enabled: true
 
     steps:
-      - attach_workspace:
-          at: .
-
       # add fingerprint from circle-ci site
       - add_ssh_keys:
           fingerprints:
             - 'bc:41:74:c6:5e:cf:78:9e:a6:c2:af:39:8a:f1:fd:ca'
+
+      - attach_workspace:
+          at: .
 
       # restore data from build job
 #      - restore_cache:
