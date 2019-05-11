@@ -108,7 +108,7 @@ jobs:
       # copy files via scp
       - run:
           name: deploy
-          command: scripts/deploy.sh
+          command:  bash ./scripts/deploy.sh
 
 workflows:
   version: 2
