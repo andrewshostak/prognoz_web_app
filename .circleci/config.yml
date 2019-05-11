@@ -40,6 +40,10 @@ jobs:
           name: test
           command: npm run test
 
+      - run:
+          name: upload coverage report
+          command: npm run codecov -- --token=$CODECOV_TOKEN
+
   lint:
     parallelism: 1
     working_directory: ~/prognoz_v2_angular
