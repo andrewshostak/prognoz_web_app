@@ -1,106 +1,119 @@
+# prettier-ignore
 version: 2
 
 jobs:
-   install_dependencies:
-      parallelism: 1
-      working_directory: ~/prognoz_v2_angular
-      docker:
-         - image: circleci/node:10-browsers
+  install_dependencies:
+    parallelism: 1
+    working_directory: ~/prognoz_v2_angular
+    docker:
+      - image: circleci/node:10-browsers
 
-      steps:
-         - checkout
+    steps:
+      - checkout
 
-         - restore_cache:
-              key: node-modules-{{ arch }}-{{ checksum "package-lock.json" }}
+      - restore_cache:
+          key: node-modules-{{ arch }}-{{ checksum "package-lock.json" }}
 
-         - run:
-              command: npm ci
+      - run:
+          command: npm ci
 
-         - save_cache:
-              key: node-modules-{{ arch }}-{{ checksum "package-lock.json" }}
-              paths:
-                 - node_modules
+      - save_cache:
+          key: node-modules-{{ arch }}-{{ checksum "package-lock.json" }}
+          paths:
+            - node_modules
 
-         - persist_to_workspace:
-              root: .
-              paths:
-                 - .
+      - persist_to_workspace:
+          root: .
+          paths:
+            - .
+  test:
+    parallelism: 1
+    working_directory: ~/prognoz_v2_angular
+    docker:
+      - image: circleci/node:10-browsers
 
-   lint:
-      parallelism: 1
-      working_directory: ~/prognoz_v2_angular
-      docker:
-         - image: circleci/node:10-browsers
+    steps:
+      - attach_workspace:
+          at: .
 
-      steps:
-         - attach_workspace:
-              at: .
+      - run:
+          name: test
+          command: npm run test
 
-         # - run: npm run lint
-         - run: echo "lint is temparary disabled untill all files will be modified according to new linter rules"
+      - run:
+          name: upload coverage report
+          command: npm run codecov -- --token=$CODECOV_TOKEN
 
-   build:
-      parallelism: 1
-      working_directory: ~/prognoz_v2_angular
-      docker:
-         - image: circleci/node:10-browsers
+  lint:
+    parallelism: 1
+    working_directory: ~/prognoz_v2_angular
+    docker:
+      - image: circleci/node:10-browsers
 
-      steps:
-         - attach_workspace:
-              at: .
+    steps:
+      - attach_workspace:
+          at: .
 
-         - run:
-              name: build
-              command: npm run build -- --configuration=production --aot
+      # - run: npm run lint
+      - run: echo "lint is temparary disabled untill all files will be modified according to new linter rules"
 
-         - save_cache:
-              key: v1-dist-{{ .Environment.CIRCLE_BRANCH }}-{{ .Environment.CIRCLE_SHA1 }}
-              paths:
-                 - dist
+  build:
+    parallelism: 1
+    working_directory: ~/prognoz_v2_angular
+    docker:
+      - image: circleci/node:10-browsers
 
-   deploy:
-      working_directory: ~/prognoz_v2_angular
+    steps:
+      - attach_workspace:
+          at: .
 
-      machine:
-         enabled: true
+      - run:
+          name: build
+          command: npm run build -- --configuration=production --aot
 
-      steps:
-         # add fingerprint from circleci cite
-         - add_ssh_keys:
-              fingerprints:
-                 - 'bc:41:74:c6:5e:cf:78:9e:a6:c2:af:39:8a:f1:fd:ca'
+      - persist_to_workspace:
+          root: .
+          paths:
+            - .
 
-         # restore data from build job
-         - restore_cache:
-              key: v1-dist-{{ .Environment.CIRCLE_BRANCH }}-{{ .Environment.CIRCLE_SHA1 }}
+  deploy:
+    parallelism: 1
+    working_directory: ~/prognoz_v2_angular
+    docker:
+      - image: circleci/node:10-browsers
 
-         # copy files via scp
-         - run:
-              name: Deploy over ssh
-              command: |
-                 scp -r ~/prognoz_v2_angular/dist root@46.101.159.170:/var/www/tmp-ui
+    steps:
+      - add_ssh_keys:
+          fingerprints:
+            - 'bc:41:74:c6:5e:cf:78:9e:a6:c2:af:39:8a:f1:fd:ca'
 
-         # change rights and move to proper folder
-         - run:
-              name: Change rights and move to files
-              command: |
-                 ssh root@46.101.159.170 'sudo chown -R root:www-data /var/www/tmp-ui/ && rm -rf /var/www/ui/dist && mv /var/www/tmp-ui/dist/ /var/www/ui/dist/'
+      - attach_workspace:
+          at: .
+
+      - run:
+          name: deploy
+          command:  bash ./scripts/deploy.sh
 
 workflows:
-   version: 2
+  version: 2
 
-   build-and-deploy:
-      jobs:
-         - install_dependencies
-         - lint:
-              requires:
-                 - install_dependencies
-         - build:
-              requires:
-                 - install_dependencies
-         - deploy:
-              requires:
-                 - build
-              filters:
-                 branches:
-                    only: master
+  build-and-deploy:
+    jobs:
+      - install_dependencies
+      - lint:
+          requires:
+            - install_dependencies
+      - build:
+          requires:
+            - install_dependencies
+      - test:
+          requires:
+            - install_dependencies
+      - deploy:
+          requires:
+            - build
+            - lint
+            - test
+          filters:
+            branches:
+              only: master
