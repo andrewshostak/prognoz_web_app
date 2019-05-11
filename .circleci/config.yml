@@ -67,16 +67,16 @@ jobs:
           name: build
           command: npm run build -- --configuration=production --aot
 
-      - run:
-          name: prepare workspace
-          command: |
-            mkdir -p workspace
-            mv dist workspace/build
+#      - run:
+#          name: prepare workspace
+#          command: |
+#            mkdir -p workspace
+#            mv dist workspace/build
 
       - persist_to_workspace:
-          root: workspace
+          root: .
           paths:
-            - build
+            - .
 
 #      - save_cache:
 #          key: v1-dist-{{ .Environment.CIRCLE_BRANCH }}-{{ .Environment.CIRCLE_SHA1 }}

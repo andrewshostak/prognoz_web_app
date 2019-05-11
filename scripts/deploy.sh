@@ -2,6 +2,8 @@
 
 echo "deployed"
 
+ls ~/prognoz_v2_angular -al
+
 # Exit if any errors are hit (any non-zero responses)
 #set -e
 
