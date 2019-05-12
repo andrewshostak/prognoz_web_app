@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 
 import { ManageMatchRoutingModule } from '@app/manage/manage-match/manage-match-routing.module';
 import { ManageMatchComponent } from '@app/manage/manage-match/manage-match.component';
@@ -9,7 +10,7 @@ import { SharedModule } from '@app/shared/shared.module';
 
 @NgModule({
    declarations: [ManageMatchComponent, MatchTableComponent],
-   imports: [CommonModule, SharedModule, ManageMatchRoutingModule],
+   imports: [CommonModule, FormsModule, SharedModule, ManageMatchRoutingModule],
    providers: [ManageMatchGuard]
 })
 export class ManageMatchModule {}

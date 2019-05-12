@@ -20,8 +20,13 @@ export class MatchService {
          params = params.set('limit', matchSearch.limit.toString());
       }
 
-      if (matchSearch.offset) {
-         params = params.set('offset', matchSearch.offset.toString());
+      if (matchSearch.page) {
+         params = params.set('page', matchSearch.page.toString());
+      }
+
+      if (matchSearch.order_by && matchSearch.sequence) {
+         params = params.set('order_by', matchSearch.order_by);
+         params = params.set('sequence', matchSearch.sequence);
       }
 
       return this.httpClient.get<PaginatedResponse<Match>>(this.matchesUrl, { params });
