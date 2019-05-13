@@ -32,13 +32,15 @@ describe('MatchService', () => {
       });
 
       it('should set request params', () => {
-         const matchSearch: MatchSearch = { limit: 10, page: 31 };
+         const matchSearch: MatchSearch = { limit: 10, page: 31, sequence: 'ASC', order_by: 'started_at' };
          matchService.getMatches(matchSearch).subscribe(() => {
             return;
          });
 
          const testRequest = httpTestingController.expectOne(
-            `${matchService.matchesUrl}?limit=${matchSearch.limit.toString()}&page=${matchSearch.page.toString()}`
+            `${matchService.matchesUrl}?limit=${matchSearch.limit.toString()}&page=${matchSearch.page.toString()}&order_by=${
+               matchSearch.order_by
+            }&sequence=${matchSearch.sequence}`
          );
          testRequest.flush(someMatchesData);
       });
