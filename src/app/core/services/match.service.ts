@@ -13,6 +13,10 @@ export class MatchService {
 
    constructor(private httpClient: HttpClient) {}
 
+   public deleteMatch(matchId: number): Observable<void> {
+      return this.httpClient.delete<void>(`${this.matchesUrl}/${matchId}`);
+   }
+
    public getMatches(matchSearch: MatchSearch): Observable<PaginatedResponse<Match>> {
       let params: HttpParams = new HttpParams();
 

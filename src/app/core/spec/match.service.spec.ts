@@ -25,6 +25,19 @@ describe('MatchService', () => {
       expect(matchService.matchesUrl).toEqual(`${environment.apiUrl}matches`);
    });
 
+   describe('#deleteMatches', () => {
+      it('should use DELETE method', () => {
+         matchService.deleteMatch(200).subscribe(() => {
+            return;
+         });
+
+         const testRequest = httpTestingController.expectOne(matchService.matchesUrl + '/200');
+         expect(testRequest.request.method).toEqual('DELETE');
+         testRequest.flush(null);
+         httpTestingController.verify();
+      });
+   });
+
    describe('#getMatches', () => {
       let someMatchesData: PaginatedResponse<Match>;
       beforeAll(() => {

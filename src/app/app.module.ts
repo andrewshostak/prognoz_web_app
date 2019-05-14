@@ -1,10 +1,11 @@
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { BrowserModule, Title } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { AppRoutingModule } from '@app/app-routing.module';
 import { AppComponent } from '@app/app.component';
+import { AuthInterceptor } from '@app/auth.interceptor';
 import { AuthModule } from '@app/auth/auth.module';
 import { ChampionshipModule } from '@app/championship/championship.module';
 import { CoreModule } from '@app/core/core.module';
@@ -38,6 +39,13 @@ import { SimpleNotificationsModule } from 'angular2-notifications';
       SimpleNotificationsModule.forRoot(),
       SharedModule
    ],
-   providers: [Title]
+   providers: [
+      Title,
+      {
+         multi: true,
+         provide: HTTP_INTERCEPTORS,
+         useClass: AuthInterceptor
+      }
+   ]
 })
 export class AppModule {}
