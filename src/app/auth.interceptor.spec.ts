@@ -5,6 +5,7 @@ import { TestBed } from '@angular/core/testing';
 import { AuthInterceptor } from '@app/auth.interceptor';
 import { environment } from '@env';
 import { MatchService } from '@services/match.service';
+import { SettingsService } from '@services/settings.service';
 
 describe('AuthInterceptor', () => {
    let authInterceptor: AuthInterceptor;
@@ -33,10 +34,6 @@ describe('AuthInterceptor', () => {
       httpClient = TestBed.get(HttpClient);
    });
 
-   it('should have paths set', () => {
-      expect(authInterceptor.paths).toContain('matches');
-   });
-
    describe('#createHeaderValue', () => {
       it('should create authorization header value', () => {
          const authToken = 'bla-bla';
@@ -44,7 +41,6 @@ describe('AuthInterceptor', () => {
       });
    });
 
-   /* tslint:disable:no-empty */
    describe('#intercept', () => {
       it('should add an Authorization header when auth token is present and isAllowedPath is true', () => {
          spyOn(localStorage, 'getItem').and.returnValue('i_am_auth_token');
@@ -92,11 +88,11 @@ describe('AuthInterceptor', () => {
       });
 
       it('should return false when url includes one of allowed paths but does not environment apiUrl', () => {
-         expect(authInterceptor.isAllowedPath(`${fakeUrl}/${authInterceptor.paths[0]}`)).toBeFalsy();
+         expect(authInterceptor.isAllowedPath(`${fakeUrl}/${SettingsService.newInterceptorPaths[0]}`)).toBeFalsy();
       });
 
       it('should return true when url includes one of allowed paths and environment apiUrl', () => {
-         expect(authInterceptor.isAllowedPath(`${environment.apiUrl}/${authInterceptor.paths[0]}`)).toBeTruthy();
+         expect(authInterceptor.isAllowedPath(`${environment.apiUrl}/${SettingsService.newInterceptorPaths[0]}`)).toBeTruthy();
       });
    });
 });

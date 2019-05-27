@@ -11,6 +11,10 @@ export class MatchServiceMock {
       total: 21
    } as PaginatedResponse<Match>;
 
+   public deleteMatch(id: number): Observable<void> {
+      return of(null);
+   }
+
    public getMatches(matchSearch: MatchSearch): Observable<PaginatedResponse<Match>> {
       return of(this.paginatedMatchesResponse);
    }

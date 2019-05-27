@@ -9,6 +9,7 @@ import { AuthInterceptor } from '@app/auth.interceptor';
 import { AuthModule } from '@app/auth/auth.module';
 import { ChampionshipModule } from '@app/championship/championship.module';
 import { CoreModule } from '@app/core/core.module';
+import { ErrorInterceptor } from '@app/core/interceptors/error.interceptor';
 import { HomeModule } from '@app/home/home.module';
 import { NewsModule } from '@app/news/news.module';
 import { SharedModule } from '@app/shared/shared.module';
@@ -41,6 +42,11 @@ import { SimpleNotificationsModule } from 'angular2-notifications';
    ],
    providers: [
       Title,
+      {
+         multi: true,
+         provide: HTTP_INTERCEPTORS,
+         useClass: ErrorInterceptor
+      },
       {
          multi: true,
          provide: HTTP_INTERCEPTORS,

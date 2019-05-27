@@ -78,7 +78,12 @@
             <button type="button" class="btn btn-sm btn-outline-warning">
                <i class="fa fa-cogs" aria-hidden="true"></i>
             </button>
-            <button [hidden]="match.ended" type="button" class="btn btn-sm btn-outline-danger">
+            <button
+               [hidden]="match.ended"
+               type="button"
+               class="btn btn-sm btn-outline-danger"
+               (click)="openConfirmModal(confirmModal, match, deleteMatch)"
+            >
                <i class="fa fa-trash" aria-hidden="true"></i>
             </button>
          </td>
@@ -110,4 +115,12 @@
 </ng-template>
 <ng-template #updatedAtText let-match="match">
    <span class="text-muted">{{ match.updated_at | time: 'fromNow' }}</span>
+</ng-template>
+<ng-template #confirmModal let-c="close">
+   <app-confirmation-modal
+      [close]="c"
+      [message]="'Видалити ' + openedModal.data.club_home.title + ' - ' + openedModal.data.club_away.title + '?'"
+      (confirmed)="openedModal.submitted($event)"
+   >
+   </app-confirmation-modal>
 </ng-template>

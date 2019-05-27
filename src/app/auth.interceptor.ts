@@ -2,12 +2,11 @@ import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from '@angular/c
 import { Injectable } from '@angular/core';
 
 import { environment } from '@env';
+import { SettingsService } from '@services/settings.service';
 import { Observable } from 'rxjs';
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
-   public readonly paths: string[] = ['matches'];
-
    public createHeaderValue(authToken: string): string {
       return `Bearer {${authToken}}`;
    }
@@ -23,6 +22,6 @@ export class AuthInterceptor implements HttpInterceptor {
    }
 
    public isAllowedPath(url: string): boolean {
-      return url.includes(environment.apiUrl) && this.paths.some(path => url.includes(path));
+      return url.includes(environment.apiUrl) && SettingsService.newInterceptorPaths.some(path => url.includes(path));
    }
 }
