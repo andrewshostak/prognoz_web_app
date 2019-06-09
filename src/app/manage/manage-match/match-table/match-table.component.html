@@ -24,10 +24,10 @@
                      {{ match.club_home.title | slice: 0:3 }}
                   </td>
                   <td class="text-center">
-                     <img class="small-image" [attr.src]="clubImagesUrl + match.club_home.image" />
+                     <img class="small-image" [attr.src]="clubsLogosPath + match.club_home.image" />
                   </td>
                   <td class="text-center">
-                     <img class="small-image" [attr.src]="clubImagesUrl + match.club_away.image" />
+                     <img class="small-image" [attr.src]="clubsLogosPath + match.club_away.image" />
                   </td>
                   <td class="text-uppercase d-table-cell d-lg-none font-weight-bold">{{ match.club_away.title | slice: 0:3 }}</td>
                </tr>
@@ -52,10 +52,10 @@
          </td>
          <td class="text-right align-middle d-none d-lg-table-cell">{{ match.club_home.title }}</td>
          <td class="text-center align-middle d-none d-lg-table-cell">
-            <img class="small-image" [attr.src]="clubImagesUrl + match.club_home.image" />
+            <img class="small-image" [attr.src]="clubsLogosPath + match.club_home.image" />
          </td>
          <td class="text-center align-middle d-none d-lg-table-cell">
-            <img class="small-image" [attr.src]="clubImagesUrl + match.club_away.image" />
+            <img class="small-image" [attr.src]="clubsLogosPath + match.club_away.image" />
          </td>
          <td class="d-none align-middle d-lg-table-cell">{{ match.club_away.title }}</td>
          <td class="result-table-cell align-middle d-none d-sm-table-cell pl-1 pr-1">

@@ -1,0 +1,225 @@
+<form novalidate [formGroup]="matchForm" (ngSubmit)="submitted()" class="bg-white p-2 pl-lg-5 pr-lg-5">
+   <div class="form-row">
+      <div class="col-12 col-md-5">
+         <div class="form-group" [class.form-group-invalid]="showFormInvalidClass(matchForm.get('home_club_id'))">
+            <label [attr.for]="'home_club_id'" class="font-weight-bold">Господарі:</label>
+            <ng-select [items]="clubs" bindValue="id" bindLabel="title" labelForId="home_club_id" formControlName="home_club_id">
+               <ng-template ng-label-tmp let-item="item">
+                  <div class="d-flex flex-row">
+                     <img class="small-image mr-2" [attr.src]="clubsLogosPath + item.image" />
+                     <div class="font-weight-bold mr-2">{{ item.title }}</div>
+                     <div *ngIf="item.parent">({{ item.parent.title }})</div>
+                  </div>
+               </ng-template>
+               <ng-template ng-option-tmp let-item="item">
+                  <div class="d-flex flex-row justify-content-between">
+                     <div class="font-weight-bold">{{ item.title }}</div>
+                     <div *ngIf="item.parent">{{ item.parent.title }}</div>
+                  </div>
+               </ng-template>
+            </ng-select>
+            <div [hidden]="!showFormErrorMessage(matchForm.get('home_club_id'), 'required')" class="error-message">
+               <small>Вибір першої команди обов'язковий</small>
+            </div>
+         </div>
+      </div>
+      <div class="d-none d-md-flex col-md-2 align-items-center justify-content-center pt-3">
+         <button type="button" class="btn btn-outline-dark" (click)="swapClubs()">
+            <i class="fa fa-arrows-h" aria-hidden="true"></i>
+         </button>
+      </div>
+      <div class="col-12 d-md-none position-relative">
+         <button class="swap-btn btn btn-outline-dark position-absolute" (click)="swapClubs()">
+            <i class="fa fa-arrows-v" aria-hidden="true"></i>
+         </button>
+      </div>
+      <div class="col-12 col-md-5">
+         <div class="form-group" [class.form-group-invalid]="showFormInvalidClass(matchForm.get('away_club_id'))">
+            <label [attr.for]="'away_club_id'" class="font-weight-bold">Гості:</label>
+            <ng-select [items]="clubs" bindValue="id" bindLabel="title" labelForId="away_club_id" formControlName="away_club_id">
+               <ng-template ng-label-tmp let-item="item">
+                  <div class="d-flex flex-row">
+                     <img class="small-image mr-2" [attr.src]="clubsLogosPath + item.image" />
+                     <div class="font-weight-bold mr-2">{{ item.title }}</div>
+                     <div *ngIf="item.parent">({{ item.parent.title }})</div>
+                  </div>
+               </ng-template>
+               <ng-template ng-option-tmp let-item="item">
+                  <div class="d-flex flex-row justify-content-between">
+                     <div class="font-weight-bold">{{ item.title }}</div>
+                     <div *ngIf="item.parent">{{ item.parent.title }}</div>
+                  </div>
+               </ng-template>
+            </ng-select>
+            <div [hidden]="!showFormErrorMessage(matchForm.get('away_club_id'), 'required')" class="error-message">
+               <small>Вибір другої команди обов'язковий</small>
+            </div>
+         </div>
+      </div>
+   </div>
+   <div [ngClass]="{ 'p-2 border border-danger rounded': startDateFormGroup.invalid }">
+      <div class="start-date form-row" [formGroup]="startDateFormGroup">
+         <div class="d-none d-lg-block col">
+            <div class="form-group" [class.form-group-invalid]="showFormInvalidClass(startDateFormGroup.get('year'))">
+               <label for="year" class="font-weight-bold">Рік:</label>
+               <div class="input-group">
+                  <div class="input-group-prepend">
+                     <button type="button" class="btn btn-outline-secondary" (click)="decreaseTime('year')">
+                        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+                     </button>
+                  </div>
+                  <input type="number" id="year" class="form-control text-center" formControlName="year" />
+                  <div class="input-group-append">
+                     <button type="button" class="btn btn-outline-secondary" (click)="increaseTime('year')">
+                        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+                     </button>
+                  </div>
+               </div>
+            </div>
+         </div>
+         <div class="col">
+            <div class="form-group" [class.form-group-invalid]="showFormInvalidClass(startDateFormGroup.get('month'))">
+               <label for="month" class="d-none d-sm-block font-weight-bold">Місяць:</label>
+               <label for="month" class="d-block d-sm-none font-weight-bold">Міс:</label>
+               <button type="button" class="d-block d-sm-none btn btn-outline-secondary btn-block" (click)="increaseTime('month')">
+                  <i class="fa fa-chevron-up" aria-hidden="true"></i>
+               </button>
+               <div class="input-group">
+                  <div class="d-none d-sm-block input-group-prepend">
+                     <button type="button" class="btn btn-outline-secondary" (click)="decreaseTime('month')">
+                        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+                     </button>
+                  </div>
+                  <input type="number" id="month" class="form-control text-center" formControlName="month" />
+                  <div class="d-none d-sm-block input-group-append">
+                     <button type="button" class="btn btn-outline-secondary" (click)="increaseTime('month')">
+                        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+                     </button>
+                  </div>
+               </div>
+               <button type="button" class="d-block d-sm-none btn btn-outline-secondary btn-block" (click)="decreaseTime('month')">
+                  <i class="fa fa-chevron-down" aria-hidden="true"></i>
+               </button>
+            </div>
+         </div>
+         <div class="col">
+            <div class="form-group" [class.form-group-invalid]="showFormInvalidClass(startDateFormGroup.get('date'))">
+               <label for="date" class="d-none d-sm-block font-weight-bold">Число:</label>
+               <label for="date" class="d-block d-sm-none font-weight-bold">Чис:</label>
+               <button type="button" class="d-block d-sm-none btn btn-outline-secondary btn-block" (click)="increaseTime('date')">
+                  <i class="fa fa-chevron-up" aria-hidden="true"></i>
+               </button>
+               <div class="input-group">
+                  <div class="d-none d-sm-block input-group-prepend">
+                     <button type="button" class="btn btn-outline-secondary" (click)="decreaseTime('date')">
+                        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+                     </button>
+                  </div>
+                  <input type="number" id="date" class="form-control text-center" formControlName="date" />
+                  <div class="d-none d-sm-block input-group-append">
+                     <button type="button" class="btn btn-outline-secondary" (click)="increaseTime('date')">
+                        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+                     </button>
+                  </div>
+               </div>
+               <button type="button" class="d-block d-sm-none btn btn-outline-secondary btn-block" (click)="decreaseTime('date')">
+                  <i class="fa fa-chevron-down" aria-hidden="true"></i>
+               </button>
+            </div>
+         </div>
+         <div class="col">
+            <div class="form-group" [class.form-group-invalid]="showFormInvalidClass(startDateFormGroup.get('hour'))">
+               <label for="hour" class="d-none d-sm-block font-weight-bold">Година:</label>
+               <label for="hour" class="d-block d-sm-none font-weight-bold">Год:</label>
+               <button type="button" class="d-block d-sm-none btn btn-outline-secondary btn-block" (click)="increaseTime('hour')">
+                  <i class="fa fa-chevron-up" aria-hidden="true"></i>
+               </button>
+               <div class="input-group">
+                  <div class="d-none d-sm-block input-group-prepend">
+                     <button type="button" class="btn btn-outline-secondary" (click)="decreaseTime('hour')">
+                        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+                     </button>
+                  </div>
+                  <input type="number" id="hour" class="form-control text-center" formControlName="hour" />
+                  <div class="d-none d-sm-block input-group-append">
+                     <button type="button" class="btn btn-outline-secondary" (click)="increaseTime('hour')">
+                        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+                     </button>
+                  </div>
+               </div>
+               <button type="button" class="d-block d-sm-none btn btn-outline-secondary btn-block" (click)="decreaseTime('hour')">
+                  <i class="fa fa-chevron-down" aria-hidden="true"></i>
+               </button>
+            </div>
+         </div>
+         <div class="col">
+            <div class="form-group" [class.form-group-invalid]="showFormInvalidClass(startDateFormGroup.get('minute'))">
+               <label for="minute" class="d-none d-sm-block font-weight-bold">Хвилина:</label>
+               <label for="minute" class="d-block d-sm-none font-weight-bold">Хв:</label>
+               <button type="button" class="d-block d-sm-none btn btn-outline-secondary btn-block" (click)="increaseTime('minute')">
+                  <i class="fa fa-chevron-up" aria-hidden="true"></i>
+               </button>
+               <div class="input-group">
+                  <div class="d-none d-sm-block input-group-prepend">
+                     <button type="button" class="btn btn-outline-secondary" (click)="decreaseTime('minute')">
+                        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+                     </button>
+                  </div>
+                  <input type="number" id="minute" class="form-control text-center" formControlName="minute" />
+                  <div class="d-none d-sm-block input-group-append">
+                     <button type="button" class="btn btn-outline-secondary" (click)="increaseTime('minute')">
+                        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+                     </button>
+                  </div>
+               </div>
+               <button type="button" class="d-block d-sm-none btn btn-outline-secondary btn-block" (click)="decreaseTime('minute')">
+                  <i class="fa fa-chevron-down" aria-hidden="true"></i>
+               </button>
+            </div>
+         </div>
+      </div>
+      <div class="form-row" [formGroup]="startDateFormGroup">
+         <div class="d-block d-lg-none col-3">
+            <div class="form-group" [class.form-group-invalid]="showFormInvalidClass(startDateFormGroup.get('year'))">
+               <label for="year" class="font-weight-bold">Рік:</label>
+               <button type="button" class="d-block d-sm-none btn btn-outline-secondary btn-block" (click)="increaseTime('year')">
+                  <i class="fa fa-chevron-up" aria-hidden="true"></i>
+               </button>
+               <div class="input-group">
+                  <div class="d-none d-sm-block input-group-prepend">
+                     <button type="button" class="btn btn-outline-secondary" (click)="decreaseTime('year')">
+                        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+                     </button>
+                  </div>
+                  <input type="number" id="year" class="form-control text-center" formControlName="year" />
+                  <div class="d-none d-sm-block input-group-append">
+                     <button type="button" class="btn btn-outline-secondary" (click)="increaseTime('year')">
+                        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+                     </button>
+                  </div>
+               </div>
+               <button type="button" class="d-block d-sm-none btn btn-outline-secondary btn-block" (click)="decreaseTime('year')">
+                  <i class="fa fa-chevron-down" aria-hidden="true"></i>
+               </button>
+            </div>
+         </div>
+         <div class="col">
+            <label class="font-weight-bold d-block">Час початку:</label>
+            <button
+               *ngFor="let timeTemplate of timeTemplates"
+               type="button"
+               class="btn btn-outline-dark mr-xl-1"
+               (click)="setTimeTemplateInForm(timeTemplate)"
+            >
+               {{ timeTemplate.hour }}:{{ timeTemplate.minute < 10 ? '0' + timeTemplate.minute : timeTemplate.minute }}
+            </button>
+         </div>
+      </div>
+   </div>
+   <div class="d-flex justify-content-end mt-2">
+      <button type="submit" class="btn btn-primary">
+         <i class="fa fa-check-circle-o" aria-hidden="true"></i>
+         Зберегти
+      </button>
+   </div>
+</form>

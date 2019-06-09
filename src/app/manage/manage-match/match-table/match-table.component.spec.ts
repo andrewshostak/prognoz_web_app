@@ -49,7 +49,7 @@ describe('MatchTableComponent', () => {
    });
 
    it('should not have any clubImagesUrl value', () => {
-      expect(matchTableComponent.clubImagesUrl).toBeUndefined();
+      expect(matchTableComponent.clubsLogosPath).toBeUndefined();
    });
 
    it('should not have any matches value', () => {
@@ -165,9 +165,9 @@ describe('MatchTableComponent', () => {
    });
 
    describe('#ngOnInit', () => {
-      it('should set clubImagesUrl', () => {
+      it('should set clubsLogosPath', () => {
          matchTableComponent.ngOnInit();
-         expect(matchTableComponent.clubImagesUrl).toEqual(environment.apiImageClubs);
+         expect(matchTableComponent.clubsLogosPath).toEqual(SettingsService.clubsLogosPath + '/');
       });
 
       it('should set activatedRouteSubscription', () => {

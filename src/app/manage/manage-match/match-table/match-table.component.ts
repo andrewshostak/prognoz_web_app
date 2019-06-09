@@ -1,7 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 
-import { environment } from '@env';
 import { Match } from '@models/match.model';
 import { OpenedModal } from '@models/opened-modal.model';
 import { Pagination } from '@models/pagination.model';
@@ -21,7 +20,7 @@ import { Subscription } from 'rxjs';
 })
 export class MatchTableComponent implements OnDestroy, OnInit {
    public activatedRouteSubscription: Subscription;
-   public clubImagesUrl: string;
+   public clubsLogosPath: string;
    public matches: Match[];
    public openedModal: OpenedModal<Match>;
    public paginationData: Pagination;
@@ -63,7 +62,7 @@ export class MatchTableComponent implements OnDestroy, OnInit {
    }
 
    public ngOnInit() {
-      this.clubImagesUrl = environment.apiImageClubs;
+      this.clubsLogosPath = SettingsService.clubsLogosPath + '/';
       this.activatedRouteSubscription = this.activatedRoute.params.subscribe((params: Params) => {
          this.getMatchesData(params.pageNumber);
       });

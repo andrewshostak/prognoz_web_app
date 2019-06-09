@@ -26,6 +26,7 @@
       "@angular/platform-browser-dynamic": "^7.1.4",
       "@angular/router": "^7.1.4",
       "@ng-bootstrap/ng-bootstrap": "^4.0.0",
+      "@ng-select/ng-select": "^2.20.0",
       "@ngx-progressbar/core": "^5.3.1",
       "@ngx-progressbar/http": "^5.3.1",
       "angular2-notifications": "^2.0.0",
