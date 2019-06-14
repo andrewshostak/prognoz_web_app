@@ -75,9 +75,9 @@
             <ng-container [ngTemplateOutlet]="updatedAtText" [ngTemplateOutletContext]="{ match: match }"></ng-container>
          </td>
          <td class="text-nowrap text-center align-middle">
-            <button type="button" class="btn btn-sm btn-outline-warning">
+            <a class="btn btn-sm btn-outline-warning" [routerLink]="['/', 'manage', 'matches', match.id]">
                <i class="fa fa-cogs" aria-hidden="true"></i>
-            </button>
+            </a>
             <button
                [hidden]="match.ended"
                type="button"

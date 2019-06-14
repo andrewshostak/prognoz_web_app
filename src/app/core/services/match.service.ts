@@ -22,6 +22,10 @@ export class MatchService {
       return this.httpClient.delete<void>(`${this.matchesUrl}/${matchId}`);
    }
 
+   public getMatch(matchId: number): Observable<Match> {
+      return this.httpClient.get<{ match: Match }>(`${this.matchesUrl}/${matchId}`).pipe(map(response => response.match));
+   }
+
    public getMatches(matchSearch: MatchSearch): Observable<PaginatedResponse<Match>> {
       let params: HttpParams = new HttpParams();
 
@@ -39,5 +43,9 @@ export class MatchService {
       }
 
       return this.httpClient.get<PaginatedResponse<Match>>(this.matchesUrl, { params });
+   }
+
+   public updateMatch(match: Partial<Match>): Observable<Match> {
+      return this.httpClient.put<{ match: Match }>(`${this.matchesUrl}/${match.id}`, match).pipe(map(response => response.match));
    }
 }
