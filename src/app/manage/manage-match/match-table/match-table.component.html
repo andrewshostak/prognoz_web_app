@@ -75,7 +75,7 @@
             <ng-container [ngTemplateOutlet]="updatedAtText" [ngTemplateOutletContext]="{ match: match }"></ng-container>
          </td>
          <td class="text-nowrap text-center align-middle">
-            <a class="btn btn-sm btn-outline-warning" [routerLink]="['/', 'manage', 'matches', match.id]">
+            <a [hidden]="!showEditButton(match)" class="btn btn-sm btn-outline-warning" [routerLink]="['/', 'manage', 'matches', match.id]">
                <i class="fa fa-cogs" aria-hidden="true"></i>
             </a>
             <button
@@ -103,14 +103,36 @@
    <i [hidden]="match.ended" title="Активний" class="fa fa-circle-o text-primary" aria-hidden="true"></i>
 </ng-template>
 <ng-template #homeResultInput let-match="match">
-   <input type="number" min="0" max="9" maxlength="1" [(ngModel)]="match.home" class="form-control form-control-sm" />
+   <input
+      type="number"
+      min="0"
+      max="99"
+      maxlength="2"
+      [(ngModel)]="match.home"
+      [disabled]="match.ended"
+      class="form-control form-control-sm font-weight-bold text-center result-input"
+   />
 </ng-template>
 <ng-template #awayResultInput let-match="match">
-   <input type="number" min="0" max="9" maxlength="1" [(ngModel)]="match.away" class="form-control form-control-sm" />
+   <input
+      type="number"
+      min="0"
+      max="99"
+      maxlength="2"
+      [(ngModel)]="match.away"
+      [disabled]="match.ended"
+      class="form-control form-control-sm font-weight-bold text-center result-input"
+   />
 </ng-template>
 <ng-template #updateResultButton let-match="match">
-   <button type="button" class="btn btn-sm" [ngClass]="match.active ? 'btn-primary' : 'btn-outline-primary'">
-      <i class="fa fa-check" aria-hidden="true"></i>
+   <button
+      type="button"
+      class="btn btn-sm"
+      [ngClass]="match.ended ? 'btn-outline-secondary' : 'btn-primary'"
+      [disabled]="match.ended"
+      (click)="addResult(match)"
+   >
+      <i class="fa" [ngClass]="match.ended ? 'fa-ban' : 'fa-plus-circle'" aria-hidden="true"></i>
    </button>
 </ng-template>
 <ng-template #updatedAtText let-match="match">

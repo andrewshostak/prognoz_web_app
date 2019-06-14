@@ -10,7 +10,8 @@ import { MatchService } from '@services/match.service';
 import { PaginationService } from '@services/pagination.service';
 import { SettingsService } from '@services/settings.service';
 import { NotificationsService } from 'angular2-notifications';
-import { remove } from 'lodash';
+import { findIndex, remove } from 'lodash';
+import * as moment from 'moment';
 import { Subscription } from 'rxjs';
 
 @Component({
@@ -31,6 +32,19 @@ export class MatchTableComponent implements OnDestroy, OnInit {
       private notificationsService: NotificationsService,
       private ngbModalService: NgbModal
    ) {}
+
+   public addResult(match: Match): void {
+      this.matchService.updateMatch(match).subscribe(response => {
+         this.notificationsService.success(
+            'Успішно',
+            `Результат в матчі №${match.id} ${match.club_home.title} - ${match.club_away.title} змінено`
+         );
+         const index = findIndex(this.matches, match);
+         if (index > -1) {
+            this.matches[index] = response;
+         }
+      });
+   }
 
    public deleteMatch(): void {
       this.matchService.deleteMatch(this.openedModal.data.id).subscribe(() => {
@@ -71,5 +85,11 @@ export class MatchTableComponent implements OnDestroy, OnInit {
    public openConfirmModal(content: NgbModalRef | HTMLElement, data: Match, submitted: (event) => void): void {
       const reference = this.ngbModalService.open(content, { centered: true });
       this.openedModal = { reference, data, submitted: () => submitted.call(this) };
+   }
+
+   public showEditButton(match: Match): boolean {
+      const updatedAt: moment.Moment = moment(match.updated_at).add(SettingsService.allowToUpdateResultAfterDays, 'day');
+      const now: moment.Moment = moment();
+      return updatedAt.isAfter(now);
    }
 }

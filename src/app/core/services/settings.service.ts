@@ -4,6 +4,7 @@ import { environment } from '@env';
 
 @Injectable()
 export class SettingsService {
+   public static readonly allowToUpdateResultAfterDays: number = 5;
    public static readonly matchesPerPage: number = 12;
    public static readonly newInterceptorPaths: string[] = ['matches'];
 
