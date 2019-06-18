@@ -1,57 +1,58 @@
 <!-- error -->
 <app-error *ngIf="error" [message]="error"></app-error>
 <!-- rating table -->
-<table *ngIf="rating"
-       class="table table-striped table-bordered table-hover table-sm black-shadow black-border">
-    <thead class="thead-dark">
-        <tr>
-            <th class="text-center">№</th>
-            <th class="text-center th-moving-icons" title="Переміщення в рейтингу">
-                <i class="fa fa-arrow-circle-down text-danger" aria-hidden="true"></i>
-                <i class="fa fa-circle-o" aria-hidden="true"></i>
-                <i class="fa fa-arrow-circle-up text-success" aria-hidden="true"></i>
-            </th>
-            <th class="text-center" title="Улюблена команда">
-                <i class="fa fa-shield" aria-hidden="true"></i><br>
-            </th>
-            <th class="text-left" title="Ім'я гравця">Ім'я</th>
-            <th class="text-center d-none d-sm-table-cell" title="2 очки">x2</th>
-            <th class="text-center" title="3 очки">x3</th>
-            <th class="text-center d-sm-none" title="Сумарна кількість очок">О</th>
-            <th class="text-center d-none d-sm-table-cell" title="Сумарна кількість очок">Очки</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr *ngFor="let ratingItem of rating; let i = index;"
-            routerLink="{{(ratingItem.position ? ('../users/') : ('/championship/users/')) + ratingItem.user_id}}"
-            class="cursor-pointer"
-            [ngClass]="{'table-active': authenticatedUser && (ratingItem.user_id === authenticatedUser.id)}">
-            <th scope="row" class="text-center">{{ratingItem.position ? ratingItem.position : i + 1}}.</th>
-            <!-- no moving -->
-            <td *ngIf="!ratingItem.moving" class="text-center text-muted">
-                <i class="fa fa-circle-o" aria-hidden="true"></i>
-            </td>
-            <!-- up moving -->
-            <td *ngIf="ratingItem.moving > 0" class="text-center text-success">
-                <i class="fa fa-arrow-circle-up" aria-hidden="true"></i>
-                <strong>{{ratingItem.moving}}</strong>
-            </td>
-            <!-- down moving -->
-            <td *ngIf="ratingItem.moving < 0" class="text-center text-danger">
-                <i class="fa fa-arrow-circle-down" aria-hidden="true"></i>
-                <strong>{{makeUnsigned(ratingItem.moving)}}</strong>
-            </td>
-            <td class="text-center p-1">
-                <app-club-logo-with-tooltip *ngIf="ratingItem.user?.main_club?.length" [club]="ratingItem.user.main_club[0]">
-                </app-club-logo-with-tooltip>
-            </td>
-            <td class="text-left">
-                <strong>{{ratingItem.user.name}}</strong>
-                <span class="d-none d-sm-inline">{{getHomeCityInBrackets(ratingItem.user.hometown)}}</span>
-            </td>
-            <td class="text-center d-none d-sm-table-cell">{{ratingItem.x2}}</td>
-            <td class="text-center">{{ratingItem.x3}}</td>
-            <td class="text-center"><strong>{{ratingItem.points}}</strong></td>
-        </tr>
-    </tbody>
+<table *ngIf="rating" class="table table-striped table-bordered table-hover table-sm black-shadow black-border">
+   <thead class="thead-dark">
+      <tr>
+         <th class="text-center">№</th>
+         <th class="text-center th-moving-icons" title="Переміщення в рейтингу">
+            <i class="fa fa-arrow-circle-down text-danger" aria-hidden="true"></i>
+            <i class="fa fa-circle-o" aria-hidden="true"></i>
+            <i class="fa fa-arrow-circle-up text-success" aria-hidden="true"></i>
+         </th>
+         <th class="text-center" title="Улюблена команда"><i class="fa fa-shield" aria-hidden="true"></i><br /></th>
+         <th class="text-left" title="Ім'я гравця">Ім'я</th>
+         <th class="text-center d-none d-sm-table-cell" title="2 очки">x2</th>
+         <th class="text-center" title="3 очки">x3</th>
+         <th class="text-center d-sm-none" title="Сумарна кількість очок">О</th>
+         <th class="text-center d-none d-sm-table-cell" title="Сумарна кількість очок">Очки</th>
+      </tr>
+   </thead>
+   <tbody>
+      <tr
+         *ngFor="let ratingItem of rating; let i = index"
+         routerLink="{{ (ratingItem.position ? '../users/' : '/championship/users/') + ratingItem.user_id }}"
+         class="cursor-pointer"
+         [ngClass]="{ 'table-active': authenticatedUser && ratingItem.user_id === authenticatedUser.id }"
+      >
+         <th scope="row" class="text-center">{{ i + 1 }}.</th>
+         <!-- no moving -->
+         <td *ngIf="!ratingItem.moving" class="text-center text-muted">
+            <i class="fa fa-circle-o" aria-hidden="true"></i>
+         </td>
+         <!-- up moving -->
+         <td *ngIf="ratingItem.moving > 0" class="text-center text-success">
+            <i class="fa fa-arrow-circle-up" aria-hidden="true"></i>
+            <strong>{{ ratingItem.moving }}</strong>
+         </td>
+         <!-- down moving -->
+         <td *ngIf="ratingItem.moving < 0" class="text-center text-danger">
+            <i class="fa fa-arrow-circle-down" aria-hidden="true"></i>
+            <strong>{{ makeUnsigned(ratingItem.moving) }}</strong>
+         </td>
+         <td class="text-center p-1">
+            <app-club-logo-with-tooltip *ngIf="ratingItem.user?.main_club?.length" [club]="ratingItem.user.main_club[0]">
+            </app-club-logo-with-tooltip>
+         </td>
+         <td class="text-left">
+            <strong>{{ ratingItem.user.name }}</strong>
+            <span class="d-none d-sm-inline">{{ getHomeCityInBrackets(ratingItem.user.hometown) }}</span>
+         </td>
+         <td class="text-center d-none d-sm-table-cell">{{ ratingItem.x2 }}</td>
+         <td class="text-center">{{ ratingItem.x3 }}</td>
+         <td class="text-center">
+            <strong>{{ ratingItem.points }}</strong>
+         </td>
+      </tr>
+   </tbody>
 </table>

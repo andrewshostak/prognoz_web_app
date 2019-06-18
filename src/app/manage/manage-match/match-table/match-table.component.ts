@@ -10,7 +10,7 @@ import { MatchService } from '@services/match.service';
 import { PaginationService } from '@services/pagination.service';
 import { SettingsService } from '@services/settings.service';
 import { NotificationsService } from 'angular2-notifications';
-import { findIndex, remove } from 'lodash';
+import { findIndex, pick, remove } from 'lodash';
 import * as moment from 'moment';
 import { Subscription } from 'rxjs';
 
@@ -34,7 +34,8 @@ export class MatchTableComponent implements OnDestroy, OnInit {
    ) {}
 
    public addResult(match: Match): void {
-      this.matchService.updateMatch(match).subscribe(response => {
+      const toUpdate = pick(match, ['id', 'home', 'away', 'home_club_id', 'away_club_id', 'started_at']);
+      this.matchService.updateMatch(toUpdate).subscribe(response => {
          this.notificationsService.success(
             'Успішно',
             `Результат в матчі №${match.id} ${match.club_home.title} - ${match.club_away.title} змінено`
