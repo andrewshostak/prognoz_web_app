@@ -11,6 +11,7 @@ import { PageNotFoundComponent } from '@app/core/page-not-found/page-not-found.c
 import { SharedModule } from '@app/shared/shared.module';
 
 import { AuthService } from '@services/auth.service';
+import { ChampionshipMatchNewService } from '@services/championship/championship-match-new.service';
 import { ChampionshipMatchService } from '@services/championship/championship-match.service';
 import { ChampionshipPredictionService } from '@services/championship/championship-prediction.service';
 import { ChampionshipRatingService } from '@services/championship/championship-rating.service';
@@ -55,6 +56,7 @@ import { UtilsService } from '@services/utils.service';
       ClubService,
       ChampionshipService,
       ChampionshipMatchService,
+      ChampionshipMatchNewService,
       ChampionshipPredictionService,
       ChampionshipRatingService,
       CompetitionService,

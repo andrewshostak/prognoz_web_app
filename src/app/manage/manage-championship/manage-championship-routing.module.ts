@@ -1,36 +1,39 @@
-import { NgModule }                         from '@angular/core';
-import { RouterModule, Routes }             from '@angular/router';
+import { NgModule } from '@angular/core';
+import { RouterModule, Routes } from '@angular/router';
 
-import { ManageChampionshipComponent }      from './manage-championship.component';
-import { ManageChampionshipGuard }          from './shared/manage-championship-guard.service';
-import { MatchCreateComponent }             from './match-create/match-create.component';
-import { MatchEditActiveComponent }         from './match-edit-active/match-edit-active.component';
-import { MatchEditComponent }               from './match-edit/match-edit.component';
-import { MatchEditEndedComponent }          from './match-edit-ended/match-edit-ended.component';
+import { ChampionshipMatchCreateComponent } from '@app/manage/manage-championship/manage-championship-match/championship-match-create/championship-match-create.component';
+import { ChampionshipMatchTableComponent } from '@app/manage/manage-championship/manage-championship-match/championship-match-table/championship-match-table.component';
+import { ChampionshipMatchUpdateComponent } from '@app/manage/manage-championship/manage-championship-match/championship-match-update/championship-match-update.component';
+import { ManageChampionshipMatchComponent } from '@app/manage/manage-championship/manage-championship-match/manage-championship-match.component';
+import { ManageChampionshipMatchGuard } from '@app/manage/manage-championship/manage-championship-match/shared/manage-championship-match-guard.service.service';
+import { ManageChampionshipComponent } from '@app/manage/manage-championship/manage-championship.component';
+import { ManageChampionshipGuard } from '@app/manage/manage-championship/shared/manage-championship-guard.service.service';
 
 const routes: Routes = [
-    {
-        path: 'championship',
-        component: ManageChampionshipComponent,
-        canActivate: [ ManageChampionshipGuard ],
-        children: [
-            {
-                path: '',
-                canActivateChild: [ ManageChampionshipGuard ],
-                children: [
-                    { path: 'matches/create', component: MatchCreateComponent },
-                    { path: 'matches/edit', component: MatchEditComponent },
-                    { path: 'matches/edit/active', component: MatchEditActiveComponent },
-                    { path: 'matches/edit/ended', component: MatchEditEndedComponent }
-                ]
-            }
-        ]
-    }
+   {
+      canActivate: [ManageChampionshipGuard],
+      canActivateChild: [ManageChampionshipGuard],
+      children: [
+         {
+            canActivateChild: [ManageChampionshipMatchGuard],
+            children: [
+               { path: 'page/:pageNumber', component: ChampionshipMatchTableComponent },
+               { path: 'create', component: ChampionshipMatchCreateComponent },
+               { path: ':id', component: ChampionshipMatchUpdateComponent },
+               { path: '', redirectTo: 'page/1', pathMatch: 'full' }
+            ],
+            component: ManageChampionshipMatchComponent,
+            path: 'matches'
+         },
+         { path: '', pathMatch: 'full', redirectTo: 'matches' }
+      ],
+      component: ManageChampionshipComponent,
+      path: 'championship'
+   }
 ];
 
 @NgModule({
-    imports: [ RouterModule.forChild(routes) ],
-    exports: [ RouterModule ]
+   exports: [RouterModule],
+   imports: [RouterModule.forChild(routes)]
 })
-
 export class ManageChampionshipRoutingModule {}

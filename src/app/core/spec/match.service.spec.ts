@@ -22,7 +22,7 @@ describe('MatchService', () => {
    });
 
    it('should have matchesUrl', () => {
-      expect(matchService.matchesUrl).toEqual(`${environment.apiUrl}matches`);
+      expect(matchService.matchesUrl).toEqual(`${environment.apiUrl}v2/matches`);
    });
 
    describe('#deleteMatches', () => {

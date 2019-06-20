@@ -89,6 +89,10 @@ export class MatchTableComponent implements OnDestroy, OnInit {
    }
 
    public showEditButton(match: Match): boolean {
+      if (match.active) {
+         return true;
+      }
+
       const updatedAt: moment.Moment = moment(match.updated_at).add(SettingsService.allowToUpdateResultAfterDays, 'day');
       const now: moment.Moment = moment();
       return updatedAt.isAfter(now);
