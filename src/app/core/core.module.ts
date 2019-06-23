@@ -11,7 +11,6 @@ import { PageNotFoundComponent } from '@app/core/page-not-found/page-not-found.c
 import { SharedModule } from '@app/shared/shared.module';
 
 import { AuthService } from '@services/auth.service';
-import { ChampionshipMatchNewService } from '@services/championship/championship-match-new.service';
 import { ChampionshipMatchService } from '@services/championship/championship-match.service';
 import { ChampionshipPredictionService } from '@services/championship/championship-prediction.service';
 import { ChampionshipRatingService } from '@services/championship/championship-rating.service';
@@ -30,8 +29,10 @@ import { ErrorHandlerService } from '@services/error-handler.service';
 import { FormValidatorService } from '@services/form-validator.service';
 import { HeadersWithToken } from '@services/headers-with-token.service';
 import { ImageService } from '@services/image.service';
-import { MatchService } from '@services/match.service';
+import { ChampionshipMatchNewService } from '@services/new/championship-match-new.service';
 import { CompetitionNewService } from '@services/new/competition-new.service';
+import { CupMatchNewService } from '@services/new/cup-match-new.service';
+import { MatchService } from '@services/new/match.service';
 import { PaginationService } from '@services/pagination.service';
 import { PusherService } from '@services/pusher.service';
 import { SeasonService } from '@services/season.service';
@@ -64,6 +65,7 @@ import { UtilsService } from '@services/utils.service';
       CompetitionNewService,
       CupApplicationService,
       CupCupMatchService,
+      CupMatchNewService,
       CupMatchService,
       CupPredictionService,
       CupRatingService,

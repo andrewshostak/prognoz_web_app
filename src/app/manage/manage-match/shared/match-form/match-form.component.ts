@@ -4,7 +4,7 @@ import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/fo
 import { Club } from '@models/club.model';
 import { Match } from '@models/match.model';
 import { ClubService } from '@services/club.service';
-import { MatchService } from '@services/match.service';
+import { MatchService } from '@services/new/match.service';
 import { SettingsService } from '@services/settings.service';
 import { UtilsService } from '@services/utils.service';
 import { NotificationsService } from 'angular2-notifications';

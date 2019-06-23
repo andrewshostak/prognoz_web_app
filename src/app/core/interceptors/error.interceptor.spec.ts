@@ -5,7 +5,7 @@ import { ErrorInterceptor } from '@app/core/interceptors/error.interceptor';
 
 import { environment } from '@env';
 import { NotificationsServiceMock } from '@mocks/services/notifications.service.mock';
-import { MatchService } from '@services/match.service';
+import { MatchService } from '@services/new/match.service';
 import { SettingsService } from '@services/settings.service';
 import { NotificationsService } from 'angular2-notifications';
 

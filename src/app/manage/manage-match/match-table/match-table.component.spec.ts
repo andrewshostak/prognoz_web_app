@@ -13,7 +13,7 @@ import { PaginatedResponse } from '@models/paginated-response.model';
 import { Pagination } from '@models/pagination.model';
 import { MatchSearch } from '@models/search/match-search.model';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
-import { MatchService } from '@services/match.service';
+import { MatchService } from '@services/new/match.service';
 import { PaginationService } from '@services/pagination.service';
 import { SettingsService } from '@services/settings.service';
 import { NotificationsService } from 'angular2-notifications';
@@ -119,8 +119,8 @@ describe('MatchTableComponent', () => {
          matchTableComponent.getMatchesData(2);
          const expectedParam: MatchSearch = {
             limit: SettingsService.matchesPerPage,
-            page: 2,
             orderBy: 'started_at',
+            page: 2,
             sequence: Sequence.Descending
          };
 

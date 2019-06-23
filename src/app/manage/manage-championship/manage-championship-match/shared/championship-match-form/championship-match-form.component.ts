@@ -4,14 +4,14 @@ import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/fo
 import { ModelStatus } from '@enums/model-status.enum';
 import { Sequence } from '@enums/sequence.enum';
 import { Tournament } from '@enums/tournament.enum';
-import { ChampionshipMatchNew } from '@models/championship/championship-match-new.model';
 import { Match } from '@models/match.model';
+import { ChampionshipMatchNew } from '@models/new/championship-match-new.model';
 import { CompetitionNew } from '@models/new/competition-new.model';
 import { CompetitionSearch } from '@models/search/competition-search.model';
 import { MatchSearch } from '@models/search/match-search.model';
-import { ChampionshipMatchNewService } from '@services/championship/championship-match-new.service';
-import { MatchService } from '@services/match.service';
+import { ChampionshipMatchNewService } from '@services/new/championship-match-new.service';
 import { CompetitionNewService } from '@services/new/competition-new.service';
+import { MatchService } from '@services/new/match.service';
 import { SettingsService } from '@services/settings.service';
 import { UtilsService } from '@services/utils.service';
 import { NotificationsService } from 'angular2-notifications';

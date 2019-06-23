@@ -2,12 +2,12 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 
 import { Sequence } from '@enums/sequence.enum';
-import { ChampionshipMatchNew } from '@models/championship/championship-match-new.model';
+import { ChampionshipMatchNew } from '@models/new/championship-match-new.model';
 import { OpenedModal } from '@models/opened-modal.model';
 import { Pagination } from '@models/pagination.model';
 import { ChampionshipMatchSearch } from '@models/search/championship-match-search.model';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
-import { ChampionshipMatchNewService } from '@services/championship/championship-match-new.service';
+import { ChampionshipMatchNewService } from '@services/new/championship-match-new.service';
 import { PaginationService } from '@services/pagination.service';
 import { SettingsService } from '@services/settings.service';
 import { NotificationsService } from 'angular2-notifications';

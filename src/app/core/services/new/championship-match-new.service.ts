@@ -2,7 +2,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
 import { environment } from '@env';
-import { ChampionshipMatchNew } from '@models/championship/championship-match-new.model';
+import { ChampionshipMatchNew } from '@models/new/championship-match-new.model';
 import { PaginatedResponse } from '@models/paginated-response.model';
 import { ChampionshipMatchSearch } from '@models/search/championship-match-search.model';
 import { Observable } from 'rxjs';
