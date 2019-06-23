@@ -24,6 +24,12 @@ export class ChampionshipMatchNewService {
       return this.httpClient.delete<void>(`${this.championshipMatchesUrl}/${championshipMatchId}`);
    }
 
+   public getChampionshipMatch(championshipMatchId: number): Observable<ChampionshipMatchNew> {
+      return this.httpClient
+         .get<{ championship_match: ChampionshipMatchNew }>(`${this.championshipMatchesUrl}/${championshipMatchId}`)
+         .pipe(map(response => response.championship_match));
+   }
+
    public getChampionshipMatches(search: ChampionshipMatchSearch): Observable<PaginatedResponse<ChampionshipMatchNew>> {
       let params: HttpParams = new HttpParams();
 
@@ -41,5 +47,11 @@ export class ChampionshipMatchNewService {
       }
 
       return this.httpClient.get<PaginatedResponse<ChampionshipMatchNew>>(this.championshipMatchesUrl, { params });
+   }
+
+   public updateChampionshipMatch(championshipMatch: Partial<ChampionshipMatchNew>): Observable<ChampionshipMatchNew> {
+      return this.httpClient
+         .put<{ championship_match: ChampionshipMatchNew }>(`${this.championshipMatchesUrl}/${championshipMatch.id}`, championshipMatch)
+         .pipe(map(response => response.championship_match));
    }
 }

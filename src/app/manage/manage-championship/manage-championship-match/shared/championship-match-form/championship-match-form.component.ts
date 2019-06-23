@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
 
 import { ModelStatus } from '@enums/model-status.enum';
@@ -21,7 +21,7 @@ import { NotificationsService } from 'angular2-notifications';
    styleUrls: ['./championship-match-form.component.scss'],
    templateUrl: './championship-match-form.component.html'
 })
-export class ChampionshipMatchFormComponent implements OnInit {
+export class ChampionshipMatchFormComponent implements OnChanges, OnInit {
    @Input() public championshipMatch: ChampionshipMatchNew;
 
    public championshipMatchForm: FormGroup;
@@ -35,6 +35,13 @@ export class ChampionshipMatchFormComponent implements OnInit {
       private matchService: MatchService,
       private notificationsService: NotificationsService
    ) {}
+
+   public addNumberInCompetitionFormControl(): void {
+      this.championshipMatchForm.addControl(
+         'number_in_competition',
+         new FormControl(null, [Validators.required, Validators.min(1), Validators.max(100)])
+      );
+   }
 
    public createChampionshipMatch(championshipMatch: Partial<ChampionshipMatchNew>): void {
       this.championshipMatchService.createChampionshipMatch(championshipMatch).subscribe(response => {
@@ -70,9 +77,21 @@ export class ChampionshipMatchFormComponent implements OnInit {
       });
    }
 
-   public matchesFilter(term: string, match: Match): Match[] {
+   public matchesFilter(term: string, match: Match): boolean {
       const title = term.toLocaleLowerCase();
       return match.club_home.title.toLocaleLowerCase().indexOf(title) > -1 || match.club_away.title.toLocaleLowerCase().indexOf(title) > -1;
+   }
+
+   public ngOnChanges(changes: SimpleChanges): void {
+      if (!changes.championshipMatch.firstChange) {
+         this.addNumberInCompetitionFormControl();
+      }
+      UtilsService.patchSimpleChangeValuesInForm(changes, this.championshipMatchForm, 'championshipMatch');
+      if (!changes.championshipMatch.firstChange && changes.championshipMatch.currentValue.match.ended) {
+         this.matches = [changes.championshipMatch.currentValue.match];
+         this.competitions = [changes.championshipMatch.currentValue.competition];
+         this.championshipMatchForm.disable();
+      }
    }
 
    public ngOnInit(): void {
@@ -103,5 +122,15 @@ export class ChampionshipMatchFormComponent implements OnInit {
          : this.createChampionshipMatch(this.championshipMatchForm.value);
    }
 
-   public updateChampionshipMatch(championshipMatch: Partial<ChampionshipMatchNew>): void {}
+   public updateChampionshipMatch(championshipMatch: Partial<ChampionshipMatchNew>): void {
+      const toUpdate: Partial<ChampionshipMatchNew> = championshipMatch;
+      toUpdate.id = this.championshipMatch.id;
+
+      this.championshipMatchService.updateChampionshipMatch(toUpdate).subscribe(response => {
+         this.notificationsService.success(
+            'Успішно',
+            `Матч №${response.id} ${response.match.club_home.title} - ${response.match.club_away.title} змінено`
+         );
+      });
+   }
 }
