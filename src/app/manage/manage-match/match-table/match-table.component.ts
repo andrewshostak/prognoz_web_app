@@ -1,6 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 
+import { Sequence } from '@enums/sequence.enum';
 import { Match } from '@models/match.model';
 import { OpenedModal } from '@models/opened-modal.model';
 import { Pagination } from '@models/pagination.model';
@@ -62,9 +63,9 @@ export class MatchTableComponent implements OnDestroy, OnInit {
    public getMatchesData(pageNumber: number): void {
       const matchSearch: MatchSearch = {
          limit: SettingsService.matchesPerPage,
-         order_by: 'started_at',
+         orderBy: 'started_at',
          page: pageNumber,
-         sequence: 'DESC'
+         sequence: Sequence.Descending
       };
       this.matchService.getMatches(matchSearch).subscribe(response => {
          this.matches = response.data;

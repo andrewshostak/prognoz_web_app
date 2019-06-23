@@ -1,6 +1,7 @@
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
 
+import { Sequence } from '@enums/sequence.enum';
 import { environment } from '@env';
 import { Match } from '@models/match.model';
 import { PaginatedResponse } from '@models/paginated-response.model';
@@ -45,14 +46,14 @@ describe('MatchService', () => {
       });
 
       it('should set request params', () => {
-         const matchSearch: MatchSearch = { limit: 10, page: 31, sequence: 'ASC', order_by: 'started_at' };
+         const matchSearch: MatchSearch = { limit: 10, page: 31, sequence: Sequence.Ascending, orderBy: 'started_at' };
          matchService.getMatches(matchSearch).subscribe(() => {
             return;
          });
 
          const testRequest = httpTestingController.expectOne(
             `${matchService.matchesUrl}?limit=${matchSearch.limit.toString()}&page=${matchSearch.page.toString()}&order_by=${
-               matchSearch.order_by
+               matchSearch.orderBy
             }&sequence=${matchSearch.sequence}`
          );
          testRequest.flush(someMatchesData);

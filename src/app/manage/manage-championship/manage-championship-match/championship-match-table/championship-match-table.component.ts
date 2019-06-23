@@ -1,6 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 
+import { Sequence } from '@enums/sequence.enum';
 import { ChampionshipMatchNew } from '@models/championship/championship-match-new.model';
 import { OpenedModal } from '@models/opened-modal.model';
 import { Pagination } from '@models/pagination.model';
@@ -36,9 +37,9 @@ export class ChampionshipMatchTableComponent implements OnDestroy, OnInit {
    public getChampionshipMatchesData(pageNumber: number): void {
       const search: ChampionshipMatchSearch = {
          limit: SettingsService.championshipMatchesPerPage,
-         order_by: 'started_at',
+         orderBy: 'started_at',
          page: pageNumber,
-         sequence: 'DESC'
+         sequence: Sequence.Descending
       };
       this.championshipMatchService.getChampionshipMatches(search).subscribe(response => {
          this.championshipMatches = response.data;

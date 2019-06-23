@@ -5,6 +5,7 @@ import { environment } from '@env';
 import { Match } from '@models/match.model';
 import { PaginatedResponse } from '@models/paginated-response.model';
 import { MatchSearch } from '@models/search/match-search.model';
+import { isNil } from 'lodash';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
@@ -15,7 +16,7 @@ export class MatchService {
    constructor(private httpClient: HttpClient) {}
 
    public createMatch(match: Partial<Match>): Observable<Match> {
-      return this.httpClient.post<{ match: Match }>(`${this.matchesUrl}`, match).pipe(map(response => response.match));
+      return this.httpClient.post<{ match: Match }>(this.matchesUrl, match).pipe(map(response => response.match));
    }
 
    public deleteMatch(matchId: number): Observable<void> {
@@ -29,6 +30,13 @@ export class MatchService {
    public getMatches(matchSearch: MatchSearch): Observable<PaginatedResponse<Match>> {
       let params: HttpParams = new HttpParams();
 
+      if (!isNil(matchSearch.active)) {
+         params = params.append('active', (matchSearch.active as unknown) as string);
+      }
+      if (!isNil(matchSearch.ended)) {
+         params = params.append('ended', (matchSearch.ended as unknown) as string);
+      }
+
       if (matchSearch.limit) {
          params = params.set('limit', matchSearch.limit.toString());
       }
@@ -37,8 +45,8 @@ export class MatchService {
          params = params.set('page', matchSearch.page.toString());
       }
 
-      if (matchSearch.order_by && matchSearch.sequence) {
-         params = params.set('order_by', matchSearch.order_by);
+      if (matchSearch.orderBy && matchSearch.sequence) {
+         params = params.set('order_by', matchSearch.orderBy);
          params = params.set('sequence', matchSearch.sequence);
       }
 

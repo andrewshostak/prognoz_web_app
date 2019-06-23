@@ -2,7 +2,7 @@ import { TestBed } from '@angular/core/testing';
 import { ActivatedRoute } from '@angular/router';
 
 import { MatchTableComponent } from '@app/manage/manage-match/match-table/match-table.component';
-import { environment } from '@env';
+import { Sequence } from '@enums/sequence.enum';
 import { ActivatedRouteMock } from '@mocks/activated-route.mock';
 import { NgbModalMock } from '@mocks/ngb-modal.mock';
 import { MatchServiceMock } from '@mocks/services/match.service.mock';
@@ -117,7 +117,12 @@ describe('MatchTableComponent', () => {
       it('should call getMatches from matchService', () => {
          spyOn(matchService, 'getMatches').and.callThrough();
          matchTableComponent.getMatchesData(2);
-         const expectedParam: MatchSearch = { limit: SettingsService.matchesPerPage, page: 2, order_by: 'started_at', sequence: 'DESC' };
+         const expectedParam: MatchSearch = {
+            limit: SettingsService.matchesPerPage,
+            page: 2,
+            orderBy: 'started_at',
+            sequence: Sequence.Descending
+         };
 
          expect(matchService.getMatches).toHaveBeenCalledWith(expectedParam);
       });

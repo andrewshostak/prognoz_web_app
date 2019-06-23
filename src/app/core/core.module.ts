@@ -31,6 +31,7 @@ import { FormValidatorService } from '@services/form-validator.service';
 import { HeadersWithToken } from '@services/headers-with-token.service';
 import { ImageService } from '@services/image.service';
 import { MatchService } from '@services/match.service';
+import { CompetitionNewService } from '@services/new/competition-new.service';
 import { PaginationService } from '@services/pagination.service';
 import { PusherService } from '@services/pusher.service';
 import { SeasonService } from '@services/season.service';
@@ -60,6 +61,7 @@ import { UtilsService } from '@services/utils.service';
       ChampionshipPredictionService,
       ChampionshipRatingService,
       CompetitionService,
+      CompetitionNewService,
       CupApplicationService,
       CupCupMatchService,
       CupMatchService,

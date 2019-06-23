@@ -1,7 +1,11 @@
-/* tslint:disable:variable-name */
+import { ModelStatus } from '@enums/model-status.enum';
+import { Sequence } from '@enums/sequence.enum';
+
 export class MatchSearch {
+   public active?: ModelStatus;
+   public ended?: ModelStatus;
    public limit: number;
-   public order_by?: string;
+   public orderBy?: string;
    public page: number;
-   public sequence?: 'ASC' | 'DESC';
+   public sequence?: Sequence;
 }

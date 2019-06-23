@@ -6,12 +6,19 @@ import { ChampionshipMatchNew } from '@models/championship/championship-match-ne
 import { PaginatedResponse } from '@models/paginated-response.model';
 import { ChampionshipMatchSearch } from '@models/search/championship-match-search.model';
 import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 @Injectable()
 export class ChampionshipMatchNewService {
    public readonly championshipMatchesUrl: string = `${environment.apiUrl}v2/championship/matches`;
 
    constructor(private httpClient: HttpClient) {}
+
+   public createChampionshipMatch(championshipMatch: Partial<ChampionshipMatchNew>): Observable<ChampionshipMatchNew> {
+      return this.httpClient
+         .post<{ championship_match: ChampionshipMatchNew }>(this.championshipMatchesUrl, championshipMatch)
+         .pipe(map(response => response.championship_match));
+   }
 
    public getChampionshipMatches(search: ChampionshipMatchSearch): Observable<PaginatedResponse<ChampionshipMatchNew>> {
       let params: HttpParams = new HttpParams();
@@ -24,8 +31,8 @@ export class ChampionshipMatchNewService {
          params = params.set('page', search.page.toString());
       }
 
-      if (search.order_by && search.sequence) {
-         params = params.set('order_by', search.order_by);
+      if (search.orderBy && search.sequence) {
+         params = params.set('order_by', search.orderBy);
          params = params.set('sequence', search.sequence);
       }
 
