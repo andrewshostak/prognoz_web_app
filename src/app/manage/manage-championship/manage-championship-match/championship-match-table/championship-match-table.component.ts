@@ -11,6 +11,7 @@ import { ChampionshipMatchNewService } from '@services/championship/championship
 import { PaginationService } from '@services/pagination.service';
 import { SettingsService } from '@services/settings.service';
 import { NotificationsService } from 'angular2-notifications';
+import { remove } from 'lodash';
 import { Subscription } from 'rxjs';
 
 @Component({
@@ -32,7 +33,19 @@ export class ChampionshipMatchTableComponent implements OnDestroy, OnInit {
       private ngbModalService: NgbModal
    ) {}
 
-   public deleteChampionshipMatch(): void {}
+   public deleteChampionshipMatch(): void {
+      this.championshipMatchService.deleteChampionshipMatch(this.openedModal.data.id).subscribe(() => {
+         remove(this.championshipMatches, this.openedModal.data);
+         this.paginationData.total--;
+         this.notificationsService.success(
+            'Успішно',
+            `Матч №${this.openedModal.data.id} ${this.openedModal.data.match.club_home.title} - ${
+               this.openedModal.data.match.club_away.title
+            } видалено`
+         );
+         this.openedModal.reference.close();
+      });
+   }
 
    public getChampionshipMatchesData(pageNumber: number): void {
       const search: ChampionshipMatchSearch = {

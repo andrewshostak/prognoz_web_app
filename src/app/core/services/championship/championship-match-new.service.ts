@@ -20,6 +20,10 @@ export class ChampionshipMatchNewService {
          .pipe(map(response => response.championship_match));
    }
 
+   public deleteChampionshipMatch(championshipMatchId: number): Observable<void> {
+      return this.httpClient.delete<void>(`${this.championshipMatchesUrl}/${championshipMatchId}`);
+   }
+
    public getChampionshipMatches(search: ChampionshipMatchSearch): Observable<PaginatedResponse<ChampionshipMatchNew>> {
       let params: HttpParams = new HttpParams();
 
