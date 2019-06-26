@@ -1,18 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 
 @Component({
-    selector: 'app-manage-cup',
-    templateUrl: './manage-cup.component.html',
-    styleUrls: ['./manage-cup.component.scss']
+   selector: 'app-manage-cup',
+   styleUrls: ['./manage-cup.component.scss'],
+   templateUrl: './manage-cup.component.html'
 })
-export class ManageCupComponent implements OnInit {
-    navigationItems: { title: string; routerLink: string }[];
-
-    ngOnInit() {
-        this.navigationItems = [
-            { title: 'Стадії', routerLink: 'stages' },
-            { title: 'Матчі', routerLink: 'matches' },
-            { title: 'Кубок-матчі', routerLink: 'cup-matches' }
-        ];
-    }
-}
+export class ManageCupComponent {}

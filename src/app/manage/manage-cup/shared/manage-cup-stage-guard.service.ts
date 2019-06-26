@@ -1,33 +1,17 @@
 import { Injectable } from '@angular/core';
-import { CanActivate, CanActivateChild, Router } from '@angular/router';
+import { CanActivate, CanActivateChild } from '@angular/router';
+
+import { AuthService } from '@services/auth.service';
 
 @Injectable()
 export class ManageCupGuard implements CanActivate, CanActivateChild {
-    constructor(private router: Router) {}
+   constructor(private authService: AuthService) {}
 
-    canActivate() {
-        return this.checkRole();
-    }
+   public canActivate(): boolean {
+      return this.authService.canActivate(['admin', 'cup_match_editor', 'cup_stage_editor', 'cup_cup_match_editor']);
+   }
 
-    canActivateChild() {
-        return this.checkRole();
-    }
-
-    /**
-     * Check if user have acceptable roles to edit news
-     * @returns {boolean}
-     */
-    checkRole(): boolean {
-        if (!!localStorage.getItem('roles') && !!localStorage.getItem('auth_token')) {
-            const userRoles = JSON.parse(localStorage.getItem('roles'));
-            const allowedRoles = ['admin', 'cup_editor'];
-            for (const role in userRoles) {
-                if (allowedRoles.indexOf(userRoles[role]) > -1) {
-                    return true;
-                }
-            }
-        }
-        this.router.navigate(['/403']);
-        return false;
-    }
+   public canActivateChild(): boolean {
+      return this.authService.canActivate(['admin', 'cup_match_editor', 'cup_stage_editor', 'cup_cup_match_editor']);
+   }
 }
