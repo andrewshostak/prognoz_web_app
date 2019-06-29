@@ -49,9 +49,12 @@ export class ChampionshipMatchNewService {
       return this.httpClient.get<PaginatedResponse<ChampionshipMatchNew>>(this.championshipMatchesUrl, { params });
    }
 
-   public updateChampionshipMatch(championshipMatch: Partial<ChampionshipMatchNew>): Observable<ChampionshipMatchNew> {
+   public updateChampionshipMatch(
+      championshipMatchId: number,
+      championshipMatch: Partial<ChampionshipMatchNew>
+   ): Observable<ChampionshipMatchNew> {
       return this.httpClient
-         .put<{ championship_match: ChampionshipMatchNew }>(`${this.championshipMatchesUrl}/${championshipMatch.id}`, championshipMatch)
+         .put<{ championship_match: ChampionshipMatchNew }>(`${this.championshipMatchesUrl}/${championshipMatchId}`, championshipMatch)
          .pipe(map(response => response.championship_match));
    }
 }
