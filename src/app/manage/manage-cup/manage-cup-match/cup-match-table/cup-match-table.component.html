@@ -1,125 +1,360 @@
-<div class="container">
-    <div class="row">
-        <div class="col">
-            <h2 class="h2">Таблиця кубкових матчів:</h2>
-        </div>
-    </div>
-    <div *ngIf="cupMatches" class="row">
-        <div class="col-12">
-            <div class="table-responsive bg-white">
-                <table class="table table-bordered table-striped table-hover mb-0">
-                    <thead class="thead-dark">
-                    <tr>
-                        <th scope="col" class="d-none d-md-table-cell">Id</th>
-                        <th scope="col">Матч</th>
-                        <th scope="col" class="text-center d-none d-md-table-cell" title="Кількість стадій">С.</th>
-                        <th scope="col" class="text-center">Результат</th>
-                        <th scope="col" class="text-center" title="Добавити результат">
-                            <i class="fa fa-plus-circle" aria-hidden="true"></i>
-                        </th>
-                        <th scope="col" class="text-center d-none d-lg-table-cell" title="Кількість прогнозів">К.</th>
-                        <th scope="col" class="text-center d-none d-lg-table-cell" title="Кількість вгаданих результатів">
-                            <i class="fa fa-soccer-ball-o" aria-hidden="true"></i>
-                        </th>
-                        <th scope="col" class="text-center d-none d-lg-table-cell" title="Очки / КС">О/КС</th>
-                        <th scope="col" class="text-center" title="Статус: Активний / Завершений">С.</th>
-                        <th scope="col">Дія</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr *ngFor="let cupMatch of cupMatches">
-                        <th scope="row" class="text-center align-middle d-none d-md-table-cell">{{cupMatch.id}}</th>
-                        <td class="text-nowrap align-middle">
-                            <img class="small-image"
-                                 [attr.src]="clubImagesUrl + cupMatch.club_first.image">
-                            <small class="text-muted">{{cupMatch.starts_at}}</small>
-                            <img class="small-image"
-                                 [attr.src]="clubImagesUrl + cupMatch.club_second.image"><br>
-                            <strong>{{cupMatch.club_first.title}}</strong> - <strong>{{cupMatch.club_second.title}}</strong>
-                        </td>
-                        <td class="text-center align-middle d-none d-md-table-cell">{{cupMatch.cup_stages.length}}</td>
-                        <td class="text-nowrap align-middle">
-                            <div class="form-row">
-                                <div class="col">
-                                    <input type="number"
-                                           class="form-control form-control-sm"
-                                           min="0"
-                                           max="9"
-                                           maxlength="1"
-                                           [disabled]="cupMatch.ended"
-                                           [(ngModel)]="cupMatch.home">
-                                </div>
-                                <div class="col">
-                                    <input type="number"
-                                           class="form-control form-control-sm"
-                                           min="0"
-                                           max="9"
-                                           maxlength="1"
-                                           [disabled]="cupMatch.ended"
-                                           [(ngModel)]="cupMatch.away">
-                                </div>
-                            </div>
-                        </td>
-                        <td class="align-middle">
-                            <div class="col">
-                                <button type="button"
-                                        class="btn btn-sm btn-block"
-                                        [disabled]="cupMatch.ended"
-                                        [ngClass]="cupMatch.ended ? 'btn-outline-secondary' : 'btn-primary'"
-                                        (click)="addResult(cupMatch)">
-                                    <i class="fa" [ngClass]="cupMatch.ended ? 'fa-ban' : 'fa-plus-circle'" aria-hidden="true"></i>
-                                </button>
-                            </div>
-                        </td>
-                        <td class="text-center align-middle d-none d-lg-table-cell font-weight-bold">
-                            {{cupMatch.predictions}}
-                        </td>
-                        <td class="text-center align-middle d-none d-lg-table-cell" [ngClass]="{'table-danger': cupMatch.guessed === 0}">
-                            {{cupMatch.guessed}}
-                        </td>
-                        <td class="text-center align-middle d-none d-lg-table-cell">
-                            {{cupMatch.ended ? cupMatch.points + ' / ' + cupMatch.dc_sum : ''}}
-                        </td>
-                        <td class="text-center align-middle">
-                            <i *ngIf="cupMatch.active" class="text-success fa fa-check-circle fa-lg" aria-hidden="true"></i>
-                            <i *ngIf="cupMatch.ended" class="text-danger fa fa-times fa-lg" aria-hidden="true"></i>
-                        </td>
-                        <td class="text-nowrap text-center">
-                            <button *ngIf="!cupMatchHasEndedStages(cupMatch); else noActionButton"
-                                    routerLink="/manage/cup/matches/{{cupMatch.id}}/edit"
-                                    type="button"
-                                    class="btn btn-sm btn-warning">
-                                <i class="fa fa-pencil-square-o fa-lg" aria-hidden="true"></i>
-                            </button>
-                            <ng-template #noActionButton>
-                                <button disabled class="btn btn-sm btn-outline-secondary">
-                                    <i class="fa fa-ban fa-lg" aria-hidden="true"></i>
-                                </button>
-                            </ng-template>
-                            <button type="button"
-                                    [hidden]="cupMatch.ended"
-                                    class="btn btn-sm btn-danger"
-                                    (click)="openConfirmModal(confirmModal, cupMatch)">
-                                <i class="fa fa-trash-o fa-lg" aria-hidden="true"></i>
-                            </button>
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </div>
-    <app-error *ngIf="errorCupMatches" [message]="errorCupMatches"></app-error>
-    <app-pagination *ngIf="cupMatches"
-                    [totalItems]="total"
-                    [currentPage]="currentPage"
-                    [pageSize]="perPage"
-                    [path]="path">
-    </app-pagination>
-</div>
+<h3 class="h3 m-2">Матчі кубку:</h3>
+<table *ngIf="cupMatches" class="d-none d-lg-table table table-dark table-striped table-hover table-bordered">
+   <thead>
+      <tr>
+         <th scope="col" class="text-center">ID</th>
+         <th scope="col" colspan="2" class="text-right">Команда 1</th>
+         <th scope="col" colspan="2">Команда 2</th>
+         <th scope="col">Стадії</th>
+         <th scope="col" title="Результат" class="text-center">Рез</th>
+         <th scope="col" class="text-center" title="К-ть Прогнозів">П</th>
+         <th scope="col" class="text-center" title="Кількість вгаданих результатів">Г</th>
+         <th scope="col" class="text-center" title="К-ть Очок">О</th>
+         <th scope="col" class="text-center">КС</th>
+         <th scope="col" title="Дія / Змінено" class="text-center">Дія/Зм</th>
+      </tr>
+   </thead>
+   <tbody>
+      <tr *ngFor="let cupMatch of cupMatches">
+         <th scope="row" class="text-center align-middle">{{ cupMatch.id }}</th>
+         <td colspan="4" class="align-middle">
+            <table align="center" class="table-sm">
+               <tr>
+                  <td colspan="4" class="text-nowrap align-middle text-center">
+                     {{ cupMatch.match.started_at | time: 'YYYY-MM-DD HH:mm' }}
+                  </td>
+               </tr>
+               <tr>
+                  <td class="text-right align-middle">{{ cupMatch.match.club_home.title }}</td>
+                  <td class="align-middle text-center">
+                     <img class="small-image" [attr.src]="clubsLogosPath + cupMatch.match.club_home.image" />
+                  </td>
+                  <td class="align-middle text-center">
+                     <img class="small-image" [attr.src]="clubsLogosPath + cupMatch.match.club_away.image" />
+                  </td>
+                  <td class="align-middle">{{ cupMatch.match.club_away.title }}</td>
+               </tr>
+            </table>
+         </td>
+         <td class="align-middle">
+            <table *ngIf="cupMatch.cup_stages" class="table-sm">
+               <tr *ngFor="let cupStage of cupMatch.cup_stages">
+                  <td class="align-middle text-nowrap">{{ cupStage.title }}</td>
+                  <td>
+                     <small>{{ cupStage.competition.title }}</small>
+                  </td>
+               </tr>
+            </table>
+         </td>
+         <td class="text-center text-nowrap align-middle font-weight-bold">{{ cupMatch.match.home }} : {{ cupMatch.match.away }}</td>
+         <td class="text-center text-nowrap align-middle">{{ cupMatch.predictions }}</td>
+         <td class="text-center text-nowrap  align-middle" [ngClass]="{ 'text-danger': cupMatch.guessed === 0 }">{{ cupMatch.guessed }}</td>
+         <td class="text-center text-nowrap align-middle" [ngClass]="{ 'text-danger': cupMatch.points === 0 }">{{ cupMatch.points }}</td>
+         <td class="text-center text-nowrap align-middle" [ngClass]="{ 'text-danger': cupMatch.dc_sum >= 1 }">{{ cupMatch.dc_sum }}</td>
+         <td class="text-center align-middle">
+            <table align="center" class="table-sm">
+               <tr *ngIf="cupMatch.match.active">
+                  <td class="text-nowrap">
+                     <a routerLink="/manage/cup/matches/{{ cupMatch.id }}/edit" class="btn btn-sm btn-outline-warning">
+                        <i class="fa fa-pencil-square-o fa-lg" aria-hidden="true"></i>
+                     </a>
+                     <button
+                        type="button"
+                        class="btn btn-sm btn-outline-danger"
+                        (click)="openConfirmModal(confirmModal, cupMatch, deleteChampionshipMatch)"
+                     >
+                        <i class="fa fa-trash-o fa-lg" aria-hidden="true"></i>
+                     </button>
+                  </td>
+               </tr>
+               <tr>
+                  <td class="text-muted">{{ cupMatch.updated_at | time: 'fromNow' }}</td>
+               </tr>
+            </table>
+         </td>
+      </tr>
+   </tbody>
+</table>
+<table *ngIf="cupMatches" class="d-none d-md-table d-lg-none table table-dark table-striped table-hover table-bordered">
+   <thead>
+      <tr>
+         <th scope="col" class="align-middle">ID</th>
+         <th scope="col" colspan="2" class="text-right">Команда 1</th>
+         <th scope="col" colspan="2">Команда 2</th>
+         <th scope="col">Стадії</th>
+         <th scope="col" title="Результат" class="text-center">Рез</th>
+         <th scope="col">П/Г/O/КС</th>
+      </tr>
+   </thead>
+   <tbody>
+      <tr *ngFor="let cupMatch of cupMatches">
+         <th scope="row" class="text-center align-middle">{{ cupMatch.id }}</th>
+         <td colspan="4" class="align-middle">
+            <table align="center" class="table-sm">
+               <tr>
+                  <td colspan="4" class="text-center text-nowrap align-middle">
+                     {{ cupMatch.match.started_at | time: 'YYYY-MM-DD HH:mm' }}
+                  </td>
+               </tr>
+               <tr>
+                  <td class="text-center text-uppercase font-weight-bold align-middle">
+                     {{ cupMatch.match.club_home.title | slice: 0:3 }}
+                  </td>
+                  <td class="text-center align-middle">
+                     <img class="small-image" [attr.src]="clubsLogosPath + cupMatch.match.club_home.image" />
+                  </td>
+                  <td class="text-center align-middle">
+                     <img class="small-image" [attr.src]="clubsLogosPath + cupMatch.match.club_away.image" />
+                  </td>
+                  <td class="text-center text-uppercase font-weight-bold align-middle">
+                     {{ cupMatch.match.club_away.title | slice: 0:3 }}
+                  </td>
+               </tr>
+               <tr>
+                  <td colspan="4" class="text-center text-nowrap align-middle text-muted">{{ cupMatch.updated_at | time: 'fromNow' }}</td>
+               </tr>
+            </table>
+         </td>
+         <td class="align-middle">
+            <table *ngIf="cupMatch.cup_stages" class="table-sm">
+               <tr *ngFor="let cupStage of cupMatch.cup_stages">
+                  <td class="align-middle text-nowrap">{{ cupStage.title }}</td>
+                  <td>
+                     <small>{{ cupStage.competition.title }}</small>
+                  </td>
+               </tr>
+            </table>
+         </td>
+         <td class="text-center text-nowrap align-middle font-weight-bold">{{ cupMatch.match.home }}:{{ cupMatch.match.away }}</td>
+         <td class="text-center text-nowrap align-middle">
+            <table *ngIf="cupMatch.match.ended" align="center" class="table-sm">
+               <tr>
+                  <td class="text-center">{{ cupMatch.predictions }}</td>
+                  <td class="text-center" [ngClass]="{ 'text-danger': cupMatch.guessed === 0 }">{{ cupMatch.guessed }}</td>
+               </tr>
+               <tr>
+                  <td class="text-center" [ngClass]="{ 'text-danger': cupMatch.points === 0 }">{{ cupMatch.points }}</td>
+                  <td class="text-center" [ngClass]="{ 'text-danger': cupMatch.dc_sum >= 1 }">
+                     <small>{{ cupMatch.dc_sum }}</small>
+                  </td>
+               </tr>
+            </table>
+
+            <span *ngIf="cupMatch.match.active">
+               <a routerLink="/manage/cup/matches/{{ cupMatch.id }}/edit" class="btn btn-sm btn-outline-warning">
+                  <i class="fa fa-pencil-square-o fa-lg" aria-hidden="true"></i>
+               </a>
+               <button
+                  type="button"
+                  class="btn btn-sm btn-outline-danger"
+                  (click)="openConfirmModal(confirmModal, cupMatch, deleteChampionshipMatch)"
+               >
+                  <i class="fa fa-trash-o fa-lg" aria-hidden="true"></i>
+               </button>
+            </span>
+         </td>
+      </tr>
+   </tbody>
+</table>
+<table *ngIf="cupMatches" class="d-none d-sm-table d-md-none table table-sm table-dark table-striped table-hover table-bordered">
+   <thead>
+      <tr>
+         <th scope="col">Матч</th>
+         <th scope="col">Стадії</th>
+         <th scope="col">Результат</th>
+      </tr>
+   </thead>
+   <tbody>
+      <tr *ngFor="let cupMatch of cupMatches">
+         <td class="align-middle">
+            <table align="center">
+               <tr>
+                  <td colspan="4" class="text-center">
+                     ID: <span class="font-weight-bold">{{ cupMatch.id }}</span>
+                  </td>
+               </tr>
+               <tr>
+                  <td colspan="4" class="text-center text-nowrap align-middle">
+                     {{ cupMatch.match.started_at | time: 'YYYY-MM-DD HH:mm' }}
+                  </td>
+               </tr>
+               <tr>
+                  <td class="text-center text-uppercase font-weight-bold align-middle">
+                     {{ cupMatch.match.club_home.title | slice: 0:3 }}
+                  </td>
+                  <td class="text-center align-middle">
+                     <img class="small-image" [attr.src]="clubsLogosPath + cupMatch.match.club_home.image" />
+                  </td>
+                  <td class="text-center align-middle">
+                     <img class="small-image" [attr.src]="clubsLogosPath + cupMatch.match.club_away.image" />
+                  </td>
+                  <td class="text-center text-uppercase font-weight-bold align-middle">
+                     {{ cupMatch.match.club_away.title | slice: 0:3 }}
+                  </td>
+               </tr>
+               <tr>
+                  <td colspan="4" class="text-center text-nowrap align-middle text-muted">{{ cupMatch.updated_at | time: 'fromNow' }}</td>
+               </tr>
+            </table>
+         </td>
+         <td class="align-middle">
+            <table *ngIf="cupMatch.cup_stages">
+               <tr *ngFor="let cupStage of cupMatch.cup_stages">
+                  <td class="align-middle text-nowrap">{{ cupStage.title }}</td>
+                  <td>
+                     <small>{{ cupStage.competition.title }}</small>
+                  </td>
+               </tr>
+            </table>
+         </td>
+         <td class="align-middle">
+            <table *ngIf="cupMatch.match.ended" align="center">
+               <tr>
+                  <td colspan="2" class="text-center font-weight-bold">{{ cupMatch.match.home }} : {{ cupMatch.match.away }}</td>
+               </tr>
+               <tr>
+                  <td class="text-center">{{ cupMatch.predictions }}</td>
+                  <td class="text-center" [ngClass]="{ 'text-danger': cupMatch.guessed === 0 }">{{ cupMatch.guessed }}</td>
+               </tr>
+               <tr>
+                  <td class="text-center" [ngClass]="{ 'text-danger': cupMatch.points === 0 }">{{ cupMatch.points }}</td>
+                  <td class="text-center" [ngClass]="{ 'text-danger': cupMatch.dc_sum >= 1 }">
+                     <small>{{ cupMatch.dc_sum }}</small>
+                  </td>
+               </tr>
+            </table>
+
+            <table *ngIf="cupMatch.match.active" align="center">
+               <tr>
+                  <td class="text-center">
+                     <a routerLink="/manage/cup/matches/{{ cupMatch.id }}/edit" class="btn btn-sm btn-outline-warning">
+                        <i class="fa fa-pencil-square-o fa-lg" aria-hidden="true"></i>
+                     </a>
+                  </td>
+               </tr>
+               <tr>
+                  <td class="text-center">
+                     <button
+                        type="button"
+                        class="btn btn-sm btn-outline-danger"
+                        (click)="openConfirmModal(confirmModal, cupMatch, deleteChampionshipMatch)"
+                     >
+                        <i class="fa fa-trash-o fa-lg" aria-hidden="true"></i>
+                     </button>
+                  </td>
+               </tr>
+            </table>
+         </td>
+      </tr>
+   </tbody>
+</table>
+<table *ngIf="cupMatches" class="d-table d-sm-none table table-sm table-dark table-striped table-hover table-bordered">
+   <tbody>
+      <tr *ngFor="let cupMatch of cupMatches">
+         <td class="align-middle">
+            <table align="center">
+               <tr>
+                  <td class="align-middle">
+                     <table align="center">
+                        <tr>
+                           <td colspan="4" class="text-center">
+                              ID: <span class="font-weight-bold">{{ cupMatch.id }}</span>
+                           </td>
+                        </tr>
+                        <tr>
+                           <td colspan="4" class="text-center text-nowrap align-middle">
+                              {{ cupMatch.match.started_at | time: 'YYYY-MM-DD HH:mm' }}
+                           </td>
+                        </tr>
+                        <tr>
+                           <td class="text-center text-uppercase font-weight-bold align-middle">
+                              {{ cupMatch.match.club_home.title | slice: 0:3 }}
+                           </td>
+                           <td class="text-center align-middle">
+                              <img class="small-image" [attr.src]="clubsLogosPath + cupMatch.match.club_home.image" />
+                           </td>
+                           <td class="text-center align-middle">
+                              <img class="small-image" [attr.src]="clubsLogosPath + cupMatch.match.club_away.image" />
+                           </td>
+                           <td class="text-center text-uppercase font-weight-bold align-middle">
+                              {{ cupMatch.match.club_away.title | slice: 0:3 }}
+                           </td>
+                        </tr>
+                        <tr>
+                           <td colspan="4" class="text-center text-nowrap align-middle text-muted">
+                              {{ cupMatch.updated_at | time: 'fromNow' }}
+                           </td>
+                        </tr>
+                     </table>
+                  </td>
+                  <td class="align-middle">
+                     <table *ngIf="cupMatch.match.ended" align="center">
+                        <tr>
+                           <td colspan="2" class="text-center font-weight-bold">{{ cupMatch.match.home }} : {{ cupMatch.match.away }}</td>
+                        </tr>
+                        <tr>
+                           <td class="text-center">{{ cupMatch.predictions }}</td>
+                           <td class="text-center" [ngClass]="{ 'text-danger': cupMatch.guessed === 0 }">{{ cupMatch.guessed }}</td>
+                        </tr>
+                        <tr>
+                           <td class="text-center" [ngClass]="{ 'text-danger': cupMatch.points === 0 }">{{ cupMatch.points }}</td>
+                           <td class="text-center" [ngClass]="{ 'text-danger': cupMatch.dc_sum >= 1 }">
+                              <small>{{ cupMatch.dc_sum }}</small>
+                           </td>
+                        </tr>
+                     </table>
+
+                     <table *ngIf="cupMatch.match.active" align="center">
+                        <tr>
+                           <td class="text-center">
+                              <a routerLink="/manage/cup/matches/{{ cupMatch.id }}/edit" class="btn btn-sm btn-outline-warning">
+                                 <i class="fa fa-pencil-square-o fa-lg" aria-hidden="true"></i>
+                              </a>
+                           </td>
+                        </tr>
+                        <tr>
+                           <td class="text-center">
+                              <button
+                                 type="button"
+                                 class="btn btn-sm btn-outline-danger"
+                                 (click)="openConfirmModal(confirmModal, cupMatch, deleteChampionshipMatch)"
+                              >
+                                 <i class="fa fa-trash-o fa-lg" aria-hidden="true"></i>
+                              </button>
+                           </td>
+                        </tr>
+                     </table>
+                  </td>
+               </tr>
+               <tr>
+                  <td colspan="2">
+                     <table *ngIf="cupMatch.cup_stages">
+                        <tr *ngFor="let cupStage of cupMatch.cup_stages">
+                           <td class="align-middle text-nowrap">{{ cupStage.title }}</td>
+                           <td>
+                              <small>{{ cupStage.competition.title }}</small>
+                           </td>
+                        </tr>
+                     </table>
+                  </td>
+               </tr>
+            </table>
+         </td>
+      </tr>
+   </tbody>
+</table>
+<app-pagination
+   *ngIf="paginationData"
+   [totalItems]="paginationData.total"
+   [currentPage]="paginationData.currentPage"
+   [pageSize]="paginationData.pageSize"
+   [path]="paginationData.path"
+></app-pagination>
 <ng-template #confirmModal let-c="close">
-    <app-confirmation-modal [close]="c"
-                            [message]="confirmModalMessage"
-                            (confirmed)="confirmModalSubmit($event)">
-    </app-confirmation-modal>
+   <app-confirmation-modal
+      [close]="c"
+      [message]="'Видалити ' + openedModal.data.match.club_home.title + ' - ' + openedModal.data.match.club_away.title + '?'"
+      (confirmed)="openedModal.submitted($event)"
+   >
+   </app-confirmation-modal>
 </ng-template>

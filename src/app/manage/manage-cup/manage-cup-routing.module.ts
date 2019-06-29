@@ -36,7 +36,7 @@ const routes: Routes = [
          },
          {
             children: [
-               { path: 'page/:number', component: CupMatchTableComponent },
+               { path: 'page/:pageNumber', component: CupMatchTableComponent },
                { path: 'create', component: CupMatchCreateComponent },
                { path: ':id/edit', component: CupMatchEditComponent },
                { path: '', redirectTo: 'page/1', pathMatch: 'full' }
