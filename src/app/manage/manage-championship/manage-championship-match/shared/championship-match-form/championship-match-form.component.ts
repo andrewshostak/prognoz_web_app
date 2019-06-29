@@ -47,7 +47,7 @@ export class ChampionshipMatchFormComponent implements OnChanges, OnInit {
       this.championshipMatchService.createChampionshipMatch(championshipMatch).subscribe(response => {
          this.notificationsService.success(
             'Успішно',
-            `Матч №${response.id} ${response.match.club_home.title} - ${response.match.club_away.title} створено`
+            `Матч чемпіонату №${response.id} ${response.match.club_home.title} - ${response.match.club_away.title} створено`
          );
          this.championshipMatchForm.get('match_id').reset();
       });
@@ -129,7 +129,7 @@ export class ChampionshipMatchFormComponent implements OnChanges, OnInit {
       this.championshipMatchService.updateChampionshipMatch(toUpdate).subscribe(response => {
          this.notificationsService.success(
             'Успішно',
-            `Матч №${response.id} ${response.match.club_home.title} - ${response.match.club_away.title} змінено`
+            `Матч чемпіонату №${response.id} ${response.match.club_home.title} - ${response.match.club_away.title} змінено`
          );
       });
    }

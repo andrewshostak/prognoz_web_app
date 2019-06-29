@@ -56,9 +56,9 @@ export class CupMatchNewService {
       return this.httpClient.get<PaginatedResponse<CupMatchNew>>(this.cupMatchesUrl, { params });
    }
 
-   public updateCupMatch(cupMatch: Partial<CupMatchNew>): Observable<CupMatchNew> {
+   public updateCupMatch(cupMatchId: number, cupMatch: Partial<CupMatchNew>): Observable<CupMatchNew> {
       return this.httpClient
-         .put<{ cup_match: CupMatchNew }>(`${this.cupMatchesUrl}/${cupMatch.id}`, cupMatch)
+         .put<{ cup_match: CupMatchNew }>(`${this.cupMatchesUrl}/${cupMatchId}`, cupMatch)
          .pipe(map(response => response.cup_match));
    }
 }

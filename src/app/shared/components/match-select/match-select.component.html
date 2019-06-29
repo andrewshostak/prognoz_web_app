@@ -1,0 +1,37 @@
+<div [formGroup]="fGroup">
+   <div *ngIf="matches" class="form-group" [class.form-group-invalid]="showFormInvalidClass(fGroup.get('match_id'))">
+      <label [attr.for]="'match_id'" class="font-weight-bold">Матч:</label>
+      <ng-select
+         [items]="matches"
+         bindValue="id"
+         bindLabel="id"
+         labelForId="match_id"
+         formControlName="match_id"
+         [searchFn]="matchesFilter"
+      >
+         <ng-template ng-label-tmp let-item="item">
+            <div>
+               <img class="small-image mr-1" [attr.src]="clubsLogosPath + item.club_home.image" />
+               <span class="font-weight-bold">{{ item.club_home.title }}</span> -
+               <span class="font-weight-bold">{{ item.club_away.title }}</span>
+               <img class="small-image ml-1" [attr.src]="clubsLogosPath + item.club_away.image" />
+               <span class="text-muted ml-2">ID:</span> {{ item.id }}
+            </div>
+         </ng-template>
+         <ng-template ng-option-tmp let-item="item">
+            <div class="d-flex flex-row justify-content-between">
+               <div class="d-flex flex-column">
+                  <div class="font-weight-bold">{{ item.club_home.title }} - {{ item.club_away.title }}</div>
+                  <div class="text-muted">{{ item.started_at | time: 'YYYY-MM-DD HH:mm' }}</div>
+               </div>
+               <div class="d-flex flex-column justify-content-end">
+                  <div><span class="text-muted">ID:</span> {{ item.id }}</div>
+               </div>
+            </div>
+         </ng-template>
+      </ng-select>
+      <div [hidden]="!showFormErrorMessage(fGroup.get('match_id'), 'required')" class="error-message">
+         <small>Вибір матчу обов'язковий</small>
+      </div>
+   </div>
+</div>
