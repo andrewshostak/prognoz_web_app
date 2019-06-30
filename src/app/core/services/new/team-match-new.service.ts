@@ -44,6 +44,10 @@ export class TeamMatchNewService {
          params = params.set('sequence', search.sequence);
       }
 
+      if (search.competitionId) {
+         params = params.set('competition_id', search.competitionId.toString());
+      }
+
       return this.httpClient.get<PaginatedResponse<TeamMatchNew>>(this.teamMatchesUrl, { params });
    }
 
