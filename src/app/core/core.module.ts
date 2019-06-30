@@ -33,6 +33,7 @@ import { ChampionshipMatchNewService } from '@services/new/championship-match-ne
 import { CompetitionNewService } from '@services/new/competition-new.service';
 import { CupMatchNewService } from '@services/new/cup-match-new.service';
 import { MatchService } from '@services/new/match.service';
+import { TeamMatchNewService } from '@services/new/team-match-new.service';
 import { PaginationService } from '@services/pagination.service';
 import { PusherService } from '@services/pusher.service';
 import { SeasonService } from '@services/season.service';
@@ -81,6 +82,7 @@ import { UtilsService } from '@services/utils.service';
       PusherService,
       SeasonService,
       SettingsService,
+      TeamMatchNewService,
       TeamMatchService,
       TeamParticipantService,
       TeamPredictionService,
