@@ -1,169 +1,144 @@
 import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
-import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
-import { Location } from '@angular/common';
+import { AbstractControl, FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 
-import { Club } from '@models/club.model';
-import { ClubService } from '@services/club.service';
-import { CupMatch } from '@models/cup/cup-match.model';
-import { CupMatchService } from '@services/cup/cup-match.service';
 import { CupStage } from '@models/cup/cup-stage.model';
-import { CupStageService } from '@services/cup/cup-stage.service';
+import { CupMatchNew } from '@models/new/cup-match-new.model';
+import { OpenedModal } from '@models/opened-modal.model';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
-import { NotificationsService } from 'angular2-notifications';
+import { CupStageService } from '@services/cup/cup-stage.service';
+import { CupMatchNewService } from '@services/new/cup-match-new.service';
 import { UtilsService } from '@services/utils.service';
+import { NotificationsService } from 'angular2-notifications';
 
 @Component({
-    selector: 'app-cup-match-form',
-    templateUrl: './cup-match-form.component.html',
-    styleUrls: ['./cup-match-form.component.scss']
+   selector: 'app-cup-match-form',
+   styleUrls: ['./cup-match-form.component.scss'],
+   templateUrl: './cup-match-form.component.html'
 })
 export class CupMatchFormComponent implements OnChanges, OnInit {
-    constructor(
-        private clubService: ClubService,
-        private cupMatchService: CupMatchService,
-        private cupStageService: CupStageService,
-        private location: Location,
-        private ngbModalService: NgbModal,
-        private notificationsService: NotificationsService
-    ) {}
+   @Input() public cupMatch: CupMatchNew;
 
-    @Input() cupMatch: CupMatch;
+   public cupStages: CupStage[];
+   public cupMatchForm: FormGroup;
+   public openedModal: OpenedModal<null>;
 
-    clubs: Club[];
-    confirmModalMessage: string;
-    confirmModalSubmit: (event) => void;
-    cupStages: CupStage[];
-    cupMatchForm: FormGroup;
-    errorClubs: string;
-    errorCupStages: string;
-    openedModalReference: NgbModalRef;
+   constructor(
+      private cupMatchService: CupMatchNewService,
+      private cupStageService: CupStageService,
+      private ngbModalService: NgbModal,
+      private notificationsService: NotificationsService
+   ) {}
 
-    get cupStagesFormArray(): FormArray {
-        return <FormArray>this.cupMatchForm.get('cup_stages');
-    }
+   get cupStagesFormArray(): FormArray {
+      return this.cupMatchForm.get('cup_stages') as FormArray;
+   }
 
-    addCupStage(cupStageId?: number): void {
-        this.cupStagesFormArray.push(
-            new FormGroup({
-                id: new FormControl(cupStageId || null, [Validators.required])
-            })
-        );
-    }
+   public addCupStage(cupStageId?: number): void {
+      this.cupStagesFormArray.push(
+         new FormGroup({
+            id: new FormControl(cupStageId || null, [Validators.required])
+         })
+      );
+   }
 
-    ngOnChanges(simpleChanges: SimpleChanges) {
-        UtilsService.patchSimpleChangeValuesInForm(simpleChanges, this.cupMatchForm, 'cupMatch', (formGroup, field, value) => {
-            if (field === 'cup_stages') {
-                this.clearCupStagesFormArray();
-                if (value.length) {
-                    value.forEach(cupStage => {
-                        if (!this.cupStages) {
-                            this.cupStages = [];
-                        }
-                        if (!this.cupStages.find(item => item.id === cupStage.id)) {
-                            this.cupStages.push(cupStage);
-                        }
-                        this.addCupStage(cupStage.id);
-                    });
-                }
-            } else {
-                if (formGroup.get(field)) {
-                    formGroup.patchValue({ [field]: value });
-                }
+   public ngOnChanges(simpleChanges: SimpleChanges): void {
+      UtilsService.patchSimpleChangeValuesInForm(simpleChanges, this.cupMatchForm, 'cupMatch', (formGroup, field, value) => {
+         if (field === 'cup_stages') {
+            this.clearCupStagesFormArray();
+            if (value.length) {
+               value.forEach(cupStage => {
+                  if (!this.cupStages) {
+                     this.cupStages = [];
+                  }
+                  if (!this.cupStages.find(item => item.id === cupStage.id)) {
+                     this.cupStages.push(cupStage);
+                  }
+                  this.addCupStage(cupStage.id);
+               });
             }
-        });
-    }
-
-    ngOnInit() {
-        this.getClubsData();
-        this.getCupStagesData();
-        this.cupMatchForm = new FormGroup({
-            t1_id: new FormControl('', [Validators.required]),
-            t2_id: new FormControl('', [Validators.required]),
-            starts_at: new FormControl('', [Validators.required]),
-            home: new FormControl('', [Validators.maxLength(1), Validators.min(0), Validators.max(9)]),
-            away: new FormControl('', [Validators.maxLength(1), Validators.min(0), Validators.max(9)]),
-            active: new FormControl({ value: false, disabled: true }),
-            ended: new FormControl({ value: false, disabled: true }),
-            cup_stages: new FormArray([])
-        });
-    }
-
-    onSubmit(): void {
-        if (this.cupMatchForm.valid) {
-            this.cupMatch ? this.updateCupMatch(this.cupMatchForm.value) : this.createCupMatch(this.cupMatchForm.value);
-        }
-    }
-
-    openConfirmModal(content: NgbModalRef): void {
-        this.confirmModalMessage = 'Очистити форму від змін?';
-        this.confirmModalSubmit = () => this.resetCupMatchForm();
-        this.openedModalReference = this.ngbModalService.open(content);
-    }
-
-    removeCupStage(index: number): void {
-        this.cupStagesFormArray.removeAt(index);
-    }
-
-    resetCupMatchForm(): void {
-        this.clearCupStagesFormArray();
-        this.cupMatchForm.reset();
-        if (this.cupMatch) {
-            this.cupMatch.cup_stages.forEach(cupStage => this.addCupStage(cupStage.id));
-            Object.entries(this.cupMatch).forEach(
-                ([field, value]) => this.cupMatchForm.get(field) && this.cupMatchForm.patchValue({ [field]: value })
-            );
-        }
-        this.openedModalReference.close();
-    }
-
-    private clearCupStagesFormArray(): void {
-        UtilsService.clearFormArray(this.cupStagesFormArray);
-    }
-
-    private createCupMatch(cupMatch: CupMatch): void {
-        this.cupMatchService.createCupMatch(cupMatch).subscribe(
-            () => {
-                this.notificationsService.success('Успішно', 'Кубковий матч створено');
-                this.clearCupStagesFormArray();
-                this.cupMatchForm.reset({ starts_at: cupMatch.starts_at });
-            },
-            errors => {
-                errors.forEach(error => this.notificationsService.error('Помилка', error));
+         } else {
+            if (formGroup.get(field)) {
+               formGroup.patchValue({ [field]: value });
             }
-        );
-    }
+         }
+      });
+      if (!simpleChanges.cupMatch.firstChange && simpleChanges.cupMatch.currentValue.match.ended) {
+         this.cupStages = simpleChanges.cupMatch.currentValue.cup_stages;
+         this.cupMatchForm.disable();
+      }
+   }
 
-    private getClubsData(): void {
-        this.clubService.getClubs().subscribe(
-            response => {
-                this.clubs = response.clubs;
-            },
-            error => {
-                this.errorClubs = error;
-            }
-        );
-    }
+   public ngOnInit(): void {
+      this.getCupStagesData();
+      this.cupMatchForm = new FormGroup({
+         cup_stages: new FormArray([]),
+         match_id: new FormControl(null, [Validators.required])
+      });
+   }
 
-    private getCupStagesData(): void {
-        this.cupStageService.getCupStages(null, null, false).subscribe(
-            response => {
-                this.cupStages = response.cup_stages;
-            },
-            error => {
-                this.errorCupStages = error;
-            }
-        );
-    }
+   public onSubmit(): void {
+      if (this.cupMatchForm.invalid) {
+         return;
+      }
 
-    private updateCupMatch(cupMatch: CupMatch): void {
-        this.cupMatchService.updateCupMatch(cupMatch, this.cupMatch.id).subscribe(
-            response => {
-                this.notificationsService.success('Успішно', 'Кубковий матч змінено');
-                this.location.back();
-            },
-            errors => {
-                errors.forEach(error => this.notificationsService.error('Помилка', error));
-            }
-        );
-    }
+      this.cupMatch ? this.updateCupMatch(this.cupMatchForm.value) : this.createCupMatch(this.cupMatchForm.value);
+   }
+
+   public openConfirmModal(content: NgbModalRef | HTMLElement, data: null, submitted: (event) => void): void {
+      const reference = this.ngbModalService.open(content, { centered: true });
+      this.openedModal = { reference, data, submitted: () => submitted.call(this) };
+   }
+
+   public removeCupStage(index: number): void {
+      this.cupStagesFormArray.removeAt(index);
+   }
+
+   public resetCupMatchForm(): void {
+      this.clearCupStagesFormArray();
+      this.cupMatchForm.reset();
+      if (this.cupMatch) {
+         this.cupMatch.cup_stages.forEach(cupStage => this.addCupStage(cupStage.id));
+         Object.entries(this.cupMatch).forEach(
+            ([field, value]) => this.cupMatchForm.get(field) && this.cupMatchForm.patchValue({ [field]: value })
+         );
+      }
+      this.openedModal.reference.close();
+   }
+
+   public showFormErrorMessage(abstractControl: AbstractControl, errorKey: string): boolean {
+      return UtilsService.showFormErrorMessage(abstractControl, errorKey);
+   }
+
+   public showFormInvalidClass(abstractControl: AbstractControl): boolean {
+      return UtilsService.showFormInvalidClass(abstractControl);
+   }
+
+   private clearCupStagesFormArray(): void {
+      UtilsService.clearFormArray(this.cupStagesFormArray);
+   }
+
+   private createCupMatch(cupMatch: CupMatchNew): void {
+      this.cupMatchService.createCupMatch(cupMatch).subscribe(response => {
+         this.notificationsService.success(
+            'Успішно',
+            `Матч кубку №${response.id} ${response.match.club_home.title} - ${response.match.club_away.title} створено`
+         );
+         this.cupMatchForm.get('match_id').reset();
+      });
+   }
+
+   private getCupStagesData(): void {
+      this.cupStageService.getCupStages(null, null, false).subscribe(response => {
+         this.cupStages = response.cup_stages;
+      });
+   }
+
+   private updateCupMatch(cupMatch: CupMatchNew): void {
+      this.cupMatchService.updateCupMatch(this.cupMatch.id, cupMatch).subscribe(response => {
+         this.notificationsService.success(
+            'Успішно',
+            `Матч кубку №${response.id} ${response.match.club_home.title} - ${response.match.club_away.title} змінено`
+         );
+      });
+   }
 }

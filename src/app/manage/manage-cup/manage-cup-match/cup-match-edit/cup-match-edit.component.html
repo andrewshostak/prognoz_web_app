@@ -1,17 +1,2 @@
-<div class="container">
-    <div class="row">
-        <div class="col">
-            <h2 class="h2">Редагувати кубковий матч:</h2>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-12 col-sm-10 offset-sm-1 col-md-8 offset-md-2 col-lg-6 offset-lg-3">
-            <div class="card black-shadow">
-                <div class="card-body">
-                    <app-cup-match-form [cupMatch]="cupMatch"></app-cup-match-form>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<app-error *ngIf="errorCupMatch" [message]="errorCupMatch"></app-error>
+<h3 class="h3">Редагувати матч кубку:</h3>
+<app-cup-match-form [cupMatch]="cupMatch"></app-cup-match-form>

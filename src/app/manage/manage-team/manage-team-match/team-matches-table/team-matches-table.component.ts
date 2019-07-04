@@ -1,106 +1,80 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 
-import { environment } from '@env';
+import { Sequence } from '@enums/sequence.enum';
+import { TeamMatchNew } from '@models/new/team-match-new.model';
+import { OpenedModal } from '@models/opened-modal.model';
+import { Pagination } from '@models/pagination.model';
+import { TeamMatchSearch } from '@models/search/team-match-search.model';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
+import { TeamMatchNewService } from '@services/new/team-match-new.service';
+import { PaginationService } from '@services/pagination.service';
+import { SettingsService } from '@services/settings.service';
 import { NotificationsService } from 'angular2-notifications';
-import { RequestParams } from '@models/request-params.model';
+import { remove } from 'lodash';
 import { Subscription } from 'rxjs';
-import { TeamMatch } from '@models/team/team-match.model';
-import { TeamMatchService } from '@services/team/team-match.service';
 
 @Component({
-    selector: 'app-team-matches-table',
-    templateUrl: './team-matches-table.component.html',
-    styleUrls: ['./team-matches-table.component.scss']
+   selector: 'app-team-matches-table',
+   styleUrls: ['./team-matches-table.component.scss'],
+   templateUrl: './team-matches-table.component.html'
 })
 export class TeamMatchesTableComponent implements OnDestroy, OnInit {
-    constructor(
-        private activatedRoute: ActivatedRoute,
-        private teamMatchService: TeamMatchService,
-        private ngbModalService: NgbModal,
-        private notificationsService: NotificationsService
-    ) {}
+   public activatedRouteSubscription: Subscription;
+   public clubsLogosPath: string;
+   public openedModal: OpenedModal<TeamMatchNew>;
+   public teamMatches: TeamMatchNew[];
+   public paginationData: Pagination;
 
-    activatedRouteSubscription: Subscription;
-    clubImagesUrl: string;
-    confirmModalMessage: string;
-    confirmModalSubmit: (event) => void;
-    currentPage: number;
-    errorTeamMatches: string;
-    lastPage: number;
-    openedModalReference: NgbModalRef;
-    path: string;
-    perPage: number;
-    teamMatches: TeamMatch[];
-    total: number;
+   constructor(
+      private activatedRoute: ActivatedRoute,
+      private teamMatchService: TeamMatchNewService,
+      private ngbModalService: NgbModal,
+      private notificationsService: NotificationsService
+   ) {}
 
-    addResult(teamMatch: TeamMatch): void {
-        this.teamMatchService.updateTeamMatch(teamMatch).subscribe(
-            response => {
-                this.notificationsService.success('Успішно', 'Результат в матчі ' + response.id + ' добавлено!');
-                const index = this.teamMatches.findIndex(item => item.id === teamMatch.id);
-                if (index > -1) {
-                    this.teamMatches[index] = response;
-                }
-            },
-            errors => {
-                errors.forEach(error => this.notificationsService.error('Помилка', error));
-            }
-        );
-    }
+   public deleteTeamMatch(): void {
+      this.teamMatchService.deleteTeamMatch(this.openedModal.data.id).subscribe(() => {
+         remove(this.teamMatches, this.openedModal.data);
+         this.paginationData.total--;
+         this.notificationsService.success(
+            'Успішно',
+            `Матч №${this.openedModal.data.id} ${this.openedModal.data.match.club_home.title} - ${
+               this.openedModal.data.match.club_away.title
+            } видалено`
+         );
+         this.openedModal.reference.close();
+      });
+   }
 
-    deleteTeamMatch(teamMatch: TeamMatch): void {
-        this.teamMatchService.deleteTeamMatch(teamMatch.id).subscribe(
-            () => {
-                this.openedModalReference.close();
-                this.total--;
-                this.teamMatches = this.teamMatches.filter(match => match.id !== teamMatch.id);
-                this.notificationsService.success(
-                    'Успішно',
-                    `Матч ${teamMatch.club_first.title} - ${teamMatch.club_second.title} видалено`
-                );
-            },
-            errors => {
-                this.openedModalReference.close();
-                errors.forEach(error => this.notificationsService.error('Помилка', error));
-            }
-        );
-    }
+   public getTeamMatchesData(pageNumber: number): void {
+      const search: TeamMatchSearch = {
+         limit: SettingsService.teamMatchesPerPage,
+         orderBy: 'started_at',
+         page: pageNumber,
+         sequence: Sequence.Descending
+      };
+      this.teamMatchService.getTeamMatches(search).subscribe(response => {
+         this.teamMatches = response.data;
+         this.paginationData = PaginationService.getPaginationData(response, '/manage/team/matches/page/');
+      });
+   }
 
-    teamMatchHasEndedCompetitions(teamMatch: TeamMatch): boolean {
-        return teamMatch.competitions.some(competition => competition.ended);
-    }
+   public ngOnDestroy(): void {
+      if (!this.activatedRouteSubscription.closed) {
+         this.activatedRouteSubscription.unsubscribe();
+      }
+   }
 
-    ngOnDestroy() {
-        if (!this.activatedRouteSubscription.closed) {
-            this.activatedRouteSubscription.unsubscribe();
-        }
-    }
+   public ngOnInit(): void {
+      this.clubsLogosPath = SettingsService.clubsLogosPath + '/';
+      this.activatedRouteSubscription = this.activatedRoute.params.subscribe((params: Params) => {
+         this.getTeamMatchesData(params.pageNumber);
+      });
+   }
 
-    ngOnInit() {
-        this.clubImagesUrl = environment.apiImageClubs;
-        this.path = '/manage/team/matches/page/';
-        this.activatedRouteSubscription = this.activatedRoute.params.subscribe((params: Params) => {
-            const requestParams: RequestParams[] = [{ parameter: 'page', value: params.number }];
-            this.teamMatchService.getTeamMatches(requestParams).subscribe(
-                response => {
-                    this.currentPage = response.current_page;
-                    this.lastPage = response.lastPage;
-                    this.perPage = response.per_page;
-                    this.total = response.total;
-                    this.teamMatches = response.data;
-                },
-                error => {
-                    this.errorTeamMatches = error;
-                }
-            );
-        });
-    }
-
-    openConfirmModal(content: NgbModalRef, teamMatch: TeamMatch): void {
-        this.confirmModalMessage = `Видалити ${teamMatch.club_first.title} - ${teamMatch.club_second.title}?`;
-        this.confirmModalSubmit = () => this.deleteTeamMatch(teamMatch);
-        this.openedModalReference = this.ngbModalService.open(content);
-    }
+   public openConfirmModal(content: NgbModalRef | HTMLElement, data: TeamMatchNew, submitted: (event) => void): void {
+      const reference = this.ngbModalService.open(content, { centered: true });
+      this.openedModal = { reference, data, submitted: () => submitted.call(this) };
+   }
 }

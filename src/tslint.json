@@ -1,6 +1,7 @@
 {
    "extends": "../tslint.json",
    "rules": {
+      "no-empty": [true, "allow-empty-functions"],
       "directive-selector": [true, "attribute", "app", "camelCase"],
       "component-selector": [true, "element", "app", "kebab-case"]
    }

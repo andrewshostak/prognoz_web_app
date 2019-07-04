@@ -1,0 +1,44 @@
+<form novalidate [formGroup]="championshipMatchForm" (ngSubmit)="submitted()" class="bg-white p-2 pl-lg-5 pr-lg-5">
+   <div class="form-row">
+      <div class="col-12 col-md-6">
+         <app-match-select [fGroup]="championshipMatchForm" [match]="championshipMatch?.match"></app-match-select>
+      </div>
+      <div class="col-12 col-md-6">
+         <div
+            *ngIf="competitions"
+            class="form-group"
+            [class.form-group-invalid]="showFormInvalidClass(championshipMatchForm.get('competition_id'))"
+         >
+            <label [attr.for]="'competition_id'" class="font-weight-bold">Змагання:</label>
+            <ng-select [items]="competitions" bindValue="id" bindLabel="title" labelForId="competition_id" formControlName="competition_id">
+            </ng-select>
+            <div [hidden]="!showFormErrorMessage(championshipMatchForm.get('competition_id'), 'required')" class="error-message">
+               <small>Вибір змагання обов'язковий</small>
+            </div>
+         </div>
+      </div>
+   </div>
+   <div *ngIf="championshipMatchForm.get('number_in_competition')" class="form-row">
+      <div class="col-12 col-md-6">
+         <div class="form-group" [class.form-group-invalid]="showFormInvalidClass(championshipMatchForm.get('number_in_competition'))">
+            <label for="number_in_competition" class="font-weight-bold">Номер у змаганні:</label>
+            <input type="number" id="number_in_competition" formControlName="number_in_competition" class="form-control" />
+            <div [hidden]="!showFormErrorMessage(championshipMatchForm.get('number_in_competition'), 'required')" class="error-message">
+               <small>Номер у змаганні обов'язковий</small>
+            </div>
+            <div [hidden]="!showFormErrorMessage(championshipMatchForm.get('number_in_competition'), 'min')" class="error-message">
+               <small>Мінімальне значення: 1</small>
+            </div>
+            <div [hidden]="!showFormErrorMessage(championshipMatchForm.get('number_in_competition'), 'max')" class="error-message">
+               <small>Максимальне значення: 100</small>
+            </div>
+         </div>
+      </div>
+   </div>
+   <div [hidden]="championshipMatchForm.disabled" class="d-flex justify-content-end mt-2">
+      <button type="submit" class="btn btn-primary">
+         <i class="fa fa-check-circle-o" aria-hidden="true"></i>
+         {{ championshipMatch ? 'Змінити' : 'Зберегти' }}
+      </button>
+   </div>
+</form>

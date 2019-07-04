@@ -1,9 +1,12 @@
-<div class="container">
-    <div class="row mb-2">
-        <div class="col-12">
-            <button routerLink="/manage/team/matches" type="button" class="btn btn-success">Таблиця матчів</button>
-            <button routerLink="/manage/team/matches/create" type="button" class="btn btn-success">Створити матч</button>
-        </div>
-    </div>
+<div class="m-2">
+   <h2 class="h2">Керування матчами командного чемпіонату:</h2>
+   <button routerLink="/manage/team/matches" type="button" class="btn btn-dark">
+      <i class="fa fa-table" aria-hidden="true"></i>
+      <span class="d-none d-sm-inline">Таблиця матчів</span>
+   </button>
+   <button routerLink="/manage/team/matches/create" type="button" class="btn btn-success">
+      <i class="fa fa-plus-circle" aria-hidden="true"></i>
+      <span class="d-none d-sm-inline">Створити матч</span>
+   </button>
 </div>
 <router-outlet></router-outlet>

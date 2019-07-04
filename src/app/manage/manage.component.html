@@ -1,21 +1,15 @@
+<h2 class="m-2 h2">Меню керування:</h2>
 <div class="container">
-    <div class="row">
-        <div class="col">
-            <h2>Меню керування:</h2>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-12">
-            <div class="card-columns">
-                <div *ngFor="let navigationItem of navigationItems" class="card">
-                    <div class="card-body text-center">
-                        <button [routerLink]="navigationItem.routerLink" type="button" class="btn btn-outline-primary">
-                            <i [attr.class]="navigationItem.iconClass + ' fa fa-4x'" aria-hidden="true"></i><br>
-                            {{navigationItem.title}}
-                        </button>
-                    </div>
-                </div>
+   <div class="row no-gutters">
+      <div *ngFor="let navigationItem of navigationItems" class="col-12 col-sm-6 col-md-4 col-lg-2">
+         <div class="card">
+            <div class="card-body text-center">
+               <a [routerLink]="navigationItem.routerLink" class="btn btn-outline-primary">
+                  <i [attr.class]="navigationItem.iconClass + ' fa fa-4x'" aria-hidden="true"></i><br />
+                  {{ navigationItem.title }}
+               </a>
             </div>
-        </div>
-    </div>
+         </div>
+      </div>
+   </div>
 </div>

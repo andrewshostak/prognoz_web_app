@@ -1,74 +1,68 @@
+<div class="m-2">
+   <h2 class="h2">Керування командним чемпіонатом:</h2>
+   <a routerLink="/manage" class="btn btn-outline-primary">
+      <i class="fa fa-arrow-left" aria-hidden="true"></i>
+      <span class="d-none d-sm-inline">Назад</span>
+   </a>
+   <a routerLink="/manage/team/matches" [routerLinkActive]="['btn-primary']" [routerLinkActiveOptions]="{ exact: false }" class="btn">
+      <small class="font-weight-bold">М</small>
+      <span class="d-none d-sm-inline">Матчі</span>
+   </a>
+   <a routerLink="/manage/team/participants" [routerLinkActive]="['btn-primary']" [routerLinkActiveOptions]="{ exact: false }" class="btn">
+      <small class="font-weight-bold">З</small>
+      <span class="d-none d-sm-inline">Заявки / Учасники</span>
+   </a>
+</div>
 <div class="container">
-    <div class="row">
-        <div class="col">
-            <h2>Керування командним чемпіонатом:</h2>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-12 mb-md-2">
-            <button routerLink="/manage" type="button" class="btn btn-outline-primary mb-2 mb-md-0">Назад до меню керування</button>
-        </div>
-    </div>
-    <!-- error competition -->
-    <app-error *ngIf="errorCompetitions" [message]="errorCompetitions"></app-error>
-    <div *ngIf="competitions" class="row mb-2">
-        <div class="col-6">
-            <div class="card p-2">
-                <button *ngFor="let competition of competitions"
-                        type="button"
-                        class="btn btn-success mb-2"
-                        (click)="openStartDrawConfirmModal(confirmModal, competition)">
-                    {{competition.title}}: Провести жеребкування календаря
-                </button>
-                <ul class="list-group">
-                    <li class="list-group-item">
-                        <small class="text-muted">1. Змінює статус командного чемпіонату з "Відкритий для заявок" в "Активний"</small>
-                    </li>
-                    <li class="list-group-item">
-                        <small class="text-muted">2. Проводить жеребкування календаря матчів</small>
-                    </li>
-                </ul>
-            </div>
-        </div>
-        <div class="col-6">
-            <div class="card p-2">
-                <button *ngFor="let competition of competitions"
-                        type="button"
-                        class="btn btn-success mb-2"
-                        (click)="openStartNextRoundConfirmModal(confirmModal, competition)">
-                    {{competition.title}}: Розпочати наступний тур - {{nextRoundNumber(competition)}}
-                </button>
-                <ul class="list-group">
-                    <li class="list-group-item">
-                        <small class="text-muted">1. Завершує матчі поточного раудну</small>
-                    </li>
-                    <li class="list-group-item">
-                        <small class="text-muted">2. Змінює активний раунд змагання</small>
-                    </li>
-                    <li class="list-group-item">
-                        <small class="text-muted">3. Рахує всі рейтинги </small>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-12">
-            <ul class="nav nav-pills justify-content-center mb-2 flex-column flex-sm-row">
-                <li class="nav-item">
-                    <a routerLink="/manage/team/participants" routerLinkActive="active" class="nav-link">Заявки / Учасники</a>
-                </li>
-                <li class="nav-item">
-                    <a routerLink="/manage/team/matches" routerLinkActive="active" class="nav-link">Матчі</a>
-                </li>
+   <!-- error competition -->
+   <app-error *ngIf="errorCompetitions" [message]="errorCompetitions"></app-error>
+   <div *ngIf="competitions" class="row mb-2">
+      <div class="col-6">
+         <div class="card p-2">
+            <button
+               *ngFor="let competition of competitions"
+               type="button"
+               class="btn btn-success mb-2"
+               (click)="openStartDrawConfirmModal(confirmModal, competition)"
+            >
+               {{ competition.title }}: Провести жеребкування календаря
+            </button>
+            <ul class="list-group">
+               <li class="list-group-item">
+                  <small class="text-muted">1. Змінює статус командного чемпіонату з "Відкритий для заявок" в "Активний"</small>
+               </li>
+               <li class="list-group-item">
+                  <small class="text-muted">2. Проводить жеребкування календаря матчів</small>
+               </li>
             </ul>
-        </div>
-    </div>
+         </div>
+      </div>
+      <div class="col-6">
+         <div class="card p-2">
+            <button
+               *ngFor="let competition of competitions"
+               type="button"
+               class="btn btn-success mb-2"
+               (click)="openStartNextRoundConfirmModal(confirmModal, competition)"
+            >
+               {{ competition.title }}: Розпочати наступний тур - {{ nextRoundNumber(competition) }}
+            </button>
+            <ul class="list-group">
+               <li class="list-group-item">
+                  <small class="text-muted">1. Завершує матчі поточного раудну</small>
+               </li>
+               <li class="list-group-item">
+                  <small class="text-muted">2. Змінює активний раунд змагання</small>
+               </li>
+               <li class="list-group-item">
+                  <small class="text-muted">3. Рахує всі рейтинги </small>
+               </li>
+            </ul>
+         </div>
+      </div>
+   </div>
 </div>
 <router-outlet></router-outlet>
 <ng-template #confirmModal let-c="close">
-    <app-confirmation-modal [close]="c"
-                            [message]="confirmModalMessage"
-                            (confirmed)="confirmModalSubmit($event)">
-    </app-confirmation-modal>
+   <app-confirmation-modal [close]="c" [message]="confirmModalMessage" (confirmed)="confirmModalSubmit($event)"> </app-confirmation-modal>
 </ng-template>

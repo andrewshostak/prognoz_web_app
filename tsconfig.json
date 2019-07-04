@@ -15,9 +15,11 @@
       "baseUrl": "src",
       "paths": {
          "@app/*": ["app/*"],
+         "@enums/*": ["app/shared/enums/*"],
          "@env": ["environments/environment"],
          "@models/*": ["app/shared/models/*"],
-         "@services/*": ["app/core/services/*"]
+         "@services/*": ["app/core/services/*"],
+         "@mocks/*": ["app/shared/mocks/*"]
       }
    }
 }

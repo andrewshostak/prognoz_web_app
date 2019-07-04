@@ -1,0 +1,13 @@
+.swap-btn {
+   right: 5px;
+   top: -10px;
+   z-index: 1;
+}
+
+.start-date {
+   input[type='number']::-webkit-inner-spin-button,
+   input[type='number']::-webkit-outer-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+   }
+}
