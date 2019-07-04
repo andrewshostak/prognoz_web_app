@@ -77,7 +77,7 @@ export class CupMatchFormComponent implements OnChanges, OnInit {
    }
 
    public onSubmit(): void {
-      if (!this.cupMatchForm.valid) {
+      if (this.cupMatchForm.invalid) {
          return;
       }
 
@@ -87,14 +87,6 @@ export class CupMatchFormComponent implements OnChanges, OnInit {
    public openConfirmModal(content: NgbModalRef | HTMLElement, data: null, submitted: (event) => void): void {
       const reference = this.ngbModalService.open(content, { centered: true });
       this.openedModal = { reference, data, submitted: () => submitted.call(this) };
-   }
-
-   public showFormErrorMessage(abstractControl: AbstractControl, errorKey: string): boolean {
-      return UtilsService.showFormErrorMessage(abstractControl, errorKey);
-   }
-
-   public showFormInvalidClass(abstractControl: AbstractControl): boolean {
-      return UtilsService.showFormInvalidClass(abstractControl);
    }
 
    public removeCupStage(index: number): void {
@@ -111,6 +103,14 @@ export class CupMatchFormComponent implements OnChanges, OnInit {
          );
       }
       this.openedModal.reference.close();
+   }
+
+   public showFormErrorMessage(abstractControl: AbstractControl, errorKey: string): boolean {
+      return UtilsService.showFormErrorMessage(abstractControl, errorKey);
+   }
+
+   public showFormInvalidClass(abstractControl: AbstractControl): boolean {
+      return UtilsService.showFormInvalidClass(abstractControl);
    }
 
    private clearCupStagesFormArray(): void {

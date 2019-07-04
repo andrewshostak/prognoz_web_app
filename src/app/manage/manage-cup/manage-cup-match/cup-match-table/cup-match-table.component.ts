@@ -33,7 +33,7 @@ export class CupMatchTableComponent implements OnDestroy, OnInit {
       private notificationsService: NotificationsService
    ) {}
 
-   public deleteChampionshipMatch(): void {
+   public deleteCupMatch(): void {
       this.cupMatchService.deleteCupMatch(this.openedModal.data.id).subscribe(() => {
          remove(this.cupMatches, this.openedModal.data);
          this.paginationData.total--;

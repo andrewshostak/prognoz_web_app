@@ -1,17 +1,2 @@
-<div class="container">
-    <div class="row">
-        <div class="col">
-            <h2 class="h2">Редагувати матч в командному чемпіонаті:</h2>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-12 col-sm-10 offset-sm-1 col-md-8 offset-md-2">
-            <div class="card black-shadow">
-                <div class="card-body">
-                    <app-team-match-form [teamMatch]="teamMatch"></app-team-match-form>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<app-error *ngIf="errorTeamMatch" [message]="errorTeamMatch"></app-error>
+<h3 class="h3">Редагувати матч командного чемпіонату:</h3>
+<app-team-match-form [teamMatch]="teamMatch"></app-team-match-form>

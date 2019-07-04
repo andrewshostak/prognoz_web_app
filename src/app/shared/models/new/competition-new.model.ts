@@ -14,4 +14,11 @@ export class CompetitionNew {
    public title: string;
    public season_id: number;
    public stated: ModelStatus;
+
+   public pivot?: {
+      competition_id: number;
+      number_in_competition: number;
+      number_in_round: number;
+      round: number;
+   };
 }
