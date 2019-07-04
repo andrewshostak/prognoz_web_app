@@ -1,111 +1,142 @@
 <form novalidate [formGroup]="teamPredictionUpdateForm" (ngSubmit)="onSubmit()">
-    <div class="row">
-        <!-- form block -->
-        <div class="col-12 col-md-10 mb-2">
-            <div class="row align-items-center p-md-1 rounded bg-white black-shadow black-border h-100"
-                 [ngClass]="{'green-inset-and-black-shadow': isScore(teamPrediction.home, teamPrediction.away),
-                            'red-inset-and-black-shadow': !isScore(teamPrediction.home, teamPrediction.away)}">
-                <!-- home club logo -->
-                <div class="d-none d-lg-block col-md-2">
-                    <img class="img-fluid" src="{{clubsImagesUrl}}{{teamPrediction.team_match.club_first.image}}" alt="{{teamPrediction.team_match.club_first.title}}"
-                         title="{{teamPrediction.team_match.club_first.title}}">
-                </div>
-                <!-- club names, starts_at, inputs -->
-                <div class="col-12 col-md-12 col-lg-8 bg-dark rounded"
-                     [ngClass]="{'green-shadow': isScore(teamPrediction.home, teamPrediction.away),
-                                'red-shadow': !isScore(teamPrediction.home, teamPrediction.away)}">
-                    <div class="row">
-                        <div class="col-12 text-center text-white">
-                            {{teamPrediction.team_match.starts_at | time:'dddd HH:mm'}}
-                        </div>
-                    </div>
-                    <div class="row align-items-center">
-                        <div class="col-6 col-sm-4 col-md-3 col-lg-4 order-1 order-sm-1 text-right text-sm-center text-white">
-                            <strong><label for="home">{{teamPrediction.team_match.club_first.title}}</label></strong>
-                        </div>
-                        <div class="col-12 col-sm-4 col-md-6 col-lg-4 order-3 order-sm-2 text-center text-white mb-2">
-                            <!-- if team match is predictable -->
-                            <div *ngIf="teamPrediction.team_match.is_predictable">
-                                <input id="home"
-                                       type="number"
-                                       min="0"
-                                       max="9"
-                                       class="predict-input"
-                                       formControlName="home"><strong>:</strong><!--
-                            --><input id="away"
-                                      type="number"
-                                      min="0"
-                                      max="9"
-                                      class="predict-input"
-                                      formControlName="away">
-                            </div>
-                            <!-- if team match is not predictable -->
-                            <div *ngIf="!teamPrediction.team_match.is_predictable">
-                                <strong>{{showScoresOrString(teamPrediction.home, teamPrediction.away, '- : -')}}</strong>
-                            </div>
-                        </div>
-                        <div class="col-6 col-sm-4 col-md-3 col-lg-4 order-2 order-sm-3 text-left text-sm-center text-white">
-                            <strong><label for="away">{{teamPrediction.team_match.club_second.title}}</label></strong>
-                        </div>
-                    </div>
-                </div>
-                <!-- away club logo -->
-                <div class="d-none d-lg-block col-md-2">
-                    <img class="img-fluid" src="{{clubsImagesUrl}}{{teamPrediction.team_match.club_second.image}}" alt="{{teamPrediction.team_match.club_second.title}}"
-                         title="{{teamPrediction.team_match.club_second.title}}">
-                </div>
+   <div class="row">
+      <!-- form block -->
+      <div class="col-12 col-md-10 mb-2">
+         <div
+            class="row align-items-center p-md-1 rounded bg-white black-shadow black-border h-100"
+            [ngClass]="{
+               'green-inset-and-black-shadow': isScore(teamPrediction.home, teamPrediction.away),
+               'red-inset-and-black-shadow': !isScore(teamPrediction.home, teamPrediction.away)
+            }"
+         >
+            <!-- home club logo -->
+            <div class="d-none d-lg-block col-md-2">
+               <img
+                  class="img-fluid"
+                  src="{{ clubsImagesUrl }}{{ teamPrediction.team_match.club_first.image }}"
+                  alt="{{ teamPrediction.team_match.club_first.title }}"
+                  title="{{ teamPrediction.team_match.club_first.title }}"
+               />
             </div>
-        </div>
-        <!-- buttons block -->
-        <div class="col-12 col-md-2 mb-2 pl-0 pl-md-2 pr-0">
-            <!-- submit button -->
-            <button *ngIf="!spinnerButton && teamPrediction.team_match.is_predictable"
-                    class="btn btn-block full-height"
-                    [ngClass]="{'btn-outline-primary': isScore(teamPrediction.home, teamPrediction.away),
-                                'btn-primary': !isScore(teamPrediction.home, teamPrediction.away)}"
-                    type="submit">
-                <!-- md lg xl -->
-                <i [hidden]="isScore(teamPrediction.home, teamPrediction.away)" class="fa fa-check-circle-o fa-2x d-none d-md-block" aria-hidden="true"></i>
-                <i [hidden]="!isScore(teamPrediction.home, teamPrediction.away)" class="fa fa-pencil-square-o fa-2x d-none d-md-block" aria-hidden="true"></i>
-                <!-- xs sm -->
-                <i [hidden]="isScore(teamPrediction.home, teamPrediction.away)" class="fa fa-check-circle-o fa-lg d-md-none" aria-hidden="true"></i>
-                <i [hidden]="!isScore(teamPrediction.home, teamPrediction.away)" class="fa fa-pencil-square-o fa-lg d-md-none" aria-hidden="true"></i>
-                <!-- lg xl -->
-                <br class="d-none d-lg-block">
-                <small class="d-none d-lg-block">
-                    {{isScore(teamPrediction.home, teamPrediction.away) ? 'Змінити' : 'Зберегти'}}
-                </small>
-                <!-- xs sm -->
-                <span class="d-md-none">
-                    {{isScore(teamPrediction.home, teamPrediction.away) ? 'Змінити прогноз' : 'Зберегти прогноз'}}
-                </span>
-            </button>
-            <!-- disabled button -->
-            <button *ngIf="!teamPrediction.team_match.is_predictable"
-                    class="btn btn-outline-secondary btn-block full-height mt-0"
-                    type="button"
-                    disabled>
-                <!-- md lg xl -->
-                <i class="fa fa-ban fa-2x d-none d-md-block" aria-hidden="true"></i>
-                <!-- lg xl -->
-                <br class="d-none d-lg-block"><small class="text-muted d-none d-lg-block">Заборонено</small>
-                <!-- xs sm -->
-                <i class="fa fa-ban fa-lg d-md-none" aria-hidden="true"></i>
-                <span class="d-md-none">Заборонено</span>
-            </button>
-            <!-- spinner -->
-            <button *ngIf="spinnerButton"
-                    class="btn btn-primary btn-block full-height mt-0"
-                    type="button">
-                <!-- xs sm -->
-                <i class="fa fa-spinner fa-spin fa-fw fa-lg d-md-none"></i>
-                <!-- md lg xl -->
-                <i class="fa fa-spinner fa-spin fa-fw fa-2x d-none d-md-inline-block"></i>
-                <!-- lg xl -->
-                <br class="d-none d-lg-block"><small class="d-none d-lg-block">Зачекайте</small>
-                <span class="sr-only">Loading...</span>
-                <span class="d-md-none">Зачекайте</span>
-            </button>
-        </div>
-    </div>
+            <!-- club names, starts_at, inputs -->
+            <div
+               class="col-12 col-md-12 col-lg-8 bg-dark rounded"
+               [ngClass]="{
+                  'green-shadow': isScore(teamPrediction.home, teamPrediction.away),
+                  'red-shadow': !isScore(teamPrediction.home, teamPrediction.away)
+               }"
+            >
+               <div class="row">
+                  <div class="col-12 text-center text-white">
+                     {{ teamPrediction.team_match.starts_at | time: 'DD MMMM HH:mm' }}
+                  </div>
+               </div>
+               <div class="row align-items-center">
+                  <div class="col-6 col-sm-4 col-md-3 col-lg-4 order-1 order-sm-1 text-right text-sm-center text-white">
+                     <strong
+                        ><label for="home">{{ teamPrediction.team_match.club_first.title }}</label></strong
+                     >
+                  </div>
+                  <div class="col-12 col-sm-4 col-md-6 col-lg-4 order-3 order-sm-2 text-center text-white mb-2">
+                     <!-- if team match is predictable -->
+                     <div *ngIf="teamPrediction.team_match.is_predictable">
+                        <input id="home" type="number" min="0" max="9" class="predict-input" formControlName="home" /><strong>:</strong
+                        ><!--
+                            --><input id="away" type="number" min="0" max="9" class="predict-input" formControlName="away" />
+                     </div>
+                     <!-- if team match is not predictable -->
+                     <div *ngIf="!teamPrediction.team_match.is_predictable">
+                        <strong>{{ showScoresOrString(teamPrediction.home, teamPrediction.away, '- : -') }}</strong>
+                     </div>
+                  </div>
+                  <div class="col-6 col-sm-4 col-md-3 col-lg-4 order-2 order-sm-3 text-left text-sm-center text-white">
+                     <strong
+                        ><label for="away">{{ teamPrediction.team_match.club_second.title }}</label></strong
+                     >
+                  </div>
+               </div>
+            </div>
+            <!-- away club logo -->
+            <div class="d-none d-lg-block col-md-2">
+               <img
+                  class="img-fluid"
+                  src="{{ clubsImagesUrl }}{{ teamPrediction.team_match.club_second.image }}"
+                  alt="{{ teamPrediction.team_match.club_second.title }}"
+                  title="{{ teamPrediction.team_match.club_second.title }}"
+               />
+            </div>
+         </div>
+      </div>
+      <!-- buttons block -->
+      <div class="col-12 col-md-2 mb-2 pl-0 pl-md-2 pr-0">
+         <!-- submit button -->
+         <button
+            *ngIf="!spinnerButton && teamPrediction.team_match.is_predictable"
+            class="btn btn-block full-height"
+            [ngClass]="{
+               'btn-outline-primary': isScore(teamPrediction.home, teamPrediction.away),
+               'btn-primary': !isScore(teamPrediction.home, teamPrediction.away)
+            }"
+            type="submit"
+         >
+            <!-- md lg xl -->
+            <i
+               [hidden]="isScore(teamPrediction.home, teamPrediction.away)"
+               class="fa fa-check-circle-o fa-2x d-none d-md-block"
+               aria-hidden="true"
+            ></i>
+            <i
+               [hidden]="!isScore(teamPrediction.home, teamPrediction.away)"
+               class="fa fa-pencil-square-o fa-2x d-none d-md-block"
+               aria-hidden="true"
+            ></i>
+            <!-- xs sm -->
+            <i
+               [hidden]="isScore(teamPrediction.home, teamPrediction.away)"
+               class="fa fa-check-circle-o fa-lg d-md-none"
+               aria-hidden="true"
+            ></i>
+            <i
+               [hidden]="!isScore(teamPrediction.home, teamPrediction.away)"
+               class="fa fa-pencil-square-o fa-lg d-md-none"
+               aria-hidden="true"
+            ></i>
+            <!-- lg xl -->
+            <br class="d-none d-lg-block" />
+            <small class="d-none d-lg-block">
+               {{ isScore(teamPrediction.home, teamPrediction.away) ? 'Змінити' : 'Зберегти' }}
+            </small>
+            <!-- xs sm -->
+            <span class="d-md-none">
+               {{ isScore(teamPrediction.home, teamPrediction.away) ? 'Змінити прогноз' : 'Зберегти прогноз' }}
+            </span>
+         </button>
+         <!-- disabled button -->
+         <button
+            *ngIf="!teamPrediction.team_match.is_predictable"
+            class="btn btn-outline-secondary btn-block full-height mt-0"
+            type="button"
+            disabled
+         >
+            <!-- md lg xl -->
+            <i class="fa fa-ban fa-2x d-none d-md-block" aria-hidden="true"></i>
+            <!-- lg xl -->
+            <br class="d-none d-lg-block" /><small class="text-muted d-none d-lg-block">Заборонено</small>
+            <!-- xs sm -->
+            <i class="fa fa-ban fa-lg d-md-none" aria-hidden="true"></i>
+            <span class="d-md-none">Заборонено</span>
+         </button>
+         <!-- spinner -->
+         <button *ngIf="spinnerButton" class="btn btn-primary btn-block full-height mt-0" type="button">
+            <!-- xs sm -->
+            <i class="fa fa-spinner fa-spin fa-fw fa-lg d-md-none"></i>
+            <!-- md lg xl -->
+            <i class="fa fa-spinner fa-spin fa-fw fa-2x d-none d-md-inline-block"></i>
+            <!-- lg xl -->
+            <br class="d-none d-lg-block" /><small class="d-none d-lg-block">Зачекайте</small>
+            <span class="sr-only">Loading...</span>
+            <span class="d-md-none">Зачекайте</span>
+         </button>
+      </div>
+   </div>
 </form>

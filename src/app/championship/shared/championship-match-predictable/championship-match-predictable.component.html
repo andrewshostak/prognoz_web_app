@@ -1,160 +1,194 @@
 <!-- one match row (if user not authenticated)-->
-<div *ngIf="match && !authenticatedUser"
-     class="row align-items-center mb-2 p-md-1 rounded bg-white black-shadow black-border position-relative">
-    <!-- home club logo -->
-    <div class="d-none d-md-block col-md-2">
-        <img class="img-fluid" src="{{clubsImagesUrl}}{{match.club_first.image}}" alt="{{match.club_first.title}}"
-             title="{{match.club_first.title}}">
-    </div>
-    <!-- club names, starts_at -->
-    <div class="col-12 col-md-8 bg-dark rounded">
-        <div class="row">
-            <div class="col-12 text-center text-white">
-                {{match.starts_at | time:'dddd HH:mm'}}
+<div
+   *ngIf="match && !authenticatedUser"
+   class="row align-items-center mb-2 p-md-1 rounded bg-white black-shadow black-border position-relative"
+>
+   <!-- home club logo -->
+   <div class="d-none d-md-block col-md-2">
+      <img
+         class="img-fluid"
+         src="{{ clubsImagesUrl }}{{ match.club_first.image }}"
+         alt="{{ match.club_first.title }}"
+         title="{{ match.club_first.title }}"
+      />
+   </div>
+   <!-- club names, starts_at -->
+   <div class="col-12 col-md-8 bg-dark rounded">
+      <div class="row">
+         <div class="col-12 text-center text-white">
+            {{ match.starts_at | time: 'DD MMMM HH:mm' }}
+         </div>
+      </div>
+      <div class="row align-items-center mb-2">
+         <div class="col-5 text-center text-white">
+            <strong>{{ match.club_first.title }}</strong>
+         </div>
+         <div class="col-2 text-center text-white">
+            <strong>vs</strong>
+         </div>
+         <div class="col-5 text-center text-white">
+            <strong>{{ match.club_second.title }}</strong>
+         </div>
+         <!-- expandable statistic -->
+         <div class="col-12 mb-2" [hidden]="isCollapsed">
+            <div class="card text-center">
+               <div class="card-header">
+                  Статистика
+               </div>
+               <!-- error statistic -->
+               <app-error *ngIf="errorStatistic" [message]="errorStatistic"></app-error>
+               <!-- statistic -->
+               <div *ngIf="statistic" class="card-body bg-white">
+                  <div class="col-12">
+                     <canvas baseChart [data]="resultChartData" [labels]="resultChartLabels" [chartType]="resultChartType"> </canvas>
+                  </div>
+               </div>
             </div>
-        </div>
-        <div class="row align-items-center mb-2">
-            <div class="col-5 text-center text-white">
-                <strong>{{match.club_first.title}}</strong>
-            </div>
-            <div class="col-2 text-center text-white">
-                <strong>vs</strong>
-            </div>
-            <div class="col-5 text-center text-white">
-                <strong>{{match.club_second.title}}</strong>
-            </div>
-            <!-- expandable statistic -->
-            <div class="col-12 mb-2" [hidden]="isCollapsed">
-                <div class="card text-center">
-                    <div class="card-header">
-                        Статистика
-                    </div>
-                    <!-- error statistic -->
-                    <app-error *ngIf="errorStatistic" [message]="errorStatistic"></app-error>
-                    <!-- statistic -->
-                    <div *ngIf="statistic" class="card-body bg-white">
-                        <div class="col-12">
-                            <canvas baseChart
-                                    [data]="resultChartData"
-                                    [labels]="resultChartLabels"
-                                    [chartType]="resultChartType">
-                            </canvas>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- away club logo -->
-    <div class="d-none d-md-block col-md-2">
-        <img class="img-fluid" src="{{clubsImagesUrl}}{{match.club_second.image}}" alt="{{match.club_second.title}}"
-             title="{{match.club_second.title}}">
-    </div>
-    <!-- expand-collapse indicator -->
-    <div class="collapse-expand-indicator cursor-pointer"
-         (click)="getChampionshipMatchStatisticData(match); isCollapsed = !isCollapsed;">
-        <span [hidden]="!isCollapsed || spinnerStatistic" class="fa-stack">
-            <i class="fa fa-circle fa-stack-2x fa-inverse" aria-hidden="true"></i>
-            <i class="fa fa-circle-o fa-stack-2x" aria-hidden="true"></i>
-            <i class="fa fa-chevron-down fa-stack-1x" aria-hidden="true"></i>
-        </span>
-        <span [hidden]="isCollapsed || spinnerStatistic" class="fa-stack">
-            <i class="fa fa-circle fa-stack-2x fa-inverse" aria-hidden="true"></i>
-            <i class="fa fa-circle-o fa-stack-2x" aria-hidden="true"></i>
-            <i class="fa fa-chevron-up fa-stack-1x" aria-hidden="true"></i>
-        </span>
-        <span [hidden]="!spinnerStatistic" class="fa-stack">
-            <i class="fa fa-circle fa-stack-2x fa-inverse" aria-hidden="true"></i>
-            <i class="fa fa-circle-o fa-stack-2x" aria-hidden="true"></i>
-            <i class="fa fa-spinner fa-spin fa-stack-1x" aria-hidden="true"></i>
-        </span>
-    </div>
+         </div>
+      </div>
+   </div>
+   <!-- away club logo -->
+   <div class="d-none d-md-block col-md-2">
+      <img
+         class="img-fluid"
+         src="{{ clubsImagesUrl }}{{ match.club_second.image }}"
+         alt="{{ match.club_second.title }}"
+         title="{{ match.club_second.title }}"
+      />
+   </div>
+   <!-- expand-collapse indicator -->
+   <div class="collapse-expand-indicator cursor-pointer" (click)="getChampionshipMatchStatisticData(match); isCollapsed = !isCollapsed">
+      <span [hidden]="!isCollapsed || spinnerStatistic" class="fa-stack">
+         <i class="fa fa-circle fa-stack-2x fa-inverse" aria-hidden="true"></i>
+         <i class="fa fa-circle-o fa-stack-2x" aria-hidden="true"></i>
+         <i class="fa fa-chevron-down fa-stack-1x" aria-hidden="true"></i>
+      </span>
+      <span [hidden]="isCollapsed || spinnerStatistic" class="fa-stack">
+         <i class="fa fa-circle fa-stack-2x fa-inverse" aria-hidden="true"></i>
+         <i class="fa fa-circle-o fa-stack-2x" aria-hidden="true"></i>
+         <i class="fa fa-chevron-up fa-stack-1x" aria-hidden="true"></i>
+      </span>
+      <span [hidden]="!spinnerStatistic" class="fa-stack">
+         <i class="fa fa-circle fa-stack-2x fa-inverse" aria-hidden="true"></i>
+         <i class="fa fa-circle-o fa-stack-2x" aria-hidden="true"></i>
+         <i class="fa fa-spinner fa-spin fa-stack-1x" aria-hidden="true"></i>
+      </span>
+   </div>
 </div>
 <!-- one match row (if user is authenticated)-->
-<div *ngIf="match && authenticatedUser && match.championship_predicts"
-     class="row align-items-center mb-2 p-md-1 rounded bg-white black-shadow black-border position-relative"
-     [ngClass]="{'green-inset-and-black-shadow': match.championship_predicts[0],
-                 'red-inset-and-black-shadow': !match.championship_predicts[0]}">
-    <!-- home club logo -->
-    <div class="d-none d-lg-block col-md-2">
-        <img class="img-fluid" src="{{clubsImagesUrl}}{{match.club_first.image}}" alt="{{match.club_first.title}}" title="{{match.club_first.title}}">
-    </div>
-    <!-- club names, starts_at, inputs -->
-    <div class="col-12 col-md-12 col-lg-8 bg-dark rounded"
-         [ngClass]="{'green-shadow': match.championship_predicts[0],
-                     'red-shadow': !match.championship_predicts[0]}"
-         [formGroup]="championshipPredictsForm">
-        <div class="row">
-            <div class="col-12 text-center text-white">
-                {{match.starts_at | time:'dddd HH:mm'}}
+<div
+   *ngIf="match && authenticatedUser && match.championship_predicts"
+   class="row align-items-center mb-2 p-md-1 rounded bg-white black-shadow black-border position-relative"
+   [ngClass]="{
+      'green-inset-and-black-shadow': match.championship_predicts[0],
+      'red-inset-and-black-shadow': !match.championship_predicts[0]
+   }"
+>
+   <!-- home club logo -->
+   <div class="d-none d-lg-block col-md-2">
+      <img
+         class="img-fluid"
+         src="{{ clubsImagesUrl }}{{ match.club_first.image }}"
+         alt="{{ match.club_first.title }}"
+         title="{{ match.club_first.title }}"
+      />
+   </div>
+   <!-- club names, starts_at, inputs -->
+   <div
+      class="col-12 col-md-12 col-lg-8 bg-dark rounded"
+      [ngClass]="{ 'green-shadow': match.championship_predicts[0], 'red-shadow': !match.championship_predicts[0] }"
+      [formGroup]="championshipPredictsForm"
+   >
+      <div class="row">
+         <div class="col-12 text-center text-white">
+            {{ match.starts_at | time: 'DD MMMM HH:mm' }}
+         </div>
+      </div>
+      <div class="row align-items-center">
+         <div class="col-6 col-sm-3 col-lg-4 order-1 order-sm-1 text-right text-sm-center text-white">
+            <strong
+               ><label [attr.for]="match.id + '_home'">{{ match.club_first.title }}</label></strong
+            >
+         </div>
+         <div class="col-12 col-sm-6 col-lg-4 order-3 order-sm-2 text-center text-white mb-2">
+            <img
+               class="small-image d-lg-none"
+               src="{{ clubsImagesUrl }}{{ match.club_first.image }}"
+               alt="{{ match.club_first.title }}"
+               title="{{ match.club_first.title }}"
+            />
+            <input
+               [attr.id]="match.id + '_home'"
+               type="number"
+               min="0"
+               max="9"
+               class="predict-input"
+               [formControlName]="match.id + '_home'"
+            /><strong>:</strong
+            ><!--
+                --><input
+               [attr.id]="match.id + '_away'"
+               type="number"
+               min="0"
+               max="9"
+               class="predict-input"
+               [formControlName]="match.id + '_away'"
+            />
+            <img
+               class="small-image d-lg-none"
+               src="{{ clubsImagesUrl }}{{ match.club_second.image }}"
+               alt="{{ match.club_second.title }}"
+               title="{{ match.club_second.title }}"
+            />
+         </div>
+         <div class="col-6 col-sm-3 col-lg-4 order-2 order-sm-3 text-left text-sm-center text-white">
+            <strong
+               ><label [attr.for]="match.id + '_away'">{{ match.club_second.title }}</label></strong
+            >
+         </div>
+         <!-- expandable statistic -->
+         <div class="col-12 mb-2 order-4" [hidden]="isCollapsed">
+            <div class="card text-center">
+               <div class="card-header">
+                  Статистика
+               </div>
+               <!-- error statistic -->
+               <app-error *ngIf="errorStatistic" [message]="errorStatistic"></app-error>
+               <!-- statistic -->
+               <div *ngIf="statistic" class="card-body bg-white">
+                  <div class="col-12">
+                     <canvas baseChart [data]="resultChartData" [labels]="resultChartLabels" [chartType]="resultChartType"> </canvas>
+                  </div>
+               </div>
             </div>
-        </div>
-        <div class="row align-items-center">
-            <div class="col-6 col-sm-3 col-lg-4 order-1 order-sm-1 text-right text-sm-center text-white">
-                <strong><label [attr.for]="match.id + '_home'">{{match.club_first.title}}</label></strong>
-            </div>
-            <div class="col-12 col-sm-6 col-lg-4 order-3 order-sm-2 text-center text-white mb-2">
-                <img class="small-image d-lg-none" src="{{clubsImagesUrl}}{{match.club_first.image}}" alt="{{match.club_first.title}}" title="{{match.club_first.title}}">
-                <input [attr.id]="match.id + '_home'"
-                       type="number"
-                       min="0"
-                       max="9"
-                       class="predict-input"
-                       [formControlName]="match.id + '_home'"><strong>:</strong><!--
-                --><input [attr.id]="match.id + '_away'"
-                      type="number"
-                      min="0"
-                      max="9"
-                      class="predict-input"
-                      [formControlName]="match.id + '_away'">
-                <img class="small-image d-lg-none" src="{{clubsImagesUrl}}{{match.club_second.image}}" alt="{{match.club_second.title}}" title="{{match.club_second.title}}">
-            </div>
-            <div class="col-6 col-sm-3 col-lg-4 order-2 order-sm-3 text-left text-sm-center text-white">
-                <strong><label [attr.for]="match.id + '_away'">{{match.club_second.title}}</label></strong>
-            </div>
-            <!-- expandable statistic -->
-            <div class="col-12 mb-2 order-4" [hidden]="isCollapsed">
-                <div class="card text-center">
-                    <div class="card-header">
-                        Статистика
-                    </div>
-                    <!-- error statistic -->
-                    <app-error *ngIf="errorStatistic" [message]="errorStatistic"></app-error>
-                    <!-- statistic -->
-                    <div *ngIf="statistic" class="card-body bg-white">
-                        <div class="col-12">
-                            <canvas baseChart
-                                    [data]="resultChartData"
-                                    [labels]="resultChartLabels"
-                                    [chartType]="resultChartType">
-                            </canvas>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- away club logo -->
-    <div class="d-none d-lg-block col-md-2">
-        <img class="img-fluid" src="{{clubsImagesUrl}}{{match.club_second.image}}" alt="{{match.club_second.title}}" title="{{match.club_second.title}}">
-    </div>
-    <!-- expand-collapse indicator -->
-    <div class="collapse-expand-indicator cursor-pointer"
-         (click)="getChampionshipMatchStatisticData(match); isCollapsed = !isCollapsed;">
-        <span [hidden]="!isCollapsed || spinnerStatistic" class="fa-stack">
-            <i class="fa fa-circle fa-stack-2x fa-inverse" aria-hidden="true"></i>
-            <i class="fa fa-circle-o fa-stack-2x" aria-hidden="true"></i>
-            <i class="fa fa-chevron-down fa-stack-1x" aria-hidden="true"></i>
-        </span>
-        <span [hidden]="isCollapsed || spinnerStatistic" class="fa-stack">
-            <i class="fa fa-circle fa-stack-2x fa-inverse" aria-hidden="true"></i>
-            <i class="fa fa-circle-o fa-stack-2x" aria-hidden="true"></i>
-            <i class="fa fa-chevron-up fa-stack-1x" aria-hidden="true"></i>
-        </span>
-        <span [hidden]="!spinnerStatistic" class="fa-stack">
-            <i class="fa fa-circle fa-stack-2x fa-inverse" aria-hidden="true"></i>
-            <i class="fa fa-circle-o fa-stack-2x" aria-hidden="true"></i>
-            <i class="fa fa-spinner fa-spin fa-stack-1x" aria-hidden="true"></i>
-        </span>
-    </div>
+         </div>
+      </div>
+   </div>
+   <!-- away club logo -->
+   <div class="d-none d-lg-block col-md-2">
+      <img
+         class="img-fluid"
+         src="{{ clubsImagesUrl }}{{ match.club_second.image }}"
+         alt="{{ match.club_second.title }}"
+         title="{{ match.club_second.title }}"
+      />
+   </div>
+   <!-- expand-collapse indicator -->
+   <div class="collapse-expand-indicator cursor-pointer" (click)="getChampionshipMatchStatisticData(match); isCollapsed = !isCollapsed">
+      <span [hidden]="!isCollapsed || spinnerStatistic" class="fa-stack">
+         <i class="fa fa-circle fa-stack-2x fa-inverse" aria-hidden="true"></i>
+         <i class="fa fa-circle-o fa-stack-2x" aria-hidden="true"></i>
+         <i class="fa fa-chevron-down fa-stack-1x" aria-hidden="true"></i>
+      </span>
+      <span [hidden]="isCollapsed || spinnerStatistic" class="fa-stack">
+         <i class="fa fa-circle fa-stack-2x fa-inverse" aria-hidden="true"></i>
+         <i class="fa fa-circle-o fa-stack-2x" aria-hidden="true"></i>
+         <i class="fa fa-chevron-up fa-stack-1x" aria-hidden="true"></i>
+      </span>
+      <span [hidden]="!spinnerStatistic" class="fa-stack">
+         <i class="fa fa-circle fa-stack-2x fa-inverse" aria-hidden="true"></i>
+         <i class="fa fa-circle-o fa-stack-2x" aria-hidden="true"></i>
+         <i class="fa fa-spinner fa-spin fa-stack-1x" aria-hidden="true"></i>
+      </span>
+   </div>
 </div>

@@ -1,203 +1,253 @@
-<h2 [hidden]="!teamMatches || !teamParticipants">Стратегія: </h2>
+<h2 [hidden]="!teamMatches || !teamParticipants">Стратегія:</h2>
 <!-- error matches-->
 <app-error *ngIf="errorTeamMatches" [message]="errorTeamMatches"></app-error>
 <!-- error participants -->
 <app-error *ngIf="errorTeamParticipants" [message]="errorTeamParticipants"></app-error>
 <!-- team strategy -->
 <div *ngIf="teamMatches && teamParticipants" class="card black-shadow">
-    <table class="table table-sm mb-0">
-        <thead>
-            <tr>
-                <th class="text-center">
-                    <small>№</small>
-                </th>
-                <th>
-                    <small>Матч</small>
-                </th>
-                <th class="text-center">
-                    <small>Прогнозист</small>
-                </th>
-                <th class="text-center">
-                    <small>Прогноз</small>
-                </th>
-                <th class="text-center" title="Вибрати учасника команди">
-                    <small>Дія</small>
-                </th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr *ngFor="let teamMatch of teamMatches; let i = index;"
-                [ngClass]="{'table-active': matchHasPrediction(teamMatch) && teamMatch.team_predictions[0].user_id === authenticatedUser.id}">
-                <th scope="row" class="text-center align-middle">{{i + 1}}.</th>
-                <td>
-                    <table class="table table-bordered table-sm mb-0">
-                        <tr [ngClass]="{'table-success': isTeamMatchGuessed(teamMatch, teamParticipants[0].team_id),
-                                        'table-danger': isTeamMatchBlocked(teamMatch, teamParticipants[0].team_id)}">
-                            <td class="text-center">
-                                <table class="table table-sm mb-0">
-                                    <tr [ngClass]="{'table-success': isTeamMatchGuessed(teamMatch, teamParticipants[0].team_id),
-                                                    'table-danger': isTeamMatchBlocked(teamMatch, teamParticipants[0].team_id)}">
-                                        <td class="d-none d-lg-table-cell">{{teamMatch.club_first.title}}</td>
-                                        <td>
-                                            <img class="small-image"
-                                                 src="{{clubsImagesUrl}}{{teamMatch.club_first.image}}"
-                                                 alt="{{teamMatch.club_first.title}}"
-                                                 title="{{teamMatch.club_first.title}}">
-                                        </td>
-                                        <td class="d-none d-sm-table-cell">
-                                            {{showScoresOrString(teamMatch.home, teamMatch.away, 'vs')}}
-                                        </td>
-                                        <td>
-                                            <img class="small-image"
-                                                 src="{{clubsImagesUrl}}{{teamMatch.club_second.image}}"
-                                                 alt="{{teamMatch.club_second.title}}"
-                                                 title="{{teamMatch.club_second.title}}">
-                                        </td>
-                                        <td class="d-none d-lg-table-cell">{{teamMatch.club_second.title}}</td>
-                                    </tr>
-                                    <tr class="d-sm-none"
-                                        [ngClass]="{'table-success': isTeamMatchGuessed(teamMatch, teamParticipants[0].team_id),
-                                                    'table-danger': isTeamMatchBlocked(teamMatch, teamParticipants[0].team_id)}">
-                                        <td colspan="2">
-                                            {{showScoresOrString(teamMatch.home, teamMatch.away, 'vs')}}
-                                        </td>
-                                    </tr>
-                                </table>
-                            </td>
-                        </tr>
-                        <tr class="d-none d-sm-table-row"
-                            [ngClass]="{'table-success': isTeamMatchGuessed(teamMatch, teamParticipants[0].team_id),
-                                        'table-danger': isTeamMatchBlocked(teamMatch, teamParticipants[0].team_id)}">
-                            <td class="text-center">
-                                <small class="text-muted text-capitalize">{{teamMatch.starts_at | time:'dddd HH:mm'}}</small>
-                                <small *ngIf="matchHasPrediction(teamMatch)" class="text-muted">
-                                    / Прогноз зроблено {{getPredictionDetails(teamMatch, teamParticipants[0].team_id).predicted_at | time:'YYYY-MM-DD HH:mm'}}
-                                </small>
-                            </td>
-                        </tr>
-                    </table>
-                </td>
-                <td class="align-middle text-center">
-                    <img *ngIf="matchHasPrediction(teamMatch)"
-                         [hidden]="isCaptain && teamMatch.is_predictable"
-                         src="{{userImagesUrl}}{{teamMatch.team_predictions[0].user.image || userImageDefault}}"
-                         alt="{{teamMatch.team_predictions[0].user.name}}"
-                         class="small-image rounded-circle">
-                    <form [hidden]="!isCaptain || !teamMatch.is_predictable" #teamPredictorForm="ngForm" novalidate>
-                        <div class="form-group mb-0">
-                            <select name="user_id"
-                                    class="form-control"
-                                    [ngModel]="matchHasPrediction(teamMatch) ? teamMatch.team_predictions[0].user_id : ''"
-                                    #user_id="ngModel">
-                                <option [value]="''" selected>Не вибрано</option>
-                                <option *ngFor="let teamParticipant of teamParticipants"
-                                        [value]="teamParticipant.user_id"
-                                        [attr.selected]="matchHasPrediction(teamMatch) && teamMatch.team_predictions[0].user_id === teamParticipant.user_id"
-                                        [disabled]="availableTeamParticipants[teamParticipant.user_id] && !availableTeamParticipants[teamParticipant.user_id].participantAvailable">
-                                    {{teamParticipant.user.name}}
-                                </option>
-                            </select>
-                        </div>
-                    </form>
-                    <div>
-                        <strong *ngIf="!isCaptain || !teamMatch.is_predictable">{{matchHasPrediction(teamMatch) ? teamMatch.team_predictions[0].user.name : '-'}}</strong>
-                    </div>
-                </td>
-                <td class="align-middle text-center">
-                    <div>
-                        <span *ngIf="isTeamMatchGuessed(teamMatch, teamParticipants[0].team_id) && !isTeamMatchBlocked(teamMatch, teamParticipants[0].team_id)"
-                              class="text-success">
-                            <i class="fa fa-lg fa-check-circle-o" aria-hidden="true"></i>
-                        </span>
-                        <span *ngIf="!isTeamMatchGuessed(teamMatch, teamParticipants[0].team_id) && isTeamMatchBlocked(teamMatch, teamParticipants[0].team_id)"
-                              class="text-danger"
-                              title="">
-                            <i class="fa fa-lg fa-lock" aria-hidden="true"></i>
-                        </span>
-                        <span *ngIf="isTeamMatchGuessed(teamMatch, teamParticipants[0].team_id) && isTeamMatchBlocked(teamMatch, teamParticipants[0].team_id)">
-                            <span class="fa-stack">
-                                <i class="fa fa-check-circle fa-stack-1x text-success"></i>
-                                <i class="fa fa-ban fa-stack-2x text-danger"></i>
-                            </span>
-                        </span>
-                    </div>
-                    {{getPredictionDetails(teamMatch, teamParticipants[0].team_id).prediction}}
-                </td>
-                <td class="align-middle text-center">
-                    <button *ngIf="isCaptain && teamMatch.is_predictable"
-                            class="btn"
-                            [ngClass]="{'btn-outline-primary': matchHasPrediction(teamMatch),
-                                        'btn-primary': !matchHasPrediction(teamMatch)}"
-                            [hidden]="spinnerButton['team_match_' + teamMatch.id]"
-                            (click)="updateOrCreateTeamPredictor(teamPredictorForm, teamMatch)">
-                        <i [hidden]="matchHasPrediction(teamMatch)" class="fa fa-check-circle-o" aria-hidden="true"></i>
-                        <i [hidden]="!matchHasPrediction(teamMatch)" class="fa fa-pencil-square-o" aria-hidden="true"></i>
-                        <span class="d-none d-lg-inline">{{matchHasPrediction(teamMatch) ? 'Змінити' : 'Підтвердити'}}</span>
-                    </button>
-                    <button *ngIf="!isCaptain || !teamMatch.is_predictable"
-                            class="btn btn-outline-secondary"
-                            disabled>
-                        <i class="fa fa-ban" aria-hidden="true"></i> <span class="d-none d-lg-inline">Заборонено</span>
-                    </button>
-                    <app-spinner-button [hidden]="!spinnerButton['team_match_' + teamMatch.id]"></app-spinner-button>
-                </td>
-            </tr>
-            <tr>
-               <td colspan="5">
-                   <div class="alert alert-info" role="alert">
-                       При зміні прогнозиста зроблений ним прогноз буде очищено.
-                   </div>
-               </td>
-            </tr>
-        </tbody>
-    </table>
+   <table class="table table-sm mb-0">
+      <thead>
+         <tr>
+            <th class="text-center">
+               <small>№</small>
+            </th>
+            <th>
+               <small>Матч</small>
+            </th>
+            <th class="text-center">
+               <small>Прогнозист</small>
+            </th>
+            <th class="text-center">
+               <small>Прогноз</small>
+            </th>
+            <th class="text-center" title="Вибрати учасника команди">
+               <small>Дія</small>
+            </th>
+         </tr>
+      </thead>
+      <tbody>
+         <tr
+            *ngFor="let teamMatch of teamMatches; let i = index"
+            [ngClass]="{ 'table-active': matchHasPrediction(teamMatch) && teamMatch.team_predictions[0].user_id === authenticatedUser.id }"
+         >
+            <th scope="row" class="text-center align-middle">{{ i + 1 }}.</th>
+            <td>
+               <table class="table table-bordered table-sm mb-0">
+                  <tr
+                     [ngClass]="{
+                        'table-success': isTeamMatchGuessed(teamMatch, teamParticipants[0].team_id),
+                        'table-danger': isTeamMatchBlocked(teamMatch, teamParticipants[0].team_id)
+                     }"
+                  >
+                     <td class="text-center">
+                        <table class="table table-sm mb-0">
+                           <tr
+                              [ngClass]="{
+                                 'table-success': isTeamMatchGuessed(teamMatch, teamParticipants[0].team_id),
+                                 'table-danger': isTeamMatchBlocked(teamMatch, teamParticipants[0].team_id)
+                              }"
+                           >
+                              <td class="d-none d-lg-table-cell">{{ teamMatch.club_first.title }}</td>
+                              <td>
+                                 <img
+                                    class="small-image"
+                                    src="{{ clubsImagesUrl }}{{ teamMatch.club_first.image }}"
+                                    alt="{{ teamMatch.club_first.title }}"
+                                    title="{{ teamMatch.club_first.title }}"
+                                 />
+                              </td>
+                              <td class="d-none d-sm-table-cell">
+                                 {{ showScoresOrString(teamMatch.home, teamMatch.away, 'vs') }}
+                              </td>
+                              <td>
+                                 <img
+                                    class="small-image"
+                                    src="{{ clubsImagesUrl }}{{ teamMatch.club_second.image }}"
+                                    alt="{{ teamMatch.club_second.title }}"
+                                    title="{{ teamMatch.club_second.title }}"
+                                 />
+                              </td>
+                              <td class="d-none d-lg-table-cell">{{ teamMatch.club_second.title }}</td>
+                           </tr>
+                           <tr
+                              class="d-sm-none"
+                              [ngClass]="{
+                                 'table-success': isTeamMatchGuessed(teamMatch, teamParticipants[0].team_id),
+                                 'table-danger': isTeamMatchBlocked(teamMatch, teamParticipants[0].team_id)
+                              }"
+                           >
+                              <td colspan="2">
+                                 {{ showScoresOrString(teamMatch.home, teamMatch.away, 'vs') }}
+                              </td>
+                           </tr>
+                        </table>
+                     </td>
+                  </tr>
+                  <tr
+                     class="d-none d-sm-table-row"
+                     [ngClass]="{
+                        'table-success': isTeamMatchGuessed(teamMatch, teamParticipants[0].team_id),
+                        'table-danger': isTeamMatchBlocked(teamMatch, teamParticipants[0].team_id)
+                     }"
+                  >
+                     <td class="text-center">
+                        <small class="text-muted text-capitalize">{{ teamMatch.starts_at | time: 'DD MMMM HH:mm' }}</small>
+                        <small *ngIf="matchHasPrediction(teamMatch)" class="text-muted">
+                           / Прогноз зроблено
+                           {{ getPredictionDetails(teamMatch, teamParticipants[0].team_id).predicted_at | time: 'YYYY-MM-DD HH:mm' }}
+                        </small>
+                     </td>
+                  </tr>
+               </table>
+            </td>
+            <td class="align-middle text-center">
+               <img
+                  *ngIf="matchHasPrediction(teamMatch)"
+                  [hidden]="isCaptain && teamMatch.is_predictable"
+                  src="{{ userImagesUrl }}{{ teamMatch.team_predictions[0].user.image || userImageDefault }}"
+                  alt="{{ teamMatch.team_predictions[0].user.name }}"
+                  class="small-image rounded-circle"
+               />
+               <form [hidden]="!isCaptain || !teamMatch.is_predictable" #teamPredictorForm="ngForm" novalidate>
+                  <div class="form-group mb-0">
+                     <select
+                        name="user_id"
+                        class="form-control"
+                        [ngModel]="matchHasPrediction(teamMatch) ? teamMatch.team_predictions[0].user_id : ''"
+                        #user_id="ngModel"
+                     >
+                        <option [value]="''" selected>Не вибрано</option>
+                        <option
+                           *ngFor="let teamParticipant of teamParticipants"
+                           [value]="teamParticipant.user_id"
+                           [attr.selected]="
+                              matchHasPrediction(teamMatch) && teamMatch.team_predictions[0].user_id === teamParticipant.user_id
+                           "
+                           [disabled]="
+                              availableTeamParticipants[teamParticipant.user_id] &&
+                              !availableTeamParticipants[teamParticipant.user_id].participantAvailable
+                           "
+                        >
+                           {{ teamParticipant.user.name }}
+                        </option>
+                     </select>
+                  </div>
+               </form>
+               <div>
+                  <strong *ngIf="!isCaptain || !teamMatch.is_predictable">{{
+                     matchHasPrediction(teamMatch) ? teamMatch.team_predictions[0].user.name : '-'
+                  }}</strong>
+               </div>
+            </td>
+            <td class="align-middle text-center">
+               <div>
+                  <span
+                     *ngIf="
+                        isTeamMatchGuessed(teamMatch, teamParticipants[0].team_id) &&
+                        !isTeamMatchBlocked(teamMatch, teamParticipants[0].team_id)
+                     "
+                     class="text-success"
+                  >
+                     <i class="fa fa-lg fa-check-circle-o" aria-hidden="true"></i>
+                  </span>
+                  <span
+                     *ngIf="
+                        !isTeamMatchGuessed(teamMatch, teamParticipants[0].team_id) &&
+                        isTeamMatchBlocked(teamMatch, teamParticipants[0].team_id)
+                     "
+                     class="text-danger"
+                     title=""
+                  >
+                     <i class="fa fa-lg fa-lock" aria-hidden="true"></i>
+                  </span>
+                  <span
+                     *ngIf="
+                        isTeamMatchGuessed(teamMatch, teamParticipants[0].team_id) &&
+                        isTeamMatchBlocked(teamMatch, teamParticipants[0].team_id)
+                     "
+                  >
+                     <span class="fa-stack">
+                        <i class="fa fa-check-circle fa-stack-1x text-success"></i>
+                        <i class="fa fa-ban fa-stack-2x text-danger"></i>
+                     </span>
+                  </span>
+               </div>
+               {{ getPredictionDetails(teamMatch, teamParticipants[0].team_id).prediction }}
+            </td>
+            <td class="align-middle text-center">
+               <button
+                  *ngIf="isCaptain && teamMatch.is_predictable"
+                  class="btn"
+                  [ngClass]="{ 'btn-outline-primary': matchHasPrediction(teamMatch), 'btn-primary': !matchHasPrediction(teamMatch) }"
+                  [hidden]="spinnerButton['team_match_' + teamMatch.id]"
+                  (click)="updateOrCreateTeamPredictor(teamPredictorForm, teamMatch)"
+               >
+                  <i [hidden]="matchHasPrediction(teamMatch)" class="fa fa-check-circle-o" aria-hidden="true"></i>
+                  <i [hidden]="!matchHasPrediction(teamMatch)" class="fa fa-pencil-square-o" aria-hidden="true"></i>
+                  <span class="d-none d-lg-inline">{{ matchHasPrediction(teamMatch) ? 'Змінити' : 'Підтвердити' }}</span>
+               </button>
+               <button *ngIf="!isCaptain || !teamMatch.is_predictable" class="btn btn-outline-secondary" disabled>
+                  <i class="fa fa-ban" aria-hidden="true"></i> <span class="d-none d-lg-inline">Заборонено</span>
+               </button>
+               <app-spinner-button [hidden]="!spinnerButton['team_match_' + teamMatch.id]"></app-spinner-button>
+            </td>
+         </tr>
+         <tr>
+            <td colspan="5">
+               <div class="alert alert-info" role="alert">
+                  При зміні прогнозиста зроблений ним прогноз буде очищено.
+               </div>
+            </td>
+         </tr>
+      </tbody>
+   </table>
 </div>
 <!-- error team-team matches -->
 <app-error *ngIf="errorTeamTeamMatches" [message]="errorTeamTeamMatches"></app-error>
-<h2 [hidden]="!teamParticipants || !teamTeamMatches">Воротар: </h2>
+<h2 [hidden]="!teamParticipants || !teamTeamMatches">Воротар:</h2>
 <!-- round goalkeeper -->
 <div *ngIf="teamParticipants && teamTeamMatches" class="card black-shadow">
-    <form #teamGoalkeeperForm="ngForm" novalidate class="p-2">
-        <div class="form-group"
-             [class.form-group-invalid-custom]="goalkeeper_id.errors?.required && goalkeeper_id.touched">
-            <label class="form-control-label" for="goalkeeper_id"><strong>Воротар:</strong></label>
-            <select name="goalkeeper_id"
-                    id="goalkeeper_id"
-                    class="form-control"
-                    [ngModel]="goalkeeperId ? goalkeeperId : ''"
-                    [disabled]="!isCaptain || (teamTeamMatch && teamTeamMatch.ended) || !teamTeamMatch"
-                    #goalkeeper_id="ngModel"
-                    required>
-                <option [value]="''" selected>Не вибрано</option>
-                <option *ngFor="let teamParticipant of teamParticipants"
-                        [value]="teamParticipant.user_id">
-                    {{teamParticipant.user.name}}
-                </option>
-            </select>
-            <div *ngIf="goalkeeper_id.errors?.required && goalkeeper_id.touched">
-                <small>Вибір воротаря обов'язковий.</small>
-            </div>
-            <div [hidden]="!goalkeeperId" class="alert alert-info mt-2" role="alert">
-                При зміні воротаря заблоковані ним матчі вибраного туру розблокуються.
-            </div>
-        </div>
-        <div class="text-center">
-            <button *ngIf="isCaptain && teamTeamMatch && !teamTeamMatch.ended"
-                    class="btn btn-primary"
-                    [ngClass]="{'btn-outline-primary': goalkeeperId, 'btn-primary': !goalkeeperId}"
-                    [hidden]="spinnerButtonGoalkeeper"
-                    [disabled]="teamGoalkeeperForm.invalid"
-                    (click)="setTeamTeamMatchGoalkeeper(teamGoalkeeperForm)">
-                <i [hidden]="goalkeeperId" class="fa fa-check-circle-o" aria-hidden="true"></i>
-                <i [hidden]="!goalkeeperId" class="fa fa-pencil-square-o" aria-hidden="true"></i>
-                {{goalkeeperId ? 'Змінити' : 'Підтвердити'}}
-            </button>
-            <button *ngIf="!isCaptain || (teamTeamMatch && teamTeamMatch.ended) || !teamTeamMatch"
-                    class="btn btn-outline-secondary"
-                    disabled>
-                <i class="fa fa-ban" aria-hidden="true"></i> Заборонено
-            </button>
-            <app-spinner-button [hidden]="!spinnerButtonGoalkeeper"></app-spinner-button>
-        </div>
-    </form>
+   <form #teamGoalkeeperForm="ngForm" novalidate class="p-2">
+      <div class="form-group" [class.form-group-invalid-custom]="goalkeeper_id.errors?.required && goalkeeper_id.touched">
+         <label class="form-control-label" for="goalkeeper_id"><strong>Воротар:</strong></label>
+         <select
+            name="goalkeeper_id"
+            id="goalkeeper_id"
+            class="form-control"
+            [ngModel]="goalkeeperId ? goalkeeperId : ''"
+            [disabled]="!isCaptain || (teamTeamMatch && teamTeamMatch.ended) || !teamTeamMatch"
+            #goalkeeper_id="ngModel"
+            required
+         >
+            <option [value]="''" selected>Не вибрано</option>
+            <option *ngFor="let teamParticipant of teamParticipants" [value]="teamParticipant.user_id">
+               {{ teamParticipant.user.name }}
+            </option>
+         </select>
+         <div *ngIf="goalkeeper_id.errors?.required && goalkeeper_id.touched">
+            <small>Вибір воротаря обов'язковий.</small>
+         </div>
+         <div [hidden]="!goalkeeperId" class="alert alert-info mt-2" role="alert">
+            При зміні воротаря заблоковані ним матчі вибраного туру розблокуються.
+         </div>
+      </div>
+      <div class="text-center">
+         <button
+            *ngIf="isCaptain && teamTeamMatch && !teamTeamMatch.ended"
+            class="btn btn-primary"
+            [ngClass]="{ 'btn-outline-primary': goalkeeperId, 'btn-primary': !goalkeeperId }"
+            [hidden]="spinnerButtonGoalkeeper"
+            [disabled]="teamGoalkeeperForm.invalid"
+            (click)="setTeamTeamMatchGoalkeeper(teamGoalkeeperForm)"
+         >
+            <i [hidden]="goalkeeperId" class="fa fa-check-circle-o" aria-hidden="true"></i>
+            <i [hidden]="!goalkeeperId" class="fa fa-pencil-square-o" aria-hidden="true"></i>
+            {{ goalkeeperId ? 'Змінити' : 'Підтвердити' }}
+         </button>
+         <button *ngIf="!isCaptain || (teamTeamMatch && teamTeamMatch.ended) || !teamTeamMatch" class="btn btn-outline-secondary" disabled>
+            <i class="fa fa-ban" aria-hidden="true"></i> Заборонено
+         </button>
+         <app-spinner-button [hidden]="!spinnerButtonGoalkeeper"></app-spinner-button>
+      </div>
+   </form>
 </div>
