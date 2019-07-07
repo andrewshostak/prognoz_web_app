@@ -33,19 +33,4 @@ export class ChampionshipMatchService {
       }
       return this.httpClient.get(`${this.championshipMatchUrl}/${id}`, { params }).pipe(catchError(this.errorHandlerService.handle));
    }
-
-   /**
-    * Get championship matches
-    * @param requestParams
-    * @returns {Observable<any>}
-    */
-   public getChampionshipMatches(requestParams?: RequestParams[]): Observable<any> {
-      let params: HttpParams = new HttpParams();
-      if (requestParams) {
-         for (const requestParam of requestParams) {
-            params = params.append(requestParam.parameter, requestParam.value);
-         }
-      }
-      return this.httpClient.get(this.championshipMatchUrl, { params }).pipe(catchError(this.errorHandlerService.handle));
-   }
 }

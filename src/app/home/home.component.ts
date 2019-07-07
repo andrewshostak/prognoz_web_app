@@ -1,61 +1,72 @@
 import { Component, OnInit } from '@angular/core';
 
-import { ChampionshipMatch } from '@models/championship/championship-match.model';
-import { ChampionshipMatchService } from '@services/championship/championship-match.service';
+import { NewsService } from '@app/news/shared/news.service';
+import { ModelStatus } from '@enums/model-status.enum';
+import { Sequence } from '@enums/sequence.enum';
 import { environment } from '@env';
+import { ChampionshipMatchNew } from '@models/new/championship-match-new.model';
 import { News } from '@models/news.model';
-import { NewsService } from '../news/shared/news.service';
+import { ChampionshipMatchSearch } from '@models/search/championship-match-search.model';
+import { ChampionshipMatchNewService } from '@services/new/championship-match-new.service';
+import { SettingsService } from '@services/settings.service';
 import { TitleService } from '@services/title.service';
 
 @Component({
-    selector: 'app-home',
-    templateUrl: './home.component.html',
-    styleUrls: ['./home.component.scss']
+   selector: 'app-home',
+   styleUrls: ['./home.component.scss'],
+   templateUrl: './home.component.html'
 })
 export class HomeComponent implements OnInit {
-    constructor(
-        private championshipMatchService: ChampionshipMatchService,
-        private newsService: NewsService,
-        private titleService: TitleService
-    ) {}
+   public championshipMatches: ChampionshipMatchNew[];
+   public clubsLogosPath: string;
+   public errorChampionshipMatches: string;
+   public errorNews: string;
+   public news: News[];
+   public newsImagesUrl: string = environment.apiImageNews;
 
-    championshipMatches: ChampionshipMatch[];
-    clubsImagesUrl: string = environment.apiImageClubs;
-    errorChampionshipMatches: string;
-    errorNews: string | Array<string>;
-    news: News[];
-    newsImagesUrl: string = environment.apiImageNews;
+   constructor(
+      private championshipMatchService: ChampionshipMatchNewService,
+      private newsService: NewsService,
+      private titleService: TitleService
+   ) {}
 
-    ngOnInit() {
-        this.titleService.setTitle('Prognoz.org.ua - конкурси футбольних прогнозів, прогнози на топ-матчі, чемпіонати прогнозистів');
-        this.getNewsData();
-        this.getMatchesData();
-    }
+   public ngOnInit(): void {
+      this.titleService.setTitle('Prognoz.org.ua - конкурси футбольних прогнозів, прогнози на топ-матчі, чемпіонати прогнозистів');
+      this.clubsLogosPath = SettingsService.clubsLogosPath + '/';
+      this.getNewsData();
+      this.getMatchesData();
+   }
 
-    private getMatchesData() {
-        const param = [{ parameter: 'filter', value: 'predictable' }, { parameter: 'coming', value: 'true' }];
-        this.championshipMatchService.getChampionshipMatches(param).subscribe(
-            response => {
-                if (response) {
-                    this.championshipMatches = response.championship_matches;
-                }
-            },
-            error => {
-                this.errorChampionshipMatches = error;
+   private getMatchesData() {
+      const search: ChampionshipMatchSearch = {
+         active: ModelStatus.Truthy,
+         limit: SettingsService.maxLimitValues.championshipMatches,
+         orderBy: 'started_at',
+         page: 1,
+         sequence: Sequence.Ascending,
+         soon: ModelStatus.Truthy
+      };
+
+      this.championshipMatchService.getChampionshipMatches(search).subscribe(
+         response => {
+            this.championshipMatches = response.data;
+         },
+         error => {
+            this.errorChampionshipMatches = error;
+         }
+      );
+   }
+
+   private getNewsData() {
+      this.newsService.getNews().subscribe(
+         response => {
+            if (response) {
+               this.news = response.data;
             }
-        );
-    }
-
-    private getNewsData() {
-        this.newsService.getNews().subscribe(
-            response => {
-                if (response) {
-                    this.news = response.data;
-                }
-            },
-            error => {
-                this.errorNews = error;
-            }
-        );
-    }
+         },
+         error => {
+            this.errorNews = error;
+         }
+      );
+   }
 }
