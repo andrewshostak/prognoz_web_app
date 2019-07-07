@@ -1,34 +1,78 @@
 import { Component, OnInit } from '@angular/core';
 
-import { ChampionshipMatch } from '@models/championship/championship-match.model';
-import { ChampionshipMatchService } from '@services/championship/championship-match.service';
-import { environment } from '@env';
+import { ModelStatus } from '@enums/model-status.enum';
+import { Sequence } from '@enums/sequence.enum';
+import { Tournament } from '@enums/tournament.enum';
+import { ChampionshipMatchNew } from '@models/new/championship-match-new.model';
+import { CompetitionNew } from '@models/new/competition-new.model';
+import { PaginatedResponse } from '@models/paginated-response.model';
+import { ChampionshipMatchSearch } from '@models/search/championship-match-search.model';
+import { CompetitionSearch } from '@models/search/competition-search.model';
+import { ChampionshipMatchNewService } from '@services/new/championship-match-new.service';
+import { CompetitionNewService } from '@services/new/competition-new.service';
+import { SettingsService } from '@services/settings.service';
 import { TitleService } from '@services/title.service';
+import { Observable, throwError } from 'rxjs';
+import { mergeMap } from 'rxjs/operators';
 
 @Component({
-    selector: 'app-championship-results',
-    templateUrl: './championship-results.component.html',
-    styleUrls: ['./championship-results.component.scss']
+   selector: 'app-championship-results',
+   styleUrls: ['./championship-results.component.scss'],
+   templateUrl: './championship-results.component.html'
 })
 export class ChampionshipResultsComponent implements OnInit {
-    constructor(private championshipMatchService: ChampionshipMatchService, private titleService: TitleService) {}
+   public championshipMatches: ChampionshipMatchNew[];
+   public error: string;
 
-    championshipMatches: ChampionshipMatch[];
-    clubsImagesUrl: string = environment.apiImageClubs;
-    errorChampionshipMatches: string;
+   constructor(
+      private championshipMatchService: ChampionshipMatchNewService,
+      private competitionService: CompetitionNewService,
+      private titleService: TitleService
+   ) {}
 
-    ngOnInit() {
-        this.titleService.setTitle('Результати матчів - Чемпіонат');
-        const param = [{ parameter: 'filter', value: 'ended' }];
-        this.championshipMatchService.getChampionshipMatches(param).subscribe(
-            response => {
-                if (response) {
-                    this.championshipMatches = response.championship_matches;
-                }
+   public getActiveChampionshipCompetition(): Observable<PaginatedResponse<CompetitionNew>> {
+      const search: CompetitionSearch = {
+         active: ModelStatus.Truthy,
+         limit: 1,
+         page: 1,
+         tournamentId: Tournament.Championship
+      };
+
+      return this.competitionService.getCompetitions(search);
+   }
+
+   public getEndedChampionshipMatches(competitionId: number): Observable<PaginatedResponse<ChampionshipMatchNew>> {
+      const search: ChampionshipMatchSearch = {
+         competitionId,
+         ended: ModelStatus.Truthy,
+         limit: SettingsService.maxLimitValues.championshipMatches,
+         orderBy: 'number_in_competition',
+         page: 1,
+         sequence: Sequence.Descending
+      };
+
+      return this.championshipMatchService.getChampionshipMatches(search);
+   }
+
+   public ngOnInit(): void {
+      this.titleService.setTitle('Результати матчів - Чемпіонат');
+
+      this.getActiveChampionshipCompetition()
+         .pipe(
+            mergeMap(competitionResponse => {
+               if (!competitionResponse.data[0]) {
+                  return throwError('Активних змагань не знайдено');
+               }
+               return this.getEndedChampionshipMatches(competitionResponse.data[0].id);
+            })
+         )
+         .subscribe(
+            championshipMatchesResponse => {
+               this.championshipMatches = championshipMatchesResponse.data;
             },
             error => {
-                this.errorChampionshipMatches = error;
+               this.error = error;
             }
-        );
-    }
+         );
+   }
 }

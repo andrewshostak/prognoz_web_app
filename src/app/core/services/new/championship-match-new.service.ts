@@ -59,6 +59,10 @@ export class ChampionshipMatchNewService {
          params = params.append('soon', (search.soon as unknown) as string);
       }
 
+      if (search.competitionId) {
+         params = params.append('competition_id', search.competitionId.toString());
+      }
+
       if (search.userId) {
          params = params.set('user_id', search.userId.toString());
       }

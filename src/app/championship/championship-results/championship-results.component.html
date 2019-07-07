@@ -1,19 +1,19 @@
-<h2>Результати: </h2>
+<h2>Результати:</h2>
 <!-- Progress -->
 <div *ngIf="championshipMatches" class="card mb-2 black-shadow">
-    <div class="card-body">
-        <div class="progress" title="{{championshipMatches.length}} з 100 матчів завершено">
-            <div class="progress-bar"
-                 role="progressbar"
-                 [ngStyle]="{width: championshipMatches.length + '%'}"
-                 [attr.aria-valuenow]="championshipMatches.length"
-                 aria-valuemin="0"
-                 aria-valuemax="100">
-                {{(championshipMatches.length > 10) ? (championshipMatches.length + '%') : ''}}
-            </div>
-        </div>
-    </div>
+   <div class="card-body">
+      <div class="progress" title="{{ championshipMatches.length }} з 100 матчів завершено">
+         <div
+            class="progress-bar"
+            role="progressbar"
+            [ngStyle]="{ width: championshipMatches.length + '%' }"
+            [attr.aria-valuenow]="championshipMatches.length"
+            aria-valuemin="0"
+            aria-valuemax="100"
+         >
+            {{ championshipMatches.length > 10 ? championshipMatches.length + '%' : '' }}
+         </div>
+      </div>
+   </div>
 </div>
-<app-championship-results-table [results]="championshipMatches"
-                                [error]="errorChampionshipMatches">
-</app-championship-results-table>
+<app-championship-results-table [results]="championshipMatches" [error]="error"> </app-championship-results-table>

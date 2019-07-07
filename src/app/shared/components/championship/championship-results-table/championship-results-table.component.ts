@@ -1,13 +1,13 @@
 import { Component, Input } from '@angular/core';
 
-import { ChampionshipMatch } from '@models/championship/championship-match.model';
+import { ChampionshipMatchNew } from '@models/new/championship-match-new.model';
 
 @Component({
-    selector: 'app-championship-results-table',
-    templateUrl: './championship-results-table.component.html',
-    styleUrls: ['./championship-results-table.component.scss']
+   selector: 'app-championship-results-table',
+   styleUrls: ['./championship-results-table.component.scss'],
+   templateUrl: './championship-results-table.component.html'
 })
 export class ChampionshipResultsTableComponent {
-    @Input() results: ChampionshipMatch[];
-    @Input() error: string;
+   @Input() public results: ChampionshipMatchNew[];
+   @Input() public error: string;
 }

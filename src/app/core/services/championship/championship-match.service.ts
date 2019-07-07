@@ -48,20 +48,4 @@ export class ChampionshipMatchService {
       }
       return this.httpClient.get(this.championshipMatchUrl, { params }).pipe(catchError(this.errorHandlerService.handle));
    }
-
-   /**
-    * Get matches with current user prediction.
-    * It has to be a separate method with separate backend path
-    * Because backend can't get current authenticated user if we don't use HeadersWithToken service.
-    * @param requestParams
-    * @returns {Observable<any>}
-    */
-   public getChampionshipPredictableMatches(requestParams: RequestParams[]): Observable<any> {
-      let params: HttpParams = new HttpParams();
-      const url = `${this.championshipMatchUrl}-predictable`;
-      for (const requestParam of requestParams) {
-         params = params.append(requestParam.parameter, requestParam.value);
-      }
-      return this.headersWithToken.get(url, params).pipe(catchError(this.errorHandlerService.handle));
-   }
 }
