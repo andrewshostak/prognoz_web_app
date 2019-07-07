@@ -5,6 +5,7 @@
 </div>
 <h2>Прогнози:</h2>
 <app-championship-match-predictions-table
+   *ngIf="championshipMatch && championshipPredictions"
    [championshipMatch]="championshipMatch"
    [championshipPredictions]="championshipPredictions"
    [authenticatedUser]="authenticatedUser"
