@@ -30,6 +30,7 @@ import { FormValidatorService } from '@services/form-validator.service';
 import { HeadersWithToken } from '@services/headers-with-token.service';
 import { ImageService } from '@services/image.service';
 import { ChampionshipMatchNewService } from '@services/new/championship-match-new.service';
+import { ChampionshipPredictionNewService } from '@services/new/championship-prediction-new.service';
 import { CompetitionNewService } from '@services/new/competition-new.service';
 import { CupMatchNewService } from '@services/new/cup-match-new.service';
 import { MatchService } from '@services/new/match.service';
@@ -60,6 +61,7 @@ import { UtilsService } from '@services/utils.service';
       ChampionshipService,
       ChampionshipMatchService,
       ChampionshipMatchNewService,
+      ChampionshipPredictionNewService,
       ChampionshipPredictionService,
       ChampionshipRatingService,
       CompetitionService,

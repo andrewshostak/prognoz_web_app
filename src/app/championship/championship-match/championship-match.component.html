@@ -1,34 +1,12 @@
 <h2>Матч:</h2>
-<!-- error -->
-<app-error *ngIf="errorChampionshipMatch" [message]="errorChampionshipMatch"></app-error>
-<!-- match info -->
 <div *ngIf="championshipMatch" class="container-fluid">
-   <!--<app-championship-match-predictable [championshipMatch]="championshipMatch"-->
-   <!--[authenticatedUser]="null"-->
-   <!--[championshipPredictsForm]="null">-->
-   <!--</app-championship-match-predictable>-->
+   <app-championship-match-predictable [championshipMatch]="championshipMatch" [authenticatedUser]="null" [championshipPredictsForm]="null">
+   </app-championship-match-predictable>
 </div>
-<!-- previous/next match -->
-<nav *ngIf="championshipMatch" aria-label="Previous/Next match">
-   <ul class="pagination justify-content-center">
-      <li class="page-item blue-shadow">
-         <a routerLink="/championship/matches/{{ championshipMatch.id - 1 }}" class="page-link" title="Попередній матч">
-            <i class="fa fa-chevron-circle-left fa-fw" aria-hidden="true"></i> <span class="d-none d-sm-inline">Попередній</span>
-         </a>
-      </li>
-      <li class="page-item blue-shadow">
-         <a routerLink="/championship/matches/{{ championshipMatch.id + 1 }}" class="page-link" title="Наступний матч">
-            <span class="d-none d-sm-inline">Наступний</span> <i class="fa fa-chevron-circle-right fa-fw" aria-hidden="true"></i>
-         </a>
-      </li>
-   </ul>
-</nav>
 <h2>Прогнози:</h2>
-<app-championship-match-predictions-table [match]="championshipMatch" [authenticatedUser]="authenticatedUser">
+<app-championship-match-predictions-table
+   [championshipMatch]="championshipMatch"
+   [championshipPredictions]="championshipPredictions"
+   [authenticatedUser]="authenticatedUser"
+>
 </app-championship-match-predictions-table>
-<!-- previous page button -->
-<div *ngIf="errorChampionshipMatch" class="row">
-   <div class="col text-center mt-2">
-      <a (click)="goBack()" class="btn btn-secondary">Назад</a>
-   </div>
-</div>

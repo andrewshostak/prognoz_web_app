@@ -13,6 +13,7 @@ export class SettingsService {
 
    public static readonly newInterceptorPaths: string[] = [
       'v2/championship/matches',
+      'v2/championship/predictions',
       'v2/matches',
       'v2/competitions',
       'v2/cup/matches',

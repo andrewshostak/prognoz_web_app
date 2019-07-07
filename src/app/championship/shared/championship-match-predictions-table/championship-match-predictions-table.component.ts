@@ -1,21 +1,23 @@
 import { Component, Input } from '@angular/core';
 
-import { ChampionshipService } from '@services/championship/championship.service';
-import { ChampionshipMatch } from '@models/championship/championship-match.model';
+import { ChampionshipMatchNew } from '@models/new/championship-match-new.model';
+import { ChampionshipPredictionNew } from '@models/new/championship-prediction-new.model';
 import { User } from '@models/user.model';
+import { ChampionshipService } from '@services/championship/championship.service';
 import { UtilsService } from '@services/utils.service';
 
 @Component({
-    selector: 'app-championship-match-predictions-table',
-    templateUrl: './championship-match-predictions-table.component.html',
-    styleUrls: ['./championship-match-predictions-table.component.scss']
+   selector: 'app-championship-match-predictions-table',
+   styleUrls: ['./championship-match-predictions-table.component.scss'],
+   templateUrl: './championship-match-predictions-table.component.html'
 })
 export class ChampionshipMatchPredictionsTableComponent {
-    @Input() match: ChampionshipMatch;
-    @Input() authenticatedUser: User;
+   @Input() public championshipMatch: ChampionshipMatchNew;
+   @Input() public authenticatedUser: User;
+   @Input() public championshipPredictions: ChampionshipPredictionNew[];
 
-    getUserPointsOnMatch = ChampionshipService.getUserPointsOnMatch;
-    isChampionshipMatchGuessed = ChampionshipService.isChampionshipMatchGuessed;
-    isScore = UtilsService.isScore;
-    showScoresOrString = UtilsService.showScoresOrString;
+   public getUserPointsOnMatch = ChampionshipService.getUserPointsOnMatch;
+   public isChampionshipMatchGuessed = ChampionshipService.isChampionshipMatchGuessed;
+   public isScore = UtilsService.isScore;
+   public showScoresOrString = UtilsService.showScoresOrString;
 }
