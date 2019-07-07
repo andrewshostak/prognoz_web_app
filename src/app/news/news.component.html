@@ -1,19 +1,19 @@
 <div class="container">
-    <div class="row">
-        <!-- left(main) column-->
-        <div class="col col-md-8 col-lg-9 col-xl-9">
-            <router-outlet></router-outlet>
-        </div>
-        <!-- right(additional) column -->
-        <div class="col-md-4 col-lg-3 col-xl-3">
-            <div class="row">
-                <div class="col">
-                    <!-- last results -->
-                    <app-championship-last-results></app-championship-last-results>
-                    <!-- users online -->
-                    <app-online-users-list></app-online-users-list>
-                </div>
+   <div class="row">
+      <!-- left(main) column-->
+      <div class="col col-md-8 col-lg-9 col-xl-9">
+         <router-outlet></router-outlet>
+      </div>
+      <!-- right(additional) column -->
+      <div class="col-md-4 col-lg-3 col-xl-3">
+         <div class="row">
+            <div class="col">
+               <!-- last results -->
+               <app-last-ended-matches></app-last-ended-matches>
+               <!-- users online -->
+               <app-online-users-list></app-online-users-list>
             </div>
-        </div>
-    </div>
+         </div>
+      </div>
+   </div>
 </div>

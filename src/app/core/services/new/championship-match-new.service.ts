@@ -5,6 +5,7 @@ import { environment } from '@env';
 import { ChampionshipMatchNew } from '@models/new/championship-match-new.model';
 import { PaginatedResponse } from '@models/paginated-response.model';
 import { ChampionshipMatchSearch } from '@models/search/championship-match-search.model';
+import { isNil } from 'lodash';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
@@ -32,6 +33,14 @@ export class ChampionshipMatchNewService {
 
    public getChampionshipMatches(search: ChampionshipMatchSearch): Observable<PaginatedResponse<ChampionshipMatchNew>> {
       let params: HttpParams = new HttpParams();
+
+      if (!isNil(search.active)) {
+         params = params.append('active', (search.active as unknown) as string);
+      }
+
+      if (!isNil(search.ended)) {
+         params = params.append('ended', (search.ended as unknown) as string);
+      }
 
       if (search.limit) {
          params = params.set('limit', search.limit.toString());

@@ -1,0 +1,18 @@
+<div *ngIf="championshipMatches" class="card black-shadow mt-2 mb-2">
+   <h4 class="card-header text-xs-center">Останні результати</h4>
+   <ul class="list-group list-group-flush">
+      <li *ngFor="let championshipMatch of championshipMatches" class="list-group-item">
+         <div class="col-12 text-center">{{ championshipMatch.match.club_home.title }} - {{ championshipMatch.match.club_away.title }}</div>
+         <div class="col-12 text-center">
+            <app-club-logo-with-tooltip [club]="championshipMatch.match.club_home"></app-club-logo-with-tooltip>
+            <strong>{{ championshipMatch.match.home }} : {{ championshipMatch.match.away }}</strong>
+            <app-club-logo-with-tooltip [club]="championshipMatch.match.club_away"></app-club-logo-with-tooltip>
+         </div>
+      </li>
+   </ul>
+   <div class="card-footer text-muted">
+      <button (click)="getChampionshipMatchesData()" title="Оновити" class="btn btn-sm btn-outline-secondary cursor-pointer">
+         <i class="fa fa-refresh fa-fw" aria-hidden="true"></i>
+      </button>
+   </div>
+</div>

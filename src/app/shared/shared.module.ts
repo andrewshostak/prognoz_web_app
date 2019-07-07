@@ -3,7 +3,6 @@ import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 
-import { ChampionshipLastResultsComponent } from '@app/shared/components/championship/championship-last-results/championship-last-results.component';
 import { ChampionshipRatingTableComponent } from '@app/shared/components/championship/championship-rating-table/championship-rating-table.component';
 import { ChampionshipResultsTableComponent } from '@app/shared/components/championship/championship-results-table/championship-results-table.component';
 import { ChampionshipUserPredictionsTableComponent } from '@app/shared/components/championship/championship-user-predictions-table/championship-user-predictions-table.component';
@@ -13,6 +12,7 @@ import { DropdownNavigationComponent } from '@app/shared/components/dropdown-nav
 import { ErrorComponent } from '@app/shared/components/error/error.component';
 import { InfoComponent } from '@app/shared/components/info/info.component';
 import { LastCommentsComponent } from '@app/shared/components/last-comments/last-comments.component';
+import { LastEndedMatchesComponent } from '@app/shared/components/last-ended-matches/last-ended-matches.component';
 import { LastUserComponent } from '@app/shared/components/last-user/last-user.component';
 import { MatchSelectComponent } from '@app/shared/components/match-select/match-select.component';
 import { NavigationComponent } from '@app/shared/components/navigation/navigation.component';
@@ -34,7 +34,6 @@ import { ChartsModule } from 'ng2-charts';
 
 @NgModule({
    declarations: [
-      ChampionshipLastResultsComponent,
       ChampionshipRatingTableComponent,
       ChampionshipResultsTableComponent,
       ChampionshipUserPredictionsTableComponent,
@@ -46,6 +45,7 @@ import { ChartsModule } from 'ng2-charts';
       ErrorComponent,
       InfoComponent,
       LastCommentsComponent,
+      LastEndedMatchesComponent,
       LastUserComponent,
       MatchSelectComponent,
       NavigationComponent,
@@ -61,7 +61,6 @@ import { ChartsModule } from 'ng2-charts';
       WinLogoWithTooltipComponent
    ],
    exports: [
-      ChampionshipLastResultsComponent,
       ChampionshipRatingTableComponent,
       ChampionshipResultsTableComponent,
       ChampionshipUserPredictionsTableComponent,
@@ -73,6 +72,7 @@ import { ChartsModule } from 'ng2-charts';
       ErrorComponent,
       InfoComponent,
       LastCommentsComponent,
+      LastEndedMatchesComponent,
       LastUserComponent,
       MatchSelectComponent,
       NavigationComponent,
