@@ -18,6 +18,8 @@ import { SettingsService } from '@services/settings.service';
 import { TitleService } from '@services/title.service';
 import { UtilsService } from '@services/utils.service';
 import { NotificationsService } from 'angular2-notifications';
+import { of } from 'rxjs';
+import { mergeMap } from 'rxjs/operators';
 
 @Component({
    selector: 'app-championship-home',
@@ -63,14 +65,25 @@ export class ChampionshipHomeComponent implements OnInit {
          search.userId = this.authenticatedUser.id;
       }
 
-      this.championshipMatchService.getChampionshipMatches(search).subscribe(
-         response => {
+      this.championshipMatchService
+         .getChampionshipMatches(search)
+         .pipe(
+            mergeMap(response => {
+               if (response.data.length) {
+                  this.updateForm(response.data, !!this.authenticatedUser);
+                  return of(null);
+               }
+               search.soon = ModelStatus.Falsy;
+               search.limit = 3;
+               return this.championshipMatchService.getChampionshipMatches(search);
+            })
+         )
+         .subscribe(response => {
+            if (!response) {
+               return;
+            }
             this.updateForm(response.data, !!this.authenticatedUser);
-         },
-         error => {
-            this.errorChampionshipMatches = error;
-         }
-      );
+         });
    }
 
    public getChampionshipPredictionsData(): void {

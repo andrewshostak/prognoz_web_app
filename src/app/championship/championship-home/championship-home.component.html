@@ -1,5 +1,4 @@
-<!-- TODAY MATCHES -->
-<h2 *ngIf="championshipMatches">
+<h2 *ngIf="championshipMatches?.length">
    Найближчі матчі:
    <button (click)="getChampionshipMatchesData()" title="Оновити" class="btn btn-sm btn-outline-secondary cursor-pointer">
       <i class="fa fa-refresh fa-fw" aria-hidden="true"></i>
