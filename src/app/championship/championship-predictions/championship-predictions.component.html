@@ -1,37 +1,31 @@
-<h2>Прогнози: </h2>
-<!-- error -->
+<h2>Прогнози:</h2>
 <app-error *ngIf="errorChampionshipMatches" [message]="errorChampionshipMatches"></app-error>
-<!-- championship-match-predictable component-->
 <div *ngIf="championshipMatches" class="container-fluid">
-    <!-- matches form -->
-    <form novalidate [formGroup]="championshipPredictionsForm" (ngSubmit)="onSubmit()">
-        <app-championship-match-predictable *ngFor="let championshipMatch of championshipMatches"
-                                            [match]="championshipMatch"
-                                            [authenticatedUser]="authenticatedUser"
-                                            [championshipPredictsForm]="championshipPredictionsForm">
-        </app-championship-match-predictable>
-        <!-- button row (only if predictable matches exists) -->
-        <div class="row mb-2">
-            <!-- submit form button -->
-            <div *ngIf="authenticatedUser" class="col-12 text-center">
-                <!-- add/update predicts button -->
-                <button [hidden]="spinnerButton" class="btn btn-primary">
-                    <i class="fa fa-check-circle-o" aria-hidden="true"></i> Зробити прогнози
-                </button>
-                <!-- spinner button -->
-                <app-spinner-button [hidden]="!spinnerButton"></app-spinner-button>
+   <form novalidate [formGroup]="championshipPredictionsForm" (ngSubmit)="onSubmit()">
+      <app-championship-match-predictable
+         *ngFor="let championshipMatch of championshipMatches"
+         [championshipMatch]="championshipMatch"
+         [authenticatedUser]="authenticatedUser"
+         [championshipPredictsForm]="championshipPredictionsForm"
+      >
+      </app-championship-match-predictable>
+      <div class="row mb-2">
+         <div *ngIf="authenticatedUser" class="col-12 text-center">
+            <button [hidden]="spinnerButton" class="btn btn-primary">
+               <i class="fa fa-check-circle-o" aria-hidden="true"></i> Зробити прогнози
+            </button>
+            <app-spinner-button [hidden]="!spinnerButton"></app-spinner-button>
+         </div>
+         <div *ngIf="!authenticatedUser" class="col-12 text-center">
+            <div class="btn-group" role="group" aria-label="Signin and signup links">
+               <button routerLink="/signin" type="button" class="btn btn-primary">
+                  <i class="fa fa fa-sign-in" aria-hidden="true"></i> Вхід
+               </button>
+               <button routerLink="/signup" type="button" class="btn btn-primary">
+                  <i class="fa fa-user-plus" aria-hidden="true"></i> Реєстрація
+               </button>
             </div>
-            <!-- login and registration links -->
-            <div *ngIf="!authenticatedUser" class="col-12 text-center">
-                <div class="btn-group" role="group" aria-label="Signin and signup links">
-                    <button routerLink="/signin" type="button" class="btn btn-primary">
-                        <i class="fa fa fa-sign-in" aria-hidden="true"></i> Вхід
-                    </button>
-                    <button routerLink="/signup" type="button" class="btn btn-primary">
-                        <i class="fa fa-user-plus" aria-hidden="true"></i> Реєстрація
-                    </button>
-                </div>
-            </div>
-        </div>
-    </form>
+         </div>
+      </div>
+   </form>
 </div>

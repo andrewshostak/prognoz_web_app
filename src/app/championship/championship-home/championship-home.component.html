@@ -1,89 +1,97 @@
 <!-- TODAY MATCHES -->
-<h2 *ngIf="championshipMatches">Найближчі матчі:
-    <button (click)="getChampionshipMatchesData()" title="Оновити" class="btn btn-sm btn-outline-secondary cursor-pointer">
-        <i class="fa fa-refresh fa-fw" aria-hidden="true"></i>
-    </button>
+<h2 *ngIf="championshipMatches">
+   Найближчі матчі:
+   <button (click)="getChampionshipMatchesData()" title="Оновити" class="btn btn-sm btn-outline-secondary cursor-pointer">
+      <i class="fa fa-refresh fa-fw" aria-hidden="true"></i>
+   </button>
 </h2>
 <!-- error -->
 <app-error *ngIf="errorChampionshipMatches" [message]="errorChampionshipMatches"></app-error>
 <!-- championship-match-predictable component-->
 <div *ngIf="championshipMatches" class="container-fluid">
-    <form novalidate [formGroup]="championshipPredictionsForm" (ngSubmit)="onSubmit()">
-        <app-championship-match-predictable *ngFor="let championshipMatch of championshipMatches"
-                                            [match]="championshipMatch"
-                                            [authenticatedUser]="authenticatedUser"
-                                            [championshipPredictsForm]="championshipPredictionsForm">
-        </app-championship-match-predictable>
-        <!--button row (only if predictable matches exists)-->
-        <div class="row">
-            <!-- submit form button -->
-            <div *ngIf="championshipMatches.length && authenticatedUser" class="col-12 text-center">
-                <!-- add/update predicts button -->
-                <button [hidden]="spinnerButton" class="btn btn-primary">
-                    <i class="fa fa-check-circle-o" aria-hidden="true"></i> Зробити прогнози
-                </button>
-                <!-- spinner button -->
-                <app-spinner-button [hidden]="!spinnerButton"></app-spinner-button>
+   <form novalidate [formGroup]="championshipPredictionsForm" (ngSubmit)="onSubmit()">
+      <app-championship-match-predictable
+         *ngFor="let championshipMatch of championshipMatches"
+         [championshipMatch]="championshipMatch"
+         [authenticatedUser]="authenticatedUser"
+         [championshipPredictsForm]="championshipPredictionsForm"
+      >
+      </app-championship-match-predictable>
+      <!--button row (only if predictable matches exists)-->
+      <div class="row">
+         <!-- submit form button -->
+         <div *ngIf="championshipMatches.length && authenticatedUser" class="col-12 text-center">
+            <!-- add/update predicts button -->
+            <button [hidden]="spinnerButton" class="btn btn-primary">
+               <i class="fa fa-check-circle-o" aria-hidden="true"></i> Зробити прогнози
+            </button>
+            <!-- spinner button -->
+            <app-spinner-button [hidden]="!spinnerButton"></app-spinner-button>
+         </div>
+         <!-- login and registration links -->
+         <div *ngIf="championshipMatches.length && !authenticatedUser" class="col-12 text-center">
+            <div class="btn-group" role="group" aria-label="Signin and signup links">
+               <button routerLink="/signin" type="button" class="btn btn-primary">
+                  <i class="fa fa fa-sign-in" aria-hidden="true"></i> Вхід
+               </button>
+               <button routerLink="/signup" type="button" class="btn btn-primary">
+                  <i class="fa fa-user-plus" aria-hidden="true"></i> Реєстрація
+               </button>
             </div>
-            <!-- login and registration links -->
-            <div *ngIf="championshipMatches.length && !authenticatedUser" class="col-12 text-center">
-                <div class="btn-group" role="group" aria-label="Signin and signup links">
-                    <button routerLink="/signin" type="button" class="btn btn-primary">
-                        <i class="fa fa fa-sign-in" aria-hidden="true"></i> Вхід
-                    </button>
-                    <button routerLink="/signup" type="button" class="btn btn-primary">
-                        <i class="fa fa-user-plus" aria-hidden="true"></i> Реєстрація
-                    </button>
-                </div>
-            </div>
-        </div>
-    </form>
+         </div>
+      </div>
+   </form>
 </div>
 <!-- RATING TOP -->
 <div *ngIf="championshipRatingItems" class="row align-items-end mt-2">
-    <div class="col-12 col-sm-5 col-md-6">
-        <h2>Топ-{{championshipRatingItems.length}} рейтингу:
-            <button (click)="getChampionshipRatingData()" title="Оновити" class="btn btn-sm btn-outline-secondary cursor-pointer">
-                <i class="fa fa-refresh fa-fw" aria-hidden="true"></i>
-            </button>
-        </h2>
-    </div>
-    <div class="col-12 col-sm-7 col-md-6 text-right">
-        <small class="text-muted">Рейтинг оновлено {{championshipRatingItems[0].updated_at | time:'fromNow'}}</small>
-    </div>
+   <div class="col-12 col-sm-5 col-md-6">
+      <h2>
+         Топ-{{ championshipRatingItems.length }} рейтингу:
+         <button (click)="getChampionshipRatingData()" title="Оновити" class="btn btn-sm btn-outline-secondary cursor-pointer">
+            <i class="fa fa-refresh fa-fw" aria-hidden="true"></i>
+         </button>
+      </h2>
+   </div>
+   <div class="col-12 col-sm-7 col-md-6 text-right">
+      <small class="text-muted">Рейтинг оновлено {{ championshipRatingItems[0].updated_at | time: 'fromNow' }}</small>
+   </div>
 </div>
 <!-- rating table -->
-<app-championship-rating-table [rating]="championshipRatingItems"
-                               [error]="errorChampionshipRating"
-                               [authenticatedUser]="authenticatedUser">
+<app-championship-rating-table [rating]="championshipRatingItems" [error]="errorChampionshipRating" [authenticatedUser]="authenticatedUser">
 </app-championship-rating-table>
 <!-- LAST PREDICTIONS -->
-<h2 *ngIf="championshipPredictions" class="mt-2">Останні прогнози:
-    <button (click)="getChampionshipPredictionsData()" title="Оновити" class="btn btn-sm btn-outline-secondary cursor-pointer">
-        <i class="fa fa-refresh fa-fw" aria-hidden="true"></i>
-    </button>
+<h2 *ngIf="championshipPredictions" class="mt-2">
+   Останні прогнози:
+   <button (click)="getChampionshipPredictionsData()" title="Оновити" class="btn btn-sm btn-outline-secondary cursor-pointer">
+      <i class="fa fa-refresh fa-fw" aria-hidden="true"></i>
+   </button>
 </h2>
 <!-- error -->
 <app-error *ngIf="errorChampionshipPredictions" [message]="errorChampionshipPredictions"></app-error>
 <!-- predictions -->
 <div *ngIf="championshipPredictions" class="row">
-    <div class="col-12">
-        <div class="card black-shadow">
-            <ul class="list-group list-group-flush">
-                <a *ngFor="let championshipPrediction of championshipPredictions"
-                   routerLink="/championship/users/{{championshipPrediction.user.id}}"
-                   class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
-                    <div>
-                        <img class="rounded-circle small-image mr-2"
-                             src="{{userImagesUrl}}{{championshipPrediction.user.image || userImageDefault}}"
-                             alt="{{championshipPrediction.user.name}}">
-                        <strong>{{championshipPrediction.user.name}}</strong> <span class="text-muted d-none d-md-inline">{{getHomeCityInBrackets(championshipPrediction.user.hometown)}}</span>
-                    </div>
-                    <div>
-                        <span>{{championshipPrediction.updated_at | time:'fromNow'}}</span>
-                    </div>
-                </a>
-            </ul>
-        </div>
-    </div>
+   <div class="col-12">
+      <div class="card black-shadow">
+         <ul class="list-group list-group-flush">
+            <a
+               *ngFor="let championshipPrediction of championshipPredictions"
+               routerLink="/championship/users/{{ championshipPrediction.user.id }}"
+               class="list-group-item list-group-item-action d-flex justify-content-between align-items-center"
+            >
+               <div>
+                  <img
+                     class="rounded-circle small-image mr-2"
+                     src="{{ userImagesUrl }}{{ championshipPrediction.user.image || userImageDefault }}"
+                     alt="{{ championshipPrediction.user.name }}"
+                  />
+                  <strong>{{ championshipPrediction.user.name }}</strong>
+                  <span class="text-muted d-none d-md-inline">{{ getHomeCityInBrackets(championshipPrediction.user.hometown) }}</span>
+               </div>
+               <div>
+                  <span>{{ championshipPrediction.updated_at | time: 'fromNow' }}</span>
+               </div>
+            </a>
+         </ul>
+      </div>
+   </div>
 </div>

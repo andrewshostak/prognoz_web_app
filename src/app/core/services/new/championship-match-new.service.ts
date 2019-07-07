@@ -55,7 +55,17 @@ export class ChampionshipMatchNewService {
          params = params.set('sequence', search.sequence);
       }
 
-      return this.httpClient.get<PaginatedResponse<ChampionshipMatchNew>>(this.championshipMatchesUrl, { params });
+      if (!isNil(search.soon)) {
+         params = params.append('soon', (search.soon as unknown) as string);
+      }
+
+      if (search.userId) {
+         params = params.set('user_id', search.userId.toString());
+      }
+
+      const url: string = search.userId ? `${this.championshipMatchesUrl}/predictions` : this.championshipMatchesUrl;
+
+      return this.httpClient.get<PaginatedResponse<ChampionshipMatchNew>>(url, { params });
    }
 
    public updateChampionshipMatch(

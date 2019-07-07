@@ -8,4 +8,6 @@ export class ChampionshipMatchSearch {
    public orderBy?: string;
    public page: number;
    public sequence?: Sequence;
+   public soon?: ModelStatus;
+   public userId?: number;
 }
