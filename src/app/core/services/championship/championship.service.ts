@@ -3,6 +3,7 @@ import { FormGroup } from '@angular/forms';
 
 import { ChampionshipPrediction } from '@models/championship/championship-prediction.model';
 import { ChampionshipMatchNew } from '@models/new/championship-match-new.model';
+import { ChampionshipPredictionNew } from '@models/new/championship-prediction-new.model';
 import { UtilsService } from '@services/utils.service';
 
 @Injectable()
@@ -73,7 +74,7 @@ export class ChampionshipService {
 
    public static isChampionshipMatchGuessed(
       championshipMatch: ChampionshipMatchNew,
-      championshipPrediction: ChampionshipPrediction
+      championshipPrediction: ChampionshipPredictionNew
    ): boolean {
       if (!championshipMatch.match.ended) {
          return false;

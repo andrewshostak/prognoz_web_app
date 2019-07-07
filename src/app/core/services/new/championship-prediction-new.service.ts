@@ -37,4 +37,31 @@ export class ChampionshipPredictionNewService {
 
       return this.httpClient.get<PaginatedResponse<ChampionshipPredictionNew>>(`${this.championshipPredictionsUrl}/by/match`, { params });
    }
+
+   public getPredictionsByUserId(search: ChampionshipPredictionSearch): Observable<PaginatedResponse<ChampionshipPredictionNew>> {
+      let params: HttpParams = new HttpParams();
+
+      if (search.limit) {
+         params = params.set('limit', search.limit.toString());
+      }
+
+      if (search.page) {
+         params = params.set('page', search.page.toString());
+      }
+
+      if (search.userId) {
+         params = params.set('user_id', search.userId.toString());
+      }
+
+      if (search.competitionId) {
+         params = params.set('competition_id', search.competitionId.toString());
+      }
+
+      if (search.orderBy && search.sequence) {
+         params = params.set('order_by', search.orderBy);
+         params = params.set('sequence', search.sequence);
+      }
+
+      return this.httpClient.get<PaginatedResponse<ChampionshipPredictionNew>>(`${this.championshipPredictionsUrl}/by/user`, { params });
+   }
 }

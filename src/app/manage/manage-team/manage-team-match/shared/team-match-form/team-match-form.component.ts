@@ -147,6 +147,7 @@ export class TeamMatchFormComponent implements OnChanges, OnInit {
       const search: CompetitionSearch = {
          active: ModelStatus.Truthy,
          limit: SettingsService.maxLimitValues.teamMatches,
+         page: 1,
          tournamentId: Tournament.Team
       };
       this.competitionService.getCompetitions(search).subscribe(response => {
