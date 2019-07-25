@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 
 import { environment } from '@env';
 import { ChampionshipMatchNew } from '@models/new/championship-match-new.model';
+import { ChampionshipMatchStatistic } from '@models/new/championship-match-statistic.model';
 import { PaginatedResponse } from '@models/paginated-response.model';
 import { ChampionshipMatchSearch } from '@models/search/championship-match-search.model';
 import { isNil } from 'lodash';
@@ -29,6 +30,10 @@ export class ChampionshipMatchNewService {
       return this.httpClient
          .get<{ championship_match: ChampionshipMatchNew }>(`${this.championshipMatchesUrl}/${championshipMatchId}`)
          .pipe(map(response => response.championship_match));
+   }
+
+   public getChampionshipMatchStatistic(championshipMatchId: number): Observable<ChampionshipMatchStatistic> {
+      return this.httpClient.get<ChampionshipMatchStatistic>(`${this.championshipMatchesUrl}/${championshipMatchId}/statistic`);
    }
 
    public getChampionshipMatches(search: ChampionshipMatchSearch): Observable<PaginatedResponse<ChampionshipMatchNew>> {
