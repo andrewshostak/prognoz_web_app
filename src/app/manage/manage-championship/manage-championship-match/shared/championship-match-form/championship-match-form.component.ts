@@ -5,12 +5,15 @@ import { ModelStatus } from '@enums/model-status.enum';
 import { Tournament } from '@enums/tournament.enum';
 import { ChampionshipMatchNew } from '@models/new/championship-match-new.model';
 import { CompetitionNew } from '@models/new/competition-new.model';
+import { PaginatedResponse } from '@models/paginated-response.model';
+import { ChampionshipMatchSearch } from '@models/search/championship-match-search.model';
 import { CompetitionSearch } from '@models/search/competition-search.model';
 import { ChampionshipMatchNewService } from '@services/new/championship-match-new.service';
 import { CompetitionNewService } from '@services/new/competition-new.service';
 import { SettingsService } from '@services/settings.service';
 import { UtilsService } from '@services/utils.service';
 import { NotificationsService } from 'angular2-notifications';
+import { Observable } from 'rxjs';
 
 @Component({
    selector: 'app-championship-match-form',
@@ -21,8 +24,10 @@ export class ChampionshipMatchFormComponent implements OnChanges, OnInit {
    @Input() public championshipMatch: ChampionshipMatchNew;
 
    public championshipMatchForm: FormGroup;
+   public championshipMatchesObservable: Observable<PaginatedResponse<ChampionshipMatchNew>>;
    public clubsLogosPath: string;
    public competitions: CompetitionNew[];
+   public lastCreatedMatchId: number;
 
    constructor(
       private championshipMatchService: ChampionshipMatchNewService,
@@ -44,6 +49,7 @@ export class ChampionshipMatchFormComponent implements OnChanges, OnInit {
             `Матч чемпіонату №${response.id} ${response.match.club_home.title} - ${response.match.club_away.title} створено`
          );
          this.championshipMatchForm.get('match_id').reset();
+         this.lastCreatedMatchId = response.match_id;
       });
    }
 
@@ -71,12 +77,22 @@ export class ChampionshipMatchFormComponent implements OnChanges, OnInit {
    }
 
    public ngOnInit(): void {
+      this.setChampionshipMatchesObservable();
       this.getCompetitionsData();
       this.clubsLogosPath = SettingsService.clubsLogosPath + '/';
       this.championshipMatchForm = new FormGroup({
          competition_id: new FormControl(null, [Validators.required]),
          match_id: new FormControl(null, [Validators.required])
       });
+   }
+
+   public setChampionshipMatchesObservable(): void {
+      const search: ChampionshipMatchSearch = {
+         active: ModelStatus.Truthy,
+         limit: SettingsService.maxLimitValues.championshipMatches,
+         page: 1
+      };
+      this.championshipMatchesObservable = this.championshipMatchService.getChampionshipMatches(search);
    }
 
    public showFormErrorMessage(abstractControl: AbstractControl, errorKey: string): boolean {
