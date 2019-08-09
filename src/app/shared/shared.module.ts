@@ -24,8 +24,10 @@ import { SpinnerComponent } from '@app/shared/components/spinner/spinner.compone
 import { ClubLogoWithTooltipComponent } from '@app/shared/components/tooltips/club-logo-with-tooltip/club-logo-with-tooltip.component';
 import { CustomContentWithTooltipComponent } from '@app/shared/components/tooltips/custom-content-with-tooltip/custom-content-with-tooltip.component';
 import { PredictionWithTooltipComponent } from '@app/shared/components/tooltips/prediction-with-tooltip/prediction-with-tooltip.component';
+import { TeamLogoWithTooltipComponent } from '@app/shared/components/tooltips/team-logo-with-tooltip/team-logo-with-tooltip.component';
 import { UserLogoWithTooltipComponent } from '@app/shared/components/tooltips/user-logo-with-tooltip/user-logo-with-tooltip.component';
 import { WinLogoWithTooltipComponent } from '@app/shared/components/tooltips/win-logo-with-tooltip/win-logo-with-tooltip.component';
+import { TrueFalseIconsComponent } from '@app/shared/components/true-false-icons/true-false-icons.component';
 import { UserMessageComponent } from '@app/shared/components/user-message/user-message.component';
 import { TimePipe } from '@app/shared/pipes/time.pipe';
 import { NgbTooltipModule } from '@ng-bootstrap/ng-bootstrap';
@@ -55,7 +57,9 @@ import { ChartsModule } from 'ng2-charts';
       SocialMedialLinksComponent,
       SpinnerComponent,
       SpinnerButtonComponent,
+      TeamLogoWithTooltipComponent,
       TimePipe,
+      TrueFalseIconsComponent,
       UserLogoWithTooltipComponent,
       UserMessageComponent,
       WinLogoWithTooltipComponent
@@ -82,7 +86,9 @@ import { ChartsModule } from 'ng2-charts';
       SocialMedialLinksComponent,
       SpinnerComponent,
       SpinnerButtonComponent,
+      TeamLogoWithTooltipComponent,
       TimePipe,
+      TrueFalseIconsComponent,
       UserLogoWithTooltipComponent,
       UserMessageComponent,
       WinLogoWithTooltipComponent

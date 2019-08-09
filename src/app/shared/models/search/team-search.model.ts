@@ -9,7 +9,7 @@ export class TeamSearch {
    public limit: number;
    public name?: string;
    public orderBy?: string;
-   public page: string;
+   public page: number;
    public sequence?: Sequence;
    public stated?: ModelStatus;
 }

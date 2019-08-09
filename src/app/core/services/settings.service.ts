@@ -10,6 +10,7 @@ export class SettingsService {
    public static readonly cupMatchesPerPage: number = 16;
    public static readonly matchesPerPage: number = 12;
    public static readonly teamMatchesPerPage: number = 12;
+   public static readonly teamsPerPage: number = 10;
 
    public static readonly newInterceptorPaths: string[] = [
       'v2/championship/matches',
@@ -21,6 +22,7 @@ export class SettingsService {
    ];
 
    public static readonly clubsLogosPath: string = environment.imageURL + '/clubs';
+   public static readonly teamsLogosPath: string = environment.imageURL + '/teams';
 
    public static readonly maxLimitValues = {
       championshipMatches: 100,

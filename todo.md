@@ -1,69 +1,20 @@
 # to do list
-- Bugs
-    - ~~Goalkeeper could block matches only before round start~~
-    - ~~Championship user page error if no predictions~~
-    - Championship match navigation: previous/next (Chart.js bug)
-    - ~~Users online list duplicate~~
 
-- Small changes
-    - ~~Team squads page ordering~~
-    - ~~Cancel button on 'me' page~~
-    - ~~Remove old championship-predicts PUT route~~
-    - Update button in both rating pages
-    - ~~Update button in guest book~~
-    - ~~Green highlighting in user-predictions table~~
-    
-- New task
-    - ~~Update to latest Angular version~~
-    - ~~Use moment.js instead of backend Carbon~~
-    - Ability to change user password
-    - ~~Captcha in recovery + update captcha library~~
-    - Edit ended match page (team competition)
-    ~~- Results page (team competition)~~
-    - Archive page (team competition)
-    ~~- Show blocked matches to current team participants~~
-    - Edit message/comment
-    - Award create page
-    - Award edit page
-    - Set award to winner ability (winners edit page)
-    - Hall of fame page
-    - ~~Users online component~~
-    - Message system
-    - ~~Club-user relation many-to-many~~
-    - Secure connection (https instead of http) backend / frontend
-    
-- Consider to implement
-    - Select-input everywhere where is club select
-    - Change all *ngIf to [hidden] where its possible
-    - Yellow highlight when data is changed and unsaved
-    - Create about page. my contacts. link in footer
-    - Championship-match comment relation
-    
-- Refactoring
-    - All forms submit standardize
-    - All labels click shout make input focused
-    - Hide data when user click reload button - standardize
-    - ~~Refactor environment files~~
-    - ~~Remove confirmation popover. use confirm popup instead~~
-    - Standardize forms with current user id
-    - Backend repositories refactor: 
-        - ~~ChampionshipMatchRepository~~
-        - ~~ChampionshipPredictRepository~~
-        - ~~ChamponshipRatingRepository~~
-        - ~~CompetitionRepository~~
-    - Backend services refactor: 
-        - ~~ChampionshipMatchService~~
-        - ~~ChampionshipPredictService~~
-        - ~~ChampionshipRatingService~~
-        - ~~CompetitionService~~
-    - Backend controllers refactor
-        - ~~ChampionshipMatchController~~
-        - ~~ChampionshipPredictController~~
-        - ~~ChampionshipRatingController~~
-        - ~~CompetitionController~~
-    - ~~Lazy loading for modules: me, manage, guestbook~~
-    
-- Test/Check
-    - Check registration in production with invalid email
-    - Responsive design on every page
-    - Insert plain html and check result
+-  New tasks:
+   -  Ability to change user password
+   -  Edit message/comment
+   -  Awards CRUD
+   -  About the site page
+-  Ideas:
+   -  Hall of fame page
+   -  Match-Comment relation
+   -  Yellow highlight when data (prediction) is changed and unsaved
+-  Refactoring
+   -  All forms submit standardize
+   -  All labels click shout make input focused
+   -  Hide data when user click reload button - standardize
+   -  Standardize forms with current user id
+-  Test/Check
+   -  Check registration in production with invalid email
+   -  Responsive design on every page
+   -  Insert plain html and check result

@@ -1,4 +1,7 @@
 /* tslint:disable:variable-name */
+import { Club } from '@models/club.model';
+import { User } from '@models/user.model';
+
 export class TeamNew {
    public id: number;
    public name: string;
@@ -10,4 +13,7 @@ export class TeamNew {
    public confirmed: boolean;
    public created_at: string;
    public updated_at: string;
+
+   public captain?: User;
+   public club: Club;
 }

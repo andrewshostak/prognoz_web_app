@@ -5,10 +5,11 @@ import { RouterModule } from '@angular/router';
 import { ManageTeamTeamComponent } from '@app/manage/manage-team/manage-team-team/manage-team-team.component';
 import { ManageTeamTeamGuard } from '@app/manage/manage-team/manage-team-team/shared/manage-team-team-guard.service';
 import { TeamTeamsTableComponent } from '@app/manage/manage-team/manage-team-team/team-teams-table/team-teams-table.component';
+import { SharedModule } from '@app/shared/shared.module';
 
 @NgModule({
    declarations: [ManageTeamTeamComponent, TeamTeamsTableComponent],
-   imports: [CommonModule, RouterModule],
+   imports: [CommonModule, RouterModule, SharedModule],
    providers: [ManageTeamTeamGuard]
 })
 export class ManageTeamTeamModule {}
