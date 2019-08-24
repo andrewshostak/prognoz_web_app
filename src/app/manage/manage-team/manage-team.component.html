@@ -29,7 +29,8 @@
                class="btn btn-success mb-2"
                (click)="openStartDrawConfirmModal(confirmModal, competition)"
             >
-               {{ competition.title }}: Провести жеребкування календаря
+               <span class="d-none d-sm-inline">{{ competition.title }}: Провести жеребкування календаря</span>
+               <span class="d-inline d-sm-none">{{ competition.title }}: Жеребкування</span>
             </button>
             <ul class="list-group">
                <li class="list-group-item">
@@ -49,7 +50,8 @@
                class="btn btn-success mb-2"
                (click)="openStartNextRoundConfirmModal(confirmModal, competition)"
             >
-               {{ competition.title }}: Розпочати наступний тур - {{ nextRoundNumber(competition) }}
+               <span class="d-none d-sm-inline">{{ competition.title }}: Розпочати наступний тур - {{ nextRoundNumber(competition) }}</span>
+               <span class="d-inline d-sm-none">{{ competition.title }}: Наступний тур - {{ nextRoundNumber(competition) }}</span>
             </button>
             <ul class="list-group">
                <li class="list-group-item">
