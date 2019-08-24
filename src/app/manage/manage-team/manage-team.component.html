@@ -12,12 +12,16 @@
       <small class="font-weight-bold">З</small>
       <span class="d-none d-sm-inline">Заявки / Учасники</span>
    </a>
+   <a routerLink="/manage/team/teams" [routerLinkActive]="['btn-primary']" [routerLinkActiveOptions]="{ exact: false }" class="btn">
+      <small class="font-weight-bold">К</small>
+      <span class="d-none d-sm-inline">Команди</span>
+   </a>
 </div>
 <div class="container">
    <!-- error competition -->
    <app-error *ngIf="errorCompetitions" [message]="errorCompetitions"></app-error>
    <div *ngIf="competitions" class="row mb-2">
-      <div class="col-6">
+      <div class="col-12 col-md-6">
          <div class="card p-2">
             <button
                *ngFor="let competition of competitions"
@@ -25,7 +29,8 @@
                class="btn btn-success mb-2"
                (click)="openStartDrawConfirmModal(confirmModal, competition)"
             >
-               {{ competition.title }}: Провести жеребкування календаря
+               <span class="d-none d-sm-inline">{{ competition.title }}: Провести жеребкування календаря</span>
+               <span class="d-inline d-sm-none">{{ competition.title }}: Жеребкування</span>
             </button>
             <ul class="list-group">
                <li class="list-group-item">
@@ -37,7 +42,7 @@
             </ul>
          </div>
       </div>
-      <div class="col-6">
+      <div class="col-12 col-md-6">
          <div class="card p-2">
             <button
                *ngFor="let competition of competitions"
@@ -45,7 +50,8 @@
                class="btn btn-success mb-2"
                (click)="openStartNextRoundConfirmModal(confirmModal, competition)"
             >
-               {{ competition.title }}: Розпочати наступний тур - {{ nextRoundNumber(competition) }}
+               <span class="d-none d-sm-inline">{{ competition.title }}: Розпочати наступний тур - {{ nextRoundNumber(competition) }}</span>
+               <span class="d-inline d-sm-none">{{ competition.title }}: Наступний тур - {{ nextRoundNumber(competition) }}</span>
             </button>
             <ul class="list-group">
                <li class="list-group-item">

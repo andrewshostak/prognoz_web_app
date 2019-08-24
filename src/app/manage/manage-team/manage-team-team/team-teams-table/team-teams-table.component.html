@@ -1,0 +1,240 @@
+<h3 class="h3 m-2">Команди:</h3>
+<table *ngIf="teams" class="d-none d-lg-table table table-dark table-striped table-hover table-bordered">
+   <thead>
+      <tr>
+         <th scope="col" class="text-center">ID</th>
+         <th scope="col" colspan="2">Ім'я</th>
+         <th scope="col">Капітан</th>
+         <th scope="col">Клуб</th>
+         <th scope="col" title="Заявлено">З</th>
+         <th scope="col" title="Підтверджено">П</th>
+         <th scope="col" title="Створено / Змінено">Дати</th>
+         <th scope="col" class="text-center">Дія</th>
+      </tr>
+   </thead>
+   <tbody>
+      <tr *ngFor="let team of teams">
+         <th scope="row" class="text-center align-middle">{{ team.id }}</th>
+         <td class="align-middle text-center">
+            <app-team-logo-with-tooltip [team]="team"></app-team-logo-with-tooltip>
+         </td>
+         <td class="align-middle">
+            <span class="font-weight-bold">{{ team.name }}</span>
+         </td>
+         <td class="text-nowrap align-middle">
+            <app-user-logo-with-tooltip [user]="team.captain"></app-user-logo-with-tooltip>
+            {{ team.captain.name }}
+         </td>
+         <td class="text-nowrap align-middle">
+            <ng-template [ngIf]="team.club">
+               <app-club-logo-with-tooltip [club]="team.club"></app-club-logo-with-tooltip>
+               {{ team.club.title }}
+            </ng-template>
+         </td>
+         <td class="align-middle">
+            <app-true-false-icons [value]="team.stated"></app-true-false-icons>
+         </td>
+         <td class="align-middle">
+            <app-true-false-icons [value]="team.confirmed"></app-true-false-icons>
+         </td>
+         <td>
+            <span class="text-nowrap">{{ team.created_at | time: 'YYYY-MM-DD HH:mm' }}</span
+            ><br />
+            <span class="text-nowrap text-muted">{{ team.updated_at | time: 'fromNow' }}</span>
+         </td>
+         <td class="text-nowrap text-center">
+            <a routerLink="/manage/team/teams/{{ team.id }}/edit" class="btn btn-sm btn-outline-warning">
+               <i class="fa fa-pencil-square-o fa-lg" aria-hidden="true"></i>
+            </a>
+            <button type="button" class="btn btn-sm btn-outline-danger">
+               <i class="fa fa-trash-o fa-lg" aria-hidden="true"></i>
+            </button>
+         </td>
+      </tr>
+   </tbody>
+</table>
+<table *ngIf="teams" class="d-none d-md-table d-lg-none table table-dark table-striped table-hover table-bordered">
+   <thead>
+      <tr>
+         <th scope="col" class="text-center">ID</th>
+         <th scope="col">Ім'я / Капітан</th>
+         <th scope="col" title="Клуб">К</th>
+         <th scope="col" title="Заявлено / Підтверджено">З/П</th>
+         <th scope="col" title="Створено / Змінено">Дати</th>
+         <th scope="col" class="text-center">Дія</th>
+      </tr>
+   </thead>
+   <tbody>
+      <tr *ngFor="let team of teams">
+         <th scope="row" class="text-center align-middle">{{ team.id }}</th>
+         <td class="text-nowrap align-middle">
+            <table class="table-sm w-100">
+               <tr>
+                  <td class="text-nowrap">
+                     <app-team-logo-with-tooltip [team]="team"></app-team-logo-with-tooltip>
+                     <span class="font-weight-bold">{{ team.name }}</span>
+                  </td>
+                  <td class="text-nowrap text-right">
+                     <app-user-logo-with-tooltip [user]="team.captain"></app-user-logo-with-tooltip>
+                     {{ team.captain.name }}
+                  </td>
+               </tr>
+            </table>
+         </td>
+         <td class="text-nowrap align-middle">
+            <app-club-logo-with-tooltip *ngIf="team.club" [club]="team.club"></app-club-logo-with-tooltip>
+         </td>
+         <td class="text-nowrap align-middle">
+            <app-true-false-icons [value]="team.stated"></app-true-false-icons>
+            <app-true-false-icons [value]="team.confirmed"></app-true-false-icons>
+         </td>
+         <td>
+            <small class="text-nowrap">{{ team.created_at | time: 'YYYY-MM-DD HH:mm' }}</small
+            ><br />
+            <small class="text-nowrap text-muted">{{ team.updated_at | time: 'fromNow' }}</small>
+         </td>
+         <td class="text-nowrap text-center align-middle">
+            <a routerLink="/manage/team/teams/{{ team.id }}/edit" class="btn btn-sm btn-outline-warning">
+               <i class="fa fa-pencil-square-o fa-lg" aria-hidden="true"></i>
+            </a>
+            <button type="button" class="btn btn-sm btn-outline-danger">
+               <i class="fa fa-trash-o fa-lg" aria-hidden="true"></i>
+            </button>
+         </td>
+      </tr>
+   </tbody>
+</table>
+<table *ngIf="teams" class="d-none d-sm-table d-md-none table table-sm table-dark table-striped table-hover table-bordered">
+   <thead>
+      <tr>
+         <th scope="col">Команда</th>
+         <th scope="col" title="Заявлено">З</th>
+         <th scope="col" title="Підтверджено">П</th>
+         <th scope="col">Дія</th>
+      </tr>
+   </thead>
+   <tbody>
+      <tr *ngFor="let team of teams">
+         <td class="align-middle">
+            <table align="center" class="w-100">
+               <tr>
+                  <td><small>Створено:</small></td>
+                  <td class="text-right">
+                     <small>{{ team.created_at | time: 'YYYY-MM-DD HH:mm' }}</small>
+                  </td>
+               </tr>
+               <tr>
+                  <td class="text-nowrap">
+                     <app-team-logo-with-tooltip [team]="team"></app-team-logo-with-tooltip>
+                     <span class="font-weight-bold">{{ team.name }}</span>
+                  </td>
+                  <td class="text-nowrap text-right">ID: {{ team.id }}</td>
+               </tr>
+               <tr>
+                  <td class="text-nowrap">
+                     <app-user-logo-with-tooltip [user]="team.captain"></app-user-logo-with-tooltip>
+                     {{ team.captain.name }}
+                  </td>
+                  <td class="text-nowrap">
+                     <app-club-logo-with-tooltip *ngIf="team.club" [club]="team.club"></app-club-logo-with-tooltip>
+                     <span *ngIf="team.club">{{ team.club.title }}</span>
+                  </td>
+               </tr>
+               <tr>
+                  <td><small>Змінено:</small></td>
+                  <td class="text-right">
+                     <small class="text-muted">{{ team.updated_at | time: 'fromNow' }}</small>
+                  </td>
+               </tr>
+            </table>
+         </td>
+         <td class="align-middle">
+            <app-true-false-icons [value]="team.stated"></app-true-false-icons>
+         </td>
+         <td class="align-middle">
+            <app-true-false-icons [value]="team.confirmed"></app-true-false-icons>
+         </td>
+         <td class="text-nowrap text-center align-middle">
+            <a routerLink="/manage/team/teams/{{ team.id }}/edit" class="btn btn-sm btn-outline-warning">
+               <i class="fa fa-pencil-square-o fa-lg" aria-hidden="true"></i>
+            </a>
+            <button type="button" class="btn btn-sm btn-outline-danger">
+               <i class="fa fa-trash-o fa-lg" aria-hidden="true"></i>
+            </button>
+         </td>
+      </tr>
+   </tbody>
+</table>
+<table *ngIf="teams" class="d-table d-sm-none d-md-none table table-sm table-dark table-striped table-hover table-bordered">
+   <tbody>
+      <tr *ngFor="let team of teams">
+         <td class="align-middle">
+            <table align="center">
+               <tr>
+                  <td class="text-nowrap">ID: {{ team.id }}</td>
+                  <td class="text-right"><app-club-logo-with-tooltip *ngIf="team.club" [club]="team.club"></app-club-logo-with-tooltip></td>
+               </tr>
+               <tr>
+                  <td class="text-nowrap" colspan="2">
+                     <app-team-logo-with-tooltip [team]="team"></app-team-logo-with-tooltip>
+                     <span class="font-weight-bold">{{ team.name }}</span>
+                  </td>
+               </tr>
+               <tr>
+                  <td class="text-nowrap" colspan="2">
+                     <app-user-logo-with-tooltip [user]="team.captain"></app-user-logo-with-tooltip>
+                     {{ team.captain.name }}
+                  </td>
+               </tr>
+               <tr>
+                  <td class="text-nowrap">
+                     Заявлено:
+                     <app-true-false-icons [value]="team.stated"></app-true-false-icons>
+                  </td>
+                  <td class="text-nowrap">
+                     Підтверджено:
+                     <app-true-false-icons [value]="team.confirmed"></app-true-false-icons>
+                  </td>
+               </tr>
+               <tr>
+                  <td><small>Створено:</small></td>
+                  <td class="text-right">
+                     <small>{{ team.created_at | time: 'YYYY-MM-DD HH:mm' }}</small>
+                  </td>
+               </tr>
+               <tr>
+                  <td><small>Змінено:</small></td>
+                  <td class="text-right">
+                     <small class="text-muted">{{ team.updated_at | time: 'fromNow' }}</small>
+                  </td>
+               </tr>
+            </table>
+         </td>
+         <td class="align-middle">
+            <table align="center">
+               <tr>
+                  <td>
+                     <a routerLink="/manage/team/teams/{{ team.id }}/edit" class="btn btn-sm btn-outline-warning">
+                        <i class="fa fa-pencil-square-o fa-lg" aria-hidden="true"></i>
+                     </a>
+                  </td>
+               </tr>
+               <tr>
+                  <td>
+                     <button type="button" class="btn btn-sm btn-outline-danger">
+                        <i class="fa fa-trash-o fa-lg" aria-hidden="true"></i>
+                     </button>
+                  </td>
+               </tr>
+            </table>
+         </td>
+      </tr>
+   </tbody>
+</table>
+<app-pagination
+   *ngIf="paginationData"
+   [totalItems]="paginationData.total"
+   [currentPage]="paginationData.currentPage"
+   [pageSize]="paginationData.pageSize"
+   [path]="paginationData.path"
+></app-pagination>

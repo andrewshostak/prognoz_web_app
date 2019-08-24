@@ -6,13 +6,16 @@ import { Tournament } from '@enums/tournament.enum';
 import { CompetitionNew } from '@models/new/competition-new.model';
 import { TeamMatchNew } from '@models/new/team-match-new.model';
 import { OpenedModal } from '@models/opened-modal.model';
+import { PaginatedResponse } from '@models/paginated-response.model';
 import { CompetitionSearch } from '@models/search/competition-search.model';
+import { TeamMatchSearch } from '@models/search/team-match-search.model';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { CompetitionNewService } from '@services/new/competition-new.service';
 import { TeamMatchNewService } from '@services/new/team-match-new.service';
 import { SettingsService } from '@services/settings.service';
 import { UtilsService } from '@services/utils.service';
 import { NotificationsService } from 'angular2-notifications';
+import { Observable } from 'rxjs';
 
 @Component({
    selector: 'app-team-match-form',
@@ -23,7 +26,9 @@ export class TeamMatchFormComponent implements OnChanges, OnInit {
    @Input() public teamMatch: TeamMatchNew;
 
    public competitions: CompetitionNew[];
+   public lastCreatedMatchId: number;
    public openedModal: OpenedModal<null>;
+   public teamMatchesObservable: Observable<PaginatedResponse<TeamMatchNew>>;
    public teamMatchForm: FormGroup;
 
    constructor(
@@ -85,6 +90,7 @@ export class TeamMatchFormComponent implements OnChanges, OnInit {
    }
 
    public ngOnInit(): void {
+      this.setTeamMatchesObservable();
       this.getCompetitionsData();
       this.teamMatchForm = new FormGroup({
          competitions: new FormArray([]),
@@ -121,6 +127,15 @@ export class TeamMatchFormComponent implements OnChanges, OnInit {
       this.openedModal.reference.close();
    }
 
+   public setTeamMatchesObservable(): void {
+      const search: TeamMatchSearch = {
+         active: ModelStatus.Truthy,
+         limit: SettingsService.maxLimitValues.teamMatches,
+         page: 1
+      };
+      this.teamMatchesObservable = this.teamMatchService.getTeamMatches(search);
+   }
+
    public showFormErrorMessage(abstractControl: AbstractControl, errorKey: string): boolean {
       return UtilsService.showFormErrorMessage(abstractControl, errorKey);
    }
@@ -140,6 +155,7 @@ export class TeamMatchFormComponent implements OnChanges, OnInit {
             `Матч командного чемпіонату №${response.id} ${response.match.club_home.title} - ${response.match.club_away.title} створено`
          );
          this.teamMatchForm.get('match_id').reset();
+         this.lastCreatedMatchId = response.match_id;
       });
    }
 

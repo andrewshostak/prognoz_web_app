@@ -10,6 +10,9 @@ import { ManageTeamParticipantComponent } from '@app/manage/manage-team/manage-t
 import { TeamParticipantCreateComponent } from '@app/manage/manage-team/manage-team-participant/team-participant-create/team-participant-create.component';
 import { TeamParticipantEditComponent } from '@app/manage/manage-team/manage-team-participant/team-participant-edit/team-participant-edit.component';
 import { TeamParticipantsTableComponent } from '@app/manage/manage-team/manage-team-participant/team-participants-table/team-participants-table.component';
+import { ManageTeamTeamComponent } from '@app/manage/manage-team/manage-team-team/manage-team-team.component';
+import { ManageTeamTeamGuard } from '@app/manage/manage-team/manage-team-team/shared/manage-team-team-guard.service';
+import { TeamTeamsTableComponent } from '@app/manage/manage-team/manage-team-team/team-teams-table/team-teams-table.component';
 import { ManageTeamComponent } from '@app/manage/manage-team/manage-team.component';
 import { ManageTeamGuard } from '@app/manage/manage-team/shared/manage-team-guard.service';
 
@@ -38,6 +41,15 @@ const routes: Routes = [
             ],
             component: ManageTeamMatchComponent,
             path: 'matches'
+         },
+         {
+            canActivateChild: [ManageTeamTeamGuard],
+            children: [
+               { path: 'page/:pageNumber', component: TeamTeamsTableComponent },
+               { path: '', redirectTo: 'page/1', pathMatch: 'full' }
+            ],
+            component: ManageTeamTeamComponent,
+            path: 'teams'
          },
          { path: '', pathMatch: 'full', redirectTo: 'matches' }
       ],

@@ -25,7 +25,6 @@ export class ChampionshipMatchFormComponent implements OnChanges, OnInit {
 
    public championshipMatchForm: FormGroup;
    public championshipMatchesObservable: Observable<PaginatedResponse<ChampionshipMatchNew>>;
-   public clubsLogosPath: string;
    public competitions: CompetitionNew[];
    public lastCreatedMatchId: number;
 
@@ -79,7 +78,6 @@ export class ChampionshipMatchFormComponent implements OnChanges, OnInit {
    public ngOnInit(): void {
       this.setChampionshipMatchesObservable();
       this.getCompetitionsData();
-      this.clubsLogosPath = SettingsService.clubsLogosPath + '/';
       this.championshipMatchForm = new FormGroup({
          competition_id: new FormControl(null, [Validators.required]),
          match_id: new FormControl(null, [Validators.required])
