@@ -1,86 +1,74 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 
-import { environment } from '@env';
+import { TeamParticipantNew } from '@models/new/team-participant-new.model';
+import { OpenedModal } from '@models/opened-modal.model';
+import { Pagination } from '@models/pagination.model';
+import { TeamParticipantSearch } from '@models/search/team-participant-search.model';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
-import { NotificationsService } from 'angular2-notifications';
-import { Subscription } from 'rxjs';
-import { TeamParticipant } from '@models/team/team-participant.model';
+import { TeamParticipantNewService } from '@services/new/team-participant-new.service';
+import { PaginationService } from '@services/pagination.service';
+import { SettingsService } from '@services/settings.service';
 import { TeamParticipantService } from '@services/team/team-participant.service';
-import { RequestParams } from '@models/request-params.model';
+import { NotificationsService } from 'angular2-notifications';
+import { remove } from 'lodash';
+import { Subscription } from 'rxjs';
 
 @Component({
-    selector: 'app-team-participants-table',
-    templateUrl: './team-participants-table.component.html',
-    styleUrls: ['./team-participants-table.component.scss']
+   selector: 'app-team-participants-table',
+   styleUrls: ['./team-participants-table.component.scss'],
+   templateUrl: './team-participants-table.component.html'
 })
 export class TeamParticipantsTableComponent implements OnDestroy, OnInit {
-    constructor(
-        private activatedRoute: ActivatedRoute,
-        private ngbModalService: NgbModal,
-        private notificationsService: NotificationsService,
-        private teamParticipantService: TeamParticipantService
-    ) {}
+   public activatedRouteSubscription: Subscription;
+   public confirmModalMessage: string;
+   public confirmModalSubmit: (event) => void;
+   public openedModal: OpenedModal<TeamParticipantNew>;
+   public paginationData: Pagination;
+   public teamParticipants: TeamParticipantNew[];
 
-    activatedRouteSubscription: Subscription;
-    confirmModalMessage: string;
-    confirmModalSubmit: (event) => void;
-    currentPage: string;
-    errorTeamParticipants: string;
-    lastPage: string;
-    openedModalReference: NgbModalRef;
-    path: string;
-    perPage: string;
-    teamParticipants: TeamParticipant[];
-    total: number;
-    userImageDefault: string;
-    userImagesUrl: string;
+   constructor(
+      private activatedRoute: ActivatedRoute,
+      private ngbModalService: NgbModal,
+      private notificationsService: NotificationsService,
+      private teamParticipantService: TeamParticipantService,
+      private teamParticipantNewService: TeamParticipantNewService
+   ) {}
 
-    deleteTeamParticipant(teamParticipant: TeamParticipant): void {
-        this.teamParticipantService.deleteTeamParticipant(teamParticipant.id).subscribe(
-            () => {
-                this.openedModalReference.close();
-                this.total--;
-                this.teamParticipants = this.teamParticipants.filter(participant => participant.id !== teamParticipant.id);
-                this.notificationsService.success('Успішно', `Заявку / Учасника ${teamParticipant.id} видалено`);
-            },
-            errors => {
-                this.openedModalReference.close();
-                errors.for(error => this.notificationsService.error('Помилка', error));
-            }
-        );
-    }
+   public getTeamParticipantsData(pageNumber: number): void {
+      const search: TeamParticipantSearch = {
+         limit: SettingsService.teamParticipantsPerPage,
+         page: pageNumber
+      };
+      this.teamParticipantNewService.getTeamParticipants(search).subscribe(response => {
+         this.teamParticipants = response.data;
+         this.paginationData = PaginationService.getPaginationData(response, '/manage/team/participants/page/');
+      });
+   }
 
-    ngOnDestroy() {
-        if (!this.activatedRouteSubscription.closed) {
-            this.activatedRouteSubscription.unsubscribe();
-        }
-    }
+   public deleteTeamParticipant(): void {
+      this.teamParticipantService.deleteTeamParticipant(this.openedModal.data.id).subscribe(() => {
+         remove(this.teamParticipants, this.openedModal.data);
+         this.paginationData.total--;
+         this.notificationsService.success('Успішно', `Заявку №${this.openedModal.data.id} ${this.openedModal.data.user.name} видалено`);
+         this.openedModal.reference.close();
+      });
+   }
 
-    ngOnInit() {
-        this.path = '/manage/team/participants/page/';
-        this.userImagesUrl = environment.apiImageUsers;
-        this.userImageDefault = environment.imageUserDefault;
-        this.activatedRouteSubscription = this.activatedRoute.params.subscribe((params: Params) => {
-            const requestParams: RequestParams[] = [{ parameter: 'page', value: params['number'] }];
-            this.teamParticipantService.getTeamParticipants(requestParams).subscribe(
-                response => {
-                    this.currentPage = response.current_page;
-                    this.lastPage = response.last_page;
-                    this.perPage = response.per_page;
-                    this.total = response.total;
-                    this.teamParticipants = response.data;
-                },
-                error => {
-                    this.errorTeamParticipants = error;
-                }
-            );
-        });
-    }
+   public ngOnDestroy() {
+      if (!this.activatedRouteSubscription.closed) {
+         this.activatedRouteSubscription.unsubscribe();
+      }
+   }
 
-    openConfirmModal(content: NgbModalRef, teamParticipant: TeamParticipant): void {
-        this.confirmModalMessage = `Видалити заявку ${teamParticipant.user.name}?`;
-        this.confirmModalSubmit = () => this.deleteTeamParticipant(teamParticipant);
-        this.openedModalReference = this.ngbModalService.open(content);
-    }
+   public ngOnInit() {
+      this.activatedRouteSubscription = this.activatedRoute.params.subscribe((params: Params) => {
+         this.getTeamParticipantsData(params.number);
+      });
+   }
+
+   public openConfirmModal(content: NgbModalRef | HTMLElement, data: TeamParticipantNew, submitted: (event) => void): void {
+      const reference = this.ngbModalService.open(content, { centered: true });
+      this.openedModal = { reference, data, submitted: () => submitted.call(this) };
+   }
 }

@@ -11,6 +11,7 @@ export class SettingsService {
    public static readonly matchesPerPage: number = 12;
    public static readonly teamMatchesPerPage: number = 12;
    public static readonly teamsPerPage: number = 10;
+   public static readonly teamParticipantsPerPage: number = 10;
 
    public static readonly newInterceptorPaths: string[] = [
       'v2/championship/matches',
@@ -18,7 +19,9 @@ export class SettingsService {
       'v2/matches',
       'v2/competitions',
       'v2/cup/matches',
-      'v2/team/matches'
+      'v2/team/matches',
+      'v2/team/teams',
+      'v2/team/participants'
    ];
 
    public static readonly clubsLogosPath: string = environment.imageURL + '/clubs';

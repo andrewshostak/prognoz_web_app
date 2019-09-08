@@ -1,3 +1,4 @@
+import { CompetitionNew } from '@models/new/competition-new.model';
 import { TeamNew } from '@models/new/team-new.model';
 import { User } from '@models/user.model';
 
@@ -13,6 +14,8 @@ export class TeamParticipantNew {
    public ended: boolean;
    public created_at: string;
    public updated_at: string;
-   public team: TeamNew;
-   public user: User;
+
+   public team?: TeamNew;
+   public user?: User;
+   public competition?: CompetitionNew;
 }

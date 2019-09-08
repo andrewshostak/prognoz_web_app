@@ -1,73 +1,77 @@
-<div class="container">
-    <div class="row">
-        <div class="col">
-            <h2 class="h2">Таблиця заявок / учасників:</h2>
-        </div>
-    </div>
-    <div *ngIf="teamParticipants" class="row">
-        <div class="col-12">
-            <div class="table-responsive bg-white">
-                <table class="table table-bordered table-striped table-hover mb-0">
-                    <thead class="thead-dark">
-                        <tr class="text-center">
-                            <th scope="col">Id</th>
-                            <th scope="col">Команда</th>
-                            <th scope="col">Заявник</th>
-                            <th scope="col">Капітан</th>
-                            <th scope="col">Змагання</th>
-                            <th scope="col">Статус</th>
-                            <th scope="col">Завершено</th>
-                            <th scope="col">Дія</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr *ngFor="let teamParticipant of teamParticipants" class="text-center">
-                            <th scope="row" class="align-middle">{{teamParticipant.id}}</th>
-                            <td class="align-middle">{{teamParticipant.team.name}}</td>
-                            <td class="align-middle">
-                                <img class="rounded-circle small-image mr-1"
-                                     src="{{userImagesUrl}}{{teamParticipant.user.image || userImageDefault}}">
-                                {{teamParticipant.user.name}}
-                            </td>
-                            <td class="align-middle">
-                                <i *ngIf="teamParticipant.captain" class="text-success fa fa-check-circle fa-lg" aria-hidden="true"></i>
-                                <i *ngIf="!teamParticipant.captain" class="text-danger fa fa-times fa-lg" aria-hidden="true"></i>
-                            </td>
-                            <td class="align-middle">{{teamParticipant.competition.title}}</td>
-                            <td class="align-middle" [ngClass]="{'table-success': teamParticipant.confirmed, 'table-danger': teamParticipant.refused, 'table-info': !teamParticipant.confirmed && !teamParticipant.refused}">
-                                <i *ngIf="teamParticipant.confirmed" class="text-success fa fa-check-circle fa-lg" aria-hidden="true" title="Підтверджено"></i>
-                                <i *ngIf="teamParticipant.refused" class="text-danger fa fa-times fa-lg" aria-hidden="true" title="Завершено"></i>
-                                <i *ngIf="!teamParticipant.confirmed && !teamParticipant.refused" class="text-info fa fa-question-circle fa-lg" aria-hidden="true" title="Очікується"></i>
-                            </td>
-                            <td class="align-middle">
-                                <i *ngIf="teamParticipant.ended" class="text-success fa fa-check-circle fa-lg" aria-hidden="true"></i>
-                                <i *ngIf="!teamParticipant.ended" class="text-danger fa fa-times fa-lg" aria-hidden="true"></i>
-                            </td>
-                            <td class="align-middle">
-                                <button routerLink="/manage/team/participants/{{teamParticipant.id}}/edit" type="button" class="btn btn-sm btn-warning">
-                                    <i class="fa fa-pencil-square-o fa-lg" aria-hidden="true"></i>
-                                </button>
-                                <button type="button" class="btn btn-sm btn-danger" (click)="openConfirmModal(confirmModal, teamParticipant)">
-                                    <i class="fa fa-trash-o fa-lg" aria-hidden="true"></i>
-                                </button>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </div>
-    <app-error *ngIf="errorTeamParticipants" [message]="errorTeamParticipants"></app-error>
-    <app-pagination *ngIf="teamParticipants"
-                    [totalItems]="total"
-                    [currentPage]="currentPage"
-                    [pageSize]="perPage"
-                    [path]="path">
-    </app-pagination>
-</div>
+<h3 class="h3 m-2">Заявки / Учасники:</h3>
+<table *ngIf="teamParticipants" class="d-none d-lg-table table table-dark table-striped table-hover table-bordered">
+   <thead>
+      <tr>
+         <th scope="col" class="text-center">ID</th>
+         <th scope="col">Заявник</th>
+         <th scope="col">Команда</th>
+         <th scope="col">Змагання</th>
+         <th scope="col" title="Капітан">К</th>
+         <th scope="col" title="Підтверджено">П</th>
+         <th scope="col" title="Відхилено">В</th>
+         <th scope="col" title="Завершено">З</th>
+         <th scope="col" title="Створено / Змінено">Дати</th>
+         <th scope="col" class="text-center">Дія</th>
+      </tr>
+   </thead>
+   <tbody>
+      <tr *ngFor="let teamParticipant of teamParticipants">
+         <th scope="row" class="text-center align-middle">{{ teamParticipant.id }}</th>
+         <td class="text-nowrap align-middle">
+            <app-user-logo-with-tooltip [user]="teamParticipant.user"></app-user-logo-with-tooltip>
+            {{ teamParticipant.user.name }}
+         </td>
+         <td class="text-nowrap align-middle">
+            <app-team-logo-with-tooltip [team]="teamParticipant.team"></app-team-logo-with-tooltip>
+            {{ teamParticipant.team.name }}
+         </td>
+         <td class="text-nowrap align-middle">
+            {{ teamParticipant.competition.title }}
+         </td>
+         <td class="text-center">
+            <app-true-false-icons [value]="teamParticipant.captain"></app-true-false-icons>
+         </td>
+         <td class="text-center">
+            <app-true-false-icons [value]="teamParticipant.confirmed"></app-true-false-icons>
+         </td>
+         <td class="text-center">
+            <app-true-false-icons [value]="teamParticipant.refused"></app-true-false-icons>
+         </td>
+         <td class="text-center">
+            <app-true-false-icons [value]="teamParticipant.ended"></app-true-false-icons>
+         </td>
+         <td>
+            <span class="text-nowrap">{{ teamParticipant.created_at | time: 'YYYY-MM-DD HH:mm' }}</span>
+            <br />
+            <span class="text-nowrap text-muted">{{ teamParticipant.updated_at | time: 'fromNow' }}</span>
+         </td>
+         <td class="text-nowrap text-center">
+            <a routerLink="/manage/team/participants/{{ teamParticipant.id }}/edit" class="btn btn-sm btn-outline-warning">
+               <i class="fa fa-pencil-square-o fa-lg" aria-hidden="true"></i>
+            </a>
+            <button
+               type="button"
+               class="btn btn-sm btn-outline-danger"
+               (click)="openConfirmModal(confirmModal, teamParticipant, deleteTeamParticipant)"
+            >
+               <i class="fa fa-trash-o fa-lg" aria-hidden="true"></i>
+            </button>
+         </td>
+      </tr>
+   </tbody>
+</table>
+<app-pagination
+   *ngIf="paginationData"
+   [totalItems]="paginationData.total"
+   [currentPage]="paginationData.currentPage"
+   [pageSize]="paginationData.pageSize"
+   [path]="paginationData.path"
+></app-pagination>
 <ng-template #confirmModal let-c="close">
-    <app-confirmation-modal [close]="c"
-                            [message]="confirmModalMessage"
-                            (confirmed)="confirmModalSubmit($event)">
-    </app-confirmation-modal>
+   <app-confirmation-modal
+      [close]="c"
+      [message]="'Видалити заявку ' + openedModal.data.user.name + '?'"
+      (confirmed)="openedModal.submitted($event)"
+   >
+   </app-confirmation-modal>
 </ng-template>
