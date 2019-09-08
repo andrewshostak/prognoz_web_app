@@ -54,7 +54,7 @@ export class ChampionshipMatchFormComponent implements OnChanges, OnInit {
 
    public getCompetitionsData(): void {
       const competitionSearch: CompetitionSearch = {
-         active: ModelStatus.Truthy,
+         ended: ModelStatus.Falsy,
          limit: SettingsService.maxLimitValues.competitions,
          page: 1,
          tournamentId: Tournament.Championship
