@@ -1,7 +1,13 @@
 <form novalidate [formGroup]="cupMatchForm" (ngSubmit)="onSubmit()" class="bg-white p-2 pl-lg-5 pr-lg-5">
    <div class="form-row">
       <div class="col-12 col-md-6">
-         <app-match-select [fGroup]="cupMatchForm" [match]="cupMatch?.match"></app-match-select>
+         <app-match-select
+            [fGroup]="cupMatchForm"
+            [match]="cupMatch?.match"
+            [tournamentMatchesObservable]="cupMatchesObservable"
+            [createdMatchId]="lastCreatedMatchId"
+         >
+         </app-match-select>
       </div>
       <div class="col-12 col-md-6">
          <div *ngIf="cupStages" formArrayName="cup_stages" class="mb-2">

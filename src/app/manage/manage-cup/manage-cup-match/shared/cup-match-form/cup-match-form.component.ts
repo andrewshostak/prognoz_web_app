@@ -1,14 +1,19 @@
 import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { AbstractControl, FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 
+import { ModelStatus } from '@enums/model-status.enum';
 import { CupStage } from '@models/cup/cup-stage.model';
 import { CupMatchNew } from '@models/new/cup-match-new.model';
 import { OpenedModal } from '@models/opened-modal.model';
+import { PaginatedResponse } from '@models/paginated-response.model';
+import { CupMatchSearch } from '@models/search/cup-match-search.model';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { CupStageService } from '@services/cup/cup-stage.service';
 import { CupMatchNewService } from '@services/new/cup-match-new.service';
+import { SettingsService } from '@services/settings.service';
 import { UtilsService } from '@services/utils.service';
 import { NotificationsService } from 'angular2-notifications';
+import { Observable } from 'rxjs';
 
 @Component({
    selector: 'app-cup-match-form',
@@ -20,6 +25,8 @@ export class CupMatchFormComponent implements OnChanges, OnInit {
 
    public cupStages: CupStage[];
    public cupMatchForm: FormGroup;
+   public cupMatchesObservable: Observable<PaginatedResponse<CupMatchNew>>;
+   public lastCreatedMatchId: number;
    public openedModal: OpenedModal<null>;
 
    constructor(
@@ -69,6 +76,7 @@ export class CupMatchFormComponent implements OnChanges, OnInit {
    }
 
    public ngOnInit(): void {
+      this.setCupMatchesObservable();
       this.getCupStagesData();
       this.cupMatchForm = new FormGroup({
          cup_stages: new FormArray([]),
@@ -105,6 +113,15 @@ export class CupMatchFormComponent implements OnChanges, OnInit {
       this.openedModal.reference.close();
    }
 
+   public setCupMatchesObservable(): void {
+      const search: CupMatchSearch = {
+         active: ModelStatus.Truthy,
+         limit: SettingsService.maxLimitValues.cupMatches,
+         page: 1
+      };
+      this.cupMatchesObservable = this.cupMatchService.getCupMatches(search);
+   }
+
    public showFormErrorMessage(abstractControl: AbstractControl, errorKey: string): boolean {
       return UtilsService.showFormErrorMessage(abstractControl, errorKey);
    }
@@ -124,6 +141,7 @@ export class CupMatchFormComponent implements OnChanges, OnInit {
             `Матч кубку №${response.id} ${response.match.club_home.title} - ${response.match.club_away.title} створено`
          );
          this.cupMatchForm.get('match_id').reset();
+         this.lastCreatedMatchId = response.match_id;
       });
    }
 
