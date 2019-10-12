@@ -4,13 +4,21 @@
       <tr>
          <th scope="col" class="text-center">ID</th>
          <th scope="col">Заявник</th>
-         <th scope="col">Команда</th>
-         <th scope="col">Змагання</th>
          <th scope="col" title="Капітан">К</th>
+         <th scope="col">
+            <table class="table-sm" align="center">
+               <tr>
+                  <td>Команда</td>
+               </tr>
+               <tr>
+                  <td>Змагання</td>
+               </tr>
+            </table>
+         </th>
          <th scope="col" title="Підтверджено">П</th>
          <th scope="col" title="Відхилено">В</th>
-         <th scope="col" title="Завершено">З</th>
          <th scope="col" title="Створено / Змінено">Дати</th>
+         <th scope="col" title="Завершено">З</th>
          <th scope="col" class="text-center">Дія</th>
       </tr>
    </thead>
@@ -21,31 +29,122 @@
             <app-user-logo-with-tooltip [user]="teamParticipant.user"></app-user-logo-with-tooltip>
             {{ teamParticipant.user.name }}
          </td>
-         <td class="text-nowrap align-middle">
-            <app-team-logo-with-tooltip [team]="teamParticipant.team"></app-team-logo-with-tooltip>
-            {{ teamParticipant.team.name }}
-         </td>
-         <td class="text-nowrap align-middle">
-            {{ teamParticipant.competition.title }}
-         </td>
-         <td class="text-center">
+         <td class="text-center align-middle">
             <app-true-false-icons [value]="teamParticipant.captain"></app-true-false-icons>
          </td>
-         <td class="text-center">
+         <td class="text-nowrap align-middle">
+            <table class="table-sm" align="center">
+               <tr>
+                  <td>
+                     <app-team-logo-with-tooltip [team]="teamParticipant.team"></app-team-logo-with-tooltip>
+                     {{ teamParticipant.team.name }}
+                  </td>
+               </tr>
+               <tr>
+                  <td class="text-nowrap align-middle">
+                     <small>{{ teamParticipant.competition.title }}</small>
+                  </td>
+               </tr>
+            </table>
+         </td>
+         <td class="text-center align-middle">
             <app-true-false-icons [value]="teamParticipant.confirmed"></app-true-false-icons>
          </td>
-         <td class="text-center">
+         <td class="text-center align-middle">
             <app-true-false-icons [value]="teamParticipant.refused"></app-true-false-icons>
-         </td>
-         <td class="text-center">
-            <app-true-false-icons [value]="teamParticipant.ended"></app-true-false-icons>
          </td>
          <td>
             <span class="text-nowrap">{{ teamParticipant.created_at | time: 'YYYY-MM-DD HH:mm' }}</span>
             <br />
             <span class="text-nowrap text-muted">{{ teamParticipant.updated_at | time: 'fromNow' }}</span>
          </td>
-         <td class="text-nowrap text-center">
+         <td class="text-center align-middle">
+            <app-true-false-icons [value]="teamParticipant.ended"></app-true-false-icons>
+         </td>
+         <td class="text-nowrap text-center align-middle">
+            <a routerLink="/manage/team/participants/{{ teamParticipant.id }}/edit" class="btn btn-sm btn-outline-warning">
+               <i class="fa fa-pencil-square-o fa-lg" aria-hidden="true"></i>
+            </a>
+            <button
+               type="button"
+               class="btn btn-sm btn-outline-danger"
+               (click)="openConfirmModal(confirmModal, teamParticipant, deleteTeamParticipant)"
+            >
+               <i class="fa fa-trash-o fa-lg" aria-hidden="true"></i>
+            </button>
+         </td>
+      </tr>
+   </tbody>
+</table>
+<table *ngIf="teamParticipants" class="d-none d-md-table d-lg-none table table-dark table-striped table-hover table-bordered">
+   <thead>
+      <tr>
+         <th scope="col" class="text-center align-middle">ID</th>
+         <th scope="col">
+            <table class="table-sm" align="center">
+               <tr>
+                  <th>Заявник (К)</th>
+               </tr>
+               <tr>
+                  <th>Команда</th>
+               </tr>
+               <tr>
+                  <th>Змагання</th>
+               </tr>
+            </table>
+         </th>
+         <th scope="col" title="Підтверджено">П</th>
+         <th scope="col" title="Відхилено">В</th>
+         <th scope="col" class="text-center" title="Створено / Змінено">Дати</th>
+         <th scope="col" title="Завершено">З</th>
+         <th scope="col" class="text-center">Дія</th>
+      </tr>
+   </thead>
+   <tbody>
+      <tr *ngFor="let teamParticipant of teamParticipants">
+         <th scope="row" class="text-center align-middle">{{ teamParticipant.id }}</th>
+         <td>
+            <table class="table-sm">
+               <tr>
+                  <td>
+                     <app-user-logo-with-tooltip [user]="teamParticipant.user"></app-user-logo-with-tooltip>
+                     <strong>{{ teamParticipant.user.name }}</strong>
+                  </td>
+                  <td class="text-center">
+                     <app-true-false-icons [value]="teamParticipant.captain"></app-true-false-icons>
+                  </td>
+               </tr>
+               <tr>
+                  <td colspan="2">
+                     <app-team-logo-with-tooltip [team]="teamParticipant.team"></app-team-logo-with-tooltip>
+                     {{ teamParticipant.team.name }}
+                  </td>
+               </tr>
+               <tr>
+                  <td colspan="2">{{ teamParticipant.competition.title }}</td>
+               </tr>
+            </table>
+         </td>
+         <td class="text-center align-middle">
+            <app-true-false-icons [value]="teamParticipant.confirmed"></app-true-false-icons>
+         </td>
+         <td class="text-center align-middle">
+            <app-true-false-icons [value]="teamParticipant.refused"></app-true-false-icons>
+         </td>
+         <td class="align-middle">
+            <table class="table-sm" align="middle">
+               <tr>
+                  <td class="text-nowrap">{{ teamParticipant.created_at | time: 'YYYY-MM-DD HH:mm' }}</td>
+               </tr>
+               <tr>
+                  <td class="text-nowrap text-muted">{{ teamParticipant.updated_at | time: 'fromNow' }}</td>
+               </tr>
+            </table>
+         </td>
+         <td class="text-center align-middle">
+            <app-true-false-icons [value]="teamParticipant.ended"></app-true-false-icons>
+         </td>
+         <td class="text-nowrap text-center align-middle">
             <a routerLink="/manage/team/participants/{{ teamParticipant.id }}/edit" class="btn btn-sm btn-outline-warning">
                <i class="fa fa-pencil-square-o fa-lg" aria-hidden="true"></i>
             </a>
