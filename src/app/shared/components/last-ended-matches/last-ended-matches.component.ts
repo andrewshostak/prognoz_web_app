@@ -2,9 +2,9 @@ import { Component, OnInit } from '@angular/core';
 
 import { ModelStatus } from '@enums/model-status.enum';
 import { Sequence } from '@enums/sequence.enum';
-import { ChampionshipMatchNew } from '@models/new/championship-match-new.model';
-import { ChampionshipMatchSearch } from '@models/search/championship-match-search.model';
-import { ChampionshipMatchNewService } from '@services/new/championship-match-new.service';
+import { Match } from '@models/match.model';
+import { MatchSearch } from '@models/search/match-search.model';
+import { MatchService } from '@services/new/match.service';
 
 @Component({
    selector: 'app-last-ended-matches',
@@ -12,25 +12,24 @@ import { ChampionshipMatchNewService } from '@services/new/championship-match-ne
    templateUrl: './last-ended-matches.component.html'
 })
 export class LastEndedMatchesComponent implements OnInit {
-   public championshipMatches: ChampionshipMatchNew[];
-   public clubsLogosPath: string;
+   public matches: Match[];
 
-   constructor(private championshipMatchService: ChampionshipMatchNewService) {}
+   constructor(private matchService: MatchService) {}
 
-   public getChampionshipMatchesData(): void {
-      const search: ChampionshipMatchSearch = {
+   public getMatchesData(): void {
+      const search: MatchSearch = {
          ended: ModelStatus.Truthy,
          limit: 5,
          orderBy: 'started_at',
          page: 1,
          sequence: Sequence.Descending
       };
-      this.championshipMatchService.getChampionshipMatches(search).subscribe(response => {
-         this.championshipMatches = response.data;
+      this.matchService.getMatches(search).subscribe(response => {
+         this.matches = response.data;
       });
    }
 
    public ngOnInit(): void {
-      this.getChampionshipMatchesData();
+      this.getMatchesData();
    }
 }
