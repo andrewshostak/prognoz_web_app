@@ -1,21 +1,40 @@
 import { Component, Input } from '@angular/core';
 
 import { environment } from '@env';
+import { CompetitionNew } from '@models/new/competition-new.model';
 import { TeamRating } from '@models/team/team-rating.model';
-import { User } from '@models/user.model';
 import { UtilsService } from '@services/utils.service';
+import { get } from 'lodash';
 
 @Component({
-    selector: 'app-team-rating-table',
-    templateUrl: './team-rating-table.component.html',
-    styleUrls: ['./team-rating-table.component.scss']
+   selector: 'app-team-rating-table',
+   styleUrls: ['./team-rating-table.component.scss'],
+   templateUrl: './team-rating-table.component.html'
 })
 export class TeamRatingTableComponent {
-    @Input() teamRating: TeamRating[];
-    @Input() errorTeamRating: string;
-    @Input() authenticatedUser: User;
+   @Input() public teamRating: TeamRating[];
+   @Input() public competition: CompetitionNew;
+   @Input() public errorTeamRating: string;
 
-    teamImageDefault: string = environment.imageTeamDefault;
-    teamImagesUrl: string = environment.apiImageTeams;
-    makeUnsigned = UtilsService.makeUnsigned;
+   public teamImageDefault: string = environment.imageTeamDefault;
+   public teamImagesUrl: string = environment.apiImageTeams;
+   public makeUnsigned = UtilsService.makeUnsigned;
+
+   public relegation(index: number, count: number): boolean {
+      const relegation = get(this.competition, 'config.team.relegation');
+      if (!relegation) {
+         return false;
+      }
+
+      return relegation >= count - index;
+   }
+
+   public promotion(index: number): boolean {
+      const promotion = get(this.competition, 'config.team.promotion');
+      if (!promotion) {
+         return false;
+      }
+
+      return promotion >= index + 1;
+   }
 }

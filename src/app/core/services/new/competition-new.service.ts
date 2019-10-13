@@ -14,6 +14,10 @@ export class CompetitionNewService {
 
    constructor(private httpClient: HttpClient) {}
 
+   public getCompetition(id: number): Observable<{ competition: CompetitionNew }> {
+      return this.httpClient.get<{ competition: CompetitionNew }>(`${this.competitionsUrl}/${id}`);
+   }
+
    public getCompetitions(search: CompetitionSearch): Observable<PaginatedResponse<CompetitionNew>> {
       let params: HttpParams = new HttpParams();
 

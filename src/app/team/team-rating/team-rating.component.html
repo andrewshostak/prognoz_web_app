@@ -1,10 +1,7 @@
-<!-- team rating table -->
-<app-team-rating-table [authenticatedUser]="authenticatedUser"
-                       [teamRating]="teamRating"
-                       [errorTeamRating]="errorTeamRating">
-</app-team-rating-table>
-<!-- team rating user table -->
-<app-team-rating-user-table [authenticatedUser]="authenticatedUser"
-                            [teamRatingUser]="teamRatingUser"
-                            [errorTeamRatingUser]="errorTeamRatingUser">
+<app-team-rating-table [teamRating]="teamRating" [competition]="competition" [errorTeamRating]="errorTeamRating"> </app-team-rating-table>
+<app-team-rating-user-table
+   [authenticatedUser]="authenticatedUser"
+   [teamRatingUser]="teamRatingUser"
+   [errorTeamRatingUser]="errorTeamRatingUser"
+>
 </app-team-rating-user-table>

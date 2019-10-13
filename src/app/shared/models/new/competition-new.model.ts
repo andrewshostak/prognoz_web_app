@@ -4,6 +4,12 @@ import { ModelStatus } from '@enums/model-status.enum';
 export class CompetitionNew {
    public active: ModelStatus;
    public active_round: number;
+   public config: {
+      team?: {
+         relegation?: number;
+         promotion?: number;
+      };
+   };
    public ended: ModelStatus;
    public first_playoff_stage: number;
    public id: number;

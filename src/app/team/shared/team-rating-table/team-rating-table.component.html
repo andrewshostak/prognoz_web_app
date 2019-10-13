@@ -1,72 +1,83 @@
 <div *ngIf="teamRating" class="row align-items-end">
-    <div class="col-12 col-sm-6 col-md-5">
-        <h2>Рейтинг команд: </h2>
-    </div>
-    <div *ngIf="teamRating.length" class="col-12 col-sm-6 col-md-7 text-right">
-        <small class="text-muted">Рейтинг після {{teamRating[0].win + teamRating[0].draw + teamRating[0].loss}} туру</small>
-    </div>
+   <div class="col-12 col-sm-6 col-md-5">
+      <h2>Рейтинг команд:</h2>
+   </div>
+   <div *ngIf="teamRating.length" class="col-12 col-sm-6 col-md-7 text-right">
+      <small class="text-muted">Рейтинг після {{ teamRating[0].win + teamRating[0].draw + teamRating[0].loss }} туру</small>
+   </div>
 </div>
 <!-- error -->
 <app-error *ngIf="errorTeamRating" [message]="errorTeamRating"></app-error>
 <!-- team rating table -->
 <div *ngIf="teamRating" class="card">
-    <table class="table table-bordered table-hover black-border black-shadow m-0">
-        <thead class="thead-dark">
-            <tr>
-                <th class="text-center">№</th>
-                <th class="text-center d-none d-lg-table-cell th-moving-icons text-nowrap" title="Переміщення в рейтингу">
-                    <i class="fa fa-arrow-circle-down text-danger" aria-hidden="true"></i>
-                    <i class="fa fa-circle-o" aria-hidden="true"></i>
-                    <i class="fa fa-arrow-circle-up text-success" aria-hidden="true"></i>
-                </th>
-                <th class="text-left" title="Назва команди">
-                    Команда
-                    <small class="pull-right text-right text-muted d-none d-lg-table-cell" title="Очки за схемою чемпіонату / Коефіцієнт складності">О / КС</small>
-                </th>
-                <th class="text-center d-none d-sm-table-cell" title="Виграші">В</th>
-                <th class="text-center d-none d-sm-table-cell" title="Нічиї">Н</th>
-                <th class="text-center d-none d-sm-table-cell" title="Поразки">П</th>
-                <th class="text-center d-none d-sm-table-cell" title="Забиті і пропущені голи">З:П</th>
-                <th class="text-center d-none d-lg-table-cell" title="Сейви">С</th>
-                <th class="text-center" title="Кількість очок">
-                    <span class="d-sm-none">О</span>
-                    <span class="d-none d-sm-table-cell">Очки</span>
-                </th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr *ngFor="let teamRatingItem of teamRating; let i = index;">
-                <th scope="row" class="text-center">{{teamRatingItem.position ? teamRatingItem.position : i + 1}}.</th>
-                <td class="text-center d-none d-lg-table-cell">
-                    <!-- no moving -->
-                    <span *ngIf="!teamRatingItem.moving" class="text-center text-muted">
-                        <i class="fa fa-circle-o" aria-hidden="true"></i>
-                    </span>
-                    <!-- up moving -->
-                    <span *ngIf="teamRatingItem.moving > 0" class="text-center text-success">
-                        <i class="fa fa-arrow-circle-up" aria-hidden="true"></i>
-                        <strong>{{teamRatingItem.moving}}</strong>
-                    </span>
-                    <!-- down moving -->
-                    <span *ngIf="teamRatingItem.moving < 0" class="text-center text-danger">
-                        <i class="fa fa-arrow-circle-down" aria-hidden="true"></i>
-                        <strong>{{makeUnsigned(teamRatingItem.moving)}}</strong>
-                    </span>
-                </td>
-                <td class="text-left">
-                    <img class="small-image rounded mr-1"
-                         src="{{teamImagesUrl}}{{teamRatingItem.team.image || teamImageDefault}}"
-                         alt="{{teamRatingItem.team.name}}">
-                    <strong>{{teamRatingItem.team.name}}</strong>
-                    <small class="pull-right text-muted d-none d-lg-table-cell">{{teamRatingItem.points_championship}} / {{teamRatingItem.dc}}</small>
-                </td>
-                <td class="text-center d-none d-sm-table-cell">{{teamRatingItem.win}}</td>
-                <td class="text-center d-none d-sm-table-cell">{{teamRatingItem.draw}}</td>
-                <td class="text-center d-none d-sm-table-cell">{{teamRatingItem.loss}}</td>
-                <td class="text-center d-none d-sm-table-cell">{{teamRatingItem.scored + ':' + teamRatingItem.missed}}</td>
-                <td class="text-center d-none d-lg-table-cell">{{teamRatingItem.blocked}}</td>
-                <td class="text-center font-weight-bold">{{teamRatingItem.points}}</td>
-            </tr>
-        </tbody>
-    </table>
+   <table class="table table-bordered table-hover black-border black-shadow m-0">
+      <thead class="thead-dark">
+         <tr>
+            <th class="text-center">№</th>
+            <th class="text-center d-none d-lg-table-cell th-moving-icons text-nowrap" title="Переміщення в рейтингу">
+               <i class="fa fa-arrow-circle-down text-danger" aria-hidden="true"></i>
+               <i class="fa fa-circle-o" aria-hidden="true"></i>
+               <i class="fa fa-arrow-circle-up text-success" aria-hidden="true"></i>
+            </th>
+            <th class="text-left" title="Назва команди">
+               Команда
+               <small
+                  class="pull-right text-right text-muted d-none d-lg-table-cell"
+                  title="Очки за схемою чемпіонату / Коефіцієнт складності"
+                  >О / КС</small
+               >
+            </th>
+            <th class="text-center d-none d-sm-table-cell" title="Виграші">В</th>
+            <th class="text-center d-none d-sm-table-cell" title="Нічиї">Н</th>
+            <th class="text-center d-none d-sm-table-cell" title="Поразки">П</th>
+            <th class="text-center d-none d-sm-table-cell" title="Забиті і пропущені голи">З:П</th>
+            <th class="text-center d-none d-lg-table-cell" title="Сейви">С</th>
+            <th class="text-center" title="Кількість очок">
+               <span class="d-sm-none">О</span>
+               <span class="d-none d-sm-table-cell">Очки</span>
+            </th>
+         </tr>
+      </thead>
+      <tbody>
+         <tr
+            *ngFor="let teamRatingItem of teamRating; let i = index; let c = count"
+            [ngClass]="{ 'table-success': promotion(i), 'table-danger': relegation(i, c) }"
+         >
+            <th scope="row" class="text-center">{{ teamRatingItem.position ? teamRatingItem.position : i + 1 }}.</th>
+            <td class="text-center d-none d-lg-table-cell">
+               <!-- no moving -->
+               <span *ngIf="!teamRatingItem.moving" class="text-center text-muted">
+                  <i class="fa fa-circle-o" aria-hidden="true"></i>
+               </span>
+               <!-- up moving -->
+               <span *ngIf="teamRatingItem.moving > 0" class="text-center text-success">
+                  <i class="fa fa-arrow-circle-up" aria-hidden="true"></i>
+                  <strong>{{ teamRatingItem.moving }}</strong>
+               </span>
+               <!-- down moving -->
+               <span *ngIf="teamRatingItem.moving < 0" class="text-center text-danger">
+                  <i class="fa fa-arrow-circle-down" aria-hidden="true"></i>
+                  <strong>{{ makeUnsigned(teamRatingItem.moving) }}</strong>
+               </span>
+            </td>
+            <td class="text-left">
+               <img
+                  class="small-image rounded mr-1"
+                  src="{{ teamImagesUrl }}{{ teamRatingItem.team.image || teamImageDefault }}"
+                  alt="{{ teamRatingItem.team.name }}"
+               />
+               <strong>{{ teamRatingItem.team.name }}</strong>
+               <small class="pull-right text-muted d-none d-lg-table-cell"
+                  >{{ teamRatingItem.points_championship }} / {{ teamRatingItem.dc }}</small
+               >
+            </td>
+            <td class="text-center d-none d-sm-table-cell">{{ teamRatingItem.win }}</td>
+            <td class="text-center d-none d-sm-table-cell">{{ teamRatingItem.draw }}</td>
+            <td class="text-center d-none d-sm-table-cell">{{ teamRatingItem.loss }}</td>
+            <td class="text-center d-none d-sm-table-cell">{{ teamRatingItem.scored + ':' + teamRatingItem.missed }}</td>
+            <td class="text-center d-none d-lg-table-cell">{{ teamRatingItem.blocked }}</td>
+            <td class="text-center font-weight-bold">{{ teamRatingItem.points }}</td>
+         </tr>
+      </tbody>
+   </table>
 </div>
