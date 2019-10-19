@@ -41,7 +41,7 @@
       <tbody>
          <tr
             *ngFor="let teamRatingItem of teamRating; let i = index; let c = count"
-            [ngClass]="{ 'table-success': promotion(i), 'table-danger': relegation(i, c) }"
+            [ngClass]="{ 'table-primary': promotion(i), 'table-danger': relegation(i, c) }"
          >
             <th scope="row" class="text-center">{{ teamRatingItem.position ? teamRatingItem.position : i + 1 }}.</th>
             <td class="text-center d-none d-lg-table-cell">
