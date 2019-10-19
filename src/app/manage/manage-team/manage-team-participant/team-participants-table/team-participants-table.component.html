@@ -159,6 +159,119 @@
       </tr>
    </tbody>
 </table>
+<table *ngIf="teamParticipants" class="d-none d-sm-table d-md-none table table-sm table-dark table-striped table-hover table-bordered">
+   <thead>
+      <tr>
+         <th scope="col">
+            <table>
+               <tr>
+                  <th>ID</th>
+                  <th>Заявник</th>
+                  <th>Капітан</th>
+               </tr>
+               <tr>
+                  <th colspan="3">Команда</th>
+               </tr>
+               <tr>
+                  <th colspan="3">Змагання</th>
+               </tr>
+            </table>
+         </th>
+         <th scope="col">
+            <table align="center">
+               <tr>
+                  <th colspan="2">Створено</th>
+               </tr>
+               <tr>
+                  <th colspan="2">Змінено</th>
+               </tr>
+               <tr>
+                  <th class="text-center" title="Підтверджено">П</th>
+                  <th class="text-center" title="Відхилено">В</th>
+               </tr>
+            </table>
+         </th>
+         <th scope="col">
+            <table align="right">
+               <tr>
+                  <th class="text-center" colspan="2">Завершено</th>
+               </tr>
+               <tr>
+                  <th class="text-center" colspan="2">Дія</th>
+               </tr>
+            </table>
+         </th>
+      </tr>
+   </thead>
+   <tbody>
+      <tr *ngFor="let teamParticipant of teamParticipants">
+         <td>
+            <table class="table-sm">
+               <tr>
+                  <th>{{ teamParticipant.id }}</th>
+                  <td>
+                     <app-user-logo-with-tooltip [user]="teamParticipant.user"></app-user-logo-with-tooltip>
+                     <strong>{{ teamParticipant.user.name }}</strong>
+                  </td>
+                  <td class="text-center">
+                     <app-true-false-icons [value]="teamParticipant.captain"></app-true-false-icons>
+                  </td>
+               </tr>
+               <tr>
+                  <td colspan="3">
+                     <app-team-logo-with-tooltip [team]="teamParticipant.team"></app-team-logo-with-tooltip>
+                     {{ teamParticipant.team.name }}
+                  </td>
+               </tr>
+               <tr>
+                  <td colspan="3">
+                     <small class="text-muted">{{ teamParticipant.competition.title }}</small>
+                  </td>
+               </tr>
+            </table>
+         </td>
+         <td>
+            <table align="center">
+               <tr>
+                  <td colspan="2" class="text-nowrap">{{ teamParticipant.created_at | time: 'YYYY-MM-DD HH:mm' }}</td>
+               </tr>
+               <tr>
+                  <td colspan="2" class="text-nowrap text-muted">{{ teamParticipant.updated_at | time: 'fromNow' }}</td>
+               </tr>
+               <tr>
+                  <td class="text-center"><app-true-false-icons [value]="teamParticipant.confirmed"></app-true-false-icons></td>
+                  <td class="text-center"><app-true-false-icons [value]="teamParticipant.refused"></app-true-false-icons></td>
+               </tr>
+            </table>
+         </td>
+         <td class="align-middle">
+            <table align="right">
+               <tr>
+                  <td class="text-center" colspan="2">
+                     <app-true-false-icons [value]="teamParticipant.ended"></app-true-false-icons>
+                  </td>
+               </tr>
+               <tr>
+                  <td>
+                     <a routerLink="/manage/team/participants/{{ teamParticipant.id }}/edit" class="btn btn-sm btn-outline-warning">
+                        <i class="fa fa-pencil-square-o fa-lg" aria-hidden="true"></i>
+                     </a>
+                  </td>
+                  <td>
+                     <button
+                        type="button"
+                        class="btn btn-sm btn-outline-danger"
+                        (click)="openConfirmModal(confirmModal, teamParticipant, deleteTeamParticipant)"
+                     >
+                        <i class="fa fa-trash-o fa-lg" aria-hidden="true"></i>
+                     </button>
+                  </td>
+               </tr>
+            </table>
+         </td>
+      </tr>
+   </tbody>
+</table>
 <app-pagination
    *ngIf="paginationData"
    [totalItems]="paginationData.total"
