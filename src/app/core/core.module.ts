@@ -36,6 +36,7 @@ import { MatchService } from '@services/new/match.service';
 import { TeamMatchNewService } from '@services/new/team-match-new.service';
 import { TeamNewService } from '@services/new/team-new.service';
 import { TeamParticipantNewService } from '@services/new/team-participant-new.service';
+import { UserNewService } from '@services/new/user-new.service';
 import { PaginationService } from '@services/pagination.service';
 import { PusherService } from '@services/pusher.service';
 import { SeasonService } from '@services/season.service';
@@ -97,6 +98,7 @@ import { UtilsService } from '@services/utils.service';
       TitleService,
       TournamentService,
       UserService,
+      UserNewService,
       UtilsService
    ]
 })

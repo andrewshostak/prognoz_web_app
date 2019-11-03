@@ -12,6 +12,7 @@ import { TeamParticipantEditComponent } from '@app/manage/manage-team/manage-tea
 import { TeamParticipantsTableComponent } from '@app/manage/manage-team/manage-team-participant/team-participants-table/team-participants-table.component';
 import { ManageTeamTeamComponent } from '@app/manage/manage-team/manage-team-team/manage-team-team.component';
 import { ManageTeamTeamGuard } from '@app/manage/manage-team/manage-team-team/shared/manage-team-team-guard.service';
+import { TeamCreateComponent } from '@app/manage/manage-team/manage-team-team/team-create/team-create.component';
 import { TeamTeamsTableComponent } from '@app/manage/manage-team/manage-team-team/team-teams-table/team-teams-table.component';
 import { ManageTeamComponent } from '@app/manage/manage-team/manage-team.component';
 import { ManageTeamGuard } from '@app/manage/manage-team/shared/manage-team-guard.service';
@@ -46,6 +47,7 @@ const routes: Routes = [
             canActivateChild: [ManageTeamTeamGuard],
             children: [
                { path: 'page/:pageNumber', component: TeamTeamsTableComponent },
+               { path: 'create', component: TeamCreateComponent },
                { path: '', redirectTo: 'page/1', pathMatch: 'full' }
             ],
             component: ManageTeamTeamComponent,

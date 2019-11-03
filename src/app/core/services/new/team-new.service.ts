@@ -14,6 +14,10 @@ export class TeamNewService {
 
    constructor(private httpClient: HttpClient) {}
 
+   public createTeam(team: Partial<TeamNew>): Observable<TeamNew> {
+      return this.httpClient.post<{ team: TeamNew }>(this.teamsUrl, team).pipe(map(response => response.team));
+   }
+
    public getTeam(teamId: number): Observable<TeamNew> {
       return this.httpClient.get<{ team: TeamNew }>(`${this.teamsUrl}/${teamId}`).pipe(map(response => response.team));
    }

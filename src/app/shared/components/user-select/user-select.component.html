@@ -1,0 +1,18 @@
+<ng-container [formGroup]="userSelectFormGroup">
+   <div class="form-group" [class.form-group-invalid]="showFormInvalidClass(userSelectFormGroup.get('user_id'))">
+      <label [attr.for]="'user_id'" class="font-weight-bold">{{ label }}:</label>
+      <ng-select
+         [items]="users"
+         [selectOnTab]="true"
+         bindValue="id"
+         bindLabel="name"
+         labelForId="user_id"
+         formControlName="user_id"
+         [typeahead]="usersTypeAhead"
+      >
+      </ng-select>
+      <div [hidden]="!showFormErrorMessage(userSelectFormGroup.get('user_id'), 'required')" class="error-message">
+         <small>{{ label }} обов'язковий</small>
+      </div>
+   </div>
+</ng-container>

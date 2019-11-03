@@ -21,6 +21,7 @@ import { PaginationComponent } from '@app/shared/components/pagination/paginatio
 import { SocialMedialLinksComponent } from '@app/shared/components/social-medial-links/social-medial-links.component';
 import { SpinnerButtonComponent } from '@app/shared/components/spinner-button/spinner-button.component';
 import { SpinnerComponent } from '@app/shared/components/spinner/spinner.component';
+import { TeamFormComponent } from '@app/shared/components/team/team-form/team-form.component';
 import { ClubLogoWithTooltipComponent } from '@app/shared/components/tooltips/club-logo-with-tooltip/club-logo-with-tooltip.component';
 import { CustomContentWithTooltipComponent } from '@app/shared/components/tooltips/custom-content-with-tooltip/custom-content-with-tooltip.component';
 import { PredictionWithTooltipComponent } from '@app/shared/components/tooltips/prediction-with-tooltip/prediction-with-tooltip.component';
@@ -29,6 +30,7 @@ import { UserLogoWithTooltipComponent } from '@app/shared/components/tooltips/us
 import { WinLogoWithTooltipComponent } from '@app/shared/components/tooltips/win-logo-with-tooltip/win-logo-with-tooltip.component';
 import { TrueFalseIconsComponent } from '@app/shared/components/true-false-icons/true-false-icons.component';
 import { UserMessageComponent } from '@app/shared/components/user-message/user-message.component';
+import { UserSelectComponent } from '@app/shared/components/user-select/user-select.component';
 import { TimePipe } from '@app/shared/pipes/time.pipe';
 import { NgbTooltipModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgSelectModule } from '@ng-select/ng-select';
@@ -58,10 +60,12 @@ import { ChartsModule } from 'ng2-charts';
       SpinnerComponent,
       SpinnerButtonComponent,
       TeamLogoWithTooltipComponent,
+      TeamFormComponent,
       TimePipe,
       TrueFalseIconsComponent,
       UserLogoWithTooltipComponent,
       UserMessageComponent,
+      UserSelectComponent,
       WinLogoWithTooltipComponent
    ],
    exports: [
@@ -87,10 +91,12 @@ import { ChartsModule } from 'ng2-charts';
       SpinnerComponent,
       SpinnerButtonComponent,
       TeamLogoWithTooltipComponent,
+      TeamFormComponent,
       TimePipe,
       TrueFalseIconsComponent,
       UserLogoWithTooltipComponent,
       UserMessageComponent,
+      UserSelectComponent,
       WinLogoWithTooltipComponent
    ],
    imports: [CommonModule, RouterModule, ChartsModule, ReactiveFormsModule, NgbTooltipModule, NgSelectModule],

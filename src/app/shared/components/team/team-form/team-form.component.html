@@ -1,0 +1,39 @@
+<form novalidate [formGroup]="teamForm" (ngSubmit)="submit()">
+   <div class="form-row">
+      <div class="col-12 col-md-6">
+         <div class="form-group" [class.form-group-invalid]="showFormInvalidClass(teamForm.get('name'))">
+            <label for="name" class="font-weight-bold">Ім'я:</label>
+            <input type="text" id="name" formControlName="name" autocomplete="off" class="form-control" />
+            <div [hidden]="!showFormErrorMessage(teamForm.get('name'), 'required')" class="error-message">
+               <small>Ім'я обов'язкове</small>
+            </div>
+            <div [hidden]="!showFormErrorMessage(teamForm.get('name'), 'minlength')" class="error-message">
+               <small>Ім'я повинне бути довшим ніж 3 символи</small>
+            </div>
+            <div [hidden]="!showFormErrorMessage(teamForm.get('name'), 'maxlength')" class="error-message">
+               <small>Ім'я не повинно перевищувати 30 символів</small>
+            </div>
+         </div>
+      </div>
+      <div class="col-12 col-md-6">
+         <app-user-select formControlName="captain_id" [label]="'Капітан'"></app-user-select>
+      </div>
+   </div>
+   <div class="form-row">
+      <div class="col-12 col-md-6">
+         <div class="form-group" [class.form-group-invalid]="showFormInvalidClass(teamForm.get('caption'))">
+            <label for="caption" class="font-weight-bold">Заголовок (Опис/Девіз):</label>
+            <textarea id="caption" formControlName="caption" autocomplete="off" rows="3" class="form-control"> </textarea>
+            <div [hidden]="!showFormErrorMessage(teamForm.get('caption'), 'maxlength')" class="error-message">
+               <small>Заголовок не повинен перевищувати 140 символів</small>
+            </div>
+         </div>
+      </div>
+   </div>
+   <div class="d-flex justify-content-end mt-2">
+      <button type="submit" class="btn btn-primary">
+         <i class="fa fa-check-circle-o" aria-hidden="true"></i>
+         {{ team ? 'Змінити' : 'Зберегти' }}
+      </button>
+   </div>
+</form>
