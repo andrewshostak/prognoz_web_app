@@ -1,4 +1,4 @@
-import { Component, EventEmitter, forwardRef, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, forwardRef, OnInit } from '@angular/core';
 import {
    AbstractControl,
    ControlValueAccessor,
@@ -7,8 +7,7 @@ import {
    NG_VALIDATORS,
    NG_VALUE_ACCESSOR,
    ValidationErrors,
-   Validator,
-   Validators
+   Validator
 } from '@angular/forms';
 
 import { Sequence } from '@enums/sequence.enum';
@@ -17,10 +16,9 @@ import { PaginatedResponse } from '@models/paginated-response.model';
 import { UserSearch } from '@models/search/user-search.model';
 import { UserNewService } from '@services/new/user-new.service';
 import { SettingsService } from '@services/settings.service';
-import { UtilsService } from '@services/utils.service';
 import { trim } from 'lodash';
-import { of } from 'rxjs';
-import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
+import { concat, Observable, of, Subject } from 'rxjs';
+import { catchError, debounceTime, distinctUntilChanged, filter, map, switchMap, tap } from 'rxjs/operators';
 
 @Component({
    selector: 'app-user-select',
@@ -40,43 +38,35 @@ import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
    ]
 })
 export class UserSelectComponent implements OnInit, ControlValueAccessor, Validator {
-   @Input() public label: string;
-
-   public userSelectFormGroup: FormGroup = new FormGroup({
-      user_id: new FormControl(null, [Validators.required])
-   });
+   public ngSelectTexts: { [key: string]: string };
+   public onChange: (value: any) => void;
+   public onTouched: () => void;
+   public users$: Observable<UserNew[]>;
+   public usersLoading: boolean;
+   public usersInput$: Subject<string>;
+   public userSelectFormGroup: FormGroup;
    public usersTypeAhead: EventEmitter<string>;
-   public users: UserNew[];
 
    constructor(private userService: UserNewService) {}
 
+   public focusOut(): void {
+      this.onTouched();
+   }
+
    public ngOnInit() {
-      this.users = [];
+      this.ngSelectTexts = SettingsService.textMessages.ngSelect;
+      this.userSelectFormGroup = new FormGroup({ user_id: new FormControl(null) });
+      this.usersInput$ = new Subject<string>();
+      this.usersLoading = false;
       this.usersTypeAhead = new EventEmitter<string>();
       this.enableTypeAheadSearch();
    }
 
-   public showFormErrorMessage(abstractControl: AbstractControl, errorKey: string): boolean {
-      return UtilsService.showFormErrorMessage(abstractControl, errorKey);
-   }
-
-   public showFormInvalidClass(abstractControl: AbstractControl): boolean {
-      return UtilsService.showFormInvalidClass(abstractControl);
-   }
-
-   // TODO: inspect all this functions
-
-   // tslint:disable-next-line:no-empty
-   public onTouched: () => void = () => {};
-
-   public writeValue(val: any): void {
-      if (val) {
-         this.userSelectFormGroup.setValue(val, { emitEvent: false });
-      }
-   }
-
    public registerOnChange(fn: any): void {
-      this.userSelectFormGroup.valueChanges.subscribe(fn);
+      this.onChange = fn;
+      this.userSelectFormGroup.get('user_id').valueChanges.subscribe(value => {
+         this.onChange(value);
+      });
    }
 
    public registerOnTouched(fn: any): void {
@@ -88,32 +78,38 @@ export class UserSelectComponent implements OnInit, ControlValueAccessor, Valida
    }
 
    public validate(c: AbstractControl): ValidationErrors | null {
-      return this.userSelectFormGroup.valid ? null : { invalidForm: { valid: false, message: 'user select form control is invalid' } };
+      return this.userSelectFormGroup.valid ? null : { invalidUserForm: true };
+   }
+
+   public writeValue(value: any): void {
+      if (value) {
+         this.userSelectFormGroup.get('user_id').setValue(value);
+      }
    }
 
    private enableTypeAheadSearch(): void {
-      this.usersTypeAhead
-         .pipe(
+      this.users$ = concat(
+         of([]), // default users
+         this.usersInput$.pipe(
             distinctUntilChanged(),
             debounceTime(SettingsService.defaultDebounceTime),
-            switchMap(term => {
-               const value = trim(term);
-               if (!value) {
-                  return of({ data: [] } as PaginatedResponse<UserNew>);
-               }
-
+            filter(term => term && term.length >= 1),
+            tap(() => (this.usersLoading = true)),
+            switchMap((term: string) => {
                const search: UserSearch = {
-                  limit: SettingsService.usersPerPage,
-                  name: value,
+                  limit: SettingsService.maxLimitValues.users,
+                  name: trim(term),
                   orderBy: 'name',
                   sequence: Sequence.Ascending
                };
 
-               return this.userService.getUsers(search);
+               return this.userService.getUsers(search).pipe(
+                  catchError(() => of([])),
+                  tap(() => (this.usersLoading = false)),
+                  map((response: PaginatedResponse<UserNew>) => response.data)
+               );
             })
          )
-         .subscribe(response => {
-            this.users = (response as PaginatedResponse<UserNew>).data;
-         });
+      );
    }
 }

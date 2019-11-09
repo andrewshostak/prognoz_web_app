@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 
 import { ChampionshipRatingTableComponent } from '@app/shared/components/championship/championship-rating-table/championship-rating-table.component';
@@ -10,6 +10,7 @@ import { ChampionshipUserRatingDetailsComponent } from '@app/shared/components/c
 import { ConfirmationModalComponent } from '@app/shared/components/confirmation-modal/confirmation-modal.component';
 import { DropdownNavigationComponent } from '@app/shared/components/dropdown-navigation/dropdown-navigation.component';
 import { ErrorComponent } from '@app/shared/components/error/error.component';
+import { FileUploadComponent } from '@app/shared/components/file-upload/file-upload.component';
 import { InfoComponent } from '@app/shared/components/info/info.component';
 import { LastCommentsComponent } from '@app/shared/components/last-comments/last-comments.component';
 import { LastEndedMatchesComponent } from '@app/shared/components/last-ended-matches/last-ended-matches.component';
@@ -47,6 +48,7 @@ import { ChartsModule } from 'ng2-charts';
       CustomContentWithTooltipComponent,
       DropdownNavigationComponent,
       ErrorComponent,
+      FileUploadComponent,
       InfoComponent,
       LastCommentsComponent,
       LastEndedMatchesComponent,
@@ -78,6 +80,7 @@ import { ChartsModule } from 'ng2-charts';
       CustomContentWithTooltipComponent,
       DropdownNavigationComponent,
       ErrorComponent,
+      FileUploadComponent,
       InfoComponent,
       LastCommentsComponent,
       LastEndedMatchesComponent,
@@ -99,7 +102,7 @@ import { ChartsModule } from 'ng2-charts';
       UserSelectComponent,
       WinLogoWithTooltipComponent
    ],
-   imports: [CommonModule, RouterModule, ChartsModule, ReactiveFormsModule, NgbTooltipModule, NgSelectModule],
+   imports: [CommonModule, RouterModule, ChartsModule, ReactiveFormsModule, NgbTooltipModule, NgSelectModule, FormsModule],
    providers: [TimePipe]
 })
 export class SharedModule {}

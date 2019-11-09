@@ -3,6 +3,7 @@ import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/fo
 
 import { TeamNew } from '@models/new/team-new.model';
 import { UserNew } from '@models/new/user-new.model';
+import { FormValidatorService } from '@services/form-validator.service';
 import { TeamNewService } from '@services/new/team-new.service';
 import { UtilsService } from '@services/utils.service';
 import { NotificationsService } from 'angular2-notifications';
@@ -18,7 +19,11 @@ export class TeamFormComponent implements OnInit {
 
    public teamForm: FormGroup;
 
-   constructor(private notificationsService: NotificationsService, private teamService: TeamNewService) {}
+   constructor(
+      private formValidatorService: FormValidatorService,
+      private notificationsService: NotificationsService,
+      private teamService: TeamNewService
+   ) {}
 
    public ngOnInit(): void {
       this.setTeamForm();
@@ -51,7 +56,7 @@ export class TeamFormComponent implements OnInit {
          name: new FormControl(null, [Validators.required, Validators.minLength(3), Validators.maxLength(30)]),
          caption: new FormControl(null, [Validators.maxLength(140)]),
          captain_id: new FormControl({ value: null, disabled: this.captain }, [Validators.required]),
-         image: new FormControl(null)
+         image: new FormControl(null, [this.formValidatorService.requiredFileType(['png', 'jpg', 'jpeg'])])
       });
    }
 

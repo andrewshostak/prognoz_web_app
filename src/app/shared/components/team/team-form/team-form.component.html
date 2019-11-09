@@ -16,7 +16,14 @@
          </div>
       </div>
       <div class="col-12 col-md-6">
-         <app-user-select formControlName="captain_id" [label]="'Капітан'"></app-user-select>
+         <div class="form-group" [class.form-group-invalid]="showFormInvalidClass(teamForm.get('captain_id'))">
+            <label [attr.for]="'user_id'" class="font-weight-bold">Капітан:</label>
+            <app-user-select formControlName="captain_id"></app-user-select>
+            <div [hidden]="!showFormErrorMessage(teamForm.get('captain_id'), 'required')" class="error-message">
+               <small>Капітан обов'язковий</small>
+            </div>
+            {{ teamForm.get('captain_id').touched }}
+         </div>
       </div>
    </div>
    <div class="form-row">
@@ -28,6 +35,9 @@
                <small>Заголовок не повинен перевищувати 140 символів</small>
             </div>
          </div>
+      </div>
+      <div class="col-12 col-md-6">
+         <app-file-upload formControlName="image"></app-file-upload>
       </div>
    </div>
    <div class="d-flex justify-content-end mt-2">

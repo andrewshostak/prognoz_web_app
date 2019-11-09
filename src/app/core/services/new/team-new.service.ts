@@ -5,6 +5,7 @@ import { environment } from '@env';
 import { TeamNew } from '@models/new/team-new.model';
 import { PaginatedResponse } from '@models/paginated-response.model';
 import { TeamSearch } from '@models/search/team-search.model';
+import { UtilsService } from '@services/utils.service';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
@@ -15,7 +16,7 @@ export class TeamNewService {
    constructor(private httpClient: HttpClient) {}
 
    public createTeam(team: Partial<TeamNew>): Observable<TeamNew> {
-      return this.httpClient.post<{ team: TeamNew }>(this.teamsUrl, team).pipe(map(response => response.team));
+      return this.httpClient.post<{ team: TeamNew }>(this.teamsUrl, UtilsService.toFormData(team)).pipe(map(response => response.team));
    }
 
    public getTeam(teamId: number): Observable<TeamNew> {
