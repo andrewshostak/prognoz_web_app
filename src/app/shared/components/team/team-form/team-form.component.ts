@@ -17,6 +17,8 @@ export class TeamFormComponent implements OnInit {
    @Input() public team: TeamNew;
    @Input() public captain: UserNew;
 
+   public teamImageExtensions: string[];
+   public teamImageSize: number;
    public teamForm: FormGroup;
 
    constructor(
@@ -26,6 +28,8 @@ export class TeamFormComponent implements OnInit {
    ) {}
 
    public ngOnInit(): void {
+      this.teamImageExtensions = FormValidatorService.fileExtensions.teamImage;
+      this.teamImageSize = FormValidatorService.fileSizeLimits.teamImage;
       this.setTeamForm();
    }
 
@@ -56,7 +60,10 @@ export class TeamFormComponent implements OnInit {
          name: new FormControl(null, [Validators.required, Validators.minLength(3), Validators.maxLength(30)]),
          caption: new FormControl(null, [Validators.maxLength(140)]),
          captain_id: new FormControl({ value: null, disabled: this.captain }, [Validators.required]),
-         image: new FormControl(null, [this.formValidatorService.requiredFileType(['png', 'jpg', 'jpeg'])])
+         image: new FormControl(null, [
+            this.formValidatorService.fileType(this.teamImageExtensions),
+            this.formValidatorService.fileSize(this.teamImageSize)
+         ])
       });
    }
 

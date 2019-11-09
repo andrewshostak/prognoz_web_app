@@ -1,16 +1,6 @@
-<div class="form-group">
-   <label class="font-weight-bold">Зображення:</label><br />
-   <div class="input-group">
-      <div class="input-group-prepend">
-         <span class="input-group-text">
-            <i class="fa fa-file-image-o" aria-hidden="true"></i>
-         </span>
-      </div>
-      <div class="custom-file">
-         <input type="file" class="custom-file-input" accept=".png,.jpg,.gif,.jpeg" id="image" />
-         <label class="custom-file-label" for="image">
-            {{ file ? file.name : 'Виберіть зображення' }}
-         </label>
-      </div>
-   </div>
+<div class="custom-file">
+   <input type="file" class="custom-file-input" [accept]="acceptAttributeValue" id="image" />
+   <label class="custom-file-label" for="image">
+      {{ file ? file.name : 'Виберіть файл' }}
+   </label>
 </div>

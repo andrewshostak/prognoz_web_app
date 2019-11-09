@@ -1,7 +1,5 @@
-import { Component, ElementRef, forwardRef, HostListener } from '@angular/core';
-import { AbstractControl, ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
-
-import { UtilsService } from '@services/utils.service';
+import { Component, ElementRef, forwardRef, HostListener, Input } from '@angular/core';
+import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 @Component({
    selector: 'app-file-upload',
@@ -16,7 +14,10 @@ import { UtilsService } from '@services/utils.service';
    ]
 })
 export class FileUploadComponent implements ControlValueAccessor {
+   @Input() public fileExtensions: string[];
+
    public onChange: (file: File) => void;
+   public onTouched: () => void;
    private file: File | null = null;
 
    constructor(private elementRef: ElementRef<HTMLInputElement>) {}
@@ -25,24 +26,23 @@ export class FileUploadComponent implements ControlValueAccessor {
       const f = event && event.item(0);
       this.onChange(f);
       this.file = f;
+      this.onTouched();
    }
 
-   public showFormErrorMessage(abstractControl: AbstractControl, errorKey: string): boolean {
-      return UtilsService.showFormErrorMessage(abstractControl, errorKey);
-   }
-
-   public showFormInvalidClass(abstractControl: AbstractControl): boolean {
-      return UtilsService.showFormInvalidClass(abstractControl);
-   }
-
-   public writeValue(value: null): void {
-      this.elementRef.nativeElement.value = '';
-      this.file = null;
+   get acceptAttributeValue(): string {
+      return this.fileExtensions ? this.fileExtensions.map(extension => '.' + extension).join(',') : '*';
    }
 
    public registerOnChange(fn: any): void {
       this.onChange = fn;
    }
 
-   public registerOnTouched(fn: any): void {}
+   public registerOnTouched(fn: any): void {
+      this.onTouched = fn;
+   }
+
+   public writeValue(value: null): void {
+      this.elementRef.nativeElement.value = '';
+      this.file = null;
+   }
 }
