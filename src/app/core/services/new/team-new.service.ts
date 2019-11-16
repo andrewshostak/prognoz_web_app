@@ -16,7 +16,8 @@ export class TeamNewService {
    constructor(private httpClient: HttpClient) {}
 
    public createTeam(team: Partial<TeamNew>): Observable<TeamNew> {
-      return this.httpClient.post<{ team: TeamNew }>(this.teamsUrl, UtilsService.toFormData(team)).pipe(map(response => response.team));
+      const body = team.image ? UtilsService.toFormData(team) : team;
+      return this.httpClient.post<{ team: TeamNew }>(this.teamsUrl, body).pipe(map(response => response.team));
    }
 
    public getTeam(teamId: number): Observable<TeamNew> {
