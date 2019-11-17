@@ -78,19 +78,25 @@ export class UtilsService {
          .filter(([propName, change]) => propName === key && !change.firstChange)
          .forEach(([propName, valueChange]) => {
             if (valueChange.currentValue) {
-               Object.entries(valueChange.currentValue).forEach(([field, value]) => {
-                  if (onUpdatedCallback) {
-                     onUpdatedCallback(formGroup, field, value);
-                  } else {
-                     if (formGroup.get(field)) {
-                        formGroup.patchValue({ [field]: value });
-                     }
-                  }
-               });
+               this.patchObjectValuesInForm(valueChange.currentValue, formGroup, onUpdatedCallback);
             } else {
                formGroup.reset();
             }
          });
+   }
+
+   public static patchObjectValuesInForm<T>(
+      model: T,
+      formGroup: FormGroup,
+      onUpdatedCallback?: (formGroup: FormGroup, field: string, value: any) => void
+   ): void {
+      Object.entries(model).forEach(([field, value]) => {
+         if (onUpdatedCallback) {
+            onUpdatedCallback(formGroup, field, value);
+         } else {
+            return formGroup.get(field) && formGroup.patchValue({ [field]: value });
+         }
+      });
    }
 
    public static createRoundsArrayFromTeamsQuantity(numberOfTeams: number): Array<{ id: number; title: string }> {

@@ -14,7 +14,7 @@ export class FormValidatorService {
    public fileSize(maxSize: number): ValidatorFn {
       return (formControl: FormControl) => {
          const file: File = formControl.value;
-         if (file) {
+         if (file && file instanceof File) {
             return file.size > maxSize ? { invalidFileSize: true } : null;
          }
 
@@ -25,7 +25,7 @@ export class FormValidatorService {
    public fileType(types: string[]): ValidatorFn {
       return (formControl: FormControl) => {
          const file = formControl.value;
-         if (file) {
+         if (file && file instanceof File) {
             const extension = file.name.split('.')[1].toLowerCase();
             if (!types.includes(extension)) {
                return { invalidFileType: true };

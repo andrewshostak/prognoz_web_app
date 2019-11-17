@@ -7,6 +7,7 @@ import { ChampionshipRatingTableComponent } from '@app/shared/components/champio
 import { ChampionshipResultsTableComponent } from '@app/shared/components/championship/championship-results-table/championship-results-table.component';
 import { ChampionshipUserPredictionsTableComponent } from '@app/shared/components/championship/championship-user-predictions-table/championship-user-predictions-table.component';
 import { ChampionshipUserRatingDetailsComponent } from '@app/shared/components/championship/championship-user-rating-details/championship-user-rating-details.component';
+import { CheckboxComponent } from '@app/shared/components/checkbox/checkbox.component';
 import { ConfirmationModalComponent } from '@app/shared/components/confirmation-modal/confirmation-modal.component';
 import { DropdownNavigationComponent } from '@app/shared/components/dropdown-navigation/dropdown-navigation.component';
 import { ErrorComponent } from '@app/shared/components/error/error.component';
@@ -43,6 +44,7 @@ import { ChartsModule } from 'ng2-charts';
       ChampionshipResultsTableComponent,
       ChampionshipUserPredictionsTableComponent,
       ChampionshipUserRatingDetailsComponent,
+      CheckboxComponent,
       ClubLogoWithTooltipComponent,
       ConfirmationModalComponent,
       CustomContentWithTooltipComponent,
@@ -75,6 +77,7 @@ import { ChartsModule } from 'ng2-charts';
       ChampionshipResultsTableComponent,
       ChampionshipUserPredictionsTableComponent,
       ChampionshipUserRatingDetailsComponent,
+      CheckboxComponent,
       ClubLogoWithTooltipComponent,
       ConfirmationModalComponent,
       CustomContentWithTooltipComponent,

@@ -13,6 +13,7 @@ import { TeamParticipantsTableComponent } from '@app/manage/manage-team/manage-t
 import { ManageTeamTeamComponent } from '@app/manage/manage-team/manage-team-team/manage-team-team.component';
 import { ManageTeamTeamGuard } from '@app/manage/manage-team/manage-team-team/shared/manage-team-team-guard.service';
 import { TeamCreateComponent } from '@app/manage/manage-team/manage-team-team/team-create/team-create.component';
+import { TeamEditComponent } from '@app/manage/manage-team/manage-team-team/team-edit/team-edit.component';
 import { TeamTeamsTableComponent } from '@app/manage/manage-team/manage-team-team/team-teams-table/team-teams-table.component';
 import { ManageTeamComponent } from '@app/manage/manage-team/manage-team.component';
 import { ManageTeamGuard } from '@app/manage/manage-team/shared/manage-team-guard.service';
@@ -48,6 +49,7 @@ const routes: Routes = [
             children: [
                { path: 'page/:pageNumber', component: TeamTeamsTableComponent },
                { path: 'create', component: TeamCreateComponent },
+               { path: ':id/edit', component: TeamEditComponent },
                { path: '', redirectTo: 'page/1', pathMatch: 'full' }
             ],
             component: ManageTeamTeamComponent,

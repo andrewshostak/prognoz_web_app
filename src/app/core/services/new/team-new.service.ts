@@ -62,4 +62,18 @@ export class TeamNewService {
 
       return this.httpClient.get<PaginatedResponse<TeamNew>>(this.teamsUrl, { params });
    }
+
+   public updateTeam(teamId: number, team: Partial<TeamNew>): Observable<TeamNew> {
+      if (team.image) {
+         const data: FormData = UtilsService.toFormData(team);
+         data.append('_method', 'PUT'); // because of laravel bug
+         const stated = data.get('stated') === 'true' ? '1' : '0';
+         const confirmed = data.get('confirmed') === 'true' ? '1' : '0';
+         data.set('stated', stated); // because form data does not accept boolean values
+         data.set('confirmed', confirmed);
+         return this.httpClient.post<{ team: TeamNew }>(`${this.teamsUrl}/${teamId}`, data).pipe(map(response => response.team));
+      }
+
+      return this.httpClient.put<{ team: TeamNew }>(`${this.teamsUrl}/${teamId}`, team).pipe(map(response => response.team));
+   }
 }

@@ -1,4 +1,4 @@
-import { Component, EventEmitter, forwardRef, OnInit } from '@angular/core';
+import { Component, EventEmitter, forwardRef, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import {
    AbstractControl,
    ControlValueAccessor,
@@ -17,7 +17,7 @@ import { UserSearch } from '@models/search/user-search.model';
 import { UserNewService } from '@services/new/user-new.service';
 import { SettingsService } from '@services/settings.service';
 import { trim } from 'lodash';
-import { concat, Observable, of, Subject } from 'rxjs';
+import { merge, Observable, of, Subject } from 'rxjs';
 import { catchError, debounceTime, distinctUntilChanged, filter, map, switchMap, tap } from 'rxjs/operators';
 
 @Component({
@@ -37,11 +37,14 @@ import { catchError, debounceTime, distinctUntilChanged, filter, map, switchMap,
       }
    ]
 })
-export class UserSelectComponent implements OnInit, ControlValueAccessor, Validator {
+export class UserSelectComponent implements OnChanges, OnInit, ControlValueAccessor, Validator {
+   @Input() public usersList: UserNew[] = [];
+
    public ngSelectTexts: { [key: string]: string };
    public onChange: (value: any) => void;
    public onTouched: () => void;
    public users$: Observable<UserNew[]>;
+   public usersList$: Subject<UserNew[]>;
    public usersLoading: boolean;
    public usersInput$: Subject<string>;
    public userSelectFormGroup: FormGroup;
@@ -53,10 +56,17 @@ export class UserSelectComponent implements OnInit, ControlValueAccessor, Valida
       this.onTouched();
    }
 
+   public ngOnChanges(changes: SimpleChanges): void {
+      if (changes.usersList && changes.usersList.currentValue) {
+         this.usersList$.next(changes.usersList.currentValue);
+      }
+   }
+
    public ngOnInit() {
       this.ngSelectTexts = SettingsService.textMessages.ngSelect;
       this.userSelectFormGroup = new FormGroup({ user_id: new FormControl(null) });
       this.usersInput$ = new Subject<string>();
+      this.usersList$ = new Subject<UserNew[]>();
       this.usersLoading = false;
       this.usersTypeAhead = new EventEmitter<string>();
       this.enableTypeAheadSearch();
@@ -88,8 +98,9 @@ export class UserSelectComponent implements OnInit, ControlValueAccessor, Valida
    }
 
    private enableTypeAheadSearch(): void {
-      this.users$ = concat(
+      this.users$ = merge(
          of([]), // default users
+         this.usersList$,
          this.usersInput$.pipe(
             distinctUntilChanged(),
             debounceTime(SettingsService.defaultDebounceTime),
