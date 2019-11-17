@@ -18,7 +18,7 @@ export class FileUploadComponent implements ControlValueAccessor {
 
    public onChange: (file: File) => void;
    public onTouched: () => void;
-   private file: File | null = null;
+   public file: File | null = null;
 
    constructor(private elementRef: ElementRef<HTMLInputElement>) {}
 
