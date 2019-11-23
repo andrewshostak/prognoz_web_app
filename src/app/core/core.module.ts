@@ -39,6 +39,7 @@ import { TeamParticipantNewService } from '@services/new/team-participant-new.se
 import { UserNewService } from '@services/new/user-new.service';
 import { PaginationService } from '@services/pagination.service';
 import { PusherService } from '@services/pusher.service';
+import { RequestPreparationService } from '@services/request-preparation.service';
 import { SeasonService } from '@services/season.service';
 import { SettingsService } from '@services/settings.service';
 import { TeamMatchService } from '@services/team/team-match.service';
@@ -83,6 +84,7 @@ import { UtilsService } from '@services/utils.service';
       MatchService,
       PaginationService,
       PusherService,
+      RequestPreparationService,
       SeasonService,
       SettingsService,
       TeamMatchNewService,
