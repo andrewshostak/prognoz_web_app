@@ -19,7 +19,8 @@
          "@env": ["environments/environment"],
          "@models/*": ["app/shared/models/*"],
          "@services/*": ["app/core/services/*"],
-         "@mocks/*": ["app/shared/mocks/*"]
+         "@mocks/*": ["app/shared/mocks/*"],
+         "@team/*": ["app/team/*"]
       }
    }
 }
