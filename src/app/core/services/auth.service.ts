@@ -94,44 +94,6 @@ export class AuthService {
       return !!localStorage.getItem('auth_token') && !!localStorage.getItem('user');
    }
 
-   public signIn(name, password): Observable<any> {
-      const headers = new HttpHeaders().set('Content-Type', 'application/json');
-      return this.httpClient
-         .post<{ token: string; user: User; roles: string[] }>(this.authUrl + 'signin', { name, password }, { headers })
-         .pipe(
-            map(response => {
-               if (response.token) {
-                  this.setTokenToLocalStorage(response.token);
-                  this.updateItemInLocalStorage('user', response.user);
-                  this.updateItemInLocalStorage('roles', response.roles);
-                  this.userObserver.next(response.user);
-               }
-               return response.user;
-            }),
-            catchError(this.errorHandlerService.handle)
-         );
-   }
-
-   public signUp(user: User): Observable<any> {
-      const headers = new HttpHeaders().set('Content-Type', 'application/json');
-      return this.httpClient.post<{ token: string; user: User; roles: string[] }>(this.authUrl + 'signup', user, { headers }).pipe(
-         map(response => {
-            if (response.token) {
-               this.setTokenToLocalStorage(response.token);
-               this.updateItemInLocalStorage('user', response.user);
-               this.userObserver.next(response.user);
-            }
-            return response.user;
-         }),
-         catchError(this.errorHandlerService.handle)
-      );
-   }
-
-   public logout(): Observable<any> {
-      this.userObserver.next(null);
-      return this.headersWithToken.post(this.authUrl + 'logout', {}).pipe(catchError(this.errorHandlerService.handle));
-   }
-
    public recovery(email: string): Observable<any> {
       const headers = new HttpHeaders().set('Content-Type', 'application/json');
       return this.httpClient.post(this.authUrl + 'recovery', { email }, { headers }).pipe(catchError(this.errorHandlerService.handle));
