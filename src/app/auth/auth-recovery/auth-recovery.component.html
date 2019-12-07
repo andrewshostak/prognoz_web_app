@@ -1,53 +1,61 @@
 <div class="container">
-    <div *ngIf="!user" class="row">
-        <div class="col-12">
-            <h2>Відновлення паролю:</h2>
-        </div>
-    </div>
-    <!-- recovery form -->
-    <div *ngIf="!user" class="row">
-        <div class="col-12 col-sm-10 offset-sm-1 col-md-8 offset-md-2 col-lg-6 offset-lg-3 text-white">
-            <form novalidate [formGroup]="recoveryForm" (ngSubmit)="onSubmit()" class="bg-dark p-2 rounded">
-                <!-- email input -->
-                <div class="form-group"
-                     [class.form-group-invalid-custom]="recoveryForm.get('email').invalid && (!recoveryForm.get('email').pristine || recoveryForm.get('email').touched)">
-                    <label class="form-control-label" for="email"><strong>Email:</strong></label>
-                    <div class="input-group">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text"><i class="fa fa-envelope-o fa-fw"></i></span>
-                        </div>
-                        <input type="email"
-                               id="email"
-                               placeholder="Введіть свій email"
-                               class="form-control"
-                               formControlName="email">
-                    </div>
-                    <div *ngIf="recoveryForm.get('email').hasError('required') && (!recoveryForm.get('email').pristine || recoveryForm.get('email').touched)">
-                        <small>Email обов'язковий.</small>
-                    </div>
-                    <div *ngIf="recoveryForm.get('email').hasError('pattern') && !recoveryForm.get('email').pristine">
-                        <small>Email введено неправильно.</small>
-                    </div>
-                </div>
-                <!-- reCaptcha -->
-                <div class="mb-2">
-                    <re-captcha (resolved)="resolved($event)" siteKey="6LcZUhQUAAAAAO0sLBWgT4DujK8EfRpEG2jdZbLv"></re-captcha>
-                </div>
-                <!-- submit button -->
-                <button [hidden]="spinnerButton" [disabled]="recoveryForm.invalid || !captchaValidity" type="submit" class="btn btn-primary">
-                    <i class="fa fa-arrow-circle-right" aria-hidden="true"></i> Продовжити
-                </button>
-                <!-- spinner button -->
-                <app-spinner-button [hidden]="!spinnerButton"></app-spinner-button>
-            </form>
-        </div>
-    </div>
-    <!-- show profile and logout buttons if user is authenticated -->
-    <div *ngIf="user" class="row">
-        <div class="col-12 col-sm-10 offset-sm-1 col-md-8 offset-md-2 col-lg-6 offset-lg-3 text-center">
-            <button routerLink="/me" class="btn btn-primary">
-                <i class="fa fa-user-circle" aria-hidden="true"></i> {{user.name}}
+   <div *ngIf="!user" class="row">
+      <div class="col-12">
+         <h2>Відновлення паролю:</h2>
+      </div>
+   </div>
+   <!-- recovery form -->
+   <div *ngIf="!user" class="row">
+      <div class="col-12 col-sm-10 offset-sm-1 col-md-8 offset-md-2 col-lg-6 offset-lg-3 text-white">
+         <form novalidate [formGroup]="recoveryForm" (ngSubmit)="onSubmit()" class="bg-dark p-2 rounded">
+            <!-- email input -->
+            <div
+               class="form-group"
+               [class.form-group-invalid-custom]="
+                  recoveryForm.get('email').invalid && (!recoveryForm.get('email').pristine || recoveryForm.get('email').touched)
+               "
+            >
+               <label class="form-control-label" for="email"><strong>Email:</strong></label>
+               <div class="input-group">
+                  <div class="input-group-prepend">
+                     <span class="input-group-text"><i class="fa fa-envelope-o fa-fw"></i></span>
+                  </div>
+                  <input type="email" id="email" placeholder="Введіть свій email" class="form-control" formControlName="email" />
+               </div>
+               <div
+                  *ngIf="
+                     recoveryForm.get('email').hasError('required') &&
+                     (!recoveryForm.get('email').pristine || recoveryForm.get('email').touched)
+                  "
+               >
+                  <small>Email обов'язковий.</small>
+               </div>
+               <div *ngIf="recoveryForm.get('email').hasError('pattern') && !recoveryForm.get('email').pristine">
+                  <small>Email введено неправильно.</small>
+               </div>
+            </div>
+            <!-- reCaptcha -->
+            <div class="mb-2">
+               <re-captcha (resolved)="resolved($event)" siteKey="6LcZUhQUAAAAAO0sLBWgT4DujK8EfRpEG2jdZbLv"></re-captcha>
+            </div>
+            <!-- submit button -->
+            <button
+               [hidden]="spinnerButton || recoveryForm.disabled"
+               [disabled]="recoveryForm.invalid || !captchaValidity"
+               type="submit"
+               class="btn btn-primary"
+            >
+               <i class="fa fa-arrow-circle-right" aria-hidden="true"></i> Продовжити
             </button>
-        </div>
-    </div>
+            <!-- spinner button -->
+            <app-spinner-button [hidden]="!spinnerButton"></app-spinner-button>
+         </form>
+      </div>
+   </div>
+   <!-- show profile and logout buttons if user is authenticated -->
+   <div *ngIf="user" class="row">
+      <div class="col-12 col-sm-10 offset-sm-1 col-md-8 offset-md-2 col-lg-6 offset-lg-3 text-center">
+         <button routerLink="/me" class="btn btn-primary"><i class="fa fa-user-circle" aria-hidden="true"></i> {{ user.name }}</button>
+      </div>
+   </div>
 </div>
