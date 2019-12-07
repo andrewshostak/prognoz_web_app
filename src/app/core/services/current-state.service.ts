@@ -4,7 +4,6 @@ import { UserNew } from '@models/new/user-new.model';
 import { User } from '@models/user.model';
 import { AuthNewService } from '@services/new/auth-new.service';
 import { PusherService } from '@services/pusher.service';
-import { UtilsService } from '@services/utils.service';
 import { Subject } from 'rxjs';
 
 @Injectable()
@@ -12,7 +11,6 @@ export class CurrentStateService {
    public onlineUsers: any[] = [];
    public onlineUserObservable = new Subject<void>();
    public pusherInstance: any;
-   public user: User;
    private selectedTeamCompetitionId: number;
 
    constructor(private authService: AuthNewService, private pusherService: PusherService) {
@@ -28,12 +26,11 @@ export class CurrentStateService {
       return this.selectedTeamCompetitionId;
    }
 
+   /**
+    * @deprecated all components should use this.authService.getUser()
+    */
    public getUser(): User {
-      if (!this.user) {
-         return UtilsService.getItemFromLocalStorage('user');
-      }
-
-      return this.user;
+      return this.authService.getUser() as User;
    }
 
    public initialize(): void {
