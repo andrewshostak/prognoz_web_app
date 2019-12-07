@@ -2,7 +2,7 @@ import { HTTP_INTERCEPTORS, HttpClient } from '@angular/common/http';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
 
-import { AuthInterceptor } from '@app/auth.interceptor';
+import { AuthInterceptor } from '@app/core/interceptors/auth.interceptor';
 import { environment } from '@env';
 import { MatchService } from '@services/new/match.service';
 import { SettingsService } from '@services/settings.service';

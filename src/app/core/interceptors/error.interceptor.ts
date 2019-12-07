@@ -2,7 +2,6 @@ import { HttpErrorResponse, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest
 import { Injectable, Injector } from '@angular/core';
 
 import { environment } from '@env';
-import { SettingsService } from '@services/settings.service';
 import { NotificationsService } from 'angular2-notifications';
 import { get } from 'lodash';
 import { Observable, throwError } from 'rxjs';
@@ -51,6 +50,6 @@ export class ErrorInterceptor implements HttpInterceptor {
    }
 
    public isAllowedPath(url: string): boolean {
-      return url.includes(environment.apiUrl) && SettingsService.newInterceptorPaths.some(path => url.includes(path));
+      return url.includes(environment.apiUrl) && url.includes('v2');
    }
 }

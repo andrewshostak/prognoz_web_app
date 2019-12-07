@@ -1,59 +1,54 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 
-import { AuthService } from '@services/auth.service';
-import { CurrentStateService } from '@services/current-state.service';
-import { NotificationsService } from 'angular2-notifications';
+import { UserNew } from '@models/new/user-new.model';
+import { AuthNewService } from '@services/new/auth-new.service';
 import { TitleService } from '@services/title.service';
-import { User } from '@models/user.model';
+import { NotificationsService } from 'angular2-notifications';
 
 @Component({
-    selector: 'app-auth-recovery',
-    templateUrl: './auth-recovery.component.html',
-    styleUrls: ['./auth-recovery.component.scss']
+   selector: 'app-auth-recovery',
+   templateUrl: './auth-recovery.component.html',
+   styleUrls: ['./auth-recovery.component.scss']
 })
 export class AuthRecoveryComponent implements OnInit {
-    constructor(
-        private authService: AuthService,
-        private currentStateService: CurrentStateService,
-        private notificationsService: NotificationsService,
-        private titleService: TitleService
-    ) {}
+   public captchaValidity: boolean;
+   public recoveryForm: FormGroup;
+   public spinnerButton: boolean;
+   public user: UserNew;
 
-    captchaValidity: boolean;
-    recoveryForm: FormGroup;
-    spinnerButton: boolean;
-    user: User;
+   constructor(
+      private authService: AuthNewService,
+      private notificationsService: NotificationsService,
+      private titleService: TitleService
+   ) {}
 
-    ngOnInit() {
-        this.titleService.setTitle('Відновлення паролю');
-        this.user = this.currentStateService.getUser();
-        const emailRegex = '^[a-z0-9]+(.[_a-z0-9]+)*@[a-z0-9-]+(.[a-z0-9-]+)*(.[a-z]{2,15})$';
-        this.recoveryForm = new FormGroup({
-            email: new FormControl('', [Validators.required, Validators.pattern(emailRegex)])
-        });
-    }
+   public ngOnInit(): void {
+      this.titleService.setTitle('Відновлення паролю');
+      this.user = this.authService.getUser();
+      const emailRegex = '^[a-z0-9]+(.[_a-z0-9]+)*@[a-z0-9-]+(.[a-z0-9-]+)*(.[a-z]{2,15})$';
+      this.recoveryForm = new FormGroup({
+         email: new FormControl('', [Validators.required, Validators.pattern(emailRegex)])
+      });
+   }
 
-    onSubmit() {
-        if (this.recoveryForm.valid && this.captchaValidity) {
-            this.spinnerButton = true;
-            this.authService.recovery(this.recoveryForm.value.email).subscribe(
-                () => {
-                    this.notificationsService.success('Успішно', 'Подальші інструкції відправлено на ваш email', { timeOut: 0 });
-                    this.recoveryForm.get('email').disable();
-                    this.spinnerButton = false;
-                },
-                errors => {
-                    for (const error of errors) {
-                        this.notificationsService.error('Помилка', error);
-                    }
-                    this.spinnerButton = false;
-                }
-            );
-        }
-    }
+   public onSubmit() {
+      if (this.recoveryForm.invalid || !this.captchaValidity) {
+         return;
+      }
 
-    resolved(captchaResponse: string): void {
-        this.captchaValidity = !!captchaResponse;
-    }
+      this.spinnerButton = true;
+      this.authService.recovery(this.recoveryForm.value.email).subscribe(
+         () => {
+            this.spinnerButton = false;
+            this.notificationsService.success('Успішно', 'Подальші інструкції відправлено на ваш email', { timeOut: 0 });
+            this.recoveryForm.get('email').disable();
+         },
+         () => (this.spinnerButton = false)
+      );
+   }
+
+   public resolved(captchaResponse: string): void {
+      this.captchaValidity = !!captchaResponse;
+   }
 }
