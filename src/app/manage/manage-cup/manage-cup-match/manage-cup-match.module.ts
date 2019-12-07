@@ -8,12 +8,10 @@ import { CupMatchEditComponent } from '@app/manage/manage-cup/manage-cup-match/c
 import { CupMatchTableComponent } from '@app/manage/manage-cup/manage-cup-match/cup-match-table/cup-match-table.component';
 import { ManageCupMatchComponent } from '@app/manage/manage-cup/manage-cup-match/manage-cup-match.component';
 import { CupMatchFormComponent } from '@app/manage/manage-cup/manage-cup-match/shared/cup-match-form/cup-match-form.component';
-import { ManageCupMatchGuard } from '@app/manage/manage-cup/manage-cup-match/shared/manage-cup-match-guard.service';
 import { SharedModule } from '@app/shared/shared.module';
 
 @NgModule({
    declarations: [ManageCupMatchComponent, CupMatchCreateComponent, CupMatchEditComponent, CupMatchFormComponent, CupMatchTableComponent],
-   imports: [CommonModule, FormsModule, ReactiveFormsModule, RouterModule, SharedModule],
-   providers: [ManageCupMatchGuard]
+   imports: [CommonModule, FormsModule, ReactiveFormsModule, RouterModule, SharedModule]
 })
 export class ManageCupMatchModule {}

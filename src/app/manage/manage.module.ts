@@ -9,9 +9,9 @@ import { ManageMatchModule } from '@app/manage/manage-match/manage-match.module'
 import { ManageNewsModule } from '@app/manage/manage-news/manage-news.module';
 import { ManageRoutingModule } from '@app/manage/manage-routing.module';
 import { ManageTeamModule } from '@app/manage/manage-team/manage-team.module';
-import { ManageTournamentModule } from '@app/manage/manage-tournament/manage-tournament.module';
 import { ManageComponent } from '@app/manage/manage.component';
 import { ManageGuard } from '@app/manage/shared/manage-guard.service';
+import { RoleGuard } from '@app/manage/shared/role-guard.service';
 
 @NgModule({
    declarations: [ManageComponent],
@@ -25,9 +25,8 @@ import { ManageGuard } from '@app/manage/shared/manage-guard.service';
       ManageCupModule,
       ManageCompetitionModule,
       ManageTeamModule,
-      ManageTournamentModule,
       ManageRoutingModule
    ],
-   providers: [ManageGuard]
+   providers: [ManageGuard, RoleGuard]
 })
 export class ManageModule {}

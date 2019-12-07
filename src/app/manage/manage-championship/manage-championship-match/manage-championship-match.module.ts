@@ -8,7 +8,6 @@ import { ChampionshipMatchEditComponent } from '@app/manage/manage-championship/
 import { ChampionshipMatchTableComponent } from '@app/manage/manage-championship/manage-championship-match/championship-match-table/championship-match-table.component';
 import { ManageChampionshipMatchComponent } from '@app/manage/manage-championship/manage-championship-match/manage-championship-match.component';
 import { ChampionshipMatchFormComponent } from '@app/manage/manage-championship/manage-championship-match/shared/championship-match-form/championship-match-form.component';
-import { ManageChampionshipMatchGuard } from '@app/manage/manage-championship/manage-championship-match/shared/manage-championship-match-guard.service.service';
 import { SharedModule } from '@app/shared/shared.module';
 import { NgSelectModule } from '@ng-select/ng-select';
 
@@ -20,7 +19,6 @@ import { NgSelectModule } from '@ng-select/ng-select';
       ChampionshipMatchFormComponent,
       ManageChampionshipMatchComponent
    ],
-   imports: [CommonModule, ReactiveFormsModule, RouterModule, NgSelectModule, SharedModule],
-   providers: [ManageChampionshipMatchGuard]
+   imports: [CommonModule, ReactiveFormsModule, RouterModule, NgSelectModule, SharedModule]
 })
 export class ManageChampionshipMatchModule {}

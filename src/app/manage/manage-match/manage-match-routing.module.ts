@@ -5,16 +5,17 @@ import { ManageMatchComponent } from '@app/manage/manage-match/manage-match.comp
 import { MatchCreateComponent } from '@app/manage/manage-match/match-create/match-create.component';
 import { MatchEditComponent } from '@app/manage/manage-match/match-edit/match-edit.component';
 import { MatchTableComponent } from '@app/manage/manage-match/match-table/match-table.component';
-import { ManageMatchGuard } from '@app/manage/manage-match/shared/manage-match-guard.service';
+import { RoleGuard } from '@app/manage/shared/role-guard.service';
 
 const routes: Routes = [
    {
-      canActivate: [ManageMatchGuard],
-      canActivateChild: [ManageMatchGuard],
+      canActivate: [RoleGuard],
+      canActivateChild: [RoleGuard],
+      data: { roles: ['match_editor'] },
       children: [
-         { path: 'page/:pageNumber', component: MatchTableComponent },
-         { path: 'create', component: MatchCreateComponent },
-         { path: ':id', component: MatchEditComponent },
+         { path: 'page/:pageNumber', component: MatchTableComponent, data: { roles: ['match_editor'] } },
+         { path: 'create', component: MatchCreateComponent, data: { roles: ['match_editor'] } },
+         { path: ':id', component: MatchEditComponent, data: { roles: ['match_editor'] } },
          { path: '', redirectTo: 'page/1', pathMatch: 'full' }
       ],
       component: ManageMatchComponent,

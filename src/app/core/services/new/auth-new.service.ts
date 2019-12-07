@@ -6,6 +6,7 @@ import { AuthReset } from '@models/new/auth/auth-reset.model';
 import { AuthSignIn } from '@models/new/auth/auth-sign-in.model';
 import { AuthSignUp } from '@models/new/auth/auth-sign-up.model';
 import { UserNew } from '@models/new/user-new.model';
+import { get } from 'lodash';
 import { Observable } from 'rxjs';
 
 @Injectable()
@@ -14,6 +15,17 @@ export class AuthNewService {
    private authURL = environment.apiUrl + 'v2/auth';
 
    constructor(private httpClient: HttpClient) {}
+
+   public hasRoles(roles: string[], or?: boolean): boolean {
+      const user = this.getUser();
+      if (!get(user, 'roles.length')) {
+         return false;
+      }
+
+      const userRoleSlugs = user.roles.map(role => role.slug);
+
+      return or ? roles.some(role => userRoleSlugs.includes(role)) : roles.every(role => userRoleSlugs.includes(role));
+   }
 
    public logout(): Observable<any> {
       return this.httpClient.delete(`${this.authURL}/logout`);

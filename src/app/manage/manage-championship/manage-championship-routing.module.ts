@@ -5,23 +5,23 @@ import { ChampionshipMatchCreateComponent } from '@app/manage/manage-championshi
 import { ChampionshipMatchEditComponent } from '@app/manage/manage-championship/manage-championship-match/championship-match-edit/championship-match-edit.component';
 import { ChampionshipMatchTableComponent } from '@app/manage/manage-championship/manage-championship-match/championship-match-table/championship-match-table.component';
 import { ManageChampionshipMatchComponent } from '@app/manage/manage-championship/manage-championship-match/manage-championship-match.component';
-import { ManageChampionshipMatchGuard } from '@app/manage/manage-championship/manage-championship-match/shared/manage-championship-match-guard.service.service';
 import { ManageChampionshipComponent } from '@app/manage/manage-championship/manage-championship.component';
-import { ManageChampionshipGuard } from '@app/manage/manage-championship/shared/manage-championship-guard.service.service';
+import { RoleGuard } from '@app/manage/shared/role-guard.service';
 
 const routes: Routes = [
    {
-      canActivate: [ManageChampionshipGuard],
-      canActivateChild: [ManageChampionshipGuard],
+      canActivate: [RoleGuard],
+      canActivateChild: [RoleGuard],
+      data: { roles: ['championship_match_editor'] },
       children: [
          {
-            canActivateChild: [ManageChampionshipMatchGuard],
             children: [
-               { path: 'page/:pageNumber', component: ChampionshipMatchTableComponent },
-               { path: 'create', component: ChampionshipMatchCreateComponent },
-               { path: ':id', component: ChampionshipMatchEditComponent },
+               { path: 'page/:pageNumber', component: ChampionshipMatchTableComponent, data: { roles: ['championship_match_editor'] } },
+               { path: 'create', component: ChampionshipMatchCreateComponent, data: { roles: ['championship_match_editor'] } },
+               { path: ':id', component: ChampionshipMatchEditComponent, data: { roles: ['championship_match_editor'] } },
                { path: '', redirectTo: 'page/1', pathMatch: 'full' }
             ],
+            data: { roles: ['championship_match_editor'] },
             component: ManageChampionshipMatchComponent,
             path: 'matches'
          },

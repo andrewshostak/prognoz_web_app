@@ -1,26 +1,20 @@
-import { Injectable }           from '@angular/core';
-import { CanActivate, Router }  from '@angular/router';
+import { Injectable } from '@angular/core';
+import { CanActivate, Router } from '@angular/router';
+
+import { AuthNewService } from '@services/new/auth-new.service';
+import { get } from 'lodash';
 
 @Injectable()
 export class ManageGuard implements CanActivate {
+   constructor(private authService: AuthNewService, private router: Router) {}
 
-    constructor(
-        private router: Router
-    ) {}
+   public canActivate(): boolean {
+      const user = this.authService.getUser();
+      if (get(user, 'roles.length')) {
+         return true;
+      }
 
-    canActivate() {
-        return this.checkRoles();
-    }
-
-    /**
-     * Check if user have some roles in localStorage
-     * @returns {boolean}
-     */
-    checkRoles(): boolean {
-        if (!!localStorage.getItem('roles') && !!localStorage.getItem('auth_token')) {
-            return true;
-        }
-        this.router.navigate(['/403']);
-        return false;
-    }
+      this.router.navigate(['/403']);
+      return false;
+   }
 }

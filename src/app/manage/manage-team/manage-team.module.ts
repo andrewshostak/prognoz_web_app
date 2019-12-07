@@ -7,7 +7,6 @@ import { ManageTeamParticipantModule } from '@app/manage/manage-team/manage-team
 import { ManageTeamRoutingModule } from '@app/manage/manage-team/manage-team-routing.module';
 import { ManageTeamTeamModule } from '@app/manage/manage-team/manage-team-team/manage-team-team.module';
 import { ManageTeamComponent } from '@app/manage/manage-team/manage-team.component';
-import { ManageTeamGuard } from '@app/manage/manage-team/shared/manage-team-guard.service';
 import { SharedModule } from '@app/shared/shared.module';
 
 @NgModule({
@@ -21,7 +20,6 @@ import { SharedModule } from '@app/shared/shared.module';
       ManageTeamTeamModule,
       ReactiveFormsModule,
       SharedModule
-   ],
-   providers: [ManageTeamGuard]
+   ]
 })
 export class ManageTeamModule {}
