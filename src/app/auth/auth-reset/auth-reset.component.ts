@@ -1,66 +1,59 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { Router, ActivatedRoute, Params } from '@angular/router';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 
-import { AuthService } from '@services/auth.service';
-import { CurrentStateService } from '@services/current-state.service';
-import { NotificationsService } from 'angular2-notifications';
+import { UserNew } from '@models/new/user-new.model';
+import { AuthNewService } from '@services/new/auth-new.service';
 import { TitleService } from '@services/title.service';
-import { User } from '@models/user.model';
+import { NotificationsService } from 'angular2-notifications';
 
 @Component({
-    selector: 'app-auth-reset',
-    templateUrl: './auth-reset.component.html',
-    styleUrls: ['./auth-reset.component.scss']
+   selector: 'app-auth-reset',
+   templateUrl: './auth-reset.component.html',
+   styleUrls: ['./auth-reset.component.scss']
 })
 export class AuthResetComponent implements OnInit {
-    constructor(
-        private activatedRoute: ActivatedRoute,
-        private authService: AuthService,
-        private currentStateService: CurrentStateService,
-        private notificationsService: NotificationsService,
-        private router: Router,
-        private titleService: TitleService
-    ) {}
+   public resetForm: FormGroup;
+   public spinnerButton: boolean;
+   public user: UserNew;
 
-    resetForm: FormGroup;
-    spinnerButton = false;
-    user: User;
+   constructor(
+      private activatedRoute: ActivatedRoute,
+      private authService: AuthNewService,
+      private notificationsService: NotificationsService,
+      private router: Router,
+      private titleService: TitleService
+   ) {}
 
-    ngOnInit() {
-        this.titleService.setTitle('Зміна паролю');
-        this.user = this.currentStateService.getUser();
-        const emailRegex = '^[a-z0-9]+(.[_a-z0-9]+)*@[a-z0-9-]+(.[a-z0-9-]+)*(.[a-z]{2,15})$';
-        this.activatedRoute.params.subscribe((params: Params) => {
-            this.resetForm = new FormGroup({
-                email: new FormControl('', [Validators.required, Validators.pattern(emailRegex)]),
-                password: new FormControl('', [Validators.required, Validators.minLength(6)]),
-                password_confirmation: new FormControl('', [Validators.required]),
-                token: new FormControl(params['token'], [Validators.required])
+   public ngOnInit() {
+      this.titleService.setTitle('Зміна паролю');
+      this.user = this.authService.getUser();
+      const emailRegex = '^[a-z0-9]+(.[_a-z0-9]+)*@[a-z0-9-]+(.[a-z0-9-]+)*(.[a-z]{2,15})$';
+      this.activatedRoute.params.subscribe((params: Params) => {
+         this.resetForm = new FormGroup({
+            email: new FormControl('', [Validators.required, Validators.pattern(emailRegex)]),
+            password: new FormControl('', [Validators.required, Validators.minLength(6)]),
+            password_confirmation: new FormControl('', [Validators.required]),
+            token: new FormControl(params.token, [Validators.required])
+         });
+      });
+   }
+
+   public onSubmit() {
+      if (this.resetForm.invalid) {
+         return;
+      }
+
+      this.spinnerButton = true;
+      this.authService.reset(this.resetForm.value).subscribe(
+         () => {
+            this.spinnerButton = false;
+            this.notificationsService.success('Успішно', 'Зміна паролю пройшла успішно. Виконайте вхід на сайт з новим паролем.', {
+               timeOut: 0
             });
-        });
-    }
-
-    onSubmit() {
-        if (this.resetForm.valid) {
-            this.spinnerButton = true;
-            this.authService.reset(this.resetForm.value).subscribe(
-                () => {
-                    this.notificationsService.success(
-                        'Успішно',
-                        'Відновлення паролю пройшло успішно. Тепер ви можете виконати вхід на сайт.',
-                        { timeOut: 0 }
-                    );
-                    this.spinnerButton = false;
-                    this.router.navigate(['/signin']);
-                },
-                errors => {
-                    for (const error of errors) {
-                        this.notificationsService.error('Помилка', error);
-                    }
-                    this.spinnerButton = false;
-                }
-            );
-        }
-    }
+            this.router.navigate(['/signin']);
+         },
+         () => (this.spinnerButton = false)
+      );
+   }
 }

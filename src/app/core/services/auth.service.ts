@@ -1,14 +1,13 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { environment } from '@env';
-import { User } from '@models/user.model';
 import { ErrorHandlerService } from '@services/error-handler.service';
 import { HeadersWithToken } from '@services/headers-with-token.service';
 import { UtilsService } from '@services/utils.service';
 import { Observable } from 'rxjs';
-import { catchError, map, share } from 'rxjs/operators';
+import { catchError, share } from 'rxjs/operators';
 
 @Injectable()
 export class AuthService {
@@ -92,16 +91,6 @@ export class AuthService {
     */
    public isUserAndTokenInLocalStorage() {
       return !!localStorage.getItem('auth_token') && !!localStorage.getItem('user');
-   }
-
-   public recovery(email: string): Observable<any> {
-      const headers = new HttpHeaders().set('Content-Type', 'application/json');
-      return this.httpClient.post(this.authUrl + 'recovery', { email }, { headers }).pipe(catchError(this.errorHandlerService.handle));
-   }
-
-   public reset(user: User): Observable<any> {
-      const headers = new HttpHeaders().set('Content-Type', 'application/json');
-      return this.httpClient.post(this.authUrl + 'reset', user, { headers }).pipe(catchError(this.errorHandlerService.handle));
    }
 
    private refresh(): Observable<any> {
