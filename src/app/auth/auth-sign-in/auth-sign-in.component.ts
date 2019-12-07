@@ -3,6 +3,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
 import { UserNew } from '@models/new/user-new.model';
+import { CurrentStateService } from '@services/current-state.service';
 import { AuthNewService } from '@services/new/auth-new.service';
 import { TitleService } from '@services/title.service';
 import { NotificationsService } from 'angular2-notifications';
@@ -19,6 +20,7 @@ export class AuthSignInComponent implements OnInit {
 
    constructor(
       private authService: AuthNewService,
+      private currentStateService: CurrentStateService,
       private notificationsService: NotificationsService,
       private router: Router,
       private titleService: TitleService
@@ -42,6 +44,7 @@ export class AuthSignInComponent implements OnInit {
       this.authService.signIn(this.signInForm.value).subscribe(
          response => {
             this.setAuthData(response);
+            this.currentStateService.getOnlineUsers(response.user);
             this.spinnerButton = false;
             this.notificationsService.success('Успішно', 'Вхід виконано успішно');
             this.router.navigate(['/championship', 'predictions']);
