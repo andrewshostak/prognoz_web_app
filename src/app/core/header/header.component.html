@@ -1,84 +1,78 @@
 <!-- top navbar: form and buttons -->
 <nav class="navbar navbar-expand navbar-dark bg-dark">
-    <a class="navbar-brand mr-auto d-none d-md-block" routerLink="/">Prognoz.org.ua</a>
-    <div *ngIf="!user" class="form-inline ml-auto ml-2">
-        <div class="btn-group ml-2" role="group" aria-label="header-buttons">
-            <button routerLink="/signin" class="btn btn-light">
-                <i class="fa fa-sign-in" aria-hidden="true"></i> Вхід
-            </button>
-            <button routerLink="/signup" class="btn btn-outline-light">
-                <i class="fa fa-user-plus" aria-hidden="true"></i> Реєстрація
-            </button>
-            <button routerLink="/recovery" class="btn btn-outline-light">
-                <i class="fa fa-question-circle" aria-hidden="true"></i> <span class="d-none d-sm-inline">Забули пароль</span>
-            </button>
-        </div>
-    </div>
-    <!-- user profile buttons -->
-    <div *ngIf="user" class="form-inline ml-auto">
-        <div class="btn-group" role="group" aria-label="user buttons">
-            <button *ngIf="user" routerLink="/me" class="btn btn-light">
-                <i class="fa fa-user-circle" aria-hidden="true"></i> {{user.name}}
-            </button>
-            <button *ngIf="user.showAdministrationLink" routerLink="/manage" class="btn btn-outline-light">
-                <i class="fa fa-pencil-square-o" aria-hidden="true"></i> <span class="d-none d-sm-inline">Керування</span>
-            </button>
-            <button (click)="logout()" class="btn btn-outline-danger">
-                <i class="fa fa-sign-out" aria-hidden="true"></i> <span class="d-none d-sm-inline">Вихід</span>
-            </button>
-        </div>
-    </div>
+   <a class="navbar-brand mr-auto d-none d-md-block" routerLink="/">Prognoz.org.ua</a>
+   <div *ngIf="!user" class="form-inline ml-auto ml-2">
+      <div class="btn-group ml-2" role="group" aria-label="header-buttons">
+         <button routerLink="/signin" class="btn btn-light"><i class="fa fa-sign-in" aria-hidden="true"></i> Вхід</button>
+         <button routerLink="/signup" class="btn btn-outline-light"><i class="fa fa-user-plus" aria-hidden="true"></i> Реєстрація</button>
+         <button routerLink="/recovery" class="btn btn-outline-light">
+            <i class="fa fa-question-circle" aria-hidden="true"></i> <span class="d-none d-sm-inline">Забули пароль</span>
+         </button>
+      </div>
+   </div>
+   <!-- user profile buttons -->
+   <div *ngIf="user" class="form-inline ml-auto">
+      <div class="btn-group" role="group" aria-label="user buttons">
+         <button *ngIf="user" routerLink="/me" class="btn btn-light">
+            <i class="fa fa-user-circle" aria-hidden="true"></i> {{ user.name }}
+         </button>
+         <button *ngIf="user.roles?.length" routerLink="/manage" class="btn btn-outline-light">
+            <i class="fa fa-pencil-square-o" aria-hidden="true"></i> <span class="d-none d-sm-inline">Керування</span>
+         </button>
+         <button (click)="logout()" class="btn btn-outline-danger">
+            <i class="fa fa-sign-out" aria-hidden="true"></i> <span class="d-none d-sm-inline">Вихід</span>
+         </button>
+      </div>
+   </div>
 </nav>
 <!-- site logo -->
 <div class="container-fluid logo-background">
-    <div class="row">
-        <div class="col">
-            <a routerLink="/">
-                <img src="/assets/img/logo.png" class="img-fluid" alt="prognoz.org.ua">
-            </a>
-        </div>
-    </div>
+   <div class="row">
+      <div class="col">
+         <a routerLink="/">
+            <img src="/assets/img/logo.png" class="img-fluid" alt="prognoz.org.ua" />
+         </a>
+      </div>
+   </div>
 </div>
 <!-- main-navigation -->
 <nav class="navbar navbar-expand-sm navbar-dark bg-dark mb-2">
-    <button class="navbar-toggler cursor-pointer" type="button" (click)="collapsed = !collapsed">
-        <span class="navbar-toggler-icon"></span>
-    </button>
-    <div [hidden]="collapsed" class="navbar-collapse justify-content-center">
-        <ul class="nav navbar-nav">
-            <li class="nav-item text-center">
-                <strong>
-                    <a routerLink="/" routerLinkActive="active" class="nav-link" [routerLinkActiveOptions]="{exact: true}">Головна</a>
-                </strong>
-            </li>
-            <li class="nav-item text-center">
-                <a routerLink="/championship"
-                   routerLinkActive="active"
-                   class="nav-link">
-                    <strong>
-                        Чемпіонат
-                    </strong>
-                </a>
-            </li>
-            <li class="nav-item text-center">
-                <strong>
-                    <a routerLink="/team" routerLinkActive="active" class="nav-link">
-                        Командний
-                    </a>
-                </strong>
-            </li>
-            <li class="nav-item text-center">
-                <strong>
-                    <a routerLink="/cup" routerLinkActive="active" class="nav-link">
-                        Кубок
-                    </a>
-                </strong>
-            </li>
-            <li class="nav-item text-center">
-                <strong>
-                    <a routerLink="/guestbook" routerLinkActive="active" class="nav-link">Гостьова</a>
-                </strong>
-            </li>
-        </ul>
-    </div>
+   <button class="navbar-toggler cursor-pointer" type="button" (click)="collapsed = !collapsed">
+      <span class="navbar-toggler-icon"></span>
+   </button>
+   <div [hidden]="collapsed" class="navbar-collapse justify-content-center">
+      <ul class="nav navbar-nav">
+         <li class="nav-item text-center">
+            <strong>
+               <a routerLink="/" routerLinkActive="active" class="nav-link" [routerLinkActiveOptions]="{ exact: true }">Головна</a>
+            </strong>
+         </li>
+         <li class="nav-item text-center">
+            <a routerLink="/championship" routerLinkActive="active" class="nav-link">
+               <strong>
+                  Чемпіонат
+               </strong>
+            </a>
+         </li>
+         <li class="nav-item text-center">
+            <strong>
+               <a routerLink="/team" routerLinkActive="active" class="nav-link">
+                  Командний
+               </a>
+            </strong>
+         </li>
+         <li class="nav-item text-center">
+            <strong>
+               <a routerLink="/cup" routerLinkActive="active" class="nav-link">
+                  Кубок
+               </a>
+            </strong>
+         </li>
+         <li class="nav-item text-center">
+            <strong>
+               <a routerLink="/guestbook" routerLinkActive="active" class="nav-link">Гостьова</a>
+            </strong>
+         </li>
+      </ul>
+   </div>
 </nav>

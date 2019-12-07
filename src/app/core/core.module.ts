@@ -28,6 +28,7 @@ import { ErrorHandlerService } from '@services/error-handler.service';
 import { FormValidatorService } from '@services/form-validator.service';
 import { HeadersWithToken } from '@services/headers-with-token.service';
 import { ImageService } from '@services/image.service';
+import { AuthNewService } from '@services/new/auth-new.service';
 import { ChampionshipMatchNewService } from '@services/new/championship-match-new.service';
 import { ChampionshipPredictionNewService } from '@services/new/championship-prediction-new.service';
 import { CompetitionNewService } from '@services/new/competition-new.service';
@@ -59,6 +60,7 @@ import { UtilsService } from '@services/utils.service';
    exports: [AccessDeniedComponent, FooterComponent, HeaderComponent, PageNotFoundComponent],
    imports: [CommonModule, ReactiveFormsModule, RouterModule, SharedModule],
    providers: [
+      AuthNewService,
       AuthService,
       ClubService,
       ChampionshipService,

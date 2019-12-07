@@ -94,12 +94,6 @@ export class AuthService {
       return !!localStorage.getItem('auth_token') && !!localStorage.getItem('user');
    }
 
-   /**
-    * Sign in request
-    * @param name
-    * @param password
-    * @returns {Observable<any>}
-    */
    public signIn(name, password): Observable<any> {
       const headers = new HttpHeaders().set('Content-Type', 'application/json');
       return this.httpClient
@@ -118,11 +112,6 @@ export class AuthService {
          );
    }
 
-   /**
-    * Sends registration request
-    * @param user
-    * @returns {Observable<any>}
-    */
    public signUp(user: User): Observable<any> {
       const headers = new HttpHeaders().set('Content-Type', 'application/json');
       return this.httpClient.post<{ token: string; user: User; roles: string[] }>(this.authUrl + 'signup', user, { headers }).pipe(
@@ -138,39 +127,21 @@ export class AuthService {
       );
    }
 
-   /**
-    * Sends unvalidate token request
-    * @returns {Observable<any>}
-    */
    public logout(): Observable<any> {
       this.userObserver.next(null);
       return this.headersWithToken.post(this.authUrl + 'logout', {}).pipe(catchError(this.errorHandlerService.handle));
    }
 
-   /**
-    * Sends recovery request
-    * @param email
-    * @returns {Observable<any>}
-    */
    public recovery(email: string): Observable<any> {
       const headers = new HttpHeaders().set('Content-Type', 'application/json');
       return this.httpClient.post(this.authUrl + 'recovery', { email }, { headers }).pipe(catchError(this.errorHandlerService.handle));
    }
 
-   /**
-    * Sends reset password request
-    * @param user
-    * @returns {Observable<any>}
-    */
    public reset(user: User): Observable<any> {
       const headers = new HttpHeaders().set('Content-Type', 'application/json');
       return this.httpClient.post(this.authUrl + 'reset', user, { headers }).pipe(catchError(this.errorHandlerService.handle));
    }
 
-   /**
-    * Refresh user data request (by token)
-    * @returns {Observable<any>}
-    */
    private refresh(): Observable<any> {
       return this.headersWithToken.get(this.authUrl + 'refresh').pipe(catchError(this.errorHandlerService.handle));
    }
