@@ -10,6 +10,7 @@ import { throwIfAlreadyLoaded } from '@app/core/module-import-guard';
 import { PageNotFoundComponent } from '@app/core/page-not-found/page-not-found.component';
 import { SharedModule } from '@app/shared/shared.module';
 
+import { AuthGuard } from '@app/core/guards/auth.guard.service';
 import { AuthService } from '@services/auth.service';
 import { ChampionshipPredictionService } from '@services/championship/championship-prediction.service';
 import { ChampionshipRatingService } from '@services/championship/championship-rating.service';
@@ -28,6 +29,7 @@ import { ErrorHandlerService } from '@services/error-handler.service';
 import { FormValidatorService } from '@services/form-validator.service';
 import { HeadersWithToken } from '@services/headers-with-token.service';
 import { ImageService } from '@services/image.service';
+import { AuthNewService } from '@services/new/auth-new.service';
 import { ChampionshipMatchNewService } from '@services/new/championship-match-new.service';
 import { ChampionshipPredictionNewService } from '@services/new/championship-prediction-new.service';
 import { CompetitionNewService } from '@services/new/competition-new.service';
@@ -59,7 +61,9 @@ import { UtilsService } from '@services/utils.service';
    exports: [AccessDeniedComponent, FooterComponent, HeaderComponent, PageNotFoundComponent],
    imports: [CommonModule, ReactiveFormsModule, RouterModule, SharedModule],
    providers: [
+      AuthNewService,
       AuthService,
+      AuthGuard,
       ClubService,
       ChampionshipService,
       ChampionshipMatchNewService,

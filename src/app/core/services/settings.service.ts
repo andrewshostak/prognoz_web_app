@@ -19,14 +19,16 @@ export class SettingsService {
 
    // endpoints show notifications after error response
    public static readonly newInterceptorPaths: string[] = [
+      'v2/auth/logout',
+      'v2/auth/user',
       'v2/championship/matches',
       'v2/championship/predictions',
-      'v2/matches',
       'v2/competitions',
       'v2/cup/matches',
+      'v2/matches',
       'v2/team/matches',
-      'v2/team/teams',
       'v2/team/participants',
+      'v2/team/teams',
       'v2/users'
    ];
 
