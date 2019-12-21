@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { SharedModule } from '@app/shared/shared.module';
+import { NgbCollapseModule } from '@ng-bootstrap/ng-bootstrap';
 import { TeamEditModalComponent } from '@team/shared/team-edit-modal/team-edit-modal.component';
 import { TeamGoalkeeperFormComponent } from '@team/shared/team-goalkeeper-form/team-goalkeeper-form.component';
 import { TeamPredictionFormComponent } from '@team/shared/team-prediction-form/team-prediction-form.component';
@@ -22,12 +23,13 @@ import { TeamRatingComponent } from '@team/team-rating/team-rating.component';
 import { TeamResultsComponent } from '@team/team-results/team-results.component';
 import { TeamRoutingModule } from '@team/team-routing.module';
 import { TeamRulesComponent } from '@team/team-rules/team-rules.component';
+import { TeamSquadsNewComponent } from '@team/team-squads-new/team-squads-new.component';
 import { TeamSquadsComponent } from '@team/team-squads/team-squads.component';
 import { TeamComponent } from '@team/team.component';
 import { SimpleNotificationsModule } from 'angular2-notifications';
 
 @NgModule({
-   imports: [CommonModule, FormsModule, ReactiveFormsModule, SharedModule, SimpleNotificationsModule, TeamRoutingModule],
+   imports: [CommonModule, FormsModule, ReactiveFormsModule, SharedModule, SimpleNotificationsModule, TeamRoutingModule, NgbCollapseModule],
    declarations: [
       TeamCaptainComponent,
       TeamCompetitionSelectComponent,
@@ -48,6 +50,7 @@ import { SimpleNotificationsModule } from 'angular2-notifications';
       TeamRulesComponent,
       TeamSelectModalComponent,
       TeamSquadsComponent,
+      TeamSquadsNewComponent,
       TeamTeamMatchCardComponent
    ],
    exports: [TeamComponent]

@@ -11,6 +11,7 @@ import { TeamPredictionsComponent } from '@team/team-predictions/team-prediction
 import { TeamRatingComponent } from '@team/team-rating/team-rating.component';
 import { TeamResultsComponent } from '@team/team-results/team-results.component';
 import { TeamRulesComponent } from '@team/team-rules/team-rules.component';
+import { TeamSquadsNewComponent } from '@team/team-squads-new/team-squads-new.component';
 import { TeamSquadsComponent } from '@team/team-squads/team-squads.component';
 import { TeamComponent } from '@team/team.component';
 
@@ -30,6 +31,10 @@ const routes: Routes = [
                {
                   path: 'squads',
                   component: TeamSquadsComponent
+               },
+               {
+                  path: 'squads-new',
+                  component: TeamSquadsNewComponent
                },
                {
                   path: 'matches/round/:round',

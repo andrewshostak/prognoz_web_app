@@ -1,0 +1,55 @@
+<div *ngIf="competition" class="card black-shadow mb-2">
+   <div class="card-header">
+      {{ competition.title }}
+   </div>
+   <div class="card-body">
+      <table class="table table-sm table-striped table-bordered mb-0">
+         <tr>
+            <td>Статус</td>
+            <td class="text-center">
+               <ng-container *ngTemplateOutlet="teamCompetitionState; context: { $implicit: competition }"></ng-container>
+            </td>
+         </tr>
+         <tr>
+            <td>Кількість команд</td>
+            <td class="text-center">{{ competition.number_of_teams }}</td>
+         </tr>
+         <tr>
+            <td>Кількість команд: вилітає / піднімається</td>
+            <td class="text-center">{{ competition?.config?.team?.relegation }} / {{ competition?.config?.team?.promotion }}</td>
+         </tr>
+      </table>
+   </div>
+</div>
+<div *ngIf="teams" class="black-shadow">
+   <ul class="list-group">
+      <li
+         *ngFor="let team of teams"
+         class="list-group-item list-group-item-success"
+         [ngClass]="{ 'list-group-item-success': team.confirmed }"
+      >
+         <div class="d-flex justify-content-between">
+            <div>
+               <app-team-logo-with-tooltip [team]="team"></app-team-logo-with-tooltip>
+               {{ team.name }}
+            </div>
+            <button type="button" class="btn btn-sm btn-info" (click)="isCollapsed = !isCollapsed">
+               <i class="fa fa-info-circle"></i>
+            </button>
+         </div>
+         <div id="collapseExample" [ngbCollapse]="isCollapsed">
+            <div class="card">
+               <div class="card-body">
+                  You can collapse this card by clicking Toggle
+               </div>
+            </div>
+         </div>
+      </li>
+   </ul>
+</div>
+<ng-template #teamCompetitionState let-competition>
+   <span *ngIf="!competition.stated && !competition.active && !competition.ended">Майбутнє змагання</span>
+   <span *ngIf="competition.stated">Відкрито подачу заявок</span>
+   <span *ngIf="competition.active">Активне змагання</span>
+   <span *ngIf="competition.ended">Завершене змагання</span>
+</ng-template>

@@ -32,7 +32,7 @@ export class TeamNewService {
       }
 
       if (search.competitionId) {
-         params = params.set('competitionId', search.competitionId.toString());
+         params = params.set('competition_id', search.competitionId.toString());
       }
 
       if (search.confirmed) {
