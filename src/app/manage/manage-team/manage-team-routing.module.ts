@@ -14,15 +14,16 @@ import { TeamCreateComponent } from '@app/manage/manage-team/manage-team-team/te
 import { TeamEditComponent } from '@app/manage/manage-team/manage-team-team/team-edit/team-edit.component';
 import { TeamTeamsTableComponent } from '@app/manage/manage-team/manage-team-team/team-teams-table/team-teams-table.component';
 import { ManageTeamComponent } from '@app/manage/manage-team/manage-team.component';
+import { PermissionGuard } from '@app/manage/shared/permission-guard.service';
 import { RoleGuard } from '@app/manage/shared/role-guard.service';
 
 const routes: Routes = [
    {
-      canActivate: [RoleGuard],
-      canActivateChild: [RoleGuard],
-      data: { roles: ['team_editor', 'team_match_editor'] },
       children: [
          {
+            canActivate: [RoleGuard],
+            canActivateChild: [RoleGuard],
+            data: { roles: ['team_editor'] },
             children: [
                { path: 'page/:number', component: TeamParticipantsTableComponent, data: { roles: ['team_editor'] } },
                { path: 'create', component: TeamParticipantCreateComponent, data: { roles: ['team_editor'] } },
@@ -30,10 +31,12 @@ const routes: Routes = [
                { path: '', redirectTo: 'page/1', pathMatch: 'full' }
             ],
             component: ManageTeamParticipantComponent,
-            data: { roles: ['team_editor'] },
             path: 'participants'
          },
          {
+            canActivate: [RoleGuard],
+            canActivateChild: [RoleGuard],
+            data: { roles: ['team_match_editor'] },
             children: [
                { path: 'page/:pageNumber', component: TeamMatchesTableComponent, data: { roles: ['team_match_editor'] } },
                { path: 'create', component: TeamMatchCreateComponent, data: { roles: ['team_match_editor'] } },
@@ -41,18 +44,26 @@ const routes: Routes = [
                { path: '', redirectTo: 'page/1', pathMatch: 'full' }
             ],
             component: ManageTeamMatchComponent,
-            data: { roles: ['team_match_editor'] },
             path: 'matches'
          },
          {
             children: [
-               { path: 'page/:pageNumber', component: TeamTeamsTableComponent, data: { roles: ['team_editor'] } },
-               { path: 'create', component: TeamCreateComponent, data: { roles: ['team_editor'] } },
-               { path: ':id/edit', component: TeamEditComponent, data: { roles: ['team_editor'] } },
+               { path: 'page/:pageNumber', component: TeamTeamsTableComponent, canActivate: [RoleGuard], data: { roles: ['team_editor'] } },
+               {
+                  path: 'create',
+                  component: TeamCreateComponent,
+                  canActivate: [PermissionGuard],
+                  data: { permissions: ['create_team_wo_validation'] }
+               },
+               {
+                  path: ':id/edit',
+                  component: TeamEditComponent,
+                  canActivate: [PermissionGuard],
+                  data: { permissions: ['update_team_wo_validation'] }
+               },
                { path: '', redirectTo: 'page/1', pathMatch: 'full' }
             ],
             component: ManageTeamTeamComponent,
-            data: { roles: ['team_editor'] },
             path: 'teams'
          },
          { path: '', pathMatch: 'full', redirectTo: 'matches' }

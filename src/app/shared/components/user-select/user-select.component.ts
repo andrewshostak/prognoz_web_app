@@ -57,7 +57,7 @@ export class UserSelectComponent implements OnChanges, OnInit, ControlValueAcces
    }
 
    public ngOnChanges(changes: SimpleChanges): void {
-      if (changes.usersList && changes.usersList.currentValue) {
+      if (changes.usersList && !changes.usersList.isFirstChange() && changes.usersList.currentValue) {
          this.usersList$.next(changes.usersList.currentValue);
       }
    }
@@ -99,7 +99,7 @@ export class UserSelectComponent implements OnChanges, OnInit, ControlValueAcces
 
    private enableTypeAheadSearch(): void {
       this.users$ = merge(
-         of([]), // default users
+         of(this.usersList), // default users
          this.usersList$,
          this.usersInput$.pipe(
             distinctUntilChanged(),

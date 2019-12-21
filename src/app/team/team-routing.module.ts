@@ -4,6 +4,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { AuthGuard } from '@app/core/guards/auth.guard.service';
 import { TeamCompetitionSelectComponent } from '@team/team-competition-select/team-competition-select.component';
 import { TeamCreateComponent } from '@team/team-create/team-create.component';
+import { TeamEditComponent } from '@team/team-edit/team-edit.component';
 import { TeamMatchesComponent } from '@team/team-matches/team-matches.component';
 import { TeamMyComponent } from '@team/team-my/team-my.component';
 import { TeamPredictionsComponent } from '@team/team-predictions/team-predictions.component';
@@ -71,6 +72,11 @@ const routes: Routes = [
          {
             path: 'create',
             component: TeamCreateComponent,
+            canActivate: [AuthGuard]
+         },
+         {
+            path: ':id/edit',
+            component: TeamEditComponent,
             canActivate: [AuthGuard]
          },
          {

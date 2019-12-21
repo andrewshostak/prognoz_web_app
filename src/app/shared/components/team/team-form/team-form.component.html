@@ -51,7 +51,7 @@
          </div>
       </div>
    </div>
-   <div *ngIf="team" class="form-row">
+   <div *ngIf="includeAdvancedFormControls" class="form-row">
       <div class="col-12 col-md-6 mb-2">
          <app-checkbox [formGroup]="teamForm" [fControlName]="'stated'" [label]="'Заявлено'"></app-checkbox>
       </div>

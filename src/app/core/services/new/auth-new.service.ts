@@ -6,7 +6,7 @@ import { AuthReset } from '@models/new/auth/auth-reset.model';
 import { AuthSignIn } from '@models/new/auth/auth-sign-in.model';
 import { AuthSignUp } from '@models/new/auth/auth-sign-up.model';
 import { UserNew } from '@models/new/user-new.model';
-import { get } from 'lodash';
+import { get, uniq } from 'lodash';
 import { Observable } from 'rxjs';
 
 @Injectable()
@@ -15,6 +15,34 @@ export class AuthNewService {
    private authURL = environment.apiUrl + 'v2/auth';
 
    constructor(private httpClient: HttpClient) {}
+
+   public getPermissions(): string[] {
+      const user = this.getUser();
+      if (!get(user, 'roles.length')) {
+         return [];
+      }
+
+      const permissions: string[] = [];
+      user.roles.forEach(role => {
+         if (!role.permissions) {
+            return;
+         }
+
+         role.permissions.forEach(permission => {
+            permissions.push(permission.slug);
+         });
+      });
+
+      return uniq(permissions);
+   }
+
+   public hasPermissions(permissions: string[], or?: boolean): boolean {
+      const userPermissions = this.getPermissions();
+
+      return or
+         ? permissions.some(permission => userPermissions.includes(permission))
+         : permissions.every(permission => userPermissions.includes(permission));
+   }
 
    public hasRoles(roles: string[], or?: boolean): boolean {
       const user = this.getUser();

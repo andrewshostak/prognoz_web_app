@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
@@ -17,6 +17,8 @@ import { NotificationsService } from 'angular2-notifications';
 export class TeamFormComponent implements OnChanges, OnInit {
    @Input() public team: TeamNew;
    @Input() public captainsList: UserNew[];
+   @Input() public includeAdvancedFormControls: boolean[];
+   @Output() public successfullySubmitted = new EventEmitter<TeamNew>();
 
    public teamImageExtensions: string[];
    public teamImageSize: number;
@@ -30,9 +32,6 @@ export class TeamFormComponent implements OnChanges, OnInit {
    ) {}
 
    public ngOnChanges(changes: SimpleChanges): void {
-      if (changes.team && changes.team.currentValue) {
-         this.addAdvancedFormControls();
-      }
       UtilsService.patchSimpleChangeValuesInForm(changes, this.teamForm, 'team', this.patchTeamValuesInForm);
    }
 
@@ -40,6 +39,13 @@ export class TeamFormComponent implements OnChanges, OnInit {
       this.teamImageExtensions = FormValidatorService.fileExtensions.teamImage;
       this.teamImageSize = FormValidatorService.fileSizeLimits.teamImage;
       this.setTeamForm();
+      if (this.includeAdvancedFormControls) {
+         this.addAdvancedFormControls(!!this.captainsList);
+      }
+      if (this.team) {
+         this.teamForm.get('captain_id').disable();
+         this.teamForm.get('captain_id').setValue(this.team.captain_id);
+      }
    }
 
    public showFormErrorMessage(abstractControl: AbstractControl, errorKey: string): boolean {
@@ -55,22 +61,24 @@ export class TeamFormComponent implements OnChanges, OnInit {
          return;
       }
 
-      this.team ? this.updateTeam(this.teamForm.value) : this.createTeam(this.teamForm.value);
+      this.team && this.team.id ? this.updateTeam(this.teamForm.getRawValue()) : this.createTeam(this.teamForm.getRawValue());
    }
 
-   private addAdvancedFormControls(): void {
+   private addAdvancedFormControls(disabled: boolean): void {
       if (!this.teamForm) {
          return;
       }
 
-      this.teamForm.addControl('stated', new FormControl(false));
-      this.teamForm.addControl('confirmed', new FormControl(false));
+      this.teamForm.addControl('stated', new FormControl({ value: false, disabled }));
+      this.teamForm.addControl('confirmed', new FormControl({ value: false, disabled }));
    }
 
    private createTeam(team: Partial<TeamNew>): void {
       this.teamService.createTeam(team).subscribe(response => {
          this.notificationsService.success('Успішно', `Команду ${response.name} створено`);
-         this.router.navigate(['/', 'manage', 'team', 'teams', response.id, 'edit']);
+         if (this.successfullySubmitted.observers.length) {
+            this.successfullySubmitted.emit(response);
+         }
       });
    }
 

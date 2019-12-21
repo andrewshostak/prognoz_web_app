@@ -11,6 +11,7 @@ import { ManageRoutingModule } from '@app/manage/manage-routing.module';
 import { ManageTeamModule } from '@app/manage/manage-team/manage-team.module';
 import { ManageComponent } from '@app/manage/manage.component';
 import { ManageGuard } from '@app/manage/shared/manage-guard.service';
+import { PermissionGuard } from '@app/manage/shared/permission-guard.service';
 import { RoleGuard } from '@app/manage/shared/role-guard.service';
 
 @NgModule({
@@ -27,6 +28,6 @@ import { RoleGuard } from '@app/manage/shared/role-guard.service';
       ManageTeamModule,
       ManageRoutingModule
    ],
-   providers: [ManageGuard, RoleGuard]
+   providers: [ManageGuard, PermissionGuard, RoleGuard]
 })
 export class ManageModule {}
