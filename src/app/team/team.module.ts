@@ -4,6 +4,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { SharedModule } from '@app/shared/shared.module';
 import { NgbCollapseModule } from '@ng-bootstrap/ng-bootstrap';
+import { TeamAndParticipantsComponent } from '@team/shared/team-and-participants/team-and-participants.component';
 import { TeamEditModalComponent } from '@team/shared/team-edit-modal/team-edit-modal.component';
 import { TeamGoalkeeperFormComponent } from '@team/shared/team-goalkeeper-form/team-goalkeeper-form.component';
 import { TeamPredictionFormComponent } from '@team/shared/team-prediction-form/team-prediction-form.component';
@@ -31,6 +32,7 @@ import { SimpleNotificationsModule } from 'angular2-notifications';
 @NgModule({
    imports: [CommonModule, FormsModule, ReactiveFormsModule, SharedModule, SimpleNotificationsModule, TeamRoutingModule, NgbCollapseModule],
    declarations: [
+      TeamAndParticipantsComponent,
       TeamCaptainComponent,
       TeamCompetitionSelectComponent,
       TeamComponent,

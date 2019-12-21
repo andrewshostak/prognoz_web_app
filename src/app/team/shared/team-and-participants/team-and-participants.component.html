@@ -1,0 +1,40 @@
+<div class="d-flex justify-content-between text-dark">
+   <div>
+      <app-team-logo-with-tooltip [team]="team"></app-team-logo-with-tooltip>
+      <span class="font-weight-bold">{{ team.name }}</span>
+   </div>
+   <button type="button" class="btn btn-sm btn-info" (click)="toggleParticipants()">
+      <i class="fa fa-info-circle"></i>
+   </button>
+</div>
+<div [ngbCollapse]="!isExpanded" class="bg-white text-dark">
+   <table *ngIf="teamParticipants" class="table table-sm table-striped table-bordered mb-0">
+      <tr *ngFor="let participant of teamParticipants">
+         <td class="text-center align-middle">
+            <ng-container *ngTemplateOutlet="teamParticipantStatus; context: { $implicit: participant }"> </ng-container>
+         </td>
+         <td class="align-middle">
+            <app-user-logo-with-tooltip [user]="participant.user"></app-user-logo-with-tooltip>
+            {{ participant.user.name }}
+         </td>
+         <td class="text-center font-weight-bold align-middle">{{ participant.captain ? 'К' : '' }}</td>
+         <td class="text-center">
+            <div class="btn-group btn-group-sm">
+               <button class="btn btn-success"><i class="fa fa-check-circle"></i> <span class="d-none d-md-inline">Прийняти</span></button>
+               <button class="btn btn-danger"><i class="fa fa-times-circle"></i> <span class="d-none d-md-inline">Відхилити</span></button>
+            </div>
+         </td>
+      </tr>
+   </table>
+</div>
+<ng-template #teamParticipantStatus let-participant>
+   <span *ngIf="!participant.confirmed && !participant.refused" class="text-info">
+      <i class="fa fa-question-circle"></i> <span class="d-none d-lg-inline">Очікується</span>
+   </span>
+   <span *ngIf="participant.confirmed" class="text-success">
+      <i class="fa fa-check-circle"></i> <span class="d-none d-lg-inline">Підтверджено</span>
+   </span>
+   <span *ngIf="participant.refused" class="text-danger">
+      <i class="fa fa-times-circle"></i> <span class="d-none d-lg-inline">Відхилено</span>
+   </span>
+</ng-template>

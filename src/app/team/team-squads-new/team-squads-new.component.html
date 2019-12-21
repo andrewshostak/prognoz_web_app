@@ -25,25 +25,10 @@
    <ul class="list-group">
       <li
          *ngFor="let team of teams"
-         class="list-group-item list-group-item-success"
-         [ngClass]="{ 'list-group-item-success': team.confirmed }"
+         class="list-group-item"
+         [ngClass]="{ 'list-group-item-success': competition.active && team.confirmed }"
       >
-         <div class="d-flex justify-content-between">
-            <div>
-               <app-team-logo-with-tooltip [team]="team"></app-team-logo-with-tooltip>
-               {{ team.name }}
-            </div>
-            <button type="button" class="btn btn-sm btn-info" (click)="isCollapsed = !isCollapsed">
-               <i class="fa fa-info-circle"></i>
-            </button>
-         </div>
-         <div id="collapseExample" [ngbCollapse]="isCollapsed">
-            <div class="card">
-               <div class="card-body">
-                  You can collapse this card by clicking Toggle
-               </div>
-            </div>
-         </div>
+         <app-team-and-participants [isExpanded]="false" [team]="team" [competition]="competition"></app-team-and-participants>
       </li>
    </ul>
 </div>

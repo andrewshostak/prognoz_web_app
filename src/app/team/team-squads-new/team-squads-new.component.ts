@@ -21,7 +21,6 @@ import { map, takeUntil } from 'rxjs/operators';
 export class TeamSquadsNewComponent implements OnDestroy, OnInit {
    public competition: CompetitionNew;
    public teams: TeamNew[];
-   public isCollapsed: boolean = true;
 
    private destroyed$ = new Subject();
 
