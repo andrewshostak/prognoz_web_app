@@ -13,10 +13,10 @@ import { SettingsService } from '@services/settings.service';
    styleUrls: ['./team-and-participants.component.scss']
 })
 export class TeamAndParticipantsComponent {
-   @Input() public isExpanded: boolean;
    @Input() public team: TeamNew;
    @Input() public competition: CompetitionNew;
 
+   public isExpanded: boolean;
    public teamParticipants: TeamParticipantNew[];
 
    constructor(private teamParticipantService: TeamParticipantNewService) {}
@@ -34,4 +34,15 @@ export class TeamAndParticipantsComponent {
          this.teamParticipants = response.data;
       });
    }
+
+   // todo: створення і заявлення існуючої команди
+   //    + "Створити нову команду"
+   //    "Заявити команду"
+   //      нове модальене вікно
+
+   // todo: buttons
+   //  "Подати заявку в команду"
+   //  "Підтвердити"
+   //  "Відхилити"
+   //  "Видалити" - delete team-participant endpoint
 }

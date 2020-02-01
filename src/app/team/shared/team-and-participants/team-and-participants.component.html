@@ -3,8 +3,8 @@
       <app-team-logo-with-tooltip [team]="team"></app-team-logo-with-tooltip>
       <span class="font-weight-bold">{{ team.name }}</span>
    </div>
-   <button type="button" class="btn btn-sm btn-info" (click)="toggleParticipants()">
-      <i class="fa fa-info-circle"></i>
+   <button type="button" class="btn btn-sm btn-outline-primary" (click)="toggleParticipants()">
+      <i class="fa" [ngClass]="isExpanded ? 'fa-chevron-up' : 'fa-chevron-down'"></i>
    </button>
 </div>
 <div [ngbCollapse]="!isExpanded" class="bg-white text-dark">

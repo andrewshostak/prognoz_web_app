@@ -21,6 +21,17 @@
       </table>
    </div>
 </div>
+<button
+   [hidden]="!showCreateTeamButton"
+   type="button"
+   class="btn btn-primary"
+   [routerLink]="['/', 'team', 'create', { createParticipantForCompetition: competition?.id }]"
+>
+   <i class="fa fa-plus-circle"></i> Створити нову команду
+</button>
+<button [hidden]="!showCreateTeamButton" type="button" class="btn btn-outline-primary">
+   <i class="fa fa-plus-circle"></i> Заявити команду
+</button>
 <div *ngIf="teams" class="black-shadow">
    <ul class="list-group">
       <li
@@ -28,7 +39,7 @@
          class="list-group-item"
          [ngClass]="{ 'list-group-item-success': competition.active && team.confirmed }"
       >
-         <app-team-and-participants [isExpanded]="false" [team]="team" [competition]="competition"></app-team-and-participants>
+         <app-team-and-participants [team]="team" [competition]="competition"></app-team-and-participants>
       </li>
    </ul>
 </div>

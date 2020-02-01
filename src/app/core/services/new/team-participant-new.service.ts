@@ -5,6 +5,7 @@ import { environment } from '@env';
 import { TeamParticipantNew } from '@models/new/team-participant-new.model';
 import { PaginatedResponse } from '@models/paginated-response.model';
 import { TeamParticipantSearch } from '@models/search/team-participant-search.model';
+import { isNil } from 'lodash';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
@@ -13,6 +14,12 @@ export class TeamParticipantNewService {
    public readonly teamParticipantsUrl: string = `${environment.apiUrl}v2/team/participants`;
 
    constructor(private httpClient: HttpClient) {}
+
+   public createTeamParticipant(teamParticipant: Partial<TeamParticipantNew>): Observable<TeamParticipantNew> {
+      return this.httpClient
+         .post<{ team_participant: TeamParticipantNew }>(this.teamParticipantsUrl, teamParticipant)
+         .pipe(map(response => response.team_participant));
+   }
 
    public getTeamParticipant(teamParticipantId: number): Observable<TeamParticipantNew> {
       return this.httpClient
@@ -35,7 +42,7 @@ export class TeamParticipantNewService {
          params = params.set('confirmed', (search.confirmed as unknown) as string);
       }
 
-      if (search.ended) {
+      if (!isNil(search.ended)) {
          params = params.set('ended', (search.ended as unknown) as string);
       }
 
@@ -47,7 +54,7 @@ export class TeamParticipantNewService {
          params = params.set('page', search.page.toString());
       }
 
-      if (search.refused) {
+      if (!isNil(search.refused)) {
          params = params.set('refused', (search.refused as unknown) as string);
       }
 
@@ -68,5 +75,11 @@ export class TeamParticipantNewService {
          params = params.set('sequence', search.sequence);
       }
       return this.httpClient.get<PaginatedResponse<TeamParticipantNew>>(this.teamParticipantsUrl, { params });
+   }
+
+   public updateTeamParticipant(teamParticipantId: number, teamParticipant: Partial<TeamParticipantNew>): Observable<TeamParticipantNew> {
+      return this.httpClient
+         .put<{ team_participant: TeamParticipantNew }>(`${this.teamParticipantsUrl}/${teamParticipantId}`, teamParticipant)
+         .pipe(map(response => response.team_participant));
    }
 }
