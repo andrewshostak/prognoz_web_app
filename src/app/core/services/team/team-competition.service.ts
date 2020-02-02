@@ -4,6 +4,9 @@ import { TeamMatch } from '@models/team/team-match.model';
 import { ChampionshipService } from '@services/championship/championship.service';
 
 @Injectable()
+/**
+ * @deprecated use TeamCompetitionNewService
+ */
 export class TeamCompetitionService {
    public static isTeamMatchBlocked(teamMatch: TeamMatch, teamId: number): boolean {
       if (!teamMatch.ended) {

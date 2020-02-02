@@ -6,6 +6,7 @@ import { TeamNew } from '@models/new/team-new.model';
 import { PaginatedResponse } from '@models/paginated-response.model';
 import { TeamSearch } from '@models/search/team-search.model';
 import { RequestPreparationService } from '@services/request-preparation.service';
+import { isNil } from 'lodash';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
@@ -35,7 +36,7 @@ export class TeamNewService {
          params = params.set('competition_id', search.competitionId.toString());
       }
 
-      if (search.confirmed) {
+      if (!isNil(search.confirmed)) {
          params = params.set('confirmed', (search.confirmed as unknown) as string);
       }
 
@@ -51,7 +52,7 @@ export class TeamNewService {
          params = params.set('page', search.page.toString());
       }
 
-      if (search.stated) {
+      if (!isNil(search.stated)) {
          params = params.set('stated', (search.stated as unknown) as string);
       }
 

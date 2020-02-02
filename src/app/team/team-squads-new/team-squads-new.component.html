@@ -29,7 +29,7 @@
 >
    <i class="fa fa-plus-circle"></i> Створити нову команду
 </button>
-<button [hidden]="!showCreateTeamButton" type="button" class="btn btn-outline-primary">
+<button [hidden]="!showCreateTeamButton" (click)="openTeamSelectModal(teamSelectModal)" type="button" class="btn btn-outline-primary">
    <i class="fa fa-plus-circle"></i> Заявити команду
 </button>
 <div *ngIf="teams" class="black-shadow">
@@ -48,4 +48,7 @@
    <span *ngIf="competition.stated">Відкрито подачу заявок</span>
    <span *ngIf="competition.active">Активне змагання</span>
    <span *ngIf="competition.ended">Завершене змагання</span>
+</ng-template>
+<ng-template #teamSelectModal let-c="close">
+   <app-team-select-modal-new [close]="c" (submitted)="teamSelected($event)"> </app-team-select-modal-new>
 </ng-template>

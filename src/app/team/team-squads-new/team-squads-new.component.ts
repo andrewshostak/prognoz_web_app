@@ -7,15 +7,19 @@ import { CompetitionNew } from '@models/new/competition-new.model';
 import { TeamNew } from '@models/new/team-new.model';
 import { TeamParticipantNew } from '@models/new/team-participant-new.model';
 import { UserNew } from '@models/new/user-new.model';
+import { OpenedModal } from '@models/opened-modal.model';
 import { PaginatedResponse } from '@models/paginated-response.model';
 import { TeamParticipantSearch } from '@models/search/team-participant-search.model';
 import { TeamSearch } from '@models/search/team-search.model';
+import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { AuthNewService } from '@services/new/auth-new.service';
 import { CompetitionNewService } from '@services/new/competition-new.service';
+import { TeamCompetitionNewService } from '@services/new/team-competition-new.service';
 import { TeamNewService } from '@services/new/team-new.service';
 import { TeamParticipantNewService } from '@services/new/team-participant-new.service';
 import { SettingsService } from '@services/settings.service';
 import { TitleService } from '@services/title.service';
+import { NotificationsService } from 'angular2-notifications';
 import { forkJoin, Observable, ObservableInput, of, Subject } from 'rxjs';
 import { map, mergeMap, takeUntil } from 'rxjs/operators';
 
@@ -26,6 +30,7 @@ import { map, mergeMap, takeUntil } from 'rxjs/operators';
 })
 export class TeamSquadsNewComponent implements OnDestroy, OnInit {
    public competition: CompetitionNew;
+   public openedModal: OpenedModal<null>;
    public showCreateTeamButton: boolean;
    public teams: TeamNew[];
    public user: UserNew;
@@ -36,6 +41,9 @@ export class TeamSquadsNewComponent implements OnDestroy, OnInit {
       private activatedRoute: ActivatedRoute,
       private authService: AuthNewService,
       private competitionService: CompetitionNewService,
+      private ngbModalService: NgbModal,
+      private notificationsService: NotificationsService,
+      private teamCompetitionService: TeamCompetitionNewService,
       private teamParticipantService: TeamParticipantNewService,
       private teamService: TeamNewService,
       private titleService: TitleService
@@ -50,31 +58,52 @@ export class TeamSquadsNewComponent implements OnDestroy, OnInit {
       this.user = this.authService.getUser();
       this.titleService.setTitle('Заявки на участь / склади команд - Командний');
       this.activatedRoute.parent.params.pipe(takeUntil(this.destroyed$)).subscribe((params: Params) => {
-         this.showCreateTeamButton = false;
-         const requests: [ObservableInput<{ competition: CompetitionNew }>, ObservableInput<PaginatedResponse<TeamNew>>] = [
-            this.getCompetitionObservable(params.competitionId),
-            this.getTeamsObservable(params.competitionId)
-         ];
-         forkJoin(requests)
-            .pipe(
-               map(([competitionResponse, teamsResponse]) => {
-                  return { competitionResponse, teamsResponse };
-               }),
-               mergeMap(response => {
-                  this.competition = response.competitionResponse.competition;
-                  this.teams = response.teamsResponse.data;
-
-                  return this.user && this.competition.stated ? this.getTeamParticipantsObservable(this.user.id) : of(null);
-               })
-            )
-            .subscribe(response => {
-               this.showCreateTeamButton = response && response.total < 1;
-            });
+         this.getPageData(params.competitionId);
       });
+   }
+
+   public openTeamSelectModal(content: NgbModalRef): void {
+      const reference = this.ngbModalService.open(content, { centered: true });
+      this.openedModal = { reference, data: null, submitted: () => {} };
+   }
+
+   public teamSelected(team: TeamNew): void {
+      const callbacks = {
+         successful: () => {
+            this.getPageData(this.competition.id);
+            this.notificationsService.success('Успішно', `Заявку в команду ${team.name} подано`);
+            this.openedModal.reference.close();
+         },
+         error: () => this.openedModal.reference.close()
+      };
+      this.teamCompetitionService.updateTeamCreateAndUpdateCaptain(team, this.competition.id, callbacks);
    }
 
    private getCompetitionObservable(id: number): Observable<{ competition: CompetitionNew }> {
       return this.competitionService.getCompetition(id);
+   }
+
+   private getPageData(competitionId: number): void {
+      this.showCreateTeamButton = false;
+      const requests: [ObservableInput<{ competition: CompetitionNew }>, ObservableInput<PaginatedResponse<TeamNew>>] = [
+         this.getCompetitionObservable(competitionId),
+         this.getTeamsObservable(competitionId)
+      ];
+      forkJoin(requests)
+         .pipe(
+            map(([competitionResponse, teamsResponse]) => {
+               return { competitionResponse, teamsResponse };
+            }),
+            mergeMap(response => {
+               this.competition = response.competitionResponse.competition;
+               this.teams = response.teamsResponse.data;
+
+               return this.user && this.competition.stated ? this.getTeamParticipantsObservable(this.user.id) : of(null);
+            })
+         )
+         .subscribe(response => {
+            this.showCreateTeamButton = response && response.total < 1;
+         });
    }
 
    private getTeamsObservable(competitionId: number): Observable<PaginatedResponse<TeamNew>> {
