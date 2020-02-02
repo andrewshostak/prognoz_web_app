@@ -21,25 +21,23 @@
       </table>
    </div>
 </div>
-<button
-   [hidden]="!showCreateTeamButton"
-   type="button"
-   class="btn btn-primary"
-   [routerLink]="['/', 'team', 'create', { createParticipantForCompetition: competition?.id }]"
->
-   <i class="fa fa-plus-circle"></i> Створити нову команду
-</button>
-<button [hidden]="!showCreateTeamButton" (click)="openTeamSelectModal(teamSelectModal)" type="button" class="btn btn-outline-primary">
-   <i class="fa fa-plus-circle"></i> Заявити команду
-</button>
+<div [hidden]="!showCreateTeamButton" class="mb-2">
+   <button
+      type="button"
+      class="btn btn-primary"
+      [routerLink]="['/', 'team', 'create', { createParticipantForCompetition: competition?.id }]"
+   >
+      <i class="fa fa-plus-circle"></i> Створити нову команду
+   </button>
+   <button (click)="openTeamSelectModal(teamSelectModal)" type="button" class="btn btn-outline-primary">
+      <i class="fa fa-plus-circle"></i> Заявити команду
+   </button>
+</div>
 <div *ngIf="teams" class="black-shadow">
    <ul class="list-group">
-      <li
-         *ngFor="let team of teams"
-         class="list-group-item"
-         [ngClass]="{ 'list-group-item-success': competition.active && team.confirmed }"
-      >
-         <app-team-and-participants [team]="team" [competition]="competition"></app-team-and-participants>
+      <li *ngFor="let team of teams" class="list-group-item" [ngClass]="{ 'list-group-item-success': team.confirmed }">
+         <app-team-and-participants [team]="team" [competition]="competition" [allUserApplications]="allUserApplications">
+         </app-team-and-participants>
       </li>
    </ul>
 </div>

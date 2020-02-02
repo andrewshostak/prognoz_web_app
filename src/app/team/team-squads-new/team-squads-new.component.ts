@@ -29,6 +29,7 @@ import { map, mergeMap, takeUntil } from 'rxjs/operators';
    styleUrls: ['./team-squads-new.component.scss']
 })
 export class TeamSquadsNewComponent implements OnDestroy, OnInit {
+   public allUserApplications: TeamParticipantNew[];
    public competition: CompetitionNew;
    public openedModal: OpenedModal<null>;
    public showCreateTeamButton: boolean;
@@ -79,8 +80,29 @@ export class TeamSquadsNewComponent implements OnDestroy, OnInit {
       this.teamCompetitionService.updateTeamCreateAndUpdateCaptain(team, this.competition.id, callbacks);
    }
 
+   private getAllUserApplicationsObservable(competitionId: number, userId): Observable<PaginatedResponse<TeamParticipantNew>> {
+      const search: TeamParticipantSearch = {
+         page: 1,
+         limit: SettingsService.maxLimitValues.teamParticipants,
+         competitionId,
+         userId
+      };
+      return this.teamParticipantService.getTeamParticipants(search);
+   }
+
    private getCompetitionObservable(id: number): Observable<{ competition: CompetitionNew }> {
       return this.competitionService.getCompetition(id);
+   }
+
+   private getOpenedUserApplicationsObservable(userId: number): Observable<PaginatedResponse<TeamParticipantNew>> {
+      const search: TeamParticipantSearch = {
+         ended: ModelStatus.Falsy,
+         limit: 1,
+         page: 1,
+         refused: ModelStatus.Falsy,
+         userId
+      };
+      return this.teamParticipantService.getTeamParticipants(search);
    }
 
    private getPageData(competitionId: number): void {
@@ -98,11 +120,26 @@ export class TeamSquadsNewComponent implements OnDestroy, OnInit {
                this.competition = response.competitionResponse.competition;
                this.teams = response.teamsResponse.data;
 
-               return this.user && this.competition.stated ? this.getTeamParticipantsObservable(this.user.id) : of(null);
+               let applicationRequests: [
+                  ObservableInput<PaginatedResponse<TeamParticipantNew>>,
+                  ObservableInput<PaginatedResponse<TeamParticipantNew>>
+               ] = [of(null), of(null)];
+               if (this.user && this.competition.stated) {
+                  applicationRequests = [
+                     this.getOpenedUserApplicationsObservable(this.user.id),
+                     this.getAllUserApplicationsObservable(competitionId, this.user.id)
+                  ];
+               }
+               return forkJoin(applicationRequests).pipe(
+                  map(([openedApplicationResponse, allApplicationsResponse]) => {
+                     return { openedApplicationResponse, allApplicationsResponse };
+                  })
+               );
             })
          )
          .subscribe(response => {
-            this.showCreateTeamButton = response && response.total < 1;
+            this.showCreateTeamButton = response.openedApplicationResponse && response.openedApplicationResponse.total < 1;
+            this.allUserApplications = response.openedApplicationResponse ? response.allApplicationsResponse.data : [];
          });
    }
 
@@ -115,16 +152,5 @@ export class TeamSquadsNewComponent implements OnDestroy, OnInit {
          page: 1
       };
       return this.teamService.getTeams(search);
-   }
-
-   private getTeamParticipantsObservable(userId: number): Observable<PaginatedResponse<TeamParticipantNew>> {
-      const search: TeamParticipantSearch = {
-         ended: ModelStatus.Falsy,
-         limit: 1,
-         page: 1,
-         refused: ModelStatus.Falsy,
-         userId
-      };
-      return this.teamParticipantService.getTeamParticipants(search);
    }
 }

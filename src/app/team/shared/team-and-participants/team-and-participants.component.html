@@ -3,9 +3,26 @@
       <app-team-logo-with-tooltip [team]="team"></app-team-logo-with-tooltip>
       <span class="font-weight-bold">{{ team.name }}</span>
    </div>
-   <button type="button" class="btn btn-sm btn-outline-primary" (click)="toggleParticipants()">
-      <i class="fa" [ngClass]="isExpanded ? 'fa-chevron-up' : 'fa-chevron-down'"></i>
-   </button>
+   <div class="text-nowrap">
+      <button
+         [hidden]="!showJoinButton"
+         (click)="
+            openConfirmModal(
+               confirmationModal,
+               { message: 'Подати заявку в команду ' + team.name + '?', teamParticipant: null },
+               createTeamParticipant
+            )
+         "
+         type="button"
+         class="btn btn-sm btn-primary"
+      >
+         <i class="fa fa-arrow-right"></i>
+         Подати заявку
+      </button>
+      <button type="button" class="btn btn-sm btn-outline-primary" (click)="toggleParticipants()">
+         <i class="fa" [ngClass]="isExpanded ? 'fa-chevron-up' : 'fa-chevron-down'"></i>
+      </button>
+   </div>
 </div>
 <div [ngbCollapse]="!isExpanded" class="bg-white text-dark">
    <table *ngIf="teamParticipants" class="table table-sm table-striped table-bordered mb-0">
@@ -37,4 +54,8 @@
    <span *ngIf="participant.refused" class="text-danger">
       <i class="fa fa-times-circle"></i> <span class="d-none d-lg-inline">Відхилено</span>
    </span>
+</ng-template>
+<ng-template #confirmationModal let-c="close">
+   <app-confirmation-modal [close]="c" [message]="openedModal.data.message" (confirmed)="openedModal.submitted($event)">
+   </app-confirmation-modal>
 </ng-template>
