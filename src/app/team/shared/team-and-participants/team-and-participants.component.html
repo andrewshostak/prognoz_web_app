@@ -16,29 +16,63 @@
          type="button"
          class="btn btn-sm btn-primary"
       >
-         <i class="fa fa-arrow-right"></i>
-         Подати заявку
+         <i class="fa fa-arrow-right"></i> <span class="d-none d-md-inline">Подати заявку</span>
       </button>
+      <span [hidden]="!team.confirmed" class="text-nowrap text-success">
+         <i class="fa fa-check-circle"></i> <span class="d-none d-md-inline">Підтверджено</span>
+      </span>
       <button type="button" class="btn btn-sm btn-outline-primary" (click)="toggleParticipants()">
          <i class="fa" [ngClass]="isExpanded ? 'fa-chevron-up' : 'fa-chevron-down'"></i>
       </button>
    </div>
 </div>
 <div [ngbCollapse]="!isExpanded" class="bg-white text-dark">
-   <table *ngIf="teamParticipants" class="table table-sm table-striped table-bordered mb-0">
+   <table *ngIf="teamParticipants" class="table table-sm table-bordered mb-0">
       <tr *ngFor="let participant of teamParticipants">
-         <td class="text-center align-middle">
-            <ng-container *ngTemplateOutlet="teamParticipantStatus; context: { $implicit: participant }"> </ng-container>
-         </td>
          <td class="align-middle">
-            <app-user-logo-with-tooltip [user]="participant.user"></app-user-logo-with-tooltip>
-            {{ participant.user.name }}
+            <ng-container [ngTemplateOutlet]="userInfo" [ngTemplateOutletContext]="{ item: participant }"></ng-container>
          </td>
-         <td class="text-center font-weight-bold align-middle">{{ participant.captain ? 'К' : '' }}</td>
-         <td class="text-center">
-            <div class="btn-group btn-group-sm">
-               <button class="btn btn-success"><i class="fa fa-check-circle"></i> <span class="d-none d-md-inline">Прийняти</span></button>
-               <button class="btn btn-danger"><i class="fa fa-times-circle"></i> <span class="d-none d-md-inline">Відхилити</span></button>
+         <td class="d-none d-sm-table-cell text-center align-middle">
+            <span [hidden]="!participant.captain">Капітан</span>
+         </td>
+         <td class="d-none d-sm-table-cell text-center text-nowrap align-middle">
+            {{ participant.created_at | time: 'YYYY-MM-DD HH:mm' }}
+         </td>
+         <td class="text-center align-middle">
+            <div
+               *ngIf="showCaptainButtons && !participant.refused && !participant.confirmed; else teamParticipantStatusWrapper"
+               class="btn-group btn-group-sm"
+            >
+               <button
+                  class="btn btn-success"
+                  (click)="
+                     openConfirmModal(
+                        confirmationModal,
+                        { message: 'Прийняти заявку ' + participant.user.name + '?', teamParticipant: participant },
+                        confirmTeamParticipant
+                     )
+                  "
+               >
+                  <i class="fa fa-check-circle"></i> <span class="d-none d-lg-inline">Прийняти</span>
+               </button>
+               <button
+                  class="btn btn-danger"
+                  (click)="
+                     openConfirmModal(
+                        confirmationModal,
+                        { message: 'Відхилити заявку ' + participant.user.name + '?', teamParticipant: participant },
+                        refuseTeamParticipant
+                     )
+                  "
+               >
+                  <i class="fa fa-times-circle"></i> <span class="d-none d-lg-inline">Відхилити</span>
+               </button>
+            </div>
+            <ng-template #teamParticipantStatusWrapper>
+               <ng-container *ngTemplateOutlet="teamParticipantStatus; context: { $implicit: participant }"></ng-container>
+            </ng-template>
+            <div class="d-block d-sm-none">
+               <small class="text-nowrap text-muted">{{ participant.created_at | time: 'YYYY-MM-DD HH:mm' }}</small>
             </div>
          </td>
       </tr>
@@ -51,11 +85,33 @@
    <span *ngIf="participant.confirmed" class="text-success">
       <i class="fa fa-check-circle"></i> <span class="d-none d-lg-inline">Підтверджено</span>
    </span>
-   <span *ngIf="participant.refused" class="text-danger">
+   <span *ngIf="participant.refused && !showCaptainButtons" class="text-danger">
       <i class="fa fa-times-circle"></i> <span class="d-none d-lg-inline">Відхилено</span>
    </span>
+   <button
+      *ngIf="participant.refused && showCaptainButtons"
+      (click)="
+         openConfirmModal(
+            confirmationModal,
+            { message: 'Видалити заявку ' + participant.user.name + '?', teamParticipant: participant },
+            deleteTeamParticipant
+         )
+      "
+      class="btn btn-sm btn-outline-danger"
+   >
+      <i class="fa fa-times-circle"></i> <span class="d-none d-lg-inline">Видалити</span>
+   </button>
 </ng-template>
 <ng-template #confirmationModal let-c="close">
    <app-confirmation-modal [close]="c" [message]="openedModal.data.message" (confirmed)="openedModal.submitted($event)">
    </app-confirmation-modal>
+</ng-template>
+<ng-template #userInfo let-item="item">
+   <div class="d-flex flex-row align-items-center">
+      <app-user-logo-with-tooltip [user]="item.user"></app-user-logo-with-tooltip>
+      <div class="ml-1 d-flex flex-column">
+         <span [ngClass]="{ 'font-weight-bold': item.confirmed }">{{ item.user.name }}</span>
+         <small [hidden]="!item.user.hometown" class="text-muted break-word">({{ item.user.hometown }})</small>
+      </div>
+   </div>
 </ng-template>

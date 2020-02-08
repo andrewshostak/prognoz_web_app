@@ -35,8 +35,13 @@
 </div>
 <div *ngIf="teams" class="black-shadow">
    <ul class="list-group">
-      <li *ngFor="let team of teams" class="list-group-item" [ngClass]="{ 'list-group-item-success': team.confirmed }">
-         <app-team-and-participants [team]="team" [competition]="competition" [allUserApplications]="allUserApplications">
+      <li *ngFor="let team of teams" class="list-group-item">
+         <app-team-and-participants
+            [team]="team"
+            [competition]="competition"
+            [allUserApplications]="allUserApplications"
+            (teamParticipantCreated)="teamParticipantCreated()"
+         >
          </app-team-and-participants>
       </li>
    </ul>

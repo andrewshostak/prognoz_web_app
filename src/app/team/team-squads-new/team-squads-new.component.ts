@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, TemplateRef } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 
 import { ModelStatus } from '@enums/model-status.enum';
@@ -50,6 +50,10 @@ export class TeamSquadsNewComponent implements OnDestroy, OnInit {
       private titleService: TitleService
    ) {}
 
+   public teamParticipantCreated(): void {
+      this.showCreateTeamButton = false;
+   }
+
    public ngOnDestroy(): void {
       this.destroyed$.next();
       this.destroyed$.complete();
@@ -63,7 +67,7 @@ export class TeamSquadsNewComponent implements OnDestroy, OnInit {
       });
    }
 
-   public openTeamSelectModal(content: NgbModalRef): void {
+   public openTeamSelectModal(content: NgbModalRef | TemplateRef<any>): void {
       const reference = this.ngbModalService.open(content, { centered: true });
       this.openedModal = { reference, data: null, submitted: () => {} };
    }
@@ -146,8 +150,8 @@ export class TeamSquadsNewComponent implements OnDestroy, OnInit {
    private getTeamsObservable(competitionId: number): Observable<PaginatedResponse<TeamNew>> {
       const search: TeamSearch = {
          competitionId,
-         orderBy: 'updated_at',
-         sequence: Sequence.Descending,
+         orderBy: 'confirmed',
+         sequence: Sequence.Ascending,
          limit: SettingsService.maxLimitValues.teamTeams,
          page: 1
       };

@@ -67,4 +67,6 @@ export class SettingsService {
          loadingText: 'Завантаження'
       }
    };
+
+   public static readonly participantsInTeam: number = 4;
 }
