@@ -35,7 +35,11 @@
 </div>
 <div *ngIf="teams" class="black-shadow">
    <ul class="list-group">
-      <li *ngFor="let team of teams" class="list-group-item">
+      <li
+         *ngFor="let team of teams"
+         class="list-group-item"
+         [ngClass]="{ 'list-group-item-info': currentUserTeamId && currentUserTeamId === team.id }"
+      >
          <app-team-and-participants
             [team]="team"
             [competition]="competition"

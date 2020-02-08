@@ -35,6 +35,7 @@ export class TeamParticipantsComponent implements OnDestroy, OnInit {
    public showCreateTeamButton: boolean;
    public teams: TeamNew[];
    public user: UserNew;
+   public currentUserTeamId: number;
 
    private destroyed$ = new Subject();
 
@@ -98,6 +99,14 @@ export class TeamParticipantsComponent implements OnDestroy, OnInit {
       return this.competitionService.getCompetition(id);
    }
 
+   private getCurrentUserTeamId(teamParticipants: TeamParticipantNew[]): number {
+      const teamParticipant = teamParticipants.find(participant => {
+         return participant.confirmed && participant.user_id === this.user.id;
+      });
+
+      return teamParticipant ? teamParticipant.team_id : null;
+   }
+
    private getOpenedUserApplicationsObservable(userId: number): Observable<PaginatedResponse<TeamParticipantNew>> {
       const search: TeamParticipantSearch = {
          ended: ModelStatus.Falsy,
@@ -128,9 +137,9 @@ export class TeamParticipantsComponent implements OnDestroy, OnInit {
                   ObservableInput<PaginatedResponse<TeamParticipantNew>>,
                   ObservableInput<PaginatedResponse<TeamParticipantNew>>
                ] = [of(null), of(null)];
-               if (this.user && this.competition.stated) {
+               if (this.user) {
                   applicationRequests = [
-                     this.getOpenedUserApplicationsObservable(this.user.id),
+                     this.competition.stated ? this.getOpenedUserApplicationsObservable(this.user.id) : of(null),
                      this.getAllUserApplicationsObservable(competitionId, this.user.id)
                   ];
                }
@@ -143,7 +152,10 @@ export class TeamParticipantsComponent implements OnDestroy, OnInit {
          )
          .subscribe(response => {
             this.showCreateTeamButton = response.openedApplicationResponse && response.openedApplicationResponse.total < 1;
-            this.allUserApplications = response.openedApplicationResponse ? response.allApplicationsResponse.data : [];
+            this.allUserApplications = response.allApplicationsResponse ? response.allApplicationsResponse.data : [];
+            this.currentUserTeamId = response.allApplicationsResponse
+               ? this.getCurrentUserTeamId(response.allApplicationsResponse.data)
+               : null;
          });
    }
 

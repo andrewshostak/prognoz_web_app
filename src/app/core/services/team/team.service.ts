@@ -42,7 +42,7 @@ export class TeamService {
             params = params.append(requestParam.parameter, requestParam.value);
          }
       }
-      return this.httpClient.get(url, { params }).pipe(
+      return this.httpClient.get<{ team: Team }>(url, { params }).pipe(
          map(response => response.team),
          catchError(this.errorHandlerService.handle)
       );

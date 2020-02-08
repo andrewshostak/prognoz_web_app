@@ -22,7 +22,7 @@ export class TeamParticipantService {
     * @deprecated
     */
    public getTeamParticipant(teamParticipantId: number): Observable<TeamParticipant> {
-      return this.httpClient.get(`${this.teamParticipantUrl}/${teamParticipantId}`).pipe(
+      return this.httpClient.get<{ team_participant: TeamParticipant }>(`${this.teamParticipantUrl}/${teamParticipantId}`).pipe(
          map(response => response.team_participant),
          catchError(this.errorHandlerService.handle)
       );

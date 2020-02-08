@@ -168,20 +168,28 @@ export class TeamAndParticipantsComponent implements OnInit, OnChanges {
                this.teamParticipants[index] = response;
             }
             if (response.confirmed) {
-               this.updateTeamState();
+               this.updateTeamAndParticipantStates();
             }
          },
          () => this.openedModal.reference.close()
       );
    }
 
-   private updateTeamState(): void {
+   private updateTeamAndParticipantStates(): void {
       const totalConfirmed = this.teamParticipants.reduce((total, teamParticipant) => {
          return teamParticipant.confirmed ? total + 1 : total;
       }, 0);
       if (totalConfirmed === SettingsService.participantsInTeam) {
          this.team.stated = false;
          this.team.confirmed = true;
+         this.showCaptainButtons = false;
+
+         this.teamParticipants = this.teamParticipants.map(teamParticipant => {
+            if (!teamParticipant.confirmed) {
+               teamParticipant.refused = true;
+            }
+            return teamParticipant;
+         });
       }
    }
 }
