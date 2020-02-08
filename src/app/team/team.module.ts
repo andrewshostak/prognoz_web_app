@@ -5,7 +5,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from '@app/shared/shared.module';
 import { NgbCollapseModule } from '@ng-bootstrap/ng-bootstrap';
 import { TeamAndParticipantsComponent } from '@team/shared/team-and-participants/team-and-participants.component';
-import { TeamEditModalComponent } from '@team/shared/team-edit-modal/team-edit-modal.component';
 import { TeamGoalkeeperFormComponent } from '@team/shared/team-goalkeeper-form/team-goalkeeper-form.component';
 import { TeamPredictionFormComponent } from '@team/shared/team-prediction-form/team-prediction-form.component';
 import { TeamRatingTableComponent } from '@team/shared/team-rating-table/team-rating-table.component';
@@ -38,7 +37,6 @@ import { SimpleNotificationsModule } from 'angular2-notifications';
       TeamComponent,
       TeamCreateComponent,
       TeamEditComponent,
-      TeamEditModalComponent,
       TeamGoalkeeperFormComponent,
       TeamMatchesComponent,
       TeamMyComponent,
