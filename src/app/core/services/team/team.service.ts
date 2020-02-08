@@ -47,14 +47,4 @@ export class TeamService {
          catchError(this.errorHandlerService.handle)
       );
    }
-
-   /**
-    * @deprecated
-    */
-   public updateTeam(team: Team): Observable<Team> {
-      return this.headersWithToken.put(`${this.teamInfoUrl}/${team.id}`, team).pipe(
-         map(response => response.team),
-         catchError(this.errorHandlerService.handle)
-      );
-   }
 }
