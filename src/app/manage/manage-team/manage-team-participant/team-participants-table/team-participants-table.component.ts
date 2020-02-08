@@ -9,7 +9,6 @@ import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { TeamParticipantNewService } from '@services/new/team-participant-new.service';
 import { PaginationService } from '@services/pagination.service';
 import { SettingsService } from '@services/settings.service';
-import { TeamParticipantService } from '@services/team/team-participant.service';
 import { NotificationsService } from 'angular2-notifications';
 import { remove } from 'lodash';
 import { Subscription } from 'rxjs';
@@ -31,7 +30,6 @@ export class TeamParticipantsTableComponent implements OnDestroy, OnInit {
       private activatedRoute: ActivatedRoute,
       private ngbModalService: NgbModal,
       private notificationsService: NotificationsService,
-      private teamParticipantService: TeamParticipantService,
       private teamParticipantNewService: TeamParticipantNewService
    ) {}
 
@@ -47,7 +45,7 @@ export class TeamParticipantsTableComponent implements OnDestroy, OnInit {
    }
 
    public deleteTeamParticipant(): void {
-      this.teamParticipantService.deleteTeamParticipant(this.openedModal.data.id).subscribe(() => {
+      this.teamParticipantNewService.deleteTeamParticipant(this.openedModal.data.id).subscribe(() => {
          remove(this.teamParticipants, this.openedModal.data);
          this.paginationData.total--;
          this.notificationsService.success('Успішно', `Заявку №${this.openedModal.data.id} ${this.openedModal.data.user.name} видалено`);

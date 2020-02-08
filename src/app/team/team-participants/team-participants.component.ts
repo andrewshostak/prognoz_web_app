@@ -24,11 +24,11 @@ import { forkJoin, Observable, ObservableInput, of, Subject } from 'rxjs';
 import { map, mergeMap, takeUntil } from 'rxjs/operators';
 
 @Component({
-   selector: 'app-team-squads-new',
-   templateUrl: './team-squads-new.component.html',
-   styleUrls: ['./team-squads-new.component.scss']
+   selector: 'app-team-participants',
+   templateUrl: './team-participants.component.html',
+   styleUrls: ['./team-participants.component.scss']
 })
-export class TeamSquadsNewComponent implements OnDestroy, OnInit {
+export class TeamParticipantsComponent implements OnDestroy, OnInit {
    public allUserApplications: TeamParticipantNew[];
    public competition: CompetitionNew;
    public openedModal: OpenedModal<null>;

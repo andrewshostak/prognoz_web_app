@@ -7,12 +7,11 @@ import { TeamCreateComponent } from '@team/team-create/team-create.component';
 import { TeamEditComponent } from '@team/team-edit/team-edit.component';
 import { TeamMatchesComponent } from '@team/team-matches/team-matches.component';
 import { TeamMyComponent } from '@team/team-my/team-my.component';
+import { TeamParticipantsComponent } from '@team/team-participants/team-participants.component';
 import { TeamPredictionsComponent } from '@team/team-predictions/team-predictions.component';
 import { TeamRatingComponent } from '@team/team-rating/team-rating.component';
 import { TeamResultsComponent } from '@team/team-results/team-results.component';
 import { TeamRulesComponent } from '@team/team-rules/team-rules.component';
-import { TeamSquadsNewComponent } from '@team/team-squads-new/team-squads-new.component';
-import { TeamSquadsComponent } from '@team/team-squads/team-squads.component';
 import { TeamComponent } from '@team/team.component';
 
 const routes: Routes = [
@@ -29,12 +28,8 @@ const routes: Routes = [
                   component: TeamRulesComponent
                },
                {
-                  path: 'squads',
-                  component: TeamSquadsComponent
-               },
-               {
-                  path: 'squads-new',
-                  component: TeamSquadsNewComponent
+                  path: 'participants',
+                  component: TeamParticipantsComponent
                },
                {
                   path: 'matches/round/:round',
