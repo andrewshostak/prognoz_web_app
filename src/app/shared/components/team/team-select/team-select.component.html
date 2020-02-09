@@ -1,0 +1,15 @@
+<ng-container [formGroup]="formGroup">
+   <ng-select
+      [items]="teams$ | async"
+      bindValue="id"
+      bindLabel="name"
+      labelForId="team_id"
+      formControlName="team_id"
+      [loading]="teamsLoading"
+      [loadingText]="ngSelectTexts.loadingText"
+      [notFoundText]="ngSelectTexts.notFoundText"
+      [typeToSearchText]="ngSelectTexts.typeToSearchText"
+      [typeahead]="teamsInput$"
+   >
+   </ng-select>
+</ng-container>

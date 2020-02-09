@@ -24,6 +24,7 @@ import { SocialMedialLinksComponent } from '@app/shared/components/social-medial
 import { SpinnerButtonComponent } from '@app/shared/components/spinner-button/spinner-button.component';
 import { SpinnerComponent } from '@app/shared/components/spinner/spinner.component';
 import { TeamFormComponent } from '@app/shared/components/team/team-form/team-form.component';
+import { TeamSelectComponent } from '@app/shared/components/team/team-select/team-select.component';
 import { ClubLogoWithTooltipComponent } from '@app/shared/components/tooltips/club-logo-with-tooltip/club-logo-with-tooltip.component';
 import { CustomContentWithTooltipComponent } from '@app/shared/components/tooltips/custom-content-with-tooltip/custom-content-with-tooltip.component';
 import { PredictionWithTooltipComponent } from '@app/shared/components/tooltips/prediction-with-tooltip/prediction-with-tooltip.component';
@@ -65,6 +66,7 @@ import { ChartsModule } from 'ng2-charts';
       SpinnerButtonComponent,
       TeamLogoWithTooltipComponent,
       TeamFormComponent,
+      TeamSelectComponent,
       TimePipe,
       TrueFalseIconsComponent,
       UserLogoWithTooltipComponent,
@@ -98,6 +100,7 @@ import { ChartsModule } from 'ng2-charts';
       SpinnerButtonComponent,
       TeamLogoWithTooltipComponent,
       TeamFormComponent,
+      TeamSelectComponent,
       TimePipe,
       TrueFalseIconsComponent,
       UserLogoWithTooltipComponent,
