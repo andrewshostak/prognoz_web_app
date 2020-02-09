@@ -21,19 +21,6 @@ export class TeamService {
    /**
     * @deprecated
     */
-   public getTeams(requestParams?: RequestParams[]): Observable<any> {
-      let params: HttpParams = new HttpParams();
-      if (requestParams) {
-         for (const requestParam of requestParams) {
-            params = params.append(requestParam.parameter, requestParam.value);
-         }
-      }
-      return this.httpClient.get(this.teamInfoUrl, { params }).pipe(catchError(this.errorHandlerService.handle));
-   }
-
-   /**
-    * @deprecated
-    */
    public getTeam(id?: number, requestParams?: RequestParams[]): Observable<Team> {
       const url = id ? `${this.teamInfoUrl}/${id}` : `${this.teamInfoUrl}/search`;
       let params: HttpParams = new HttpParams();

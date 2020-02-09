@@ -1,33 +1,24 @@
 import { Component, OnInit } from '@angular/core';
-import { TeamParticipant } from '@models/team/team-participant.model';
-import { ActivatedRoute, Params } from '@angular/router';
-import { TeamParticipantService } from '@services/team/team-participant.service';
+import { ActivatedRoute } from '@angular/router';
+
+import { TeamParticipantNew } from '@models/new/team-participant-new.model';
+import { TeamParticipantNewService } from '@services/new/team-participant-new.service';
 
 @Component({
-    selector: 'app-team-participant-edit',
-    templateUrl: './team-participant-edit.component.html',
-    styleUrls: ['./team-participant-edit.component.scss']
+   selector: 'app-team-participant-edit',
+   templateUrl: './team-participant-edit.component.html',
+   styleUrls: ['./team-participant-edit.component.scss']
 })
 export class TeamParticipantEditComponent implements OnInit {
-    constructor(private activatedRoute: ActivatedRoute, private teamParticipantService: TeamParticipantService) {}
+   public teamParticipant: TeamParticipantNew;
 
-    teamParticipant: TeamParticipant;
-    errorTeamParticipant: string;
+   constructor(private activatedRoute: ActivatedRoute, private teamParticipantService: TeamParticipantNewService) {}
 
-    ngOnInit() {
-        this.activatedRoute.params.forEach((params: Params) => {
-            this.getTeamParticipant(params['id']);
-        });
-    }
+   public ngOnInit(): void {
+      this.getTeamParticipant(this.activatedRoute.snapshot.params.id);
+   }
 
-    private getTeamParticipant(teamParticipantId: number): void {
-        this.teamParticipantService.getTeamParticipant(teamParticipantId).subscribe(
-            response => {
-                this.teamParticipant = response;
-            },
-            error => {
-                this.errorTeamParticipant = error;
-            }
-        );
-    }
+   private getTeamParticipant(teamParticipantId: number): void {
+      this.teamParticipantService.getTeamParticipant(teamParticipantId).subscribe(response => (this.teamParticipant = response));
+   }
 }

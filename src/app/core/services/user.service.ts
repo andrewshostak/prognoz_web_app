@@ -39,9 +39,7 @@ export class UserService {
    }
 
    /**
-    * Get user by id
-    * @param id
-    * @returns {Observable<User>}
+    * @deprecated use UserNewService
     */
    public getUser(id: number): Observable<User> {
       return this.httpClient.get<{ user: User }>(`${this.usersUrl}/${id}`).pipe(

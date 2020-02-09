@@ -6,12 +6,12 @@ import { Router } from '@angular/router';
 import { environment } from '@env';
 import { Competition } from '@models/competition.model';
 import { TeamNew } from '@models/new/team-new.model';
-import { TeamParticipant } from '@models/team/team-participant.model';
-import { User } from '@models/user.model';
+import { TeamParticipantNew } from '@models/new/team-participant-new.model';
+import { UserNew } from '@models/new/user-new.model';
 import { CompetitionService } from '@services/competition.service';
 import { TeamNewService } from '@services/new/team-new.service';
-import { TeamParticipantService } from '@services/team/team-participant.service';
-import { UserService } from '@services/user.service';
+import { TeamParticipantNewService } from '@services/new/team-participant-new.service';
+import { UserNewService } from '@services/new/user-new.service';
 import { UtilsService } from '@services/utils.service';
 import { NotificationsService } from 'angular2-notifications';
 
@@ -21,15 +21,13 @@ import { NotificationsService } from 'angular2-notifications';
    styleUrls: ['./team-participant-form.component.scss']
 })
 export class TeamParticipantFormComponent implements OnChanges, OnInit {
-   @Input() public teamParticipant: TeamParticipant;
+   @Input() public teamParticipant: TeamParticipantNew;
 
    public competitions: Competition[];
    public errorCompetitions: string;
-   public errorTeams: string;
-   public errorUsers: string;
    public team: TeamNew;
    public teamParticipantForm: FormGroup;
-   public users: User[];
+   public user: UserNew;
 
    constructor(
       private competitionService: CompetitionService,
@@ -37,20 +35,20 @@ export class TeamParticipantFormComponent implements OnChanges, OnInit {
       private notificationsService: NotificationsService,
       private router: Router,
       private teamService: TeamNewService,
-      private teamParticipantService: TeamParticipantService,
-      private userService: UserService
+      private teamParticipantService: TeamParticipantNewService,
+      private userService: UserNewService
    ) {}
 
-   public ngOnChanges(simpleChanges: SimpleChanges) {
-      UtilsService.patchSimpleChangeValuesInForm(simpleChanges, this.teamParticipantForm, 'teamParticipant');
-      if (simpleChanges.teamParticipant && !simpleChanges.teamParticipant.isFirstChange() && simpleChanges.teamParticipant.currentValue) {
-         this.getTeamData(simpleChanges.teamParticipant.currentValue.team_id);
+   public ngOnChanges(changes: SimpleChanges) {
+      UtilsService.patchSimpleChangeValuesInForm(changes, this.teamParticipantForm, 'teamParticipant');
+      if (changes.teamParticipant && !changes.teamParticipant.isFirstChange() && changes.teamParticipant.currentValue) {
+         this.getTeamData(changes.teamParticipant.currentValue.team_id);
+         this.getUserData(changes.teamParticipant.currentValue.user_id);
       }
    }
 
    public ngOnInit() {
       this.getCompetitionsData();
-      this.getUsersData();
       this.teamParticipantForm = new FormGroup({
          team_id: new FormControl('', [Validators.required]),
          user_id: new FormControl('', [Validators.required]),
@@ -97,39 +95,21 @@ export class TeamParticipantFormComponent implements OnChanges, OnInit {
       this.teamService.getTeam(teamId).subscribe(response => (this.team = response));
    }
 
-   private getUsersData(): void {
-      this.userService.getUsers(null, 'name', 'asc').subscribe(
-         response => {
-            this.users = response.users;
-         },
-         error => {
-            this.errorUsers = error;
-         }
-      );
+   private getUserData(userId: number): void {
+      this.userService.getUser(userId).subscribe(response => (this.user = response));
    }
 
-   private createTeamParticipant(teamParticipant: TeamParticipant): void {
-      this.teamParticipantService.createTeamParticipant(teamParticipant).subscribe(
-         response => {
-            this.notificationsService.success('Успішно', 'Заявку / Учасника створено');
-            this.router.navigate(['/manage', 'team', 'participants', response.id, 'edit']);
-         },
-         errors => {
-            errors.forEach(error => this.notificationsService.error('Помилка', error));
-         }
-      );
+   private createTeamParticipant(teamParticipant: Partial<TeamParticipantNew>): void {
+      this.teamParticipantService.createTeamParticipant(teamParticipant).subscribe(response => {
+         this.notificationsService.success('Успішно', 'Заявку / Учасника створено');
+         this.router.navigate(['/manage', 'team', 'participants', response.id, 'edit']);
+      });
    }
 
-   private updateTeamParticipant(teamParticipant: TeamParticipant): void {
-      teamParticipant.id = this.teamParticipant.id;
-      this.teamParticipantService.updateTeamParticipant(teamParticipant).subscribe(
-         () => {
-            this.notificationsService.success('Успішно', 'Заявку / Учасника змінено');
-            this.location.back();
-         },
-         errors => {
-            errors.forEach(error => this.notificationsService.error('Помилка', error));
-         }
-      );
+   private updateTeamParticipant(teamParticipant: Partial<TeamParticipantNew>): void {
+      this.teamParticipantService.updateTeamParticipant(this.teamParticipant.id, teamParticipant).subscribe(() => {
+         this.notificationsService.success('Успішно', 'Заявку / Учасника змінено');
+         this.location.back();
+      });
    }
 }

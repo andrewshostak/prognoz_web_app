@@ -6,12 +6,17 @@ import { UserNew } from '@models/new/user-new.model';
 import { PaginatedResponse } from '@models/paginated-response.model';
 import { UserSearch } from '@models/search/user-search.model';
 import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 @Injectable()
 export class UserNewService {
    public readonly usersUrl: string = `${environment.apiUrl}v2/users`;
 
    constructor(private httpClient: HttpClient) {}
+
+   public getUser(id: number): Observable<UserNew> {
+      return this.httpClient.get<{ user: UserNew }>(`${this.usersUrl}/${id}`).pipe(map(response => response.user));
+   }
 
    public getUsers(search: UserSearch): Observable<PaginatedResponse<UserNew>> {
       let params: HttpParams = new HttpParams();

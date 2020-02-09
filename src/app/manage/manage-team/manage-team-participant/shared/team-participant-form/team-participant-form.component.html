@@ -6,17 +6,11 @@
          <small>Команда обов'язкова</small>
       </div>
    </div>
-   <div
-      *ngIf="users"
-      class="form-group"
-      [class.form-group-invalid-custom]="teamParticipantForm.get('user_id').invalid && teamParticipantForm.get('user_id').touched"
-   >
-      <label for="user_id" class="font-weight-bold">Заявник</label>
-      <select id="user_id" class="form-control" formControlName="user_id">
-         <option *ngFor="let user of users" [value]="user.id">{{ user.name }}</option>
-      </select>
-      <div *ngIf="teamParticipantForm.get('user_id').hasError('required') && teamParticipantForm.get('user_id').touched">
-         <small>Учасник обов'язковий</small>
+   <div class="form-group" [class.form-group-invalid]="showFormInvalidClass(teamParticipantForm.get('user_id'))">
+      <label [attr.for]="'user_id'" class="font-weight-bold">Заявник:</label>
+      <app-user-select formControlName="user_id" [usersList]="user ? [user] : []"></app-user-select>
+      <div [hidden]="!showFormErrorMessage(teamParticipantForm.get('user_id'), 'required')" class="error-message">
+         <small>Заявник обов'язковий</small>
       </div>
    </div>
    <div
@@ -75,6 +69,4 @@
       <button type="submit" class="btn btn-primary">{{ teamParticipant ? 'Змінити' : 'Зберегти' }}</button>
    </div>
 </form>
-<app-error *ngIf="errorTeams" [message]="errorTeams"></app-error>
-<app-error *ngIf="errorUsers" [message]="errorUsers"></app-error>
 <app-error *ngIf="errorCompetitions" [message]="errorCompetitions"></app-error>
