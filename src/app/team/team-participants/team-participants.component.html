@@ -57,5 +57,5 @@
    <span *ngIf="competition.ended">Завершене змагання</span>
 </ng-template>
 <ng-template #teamSelectModal let-c="close">
-   <app-team-select-modal-new [close]="c" (submitted)="teamSelected($event)"> </app-team-select-modal-new>
+   <app-team-select-modal [close]="c" (submitted)="teamSelected($event)"> </app-team-select-modal>
 </ng-template>
