@@ -1,4 +1,4 @@
-<form novalidate [formGroup]="teamParticipantForm" (ngSubmit)="onSubmit()">
+<form novalidate [formGroup]="teamParticipantForm" (ngSubmit)="submit()">
    <div class="form-group" [class.form-group-invalid]="showFormInvalidClass(teamParticipantForm.get('team_id'))">
       <label [attr.for]="'team_id'" class="font-weight-bold">Команда:</label>
       <app-team-select [formGroup]="teamParticipantForm" [teamsList]="team ? [team] : []"></app-team-select>
@@ -65,7 +65,6 @@
       </div>
    </div>
    <div class="d-flex justify-content-between">
-      <button type="button" class="btn btn-outline-danger" (click)="resetTeamParticipantForm()">Відмінити зміни</button>
       <button type="submit" class="btn btn-primary">{{ teamParticipant ? 'Змінити' : 'Зберегти' }}</button>
    </div>
 </form>

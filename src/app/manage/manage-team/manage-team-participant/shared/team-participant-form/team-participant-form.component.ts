@@ -60,16 +60,14 @@ export class TeamParticipantFormComponent implements OnChanges, OnInit {
       });
    }
 
-   public onSubmit(): void {
-      if (this.teamParticipantForm.valid) {
-         this.teamParticipant
-            ? this.updateTeamParticipant(this.teamParticipantForm.value)
-            : this.createTeamParticipant(this.teamParticipantForm.value);
+   public submit(): void {
+      if (this.teamParticipantForm.invalid) {
+         return;
       }
-   }
 
-   public resetTeamParticipantForm(): void {
-      this.teamParticipantForm.reset();
+      this.teamParticipant
+         ? this.updateTeamParticipant(this.teamParticipantForm.value)
+         : this.createTeamParticipant(this.teamParticipantForm.value);
    }
 
    public showFormErrorMessage(abstractControl: AbstractControl, errorKey: string): boolean {

@@ -51,6 +51,10 @@ export class TeamParticipantsComponent implements OnDestroy, OnInit {
       private titleService: TitleService
    ) {}
 
+   get numberOfConfirmedTeams(): number {
+      return this.teams.filter(team => team.confirmed).length;
+   }
+
    public teamParticipantCreated(): void {
       this.showCreateTeamButton = false;
    }

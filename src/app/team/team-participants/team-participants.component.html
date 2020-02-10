@@ -5,18 +5,18 @@
    <div class="card-body">
       <table class="table table-sm table-striped table-bordered mb-0">
          <tr>
-            <td>Статус</td>
+            <td class="align-middle">Статус</td>
             <td class="text-center">
                <ng-container *ngTemplateOutlet="teamCompetitionState; context: { $implicit: competition }"></ng-container>
             </td>
          </tr>
          <tr>
-            <td>Кількість команд</td>
-            <td class="text-center">{{ competition.number_of_teams }}</td>
+            <td>Кількість заявлених команд</td>
+            <td class="text-center align-middle">{{ teams.length }}</td>
          </tr>
          <tr>
-            <td>Кількість команд: вилітає / піднімається</td>
-            <td class="text-center">{{ competition?.config?.team?.relegation }} / {{ competition?.config?.team?.promotion }}</td>
+            <td>Кількість підтверджених команд</td>
+            <td class="text-center align-middle">{{ numberOfConfirmedTeams }}</td>
          </tr>
       </table>
    </div>
@@ -24,12 +24,12 @@
 <div [hidden]="!showCreateTeamButton" class="mb-2">
    <button
       type="button"
-      class="btn btn-primary"
+      class="btn btn-primary mb-1 mb-sm-0"
       [routerLink]="['/', 'team', 'create', { createParticipantForCompetition: competition?.id }]"
    >
       <i class="fa fa-plus-circle"></i> Створити нову команду
    </button>
-   <button (click)="openTeamSelectModal(teamSelectModal)" type="button" class="btn btn-outline-primary">
+   <button (click)="openTeamSelectModal(teamSelectModal)" type="button" class="btn btn-outline-primary mb-1 mb-sm-0">
       <i class="fa fa-plus-circle"></i> Заявити команду
    </button>
 </div>
