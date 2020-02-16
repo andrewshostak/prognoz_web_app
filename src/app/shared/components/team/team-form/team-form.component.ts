@@ -31,6 +31,10 @@ export class TeamFormComponent implements OnChanges, OnInit {
       private teamService: TeamNewService
    ) {}
 
+   get isUpdatePage(): boolean {
+      return !!(this.team && this.team.id);
+   }
+
    public ngOnChanges(changes: SimpleChanges): void {
       UtilsService.patchSimpleChangeValuesInForm(changes, this.teamForm, 'team', this.patchTeamValuesInForm);
    }

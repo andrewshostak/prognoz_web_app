@@ -9,6 +9,9 @@ export class RequestPreparationService {
 
       Object.keys(formValue).forEach(key => {
          let value: string | Blob = formValue[key];
+         if (value === null) {
+            return;
+         }
 
          if (modifyBooleans && isBoolean(value)) {
             value = value ? '1' : '0';
