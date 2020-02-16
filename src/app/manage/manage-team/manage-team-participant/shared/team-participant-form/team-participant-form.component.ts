@@ -1,19 +1,22 @@
-import { Location } from '@angular/common';
 import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
-import { environment } from '@env';
-import { Competition } from '@models/competition.model';
+import { ModelStatus } from '@enums/model-status.enum';
+import { Tournament } from '@enums/tournament.enum';
+import { CompetitionNew } from '@models/new/competition-new.model';
 import { TeamNew } from '@models/new/team-new.model';
 import { TeamParticipantNew } from '@models/new/team-participant-new.model';
 import { UserNew } from '@models/new/user-new.model';
-import { CompetitionService } from '@services/competition.service';
+import { CompetitionSearch } from '@models/search/competition-search.model';
+import { CompetitionNewService } from '@services/new/competition-new.service';
 import { TeamNewService } from '@services/new/team-new.service';
 import { TeamParticipantNewService } from '@services/new/team-participant-new.service';
 import { UserNewService } from '@services/new/user-new.service';
+import { SettingsService } from '@services/settings.service';
 import { UtilsService } from '@services/utils.service';
 import { NotificationsService } from 'angular2-notifications';
+import { uniqBy } from 'lodash';
 
 @Component({
    selector: 'app-team-participant-form',
@@ -23,15 +26,13 @@ import { NotificationsService } from 'angular2-notifications';
 export class TeamParticipantFormComponent implements OnChanges, OnInit {
    @Input() public teamParticipant: TeamParticipantNew;
 
-   public competitions: Competition[];
-   public errorCompetitions: string;
+   public competitions: CompetitionNew[];
    public team: TeamNew;
    public teamParticipantForm: FormGroup;
    public user: UserNew;
 
    constructor(
-      private competitionService: CompetitionService,
-      private location: Location,
+      private competitionService: CompetitionNewService,
       private notificationsService: NotificationsService,
       private router: Router,
       private teamService: TeamNewService,
@@ -44,11 +45,13 @@ export class TeamParticipantFormComponent implements OnChanges, OnInit {
       if (changes.teamParticipant && !changes.teamParticipant.isFirstChange() && changes.teamParticipant.currentValue) {
          this.getTeamData(changes.teamParticipant.currentValue.team_id);
          this.getUserData(changes.teamParticipant.currentValue.user_id);
+         this.getCurrentCompetitionData(changes.teamParticipant.currentValue);
       }
    }
 
    public ngOnInit() {
-      this.getCompetitionsData();
+      this.competitions = [];
+      this.getNotEndedCompetitionsData();
       this.teamParticipantForm = new FormGroup({
          team_id: new FormControl('', [Validators.required]),
          user_id: new FormControl('', [Validators.required]),
@@ -78,15 +81,25 @@ export class TeamParticipantFormComponent implements OnChanges, OnInit {
       return UtilsService.showFormInvalidClass(abstractControl);
    }
 
-   private getCompetitionsData(): void {
-      this.competitionService.getCompetitions(null, environment.tournaments.team.id, null, null, true, true).subscribe(
-         response => {
-            this.competitions = response.competitions;
-         },
-         error => {
-            this.errorCompetitions = error;
-         }
-      );
+   private getCurrentCompetitionData(teamParticipant: TeamParticipantNew): void {
+      this.competitionService.getCompetition(teamParticipant.competition_id).subscribe(response => {
+         const competitions = [...this.competitions, ...[response.competition]];
+         this.competitions = uniqBy(competitions, 'id');
+      });
+   }
+
+   private getNotEndedCompetitionsData(): void {
+      const search: CompetitionSearch = {
+         ended: ModelStatus.Falsy,
+         limit: SettingsService.maxLimitValues.competitions,
+         page: 1,
+         tournamentId: Tournament.Team
+      };
+
+      this.competitionService.getCompetitions(search).subscribe(response => {
+         const competitions = [...this.competitions, ...response.data];
+         this.competitions = uniqBy(competitions, 'id');
+      });
    }
 
    private getTeamData(teamId: number): void {
@@ -107,7 +120,6 @@ export class TeamParticipantFormComponent implements OnChanges, OnInit {
    private updateTeamParticipant(teamParticipant: Partial<TeamParticipantNew>): void {
       this.teamParticipantService.updateTeamParticipant(this.teamParticipant.id, teamParticipant).subscribe(() => {
          this.notificationsService.success('Успішно', 'Заявку / Учасника змінено');
-         this.location.back();
       });
    }
 }
