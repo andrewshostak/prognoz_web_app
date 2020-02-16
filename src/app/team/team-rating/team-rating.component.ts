@@ -60,7 +60,7 @@ export class TeamRatingComponent implements OnDestroy, OnInit {
 
    private getCompetitionData(id: number): void {
       this.competitionNewService.getCompetition(id).subscribe(response => {
-         this.competition = response.competition;
+         this.competition = response;
       });
    }
 

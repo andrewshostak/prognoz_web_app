@@ -90,7 +90,7 @@ export class CupRatingGroupComponent implements OnInit {
    }
 
    private getCompetitionData(competitionId: number): void {
-      this.competitionService.getCompetition(competitionId).subscribe(response => (this.competition = response.competition));
+      this.competitionService.getCompetition(competitionId).subscribe(response => (this.competition = response));
    }
 
    private getCupRatingGroupData(competitionId: number, groupNumber: number): void {

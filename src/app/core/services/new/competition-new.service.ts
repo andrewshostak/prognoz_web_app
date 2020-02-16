@@ -7,6 +7,7 @@ import { PaginatedResponse } from '@models/paginated-response.model';
 import { CompetitionSearch } from '@models/search/competition-search.model';
 import { isNil } from 'lodash';
 import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 @Injectable()
 export class CompetitionNewService {
@@ -14,8 +15,10 @@ export class CompetitionNewService {
 
    constructor(private httpClient: HttpClient) {}
 
-   public getCompetition(id: number): Observable<{ competition: CompetitionNew }> {
-      return this.httpClient.get<{ competition: CompetitionNew }>(`${this.competitionsUrl}/${id}`);
+   public getCompetition(id: number): Observable<CompetitionNew> {
+      return this.httpClient
+         .get<{ competition: CompetitionNew }>(`${this.competitionsUrl}/${id}`)
+         .pipe(map(response => response.competition));
    }
 
    public getCompetitions(search: CompetitionSearch): Observable<PaginatedResponse<CompetitionNew>> {

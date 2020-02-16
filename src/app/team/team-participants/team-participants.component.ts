@@ -99,7 +99,7 @@ export class TeamParticipantsComponent implements OnDestroy, OnInit {
       return this.teamParticipantService.getTeamParticipants(search);
    }
 
-   private getCompetitionObservable(id: number): Observable<{ competition: CompetitionNew }> {
+   private getCompetitionObservable(id: number): Observable<CompetitionNew> {
       return this.competitionService.getCompetition(id);
    }
 
@@ -124,7 +124,7 @@ export class TeamParticipantsComponent implements OnDestroy, OnInit {
 
    private getPageData(competitionId: number): void {
       this.showCreateTeamButton = false;
-      const requests: [ObservableInput<{ competition: CompetitionNew }>, ObservableInput<PaginatedResponse<TeamNew>>] = [
+      const requests: [ObservableInput<CompetitionNew>, ObservableInput<PaginatedResponse<TeamNew>>] = [
          this.getCompetitionObservable(competitionId),
          this.getTeamsObservable(competitionId)
       ];
@@ -134,7 +134,7 @@ export class TeamParticipantsComponent implements OnDestroy, OnInit {
                return { competitionResponse, teamsResponse };
             }),
             mergeMap(response => {
-               this.competition = response.competitionResponse.competition;
+               this.competition = response.competitionResponse;
                this.teams = response.teamsResponse.data;
 
                let applicationRequests: [

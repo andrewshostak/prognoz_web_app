@@ -83,7 +83,7 @@ export class TeamParticipantFormComponent implements OnChanges, OnInit {
 
    private getCurrentCompetitionData(teamParticipant: TeamParticipantNew): void {
       this.competitionService.getCompetition(teamParticipant.competition_id).subscribe(response => {
-         const competitions = [...this.competitions, ...[response.competition]];
+         const competitions = [...this.competitions, ...[response]];
          this.competitions = uniqBy(competitions, 'id');
       });
    }
