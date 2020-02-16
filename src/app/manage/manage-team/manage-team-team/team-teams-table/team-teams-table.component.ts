@@ -1,12 +1,16 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, TemplateRef } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 
 import { TeamNew } from '@models/new/team-new.model';
+import { OpenedModal } from '@models/opened-modal.model';
 import { Pagination } from '@models/pagination.model';
 import { TeamSearch } from '@models/search/team-search.model';
+import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { TeamNewService } from '@services/new/team-new.service';
 import { PaginationService } from '@services/pagination.service';
 import { SettingsService } from '@services/settings.service';
+import { NotificationsService } from 'angular2-notifications';
+import { remove } from 'lodash';
 import { Subscription } from 'rxjs';
 
 @Component({
@@ -16,10 +20,30 @@ import { Subscription } from 'rxjs';
 })
 export class TeamTeamsTableComponent implements OnDestroy, OnInit {
    public activatedRouteSubscription: Subscription;
+   public openedModal: OpenedModal<TeamNew>;
    public paginationData: Pagination;
    public teams: TeamNew[];
 
-   constructor(private activatedRoute: ActivatedRoute, private teamService: TeamNewService) {}
+   constructor(
+      private activatedRoute: ActivatedRoute,
+      private ngbModalService: NgbModal,
+      private notificationsService: NotificationsService,
+      private teamService: TeamNewService
+   ) {}
+
+   public deleteTeam(): void {
+      this.teamService.deleteTeam(this.openedModal.data.id).subscribe(
+         () => {
+            remove(this.teams, this.openedModal.data);
+            this.paginationData.total--;
+            this.notificationsService.success('Успішно', `Команду ${this.openedModal.data.name} видалено`);
+            this.openedModal.reference.close();
+         },
+         () => {
+            this.openedModal.reference.close();
+         }
+      );
+   }
 
    public getTeamsData(pageNumber: number): void {
       const search: TeamSearch = {
@@ -42,5 +66,10 @@ export class TeamTeamsTableComponent implements OnDestroy, OnInit {
       this.activatedRouteSubscription = this.activatedRoute.params.subscribe((params: Params) => {
          this.getTeamsData(params.pageNumber);
       });
+   }
+
+   public openConfirmModal(content: NgbModalRef | TemplateRef<any>, data: TeamNew, submitted: (event) => void): void {
+      const reference = this.ngbModalService.open(content, { centered: true });
+      this.openedModal = { reference, data, submitted: () => submitted.call(this) };
    }
 }

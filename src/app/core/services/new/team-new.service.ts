@@ -21,6 +21,10 @@ export class TeamNewService {
       return this.httpClient.post<{ team: TeamNew }>(this.teamsUrl, body).pipe(map(response => response.team));
    }
 
+   public deleteTeam(teamId: number): Observable<void> {
+      return this.httpClient.delete<void>(`${this.teamsUrl}/${teamId}`);
+   }
+
    public getTeam(teamId: number): Observable<TeamNew> {
       return this.httpClient.get<{ team: TeamNew }>(`${this.teamsUrl}/${teamId}`).pipe(map(response => response.team));
    }

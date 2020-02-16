@@ -34,17 +34,22 @@ export class TeamMatchesTableComponent implements OnDestroy, OnInit {
    ) {}
 
    public deleteTeamMatch(): void {
-      this.teamMatchService.deleteTeamMatch(this.openedModal.data.id).subscribe(() => {
-         remove(this.teamMatches, this.openedModal.data);
-         this.paginationData.total--;
-         this.notificationsService.success(
-            'Успішно',
-            `Матч №${this.openedModal.data.id} ${this.openedModal.data.match.club_home.title} - ${
-               this.openedModal.data.match.club_away.title
-            } видалено`
-         );
-         this.openedModal.reference.close();
-      });
+      this.teamMatchService.deleteTeamMatch(this.openedModal.data.id).subscribe(
+         () => {
+            remove(this.teamMatches, this.openedModal.data);
+            this.paginationData.total--;
+            this.notificationsService.success(
+               'Успішно',
+               `Матч №${this.openedModal.data.id} ${this.openedModal.data.match.club_home.title} - ${
+                  this.openedModal.data.match.club_away.title
+               } видалено`
+            );
+            this.openedModal.reference.close();
+         },
+         () => {
+            this.openedModal.reference.close();
+         }
+      );
    }
 
    public getTeamMatchesData(pageNumber: number): void {
