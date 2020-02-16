@@ -45,12 +45,17 @@ export class TeamParticipantsTableComponent implements OnDestroy, OnInit {
    }
 
    public deleteTeamParticipant(): void {
-      this.teamParticipantNewService.deleteTeamParticipant(this.openedModal.data.id).subscribe(() => {
-         remove(this.teamParticipants, this.openedModal.data);
-         this.paginationData.total--;
-         this.notificationsService.success('Успішно', `Заявку №${this.openedModal.data.id} ${this.openedModal.data.user.name} видалено`);
-         this.openedModal.reference.close();
-      });
+      this.teamParticipantNewService.deleteTeamParticipant(this.openedModal.data.id).subscribe(
+         () => {
+            remove(this.teamParticipants, this.openedModal.data);
+            this.paginationData.total--;
+            this.notificationsService.success('Успішно', `Заявку №${this.openedModal.data.id} ${this.openedModal.data.user.name} видалено`);
+            this.openedModal.reference.close();
+         },
+         () => {
+            this.openedModal.reference.close();
+         }
+      );
    }
 
    public ngOnDestroy() {
