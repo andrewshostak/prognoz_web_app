@@ -12,4 +12,5 @@ export class TeamSearch {
    public page: number;
    public sequence?: Sequence;
    public stated?: ModelStatus;
+   public teamParticipantId?: number;
 }

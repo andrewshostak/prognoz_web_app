@@ -75,7 +75,7 @@
             ></i>
             <i
                [hidden]="!isScore(cupPrediction.home, cupPrediction.away)"
-               class="fa fa-pencil-square-o fa-2x d-none d-md-block"
+               class="fa fa-refresh fa-2x d-none d-md-block"
                aria-hidden="true"
             ></i>
             <i
@@ -83,11 +83,7 @@
                class="fa fa-check-circle-o fa-lg d-md-none"
                aria-hidden="true"
             ></i>
-            <i
-               [hidden]="!isScore(cupPrediction.home, cupPrediction.away)"
-               class="fa fa-pencil-square-o fa-lg d-md-none"
-               aria-hidden="true"
-            ></i>
+            <i [hidden]="!isScore(cupPrediction.home, cupPrediction.away)" class="fa fa-refresh fa-lg d-md-none" aria-hidden="true"></i>
             <br class="d-none d-lg-block" />
             <small class="d-none d-lg-block">
                {{ isScore(cupPrediction.home, cupPrediction.away) ? 'Змінити' : 'Зберегти' }}

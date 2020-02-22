@@ -87,7 +87,7 @@
             ></i>
             <i
                [hidden]="!isScore(teamPrediction.home, teamPrediction.away)"
-               class="fa fa-pencil-square-o fa-2x d-none d-md-block"
+               class="fa fa-refresh fa-2x d-none d-md-block"
                aria-hidden="true"
             ></i>
             <!-- xs sm -->
@@ -96,11 +96,7 @@
                class="fa fa-check-circle-o fa-lg d-md-none"
                aria-hidden="true"
             ></i>
-            <i
-               [hidden]="!isScore(teamPrediction.home, teamPrediction.away)"
-               class="fa fa-pencil-square-o fa-lg d-md-none"
-               aria-hidden="true"
-            ></i>
+            <i [hidden]="!isScore(teamPrediction.home, teamPrediction.away)" class="fa fa-refresh fa-lg d-md-none" aria-hidden="true"></i>
             <!-- lg xl -->
             <br class="d-none d-lg-block" />
             <small class="d-none d-lg-block">

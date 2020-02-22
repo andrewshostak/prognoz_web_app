@@ -2,15 +2,16 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 
+import { TeamNew } from '@models/new/team-new.model';
 import { RequestParams } from '@models/request-params.model';
+import { TeamSearch } from '@models/search/team-search.model';
 import { TeamMatch } from '@models/team/team-match.model';
 import { TeamTeamMatch } from '@models/team/team-team-match.model';
-import { Team } from '@models/team/team.model';
 import { User } from '@models/user.model';
 import { CurrentStateService } from '@services/current-state.service';
+import { TeamNewService } from '@services/new/team-new.service';
 import { TeamMatchService } from '@services/team/team-match.service';
 import { TeamTeamMatchService } from '@services/team/team-team-match.service';
-import { TeamService } from '@services/team/team.service';
 import { TitleService } from '@services/title.service';
 import { UtilsService } from '@services/utils.service';
 
@@ -22,21 +23,20 @@ import { UtilsService } from '@services/utils.service';
 export class TeamMyComponent implements OnInit, OnDestroy {
    public authenticatedUser: User;
    public competitionId: number;
-   public errorTeam: string;
    public errorTeamTeamMatches: string;
    public isCaptain = false;
    public noAccess = 'Доступ заборонено. Увійдіть на сайт для перегляду цієї сторінки.';
    public routerEventsSubscription: Subscription;
    public round: number;
    public roundsArray: Array<{ id: number; title: string }>;
-   public team: Team;
+   public team: TeamNew;
    public teamMatches: TeamMatch[];
    public teamTeamMatches: TeamTeamMatch[];
    constructor(
       private currentStateService: CurrentStateService,
       private router: Router,
       private teamMatchService: TeamMatchService,
-      private teamService: TeamService,
+      private teamService: TeamNewService,
       private teamTeamMatchService: TeamTeamMatchService,
       private titleService: TitleService
    ) {
@@ -83,27 +83,18 @@ export class TeamMyComponent implements OnInit, OnDestroy {
    }
 
    private getTeamData(competitionId: number) {
-      const params = [
-         { parameter: 'user_id', value: this.authenticatedUser.id.toString() },
-         { parameter: 'competition_id', value: competitionId.toString() }
-      ];
-      this.teamService.getTeam(null, params).subscribe(
+      const search: TeamSearch = {
+         competitionId,
+         limit: 1,
+         page: 1,
+         teamParticipantId: this.authenticatedUser.id
+      };
+      this.teamService.getTeams(search).subscribe(
          response => {
-            this.errorTeam = null;
-            if (!response) {
-               this.team = null;
-               return;
-            }
-
-            this.team = Object.assign({}, response);
-            if (this.team.captain_id !== this.authenticatedUser.id) {
-               return;
-            }
-
-            this.isCaptain = true;
+            this.team = response.data[0] ? Object.assign({}, response.data[0]) : null;
+            this.isCaptain = this.team && this.team.captain_id === this.authenticatedUser.id;
          },
-         error => {
-            this.errorTeam = error;
+         () => {
             this.team = null;
          }
       );

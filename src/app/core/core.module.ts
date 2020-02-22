@@ -51,7 +51,6 @@ import { TeamPredictionService } from '@services/team/team-prediction.service';
 import { TeamRatingUserService } from '@services/team/team-rating-user.service';
 import { TeamRatingService } from '@services/team/team-rating.service';
 import { TeamTeamMatchService } from '@services/team/team-team-match.service';
-import { TeamService } from '@services/team/team.service';
 import { TitleService } from '@services/title.service';
 import { TournamentService } from '@services/tournament.service';
 import { UserService } from '@services/user.service';
@@ -101,7 +100,6 @@ import { UtilsService } from '@services/utils.service';
       TeamPredictionService,
       TeamRatingService,
       TeamRatingUserService,
-      TeamService,
       TeamTeamMatchService,
       TitleService,
       TournamentService,
