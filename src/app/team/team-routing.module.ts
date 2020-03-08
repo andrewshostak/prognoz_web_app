@@ -16,7 +16,7 @@ import { TeamComponent } from '@team/team.component';
 
 const routes: Routes = [
    {
-      path: 'team',
+      path: '',
       component: TeamComponent,
       children: [
          {

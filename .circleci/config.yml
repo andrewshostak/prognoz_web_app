@@ -6,7 +6,7 @@ jobs:
     parallelism: 1
     working_directory: ~/prognoz_v2_angular
     docker:
-      - image: circleci/node:10-browsers
+      - image: circleci/node:12-browsers
 
     steps:
       - checkout
@@ -30,7 +30,7 @@ jobs:
     parallelism: 1
     working_directory: ~/prognoz_v2_angular
     docker:
-      - image: circleci/node:10-browsers
+      - image: circleci/node:12-browsers
 
     steps:
       - attach_workspace:
@@ -48,7 +48,7 @@ jobs:
     parallelism: 1
     working_directory: ~/prognoz_v2_angular
     docker:
-      - image: circleci/node:10-browsers
+      - image: circleci/node:12-browsers
 
     steps:
       - attach_workspace:
@@ -61,7 +61,7 @@ jobs:
     parallelism: 1
     working_directory: ~/prognoz_v2_angular
     docker:
-      - image: circleci/node:10-browsers
+      - image: circleci/node:12-browsers
 
     steps:
       - attach_workspace:
@@ -80,7 +80,7 @@ jobs:
     parallelism: 1
     working_directory: ~/prognoz_v2_angular
     docker:
-      - image: circleci/node:10-browsers
+      - image: circleci/node:12-browsers
 
     steps:
       - add_ssh_keys:

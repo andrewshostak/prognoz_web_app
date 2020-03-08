@@ -14,11 +14,11 @@ import { HomeModule } from '@app/home/home.module';
 import { InitService } from '@app/init.service';
 import { NewsModule } from '@app/news/news.module';
 import { SharedModule } from '@app/shared/shared.module';
-import { TeamModule } from '@app/team/team.module';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { NgProgressModule } from '@ngx-progressbar/core';
-import { NgProgressHttpModule } from '@ngx-progressbar/http';
 import { SimpleNotificationsModule } from 'angular2-notifications';
+import { NgProgressModule } from 'ngx-progressbar';
+import { NgProgressHttpModule } from 'ngx-progressbar/http';
+import { QuillModule } from 'ngx-quill';
 
 @NgModule({
    bootstrap: [AppComponent],
@@ -34,11 +34,11 @@ import { SimpleNotificationsModule } from 'angular2-notifications';
       HttpClientModule,
       NgbModule,
       NgProgressModule,
-      TeamModule,
       NewsModule,
       NgProgressModule,
       NgProgressHttpModule,
       SimpleNotificationsModule.forRoot(),
+      QuillModule.forRoot(),
       SharedModule
    ],
    providers: [
