@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 
+import { CupApplicationPlace } from '@enums/cup-application-place.enum';
 import { environment } from '@env';
 
 @Injectable()
@@ -69,4 +70,10 @@ export class SettingsService {
    };
 
    public static readonly participantsInTeam: number = 4;
+
+   public static readonly cupApplicationPlaces: Array<{ id: CupApplicationPlace; title: string }> = [
+      { id: CupApplicationPlace.Home, title: 'Вдома' },
+      { id: CupApplicationPlace.Away, title: 'На виїзді' },
+      { id: CupApplicationPlace.Anywhere, title: 'Будь-де' }
+   ];
 }

@@ -18,7 +18,7 @@ import { UserNewService } from '@services/new/user-new.service';
 import { SettingsService } from '@services/settings.service';
 import { trim } from 'lodash';
 import { merge, Observable, of, Subject } from 'rxjs';
-import { catchError, debounceTime, distinctUntilChanged, filter, map, switchMap, tap } from 'rxjs/operators';
+import { catchError, debounceTime, distinctUntilChanged, map, switchMap, tap } from 'rxjs/operators';
 
 @Component({
    selector: 'app-user-select',
@@ -104,9 +104,13 @@ export class UserSelectComponent implements OnChanges, OnInit, ControlValueAcces
          this.usersInput$.pipe(
             distinctUntilChanged(),
             debounceTime(SettingsService.defaultDebounceTime),
-            filter(term => term && term.length >= 1),
-            tap(() => (this.usersLoading = true)),
             switchMap((term: string) => {
+               if (!term) {
+                  return of(this.usersList);
+               }
+
+               this.usersLoading = true;
+
                const search: UserSearch = {
                   limit: SettingsService.maxLimitValues.users,
                   name: trim(term),

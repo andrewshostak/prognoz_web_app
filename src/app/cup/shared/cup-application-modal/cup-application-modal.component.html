@@ -1,0 +1,36 @@
+<form novalidate [formGroup]="cupApplicationForm" (ngSubmit)="submit()">
+   <div class="modal-content">
+      <div class="modal-header">
+         <h5 class="modal-title">Подати заявку</h5>
+         <button type="button" class="close" aria-label="Close" (click)="close()">
+            <span aria-hidden="true">&times;</span>
+         </button>
+      </div>
+      <div class="modal-body">
+         <div class="form-group" [class.form-group-invalid]="showFormInvalidClass(cupApplicationForm.get('applicant_id'))">
+            <label [attr.for]="'applicant_id'" class="font-weight-bold">Заявник:</label>
+            <app-user-select formControlName="applicant_id" [usersList]="applicant ? [applicant] : []"></app-user-select>
+            <div [hidden]="!showFormErrorMessage(cupApplicationForm.get('applicant_id'), 'required')" class="error-message">
+               <small>Заявник обов'язковий</small>
+            </div>
+         </div>
+         <div *ngIf="isFriendlyCompetition()">
+            <div class="form-group">
+               <label [attr.for]="'receiver_id'" class="font-weight-bold">Отримувач:</label>
+               <app-user-select formControlName="receiver_id" [usersList]="receiver ? [receiver, anyUser] : [anyUser]"></app-user-select>
+            </div>
+            <div class="form-group">
+               <label for="place" class="font-weight-bold">Місце:</label>
+               <select id="place" formControlName="place" class="form-control">
+                  <option *ngFor="let place of places" [value]="place.id">{{ place.title }}</option>
+               </select>
+            </div>
+         </div>
+      </div>
+      <div class="modal-footer d-flex justify-content-between">
+         <button type="button" class="btn btn-secondary" (click)="close()">Скасувати</button>
+         <button [hidden]="spinnerButton" type="submit" class="btn btn-primary">Продовжити</button>
+         <app-spinner-button [hidden]="!spinnerButton"></app-spinner-button>
+      </div>
+   </div>
+</form>

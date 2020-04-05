@@ -22,11 +22,6 @@ export const environment = {
       },
       cup: {
          id: 2,
-         places: [
-            { id: 1, title: 'Вдома', slug: 'home' },
-            { id: 2, title: 'На виїзді', slug: 'away' },
-            { id: 3, title: 'Будь-де', slug: 'anywhere' }
-         ],
          numberOfMatchesInStage: 8
       },
       team: {
