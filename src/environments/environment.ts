@@ -18,6 +18,7 @@ export const environment = {
    },
    tournaments: {
       championship: {
+         // todo: change tournament ids to Tournament enum and remove from both env files
          id: 1
       },
       cup: {

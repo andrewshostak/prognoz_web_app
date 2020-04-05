@@ -18,11 +18,7 @@ export class UserService {
    ) {}
 
    /**
-    * Get users
-    * @param order
-    * @param limit
-    * @param sequence
-    * @returns {Observable<any>}
+    * @deprecated use UserNewService
     */
    public getUsers(limit?: number, order?: string, sequence?: 'asc' | 'desc'): Observable<any> {
       let params: HttpParams = new HttpParams();

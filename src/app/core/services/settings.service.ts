@@ -36,6 +36,8 @@ export class SettingsService {
    // new image logos paths
    public static readonly clubsLogosPath: string = environment.imageURL + '/clubs';
    public static readonly teamsLogosPath: string = environment.imageURL + '/teams';
+   public static readonly usersLogosPath: string = environment.imageURL + '/users';
+   public static readonly userDefaultImage: string = 'default.png';
 
    // max limit values (same limitations present on the back-end side)
    public static readonly maxLimitValues = {

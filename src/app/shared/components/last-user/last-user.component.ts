@@ -1,32 +1,30 @@
 import { Component, OnInit } from '@angular/core';
 
-import { environment } from '@env';
-import { User } from '@models/user.model';
-import { UserService } from '@services/user.service';
+import { Sequence } from '@enums/sequence.enum';
+import { UserNew } from '@models/new/user-new.model';
+import { UserSearch } from '@models/search/user-search.model';
+import { UserNewService } from '@services/new/user-new.service';
+import { SettingsService } from '@services/settings.service';
 import { UtilsService } from '@services/utils.service';
 
 @Component({
-    selector: 'app-last-user',
-    templateUrl: './last-user.component.html',
-    styleUrls: ['./last-user.component.scss']
+   selector: 'app-last-user',
+   templateUrl: './last-user.component.html',
+   styleUrls: ['./last-user.component.scss']
 })
 export class LastUserComponent implements OnInit {
-    constructor(private userService: UserService) {}
+   public lastUser: UserNew;
+   public userDefaultImage = SettingsService.userDefaultImage;
+   public usersLogosPath = SettingsService.usersLogosPath + '/';
+   public homeCityInBrackets: string;
 
-    errorUser: string | Array<string>;
-    lastUser: User;
-    userImageDefault: string = environment.imageUserDefault;
-    userImagesUrl: string = environment.apiImageUsers;
-    getHomeCityInBrackets = UtilsService.getHomeCityInBrackets;
+   constructor(private userService: UserNewService) {}
 
-    ngOnInit() {
-        this.userService.getUsers(1, 'created_at', 'desc').subscribe(
-            response => {
-                this.lastUser = response.users[0];
-            },
-            error => {
-                this.errorUser = error;
-            }
-        );
-    }
+   public ngOnInit(): void {
+      const search: UserSearch = { limit: 1, sequence: Sequence.Descending, orderBy: 'created_at' };
+      this.userService.getUsers(search).subscribe(response => {
+         this.lastUser = response.data[0];
+         this.homeCityInBrackets = UtilsService.getHomeCityInBrackets(this.lastUser.hometown);
+      });
+   }
 }

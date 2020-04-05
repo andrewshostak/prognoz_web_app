@@ -1,19 +1,18 @@
-<!-- error -->
-<app-error *ngIf="errorUser" [message]="errorUser"></app-error>
-<!-- user card -->
 <div *ngIf="lastUser" class="card black-shadow">
-    <h4 class="card-header text-xs-center">Останній зареєстрований користувач</h4>
-    <div class="card-body text-center">
-        <img class="card-img-top img-fluid rounded"
-             src="{{userImagesUrl}}{{lastUser.image || userImageDefault}}"
-             alt="{{lastUser.name}}">
-    </div>
-    <div class="card-body">
-        <p class="card-text text-center">
-            <strong>{{lastUser.name}}</strong> {{getHomeCityInBrackets(lastUser.hometown)}}
-        </p>
-    </div>
-    <div class="card-footer text-muted">
-        {{lastUser.created_at | time:'fromNow'}}
-    </div>
+   <h4 class="card-header text-xs-center">Останній зареєстрований користувач</h4>
+   <div class="card-body text-center">
+      <img
+         class="card-img-top img-fluid rounded"
+         [attr.src]="usersLogosPath + (lastUser.image || userDefaultImage)"
+         [attr.alt]="lastUser.name"
+      />
+   </div>
+   <div class="card-body">
+      <p class="card-text text-center">
+         <strong>{{ lastUser.name }}</strong> {{ homeCityInBrackets }}
+      </p>
+   </div>
+   <div class="card-footer text-muted">
+      {{ lastUser.created_at | time: 'fromNow' }}
+   </div>
 </div>
