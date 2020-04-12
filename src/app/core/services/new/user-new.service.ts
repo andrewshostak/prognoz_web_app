@@ -5,6 +5,7 @@ import { environment } from '@env';
 import { UserNew } from '@models/new/user-new.model';
 import { PaginatedResponse } from '@models/paginated-response.model';
 import { UserSearch } from '@models/search/user-search.model';
+import { RequestPreparationService } from '@services/request-preparation.service';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
@@ -35,5 +36,10 @@ export class UserNewService {
       }
 
       return this.httpClient.get<PaginatedResponse<UserNew>>(this.usersUrl, { params });
+   }
+
+   public updateUser(userId: number, user: Partial<UserNew>): Observable<UserNew> {
+      const body = user.image ? RequestPreparationService.toFormData(user) : user;
+      return this.httpClient.put<{ user: UserNew }>(`${this.usersUrl}/${userId}`, body).pipe(map(response => response.user));
    }
 }

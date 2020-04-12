@@ -44,6 +44,9 @@ export class UserService {
       );
    }
 
+   /**
+    * @deprecated use UserNewService
+    */
    public updateUser(user: User): Observable<{ user: User }> {
       return this.headersWithToken.put(`${this.usersUrl}/${user.id}`, user).pipe(catchError(this.errorHandlerService.handle));
    }
