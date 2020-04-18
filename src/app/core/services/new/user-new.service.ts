@@ -15,8 +15,9 @@ export class UserNewService {
 
    constructor(private httpClient: HttpClient) {}
 
-   public getUser(id: number): Observable<UserNew> {
-      return this.httpClient.get<{ user: UserNew }>(`${this.usersUrl}/${id}`).pipe(map(response => response.user));
+   public getUser(id: number, relations: string[] = []): Observable<UserNew> {
+      const params = new HttpParams({ fromObject: { 'relations[]': relations } });
+      return this.httpClient.get<{ user: UserNew }>(`${this.usersUrl}/${id}`, { params }).pipe(map(response => response.user));
    }
 
    public getUsers(search: UserSearch): Observable<PaginatedResponse<UserNew>> {

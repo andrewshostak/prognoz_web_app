@@ -1,9 +1,9 @@
-<h2>Прогнози {{user ? user.name : 'гравця'}}: </h2>
-<app-championship-user-rating-details [user]="user"
-                                      [championshipRatingItem]="championshipRatingItem"
-                                      [errorChampionshipRating]="errorRating"
-                                      [errorUser]="errorUser">
+<h2>Прогнози {{ user ? user.name : 'гравця' }}:</h2>
+<app-championship-user-rating-details
+   [user]="user"
+   [championshipRatingItem]="championshipRatingItem"
+   [errorChampionshipRating]="errorRating"
+>
 </app-championship-user-rating-details>
-<app-championship-user-predictions-table [predictions]="championshipPredictions"
-                                         [error]="errorChampionshipPredictions">
+<app-championship-user-predictions-table [predictions]="championshipPredictions" [error]="errorChampionshipPredictions">
 </app-championship-user-predictions-table>

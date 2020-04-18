@@ -7,16 +7,16 @@ import { Tournament } from '@enums/tournament.enum';
 import { ChampionshipRating } from '@models/championship/championship-rating.model';
 import { ChampionshipPredictionNew } from '@models/new/championship-prediction-new.model';
 import { CompetitionNew } from '@models/new/competition-new.model';
+import { UserNew } from '@models/new/user-new.model';
 import { PaginatedResponse } from '@models/paginated-response.model';
 import { ChampionshipPredictionSearch } from '@models/search/championship-prediction-search.model';
 import { CompetitionSearch } from '@models/search/competition-search.model';
-import { User } from '@models/user.model';
 import { ChampionshipRatingService } from '@services/championship/championship-rating.service';
 import { ChampionshipPredictionNewService } from '@services/new/championship-prediction-new.service';
 import { CompetitionNewService } from '@services/new/competition-new.service';
+import { UserNewService } from '@services/new/user-new.service';
 import { SettingsService } from '@services/settings.service';
 import { TitleService } from '@services/title.service';
-import { UserService } from '@services/user.service';
 import { UtilsService } from '@services/utils.service';
 import { Observable, throwError } from 'rxjs';
 import { mergeMap } from 'rxjs/operators';
@@ -31,8 +31,7 @@ export class ChampionshipUserComponent implements OnInit {
    public championshipRatingItem: ChampionshipRating;
    public errorChampionshipPredictions: string;
    public errorRating: string;
-   public errorUser: string;
-   public user: User;
+   public user: UserNew;
 
    constructor(
       private activatedRoute: ActivatedRoute,
@@ -40,7 +39,7 @@ export class ChampionshipUserComponent implements OnInit {
       private championshipRatingService: ChampionshipRatingService,
       private competitionService: CompetitionNewService,
       private titleService: TitleService,
-      private userService: UserService
+      private userService: UserNewService
    ) {}
 
    public ngOnInit(): void {
@@ -106,15 +105,10 @@ export class ChampionshipUserComponent implements OnInit {
    }
 
    private getUserData(id: number) {
-      this.userService.getUser(id).subscribe(
-         response => {
-            this.user = response;
-            this.titleService.setTitle(`Прогнози ${this.user.name}
+      this.userService.getUser(id, ['clubs', 'winners.award', 'winners.competition']).subscribe(response => {
+         this.user = response;
+         this.titleService.setTitle(`Прогнози ${this.user.name}
                     ${UtilsService.getHomeCityInBrackets(this.user.hometown)} - Чемпіонат`);
-         },
-         error => {
-            this.errorUser = error;
-         }
-      );
+      });
    }
 }
