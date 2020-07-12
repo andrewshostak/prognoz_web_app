@@ -6,5 +6,6 @@ export class CompetitionSearch {
    public ended?: ModelStatus;
    public limit: number;
    public page: number;
+   public stated?: ModelStatus;
    public tournamentId?: Tournament;
 }

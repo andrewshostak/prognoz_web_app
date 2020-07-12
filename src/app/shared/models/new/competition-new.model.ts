@@ -20,6 +20,7 @@ export class CompetitionNew {
    public title: string;
    public season_id: number;
    public stated: ModelStatus;
+   public updated_at: string;
 
    public pivot?: {
       competition_id: number;

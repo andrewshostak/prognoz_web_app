@@ -38,6 +38,9 @@ export class CompetitionNewService {
       if (!isNil(search.ended)) {
          params = params.append('ended', (search.ended as unknown) as string);
       }
+      if (!isNil(search.stated)) {
+         params = params.append('stated', (search.stated as unknown) as string);
+      }
 
       return this.httpClient.get<PaginatedResponse<CompetitionNew>>(this.competitionsUrl, { params });
    }

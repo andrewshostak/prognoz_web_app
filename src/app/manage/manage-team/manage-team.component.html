@@ -16,59 +16,9 @@
       <small class="font-weight-bold">К</small>
       <span class="d-none d-sm-inline">Команди</span>
    </a>
-</div>
-<div class="container">
-   <!-- error competition -->
-   <app-error *ngIf="errorCompetitions" [message]="errorCompetitions"></app-error>
-   <div *ngIf="competitions" class="row mb-2">
-      <div class="col-12 col-md-6">
-         <div class="card p-2">
-            <button
-               *ngFor="let competition of competitions"
-               type="button"
-               class="btn btn-success mb-2"
-               (click)="openStartDrawConfirmModal(confirmModal, competition)"
-            >
-               <span class="d-none d-sm-inline">{{ competition.title }}: Провести жеребкування календаря</span>
-               <span class="d-inline d-sm-none">{{ competition.title }}: Жеребкування</span>
-            </button>
-            <ul class="list-group">
-               <li class="list-group-item">
-                  <small class="text-muted">1. Змінює статус командного чемпіонату з "Відкритий для заявок" в "Активний"</small>
-               </li>
-               <li class="list-group-item">
-                  <small class="text-muted">2. Проводить жеребкування календаря матчів</small>
-               </li>
-            </ul>
-         </div>
-      </div>
-      <div class="col-12 col-md-6">
-         <div class="card p-2">
-            <button
-               *ngFor="let competition of competitions"
-               type="button"
-               class="btn btn-success mb-2"
-               (click)="openStartNextRoundConfirmModal(confirmModal, competition)"
-            >
-               <span class="d-none d-sm-inline">{{ competition.title }}: Розпочати наступний тур - {{ nextRoundNumber(competition) }}</span>
-               <span class="d-inline d-sm-none">{{ competition.title }}: Наступний тур - {{ nextRoundNumber(competition) }}</span>
-            </button>
-            <ul class="list-group">
-               <li class="list-group-item">
-                  <small class="text-muted">1. Завершує матчі поточного раудну</small>
-               </li>
-               <li class="list-group-item">
-                  <small class="text-muted">2. Змінює активний раунд змагання</small>
-               </li>
-               <li class="list-group-item">
-                  <small class="text-muted">3. Рахує всі рейтинги </small>
-               </li>
-            </ul>
-         </div>
-      </div>
-   </div>
+   <a routerLink="/manage/team/competitions" [routerLinkActive]="['btn-primary']" class="btn">
+      <small class="font-weight-bold">З</small>
+      <span class="d-none d-sm-inline">Змагання</span>
+   </a>
 </div>
 <router-outlet></router-outlet>
-<ng-template #confirmModal let-c="close">
-   <app-confirmation-modal [close]="c" [message]="confirmModalMessage" (confirmed)="confirmModalSubmit($event)"> </app-confirmation-modal>
-</ng-template>

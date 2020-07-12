@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
+import { ManageTeamCompetitionsComponent } from '@app/manage/manage-team/manage-team-competitions/manage-team-competitions.component';
 import { ManageTeamMatchComponent } from '@app/manage/manage-team/manage-team-match/manage-team-match.component';
 import { TeamMatchCreateComponent } from '@app/manage/manage-team/manage-team-match/team-match-create/team-match-create.component';
 import { TeamMatchEditComponent } from '@app/manage/manage-team/manage-team-match/team-match-edit/team-match-edit.component';
@@ -20,6 +21,13 @@ import { RoleGuard } from '@app/manage/shared/role-guard.service';
 const routes: Routes = [
    {
       children: [
+         {
+            canActivate: [RoleGuard],
+            // todo: don't now why `championship_editor`, but its required in controller middleware
+            data: { roles: ['championship_editor'] },
+            component: ManageTeamCompetitionsComponent,
+            path: 'competitions'
+         },
          {
             canActivate: [RoleGuard],
             canActivateChild: [RoleGuard],

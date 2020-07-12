@@ -1,0 +1,167 @@
+<div class="m-2">
+   <h2 class="h2">Керування змаганнями:</h2>
+</div>
+<table class="d-none d-lg-table table table-dark table-striped table-hover table-bordered mb-0">
+   <thead>
+      <tr>
+         <th scope="col" class="text-center">ID</th>
+         <th>Назва</th>
+         <th class="text-center">Кількість Команд</th>
+         <th class="text-center">Статус</th>
+         <th class="text-center">Активний Тур</th>
+         <th class="text-center">Змінено</th>
+         <th class="text-center">Дія</th>
+      </tr>
+   </thead>
+   <tbody>
+      <tr *ngFor="let c of competitions" [ngClass]="{ 'table-success': c.isUpdated }">
+         <th scope="row" class="text-center align-middle">{{ c.competition.id }}</th>
+         <th class="align-middle">{{ c.competition.title }}</th>
+         <td class="text-center align-middle">{{ c.competition.number_of_teams }}</td>
+         <td class="text-center align-middle">{{ c.stateText }}</td>
+         <td class="text-center text-nowrap align-middle">{{ c.competition.active_round || 0 }} / {{ c.totalNumberOfRounds }}</td>
+         <td class="text-center text-nowrap text-muted align-middle">{{ c.competition.updated_at | time: 'fromNow' }}</td>
+         <td class="text-center align-middle">
+            <button
+               *ngIf="c.modal"
+               [disabled]="c.isUpdated"
+               (click)="openConfirmModal(confirmModal, { competition: c.competition, message: c.modal.confirmText }, c.modal.callback)"
+               type="button"
+               class="btn-action-lg btn btn-warning"
+            >
+               <i class="fa fa-exclamation-circle"></i> {{ c.buttonText }}
+            </button>
+         </td>
+      </tr>
+   </tbody>
+</table>
+<table class="d-none d-md-table d-lg-none table table-dark table-striped table-hover table-bordered mb-0">
+   <thead>
+      <tr>
+         <th scope="col" class="text-center align-middle">ID</th>
+         <th class="align-middle">Назва</th>
+         <th class="text-center">
+            <div class="text-nowrap">К-ть Команд</div>
+            <div class="text-nowrap">Активний Тур</div>
+         </th>
+         <th class="text-center align-middle">Статус</th>
+         <th class="text-center align-middle">Змінено</th>
+         <th class="text-center align-middle">Дія</th>
+      </tr>
+   </thead>
+   <tbody>
+      <tr *ngFor="let c of competitions" [ngClass]="{ 'table-success': c.isUpdated }">
+         <th scope="row" class="text-center align-middle">{{ c.competition.id }}</th>
+         <th class="align-middle">{{ c.competition.title }}</th>
+         <td class="text-center align-middle">
+            <div>Команд: {{ c.competition.number_of_teams }}</div>
+            <div>Тур: {{ c.competition.active_round || 0 }} / {{ c.totalNumberOfRounds }}</div>
+         </td>
+         <td class="text-center align-middle">{{ c.stateText }}</td>
+         <td class="text-center text-nowrap text-muted align-middle">{{ c.competition.updated_at | time: 'fromNow' }}</td>
+         <td class="text-center align-middle">
+            <button
+               *ngIf="c.modal"
+               [disabled]="c.isUpdated"
+               (click)="openConfirmModal(confirmModal, { competition: c.competition, message: c.modal.confirmText }, c.modal.callback)"
+               type="button"
+               class="btn-action-md btn btn-sm btn-warning"
+            >
+               <i class="fa fa-exclamation-circle"></i> {{ c.buttonText }}
+            </button>
+         </td>
+      </tr>
+   </tbody>
+</table>
+<table class="d-none d-sm-table d-md-none table table-sm table-dark table-striped table-hover table-bordered mb-0">
+   <thead>
+      <tr>
+         <th scope="col" class="text-center align-middle">ID</th>
+         <th class="align-middle">Назва</th>
+         <th class="text-center">
+            <div class="text-nowrap">К-ть Команд</div>
+            <div class="text-nowrap">Активний Тур</div>
+         </th>
+         <th class="text-center align-middle">Статус</th>
+         <th class="text-center align-middle">
+            <div>Змінено</div>
+            <div>Дія</div>
+         </th>
+      </tr>
+   </thead>
+   <tbody>
+      <tr *ngFor="let c of competitions" [ngClass]="{ 'table-success': c.isUpdated }">
+         <th scope="row" class="text-center align-middle">{{ c.competition.id }}</th>
+         <th class="align-middle">{{ c.competition.title }}</th>
+         <td class="text-center align-middle">
+            <div>Команд: {{ c.competition.number_of_teams }}</div>
+            <div>Тур: {{ c.competition.active_round || 0 }} / {{ c.totalNumberOfRounds }}</div>
+         </td>
+         <td class="text-center align-middle">{{ c.stateText }}</td>
+         <td class="text-center align-middle">
+            <div class="text-muted">{{ c.competition.updated_at | time: 'fromNow' }}</div>
+            <div>
+               <button
+                  *ngIf="c.modal"
+                  [disabled]="c.isUpdated"
+                  (click)="openConfirmModal(confirmModal, { competition: c.competition, message: c.modal.confirmText }, c.modal.callback)"
+                  type="button"
+                  class="btn-action-md btn btn-sm btn-warning"
+               >
+                  <i class="fa fa-exclamation-circle"></i> {{ c.buttonText }}
+               </button>
+            </div>
+         </td>
+      </tr>
+   </tbody>
+</table>
+<table class="d-table d-sm-none table table-sm table table-sm table-dark table-striped table-hover table-bordered mb-0">
+   <tbody>
+      <tr *ngFor="let c of competitions" [ngClass]="{ 'table-success': c.isUpdated }">
+         <td>
+            <table align="center">
+               <tr>
+                  <td>
+                     ID: <span class="font-weight-bold">{{ c.competition.id }}</span>
+                  </td>
+                  <th>{{ c.competition.title }}</th>
+               </tr>
+               <tr>
+                  <td>Команд: {{ c.competition.number_of_teams }}</td>
+                  <td class="text-right">Тур: {{ c.competition.active_round || 0 }} / {{ c.totalNumberOfRounds }}</td>
+               </tr>
+               <tr>
+                  <td colspan="2">{{ c.stateText }}</td>
+               </tr>
+               <tr>
+                  <td colspan="2" class="text-muted text-center">Змінено {{ c.competition.updated_at | time: 'fromNow' }}</td>
+               </tr>
+               <tr>
+                  <td colspan="2" class="text-center">
+                     <button
+                        *ngIf="c.modal"
+                        [disabled]="c.isUpdated"
+                        (click)="
+                           openConfirmModal(confirmModal, { competition: c.competition, message: c.modal.confirmText }, c.modal.callback)
+                        "
+                        type="button"
+                        class="btn btn-sm btn-warning"
+                     >
+                        <i class="fa fa-exclamation-circle"></i> {{ c.buttonText }}
+                     </button>
+                  </td>
+               </tr>
+            </table>
+         </td>
+      </tr>
+   </tbody>
+</table>
+<div class="text-right">
+   <small>
+      *В цій таблиці відображаються тільки незавершені командні змагання
+   </small>
+</div>
+<ng-template #confirmModal let-c="close">
+   <app-confirmation-modal [close]="c" [message]="openedModal.data.message" (confirmed)="openedModal.submitted($event)">
+   </app-confirmation-modal>
+</ng-template>
