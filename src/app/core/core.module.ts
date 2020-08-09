@@ -25,6 +25,7 @@ import { CupRatingService } from '@services/cup/cup-rating.service';
 import { CupStageTypeService } from '@services/cup/cup-stage-type.service';
 import { CupStageService } from '@services/cup/cup-stage.service';
 import { CurrentStateService } from '@services/current-state.service';
+import { DeviceService } from '@services/device.service';
 import { ErrorHandlerService } from '@services/error-handler.service';
 import { FormValidatorService } from '@services/form-validator.service';
 import { HeadersWithToken } from '@services/headers-with-token.service';
@@ -81,6 +82,7 @@ import { UtilsService } from '@services/utils.service';
       CupStageService,
       CupStageTypeService,
       CurrentStateService,
+      DeviceService,
       ErrorHandlerService,
       FormValidatorService,
       HeadersWithToken,

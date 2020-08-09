@@ -33,7 +33,9 @@
                      "./node_modules/chart.js/dist/Chart.bundle.min.js",
                      "./node_modules/pusher-js/dist/web/pusher.min.js",
                      "./node_modules/moment/min/moment.min.js",
-                     "./node_modules/moment/locale/uk.js"
+                     "./node_modules/moment/locale/uk.js",
+                     "./node_modules/fingerprintjs2/dist/fingerprint2.min.js",
+                     "./node_modules/ua-parser-js/dist/ua-parser.min.js"
                   ]
                },
                "configurations": {

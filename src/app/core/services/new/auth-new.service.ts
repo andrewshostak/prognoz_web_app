@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
 import { environment } from '@env';
@@ -6,7 +6,7 @@ import { AuthReset } from '@models/new/auth/auth-reset.model';
 import { AuthSignIn } from '@models/new/auth/auth-sign-in.model';
 import { AuthSignUp } from '@models/new/auth/auth-sign-up.model';
 import { UserNew } from '@models/new/user-new.model';
-import { get, uniq } from 'lodash';
+import { get, omit, uniq } from 'lodash';
 import { Observable } from 'rxjs';
 
 @Injectable()
@@ -68,7 +68,12 @@ export class AuthNewService {
    }
 
    public signIn(authSignIn: AuthSignIn): Observable<{ token: string; user: UserNew }> {
-      return this.httpClient.post<{ token: string; user: UserNew }>(`${this.authURL}/sign-in`, authSignIn);
+      const httpOptions = { headers: new HttpHeaders({ 'x-device-id': authSignIn.deviceId }) };
+      return this.httpClient.post<{ token: string; user: UserNew }>(
+         `${this.authURL}/sign-in`,
+         omit(authSignIn, 'fingerprint'),
+         httpOptions
+      );
    }
 
    public signUp(authSignUp: AuthSignUp): Observable<{ token: string; user: UserNew }> {
