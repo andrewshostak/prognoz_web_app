@@ -31,7 +31,7 @@
       "core-js": "^2.5.4",
       "fingerprintjs2": "^2.1.2",
       "font-awesome": "^4.7.0",
-      "lodash": "^4.17.11",
+      "lodash": "^4.17.19",
       "moment": "^2.24.0",
       "ng-recaptcha": "^4.2.1",
       "ng2-charts": "^1.6.0",
