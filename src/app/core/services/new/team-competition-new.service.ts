@@ -2,14 +2,19 @@ import { Injectable } from '@angular/core';
 
 import { TeamNew } from '@models/new/team-new.model';
 import { TeamParticipantNew } from '@models/new/team-participant-new.model';
+import { DeviceService } from '@services/device.service';
 import { TeamNewService } from '@services/new/team-new.service';
 import { TeamParticipantNewService } from '@services/new/team-participant-new.service';
-import { Observable } from 'rxjs';
-import { mergeMap } from 'rxjs/operators';
+import { from, Observable, of } from 'rxjs';
+import { catchError, mergeMap } from 'rxjs/operators';
 
 @Injectable()
 export class TeamCompetitionNewService {
-   constructor(private teamParticipantService: TeamParticipantNewService, private teamService: TeamNewService) {}
+   constructor(
+      private deviceService: DeviceService,
+      private teamParticipantService: TeamParticipantNewService,
+      private teamService: TeamNewService
+   ) {}
 
    public updateTeamCreateAndUpdateCaptain(
       team: TeamNew,
@@ -31,7 +36,12 @@ export class TeamCompetitionNewService {
          team_id: team.id,
          user_id: team.captain_id
       } as TeamParticipantNew;
-      return this.teamParticipantService.createTeamParticipant(teamParticipant);
+      return from(this.deviceService.getDevice()).pipe(
+         catchError(() => of(DeviceService.emptyDevice)),
+         mergeMap((device: { fingerprint: string; info: { [key: string]: any } }) => {
+            return this.teamParticipantService.createTeamParticipant(teamParticipant, device.fingerprint, device.info);
+         })
+      );
    }
 
    private makeTeamParticipantConfirmedRequest(teamParticipant: TeamParticipantNew): Observable<TeamParticipantNew> {

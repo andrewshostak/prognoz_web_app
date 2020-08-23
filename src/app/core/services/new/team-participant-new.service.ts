@@ -1,4 +1,4 @@
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
 import { environment } from '@env';
@@ -15,7 +15,18 @@ export class TeamParticipantNewService {
 
    constructor(private httpClient: HttpClient) {}
 
-   public createTeamParticipant(teamParticipant: Partial<TeamParticipantNew>): Observable<TeamParticipantNew> {
+   public createTeamParticipant(
+      teamParticipant: Partial<TeamParticipantNew>,
+      deviceId?: string,
+      deviceInfo?: { [key: string]: any }
+   ): Observable<TeamParticipantNew> {
+      if (deviceId && deviceInfo) {
+         const httpOptions = { headers: new HttpHeaders({ 'x-device-id': deviceId }) };
+         return this.httpClient
+            .post<{ team_participant: TeamParticipantNew }>(this.teamParticipantsUrl, { ...teamParticipant, deviceInfo }, httpOptions)
+            .pipe(map(response => response.team_participant));
+      }
+
       return this.httpClient
          .post<{ team_participant: TeamParticipantNew }>(this.teamParticipantsUrl, teamParticipant)
          .pipe(map(response => response.team_participant));

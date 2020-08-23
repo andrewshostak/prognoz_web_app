@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, TemplateRef } from '@angular/core';
 
+import { Device } from '@models/device.model';
 import { CompetitionNew } from '@models/new/competition-new.model';
 import { TeamNew } from '@models/new/team-new.model';
 import { TeamParticipantNew } from '@models/new/team-participant-new.model';
@@ -7,11 +8,14 @@ import { UserNew } from '@models/new/user-new.model';
 import { OpenedModal } from '@models/opened-modal.model';
 import { TeamParticipantSearch } from '@models/search/team-participant-search.model';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
+import { DeviceService } from '@services/device.service';
 import { AuthNewService } from '@services/new/auth-new.service';
 import { TeamParticipantNewService } from '@services/new/team-participant-new.service';
 import { SettingsService } from '@services/settings.service';
 import { NotificationsService } from 'angular2-notifications';
 import { pick, remove } from 'lodash';
+import { from, of } from 'rxjs';
+import { catchError, mergeMap } from 'rxjs/operators';
 
 @Component({
    selector: 'app-team-and-participants',
@@ -34,6 +38,7 @@ export class TeamAndParticipantsComponent implements OnInit, OnChanges {
 
    constructor(
       private authService: AuthNewService,
+      private deviceService: DeviceService,
       private ngbModalService: NgbModal,
       private notificationsService: NotificationsService,
       private teamParticipantService: TeamParticipantNewService
@@ -52,17 +57,24 @@ export class TeamAndParticipantsComponent implements OnInit, OnChanges {
          captain: false,
          team_id: this.team.id
       } as TeamParticipantNew;
-      this.teamParticipantService.createTeamParticipant(teamParticipant).subscribe(
-         () => {
-            this.getTeamParticipants(this.competition.id, this.team.id);
-            this.notificationsService.success('Успішно', `Заявку в команду ${this.team.name} подано`);
-            this.isExpanded = true;
-            this.showJoinButton = false;
-            this.openedModal.reference.close();
-            this.teamParticipantCreated.emit();
-         },
-         () => this.openedModal.reference.close()
-      );
+      from(this.deviceService.getDevice())
+         .pipe(
+            catchError(() => of(DeviceService.emptyDevice)),
+            mergeMap((device: Device) =>
+               this.teamParticipantService.createTeamParticipant(teamParticipant, device.fingerprint, device.info)
+            )
+         )
+         .subscribe(
+            () => {
+               this.getTeamParticipants(this.competition.id, this.team.id);
+               this.notificationsService.success('Успішно', `Заявку в команду ${this.team.name} подано`);
+               this.isExpanded = true;
+               this.showJoinButton = false;
+               this.openedModal.reference.close();
+               this.teamParticipantCreated.emit();
+            },
+            () => this.openedModal.reference.close()
+         );
    }
 
    public deleteTeamParticipant(): void {

@@ -2,13 +2,14 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
+import { Device } from '@models/device.model';
 import { UserNew } from '@models/new/user-new.model';
 import { CurrentStateService } from '@services/current-state.service';
 import { DeviceService } from '@services/device.service';
 import { AuthNewService } from '@services/new/auth-new.service';
 import { TitleService } from '@services/title.service';
 import { NotificationsService } from 'angular2-notifications';
-import { from } from 'rxjs';
+import { from, of } from 'rxjs';
 import { catchError, mergeMap } from 'rxjs/operators';
 
 @Component({
@@ -48,14 +49,8 @@ export class AuthSignInComponent implements OnInit {
 
       from(this.deviceService.getDevice())
          .pipe(
-            catchError(() =>
-               this.authService.signIn({
-                  ...this.signInForm.value,
-                  deviceId: 'unknown',
-                  deviceInfo: {}
-               })
-            ),
-            mergeMap((device: { fingerprint: string; info: { [key: string]: any } }) => {
+            catchError(() => of(DeviceService.emptyDevice)),
+            mergeMap((device: Device) => {
                return this.authService.signIn({
                   ...this.signInForm.value,
                   deviceId: device.fingerprint,

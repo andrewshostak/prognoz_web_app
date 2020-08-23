@@ -69,11 +69,7 @@ export class AuthNewService {
 
    public signIn(authSignIn: AuthSignIn): Observable<{ token: string; user: UserNew }> {
       const httpOptions = { headers: new HttpHeaders({ 'x-device-id': authSignIn.deviceId }) };
-      return this.httpClient.post<{ token: string; user: UserNew }>(
-         `${this.authURL}/sign-in`,
-         omit(authSignIn, 'fingerprint'),
-         httpOptions
-      );
+      return this.httpClient.post<{ token: string; user: UserNew }>(`${this.authURL}/sign-in`, omit(authSignIn, 'deviceId'), httpOptions);
    }
 
    public signUp(authSignUp: AuthSignUp): Observable<{ token: string; user: UserNew }> {

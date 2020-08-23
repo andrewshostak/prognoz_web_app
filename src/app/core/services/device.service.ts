@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
 
+import { Device } from '@models/device.model';
+
 declare const Fingerprint2: any;
 declare const UAParser: any;
 
@@ -26,7 +28,9 @@ declare global {
 
 @Injectable()
 export class DeviceService {
-   public getDevice(): Promise<{ fingerprint: string; info: { [key: string]: any } }> {
+   public static readonly emptyDevice: Device = { fingerprint: 'unknown', info: {} };
+
+   public getDevice(): Promise<Device> {
       return new Promise((resolve, reject) => {
          async function getHash() {
             const options = {
