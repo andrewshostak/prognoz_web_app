@@ -1,63 +1,51 @@
-import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
 
-import { catchError, map } from 'rxjs/operators';
+import { environment } from '@env';
 import { CupApplication } from '@models/cup/cup-application.model';
 import { ErrorHandlerService } from '@services/error-handler.service';
-import { environment } from '@env';
 import { HeadersWithToken } from '@services/headers-with-token.service';
 import { Observable } from 'rxjs';
+import { catchError, map } from 'rxjs/operators';
 
 @Injectable()
 export class CupApplicationService {
-    constructor(
-        private errorHandlerService: ErrorHandlerService,
-        private headersWithToken: HeadersWithToken,
-        private httpClient: HttpClient
-    ) {}
+   private cupApplicationUrl = environment.apiUrl + 'cup/applications';
+   constructor(
+      private errorHandlerService: ErrorHandlerService,
+      private headersWithToken: HeadersWithToken,
+      private httpClient: HttpClient
+   ) {}
 
-    private cupApplicationUrl = environment.apiUrl + 'cup/applications';
+   public getCupApplications(): Observable<CupApplication[]> {
+      return this.httpClient.get<{ cup_applications: CupApplication[] }>(this.cupApplicationUrl).pipe(
+         map(response => response.cup_applications),
+         catchError(this.errorHandlerService.handle)
+      );
+   }
 
-    /**
-     * Get cup applications
-     * @returns {Observable<CupApplication[]>}
-     */
-    getCupApplications(): Observable<CupApplication[]> {
-        return this.httpClient.get(this.cupApplicationUrl).pipe(
-            map(response => response['cup_applications']),
-            catchError(this.errorHandlerService.handle)
-        );
-    }
+   public updateCupApplication(cupApplication, cupApplicationId: number): Observable<CupApplication> {
+      return this.headersWithToken
+         .put(`${this.cupApplicationUrl}/${cupApplicationId}`, cupApplication)
+         .pipe(catchError(this.errorHandlerService.handle));
+   }
 
-    /**
-     * Update cup application
-     * @param cupApplication
-     * @param cupApplicationId
-     * @returns {Observable<CupApplication>}
-     */
-    updateCupApplication(cupApplication, cupApplicationId: number): Observable<CupApplication> {
-        return this.headersWithToken
-            .put(`${this.cupApplicationUrl}/${cupApplicationId}`, cupApplication)
+   public createCupApplication(
+      cupApplication: CupApplication,
+      deviceId?: string,
+      deviceInfo?: { [key: string]: any }
+   ): Observable<CupApplication> {
+      if (deviceId && deviceInfo) {
+         return this.headersWithToken
+            .post(this.cupApplicationUrl, { ...cupApplication, deviceInfo }, { 'x-device-id': deviceId })
             .pipe(catchError(this.errorHandlerService.handle));
-    }
+      }
+      return this.headersWithToken.post(this.cupApplicationUrl, cupApplication).pipe(catchError(this.errorHandlerService.handle));
+   }
 
-    /**
-     * Create cup application
-     * @param {CupApplication} cupApplication
-     * @returns {Observable<CupApplication>}
-     */
-    createCupApplication(cupApplication: CupApplication): Observable<CupApplication> {
-        return this.headersWithToken.post(this.cupApplicationUrl, cupApplication).pipe(catchError(this.errorHandlerService.handle));
-    }
-
-    /**
-     * Delete cup application
-     * @param {number} cupApplicationId
-     * @returns {Observable<void>}
-     */
-    deleteCupApplication(cupApplicationId: number): Observable<void> {
-        return this.headersWithToken
-            .delete(`${this.cupApplicationUrl}/${cupApplicationId}`)
-            .pipe(catchError(this.errorHandlerService.handle));
-    }
+   public deleteCupApplication(cupApplicationId: number): Observable<void> {
+      return this.headersWithToken
+         .delete(`${this.cupApplicationUrl}/${cupApplicationId}`)
+         .pipe(catchError(this.errorHandlerService.handle));
+   }
 }

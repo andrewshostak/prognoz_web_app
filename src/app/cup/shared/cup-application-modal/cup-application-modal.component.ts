@@ -5,11 +5,14 @@ import { Competition } from '@models/competition.model';
 import { CupApplication } from '@models/cup/cup-application.model';
 import { UserNew } from '@models/new/user-new.model';
 import { CupApplicationService } from '@services/cup/cup-application.service';
+import { DeviceService } from '@services/device.service';
 import { AuthNewService } from '@services/new/auth-new.service';
 import { UserNewService } from '@services/new/user-new.service';
 import { SettingsService } from '@services/settings.service';
 import { UtilsService } from '@services/utils.service';
 import { NotificationsService } from 'angular2-notifications';
+import { from, of } from 'rxjs';
+import { catchError, mergeMap } from 'rxjs/operators';
 
 @Component({
    selector: 'app-cup-application-modal',
@@ -32,6 +35,7 @@ export class CupApplicationModalComponent implements OnInit {
    constructor(
       private authNewService: AuthNewService,
       private cupApplicationService: CupApplicationService,
+      private deviceService: DeviceService,
       private notificationsService: NotificationsService,
       private userNewService: UserNewService
    ) {}
@@ -83,17 +87,24 @@ export class CupApplicationModalComponent implements OnInit {
    }
 
    private createCupApplication(): void {
-      this.cupApplicationService.createCupApplication(this.cupApplicationForm.getRawValue()).subscribe(
-         () => {
-            this.notificationsService.success('Успішно', 'Заявку створено');
-            this.successfullySubmitted.emit();
-            this.spinnerButton = false;
-         },
-         errors => {
-            this.spinnerButton = false;
-            errors.forEach(error => this.notificationsService.error('Помилка', error));
-         }
-      );
+      from(this.deviceService.getDevice())
+         .pipe(
+            catchError(() => of(DeviceService.emptyDevice)),
+            mergeMap((device: { fingerprint: string; info: { [key: string]: any } }) =>
+               this.cupApplicationService.createCupApplication(this.cupApplicationForm.getRawValue(), device.fingerprint, device.info)
+            )
+         )
+         .subscribe(
+            () => {
+               this.notificationsService.success('Успішно', 'Заявку створено');
+               this.successfullySubmitted.emit();
+               this.spinnerButton = false;
+            },
+            errors => {
+               this.spinnerButton = false;
+               errors.forEach(error => this.notificationsService.error('Помилка', error));
+            }
+         );
    }
 
    private getApplicant(id: number): void {
