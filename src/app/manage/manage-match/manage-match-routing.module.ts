@@ -5,17 +5,16 @@ import { ManageMatchComponent } from '@app/manage/manage-match/manage-match.comp
 import { MatchCreateComponent } from '@app/manage/manage-match/match-create/match-create.component';
 import { MatchEditComponent } from '@app/manage/manage-match/match-edit/match-edit.component';
 import { MatchTableComponent } from '@app/manage/manage-match/match-table/match-table.component';
-import { RoleGuard } from '@app/manage/shared/role-guard.service';
+import { PermissionGuard } from '@app/manage/shared/permission-guard.service';
 
 const routes: Routes = [
    {
-      canActivate: [RoleGuard],
-      canActivateChild: [RoleGuard],
-      data: { roles: ['match_editor'] },
+      canActivate: [PermissionGuard],
+      data: { permissions: ['create_match', 'update_match', 'delete_match'] },
       children: [
-         { path: 'page/:pageNumber', component: MatchTableComponent, data: { roles: ['match_editor'] } },
-         { path: 'create', component: MatchCreateComponent, data: { roles: ['match_editor'] } },
-         { path: ':id', component: MatchEditComponent, data: { roles: ['match_editor'] } },
+         { path: 'page/:pageNumber', component: MatchTableComponent },
+         { path: 'create', component: MatchCreateComponent, canActivate: [PermissionGuard], data: { permissions: ['create_match'] } },
+         { path: ':id', component: MatchEditComponent, canActivate: [PermissionGuard], data: { permissions: ['update_match'] } },
          { path: '', redirectTo: 'page/1', pathMatch: 'full' }
       ],
       component: ManageMatchComponent,

@@ -16,47 +16,57 @@ import { TeamEditComponent } from '@app/manage/manage-team/manage-team-team/team
 import { TeamTeamsTableComponent } from '@app/manage/manage-team/manage-team-team/team-teams-table/team-teams-table.component';
 import { ManageTeamComponent } from '@app/manage/manage-team/manage-team.component';
 import { PermissionGuard } from '@app/manage/shared/permission-guard.service';
-import { RoleGuard } from '@app/manage/shared/role-guard.service';
 
 const routes: Routes = [
    {
       children: [
          {
-            canActivate: [RoleGuard],
-            // todo: don't now why `championship_editor`, but its required in controller middleware
-            data: { roles: ['championship_editor'] },
+            canActivate: [PermissionGuard],
+            data: { permissions: ['update_competition'] },
             component: ManageTeamCompetitionsComponent,
             path: 'competitions'
          },
          {
-            canActivate: [RoleGuard],
-            canActivateChild: [RoleGuard],
-            data: { roles: ['team_editor'] },
+            canActivate: [PermissionGuard],
+            data: {
+               permissions: ['create_team_participant_wo_validation', 'update_team_participant_wo_validation', 'delete_team_wo_validation']
+            },
             children: [
-               { path: 'page/:number', component: TeamParticipantsTableComponent, data: { roles: ['team_editor'] } },
-               { path: 'create', component: TeamParticipantCreateComponent, data: { roles: ['team_editor'] } },
-               { path: ':id/edit', component: TeamParticipantEditComponent, data: { roles: ['team_editor'] } },
+               { path: 'page/:number', component: TeamParticipantsTableComponent },
+               {
+                  path: 'create',
+                  component: TeamParticipantCreateComponent,
+                  canActivate: [PermissionGuard],
+                  data: { permissions: ['create_team_participant_wo_validation'] }
+               },
+               {
+                  path: ':id/edit',
+                  component: TeamParticipantEditComponent,
+                  canActivate: [PermissionGuard],
+                  data: { permissions: ['update_team_participant_wo_validation'] }
+               },
                { path: '', redirectTo: 'page/1', pathMatch: 'full' }
             ],
             component: ManageTeamParticipantComponent,
             path: 'participants'
          },
          {
-            canActivate: [RoleGuard],
-            canActivateChild: [RoleGuard],
-            data: { roles: ['team_match_editor'] },
+            canActivate: [PermissionGuard],
+            data: { permissions: ['create_team_match', 'update_team_match', 'delete_team_match'] },
             children: [
-               { path: 'page/:pageNumber', component: TeamMatchesTableComponent, data: { roles: ['team_match_editor'] } },
-               { path: 'create', component: TeamMatchCreateComponent, data: { roles: ['team_match_editor'] } },
-               { path: ':id/edit', component: TeamMatchEditComponent, data: { roles: ['team_match_editor'] } },
+               { path: 'page/:pageNumber', component: TeamMatchesTableComponent },
+               { path: 'create', component: TeamMatchCreateComponent, data: { permissions: ['create_team_match'] } },
+               { path: ':id/edit', component: TeamMatchEditComponent, data: { permissions: ['update_team_match'] } },
                { path: '', redirectTo: 'page/1', pathMatch: 'full' }
             ],
             component: ManageTeamMatchComponent,
             path: 'matches'
          },
          {
+            canActivate: [PermissionGuard],
+            data: { permissions: ['create_team_wo_validation', 'update_team_wo_validation', 'delete_team_wo_validation'] },
             children: [
-               { path: 'page/:pageNumber', component: TeamTeamsTableComponent, canActivate: [RoleGuard], data: { roles: ['team_editor'] } },
+               { path: 'page/:pageNumber', component: TeamTeamsTableComponent },
                {
                   path: 'create',
                   component: TeamCreateComponent,

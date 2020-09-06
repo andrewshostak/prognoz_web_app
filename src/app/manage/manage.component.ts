@@ -16,7 +16,7 @@ export class ManageComponent implements OnInit {
          { title: 'Кубок', iconClass: 'fa-user-circle-o', routerLink: 'cup' },
          { title: 'Новини', iconClass: 'fa-newspaper-o', routerLink: 'news' },
          { title: 'Змагання', iconClass: 'fa-star', routerLink: 'competitions' },
-         { title: 'Команди', iconClass: 'fa-shield', routerLink: 'clubs' }
+         { title: 'Клуби/Збірні', iconClass: 'fa-shield', routerLink: 'clubs' }
       ];
    }
 }

@@ -15,46 +15,81 @@ import { CupStageEditComponent } from '@app/manage/manage-cup/manage-cup-stage/c
 import { CupStagesTableComponent } from '@app/manage/manage-cup/manage-cup-stage/cup-stages-table/cup-stages-table.component';
 import { ManageCupStageComponent } from '@app/manage/manage-cup/manage-cup-stage/manage-cup-stage.component';
 import { ManageCupComponent } from '@app/manage/manage-cup/manage-cup.component';
-import { RoleGuard } from '@app/manage/shared/role-guard.service';
+import { PermissionGuard } from '@app/manage/shared/permission-guard.service';
 
 const routes: Routes = [
    {
-      canActivate: [RoleGuard],
-      canActivateChild: [RoleGuard],
-      data: { roles: ['cup_editor', 'cup_match_editor'] },
       children: [
          {
+            canActivate: [PermissionGuard],
+            data: { permissions: ['create_cup_stage', 'update_cup_stage', 'delete_cup_stage'] },
             children: [
-               { path: 'page/:number', component: CupStagesTableComponent, data: { roles: ['cup_editor'] } },
-               { path: 'create', component: CupStageCreateComponent, data: { roles: ['cup_editor'] } },
-               { path: ':id/edit', component: CupStageEditComponent, data: { roles: ['cup_editor'] } },
+               { path: 'page/:number', component: CupStagesTableComponent },
+               {
+                  path: 'create',
+                  component: CupStageCreateComponent,
+                  canActivate: [PermissionGuard],
+                  data: { permissions: ['create_cup_stage'] }
+               },
+               {
+                  path: ':id/edit',
+                  component: CupStageEditComponent,
+                  canActivate: [PermissionGuard],
+                  data: { permissions: ['update_cup_stage'] }
+               },
                { path: '', redirectTo: 'page/1', pathMatch: 'full' }
             ],
             component: ManageCupStageComponent,
-            data: { roles: ['cup_editor'] },
             path: 'stages'
          },
          {
+            canActivate: [PermissionGuard],
+            data: { permissions: ['create_cup_match', 'update_cup_match', 'delete_cup_match'] },
             children: [
-               { path: 'page/:pageNumber', component: CupMatchTableComponent, data: { roles: ['cup_match_editor'] } },
-               { path: 'create', component: CupMatchCreateComponent, data: { roles: ['cup_match_editor'] } },
-               { path: ':id/edit', component: CupMatchEditComponent, data: { roles: ['cup_match_editor'] } },
+               { path: 'page/:pageNumber', component: CupMatchTableComponent },
+               {
+                  path: 'create',
+                  component: CupMatchCreateComponent,
+                  canActivate: [PermissionGuard],
+                  data: { permissions: ['create_cup_match'] }
+               },
+               {
+                  path: ':id/edit',
+                  component: CupMatchEditComponent,
+                  canActivate: [PermissionGuard],
+                  data: { permissions: ['update_cup_match'] }
+               },
                { path: '', redirectTo: 'page/1', pathMatch: 'full' }
             ],
             component: ManageCupMatchComponent,
-            data: { roles: ['cup_match_editor'] },
             path: 'matches'
          },
          {
+            canActivate: [PermissionGuard],
+            data: { permissions: ['create_cup_cup_match', 'update_cup_cup_match', 'delete_cup_cup_match'] },
             children: [
-               { path: 'page/:number', component: CupCupMatchesTableComponent, data: { roles: ['cup_editor'] } },
-               { path: 'create', component: CupCupMatchCreateComponent, data: { roles: ['cup_editor'] } },
-               { path: ':id/edit', component: CupCupMatchEditComponent, data: { roles: ['cup_editor'] } },
-               { path: 'create-auto', component: CupCupMatchesCreateAutoComponent, data: { roles: ['cup_editor'] } },
+               { path: 'page/:number', component: CupCupMatchesTableComponent },
+               {
+                  path: 'create',
+                  component: CupCupMatchCreateComponent,
+                  canActivate: [PermissionGuard],
+                  data: { permissions: ['create_cup_cup_match'] }
+               },
+               {
+                  path: ':id/edit',
+                  component: CupCupMatchEditComponent,
+                  canActivate: [PermissionGuard],
+                  data: { permissions: ['update_cup_cup_match'] }
+               },
+               {
+                  path: 'create-auto',
+                  component: CupCupMatchesCreateAutoComponent,
+                  canActivate: [PermissionGuard],
+                  data: { permissions: ['create_cup_cup_match'] }
+               },
                { path: '', redirectTo: 'page/1', pathMatch: 'full' }
             ],
             component: ManageCupCupMatchComponent,
-            data: { roles: ['cup_editor'] },
             path: 'cup-matches'
          },
          { path: '', pathMatch: 'full', redirectTo: 'matches' }

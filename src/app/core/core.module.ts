@@ -11,7 +11,6 @@ import { PageNotFoundComponent } from '@app/core/page-not-found/page-not-found.c
 import { SharedModule } from '@app/shared/shared.module';
 
 import { AuthGuard } from '@app/core/guards/auth.guard.service';
-import { AuthService } from '@services/auth.service';
 import { ChampionshipPredictionService } from '@services/championship/championship-prediction.service';
 import { ChampionshipRatingService } from '@services/championship/championship-rating.service';
 import { ChampionshipService } from '@services/championship/championship.service';
@@ -63,7 +62,6 @@ import { UtilsService } from '@services/utils.service';
    imports: [CommonModule, ReactiveFormsModule, RouterModule, SharedModule],
    providers: [
       AuthNewService,
-      AuthService,
       AuthGuard,
       ClubService,
       ChampionshipService,
