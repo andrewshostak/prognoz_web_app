@@ -18,6 +18,7 @@ import { SettingsService } from '@services/settings.service';
 import { TitleService } from '@services/title.service';
 import { UtilsService } from '@services/utils.service';
 import { NotificationsService } from 'angular2-notifications';
+import { get } from 'lodash';
 import { of } from 'rxjs';
 import { mergeMap } from 'rxjs/operators';
 
@@ -37,6 +38,7 @@ export class ChampionshipHomeComponent implements OnInit {
    public errorChampionshipPredictions: string;
    public errorChampionshipRating: string;
    public getHomeCityInBrackets = UtilsService.getHomeCityInBrackets;
+   public ratingUpdatedAt: string;
    public spinnerButton = false;
    public userImageDefault: string = environment.imageUserDefault;
    public userImagesUrl: string = environment.apiImageUsers;
@@ -114,6 +116,19 @@ export class ChampionshipHomeComponent implements OnInit {
       );
    }
 
+   public getLastMatchData(): void {
+      const search: ChampionshipMatchSearch = {
+         ended: ModelStatus.Truthy,
+         orderBy: 'updated_at',
+         limit: 1,
+         page: 1,
+         sequence: Sequence.Descending
+      };
+      this.championshipMatchService.getChampionshipMatches(search).subscribe(response => {
+         this.ratingUpdatedAt = get(response, 'data[0].updated_at', null);
+      });
+   }
+
    public ngOnInit(): void {
       this.titleService.setTitle('Найближчі матчі, останні прогнози і топ-рейтингу - Чемпіонат');
       this.authenticatedUser = this.currentStateService.getUser();
@@ -121,6 +136,7 @@ export class ChampionshipHomeComponent implements OnInit {
       this.getChampionshipMatchesData();
       this.getChampionshipRatingData();
       this.getChampionshipPredictionsData();
+      this.getLastMatchData();
    }
 
    public onSubmit(): void {

@@ -51,8 +51,8 @@
          </button>
       </h2>
    </div>
-   <div class="col-12 col-sm-7 col-md-6 text-right">
-      <small class="text-muted">Рейтинг оновлено {{ championshipRatingItems[0].updated_at | time: 'fromNow' }}</small>
+   <div *ngIf="ratingUpdatedAt" class="col-12 col-sm-7 col-md-6 text-right">
+      <small class="text-muted">Рейтинг оновлено {{ ratingUpdatedAt | time: 'fromNow' }}</small>
    </div>
 </div>
 <!-- rating table -->
