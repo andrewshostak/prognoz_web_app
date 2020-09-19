@@ -1,13 +1,9 @@
 <div class="row align-items-end">
-    <div class="col-12 col-sm-6 col-md-5">
-        <h2>Рейтинг: </h2>
-    </div>
-    <div *ngIf="championshipRatingItems" class="col-12 col-sm-6 col-md-7 text-right">
-        <small class="text-muted">Рейтинг оновлено {{championshipRatingItems[0].updated_at | time:'fromNow'}}</small>
-    </div>
+   <div class="col-12 col-sm-6 col-md-5">
+      <h2>Рейтинг:</h2>
+   </div>
+   <div *ngIf="ratingUpdatedAt" class="col-12 col-sm-6 col-md-7 text-right">
+      <small class="text-muted">Рейтинг оновлено {{ ratingUpdatedAt | time: 'fromNow' }}</small>
+   </div>
 </div>
-<!-- rating table -->
-<app-championship-rating-table [rating]="championshipRatingItems"
-                               [error]="errorChampionshipRating"
-                               [authenticatedUser]="authenticatedUser">
-</app-championship-rating-table>
+<app-championship-rating-table [rating]="championshipRatingItems" [authenticatedUser]="authenticatedUser"> </app-championship-rating-table>
