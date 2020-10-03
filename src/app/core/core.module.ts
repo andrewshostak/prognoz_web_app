@@ -37,6 +37,7 @@ import { CupCupMatchNewService } from '@services/new/cup-cup-match-new.service';
 import { CupMatchNewService } from '@services/new/cup-match-new.service';
 import { CupStageNewService } from '@services/new/cup-stage-new.service';
 import { MatchService } from '@services/new/match.service';
+import { SeasonNewService } from '@services/new/season-new.service';
 import { TeamCompetitionNewService } from '@services/new/team-competition-new.service';
 import { TeamMatchNewService } from '@services/new/team-match-new.service';
 import { TeamNewService } from '@services/new/team-new.service';
@@ -93,6 +94,7 @@ import { UtilsService } from '@services/utils.service';
       PusherService,
       RequestPreparationService,
       SeasonService,
+      SeasonNewService,
       SettingsService,
       TeamCompetitionNewService,
       TeamMatchNewService,
