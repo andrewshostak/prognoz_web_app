@@ -33,7 +33,9 @@ import { AuthNewService } from '@services/new/auth-new.service';
 import { ChampionshipMatchNewService } from '@services/new/championship-match-new.service';
 import { ChampionshipPredictionNewService } from '@services/new/championship-prediction-new.service';
 import { CompetitionNewService } from '@services/new/competition-new.service';
+import { CupCupMatchNewService } from '@services/new/cup-cup-match-new.service';
 import { CupMatchNewService } from '@services/new/cup-match-new.service';
+import { CupStageNewService } from '@services/new/cup-stage-new.service';
 import { MatchService } from '@services/new/match.service';
 import { TeamCompetitionNewService } from '@services/new/team-competition-new.service';
 import { TeamMatchNewService } from '@services/new/team-match-new.service';
@@ -59,7 +61,6 @@ import { UtilsService } from '@services/utils.service';
 @NgModule({
    declarations: [AccessDeniedComponent, FooterComponent, HeaderComponent, PageNotFoundComponent],
    exports: [AccessDeniedComponent, FooterComponent, HeaderComponent, PageNotFoundComponent],
-   imports: [CommonModule, ReactiveFormsModule, RouterModule, SharedModule],
    providers: [
       AuthNewService,
       AuthGuard,
@@ -72,11 +73,13 @@ import { UtilsService } from '@services/utils.service';
       CompetitionService,
       CompetitionNewService,
       CupApplicationService,
+      CupCupMatchNewService,
       CupCupMatchService,
       CupMatchNewService,
       CupMatchService,
       CupPredictionService,
       CupRatingService,
+      CupStageNewService,
       CupStageService,
       CupStageTypeService,
       CurrentStateService,
@@ -106,7 +109,8 @@ import { UtilsService } from '@services/utils.service';
       UserService,
       UserNewService,
       UtilsService
-   ]
+   ],
+   imports: [CommonModule, ReactiveFormsModule, RouterModule, SharedModule]
 })
 export class CoreModule {
    constructor(

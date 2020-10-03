@@ -1,102 +1,118 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 
 @Component({
-    selector: 'app-dropdown-navigation',
-    templateUrl: './dropdown-navigation.component.html',
-    styleUrls: ['./dropdown-navigation.component.scss']
+   selector: 'app-dropdown-navigation',
+   templateUrl: './dropdown-navigation.component.html',
+   styleUrls: ['./dropdown-navigation.component.scss']
 })
-export class DropdownNavigationComponent implements OnInit {
-    constructor(private router: Router) {}
+export class DropdownNavigationComponent implements OnChanges, OnInit {
+   @Input() public dropdownItems: any[];
+   @Input() public selectedId: number;
+   @Input() public navigationPath: any[];
+   @Input() public formSize: 'sm' | 'lg';
 
-    @Input() dropdownItems: any[];
-    @Input() selectedId: number;
-    @Input() navigationPath: any[];
-    @Input() formSize: 'sm' | 'lg';
+   public form: FormGroup;
+   constructor(private router: Router) {}
 
-    form: FormGroup;
+   public inputValuesPresent(): boolean {
+      return this.dropdownItems && this.dropdownItems.length && !!this.selectedId;
+   }
 
-    inputValuesPresent(): boolean {
-        return this.dropdownItems && this.dropdownItems.length && !!this.selectedId;
-    }
+   public isFirst(): boolean {
+      if (!this.inputValuesPresent()) {
+         return false;
+      }
 
-    isFirst(): boolean {
-        if (!this.inputValuesPresent()) {
-            return false;
-        }
+      return this.dropdownItems.findIndex(dropdownItem => dropdownItem.id === this.selectedId) === 0;
+   }
 
-        return this.dropdownItems.findIndex(dropdownItem => dropdownItem.id === this.selectedId) === 0;
-    }
+   public isLast(): boolean {
+      if (!this.inputValuesPresent()) {
+         return false;
+      }
 
-    isLast(): boolean {
-        if (!this.inputValuesPresent()) {
-            return false;
-        }
+      return this.dropdownItems.findIndex(dropdownItem => dropdownItem.id === this.selectedId) === this.dropdownItems.length - 1;
+   }
 
-        return this.dropdownItems.findIndex(dropdownItem => dropdownItem.id === this.selectedId) === this.dropdownItems.length - 1;
-    }
+   public ngOnChanges(changes: SimpleChanges): void {
+      if (changes.selectedId && this.form && this.navigationPath.includes('cup-matches-new')) {
+         this.form.get('id').setValue(changes.selectedId.currentValue);
+      }
+   }
 
-    ngOnInit() {
-        this.form = new FormGroup({
-            id: new FormControl(this.selectedId)
-        });
+   public ngOnInit() {
+      this.form = new FormGroup({
+         id: new FormControl(this.selectedId)
+      });
 
-        this.form.get('id').valueChanges.subscribe(value => {
-            this.selectedId = parseInt(value, 10);
-            this.navigateTo(this.selectedId);
-        });
-    }
+      this.form.get('id').valueChanges.subscribe(value => {
+         this.selectedId = parseInt(value, 10);
+         this.navigateTo(this.selectedId);
+      });
+   }
 
-    navigateTo(id: number): void {
-        if (this.navigationPath.includes('cup-matches')) {
-            this.navigateToCupMatchesByStage(this.navigationPath, id);
-            return;
-        }
+   public navigateTo(id: number): void {
+      // todo: delete when deleting old cup-matches page
+      if (this.navigationPath.includes('cup-matches')) {
+         this.navigateToCupMatchesByStage(this.navigationPath, id);
+         return;
+      }
 
-        this.router.navigate(this.navigationPath.concat(id));
-    }
+      if (this.navigationPath.includes('cup-matches-new')) {
+         this.navigateToCupMatchesNewByStage(this.navigationPath, id);
+         return;
+      }
 
-    navigateToCupMatchesByStage(path: any[], id: number): void {
-        const index = path.findIndex(part => {
-            return part.cup_stage_id && part.cup_stage_id === ':id';
-        });
+      this.router.navigate(this.navigationPath.concat(id));
+   }
 
-        if (index < 0) {
-            return;
-        }
+   public navigateToCupMatchesNewByStage(path: any[], id: number): void {
+      path[path.length - 1] = { cup_stage_id: id };
+      this.router.navigate(path);
+   }
 
-        path[index] = { cup_stage_id: id };
-        this.router.navigate(path);
-    }
+   public navigateToCupMatchesByStage(path: any[], id: number): void {
+      const index = path.findIndex(part => {
+         return part.cup_stage_id && part.cup_stage_id === ':id';
+      });
 
-    next(): void {
-        if (this.isLast()) {
-            return;
-        }
+      if (index < 0) {
+         return;
+      }
 
-        const index = this.dropdownItems.findIndex(dropdownItem => dropdownItem.id === this.selectedId);
-        const nextItemIndex = index + 1;
+      path[index] = { cup_stage_id: id };
+      this.router.navigate(path);
+   }
 
-        if (!this.dropdownItems[nextItemIndex]) {
-            return;
-        }
+   public next(): void {
+      if (this.isLast()) {
+         return;
+      }
 
-        this.form.get('id').setValue(this.dropdownItems[nextItemIndex].id);
-    }
+      const index = this.dropdownItems.findIndex(dropdownItem => dropdownItem.id === this.selectedId);
+      const nextItemIndex = index + 1;
 
-    previous(): void {
-        if (this.isFirst()) {
-            return;
-        }
+      if (!this.dropdownItems[nextItemIndex]) {
+         return;
+      }
 
-        const index = this.dropdownItems.findIndex(dropdownItem => dropdownItem.id === this.selectedId);
-        const previousItemIndex = index - 1;
+      this.form.get('id').setValue(this.dropdownItems[nextItemIndex].id);
+   }
 
-        if (!this.dropdownItems[previousItemIndex]) {
-            return;
-        }
+   public previous(): void {
+      if (this.isFirst()) {
+         return;
+      }
 
-        this.form.get('id').setValue(this.dropdownItems[previousItemIndex].id);
-    }
+      const index = this.dropdownItems.findIndex(dropdownItem => dropdownItem.id === this.selectedId);
+      const previousItemIndex = index - 1;
+
+      if (!this.dropdownItems[previousItemIndex]) {
+         return;
+      }
+
+      this.form.get('id').setValue(this.dropdownItems[previousItemIndex].id);
+   }
 }

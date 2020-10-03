@@ -1,0 +1,22 @@
+<h2 class="h2">Матчі:</h2>
+<div *ngIf="competitions" class="btn-group">
+   <button
+      *ngFor="let competition of competitions"
+      (click)="clickOnCompetitionButton(competition)"
+      class="btn mb-2"
+      [ngClass]="competition.id === selectedCompetitionId ? 'btn-primary' : 'btn-outline-primary'"
+      type="button"
+   >
+      {{ competition.title }}
+   </button>
+   <button class="btn btn-outline-secondary mb-2" type="button">
+      <i class="fa fa-history" title="Попередні змагання"></i>
+   </button>
+</div>
+<app-dropdown-navigation
+   [dropdownItems]="cupStages"
+   [selectedId]="selectedCupStageId"
+   [navigationPath]="['/cup', 'cup-matches-new', { cup_stage_id: ':id' }]"
+   [formSize]="'sm'"
+>
+</app-dropdown-navigation>

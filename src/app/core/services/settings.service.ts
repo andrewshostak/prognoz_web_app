@@ -45,9 +45,9 @@ export class SettingsService {
       championshipPredictions: 150,
       championshipRating: 200,
 
-      cupCupMatches: 10,
+      cupCupMatches: 48,
       cupMatches: 50,
-      cupStages: 10,
+      cupStages: 40,
 
       teamMatches: 20,
       teamParticipants: 10,

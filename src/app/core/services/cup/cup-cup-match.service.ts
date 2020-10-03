@@ -55,7 +55,7 @@ export class CupCupMatchService {
     * @deprecated
     */
    public getCupCupMatch(cupCupMatchId: number): Observable<CupCupMatch> {
-      return this.httpClient.get(`${this.cupCupMatchUrl}/${cupCupMatchId}`).pipe(
+      return this.httpClient.get<{ cup_cup_match: CupCupMatch }>(`${this.cupCupMatchUrl}/${cupCupMatchId}`).pipe(
          map(response => response.cup_cup_match),
          catchError(this.errorHandlerService.handle)
       );

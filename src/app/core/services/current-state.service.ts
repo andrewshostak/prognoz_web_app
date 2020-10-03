@@ -11,10 +11,20 @@ export class CurrentStateService {
    public onlineUsers: any[] = [];
    public onlineUserObservable = new Subject<void>();
    public pusherInstance: any;
+   private selectedCupCompetitionId: number;
    private selectedTeamCompetitionId: number;
 
    constructor(private authService: AuthNewService, private pusherService: PusherService) {
       this.getOnlineUsers(this.authService.getUser());
+   }
+
+   set cupCompetitionId(cupCompetitionId: number) {
+      this.selectedCupCompetitionId = cupCompetitionId;
+      localStorage.setItem('selectedCupCompetitionId', JSON.stringify(cupCompetitionId));
+   }
+
+   get cupCompetitionId(): number {
+      return this.selectedCupCompetitionId;
    }
 
    set teamCompetitionId(teamCompetitionId: number) {
@@ -35,6 +45,7 @@ export class CurrentStateService {
 
    public initialize(): void {
       this.selectedTeamCompetitionId = this.getSelectedTeamCompetitionId();
+      this.selectedCupCompetitionId = this.getSelectedCupCompetitionId();
    }
 
    /**
@@ -87,10 +98,6 @@ export class CurrentStateService {
       this.onlineUsers = [];
    }
 
-   /**
-    * Get selected team competition id from local storage
-    * @returns {number}
-    */
    private getSelectedTeamCompetitionId(): number {
       const selectedTeamCompetitionId = localStorage.getItem('selectedTeamCompetitionId');
       if (!selectedTeamCompetitionId) {
@@ -98,6 +105,15 @@ export class CurrentStateService {
       }
 
       return parseInt(selectedTeamCompetitionId, 10);
+   }
+
+   private getSelectedCupCompetitionId(): number {
+      const selectedCupCompetitionId = localStorage.getItem('selectedCupCompetitionId');
+      if (!selectedCupCompetitionId) {
+         return null;
+      }
+
+      return parseInt(selectedCupCompetitionId, 10);
    }
 
    /**

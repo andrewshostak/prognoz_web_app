@@ -42,7 +42,7 @@ export class CupStageService {
     * @deprecated
     */
    public getCupStage(cupStageId: number): Observable<CupStage> {
-      return this.httpClient.get(`${this.cupStageUrl}/${cupStageId}`).pipe(
+      return this.httpClient.get<{ cup_stage: CupStage }>(`${this.cupStageUrl}/${cupStageId}`).pipe(
          map(response => response.cup_stage),
          catchError(this.errorHandlerService.handle)
       );

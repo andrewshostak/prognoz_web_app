@@ -7,6 +7,7 @@ import { ChartsModule } from 'ng2-charts';
 import { SharedModule } from '../shared/shared.module';
 import { CupApplicationsComponent } from './cup-applications/cup-applications.component';
 import { CupCupMatchComponent } from './cup-cup-match/cup-cup-match.component';
+import { CupCupMatchesNewComponent } from './cup-cup-matches-new/cup-cup-matches-new.component';
 import { CupCupMatchesComponent } from './cup-cup-matches/cup-cup-matches.component';
 import { CupPredictionsComponent } from './cup-predictions/cup-predictions.component';
 import { CupRatingGroupComponent } from './cup-rating-group/cup-rating-group.component';
@@ -37,6 +38,7 @@ import { CupRatingTableComponent } from './shared/cup-rating-table/cup-rating-ta
       CupApplicationModalComponent,
       CupApplicationsComponent,
       CupCupMatchesComponent,
+      CupCupMatchesNewComponent,
       CupCupMatchComponent,
       CupPredictionFormComponent,
       CupPredictionsComponent,
