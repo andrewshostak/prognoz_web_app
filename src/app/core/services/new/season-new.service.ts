@@ -1,16 +1,20 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
+import { Sequence } from '@enums/sequence.enum';
 import { environment } from '@env';
 import { SeasonNew } from '@models/new/season-new.model';
 import { PaginatedResponse } from '@models/paginated-response.model';
 import { SeasonSearch } from '@models/search/season-search.model';
+import { SettingsService } from '@services/settings.service';
 import { isNil } from 'lodash';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
+import { tap } from 'rxjs/operators';
 
 @Injectable()
 export class SeasonNewService {
    public readonly seasonsUrl: string = `${environment.apiUrl}v2/seasons`;
+   private seasons: SeasonNew[];
 
    constructor(private httpClient: HttpClient) {}
 
@@ -38,6 +42,35 @@ export class SeasonNewService {
          params = params.append('ended', (search.ended as unknown) as string);
       }
 
-      return this.httpClient.get<PaginatedResponse<SeasonNew>>(this.seasonsUrl, { params });
+      const noSeasonsFilterParams = this.noSeasonsFilterParams(search);
+      return this.seasons && noSeasonsFilterParams
+         ? of({ data: this.seasons } as PaginatedResponse<SeasonNew>)
+         : this.httpClient.get<PaginatedResponse<SeasonNew>>(this.seasonsUrl, { params }).pipe(
+              tap(response => {
+                 if (noSeasonsFilterParams) {
+                    this.seasons = response.data;
+                 }
+              })
+           );
+   }
+
+   private noSeasonsFilterParams(search: SeasonSearch): boolean {
+      if (!isNil(search.active)) {
+         return false;
+      }
+
+      if (!isNil(search.ended)) {
+         return false;
+      }
+
+      if (search.sequence !== Sequence.Descending) {
+         return false;
+      }
+
+      if (search.orderBy !== 'id') {
+         return false;
+      }
+
+      return search.limit === SettingsService.maxLimitValues.seasons;
    }
 }

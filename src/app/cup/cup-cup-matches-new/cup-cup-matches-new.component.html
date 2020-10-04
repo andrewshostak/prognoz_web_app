@@ -1,5 +1,27 @@
 <h2 class="h2">Матчі:</h2>
-<div *ngIf="competitions" class="btn-group">
+<ng-container *ngIf="competitions">
+   <div class="d-block d-md-none">
+      <div class="btn-group btn-group-sm">
+         <ng-container [ngTemplateOutlet]="competitionsNavigation"></ng-container>
+      </div>
+   </div>
+   <div class="d-none d-md-block">
+      <div class="btn-group">
+         <ng-container [ngTemplateOutlet]="competitionsNavigation"></ng-container>
+      </div>
+   </div>
+</ng-container>
+<div [hidden]="!showCupStageSelect" class="mb-2">
+   <app-cup-stage-select (cupStageSelected)="clickOnCupStageSelectButton($event)"></app-cup-stage-select>
+</div>
+<app-dropdown-navigation
+   [dropdownItems]="cupStages"
+   [selectedId]="selectedCupStageId"
+   [navigationPath]="['/cup', 'cup-matches-new', { cup_stage_id: ':id' }]"
+   [formSize]="'lg'"
+>
+</app-dropdown-navigation>
+<ng-template #competitionsNavigation>
    <button
       *ngFor="let competition of competitions"
       (click)="clickOnCompetitionButton(competition)"
@@ -9,14 +31,14 @@
    >
       {{ competition.title }}
    </button>
-   <button class="btn btn-outline-secondary mb-2" type="button">
-      <i class="fa fa-history" title="Попередні змагання"></i>
+   <button
+      (click)="showCupStageSelect = !showCupStageSelect"
+      class="btn btn-outline-secondary mb-2"
+      type="button"
+      title="Попередні змагання"
+   >
+      <i class="fa fa-history"></i>
+      <i [hidden]="showCupStageSelect" class="fa fa-chevron-down"></i>
+      <i [hidden]="!showCupStageSelect" class="fa fa-chevron-up"></i>
    </button>
-</div>
-<app-dropdown-navigation
-   [dropdownItems]="cupStages"
-   [selectedId]="selectedCupStageId"
-   [navigationPath]="['/cup', 'cup-matches-new', { cup_stage_id: ':id' }]"
-   [formSize]="'sm'"
->
-</app-dropdown-navigation>
+</ng-template>

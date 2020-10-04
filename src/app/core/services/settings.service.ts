@@ -60,6 +60,7 @@ export class SettingsService {
       guestbook: 20,
       matches: 100,
       news: 10,
+      seasons: 100,
       users: 10
    };
 

@@ -16,6 +16,7 @@ import { CompetitionNewService } from '@services/new/competition-new.service';
 import { CupCupMatchNewService } from '@services/new/cup-cup-match-new.service';
 import { CupStageNewService } from '@services/new/cup-stage-new.service';
 import { SettingsService } from '@services/settings.service';
+import { TitleService } from '@services/title.service';
 import { iif, Observable, of } from 'rxjs';
 import { filter, mergeMap, tap } from 'rxjs/operators';
 
@@ -29,6 +30,7 @@ export class CupCupMatchesNewComponent implements OnInit {
    public cupCupMatches: CupCupMatchNew[] = [];
    public cupStages: CupStageNew[] = [];
    public selectedCompetitionId: number = null;
+   public showCupStageSelect: boolean = false;
 
    constructor(
       private activatedRoute: ActivatedRoute,
@@ -36,11 +38,18 @@ export class CupCupMatchesNewComponent implements OnInit {
       private cupCupMatchService: CupCupMatchNewService,
       private cupStageService: CupStageNewService,
       private currentStateService: CurrentStateService,
-      private router: Router
+      private router: Router,
+      private titleService: TitleService
    ) {}
 
    get selectedCupStageId(): number {
       return parseInt(this.activatedRoute.snapshot.params.cup_stage_id, 10);
+   }
+
+   public clickOnCupStageSelectButton(event: { cupStages: CupStageNew[]; selected: CupStageNew }): void {
+      this.cupStages = event.cupStages;
+      this.selectedCompetitionId = event.selected.competition_id;
+      this.router.navigate(['/cup', 'cup-matches-new', { cup_stage_id: event.selected.id }]);
    }
 
    public clickOnCompetitionButton(competition: CompetitionNew): void {
@@ -57,11 +66,16 @@ export class CupCupMatchesNewComponent implements OnInit {
    }
 
    public ngOnInit() {
+      this.titleService.setTitle('Матчі - Кубок');
       this.initializePageData();
       this.subscribeToCupStageIdUrlParamChange();
    }
 
-   private getCompetitionIdToDownloadStages(competitions: CompetitionNew[], selectedCompetitionId: number): number {
+   public toggleCupStageSelect(): void {
+      this.showCupStageSelect = !this.showCupStageSelect;
+   }
+
+   private getCompetitionIdForDownloadingStages(competitions: CompetitionNew[], selectedCompetitionId: number): number {
       if (!competitions.length && !selectedCompetitionId) {
          return null;
       }
@@ -96,7 +110,13 @@ export class CupCupMatchesNewComponent implements OnInit {
    }
 
    private getCupStagesObservable(competitionId: number): Observable<PaginatedResponse<CupStageNew>> {
-      const search: CupStageSearch = { page: 1, competitionId, limit: SettingsService.maxLimitValues.cupStages };
+      const search: CupStageSearch = {
+         orderBy: 'id',
+         sequence: Sequence.Ascending,
+         page: 1,
+         competitionId,
+         limit: SettingsService.maxLimitValues.cupStages
+      };
       return this.cupStageService.getCupStages(search);
    }
 
@@ -125,7 +145,7 @@ export class CupCupMatchesNewComponent implements OnInit {
                   () => this.activatedRoute.snapshot.params.cup_stage_id,
                   this.getSiblingCupStagesObservable(this.activatedRoute.snapshot.params.cup_stage_id),
                   this.getCupStagesObservable(
-                     this.getCompetitionIdToDownloadStages(response.data, this.currentStateService.cupCompetitionId)
+                     this.getCompetitionIdForDownloadingStages(response.data, this.currentStateService.cupCompetitionId)
                   )
                )
             ),
