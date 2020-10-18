@@ -1,0 +1,34 @@
+import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+
+import { CupStageType } from '@enums/cup-stage-type.enum';
+import { CupCupMatchNew } from '@models/new/cup-cup-match-new.model';
+import { CupStageNew } from '@models/new/cup-stage-new';
+import { CupCupMatchNewService } from '@services/new/cup-cup-match-new.service';
+import { isNil } from 'lodash';
+
+@Component({
+   selector: 'app-cup-cup-matches-group',
+   templateUrl: './cup-cup-matches-group.component.html',
+   styleUrls: ['./cup-cup-matches-group.component.scss']
+})
+export class CupCupMatchesGroupComponent implements OnChanges, OnInit {
+   @Input() public cupCupMatches: CupCupMatchNew[] = [];
+   @Input() public cupStage: CupStageNew;
+
+   public cupStageTypes = CupStageType;
+   public groupedCupCupMatches: CupCupMatchNew[][] = [];
+   public isNil = isNil;
+
+   constructor(private cupCupMatchService: CupCupMatchNewService) {}
+
+   public ngOnChanges(changes: SimpleChanges) {
+      if (changes.cupCupMatches && changes.cupCupMatches.currentValue) {
+         this.groupedCupCupMatches = this.cupCupMatchService.groupCupCupMatches(changes.cupCupMatches.currentValue);
+      }
+      if (changes.cupStage && changes.cupStage.currentValue) {
+         // todo: is it even needed
+      }
+   }
+
+   public ngOnInit(): void {}
+}

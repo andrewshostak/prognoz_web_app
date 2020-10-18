@@ -5,7 +5,8 @@ import { environment } from '@env';
 import { CupCupMatchNew } from '@models/new/cup-cup-match-new.model';
 import { PaginatedResponse } from '@models/paginated-response.model';
 import { CupCupMatchSearch } from '@models/search/cup-cup-match-search.model';
-import { isNil } from 'lodash';
+import { AuthNewService } from '@services/new/auth-new.service';
+import { groupBy, isNil } from 'lodash';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
@@ -13,7 +14,35 @@ import { map } from 'rxjs/operators';
 export class CupCupMatchNewService {
    public readonly cupCupMatchesUrl: string = `${environment.apiUrl}v2/cup/cup-matches`;
 
-   constructor(private httpClient: HttpClient) {}
+   constructor(private authService: AuthNewService, private httpClient: HttpClient) {}
+
+   public groupCupCupMatches(cupCupMatches: CupCupMatchNew[]): CupCupMatchNew[][] {
+      const groupedCupCupMatches = Object.values(groupBy<CupCupMatchNew>(cupCupMatches, 'group_number') as {
+         [groupNumber: number]: CupCupMatchNew[];
+      });
+
+      const user = this.authService.getUser();
+      if (!user) {
+         return groupedCupCupMatches;
+      }
+
+      const userGroupIndex = groupedCupCupMatches.findIndex((ccMatches: CupCupMatchNew[]) =>
+         ccMatches
+            .map(cupCupMatch => [cupCupMatch.home_user_id, cupCupMatch.away_user_id])
+            .flat()
+            .includes(user.id)
+      );
+
+      if (userGroupIndex < 0) {
+         return groupedCupCupMatches;
+      }
+
+      const userGroupCupCupMatches = groupedCupCupMatches.splice(userGroupIndex, 1).flat();
+      const userGroupSortedCupCupMatches = this.sortCupCupMatches(userGroupCupCupMatches, user.id);
+      groupedCupCupMatches.unshift(userGroupSortedCupCupMatches);
+
+      return groupedCupCupMatches;
+   }
 
    public getCupCupMatch(cupCupMatchId: number): Observable<CupCupMatchNew> {
       return this.httpClient
@@ -22,7 +51,7 @@ export class CupCupMatchNewService {
    }
 
    public getCupCupMatches(search: CupCupMatchSearch): Observable<PaginatedResponse<CupCupMatchNew>> {
-      let params: HttpParams = new HttpParams();
+      let params: HttpParams = new HttpParams({ fromObject: { 'relations[]': search.relations || [] } });
 
       if (search.limit) {
          params = params.set('limit', search.limit.toString());
@@ -50,5 +79,19 @@ export class CupCupMatchNewService {
       }
 
       return this.httpClient.get<PaginatedResponse<CupCupMatchNew>>(this.cupCupMatchesUrl, { params });
+   }
+
+   // todo: create wrapper function for other stages
+   private sortCupCupMatches(cupCupMatches: CupCupMatchNew[], userId: number): CupCupMatchNew[] {
+      return cupCupMatches.sort((a, b) => {
+         if ([a.home_user_id, a.away_user_id].includes(userId)) {
+            return -1;
+         }
+         if ([b.home_user_id, b.away_user_id].includes(userId)) {
+            return 1;
+         }
+
+         return 0;
+      });
    }
 }

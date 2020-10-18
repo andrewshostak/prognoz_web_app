@@ -1,0 +1,45 @@
+<div *ngIf="cupStage" class="card black-shadow rounded">
+   <div class="card-header">
+      <div class="d-flex justify-content-between">
+         <div *ngIf="cupStage.cup_stage_type_id === cupStageTypes.Group"><strong>Груповий етап</strong></div>
+         <div *ngIf="cupStage.cup_stage_type_id === cupStageTypes.GroupOneMatch"><strong>Груповий етап (Одноматчева дуель)</strong></div>
+         <div>Матчів: {{ cupCupMatches.length }}</div>
+      </div>
+   </div>
+   <div class="card-body p-0">
+      <div *ngFor="let cupCupMatchesInOneGroup of groupedCupCupMatches">
+         <div
+            class="table-secondary cursor-pointer font-italic pl-2 pr-2"
+            [routerLink]="['/cup', cupStage.competition_id, 'rating-group', cupCupMatchesInOneGroup[0].group_number]"
+         >
+            Група {{ cupCupMatchesInOneGroup[0].group_number }}
+         </div>
+         <div
+            *ngFor="let cupCupMatch of cupCupMatchesInOneGroup"
+            class="row cursor-pointer padding-1px"
+            [routerLink]="'/cup/cup-matches/' + cupCupMatch.id"
+         >
+            <div class="col-5 d-flex align-items-center justify-content-end">
+               <small *ngIf="cupCupMatch.home_user.hometown" class="d-block text-muted text-truncate pr-1"
+                  >({{ cupCupMatch.home_user.hometown }})</small
+               >
+               <strong class="pr-1">{{ cupCupMatch.home_user.name }}</strong>
+               <app-user-logo-with-tooltip [user]="cupCupMatch.home_user"></app-user-logo-with-tooltip>
+            </div>
+            <div class="col-2 text-center text-nowrap">
+               <small class="text-muted" *ngIf="isNil(cupCupMatch.home) && isNil(cupCupMatch.away); else score">vs</small>
+               <ng-template #score>
+                  <strong>{{ cupCupMatch.home }} : {{ cupCupMatch.away }}</strong>
+               </ng-template>
+            </div>
+            <div class="col-5 d-flex align-items-center justify-content-start">
+               <app-user-logo-with-tooltip [user]="cupCupMatch.away_user"></app-user-logo-with-tooltip>
+               <strong class="pl-1">{{ cupCupMatch.away_user.name }}</strong>
+               <small *ngIf="cupCupMatch.away_user.hometown" class="d-block text-muted text-truncate pl-1"
+                  >({{ cupCupMatch.away_user.hometown }})</small
+               >
+            </div>
+         </div>
+      </div>
+   </div>
+</div>

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
+import { CupStageType } from '@enums/cup-stage-type.enum';
 import { ModelStatus } from '@enums/model-status.enum';
 import { Sequence } from '@enums/sequence.enum';
 import { Tournament } from '@enums/tournament.enum';
@@ -17,6 +18,7 @@ import { CupCupMatchNewService } from '@services/new/cup-cup-match-new.service';
 import { CupStageNewService } from '@services/new/cup-stage-new.service';
 import { SettingsService } from '@services/settings.service';
 import { TitleService } from '@services/title.service';
+import { find } from 'lodash';
 import { iif, Observable, of } from 'rxjs';
 import { filter, mergeMap, tap } from 'rxjs/operators';
 
@@ -30,7 +32,9 @@ export class CupCupMatchesNewComponent implements OnInit {
    public cupCupMatches: CupCupMatchNew[] = [];
    public cupStages: CupStageNew[] = [];
    public selectedCompetitionId: number = null;
+   public selectedCupStage: CupStageNew = null;
    public showCupStageSelect: boolean = false;
+   public cupStageTypes = CupStageType;
 
    constructor(
       private activatedRoute: ActivatedRoute,
@@ -41,10 +45,6 @@ export class CupCupMatchesNewComponent implements OnInit {
       private router: Router,
       private titleService: TitleService
    ) {}
-
-   get selectedCupStageId(): number {
-      return parseInt(this.activatedRoute.snapshot.params.cup_stage_id, 10);
-   }
 
    public clickOnCupStageSelectButton(event: { cupStages: CupStageNew[]; selected: CupStageNew }): void {
       this.cupStages = event.cupStages;
@@ -105,7 +105,12 @@ export class CupCupMatchesNewComponent implements OnInit {
    }
 
    private getCupCupMatchesObservable(cupStageId: number): Observable<PaginatedResponse<CupCupMatchNew>> {
-      const search: CupCupMatchSearch = { page: 1, cupStageId, limit: SettingsService.maxLimitValues.cupCupMatches };
+      const search: CupCupMatchSearch = {
+         page: 1,
+         cupStageId,
+         relations: ['homeUser', 'awayUser'],
+         limit: SettingsService.maxLimitValues.cupCupMatches
+      };
       return this.cupCupMatchService.getCupCupMatches(search);
    }
 
@@ -157,6 +162,8 @@ export class CupCupMatchesNewComponent implements OnInit {
 
                if (!this.activatedRoute.snapshot.params.cup_stage_id) {
                   this.navigateToCupStage(this.cupStages);
+               } else {
+                  this.selectedCupStage = find(this.cupStages, { id: parseInt(this.activatedRoute.snapshot.params.cup_stage_id, 10) });
                }
             })
          )
@@ -185,6 +192,7 @@ export class CupCupMatchesNewComponent implements OnInit {
 
    private subscribeToCupStageIdUrlParamChange(): void {
       this.activatedRoute.params.pipe(filter(value => value.cup_stage_id)).subscribe(params => {
+         this.selectedCupStage = find(this.cupStages, { id: parseInt(params.cup_stage_id, 10) });
          this.getCupCupMatchesObservable(params.cup_stage_id).subscribe(response => {
             this.cupCupMatches = response.data;
          });
