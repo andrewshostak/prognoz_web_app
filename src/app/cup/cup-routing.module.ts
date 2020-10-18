@@ -56,7 +56,7 @@ const routes: Routes = [
          {
             path: '',
             pathMatch: 'full',
-            redirectTo: 'cup-matches;active=1'
+            redirectTo: 'cup-matches-new'
          }
       ]
    }
