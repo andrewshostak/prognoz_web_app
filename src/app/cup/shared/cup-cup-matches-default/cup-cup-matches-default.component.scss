@@ -1,1 +1,5 @@
-// todo: remove if no styles
+@import '~bootstrap/scss/functions', '~bootstrap/scss/variables';
+
+.row:nth-child(even) {
+   background-color: $gray-200;
+}

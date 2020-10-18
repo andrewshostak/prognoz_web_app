@@ -38,10 +38,19 @@ export class CupCupMatchNewService {
       }
 
       const userGroupCupCupMatches = groupedCupCupMatches.splice(userGroupIndex, 1).flat();
-      const userGroupSortedCupCupMatches = this.sortCupCupMatches(userGroupCupCupMatches, user.id);
+      const userGroupSortedCupCupMatches = this.sortCupCupMatchesByUserId(userGroupCupCupMatches, user.id);
       groupedCupCupMatches.unshift(userGroupSortedCupCupMatches);
 
       return groupedCupCupMatches;
+   }
+
+   public sortCupCupMatches(cupCupMatches: CupCupMatchNew[]): CupCupMatchNew[] {
+      const user = this.authService.getUser();
+      if (!user) {
+         return cupCupMatches;
+      }
+
+      return this.sortCupCupMatchesByUserId(cupCupMatches, user.id);
    }
 
    public getCupCupMatch(cupCupMatchId: number): Observable<CupCupMatchNew> {
@@ -81,8 +90,7 @@ export class CupCupMatchNewService {
       return this.httpClient.get<PaginatedResponse<CupCupMatchNew>>(this.cupCupMatchesUrl, { params });
    }
 
-   // todo: create wrapper function for other stages
-   private sortCupCupMatches(cupCupMatches: CupCupMatchNew[], userId: number): CupCupMatchNew[] {
+   private sortCupCupMatchesByUserId(cupCupMatches: CupCupMatchNew[], userId: number): CupCupMatchNew[] {
       return cupCupMatches.sort((a, b) => {
          if ([a.home_user_id, a.away_user_id].includes(userId)) {
             return -1;

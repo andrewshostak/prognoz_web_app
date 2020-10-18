@@ -49,5 +49,6 @@
    </app-cup-cup-matches-group>
    <app-cup-cup-matches-group *ngSwitchCase="cupStageTypes.GroupOneMatch" [cupStage]="selectedCupStage" [cupCupMatches]="cupCupMatches">
    </app-cup-cup-matches-group>
-   <app-cup-cup-matches-default *ngSwitchDefault> </app-cup-cup-matches-default>
+   <app-cup-cup-matches-default *ngSwitchDefault [cupStage]="selectedCupStage" [cupCupMatches]="cupCupMatches">
+   </app-cup-cup-matches-default>
 </div>

@@ -7,5 +7,5 @@ export enum CupStageType {
    QualificationOneMatch,
    GroupOneMatch,
    PlayOffOneMatch,
-   Supercup
+   SuperCup
 }
