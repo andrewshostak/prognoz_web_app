@@ -18,8 +18,7 @@ export class SeasonService {
    ) {}
 
    /**
-    * Get all seasons
-    * @returns {Observable<any>}
+    * @deprecated
     */
    public getSeasons(): Observable<any> {
       return this.httpClient.get<any>(this.seasonsUrl).pipe(catchError(this.errorHandlerService.handle));

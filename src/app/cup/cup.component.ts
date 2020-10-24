@@ -11,7 +11,7 @@ export class CupComponent {
    public navigationItems: NavigationItem[] = [
       { link: ['/cup', 'rules'], title: 'Правила' },
       { link: ['/cup', 'applications'], title: 'Заявки / Учасники' },
-      { link: ['/cup', 'cup-matches-new'], title: 'Матчі' },
+      { link: ['/cup', 'cup-matches'], title: 'Матчі' },
       { link: ['/cup', 'predictions'], title: 'Прогнози' },
       { link: ['/cup', 'rating'], title: 'Рейтинг' }
    ];

@@ -17,19 +17,6 @@ export class UtilsService {
       }
    }
 
-   public static getDistinctItemsOfArray<T>(items: T[], key: string = 'id'): T[] {
-      const distinctItems = [];
-      if (!items.length) {
-         return distinctItems;
-      }
-      items.forEach(item => {
-         if (!distinctItems.find(distinctItem => distinctItem[key] === item[key])) {
-            distinctItems.push(item);
-         }
-      });
-      return distinctItems;
-   }
-
    public static getHomeCityInBrackets(hometown: string): string {
       return hometown ? '(' + hometown + ')' : '';
    }

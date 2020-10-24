@@ -1,201 +1,201 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { ActivatedRoute, Params, Router } from '@angular/router';
-import { FormControl, FormGroup } from '@angular/forms';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 
-import { Competition } from '@models/competition.model';
-import { CompetitionService } from '@services/competition.service';
-import { CupCupMatch } from '@models/cup/cup-cup-match.model';
-import { CupCupMatchService } from '@services/cup/cup-cup-match.service';
-import { CupStage } from '@models/cup/cup-stage.model';
-import { CupStageService } from '@services/cup/cup-stage.service';
+import { CupStageType } from '@enums/cup-stage-type.enum';
+import { ModelStatus } from '@enums/model-status.enum';
+import { Sequence } from '@enums/sequence.enum';
+import { Tournament } from '@enums/tournament.enum';
+import { CompetitionNew } from '@models/new/competition-new.model';
+import { CupCupMatchNew } from '@models/new/cup-cup-match-new.model';
+import { CupStageNew } from '@models/new/cup-stage-new';
+import { PaginatedResponse } from '@models/paginated-response.model';
+import { CompetitionSearch } from '@models/search/competition-search.model';
+import { CupCupMatchSearch } from '@models/search/cup-cup-match-search.model';
+import { CupStageSearch } from '@models/search/cup-stage-search.model';
 import { CurrentStateService } from '@services/current-state.service';
-import { environment } from '@env';
-import { isNullOrUndefined } from 'util';
-import { Season } from '@models/season.model';
-import { SeasonService } from '@services/season.service';
-import { Subscription } from 'rxjs';
+import { CompetitionNewService } from '@services/new/competition-new.service';
+import { CupCupMatchNewService } from '@services/new/cup-cup-match-new.service';
+import { CupStageNewService } from '@services/new/cup-stage-new.service';
+import { SettingsService } from '@services/settings.service';
 import { TitleService } from '@services/title.service';
-import { User } from '@models/user.model';
-import { UtilsService } from '@services/utils.service';
+import { find } from 'lodash';
+import { iif, Observable, of } from 'rxjs';
+import { filter, mergeMap, tap } from 'rxjs/operators';
 
 @Component({
-    selector: 'app-cup-cup-matches',
-    templateUrl: './cup-cup-matches.component.html',
-    styleUrls: ['./cup-cup-matches.component.scss']
+   selector: 'app-cup-cup-matches',
+   templateUrl: './cup-cup-matches.component.html',
+   styleUrls: ['./cup-cup-matches.component.scss']
 })
-export class CupCupMatchesComponent implements OnInit, OnDestroy {
-    constructor(
-        private activatedRoute: ActivatedRoute,
-        private competitionService: CompetitionService,
-        private cupCupMatchService: CupCupMatchService,
-        private cupStageService: CupStageService,
-        private currentStateService: CurrentStateService,
-        private seasonService: SeasonService,
-        private titleService: TitleService,
-        private router: Router
-    ) {}
+export class CupCupMatchesComponent implements OnInit {
+   public competitions: CompetitionNew[] = [];
+   public cupCupMatches: CupCupMatchNew[] = [];
+   public cupStages: CupStageNew[] = [];
+   public selectedCompetitionId: number = null;
+   public selectedCupStage: CupStageNew = null;
+   public showCupStageSelect: boolean = false;
+   public cupStageTypes = CupStageType;
 
-    authenticatedUser: User;
-    activatedRouteSubscription: Subscription;
-    competitionsCupStages: { [competitionId: string]: CupStage[] };
-    cupStagesWithCupCupMatches: CupStage[];
-    errorCompetitions: string;
-    errorCupCupMatches: string;
-    errorCupStages: string;
-    errorSeasons: string;
-    filterCardExpanded: boolean;
-    filterCupCupMatchesForm: FormGroup;
-    seasons: Season[];
-    seasonsCompetitions: { [seasonId: string]: Competition[] };
-    userImageDefault: string;
-    userImagesUrl: string;
+   constructor(
+      private activatedRoute: ActivatedRoute,
+      private competitionService: CompetitionNewService,
+      private cupCupMatchService: CupCupMatchNewService,
+      private cupStageService: CupStageNewService,
+      private currentStateService: CurrentStateService,
+      private router: Router,
+      private titleService: TitleService
+   ) {}
 
-    currentUserCupCupMatch(cupCupMatch): boolean {
-        if (!this.authenticatedUser) {
-            return false;
-        }
-        return this.authenticatedUser.id === cupCupMatch.home_user_id || this.authenticatedUser.id === cupCupMatch.away_user_id;
-    }
+   public clickOnCupStageSelectButton(event: { cupStages: CupStageNew[]; selected: CupStageNew }): void {
+      this.cupStages = event.cupStages;
+      this.selectedCompetitionId = event.selected.competition_id;
+      this.router.navigate(['/cup', 'cup-matches', { cup_stage_id: event.selected.id }]);
+   }
 
-    ngOnDestroy() {
-        if (!this.activatedRouteSubscription.closed) {
-            this.activatedRouteSubscription.unsubscribe();
-        }
-    }
+   public clickOnCompetitionButton(competition: CompetitionNew): void {
+      if (this.selectedCompetitionId === competition.id) {
+         return;
+      }
 
-    ngOnInit() {
-        this.titleService.setTitle('Матчі - Кубок');
-        this.userImageDefault = environment.imageUserDefault;
-        this.userImagesUrl = environment.apiImageUsers;
-        this.authenticatedUser = this.currentStateService.getUser();
-        this.competitionsCupStages = {};
-        this.seasonsCompetitions = {};
-        this.filterCupCupMatchesForm = new FormGroup({
-            active: new FormControl(''),
-            season_id: new FormControl(''),
-            competition_id: new FormControl(''),
-            cup_stage_id: new FormControl('')
-        });
-        this.activatedRouteSubscription = this.activatedRoute.params.subscribe((params: Params) => {
-            this.cupCupMatchService
-                .getCupCupMatches(isNullOrUndefined(params.active) ? null : !!parseInt(params.active, 10), params.cup_stage_id)
-                .subscribe(
-                    response => {
-                        this.errorCupCupMatches = null;
-                        if (response && response.cup_cup_matches) {
-                            this.prepareViewData(response.cup_cup_matches);
-                        } else {
-                            this.cupStagesWithCupCupMatches = [];
-                        }
-                    },
-                    error => {
-                        this.cupStagesWithCupCupMatches = null;
-                        this.errorCupCupMatches = error;
-                    }
-                );
-        });
-        this.filterCupCupMatchesForm.get('active').valueChanges.subscribe(value => {
-            if (value) {
-                this.router.navigate(['/cup', 'cup-matches', { active: 1 }]);
-            }
-        });
-        this.filterCupCupMatchesForm.get('season_id').valueChanges.subscribe(value => {
-            this.filterCupCupMatchesForm.get('competition_id').setValue('0');
-            if (value && !this.seasonsCompetitions[value]) {
-                this.getCompetitionsData();
-            }
-        });
-        this.filterCupCupMatchesForm.get('competition_id').valueChanges.subscribe(value => {
-            this.filterCupCupMatchesForm.get('cup_stage_id').setValue('0');
-            if (value && value !== '0' && !this.competitionsCupStages[value]) {
-                this.getCupStages();
-            }
-        });
-        this.filterCupCupMatchesForm.get('cup_stage_id').valueChanges.subscribe(value => {
-            if (value && value !== '0') {
-                this.filterCupCupMatchesForm.patchValue({ active: 0 });
-                this.router.navigate(['/cup', 'cup-matches', { cup_stage_id: value }]);
-            }
-        });
-    }
+      this.getCupStagesObservable(competition.id).subscribe(response => {
+         this.cupStages = response.data;
+         this.navigateToCupStage(this.cupStages);
+      });
+      this.currentStateService.cupCompetitionId = competition.id;
+      this.selectedCompetitionId = competition.id;
+   }
 
-    resetCupCupMatchesFormFilters(): void {
-        this.filterCupCupMatchesForm.reset({ active: 1 });
-    }
+   public ngOnInit() {
+      this.titleService.setTitle('Матчі - Кубок');
+      this.initializePageData();
+      this.subscribeToCupStageIdUrlParamChange();
+   }
 
-    toggleFilterCardVisibility(): void {
-        this.filterCardExpanded = !this.filterCardExpanded;
+   public toggleCupStageSelect(): void {
+      this.showCupStageSelect = !this.showCupStageSelect;
+   }
 
-        if (!this.seasons && this.filterCardExpanded) {
-            this.getSeasonsData();
-        }
-    }
+   private getCompetitionIdForDownloadingStages(competitions: CompetitionNew[], selectedCompetitionId: number): number {
+      if (!competitions.length && !selectedCompetitionId) {
+         return null;
+      }
 
-    private getCupStages(selectedCompetitionId?: number): void {
-        const competitionId = selectedCompetitionId
-            ? selectedCompetitionId.toString()
-            : this.filterCupCupMatchesForm.get('competition_id').value;
-        this.cupStageService.getCupStages(null, null, null, competitionId).subscribe(
-            response => {
-                this.errorCupStages = null;
-                if (response) {
-                    this.competitionsCupStages[competitionId] = response.cup_stages.sort((a, b) => a.id - b.id);
-                }
-            },
-            error => {
-                this.competitionsCupStages[competitionId] = null;
-                this.errorCupStages = error;
-            }
-        );
-    }
+      if (!selectedCompetitionId) {
+         return competitions[0].id;
+      }
 
-    private getCompetitionsData(): void {
-        this.competitionService
-            .getCompetitions(null, environment.tournaments.cup.id, this.filterCupCupMatchesForm.get('season_id').value)
-            .subscribe(
-                response => {
-                    this.errorCompetitions = null;
-                    if (response) {
-                        this.seasonsCompetitions[this.filterCupCupMatchesForm.get('season_id').value] = response.competitions;
-                    }
-                },
-                error => {
-                    this.seasonsCompetitions[this.filterCupCupMatchesForm.get('season_id').value] = null;
-                    this.errorCompetitions = error;
-                }
-            );
-    }
+      const ids = competitions.map(competition => competition.id);
+      return ids.includes(selectedCompetitionId) ? selectedCompetitionId : competitions[0].id;
+   }
 
-    private getSeasonsData(): void {
-        this.seasonService.getSeasons().subscribe(
-            response => {
-                this.errorSeasons = null;
-                if (response) {
-                    this.seasons = response.seasons;
-                }
-            },
-            error => {
-                this.seasons = null;
-                this.errorSeasons = error;
-            }
-        );
-    }
+   private getActiveCompetitions(): Observable<PaginatedResponse<CompetitionNew>> {
+      const search: CompetitionSearch = {
+         active: ModelStatus.Truthy,
+         limit: SettingsService.maxLimitValues.competitions,
+         page: 1,
+         tournamentId: Tournament.Cup
+      };
+      return this.competitionService.getCompetitions(search);
+   }
 
-    private prepareViewData(response: CupCupMatch[]): void {
-        const allCupStages = response.map(item => item.cup_stage);
-        this.cupStagesWithCupCupMatches = <CupStage[]>UtilsService.getDistinctItemsOfArray(allCupStages);
-        const grouped = UtilsService.groupBy(response, cupCupMatch => cupCupMatch.cup_stage_id);
-        this.cupStagesWithCupCupMatches.map(cupStage => {
-            return (cupStage.cup_cup_matches = grouped.get(cupStage.id));
-        });
-        this.cupStagesWithCupCupMatches.forEach(cupStage => {
-            if (!this.competitionsCupStages[cupStage.competition_id.toString()]) {
-                this.getCupStages(cupStage.competition_id);
-            }
-            cupStage.cup_matches = cupStage.cup_cup_matches.map(cupCupMatch => {
-                cupCupMatch.score = UtilsService.showScoresOrString(cupCupMatch.home, cupCupMatch.away, 'vs');
-                return cupCupMatch;
-            });
-        });
-    }
+   private getCompetitionsObservable(): Observable<PaginatedResponse<CompetitionNew>> {
+      return this.getActiveCompetitions().pipe(
+         mergeMap(response => iif(() => !!response.total, of(response), this.getEndedCompetitions()))
+      );
+   }
+
+   private getCupCupMatchesObservable(cupStageId: number): Observable<PaginatedResponse<CupCupMatchNew>> {
+      const search: CupCupMatchSearch = {
+         page: 1,
+         cupStageId,
+         relations: ['homeUser', 'awayUser'],
+         limit: SettingsService.maxLimitValues.cupCupMatches
+      };
+      return this.cupCupMatchService.getCupCupMatches(search);
+   }
+
+   private getCupStagesObservable(competitionId: number): Observable<PaginatedResponse<CupStageNew>> {
+      const search: CupStageSearch = {
+         orderBy: 'id',
+         sequence: Sequence.Ascending,
+         page: 1,
+         competitionId,
+         limit: SettingsService.maxLimitValues.cupStages
+      };
+      return this.cupStageService.getCupStages(search);
+   }
+
+   private getEndedCompetitions(): Observable<PaginatedResponse<CompetitionNew>> {
+      const search: CompetitionSearch = {
+         ended: ModelStatus.Truthy,
+         limit: 2,
+         orderBy: 'id',
+         page: 1,
+         sequence: Sequence.Descending,
+         tournamentId: Tournament.Cup
+      };
+      return this.competitionService.getCompetitions(search);
+   }
+
+   private getSiblingCupStagesObservable(cupStageId: number): Observable<PaginatedResponse<CupStageNew>> {
+      return this.cupStageService.getCupStage(cupStageId).pipe(mergeMap(response => this.getCupStagesObservable(response.competition_id)));
+   }
+
+   private initializePageData(): void {
+      this.getCompetitionsObservable()
+         .pipe(
+            tap(response => (this.competitions = response.data)),
+            mergeMap(response =>
+               iif(
+                  () => this.activatedRoute.snapshot.params.cup_stage_id,
+                  this.getSiblingCupStagesObservable(this.activatedRoute.snapshot.params.cup_stage_id),
+                  this.getCupStagesObservable(
+                     this.getCompetitionIdForDownloadingStages(response.data, this.currentStateService.cupCompetitionId)
+                  )
+               )
+            ),
+            tap(response => {
+               this.cupStages = response.data;
+               if (this.competitions.map(c => c.id).includes(response.data[0].competition_id)) {
+                  this.selectedCompetitionId = response.data[0].competition_id;
+               }
+
+               if (!this.activatedRoute.snapshot.params.cup_stage_id) {
+                  this.navigateToCupStage(this.cupStages);
+               } else {
+                  this.selectedCupStage = find(this.cupStages, { id: parseInt(this.activatedRoute.snapshot.params.cup_stage_id, 10) });
+               }
+            })
+         )
+         .subscribe();
+   }
+
+   private navigateToCupStage(cupStages: CupStageNew[]): void {
+      if (!cupStages.length) {
+         return;
+      }
+
+      const active = cupStages.find(cupStage => cupStage.active);
+      if (active) {
+         this.router.navigate(['/cup', 'cup-matches', { cup_stage_id: active.id }]);
+         return;
+      }
+
+      const ended = cupStages.find(cupStage => cupStage.ended);
+      if (ended) {
+         this.router.navigate(['/cup', 'cup-matches', { cup_stage_id: ended.id }]);
+         return;
+      }
+
+      this.router.navigate(['/cup', 'cup-matches', { cup_Stage_id: cupStages[0].id }]);
+   }
+
+   private subscribeToCupStageIdUrlParamChange(): void {
+      this.activatedRoute.params.pipe(filter(value => value.cup_stage_id)).subscribe(params => {
+         this.selectedCupStage = find(this.cupStages, { id: parseInt(params.cup_stage_id, 10) });
+         this.getCupCupMatchesObservable(params.cup_stage_id).subscribe(response => {
+            this.cupCupMatches = response.data;
+         });
+      });
+   }
 }

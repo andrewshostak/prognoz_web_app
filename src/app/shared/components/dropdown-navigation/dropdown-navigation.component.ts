@@ -37,7 +37,7 @@ export class DropdownNavigationComponent implements OnChanges, OnInit {
    }
 
    public ngOnChanges(changes: SimpleChanges): void {
-      if (changes.selectedId && this.form && this.navigationPath.includes('cup-matches-new')) {
+      if (changes.selectedId && this.form && this.navigationPath.includes('cup-matches')) {
          this.form.get('id').setValue(changes.selectedId.currentValue);
       }
    }
@@ -54,35 +54,16 @@ export class DropdownNavigationComponent implements OnChanges, OnInit {
    }
 
    public navigateTo(id: number): void {
-      // todo: delete when deleting old cup-matches page
       if (this.navigationPath.includes('cup-matches')) {
          this.navigateToCupMatchesByStage(this.navigationPath, id);
-         return;
-      }
-
-      if (this.navigationPath.includes('cup-matches-new')) {
-         this.navigateToCupMatchesNewByStage(this.navigationPath, id);
          return;
       }
 
       this.router.navigate(this.navigationPath.concat(id));
    }
 
-   public navigateToCupMatchesNewByStage(path: any[], id: number): void {
-      path[path.length - 1] = { cup_stage_id: id };
-      this.router.navigate(path);
-   }
-
    public navigateToCupMatchesByStage(path: any[], id: number): void {
-      const index = path.findIndex(part => {
-         return part.cup_stage_id && part.cup_stage_id === ':id';
-      });
-
-      if (index < 0) {
-         return;
-      }
-
-      path[index] = { cup_stage_id: id };
+      path[path.length - 1] = { cup_stage_id: id };
       this.router.navigate(path);
    }
 

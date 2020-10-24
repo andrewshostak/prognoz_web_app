@@ -1,10 +1,9 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
-import { CupCupMatchesNewComponent } from '@app/cup/cup-cup-matches-new/cup-cup-matches-new.component';
+import { CupCupMatchesComponent } from '@app/cup/cup-cup-matches/cup-cup-matches.component';
 import { CupApplicationsComponent } from './cup-applications/cup-applications.component';
 import { CupCupMatchComponent } from './cup-cup-match/cup-cup-match.component';
-import { CupCupMatchesComponent } from './cup-cup-matches/cup-cup-matches.component';
 import { CupPredictionsComponent } from './cup-predictions/cup-predictions.component';
 import { CupRatingGroupComponent } from './cup-rating-group/cup-rating-group.component';
 import { CupRatingUserComponent } from './cup-rating-user/cup-rating-user.component';
@@ -30,10 +29,6 @@ const routes: Routes = [
             component: CupApplicationsComponent
          },
          {
-            path: 'cup-matches-new',
-            component: CupCupMatchesNewComponent
-         },
-         {
             path: 'cup-matches',
             component: CupCupMatchesComponent
          },
@@ -56,7 +51,7 @@ const routes: Routes = [
          {
             path: '',
             pathMatch: 'full',
-            redirectTo: 'cup-matches-new'
+            redirectTo: 'cup-matches'
          }
       ]
    }

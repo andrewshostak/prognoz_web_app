@@ -1,130 +1,54 @@
 <h2 class="h2">Матчі:</h2>
-<div *ngIf="cupStagesWithCupCupMatches">
-   <button class="btn btn-secondary mb-2" (click)="toggleFilterCardVisibility()" type="button">
-      Попередні стадії
+<ng-container *ngIf="competitions">
+   <div class="d-block d-md-none">
+      <div class="btn-group btn-group-sm">
+         <ng-container [ngTemplateOutlet]="competitionsNavigation"></ng-container>
+      </div>
+   </div>
+   <div class="d-none d-md-block">
+      <div class="btn-group">
+         <ng-container [ngTemplateOutlet]="competitionsNavigation"></ng-container>
+      </div>
+   </div>
+</ng-container>
+<ng-template #competitionsNavigation>
+   <button
+      *ngFor="let competition of competitions"
+      (click)="clickOnCompetitionButton(competition)"
+      class="btn mb-2"
+      [ngClass]="competition.id === selectedCompetitionId ? 'btn-primary' : 'btn-outline-primary'"
+      type="button"
+   >
+      {{ competition.title }}
    </button>
-   <div [hidden]="!filterCardExpanded">
-      <div class="card black-shadow mb-2">
-         <div class="card-body">
-            <form novalidate [formGroup]="filterCupCupMatchesForm">
-               <div class="form-row">
-                  <div *ngIf="seasons" class="form-group col-12 col-md-4">
-                     <label for="season_id" class="font-weight-bold">Сезон:</label>
-                     <select id="season_id" class="form-control" formControlName="season_id">
-                        <option *ngFor="let season of seasons" [value]="season.id">{{ season.title }}</option>
-                     </select>
-                  </div>
-                  <div *ngIf="seasonsCompetitions[filterCupCupMatchesForm.get('season_id').value]" class="form-group col-12 col-md-4">
-                     <label for="competition_id" class="font-weight-bold">Змагання:</label>
-                     <select id="competition_id" class="form-control" formControlName="competition_id">
-                        <option [value]="0">Виберіть змагання</option>
-                        <option
-                           *ngFor="let competition of seasonsCompetitions[filterCupCupMatchesForm.get('season_id').value]"
-                           [value]="competition.id"
-                           >{{ competition.title }}</option
-                        >
-                     </select>
-                  </div>
-                  <div
-                     *ngIf="competitionsCupStages[filterCupCupMatchesForm.get('competition_id').value]"
-                     class="form-group col-12 col-md-4"
-                  >
-                     <label for="cup_stage_id" class="font-weight-bold">Стадія:</label>
-                     <select id="cup_stage_id" class="form-control" formControlName="cup_stage_id">
-                        <option [value]="0">Виберіть стадію</option>
-                        <option
-                           *ngFor="let cupStage of competitionsCupStages[filterCupCupMatchesForm.get('competition_id').value]"
-                           [value]="cupStage.id"
-                           >{{ cupStage.title }}</option
-                        >
-                     </select>
-                  </div>
-               </div>
-               <div class="form-group">
-                  <button class="btn btn-outline-danger" type="button" (click)="resetCupCupMatchesFormFilters()">
-                     Скинути параметри пошуку
-                  </button>
-               </div>
-            </form>
-         </div>
-      </div>
-   </div>
-   <div *ngFor="let cupStage of cupStagesWithCupCupMatches" class="mb-2">
-      <div class="card black-shadow">
-         <div class="card-header">
-            <div class="row">
-               <div class="col-12 col-md-6 col-lg-8 d-flex align-items-center">
-                  <strong>{{ cupStage.competition.title }}: </strong>
-                  <span *ngIf="!competitionsCupStages[cupStage.competition_id.toString()]">
-                     {{ cupStage.title }}
-                  </span>
-               </div>
-               <div class="col-12 col-md-6 col-lg-4 d-flex align-items-center">
-                  <app-dropdown-navigation
-                     [dropdownItems]="competitionsCupStages[cupStage.competition_id.toString()]"
-                     [selectedId]="cupStage.id"
-                     [navigationPath]="['/cup', 'cup-matches', { cup_stage_id: ':id' }]"
-                     [formSize]="'sm'"
-                  >
-                  </app-dropdown-navigation>
-               </div>
-            </div>
-         </div>
-         <ul class="list-group list-group-flush">
-            <li
-               *ngFor="let cupCupMatch of cupStage.cup_cup_matches"
-               class="list-group-item list-group-item-action cursor-pointer pt-1 pb-1"
-               [ngClass]="{ 'bg-light': currentUserCupCupMatch(cupCupMatch) }"
-               [routerLink]="'/cup/cup-matches/' + cupCupMatch.id"
-            >
-               <div class="row">
-                  <div class="col-5">
-                     <div class="d-flex flex-row justify-content-end h-100">
-                        <div class="d-flex flex-column text-right justify-content-center">
-                           <strong>{{ cupCupMatch.home_user.name }}</strong>
-                           <small class="text-muted hometown">
-                              {{ cupCupMatch.home_user.hometown ? '(' + cupCupMatch.home_user.hometown + ')' : '' }}
-                           </small>
-                        </div>
-                        <div class="d-flex flex-column justify-content-center ml-2">
-                           <app-user-logo-with-tooltip [user]="cupCupMatch.home_user"></app-user-logo-with-tooltip>
-                        </div>
-                     </div>
-                  </div>
-                  <div class="col-2 text-center">
-                     <div class="d-flex justify-content-center align-items-center h-100">
-                        <strong class="text-nowrap">{{ cupCupMatch.score }}</strong>
-                     </div>
-                  </div>
-                  <div class="col-5">
-                     <div class="d-flex flex-row h-100">
-                        <div class="d-flex flex-column justify-content-center mr-2">
-                           <app-user-logo-with-tooltip [user]="cupCupMatch.away_user"></app-user-logo-with-tooltip>
-                        </div>
-                        <div class="d-flex flex-column justify-content-center">
-                           <strong>{{ cupCupMatch.away_user.name }}</strong>
-                           <small class="text-muted hometown">
-                              {{ cupCupMatch.away_user.hometown ? '(' + cupCupMatch.away_user.hometown + ')' : '' }}
-                           </small>
-                        </div>
-                     </div>
-                  </div>
-                  <div
-                     *ngIf="cupCupMatch.group_number"
-                     class="d-none d-sm-block position-absolute group-number"
-                     [attr.title]="'Матч групи №' + cupCupMatch.group_number"
-                  >
-                     <span class="fa-stack">
-                        <i class="fa fa-circle fa-stack-2x"></i>
-                        <strong class="fa-stack-1x">{{ cupCupMatch.group_number }}</strong>
-                     </span>
-                  </div>
-               </div>
-            </li>
-         </ul>
-         <div class="card-footer text-muted text-right pt-1 pb-1">
-            <small>Кількість матчів: {{ cupStage.cup_cup_matches.length }}</small>
-         </div>
-      </div>
-   </div>
+   <button
+      (click)="showCupStageSelect = !showCupStageSelect"
+      class="btn btn-outline-secondary mb-2"
+      type="button"
+      title="Попередні змагання"
+   >
+      <i class="fa fa-history"></i>
+      <i [hidden]="showCupStageSelect" class="fa fa-chevron-down"></i>
+      <i [hidden]="!showCupStageSelect" class="fa fa-chevron-up"></i>
+   </button>
+</ng-template>
+<div [hidden]="!showCupStageSelect" class="mb-2">
+   <app-cup-stage-select (cupStageSelected)="clickOnCupStageSelectButton($event)"></app-cup-stage-select>
+</div>
+<div class="mb-2">
+   <app-dropdown-navigation
+      [dropdownItems]="cupStages"
+      [selectedId]="selectedCupStage?.id"
+      [navigationPath]="['/cup', 'cup-matches', { cup_stage_id: ':id' }]"
+      [formSize]="'lg'"
+   >
+   </app-dropdown-navigation>
+</div>
+<div [ngSwitch]="selectedCupStage?.cup_stage_type_id">
+   <app-cup-cup-matches-group *ngSwitchCase="cupStageTypes.Group" [cupStage]="selectedCupStage" [cupCupMatches]="cupCupMatches">
+   </app-cup-cup-matches-group>
+   <app-cup-cup-matches-group *ngSwitchCase="cupStageTypes.GroupOneMatch" [cupStage]="selectedCupStage" [cupCupMatches]="cupCupMatches">
+   </app-cup-cup-matches-group>
+   <app-cup-cup-matches-default *ngSwitchDefault [cupStage]="selectedCupStage" [cupCupMatches]="cupCupMatches">
+   </app-cup-cup-matches-default>
 </div>
