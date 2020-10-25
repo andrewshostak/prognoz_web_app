@@ -1,136 +1,203 @@
 <h2 class="h2">Матч:</h2>
 <div *ngIf="cupCupMatch">
-    <div class="card black-shadow">
-        <div class="card-header">
-            <strong>{{cupCupMatch.cup_stage.competition.title}}: </strong>{{cupCupMatch.cup_stage.title}}
-        </div>
-        <ul class="list-group list-group-flush">
-            <li class="list-group-item">
-                <div class="row">
-                    <div class="col-5">
-                        <div class="d-flex flex-row justify-content-end h-100">
-                            <div class="d-flex flex-column text-right justify-content-center">
-                                <strong>{{cupCupMatch.home_user.name}}</strong>
-                                <small class="text-muted hometown">
-                                    {{cupCupMatch.home_user.hometown ? '(' + cupCupMatch.home_user.hometown + ')' : ''}}
-                                </small>
-                            </div>
-                            <div class="d-flex flex-column justify-content-center ml-2">
-                                <img class="small-image rounded-circle d-none d-sm-inline"
-                                     src="{{userImagesUrl}}{{cupCupMatch.home_user.image || userImageDefault}}"
-                                     alt="{{cupCupMatch.home_user.name}}">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-2 text-center">
-                        <div class="d-flex justify-content-center align-items-center h-100">
-                            <strong class="text-nowrap">{{cupCupMatch.score}}</strong>
-                        </div>
-                    </div>
-                    <div class="col-5">
-                        <div class="d-flex flex-row h-100">
-                            <div class="d-flex flex-column justify-content-center mr-2">
-                                <img class="small-image rounded-circle d-none d-sm-inline"
-                                     src="{{userImagesUrl}}{{cupCupMatch.away_user.image || userImageDefault}}"
-                                     alt="{{cupCupMatch.away_user.name}}">
-                            </div>
-                            <div class="d-flex flex-column justify-content-center">
-                                <strong>{{cupCupMatch.away_user.name}}</strong>
-                                <small class="text-muted hometown">
-                                    {{cupCupMatch.away_user.hometown ? '(' + cupCupMatch.away_user.hometown + ')' : ''}}
-                                </small>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </li>
-        </ul>
-        <div class="card-body">
-            <div *ngIf="cupMatches" class="table-responsive">
-                <table class="table table-bordered table-striped table-sm">
-                    <tr *ngFor="let cupMatch of cupMatches">
-                        <td class="text-center text-nowrap"
-                            [ngClass]="{'bg-success text-white': isCupMatchGuessed(cupMatch, cupMatch.home_prediction)}">
-                            <app-prediction-with-tooltip [componentText]="cupMatch.home_prediction"
-                                                         [tooltipText]="cupMatch.home_prediction_created_at"
-                                                         [placement]="'right'">
-                            </app-prediction-with-tooltip>
-                        </td>
-                        <td class="text-right text-nowrap">
-                            <span *ngIf="isCupMatchGuessed(cupMatch, cupMatch.home_prediction)"
-                                  class="pull-left text-success d-none d-lg-inline">
-                                <i class="fa fa-lg fa-check-circle-o" aria-hidden="true"></i>
-                            </span>
-                            <span class="d-none d-sm-inline">{{cupMatch.club_first.title}}</span>
-                            <app-club-logo-with-tooltip [club]="cupMatch.club_first"></app-club-logo-with-tooltip>
-                        </td>
-                        <th class="text-center text-nowrap">
-                            {{showScoresOrString(cupMatch.home, cupMatch.away, 'vs')}}
-                        </th>
-                        <td class="text-left text-nowrap">
-                            <app-club-logo-with-tooltip [club]="cupMatch.club_second"></app-club-logo-with-tooltip>
-                            <span class="d-none d-sm-inline">{{cupMatch.club_second.title}}</span>
-                            <span *ngIf="isCupMatchGuessed(cupMatch, cupMatch.away_prediction)"
-                                  class="pull-right text-success d-none d-lg-inline">
-                                <i class="fa fa-lg fa-check-circle-o" aria-hidden="true"></i>
-                            </span>
-                        </td>
-                        <td class="text-center text-nowrap"
-                            [ngClass]="{'bg-success text-white': isCupMatchGuessed(cupMatch, cupMatch.away_prediction)}">
-                            <app-prediction-with-tooltip [componentText]="cupMatch.away_prediction"
-                                                         [tooltipText]="cupMatch.away_prediction_created_at"
-                                                         [placement]="'left'">
-                            </app-prediction-with-tooltip>
-                        </td>
-                    </tr>
-                </table>
+   <div class="card black-shadow">
+      <div class="card-header d-block d-lg-none justify-content-between align-items-center p-1">
+         <div>
+            <strong>{{ cupCupMatch.cup_stage.competition.title }}</strong>
+         </div>
+         <div>
+            <a [routerLink]="['/cup', 'cup-matches', { cup_stage_id: cupCupMatch.cup_stage_id }]"
+               ><strong>{{ cupCupMatch.cup_stage.title }}</strong></a
+            >
+            <a
+               *ngIf="cupCupMatch.group_number"
+               [routerLink]="['/cup', cupCupMatch.cup_stage.competition_id, 'rating-group', cupCupMatch.group_number]"
+               class="ml-2"
+            >
+               Група {{ cupCupMatch.group_number }}
+            </a>
+         </div>
+         <div class="cup-stage-type">
+            <small class="text-muted">{{ cupCupMatch.cup_stage.cup_stage_type.title }}</small>
+         </div>
+      </div>
+      <div class="card-header d-none d-lg-flex justify-content-between pt-1 pb-1">
+         <div>
+            <strong>{{ cupCupMatch.cup_stage.competition.title }}</strong>
+         </div>
+         <div class="text-right">
+            <div>
+               <a [routerLink]="['/cup', 'cup-matches', { cup_stage_id: cupCupMatch.cup_stage_id }]"
+                  ><strong>{{ cupCupMatch.cup_stage.title }}</strong></a
+               >
+               <a
+                  *ngIf="cupCupMatch.group_number"
+                  [routerLink]="['/cup', cupCupMatch.cup_stage.competition_id, 'rating-group', cupCupMatch.group_number]"
+                  class="ml-2"
+               >
+                  Група {{ cupCupMatch.group_number }}
+               </a>
             </div>
-            <div class="table-responsive">
-                <table class="table table-bordered table-sm">
-                    <tr>
-                        <td class="text-center font-weight-bold">{{cupCupMatch.home}}</td>
-                        <th class="text-center">Голи</th>
-                        <td class="text-center font-weight-bold">{{cupCupMatch.away}}</td>
-                    </tr>
-                    <tr>
-                        <td class="text-center">{{cupCupMatch.home_points}}</td>
-                        <th class="text-center">Очки <small class="text-muted">(за принципом чемпіонату)</small></th>
-                        <td class="text-center">{{cupCupMatch.away_points}}</td>
-                    </tr>
-                    <tr>
-                        <td class="text-center text-muted">{{cupCupMatch.home_dc_sum}}</td>
-                        <th class="text-center">Коефіцієнт складності</th>
-                        <td class="text-center text-muted">{{cupCupMatch.away_dc_sum}}</td>
-                    </tr>
-                    <tr *ngIf="cupPredictionsRequestsEnded">
-                        <td class="text-center">
-                            <i *ngIf="numberOfMatchesInStage === numberOfHomePredictions" class="fa fa-check-circle text-success" aria-hidden="true"></i>
-                            <i *ngIf="!numberOfHomePredictions" class="fa fa-times text-danger" aria-hidden="true"></i>
-                            <span *ngIf="numberOfHomePredictions && numberOfMatchesInStage !== numberOfHomePredictions" class="text-danger">{{numberOfHomePredictions}} / {{numberOfMatchesInStage}}</span>
-                        </td>
-                        <th class="text-center">Прогнози зроблено</th>
-                        <td class="text-center">
-                            <i *ngIf="numberOfMatchesInStage === numberOfAwayPredictions" class="fa fa-check-circle text-success" aria-hidden="true"></i>
-                            <i *ngIf="!numberOfAwayPredictions" class="fa fa-times text-danger" aria-hidden="true"></i>
-                            <span *ngIf="numberOfAwayPredictions && numberOfMatchesInStage !== numberOfAwayPredictions" class="text-danger">{{numberOfAwayPredictions}} / {{numberOfMatchesInStage}}</span>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="text-center">{{cupCupMatch.home_rating_points}}</td>
-                        <th class="text-center">Рейтингові очки</th>
-                        <td class="text-center">{{cupCupMatch.away_rating_points}}</td>
-                    </tr>
-                </table>
+            <div class="cup-stage-type">
+               <small class="text-muted">{{ cupCupMatch.cup_stage.cup_stage_type.title }}</small>
             </div>
-            <div class="d-flex justify-content-between">
-                <div><strong>Тип кубкової стадії:</strong> {{cupCupMatch.cup_stage.cup_stage_type.title}}</div>
-                <button *ngIf="cupCupMatch.group_number" [routerLink]="['/cup', cupCupMatch.cup_stage.competition_id, 'rating-group', cupCupMatch.group_number]"
-                        class="btn btn-sm btn-primary">
-                    Рейтинг групи {{cupCupMatch.group_number}}
-                </button>
+         </div>
+      </div>
+      <ul class="list-group list-group-flush">
+         <li class="list-group-item">
+            <div class="row">
+               <div class="col-5">
+                  <div class="d-flex flex-row justify-content-end h-100">
+                     <div class="d-flex flex-column text-right justify-content-center">
+                        <strong>{{ cupCupMatch.home_user.name }}</strong>
+                        <small class="text-muted hometown">
+                           {{ cupCupMatch.home_user.hometown ? '(' + cupCupMatch.home_user.hometown + ')' : '' }}
+                        </small>
+                     </div>
+                     <div class="d-flex flex-column justify-content-center ml-2">
+                        <img
+                           class="small-image rounded-circle d-none d-sm-inline"
+                           src="{{ userImagesUrl }}{{ cupCupMatch.home_user.image || userImageDefault }}"
+                           alt="{{ cupCupMatch.home_user.name }}"
+                        />
+                     </div>
+                  </div>
+               </div>
+               <div class="col-2 text-center">
+                  <div class="d-flex justify-content-center align-items-center h-100">
+                     <strong class="text-nowrap">{{ cupCupMatch.score }}</strong>
+                  </div>
+               </div>
+               <div class="col-5">
+                  <div class="d-flex flex-row h-100">
+                     <div class="d-flex flex-column justify-content-center mr-2">
+                        <img
+                           class="small-image rounded-circle d-none d-sm-inline"
+                           src="{{ userImagesUrl }}{{ cupCupMatch.away_user.image || userImageDefault }}"
+                           alt="{{ cupCupMatch.away_user.name }}"
+                        />
+                     </div>
+                     <div class="d-flex flex-column justify-content-center">
+                        <strong>{{ cupCupMatch.away_user.name }}</strong>
+                        <small class="text-muted hometown">
+                           {{ cupCupMatch.away_user.hometown ? '(' + cupCupMatch.away_user.hometown + ')' : '' }}
+                        </small>
+                     </div>
+                  </div>
+               </div>
             </div>
-        </div>
-    </div>
+         </li>
+      </ul>
+      <div class="card-body p-0">
+         <div class="table-responsive">
+            <table class="table table-bordered table-sm mb-0">
+               <tr class="bg-light">
+                  <td class="text-center text-muted pt-0 pb-0" colspan="3"><small>Додаткові показники</small></td>
+               </tr>
+               <tr>
+                  <td class="text-center align-middle">{{ cupCupMatch.home_points }}</td>
+                  <td class="text-center">Очки</td>
+                  <td class="text-center align-middle">{{ cupCupMatch.away_points }}</td>
+               </tr>
+               <tr>
+                  <td class="text-center align-middle">{{ cupCupMatch.home_dc_sum }}</td>
+                  <td class="text-center">КС</td>
+                  <td class="text-center align-middle">{{ cupCupMatch.away_dc_sum }}</td>
+               </tr>
+            </table>
+         </div>
+         <div class="table-responsive">
+            <table class="table table-bordered table-striped table-sm mb-0">
+               <tr *ngIf="cupPredictionsRequestsEnded" class="bg-light">
+                  <td class="text-center text-nowrap pb-0 pt-0">
+                     <i
+                        *ngIf="numberOfMatchesInStage === numberOfHomePredictions"
+                        class="fa fa-check-circle text-success"
+                        aria-hidden="true"
+                     ></i>
+                     <i *ngIf="!numberOfHomePredictions" class="fa fa-times text-danger" aria-hidden="true"></i>
+                     <span *ngIf="numberOfHomePredictions && numberOfMatchesInStage !== numberOfHomePredictions" class="text-danger"
+                        >{{ numberOfHomePredictions }} / {{ numberOfMatchesInStage }}</span
+                     >
+                  </td>
+                  <td class="text-center text-muted pb-0 pt-0" colspan="3"><small>Прогнози</small></td>
+                  <td class="text-center text-nowrap pb-0 pt-0">
+                     <i
+                        *ngIf="numberOfMatchesInStage === numberOfAwayPredictions"
+                        class="fa fa-check-circle text-success"
+                        aria-hidden="true"
+                     ></i>
+                     <i *ngIf="!numberOfAwayPredictions" class="fa fa-times text-danger" aria-hidden="true"></i>
+                     <span *ngIf="numberOfAwayPredictions && numberOfMatchesInStage !== numberOfAwayPredictions" class="text-danger"
+                        >{{ numberOfAwayPredictions }} / {{ numberOfMatchesInStage }}</span
+                     >
+                  </td>
+               </tr>
+               <ng-container *ngIf="cupMatches">
+                  <tr *ngFor="let cupMatch of cupMatches">
+                     <td
+                        class="text-center text-nowrap"
+                        [ngClass]="{ 'bg-success text-white': isCupMatchGuessed(cupMatch, cupMatch.home_prediction) }"
+                     >
+                        <app-prediction-with-tooltip
+                           [componentText]="cupMatch.home_prediction"
+                           [tooltipText]="cupMatch.home_prediction_created_at"
+                           [placement]="'right'"
+                        >
+                        </app-prediction-with-tooltip>
+                     </td>
+                     <td class="text-right text-nowrap">
+                        <span
+                           *ngIf="isCupMatchGuessed(cupMatch, cupMatch.home_prediction)"
+                           class="pull-left text-success d-none d-lg-inline"
+                        >
+                           <i class="fa fa-lg fa-check-circle-o" aria-hidden="true"></i>
+                        </span>
+                        <span class="d-none d-sm-inline">{{ cupMatch.club_first.title }}</span>
+                        <app-club-logo-with-tooltip [club]="cupMatch.club_first"></app-club-logo-with-tooltip>
+                     </td>
+                     <th class="text-center text-nowrap">
+                        {{ showScoresOrString(cupMatch.home, cupMatch.away, 'vs') }}
+                     </th>
+                     <td class="text-left text-nowrap">
+                        <app-club-logo-with-tooltip [club]="cupMatch.club_second"></app-club-logo-with-tooltip>
+                        <span class="d-none d-sm-inline">{{ cupMatch.club_second.title }}</span>
+                        <span
+                           *ngIf="isCupMatchGuessed(cupMatch, cupMatch.away_prediction)"
+                           class="pull-right text-success d-none d-lg-inline"
+                        >
+                           <i class="fa fa-lg fa-check-circle-o" aria-hidden="true"></i>
+                        </span>
+                     </td>
+                     <td
+                        class="text-center text-nowrap"
+                        [ngClass]="{ 'bg-success text-white': isCupMatchGuessed(cupMatch, cupMatch.away_prediction) }"
+                     >
+                        <app-prediction-with-tooltip
+                           [componentText]="cupMatch.away_prediction"
+                           [tooltipText]="cupMatch.away_prediction_created_at"
+                           [placement]="'left'"
+                        >
+                        </app-prediction-with-tooltip>
+                     </td>
+                  </tr>
+               </ng-container>
+            </table>
+         </div>
+         <table *ngIf="cupCupMatch.ended" class="table table-bordered table-sm mb-0">
+            <tr>
+               <td class="points-cell text-center">
+                  <strong *ngIf="cupCupMatch.home_rating_points > 0; else noPoints"> +{{ cupCupMatch.home_rating_points }} </strong>
+               </td>
+               <td class="text-center text-muted bg-light"><small>Рейтингові очки</small></td>
+               <td class="points-cell text-center">
+                  <strong *ngIf="cupCupMatch.away_rating_points > 0; else noPoints"> +{{ cupCupMatch.away_rating_points }} </strong>
+               </td>
+            </tr>
+         </table>
+      </div>
+   </div>
 </div>
 <app-error *ngIf="errorCupCupMatch" [message]="errorCupCupMatch"></app-error>
 <app-error *ngIf="errorCupMatches" [message]="errorCupMatches"></app-error>
+<ng-template #noPoints><span>0</span></ng-template>
