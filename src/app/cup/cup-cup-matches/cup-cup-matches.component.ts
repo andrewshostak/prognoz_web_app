@@ -18,7 +18,7 @@ import { CupCupMatchNewService } from '@services/new/cup-cup-match-new.service';
 import { CupStageNewService } from '@services/new/cup-stage-new.service';
 import { SettingsService } from '@services/settings.service';
 import { TitleService } from '@services/title.service';
-import { find } from 'lodash';
+import { find, findLast } from 'lodash';
 import { iif, Observable, of } from 'rxjs';
 import { filter, mergeMap, tap } from 'rxjs/operators';
 
@@ -90,7 +90,7 @@ export class CupCupMatchesComponent implements OnInit {
 
    private getActiveCompetitions(): Observable<PaginatedResponse<CompetitionNew>> {
       const search: CompetitionSearch = {
-         active: ModelStatus.Truthy,
+         activeOrStated: ModelStatus.Truthy,
          limit: SettingsService.maxLimitValues.competitions,
          page: 1,
          tournamentId: Tournament.Cup
@@ -181,7 +181,13 @@ export class CupCupMatchesComponent implements OnInit {
          return;
       }
 
-      const ended = cupStages.find(cupStage => cupStage.ended);
+      const stated = cupStages.find(cupStage => !cupStage.active && !cupStage.ended);
+      if (stated) {
+         this.router.navigate(['/cup', 'cup-matches', { cup_stage_id: stated.id }]);
+         return;
+      }
+
+      const ended = findLast(cupStages, cupStage => cupStage.ended) as CupStageNew;
       if (ended) {
          this.router.navigate(['/cup', 'cup-matches', { cup_stage_id: ended.id }]);
          return;

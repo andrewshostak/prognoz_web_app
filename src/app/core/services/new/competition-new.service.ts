@@ -36,6 +36,10 @@ export class CompetitionNewService {
          params = params.set('season_id', (search.seasonId as unknown) as string);
       }
 
+      if (search.activeOrStated) {
+         params = params.append('active_or_stated', (true as unknown) as string);
+      }
+
       if (!isNil(search.active)) {
          params = params.append('active', (search.active as unknown) as string);
       }

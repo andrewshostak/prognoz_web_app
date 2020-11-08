@@ -3,6 +3,7 @@ import { Sequence } from '@enums/sequence.enum';
 import { Tournament } from '@enums/tournament.enum';
 
 export class CompetitionSearch {
+   public activeOrStated?: ModelStatus;
    public active?: ModelStatus;
    public ended?: ModelStatus;
    public limit: number;
