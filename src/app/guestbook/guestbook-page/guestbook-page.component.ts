@@ -1,88 +1,55 @@
-import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 
-import { CurrentStateService } from '@services/current-state.service';
-import { GuestbookMessage } from '@models/guestbook-message.model';
-import { GuestbookService } from '../shared/guestbook.service';
-import { NotificationsService } from 'angular2-notifications';
+import { GuestbookMessageNewService } from '@app/guestbook/shared/guestbook-message-new.service';
+import { Sequence } from '@enums/sequence.enum';
+import { GuestbookMessageNew } from '@models/new/guestbook-message-new.model';
+import { Pagination } from '@models/pagination.model';
+import { GuestbookMessageSearch } from '@models/search/guestbook-message-search.model';
+import { PaginationService } from '@services/pagination.service';
+import { SettingsService } from '@services/settings.service';
 import { TitleService } from '@services/title.service';
-import { User } from '@models/user.model';
+import { Subscription } from 'rxjs';
 
 @Component({
-    selector: 'app-guestbook-page',
-    templateUrl: './guestbook-page.component.html',
-    styleUrls: ['./guestbook-page.component.scss']
+   selector: 'app-guestbook-page',
+   templateUrl: './guestbook-page.component.html',
+   styleUrls: ['./guestbook-page.component.scss']
 })
-export class GuestbookPageComponent implements OnInit {
-    constructor(
-        private activatedRoute: ActivatedRoute,
-        private currentStateService: CurrentStateService,
-        private formBuilder: FormBuilder,
-        private guestbookService: GuestbookService,
-        private notificationsService: NotificationsService,
-        private titleService: TitleService
-    ) {}
+export class GuestbookPageComponent implements OnDestroy, OnInit {
+   public activatedRouteSubscription: Subscription;
+   public guestbookMessages: GuestbookMessageNew[] = [];
+   public paginationData: Pagination;
 
-    addGuestbookMessageForm: FormGroup;
-    authenticatedUser: User;
-    currentPage: number;
-    errorGuestbookMessages: string | Array<string>;
-    guestbookMessages: GuestbookMessage[];
-    lastPage: number;
-    path = '/guestbook/page/';
-    perPage: number;
-    spinnerButton = false;
-    total: number;
+   constructor(
+      private activatedRoute: ActivatedRoute,
+      private guestbookMessageService: GuestbookMessageNewService,
+      private titleService: TitleService
+   ) {}
 
-    getGuestbookMessagesData() {
-        this.activatedRoute.params.subscribe((params: Params) => {
-            this.titleService.setTitle(`Гостьова${params['number'] ? ', сторінка ' + params['number'] : ''}`);
-            this.guestbookService.getGuestbookMessages(params['number']).subscribe(
-                response => {
-                    if (response) {
-                        this.currentPage = response.current_page;
-                        this.lastPage = response.last_page;
-                        this.perPage = response.per_page;
-                        this.total = response.total;
-                        this.guestbookMessages = response.data;
-                        const userId = this.authenticatedUser ? this.authenticatedUser.id.toString() : '';
-                        this.addGuestbookMessageForm.patchValue({ user_id: userId });
-                    }
-                },
-                error => {
-                    this.errorGuestbookMessages = error;
-                }
-            );
-        });
-    }
+   public getGuestbookMessagesData(pageNumber: number): void {
+      const search: GuestbookMessageSearch = {
+         limit: SettingsService.guestbookMessagesPerPage,
+         page: pageNumber,
+         sequence: Sequence.Descending,
+         orderBy: 'created_at',
+         relations: ['user.clubs', 'user.winners.award', 'user.winners.competition']
+      };
+      this.guestbookMessageService.getGuestbookMessages(search).subscribe(response => {
+         this.guestbookMessages = response.data;
+         this.paginationData = PaginationService.getPaginationData(response, '/guestbook/page/');
+      });
+   }
 
-    ngOnInit() {
-        this.titleService.setTitle('Гостьова');
-        this.addGuestbookMessageForm = this.formBuilder.group({
-            user_id: ['', [Validators.required]],
-            body: ['', [Validators.required, Validators.minLength(10), Validators.maxLength(1000)]]
-        });
-        this.authenticatedUser = this.currentStateService.getUser();
-        this.addGuestbookMessageForm.patchValue({ user_id: this.authenticatedUser ? this.authenticatedUser.id : '' });
-        this.getGuestbookMessagesData();
-    }
+   public ngOnDestroy(): void {
+      this.activatedRouteSubscription.unsubscribe();
+   }
 
-    onSubmit() {
-        this.spinnerButton = true;
-        this.guestbookService.createGuestbookMessage(this.addGuestbookMessageForm.value).subscribe(
-            () => {
-                this.getGuestbookMessagesData();
-                this.spinnerButton = false;
-                this.addGuestbookMessageForm.reset({ user_id: this.authenticatedUser.id });
-                this.notificationsService.success('Успішно', 'Повідомлення додано');
-            },
-            errors => {
-                for (const error of errors) {
-                    this.notificationsService.error('Помилка', error);
-                }
-                this.spinnerButton = false;
-            }
-        );
-    }
+   public ngOnInit() {
+      this.titleService.setTitle('Гостьова сторінка');
+
+      this.activatedRouteSubscription = this.activatedRoute.params.subscribe((params: Params) => {
+         this.getGuestbookMessagesData(params.pageNumber);
+      });
+   }
 }

@@ -1,59 +1,35 @@
 <div class="row">
-    <div class="col">
-        <h2>Гостьова:
-            <button [hidden]="!guestbookMessages" (click)="getGuestbookMessagesData()" title="Оновити" class="btn btn-sm btn-outline-secondary cursor-pointer">
-                <i class="fa fa-refresh fa-fw" aria-hidden="true"></i>
-            </button>
-        </h2>
-    </div>
+   <div class="col">
+      <h2>
+         Гостьова:
+         <button
+            *ngIf="paginationData"
+            (click)="getGuestbookMessagesData(paginationData.currentPage)"
+            title="Оновити"
+            class="btn btn-sm btn-outline-secondary cursor-pointer"
+         >
+            <i class="fa fa-refresh fa-fw" aria-hidden="true"></i>
+         </button>
+      </h2>
+   </div>
 </div>
-<!-- new guestbook messages form-->
-<div *ngIf="authenticatedUser" class="row">
-    <div class="col text-white">
-        <form [formGroup]="addGuestbookMessageForm" (ngSubmit)="onSubmit()" novalidate class="bg-dark p-2 mb-2 rounded">
-            <input type="hidden" name="user_id" formControlName="user_id">
-            <div class="form-group"
-                 [class.form-group-invalid-custom]="addGuestbookMessageForm.get('body').invalid && (addGuestbookMessageForm.get('body').touched || !addGuestbookMessageForm.get('body').pristine)">
-                <label class="form-control-label" for="body"><strong>Добавити повідомлення:</strong></label>
-                <textarea id="body"
-                          placeholder="Напишіть щось..."
-                          class="form-control"
-                          rows="3"
-                          formControlName="body">
-                    </textarea>
-                <div *ngIf="addGuestbookMessageForm.get('body').hasError('required') && (addGuestbookMessageForm.get('body').touched || !addGuestbookMessageForm.get('body').pristine)">
-                    <small>Текст коментаря обов'язковий.</small>
-                </div>
-                <div *ngIf="addGuestbookMessageForm.get('body').hasError('minlength') && !addGuestbookMessageForm.get('body').pristine">
-                    <small>Текст коментаря повинен бути більшим ніж 10 символів.</small>
-                </div>
-                <div *ngIf="addGuestbookMessageForm.get('body').hasError('maxlength') && !addGuestbookMessageForm.get('body').pristine">
-                    <small>Текст коментаря перевищує 1000 символів.</small>
-                </div>
-            </div>
-            <button [disabled]="addGuestbookMessageForm.invalid"
-                    [hidden]="spinnerButton"
-                    type="submit"
-                    class="btn btn-primary">Добавити</button>
-            <!-- spinner button -->
-            <app-spinner-button [hidden]="!spinnerButton"></app-spinner-button>
-        </form>
-    </div>
+<div class="row">
+   <div class="col">
+      <app-guestbook-message-form></app-guestbook-message-form>
+   </div>
 </div>
-<!-- error -->
-<app-error *ngIf="errorGuestbookMessages" [message]="errorGuestbookMessages"></app-error>
-<!-- guestbook messages -->
-<div *ngIf="guestbookMessages" class="row">
-    <div class="col">
-        <div *ngFor="let message of guestbookMessages">
-            <app-user-message [message]="message"></app-user-message>
-        </div>
-    </div>
+<div class="row">
+   <div class="col">
+      <div *ngFor="let message of guestbookMessages">
+         <app-user-message [message]="message"></app-user-message>
+      </div>
+   </div>
 </div>
-<!-- pagination -->
-<app-pagination *ngIf="guestbookMessages"
-                [totalItems]="total"
-                [currentPage]="currentPage"
-                [pageSize]="perPage"
-                [path]="path">
+<app-pagination
+   *ngIf="paginationData"
+   [totalItems]="paginationData.total"
+   [currentPage]="paginationData.currentPage"
+   [pageSize]="paginationData.pageSize"
+   [path]="paginationData.path"
+>
 </app-pagination>
