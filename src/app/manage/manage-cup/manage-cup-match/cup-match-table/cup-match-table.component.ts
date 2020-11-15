@@ -52,6 +52,7 @@ export class CupMatchTableComponent implements OnDestroy, OnInit {
          limit: SettingsService.cupMatchesPerPage,
          orderBy: 'started_at',
          page: pageNumber,
+         relations: ['match.clubHome', 'match.clubAway', 'cupStages.competition'],
          sequence: Sequence.Descending
       };
       this.cupMatchService.getCupMatches(search).subscribe(response => {

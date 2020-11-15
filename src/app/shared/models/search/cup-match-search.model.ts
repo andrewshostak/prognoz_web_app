@@ -7,5 +7,6 @@ export class CupMatchSearch {
    public limit: number;
    public orderBy?: string;
    public page: number;
+   public relations?: string[];
    public sequence?: Sequence;
 }

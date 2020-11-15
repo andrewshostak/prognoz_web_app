@@ -117,7 +117,8 @@ export class CupMatchFormComponent implements OnChanges, OnInit {
       const search: CupMatchSearch = {
          active: ModelStatus.Truthy,
          limit: SettingsService.maxLimitValues.cupMatches,
-         page: 1
+         page: 1,
+         relations: ['match.clubHome', 'match.clubAway']
       };
       this.cupMatchesObservable = this.cupMatchService.getCupMatches(search);
    }
