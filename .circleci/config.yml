@@ -12,13 +12,14 @@ jobs:
       - checkout
 
       - restore_cache:
-          key: node-modules-{{ arch }}-{{ checksum "package-lock.json" }}
+          key: node-modules-{{ checksum "package.json" }}-{{ checksum "package-lock.json" }}
 
       - run:
-          command: npm ci
+          name: install dependencies if no cache
+          command: "[ ! -d node_modules ] && npm ci --loglevel warn --yes || echo package.json and package-lock.json unchanged. Using cache."
 
       - save_cache:
-          key: node-modules-{{ arch }}-{{ checksum "package-lock.json" }}
+          key: node-modules-{{ checksum "package.json" }}-{{ checksum "package-lock.json" }}
           paths:
             - node_modules
 
