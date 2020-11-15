@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 import { GuestbookService } from '@app/guestbook/shared/guestbook.service';
@@ -12,6 +12,8 @@ import { NotificationsService } from 'angular2-notifications';
    templateUrl: './guestbook-message-form.component.html'
 })
 export class GuestbookMessageFormComponent implements OnInit {
+   @Output() public guestbookMessageAdded = new EventEmitter<void>();
+
    public guestbookMessageForm: FormGroup;
    public showFormErrorMessage = UtilsService.showFormErrorMessage;
    public showFormInvalidClass = UtilsService.showFormInvalidClass;
@@ -44,7 +46,7 @@ export class GuestbookMessageFormComponent implements OnInit {
             this.spinnerButton = false;
             this.guestbookMessageForm.reset();
             this.notificationsService.success('Успішно', 'Ваше повідомлення додано');
-            // send upd event
+            this.guestbookMessageAdded.emit();
          },
          errors => {
             this.spinnerButton = false;
