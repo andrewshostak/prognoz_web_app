@@ -1,5 +1,6 @@
 /* tslint:disable:variable-name */
 import { ModelStatus } from '@enums/model-status.enum';
+import { CupStageNew } from '@models/new/cup-stage-new';
 import { UserNew } from '@models/new/user-new.model';
 
 export class CupCupMatchNew {
@@ -23,4 +24,5 @@ export class CupCupMatchNew {
 
    public home_user?: UserNew;
    public away_user?: UserNew;
+   public cup_stage: CupStageNew;
 }

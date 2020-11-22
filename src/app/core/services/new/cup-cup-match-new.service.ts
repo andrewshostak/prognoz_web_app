@@ -53,9 +53,10 @@ export class CupCupMatchNewService {
       return this.sortCupCupMatchesByUserId(cupCupMatches, user.id);
    }
 
-   public getCupCupMatch(cupCupMatchId: number): Observable<CupCupMatchNew> {
+   public getCupCupMatch(cupCupMatchId: number, relations: string[] = []): Observable<CupCupMatchNew> {
+      const params = new HttpParams({ fromObject: { 'relations[]': relations } });
       return this.httpClient
-         .get<{ cup_cup_match: CupCupMatchNew }>(`${this.cupCupMatchesUrl}/${cupCupMatchId}`)
+         .get<{ cup_cup_match: CupCupMatchNew }>(`${this.cupCupMatchesUrl}/${cupCupMatchId}`, { params })
          .pipe(map(response => response.cup_cup_match));
    }
 

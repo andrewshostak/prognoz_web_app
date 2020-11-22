@@ -30,7 +30,11 @@ export class CupMatchNewService {
    }
 
    public getCupMatches(search: CupMatchSearch): Observable<PaginatedResponse<CupMatchNew>> {
-      let params: HttpParams = new HttpParams();
+      let params: HttpParams = new HttpParams({ fromObject: { 'relations[]': search.relations || [] } });
+
+      if (search.cupCupMatchId) {
+         params = params.set('cup_cup_match_id', search.cupCupMatchId.toString());
+      }
 
       if (search.limit) {
          params = params.set('limit', search.limit.toString());
@@ -51,12 +55,6 @@ export class CupMatchNewService {
 
       if (!isNil(search.ended)) {
          params = params.append('ended', (search.ended as unknown) as string);
-      }
-
-      if (search.relations) {
-         search.relations.forEach(relation => {
-            params = params.append('relations[]', relation);
-         });
       }
 
       return this.httpClient.get<PaginatedResponse<CupMatchNew>>(this.cupMatchesUrl, { params });

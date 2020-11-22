@@ -35,6 +35,7 @@ import { ChampionshipPredictionNewService } from '@services/new/championship-pre
 import { CompetitionNewService } from '@services/new/competition-new.service';
 import { CupCupMatchNewService } from '@services/new/cup-cup-match-new.service';
 import { CupMatchNewService } from '@services/new/cup-match-new.service';
+import { CupPredictionNewService } from '@services/new/cup-prediction-new.service';
 import { CupStageNewService } from '@services/new/cup-stage-new.service';
 import { MatchService } from '@services/new/match.service';
 import { SeasonNewService } from '@services/new/season-new.service';
@@ -79,6 +80,7 @@ import { UtilsService } from '@services/utils.service';
       CupMatchNewService,
       CupMatchService,
       CupPredictionService,
+      CupPredictionNewService,
       CupRatingService,
       CupStageNewService,
       CupStageService,

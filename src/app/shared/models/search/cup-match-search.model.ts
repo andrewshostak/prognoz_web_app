@@ -3,6 +3,7 @@ import { Sequence } from '@enums/sequence.enum';
 
 export class CupMatchSearch {
    public active?: ModelStatus;
+   public cupCupMatchId?: number;
    public ended?: ModelStatus;
    public limit: number;
    public orderBy?: string;

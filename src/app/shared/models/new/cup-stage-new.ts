@@ -1,5 +1,7 @@
 /* tslint:disable:variable-name */
 import { ModelStatus } from '@enums/model-status.enum';
+import { CompetitionNew } from '@models/new/competition-new.model';
+import { CupStageTypeNew } from '@models/new/cup-stage-type-new';
 
 export class CupStageNew {
    public active: ModelStatus;
@@ -11,4 +13,7 @@ export class CupStageNew {
    public round: number;
    public title: string;
    public updated_at: string;
+
+   public competition: CompetitionNew;
+   public cup_stage_type?: CupStageTypeNew;
 }

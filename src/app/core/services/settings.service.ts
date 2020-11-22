@@ -27,6 +27,7 @@ export class SettingsService {
       'v2/championship/predictions',
       'v2/competitions',
       'v2/cup/matches',
+      'v2/cup/predictions/my',
       'v2/matches',
       'v2/team/matches',
       'v2/team/participants',

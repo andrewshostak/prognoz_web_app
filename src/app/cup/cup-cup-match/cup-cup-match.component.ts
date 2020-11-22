@@ -1,147 +1,167 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { ActivatedRoute, Params } from '@angular/router';
-
-import { CupCupMatch } from '@models/cup/cup-cup-match.model';
-import { CupCupMatchService } from '@services/cup/cup-cup-match.service';
-import { CupMatch } from '@models/cup/cup-match.model';
-import { CupMatchService } from '@services/cup/cup-match.service';
-import { CupPrediction } from '@models/cup/cup-prediction.model';
-import { CupPredictionService } from '@services/cup/cup-prediction.service';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { environment } from '@env';
-import { forkJoin } from 'rxjs';
-import { Subscription } from 'rxjs';
-import { TimePipe } from '../../shared/pipes/time.pipe';
+
+import { TimePipe } from '@app/shared/pipes/time.pipe';
+import { Sequence } from '@enums/sequence.enum';
+import { CupCupMatchNew } from '@models/new/cup-cup-match-new.model';
+import { CupMatchNew } from '@models/new/cup-match-new.model';
+import { CupPredictionNew } from '@models/new/cup-prediction-new.model';
+import { UserNew } from '@models/new/user-new.model';
+import { PaginatedResponse } from '@models/paginated-response.model';
+import { CupMatchSearch } from '@models/search/cup-match-search.model';
+import { AuthNewService } from '@services/new/auth-new.service';
+import { CupCupMatchNewService } from '@services/new/cup-cup-match-new.service';
+import { CupMatchNewService } from '@services/new/cup-match-new.service';
+import { CupPredictionNewService } from '@services/new/cup-prediction-new.service';
+import { SettingsService } from '@services/settings.service';
 import { TitleService } from '@services/title.service';
 import { UtilsService } from '@services/utils.service';
+import { isNil } from 'lodash';
+import { forkJoin, Observable } from 'rxjs';
+import { map, mergeMap, tap } from 'rxjs/operators';
 
 @Component({
-    selector: 'app-cup-cup-match',
-    templateUrl: './cup-cup-match.component.html',
-    styleUrls: ['./cup-cup-match.component.scss']
+   selector: 'app-cup-cup-match',
+   templateUrl: './cup-cup-match.component.html',
+   styleUrls: ['./cup-cup-match.component.scss']
 })
-export class CupCupMatchComponent implements OnDestroy, OnInit {
-    constructor(
-        private activatedRoute: ActivatedRoute,
-        private cupCupMatchService: CupCupMatchService,
-        private cupMatchService: CupMatchService,
-        private cupPredictionService: CupPredictionService,
-        private timePipe: TimePipe,
-        private titleService: TitleService
-    ) {}
+export class CupCupMatchComponent implements OnInit {
+   public cupCupMatch: CupCupMatchNew;
+   public cupCupMatchReadableResult: string;
+   public matchesWithPredictions: Array<{
+      matchInfo: { match: CupMatchNew; readable: string };
+      homePredictionInfo: { prediction: CupPredictionNew; readable: string; scored: boolean };
+      awayPredictionInfo: { prediction: CupPredictionNew; readable: string; scored: boolean };
+   }> = [];
+   public numberOfMatchesInStage = environment.tournaments.cup.numberOfMatchesInStage;
+   public predictionsNumber = { home: 0, away: 0 };
+   public user: UserNew;
 
-    activatedRouteSubscription: Subscription;
-    cupCupMatch: CupCupMatch;
-    cupMatches: CupMatch[];
-    cupPredictionsRequestsEnded: boolean;
-    errorCupCupMatch: string;
-    errorCupMatches: string;
-    errorCupPredictions: string;
-    numberOfHomePredictions: number;
-    numberOfAwayPredictions: number;
-    numberOfMatchesInStage: number;
-    showScoresOrString = UtilsService.showScoresOrString;
-    userImageDefault: string;
-    userImagesUrl: string;
+   private cupMatches: CupMatchNew[] = [];
 
-    getCupPrediction(cupMatch: CupMatch, cupPrediction: CupPrediction): string {
-        if (cupMatch.is_predictable) {
-            return '?';
-        }
-        if (cupPrediction) {
-            return this.showScoresOrString(cupPrediction.home, cupPrediction.away, '-');
-        }
-        return '-';
-    }
+   constructor(
+      private activatedRoute: ActivatedRoute,
+      private authService: AuthNewService,
+      private cupCupMatchService: CupCupMatchNewService,
+      private cupMatchService: CupMatchNewService,
+      private cupPredictionService: CupPredictionNewService,
+      private timePipe: TimePipe,
+      private titleService: TitleService
+   ) {}
 
-    getCupPredictionTime(cupMatch: CupMatch, cupPrediction: CupPrediction): string {
-        if (cupMatch.is_predictable) {
-            return 'Прогнози гравців відображаються після початку другого тайму матчу';
-        }
-        if (cupPrediction) {
-            const date = this.timePipe.transform(cupPrediction.updated_at, 'YYYY-MM-DD HH:mm');
-            return 'Прогноз зроблено ' + date;
-        }
-        return 'Прогноз не зроблено';
-    }
+   public isCupMatchGuessed(cupMatch: CupMatchNew, cupPrediction: CupPredictionNew): boolean {
+      if (!cupPrediction) {
+         return false;
+      }
 
-    isCupMatchGuessed(cupMatch: CupMatch, prediction: string): boolean {
-        if (cupMatch.is_predictable || cupMatch.active || prediction === '-') {
-            return false;
-        }
-        return this.showScoresOrString(cupMatch.home, cupMatch.away, '') === prediction;
-    }
+      if (cupMatch.match.active) {
+         return false;
+      }
 
-    ngOnDestroy() {
-        if (!this.activatedRouteSubscription.closed) {
-            this.activatedRouteSubscription.unsubscribe();
-        }
-    }
+      if (isNil(cupPrediction.home) && isNil(cupPrediction.away)) {
+         return false;
+      }
 
-    ngOnInit() {
-        this.userImageDefault = environment.imageUserDefault;
-        this.userImagesUrl = environment.apiImageUsers;
-        this.numberOfMatchesInStage = environment.tournaments.cup.numberOfMatchesInStage;
-        this.activatedRouteSubscription = this.activatedRoute.params.subscribe((params: Params) => {
-            this.cupCupMatchService.getCupCupMatch(params['cupCupMatchId']).subscribe(
-                response => {
-                    this.cupCupMatch = response;
-                    this.cupCupMatch.score = this.showScoresOrString(this.cupCupMatch.home, this.cupCupMatch.away, 'vs');
-                    this.titleService.setTitle(`${response.home_user.name} vs ${response.away_user.name} - Кубок`);
-                    this.errorCupCupMatch = null;
-                    this.getCupMatchesData(this.cupCupMatch.cup_stage_id);
-                },
-                error => {
-                    this.cupCupMatch = null;
-                    this.errorCupCupMatch = error;
-                }
-            );
-        });
-    }
+      return cupMatch.match.home === cupPrediction.home && cupMatch.match.away === cupPrediction.away;
+   }
 
-    private getCupMatchesData(cupStageId: number): void {
-        this.cupMatchService.getCupMatches(null, null, null, null, null, cupStageId).subscribe(
-            response => {
-                this.errorCupMatches = null;
-                if (response && response.cup_matches) {
-                    this.cupMatches = response.cup_matches;
-                    const cupPredictionsHome = this.cupPredictionService.getCupPredictions(
-                        this.cupCupMatch.id,
-                        this.cupCupMatch.home_user_id
-                    );
-                    const cupPredictionsAway = this.cupPredictionService.getCupPredictions(
-                        this.cupCupMatch.id,
-                        this.cupCupMatch.away_user_id
-                    );
+   public ngOnInit(): void {
+      this.user = this.authService.getUser();
+      this.getPageData(this.activatedRoute.snapshot.params.cupCupMatchId);
+   }
 
-                    forkJoin([cupPredictionsHome, cupPredictionsAway], (home, away) => {
-                        return { home, away };
-                    }).subscribe(r => {
-                        this.numberOfHomePredictions = 0;
-                        this.numberOfAwayPredictions = 0;
-                        this.errorCupPredictions = null;
-                        this.cupMatches = this.cupMatches.map(cupMatch => {
-                            const homePrediction = r.home ? r.home.find(prediction => prediction.cup_match_id === cupMatch.id) : null;
-                            const awayPrediction = r.away ? r.away.find(prediction => prediction.cup_match_id === cupMatch.id) : null;
-                            cupMatch.home_prediction = this.getCupPrediction(cupMatch, homePrediction);
-                            cupMatch.away_prediction = this.getCupPrediction(cupMatch, awayPrediction);
-                            cupMatch.home_prediction_created_at = this.getCupPredictionTime(cupMatch, homePrediction);
-                            cupMatch.away_prediction_created_at = this.getCupPredictionTime(cupMatch, awayPrediction);
-                            if (homePrediction) {
-                                this.numberOfHomePredictions++;
-                            }
-                            if (awayPrediction) {
-                                this.numberOfAwayPredictions++;
-                            }
-                            return cupMatch;
-                        });
-                        this.cupPredictionsRequestsEnded = true;
-                    }, error => (this.errorCupPredictions = error));
-                }
+   private getCupCupMatchObservable(cupCupMatchId: number): Observable<CupCupMatchNew> {
+      const relations = ['homeUser', 'awayUser', 'cupStage.competition', 'cupStage.CupStageType'];
+      return this.cupCupMatchService.getCupCupMatch(cupCupMatchId, relations);
+   }
+
+   private getCupMatchesObservable(cupCupMatchId: number): Observable<PaginatedResponse<CupMatchNew>> {
+      const search: CupMatchSearch = {
+         cupCupMatchId,
+         relations: ['match.clubHome', 'match.clubAway'],
+         orderBy: 'started_at',
+         sequence: Sequence.Ascending,
+         limit: SettingsService.maxLimitValues.cupMatches,
+         page: 1
+      };
+      return this.cupMatchService.getCupMatches(search);
+   }
+
+   private getCupPredictionsObservable(
+      cupCupMatchId: number,
+      homeUserId: number,
+      awayUserId: number
+   ): Observable<{ homePredictions: PaginatedResponse<CupPredictionNew>; awayPredictions: PaginatedResponse<CupPredictionNew> }> {
+      const homeRequest =
+         this.user && this.user.id === homeUserId
+            ? this.cupPredictionService.getMyCupPredictions(cupCupMatchId)
+            : this.cupPredictionService.getCupPredictions({ cupCupMatchId, userId: homeUserId });
+      const awayRequest =
+         this.user && this.user.id === awayUserId
+            ? this.cupPredictionService.getMyCupPredictions(cupCupMatchId)
+            : this.cupPredictionService.getCupPredictions({ cupCupMatchId, userId: awayUserId });
+
+      const requests: [Observable<PaginatedResponse<CupPredictionNew>>, Observable<PaginatedResponse<CupPredictionNew>>] = [
+         homeRequest,
+         awayRequest
+      ];
+      return forkJoin(requests).pipe(
+         map(([homePredictions, awayPredictions]) => {
+            return { homePredictions, awayPredictions };
+         })
+      );
+   }
+
+   private getPageData(cupCupMatchId: number): void {
+      const requests: [Observable<CupCupMatchNew>, Observable<PaginatedResponse<CupMatchNew>>] = [
+         this.getCupCupMatchObservable(cupCupMatchId),
+         this.getCupMatchesObservable(cupCupMatchId)
+      ];
+      forkJoin(requests)
+         .pipe(
+            map(([cupCupMatch, cupMatchesResponse]) => {
+               return { cupCupMatch, cupMatchesResponse };
+            }),
+            tap(response => this.handleParentObservablesResult(response)),
+            mergeMap(response =>
+               this.getCupPredictionsObservable(cupCupMatchId, response.cupCupMatch.home_user_id, response.cupCupMatch.away_user_id)
+            )
+         )
+         .subscribe(response => this.handlePredictionsObservableResult(response));
+   }
+
+   private handleParentObservablesResult(response: {
+      cupCupMatch: CupCupMatchNew;
+      cupMatchesResponse: PaginatedResponse<CupMatchNew>;
+   }): void {
+      this.cupCupMatch = response.cupCupMatch;
+      this.cupMatches = response.cupMatchesResponse.data;
+      this.titleService.setTitle(`${this.cupCupMatch.home_user.name} vs ${this.cupCupMatch.away_user.name} - Кубок`);
+      this.cupCupMatchReadableResult = UtilsService.showScoresOrString(this.cupCupMatch.home, this.cupCupMatch.away, 'vs');
+   }
+
+   private handlePredictionsObservableResult(response: {
+      homePredictions: PaginatedResponse<CupPredictionNew>;
+      awayPredictions: PaginatedResponse<CupPredictionNew>;
+   }): void {
+      this.cupMatches.forEach(cupMatch => {
+         this.predictionsNumber = { home: response.homePredictions.total, away: response.awayPredictions.total };
+         const homePrediction = response.homePredictions.data.find(prediction => prediction.cup_match_id === cupMatch.id);
+         const awayPrediction = response.awayPredictions.data.find(prediction => prediction.cup_match_id === cupMatch.id);
+         this.matchesWithPredictions.push({
+            matchInfo: { match: cupMatch, readable: UtilsService.showScoresOrString(cupMatch.match.home, cupMatch.match.away, 'vs') },
+            homePredictionInfo: {
+               prediction: homePrediction,
+               readable: homePrediction ? UtilsService.showScoresOrString(homePrediction.home, homePrediction.away, '-') : null,
+               scored: this.isCupMatchGuessed(cupMatch, homePrediction)
             },
-            error => {
-                this.cupMatches = null;
-                this.errorCupMatches = error;
+            awayPredictionInfo: {
+               prediction: awayPrediction,
+               readable: awayPrediction ? UtilsService.showScoresOrString(awayPrediction.home, awayPrediction.away, '-') : null,
+               scored: this.isCupMatchGuessed(cupMatch, awayPrediction)
             }
-        );
-    }
+         });
+      });
+   }
 }

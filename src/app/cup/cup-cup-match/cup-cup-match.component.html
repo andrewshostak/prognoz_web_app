@@ -55,27 +55,19 @@
                         </small>
                      </div>
                      <div class="d-flex flex-column justify-content-center ml-2">
-                        <img
-                           class="small-image rounded-circle d-none d-sm-inline"
-                           src="{{ userImagesUrl }}{{ cupCupMatch.home_user.image || userImageDefault }}"
-                           alt="{{ cupCupMatch.home_user.name }}"
-                        />
+                        <app-user-logo-with-tooltip [user]="cupCupMatch.home_user"></app-user-logo-with-tooltip>
                      </div>
                   </div>
                </div>
                <div class="col-2 text-center">
                   <div class="d-flex justify-content-center align-items-center h-100">
-                     <strong class="text-nowrap">{{ cupCupMatch.score }}</strong>
+                     <strong class="text-nowrap">{{ cupCupMatchReadableResult }}</strong>
                   </div>
                </div>
                <div class="col-5">
                   <div class="d-flex flex-row h-100">
                      <div class="d-flex flex-column justify-content-center mr-2">
-                        <img
-                           class="small-image rounded-circle d-none d-sm-inline"
-                           src="{{ userImagesUrl }}{{ cupCupMatch.away_user.image || userImageDefault }}"
-                           alt="{{ cupCupMatch.away_user.name }}"
-                        />
+                        <app-user-logo-with-tooltip [user]="cupCupMatch.away_user"></app-user-logo-with-tooltip>
                      </div>
                      <div class="d-flex flex-column justify-content-center">
                         <strong>{{ cupCupMatch.away_user.name }}</strong>
@@ -108,80 +100,71 @@
          </div>
          <div class="table-responsive">
             <table class="table table-bordered table-striped table-sm mb-0">
-               <tr *ngIf="cupPredictionsRequestsEnded" class="bg-light">
+               <tr class="bg-light">
                   <td class="text-center text-nowrap pb-0 pt-0">
-                     <i
-                        *ngIf="numberOfMatchesInStage === numberOfHomePredictions"
-                        class="fa fa-check-circle text-success"
-                        aria-hidden="true"
-                     ></i>
-                     <i *ngIf="!numberOfHomePredictions" class="fa fa-times text-danger" aria-hidden="true"></i>
-                     <span *ngIf="numberOfHomePredictions && numberOfMatchesInStage !== numberOfHomePredictions" class="text-danger"
-                        >{{ numberOfHomePredictions }} / {{ numberOfMatchesInStage }}</span
-                     >
+                     <i *ngIf="numberOfMatchesInStage === predictionsNumber.home" class="fa fa-check-circle text-success"></i>
+                     <i *ngIf="!predictionsNumber.home" class="fa fa-times text-danger"></i>
+                     <span *ngIf="predictionsNumber.home && numberOfMatchesInStage !== predictionsNumber.home" class="text-danger">
+                        {{ predictionsNumber.home }} / {{ numberOfMatchesInStage }}
+                     </span>
                   </td>
                   <td class="text-center text-muted pb-0 pt-0" colspan="3"><small>Прогнози</small></td>
                   <td class="text-center text-nowrap pb-0 pt-0">
-                     <i
-                        *ngIf="numberOfMatchesInStage === numberOfAwayPredictions"
-                        class="fa fa-check-circle text-success"
-                        aria-hidden="true"
-                     ></i>
-                     <i *ngIf="!numberOfAwayPredictions" class="fa fa-times text-danger" aria-hidden="true"></i>
-                     <span *ngIf="numberOfAwayPredictions && numberOfMatchesInStage !== numberOfAwayPredictions" class="text-danger"
-                        >{{ numberOfAwayPredictions }} / {{ numberOfMatchesInStage }}</span
-                     >
+                     <i *ngIf="numberOfMatchesInStage === predictionsNumber.away" class="fa fa-check-circle text-success"></i>
+                     <i *ngIf="!predictionsNumber.away" class="fa fa-times text-danger"></i>
+                     <span *ngIf="predictionsNumber.away && numberOfMatchesInStage !== predictionsNumber.away" class="text-danger">
+                        {{ predictionsNumber.away }} / {{ numberOfMatchesInStage }}
+                     </span>
                   </td>
                </tr>
-               <ng-container *ngIf="cupMatches">
-                  <tr *ngFor="let cupMatch of cupMatches">
-                     <td
-                        class="text-center text-nowrap"
-                        [ngClass]="{ 'bg-success text-white': isCupMatchGuessed(cupMatch, cupMatch.home_prediction) }"
+               <tr *ngFor="let matchWithPredictions of matchesWithPredictions">
+                  <td
+                     class="text-center text-nowrap"
+                     [ngClass]="{ 'bg-success text-white': matchWithPredictions.homePredictionInfo.scored }"
+                  >
+                     <app-prediction-with-tooltip
+                        *ngIf="matchWithPredictions.homePredictionInfo.prediction; else hiddenPrediction"
+                        [componentText]="matchWithPredictions.homePredictionInfo.readable"
+                        [tooltipText]="matchWithPredictions.homePredictionInfo.prediction.created_at"
+                        [placement]="'right'"
                      >
-                        <app-prediction-with-tooltip
-                           [componentText]="cupMatch.home_prediction"
-                           [tooltipText]="cupMatch.home_prediction_created_at"
-                           [placement]="'right'"
-                        >
-                        </app-prediction-with-tooltip>
-                     </td>
-                     <td class="text-right text-nowrap">
-                        <span
-                           *ngIf="isCupMatchGuessed(cupMatch, cupMatch.home_prediction)"
-                           class="pull-left text-success d-none d-lg-inline"
-                        >
-                           <i class="fa fa-lg fa-check-circle-o" aria-hidden="true"></i>
-                        </span>
-                        <span class="d-none d-sm-inline">{{ cupMatch.club_first.title }}</span>
-                        <app-club-logo-with-tooltip [club]="cupMatch.club_first"></app-club-logo-with-tooltip>
-                     </td>
-                     <th class="text-center text-nowrap">
-                        {{ showScoresOrString(cupMatch.home, cupMatch.away, 'vs') }}
-                     </th>
-                     <td class="text-left text-nowrap">
-                        <app-club-logo-with-tooltip [club]="cupMatch.club_second"></app-club-logo-with-tooltip>
-                        <span class="d-none d-sm-inline">{{ cupMatch.club_second.title }}</span>
-                        <span
-                           *ngIf="isCupMatchGuessed(cupMatch, cupMatch.away_prediction)"
-                           class="pull-right text-success d-none d-lg-inline"
-                        >
-                           <i class="fa fa-lg fa-check-circle-o" aria-hidden="true"></i>
-                        </span>
-                     </td>
-                     <td
-                        class="text-center text-nowrap"
-                        [ngClass]="{ 'bg-success text-white': isCupMatchGuessed(cupMatch, cupMatch.away_prediction) }"
+                     </app-prediction-with-tooltip>
+                  </td>
+                  <td class="text-right text-nowrap">
+                     <span *ngIf="matchWithPredictions.homePredictionInfo.scored" class="pull-left text-success d-none d-lg-inline">
+                        <i class="fa fa-lg fa-check-circle-o"></i>
+                     </span>
+                     <span class="d-none d-sm-inline">{{ matchWithPredictions.matchInfo.match.match.club_home.title }}</span>
+                     <app-club-logo-with-tooltip [club]="matchWithPredictions.matchInfo.match.match.club_home"></app-club-logo-with-tooltip>
+                  </td>
+                  <th class="text-center text-nowrap">
+                     <app-prediction-with-tooltip
+                        [componentText]="matchWithPredictions.matchInfo.readable"
+                        [tooltipText]="matchWithPredictions.matchInfo.match.match.started_at"
+                        [placement]="'top'"
                      >
-                        <app-prediction-with-tooltip
-                           [componentText]="cupMatch.away_prediction"
-                           [tooltipText]="cupMatch.away_prediction_created_at"
-                           [placement]="'left'"
-                        >
-                        </app-prediction-with-tooltip>
-                     </td>
-                  </tr>
-               </ng-container>
+                     </app-prediction-with-tooltip>
+                  </th>
+                  <td class="text-left text-nowrap">
+                     <app-club-logo-with-tooltip [club]="matchWithPredictions.matchInfo.match.match.club_away"></app-club-logo-with-tooltip>
+                     <span class="d-none d-sm-inline">{{ matchWithPredictions.matchInfo.match.match.club_away.title }}</span>
+                     <span *ngIf="matchWithPredictions.awayPredictionInfo.scored" class="pull-right text-success d-none d-lg-inline">
+                        <i class="fa fa-lg fa-check-circle-o"></i>
+                     </span>
+                  </td>
+                  <td
+                     class="text-center text-nowrap"
+                     [ngClass]="{ 'bg-success text-white': matchWithPredictions.awayPredictionInfo.scored }"
+                  >
+                     <app-prediction-with-tooltip
+                        *ngIf="matchWithPredictions.awayPredictionInfo.prediction; else hiddenPrediction"
+                        [componentText]="matchWithPredictions.awayPredictionInfo.readable"
+                        [tooltipText]="matchWithPredictions.awayPredictionInfo.prediction.created_at"
+                        [placement]="'left'"
+                     >
+                     </app-prediction-with-tooltip>
+                  </td>
+               </tr>
             </table>
          </div>
          <table *ngIf="cupCupMatch.ended" class="table table-bordered table-sm mb-0">
@@ -198,6 +181,5 @@
       </div>
    </div>
 </div>
-<app-error *ngIf="errorCupCupMatch" [message]="errorCupCupMatch"></app-error>
-<app-error *ngIf="errorCupMatches" [message]="errorCupMatches"></app-error>
 <ng-template #noPoints><span>0</span></ng-template>
+<ng-template #hiddenPrediction><i class="fa fa-question text-muted"></i></ng-template>
