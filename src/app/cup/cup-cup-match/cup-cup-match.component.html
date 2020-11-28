@@ -125,7 +125,7 @@
                      <app-prediction-with-tooltip
                         *ngIf="matchWithPredictions.homePredictionInfo.prediction; else hiddenPrediction"
                         [componentText]="matchWithPredictions.homePredictionInfo.readable"
-                        [tooltipText]="matchWithPredictions.homePredictionInfo.prediction.created_at"
+                        [tooltipText]="matchWithPredictions.homePredictionInfo.prediction.updated_at"
                         [placement]="'right'"
                      >
                      </app-prediction-with-tooltip>
@@ -159,7 +159,7 @@
                      <app-prediction-with-tooltip
                         *ngIf="matchWithPredictions.awayPredictionInfo.prediction; else hiddenPrediction"
                         [componentText]="matchWithPredictions.awayPredictionInfo.readable"
-                        [tooltipText]="matchWithPredictions.awayPredictionInfo.prediction.created_at"
+                        [tooltipText]="matchWithPredictions.awayPredictionInfo.prediction.updated_at"
                         [placement]="'left'"
                      >
                      </app-prediction-with-tooltip>
