@@ -47,7 +47,7 @@ export class CupCupMatchNewService {
    public sortCupCupMatches(cupCupMatches: CupCupMatchNew[]): CupCupMatchNew[] {
       const user = this.authService.getUser();
       if (!user) {
-         return cupCupMatches;
+         return cupCupMatches.sort(this.sortByIdFunc);
       }
 
       return this.sortCupCupMatchesByUserId(cupCupMatches, user.id);
@@ -91,6 +91,10 @@ export class CupCupMatchNewService {
       return this.httpClient.get<PaginatedResponse<CupCupMatchNew>>(this.cupCupMatchesUrl, { params });
    }
 
+   private sortByIdFunc(a: CupCupMatchNew, b: CupCupMatchNew): number {
+      return a.id < b.id ? -1 : 1;
+   }
+
    private sortCupCupMatchesByUserId(cupCupMatches: CupCupMatchNew[], userId: number): CupCupMatchNew[] {
       return cupCupMatches.sort((a, b) => {
          if ([a.home_user_id, a.away_user_id].includes(userId)) {
@@ -100,7 +104,7 @@ export class CupCupMatchNewService {
             return 1;
          }
 
-         return 0;
+         return this.sortByIdFunc(a, b);
       });
    }
 }
