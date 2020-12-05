@@ -38,7 +38,9 @@ export class DropdownNavigationComponent implements OnChanges, OnInit {
 
    public ngOnChanges(changes: SimpleChanges): void {
       if (changes.selectedId && this.form && this.navigationPath.includes('cup-matches')) {
-         this.form.get('id').setValue(changes.selectedId.currentValue);
+         if (changes.selectedId.currentValue) {
+            this.form.get('id').setValue(changes.selectedId.currentValue);
+         }
       }
    }
 

@@ -29,7 +29,12 @@
          <div class="col-2 d-flex align-items-center justify-content-center text-center text-nowrap">
             <small class="text-muted" *ngIf="isNil(cupCupMatch.home) && isNil(cupCupMatch.away); else score">vs</small>
             <ng-template #score>
-               <strong>{{ cupCupMatch.home }} : {{ cupCupMatch.away }}</strong>
+               <span class="d-none d-sm-inline">
+                  <strong>{{ cupCupMatch.home }} : {{ cupCupMatch.away }}</strong>
+               </span>
+               <span class="d-inline d-sm-none">
+                  <strong>{{ cupCupMatch.home }}:{{ cupCupMatch.away }}</strong>
+               </span>
             </ng-template>
          </div>
          <div class="col-5 d-flex align-items-center justify-content-start">
