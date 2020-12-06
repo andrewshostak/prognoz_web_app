@@ -49,6 +49,20 @@
    </app-cup-cup-matches-group>
    <app-cup-cup-matches-group *ngSwitchCase="cupStageTypes.GroupOneMatch" [cupStage]="selectedCupStage" [cupCupMatches]="cupCupMatches">
    </app-cup-cup-matches-group>
+   <app-cup-cup-matches-two-rounds
+      *ngSwitchCase="cupStageTypes.Qualification"
+      [cupStage]="selectedCupStage"
+      [cupCupMatches]="cupCupMatches"
+      [cupCupMatchesOfFirstStage]="cupCupMatchesOfFirstStage"
+   >
+   </app-cup-cup-matches-two-rounds>
+   <app-cup-cup-matches-two-rounds
+      *ngSwitchCase="cupStageTypes.PlayOff"
+      [cupStage]="selectedCupStage"
+      [cupCupMatches]="cupCupMatches"
+      [cupCupMatchesOfFirstStage]="cupCupMatchesOfFirstStage"
+   >
+   </app-cup-cup-matches-two-rounds>
    <app-cup-cup-matches-default *ngSwitchDefault [cupStage]="selectedCupStage" [cupCupMatches]="cupCupMatches">
    </app-cup-cup-matches-default>
 </div>

@@ -18,6 +18,7 @@ import { CupComponent } from './cup.component';
 import { CupApplicationModalComponent } from './shared/cup-application-modal/cup-application-modal.component';
 import { CupCupMatchesDefaultComponent } from './shared/cup-cup-matches-default/cup-cup-matches-default.component';
 import { CupCupMatchesGroupComponent } from './shared/cup-cup-matches-group/cup-cup-matches-group.component';
+import { CupCupMatchesTwoRoundsComponent } from './shared/cup-cup-matches-two-rounds/cup-cup-matches-two-rounds.component';
 import { CupPredictionFormComponent } from './shared/cup-prediction-form/cup-prediction-form.component';
 import { CupRatingSeasonDetailsComponent } from './shared/cup-rating-season-details/cup-rating-season-details.component';
 import { CupRatingSeasonsSummaryComponent } from './shared/cup-rating-seasons-summary/cup-rating-seasons-summary.component';
@@ -41,6 +42,7 @@ import { CupStageSelectComponent } from './shared/cup-stage-select/cup-stage-sel
       CupApplicationsComponent,
       CupCupMatchesDefaultComponent,
       CupCupMatchesGroupComponent,
+      CupCupMatchesTwoRoundsComponent,
       CupCupMatchesComponent,
       CupCupMatchComponent,
       CupPredictionFormComponent,

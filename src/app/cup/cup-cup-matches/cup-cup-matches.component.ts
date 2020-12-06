@@ -30,6 +30,7 @@ import { filter, first, mergeMap, tap } from 'rxjs/operators';
 export class CupCupMatchesComponent implements OnInit {
    public competitions: CompetitionNew[] = [];
    public cupCupMatches: CupCupMatchNew[] = [];
+   public cupCupMatchesOfFirstStage: CupCupMatchNew[] = [];
    public cupStages: CupStageNew[] = [];
    public selectedCompetitionId: number = null;
    public selectedCupStage: CupStageNew = null;
@@ -76,7 +77,6 @@ export class CupCupMatchesComponent implements OnInit {
       this.showCupStageSelect = !this.showCupStageSelect;
    }
 
-   // todo
    private findPreviousCupStage(cupStages: CupStageNew[], selectedCupStage: CupStageNew): CupStageNew {
       return findLast(cupStages, (cupStage: CupStageNew) => {
          return (
@@ -114,11 +114,11 @@ export class CupCupMatchesComponent implements OnInit {
       );
    }
 
-   private getCupCupMatchesObservable(cupStageId: number): Observable<PaginatedResponse<CupCupMatchNew>> {
+   private getCupCupMatchesObservable(cupStageId: number, includeRelations: boolean): Observable<PaginatedResponse<CupCupMatchNew>> {
       const search: CupCupMatchSearch = {
          page: 1,
          cupStageId,
-         relations: ['homeUser', 'awayUser'],
+         relations: includeRelations ? ['homeUser', 'awayUser'] : [],
          limit: SettingsService.maxLimitValues.cupCupMatches
       };
       return this.cupCupMatchService.getCupCupMatches(search);
@@ -151,7 +151,6 @@ export class CupCupMatchesComponent implements OnInit {
       return this.cupStageService.getCupStage(cupStageId).pipe(mergeMap(response => this.getCupStagesObservable(response.competition_id)));
    }
 
-   // todo
    private hasPreviousCupStage(cupStage: CupStageNew): boolean {
       const twoMatchCupStages = [CupStageType.Qualification, CupStageType.PlayOff];
       return twoMatchCupStages.includes(cupStage.cup_stage_type_id) && cupStage.round === 2;
@@ -229,19 +228,27 @@ export class CupCupMatchesComponent implements OnInit {
                   this.cupStages = response.data;
                   this.setSelectedCompetitionId(response.data[0].competition_id);
                   this.selectedCupStage = find(this.cupStages, { id: parseInt(params.cup_stage_id, 10) });
+                  this.updateFirstStageCupCupMatches();
                });
          } else {
             this.selectedCupStage = found as CupStageNew;
-
-            // todo
-            // if (this.hasPreviousCupStage(this.selectedCupStage)) {
-            //    const previousCupStage = this.findPreviousCupStage(this.cupStages, this.selectedCupStage);
-            // }
+            this.updateFirstStageCupCupMatches();
          }
 
-         this.getCupCupMatchesObservable(params.cup_stage_id).subscribe(response => {
+         this.getCupCupMatchesObservable(params.cup_stage_id, true).subscribe(response => {
             this.cupCupMatches = response.data;
          });
       });
+   }
+
+   private updateFirstStageCupCupMatches(): void {
+      if (this.hasPreviousCupStage(this.selectedCupStage) && (this.selectedCupStage.active || this.selectedCupStage.ended)) {
+         const previousCupStage = this.findPreviousCupStage(this.cupStages, this.selectedCupStage);
+         this.getCupCupMatchesObservable(previousCupStage.id, false).subscribe(response => {
+            this.cupCupMatchesOfFirstStage = response.data;
+         });
+      } else {
+         this.cupCupMatchesOfFirstStage = [];
+      }
    }
 }
