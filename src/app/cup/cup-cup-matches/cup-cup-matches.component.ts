@@ -18,7 +18,7 @@ import { CupCupMatchNewService } from '@services/new/cup-cup-match-new.service';
 import { CupStageNewService } from '@services/new/cup-stage-new.service';
 import { SettingsService } from '@services/settings.service';
 import { TitleService } from '@services/title.service';
-import { find, findLast } from 'lodash';
+import { find, findLast, get } from 'lodash';
 import { iif, Observable, of } from 'rxjs';
 import { filter, first, mergeMap, tap } from 'rxjs/operators';
 
@@ -171,7 +171,7 @@ export class CupCupMatchesComponent implements OnInit {
             ),
             tap(response => {
                this.cupStages = response.data;
-               this.setSelectedCompetitionId(response.data[0].competition_id);
+               this.setSelectedCompetitionId(response);
 
                this.subscribeToCupStageIdUrlParamChange();
                if (!this.activatedRoute.snapshot.params.cup_stage_id) {
@@ -210,7 +210,11 @@ export class CupCupMatchesComponent implements OnInit {
       this.router.navigate(['/cup', 'cup-matches', { cup_Stage_id: cupStages[0].id }]);
    }
 
-   private setSelectedCompetitionId(competitionId: number): void {
+   private setSelectedCompetitionId(response: PaginatedResponse<CupStageNew>): void {
+      const competitionId = get(response, 'data[0].competition_id');
+      if (!competitionId) {
+         return;
+      }
       if (this.competitions.map(c => c.id).includes(competitionId)) {
          this.selectedCompetitionId = competitionId;
       }
@@ -226,7 +230,7 @@ export class CupCupMatchesComponent implements OnInit {
                .pipe(first())
                .subscribe((response: PaginatedResponse<CupStageNew>) => {
                   this.cupStages = response.data;
-                  this.setSelectedCompetitionId(response.data[0].competition_id);
+                  this.setSelectedCompetitionId(response);
                   this.selectedCupStage = find(this.cupStages, { id: parseInt(params.cup_stage_id, 10) });
                   this.updateFirstStageCupCupMatches();
                });
