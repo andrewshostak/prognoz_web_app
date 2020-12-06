@@ -170,16 +170,19 @@
          <table *ngIf="cupCupMatch.ended" class="table table-bordered table-sm mb-0">
             <tr>
                <td class="points-cell text-center">
-                  <strong *ngIf="cupCupMatch.home_rating_points > 0; else noPoints"> +{{ cupCupMatch.home_rating_points }} </strong>
+                  <strong *ngIf="cupCupMatch.home_rating_points > 0"> +{{ cupCupMatch.home_rating_points }} </strong>
+                  <strong *ngIf="cupCupMatch.home_rating_points < 0" class="text-danger"> {{ cupCupMatch.home_rating_points }} </strong>
+                  <span *ngIf="cupCupMatch.home_rating_points == 0">0</span>
                </td>
                <td class="text-center text-muted bg-light"><small>Рейтингові очки</small></td>
                <td class="points-cell text-center">
-                  <strong *ngIf="cupCupMatch.away_rating_points > 0; else noPoints"> +{{ cupCupMatch.away_rating_points }} </strong>
+                  <strong *ngIf="cupCupMatch.away_rating_points > 0"> +{{ cupCupMatch.away_rating_points }} </strong>
+                  <strong *ngIf="cupCupMatch.away_rating_points < 0" class="text-danger"> {{ cupCupMatch.away_rating_points }} </strong>
+                  <span *ngIf="cupCupMatch.away_rating_points == 0">0</span>
                </td>
             </tr>
          </table>
       </div>
    </div>
 </div>
-<ng-template #noPoints><span>0</span></ng-template>
 <ng-template #hiddenPrediction><i class="fa fa-question text-muted"></i></ng-template>
