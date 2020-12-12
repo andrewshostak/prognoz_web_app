@@ -1,4 +1,3 @@
-<!-- top navbar: form and buttons -->
 <nav class="navbar navbar-expand navbar-dark bg-dark">
    <a class="navbar-brand mr-auto d-none d-md-block" routerLink="/">Prognoz.org.ua</a>
    <div *ngIf="!user" class="form-inline ml-auto ml-2">
@@ -10,7 +9,6 @@
          </button>
       </div>
    </div>
-   <!-- user profile buttons -->
    <div *ngIf="user" class="form-inline ml-auto">
       <div class="btn-group" role="group" aria-label="user buttons">
          <button *ngIf="user" routerLink="/me" class="btn btn-light">
@@ -25,17 +23,15 @@
       </div>
    </div>
 </nav>
-<!-- site logo -->
-<div class="container-fluid logo-background">
+<div #logoBackground class="container-fluid logo-background">
    <div class="row">
       <div class="col">
          <a routerLink="/">
-            <img src="/assets/img/logo.png" class="img-fluid" alt="prognoz.org.ua" />
+            <img src="/assets/img/logo.png" class="img-fluid logo-image" alt="prognoz.org.ua" />
          </a>
       </div>
    </div>
 </div>
-<!-- main-navigation -->
 <nav class="navbar navbar-expand-sm navbar-dark bg-dark mb-2">
    <button class="navbar-toggler cursor-pointer" type="button" (click)="collapsed = !collapsed">
       <span class="navbar-toggler-icon"></span>

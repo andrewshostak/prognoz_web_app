@@ -37,6 +37,7 @@ import { CupCupMatchNewService } from '@services/new/cup-cup-match-new.service';
 import { CupMatchNewService } from '@services/new/cup-match-new.service';
 import { CupPredictionNewService } from '@services/new/cup-prediction-new.service';
 import { CupStageNewService } from '@services/new/cup-stage-new.service';
+import { HeaderImageService } from '@services/new/header-image.service';
 import { MatchService } from '@services/new/match.service';
 import { SeasonNewService } from '@services/new/season-new.service';
 import { TeamCompetitionNewService } from '@services/new/team-competition-new.service';
@@ -89,6 +90,7 @@ import { UtilsService } from '@services/utils.service';
       DeviceService,
       ErrorHandlerService,
       FormValidatorService,
+      HeaderImageService,
       HeadersWithToken,
       ImageService,
       MatchService,

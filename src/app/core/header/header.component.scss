@@ -1,5 +1,10 @@
 .logo-background {
-   background: url('/assets/img/grass_dew.jpg') center center;
    background-size: cover;
+   background-position: center;
    text-align: center;
+
+   .logo-image {
+      -webkit-filter: drop-shadow(5px 5px 15px black);
+      filter: drop-shadow(5px 5px 15px black);
+   }
 }

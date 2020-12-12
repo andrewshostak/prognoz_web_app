@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnInit, Renderer2, ViewChild } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 
 import { UserNew } from '@models/new/user-new.model';
 import { CurrentStateService } from '@services/current-state.service';
 import { AuthNewService } from '@services/new/auth-new.service';
+import { HeaderImageService } from '@services/new/header-image.service';
 import { NotificationsService } from 'angular2-notifications';
 import { filter } from 'rxjs/operators';
 
@@ -12,14 +13,18 @@ import { filter } from 'rxjs/operators';
    templateUrl: './header.component.html',
    styleUrls: ['./header.component.scss']
 })
-export class HeaderComponent implements OnInit {
+export class HeaderComponent implements AfterViewInit, OnInit {
    public collapsed: boolean;
    public user: UserNew;
+
+   @ViewChild('logoBackground', { static: true }) public logoBackground: ElementRef;
 
    constructor(
       private authService: AuthNewService,
       private currentStateService: CurrentStateService,
+      private headerImageService: HeaderImageService,
       private notificationsService: NotificationsService,
+      private renderer: Renderer2,
       private router: Router
    ) {}
 
@@ -31,6 +36,10 @@ export class HeaderComponent implements OnInit {
       this.currentStateService.getOnlineUsers(null);
       this.notificationsService.info('Успішно', 'Ви вийшли зі свого аккаунту');
       this.router.navigate(['/']);
+   }
+
+   public ngAfterViewInit() {
+      this.renderer.setStyle(this.logoBackground.nativeElement, 'background-image', this.headerImageService.getBackgroundImageValue());
    }
 
    public ngOnInit(): void {
