@@ -118,6 +118,7 @@ export class CupCupMatchesComponent implements OnInit {
       const search: CupCupMatchSearch = {
          page: 1,
          cupStageId,
+         cupPredictionsCount: true,
          relations: includeRelations ? ['homeUser', 'awayUser'] : [],
          limit: SettingsService.maxLimitValues.cupCupMatches
       };

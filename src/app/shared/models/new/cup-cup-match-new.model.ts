@@ -25,4 +25,6 @@ export class CupCupMatchNew {
    public home_user?: UserNew;
    public away_user?: UserNew;
    public cup_stage: CupStageNew;
+   public cup_predictions_away_count?: number;
+   public cup_predictions_home_count?: number;
 }

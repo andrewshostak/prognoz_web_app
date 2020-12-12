@@ -16,7 +16,11 @@
             <small *ngIf="wrappedCupCupMatch.current.home_user.hometown" class="d-none d-sm-block text-muted text-truncate pr-1"
                >({{ wrappedCupCupMatch.current.home_user.hometown }})</small
             >
-            <strong class="text-right pr-1">{{ wrappedCupCupMatch.current.home_user.name }}</strong>
+            <app-cup-cup-match-user-name
+               class="text-right pr-1"
+               [count]="wrappedCupCupMatch.current.cup_predictions_home_count"
+               [user]="wrappedCupCupMatch.current.home_user"
+            ></app-cup-cup-match-user-name>
             <app-user-logo-with-tooltip [user]="wrappedCupCupMatch.current.home_user"></app-user-logo-with-tooltip>
          </div>
          <div class="col-2 d-flex flex-column align-items-center justify-content-center text-center text-nowrap">
@@ -39,7 +43,11 @@
          </div>
          <div class="col-5 d-flex align-items-center justify-content-start">
             <app-user-logo-with-tooltip [user]="wrappedCupCupMatch.current.away_user"></app-user-logo-with-tooltip>
-            <strong class="text-left pl-1">{{ wrappedCupCupMatch.current.away_user.name }}</strong>
+            <app-cup-cup-match-user-name
+               class="text-left pl-1"
+               [count]="wrappedCupCupMatch.current.cup_predictions_away_count"
+               [user]="wrappedCupCupMatch.current.away_user"
+            ></app-cup-cup-match-user-name>
             <small *ngIf="wrappedCupCupMatch.current.away_user.hometown" class="d-none d-sm-block text-muted text-truncate pl-1"
                >({{ wrappedCupCupMatch.current.away_user.hometown }})</small
             >

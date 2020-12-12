@@ -88,6 +88,10 @@ export class CupCupMatchNewService {
          params = params.set('cup_stage_id', search.cupStageId.toString());
       }
 
+      if (search.cupPredictionsCount) {
+         params = params.append('cup_predictions_count', (search.cupPredictionsCount as unknown) as string);
+      }
+
       return this.httpClient.get<PaginatedResponse<CupCupMatchNew>>(this.cupCupMatchesUrl, { params });
    }
 

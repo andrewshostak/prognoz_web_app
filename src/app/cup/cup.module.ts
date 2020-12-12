@@ -16,6 +16,7 @@ import { CupRoutingModule } from './cup-routing.module';
 import { CupRulesComponent } from './cup-rules/cup-rules.component';
 import { CupComponent } from './cup.component';
 import { CupApplicationModalComponent } from './shared/cup-application-modal/cup-application-modal.component';
+import { CupCupMatchUserNameComponent } from './shared/cup-cup-match-user-name/cup-cup-match-user-name.component';
 import { CupCupMatchesDefaultComponent } from './shared/cup-cup-matches-default/cup-cup-matches-default.component';
 import { CupCupMatchesGroupComponent } from './shared/cup-cup-matches-group/cup-cup-matches-group.component';
 import { CupCupMatchesTwoRoundsComponent } from './shared/cup-cup-matches-two-rounds/cup-cup-matches-two-rounds.component';
@@ -45,6 +46,7 @@ import { CupStageSelectComponent } from './shared/cup-stage-select/cup-stage-sel
       CupCupMatchesTwoRoundsComponent,
       CupCupMatchesComponent,
       CupCupMatchComponent,
+      CupCupMatchUserNameComponent,
       CupPredictionFormComponent,
       CupPredictionsComponent,
       CupRatingComponent,
