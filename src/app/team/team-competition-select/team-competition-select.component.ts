@@ -1,166 +1,163 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
 import { FormControl, FormGroup } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
 
+import { Sequence } from '@enums/sequence.enum';
+import { environment } from '@env';
 import { Competition } from '@models/competition.model';
+import { SeasonNew } from '@models/new/season-new.model';
+import { SeasonSearch } from '@models/search/season-search.model';
 import { CompetitionService } from '@services/competition.service';
 import { CurrentStateService } from '@services/current-state.service';
-import { environment } from '@env';
-import { Season } from '@models/season.model';
-import { SeasonService } from '@services/season.service';
+import { SeasonNewService } from '@services/new/season-new.service';
+import { SettingsService } from '@services/settings.service';
 
 @Component({
-    selector: 'app-team-competition-select',
-    templateUrl: './team-competition-select.component.html',
-    styleUrls: ['./team-competition-select.component.scss']
+   selector: 'app-team-competition-select',
+   templateUrl: './team-competition-select.component.html',
+   styleUrls: ['./team-competition-select.component.scss']
 })
 export class TeamCompetitionSelectComponent implements OnInit {
-    constructor(
-        private activatedRoute: ActivatedRoute,
-        private competitionService: CompetitionService,
-        private currentStateService: CurrentStateService,
-        private router: Router,
-        private seasonService: SeasonService
-    ) {}
+   public archiveCompetitions: Competition[];
+   public competitions: Competition[];
+   public errorArchiveCompetitions: string;
+   public errorCompetitions: string;
+   public filterCardExpanded: boolean;
+   public filterTeamCompetitionsForm: FormGroup;
+   public seasons: SeasonNew[];
 
-    archiveCompetitions: Competition[];
-    competitions: Competition[];
-    errorArchiveCompetitions: string;
-    errorCompetitions: string;
-    errorSeasons: string;
-    filterCardExpanded: boolean;
-    filterTeamCompetitionsForm: FormGroup;
-    seasons: Season[];
+   constructor(
+      private activatedRoute: ActivatedRoute,
+      private competitionService: CompetitionService,
+      private currentStateService: CurrentStateService,
+      private router: Router,
+      private seasonService: SeasonNewService
+   ) {}
 
-    isSelected(competition: Competition): boolean {
-        return this.getTeamCompetitionIdFromUrl() === competition.id;
-    }
+   public isSelected(competition: Competition): boolean {
+      return this.getTeamCompetitionIdFromUrl() === competition.id;
+   }
 
-    navigate(competition: Competition, type: 'main' | 'archive' = 'main'): void {
-        const urlArray = this.getRouterUrlAsArray();
-        urlArray[3] = competition.id.toString();
-        urlArray[4] = urlArray[4] ? urlArray[4] : 'matches';
+   public navigate(competition: Competition, type: 'main' | 'archive' = 'main'): void {
+      const urlArray = this.getRouterUrlAsArray();
+      urlArray[3] = competition.id.toString();
+      urlArray[4] = urlArray[4] ? urlArray[4] : 'matches';
 
-        if (type === 'main') {
-            this.currentStateService.teamCompetitionId = competition.id;
-        }
+      if (type === 'main') {
+         this.currentStateService.teamCompetitionId = competition.id;
+      }
 
-        this.router.navigate(urlArray);
-    }
+      this.router.navigate(urlArray);
+   }
 
-    ngOnInit() {
-        this.activatedRoute.params.subscribe(() => {
-            if (this.getRouterUrlAsArray().includes('get-active')) {
-                if (this.currentStateService.teamCompetitionId) {
-                    this.router.navigate(['/team', 'competitions', this.currentStateService.teamCompetitionId, 'matches']);
-                }
+   public ngOnInit() {
+      this.activatedRoute.params.subscribe(() => {
+         if (this.getRouterUrlAsArray().includes('get-active')) {
+            if (this.currentStateService.teamCompetitionId) {
+               this.router.navigate(['/team', 'competitions', this.currentStateService.teamCompetitionId, 'matches']);
             }
-        });
+         }
+      });
 
-        this.competitionService.getCompetitions(null, environment.tournaments.team.id, null, null, true, true).subscribe(
+      this.competitionService.getCompetitions(null, environment.tournaments.team.id, null, null, true, true).subscribe(
+         response => {
+            this.errorCompetitions = null;
+            if (response && response.competitions && response.competitions.length) {
+               this.competitions = response.competitions;
+               if (this.getRouterUrlAsArray().includes('get-active') && !this.currentStateService.teamCompetitionId) {
+                  this.router.navigate(['/team', 'competitions', response.competitions[0].id, 'matches']);
+               }
+            } else {
+               this.getLastEndedTeamCompetitions(1);
+            }
+         },
+         error => {
+            this.competitions = null;
+            this.errorCompetitions = error;
+         }
+      );
+
+      this.filterTeamCompetitionsForm = new FormGroup({
+         season_id: new FormControl(''),
+         competition_id: new FormControl('')
+      });
+
+      this.filterTeamCompetitionsForm.get('season_id').valueChanges.subscribe(value => {
+         this.archiveCompetitions = null;
+         if (value) {
+            this.getCompetitionsData();
+         }
+      });
+
+      this.filterTeamCompetitionsForm.get('competition_id').valueChanges.subscribe(value => {
+         if (value) {
+            this.navigate(this.archiveCompetitions.find(competition => competition.id.toString() === value), 'archive');
+         }
+      });
+   }
+
+   public resetTeamCompetitionsFormFilters(): void {
+      this.filterTeamCompetitionsForm.reset();
+   }
+
+   public toggleFilterCardVisibility(): void {
+      this.filterCardExpanded = !this.filterCardExpanded;
+
+      if (!this.seasons && this.filterCardExpanded) {
+         this.getSeasonsData();
+      }
+   }
+
+   private getCompetitionsData(): void {
+      this.competitionService
+         .getCompetitions(null, environment.tournaments.team.id, this.filterTeamCompetitionsForm.get('season_id').value)
+         .subscribe(
             response => {
-                this.errorCompetitions = null;
-                if (response && response.competitions && response.competitions.length) {
-                    this.competitions = response.competitions;
-                    if (this.getRouterUrlAsArray().includes('get-active') && !this.currentStateService.teamCompetitionId) {
-                        this.router.navigate(['/team', 'competitions', response.competitions[0].id, 'matches']);
-                    }
-                } else {
-                    this.getLastEndedTeamCompetitions(1);
-                }
+               this.errorArchiveCompetitions = null;
+               if (response) {
+                  this.archiveCompetitions = response.competitions;
+               }
             },
             error => {
-                this.competitions = null;
-                this.errorCompetitions = error;
+               this.competitions = null;
+               this.errorArchiveCompetitions = error;
             }
-        );
+         );
+   }
 
-        this.filterTeamCompetitionsForm = new FormGroup({
-            season_id: new FormControl(''),
-            competition_id: new FormControl('')
-        });
+   private getRouterUrlAsArray(): string[] {
+      return this.router.url.split('/');
+   }
 
-        this.filterTeamCompetitionsForm.get('season_id').valueChanges.subscribe(value => {
-            this.archiveCompetitions = null;
-            if (value) {
-                this.getCompetitionsData();
+   private getSeasonsData(): void {
+      const search: SeasonSearch = {
+         limit: SettingsService.maxLimitValues.seasons,
+         page: 1,
+         orderBy: 'id',
+         sequence: Sequence.Descending
+      };
+      this.seasonService.getSeasons(search).subscribe(response => (this.seasons = response.data));
+   }
+
+   private getTeamCompetitionIdFromUrl(): number {
+      return parseInt(this.getRouterUrlAsArray()[3], 10);
+   }
+
+   private getLastEndedTeamCompetitions(limit: number): void {
+      this.competitionService.getCompetitions(null, environment.tournaments.team.id, null, null, null, null, true, 1).subscribe(
+         response => {
+            this.errorCompetitions = null;
+            if (response && response.competitions && response.competitions.length) {
+               this.competitions = response.competitions;
+               if (this.getRouterUrlAsArray().includes('get-active') && !this.currentStateService.teamCompetitionId) {
+                  this.router.navigate(['/team', 'competitions', response.competitions[0].id, 'matches']);
+               }
             }
-        });
-
-        this.filterTeamCompetitionsForm.get('competition_id').valueChanges.subscribe(value => {
-            if (value) {
-                this.navigate(this.archiveCompetitions.find(competition => competition.id.toString() === value), 'archive');
-            }
-        });
-    }
-
-    resetTeamCompetitionsFormFilters(): void {
-        this.filterTeamCompetitionsForm.reset();
-    }
-
-    toggleFilterCardVisibility(): void {
-        this.filterCardExpanded = !this.filterCardExpanded;
-
-        if (!this.seasons && this.filterCardExpanded) {
-            this.getSeasonsData();
-        }
-    }
-
-    private getCompetitionsData(): void {
-        this.competitionService
-            .getCompetitions(null, environment.tournaments.team.id, this.filterTeamCompetitionsForm.get('season_id').value)
-            .subscribe(
-                response => {
-                    this.errorArchiveCompetitions = null;
-                    if (response) {
-                        this.archiveCompetitions = response.competitions;
-                    }
-                },
-                error => {
-                    this.competitions = null;
-                    this.errorArchiveCompetitions = error;
-                }
-            );
-    }
-
-    private getRouterUrlAsArray(): string[] {
-        return this.router.url.split('/');
-    }
-
-    private getSeasonsData(): void {
-        this.seasonService.getSeasons().subscribe(
-            response => {
-                this.errorSeasons = null;
-                if (response) {
-                    this.seasons = response.seasons;
-                }
-            },
-            error => {
-                this.seasons = null;
-                this.errorSeasons = error;
-            }
-        );
-    }
-
-    private getTeamCompetitionIdFromUrl(): number {
-        return parseInt(this.getRouterUrlAsArray()[3], 10);
-    }
-
-    private getLastEndedTeamCompetitions(limit: number): void {
-        this.competitionService.getCompetitions(null, environment.tournaments.team.id, null, null, null, null, true, 1).subscribe(
-            response => {
-                this.errorCompetitions = null;
-                if (response && response.competitions && response.competitions.length) {
-                    this.competitions = response.competitions;
-                    if (this.getRouterUrlAsArray().includes('get-active') && !this.currentStateService.teamCompetitionId) {
-                        this.router.navigate(['/team', 'competitions', response.competitions[0].id, 'matches']);
-                    }
-                }
-            },
-            error => {
-                this.competitions = null;
-                this.errorCompetitions = error;
-            }
-        );
-    }
+         },
+         error => {
+            this.competitions = null;
+            this.errorCompetitions = error;
+         }
+      );
+   }
 }

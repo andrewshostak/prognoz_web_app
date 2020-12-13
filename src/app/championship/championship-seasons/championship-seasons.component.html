@@ -1,26 +1,27 @@
 <h2>Архів:</h2>
-<!-- error -->
-<app-error *ngIf="errorSeasons" [message]="errorSeasons"></app-error>
-<!-- seasons -->
 <div *ngIf="seasons" class="row">
-    <div *ngFor="let season of seasons" class="col col-sm-6">
-        <div class="card text-center blue-shadow p-2 mb-2">
-            <div class="btn-group-vertical" role="group" aria-label="Basic example">
-                <button routerLink="{{season.id + '/competitions'}}"
-                        routerLinkActive="active"
-                        type="button"
-                        class="btn btn-outline-primary btn-block">
-                    <h4>{{season.title}}</h4>
-                </button>
-                <button routerLink="{{season.id + '/rating'}}"
-                        routerLinkActive="active"
-                        [routerLinkActiveOptions]="{exact: true}"
-                        type="button"
-                        class="btn btn-outline-primary btn-block">
-                    Рейтинг
-                </button>
-            </div>
-        </div>
-    </div>
+   <div *ngFor="let season of seasons" class="col col-sm-6">
+      <div class="card text-center blue-shadow p-2 mb-2">
+         <div class="btn-group-vertical" role="group" aria-label="Basic example">
+            <button
+               routerLink="{{ season.id + '/competitions' }}"
+               routerLinkActive="active"
+               type="button"
+               class="btn btn-outline-primary btn-block"
+            >
+               <h4>{{ season.title }}</h4>
+            </button>
+            <button
+               routerLink="{{ season.id + '/rating' }}"
+               routerLinkActive="active"
+               [routerLinkActiveOptions]="{ exact: true }"
+               type="button"
+               class="btn btn-outline-primary btn-block"
+            >
+               Рейтинг
+            </button>
+         </div>
+      </div>
+   </div>
 </div>
 <router-outlet></router-outlet>

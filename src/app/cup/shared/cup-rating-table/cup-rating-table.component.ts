@@ -1,41 +1,42 @@
 import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 
+import { SeasonState } from '@enums/season-state.enum';
 import { CupRating } from '@models/cup/cup-rating.model';
+import { SeasonNew } from '@models/new/season-new.model';
 import { User } from '@models/user.model';
-import { Season } from '@models/season.model';
 
 @Component({
-    selector: 'app-cup-rating-table',
-    templateUrl: './cup-rating-table.component.html',
-    styleUrls: ['./cup-rating-table.component.scss']
+   selector: 'app-cup-rating-table',
+   templateUrl: './cup-rating-table.component.html',
+   styleUrls: ['./cup-rating-table.component.scss']
 })
 export class CupRatingTableComponent implements OnChanges {
-    @Input() cupRating: CupRating[];
-    @Input() errorCupRating: string;
-    @Input() authenticatedUser: User;
-    @Input() seasons: Season[];
+   @Input() public cupRating: CupRating[];
+   @Input() public errorCupRating: string;
+   @Input() public authenticatedUser: User;
+   @Input() public seasons: SeasonNew[];
 
-    activeSeason: Season;
-    beforePreviousSeason: Season;
-    previousSeason: Season;
+   public activeSeason: SeasonNew;
+   public beforePreviousSeason: SeasonNew;
+   public previousSeason: SeasonNew;
 
-    ngOnChanges(changes: SimpleChanges) {
-        for (const propName of Object.keys(changes)) {
-            if (!changes[propName].firstChange && propName === 'seasons') {
-                const seasonIds: number[] = [];
-                changes[propName].currentValue.forEach(season => {
-                    if (season.active) {
-                        this.activeSeason = season;
-                        seasonIds.push(season.id);
-                    } else if (this.activeSeason && !this.previousSeason) {
-                        this.previousSeason = season;
-                        seasonIds.push(season.id);
-                    } else if (this.previousSeason && !this.beforePreviousSeason) {
-                        this.beforePreviousSeason = season;
-                        seasonIds.push(season.id);
-                    }
-                });
-            }
-        }
-    }
+   public ngOnChanges(changes: SimpleChanges) {
+      for (const propName of Object.keys(changes)) {
+         if (!changes[propName].firstChange && propName === 'seasons') {
+            const seasonIds: number[] = [];
+            changes[propName].currentValue.forEach((season: SeasonNew) => {
+               if (season.state === SeasonState.Active) {
+                  this.activeSeason = season;
+                  seasonIds.push(season.id);
+               } else if (this.activeSeason && !this.previousSeason) {
+                  this.previousSeason = season;
+                  seasonIds.push(season.id);
+               } else if (this.previousSeason && !this.beforePreviousSeason) {
+                  this.beforePreviousSeason = season;
+                  seasonIds.push(season.id);
+               }
+            });
+         }
+      }
+   }
 }
