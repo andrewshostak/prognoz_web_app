@@ -32,43 +32,27 @@
       </div>
    </div>
 </div>
-<nav class="navbar navbar-expand-sm navbar-dark bg-dark mb-2">
-   <button class="navbar-toggler cursor-pointer" type="button" (click)="collapsed = !collapsed">
-      <span class="navbar-toggler-icon"></span>
-   </button>
-   <div [hidden]="collapsed" class="navbar-collapse justify-content-center">
-      <ul class="nav navbar-nav">
-         <li class="nav-item text-center">
-            <strong>
-               <a routerLink="/" routerLinkActive="active" class="nav-link" [routerLinkActiveOptions]="{ exact: true }">Головна</a>
-            </strong>
-         </li>
-         <li class="nav-item text-center">
-            <a routerLink="/championship" routerLinkActive="active" class="nav-link">
-               <strong>
-                  Чемпіонат
-               </strong>
+<nav class="d-none d-sm-flex navbar navbar-dark bg-dark justify-content-center mb-2">
+   <ul class="nav nav-pills nav-fill justify-content-center">
+      <li *ngFor="let navigationItem of navigationItems" class="nav-item">
+         <a [routerLink]="navigationItem.link" routerLinkActive="btn-warning text-dark" class="btn btn-block text-white font-weight-bold">
+            {{ navigationItem.label }}
+         </a>
+      </li>
+   </ul>
+</nav>
+<nav class="d-flex d-sm-none navbar navbar-dark bg-dark justify-content-center mb-2">
+   <div class="container">
+      <div class="row justify-content-center">
+         <div *ngFor="let navigationItem of navigationItems" class="col-6">
+            <a
+               class="btn btn-sm btn-block font-weight-bold text-white"
+               routerLinkActive="btn-warning text-dark"
+               [routerLink]="navigationItem.link"
+            >
+               {{ navigationItem.label }}
             </a>
-         </li>
-         <li class="nav-item text-center">
-            <strong>
-               <a routerLink="/team" routerLinkActive="active" class="nav-link">
-                  Командний
-               </a>
-            </strong>
-         </li>
-         <li class="nav-item text-center">
-            <strong>
-               <a routerLink="/cup" routerLinkActive="active" class="nav-link">
-                  Кубок
-               </a>
-            </strong>
-         </li>
-         <li class="nav-item text-center">
-            <strong>
-               <a routerLink="/guestbook" routerLinkActive="active" class="nav-link">Гостьова</a>
-            </strong>
-         </li>
-      </ul>
+         </div>
+      </div>
    </div>
 </nav>

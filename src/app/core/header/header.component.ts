@@ -14,8 +14,13 @@ import { filter } from 'rxjs/operators';
    styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent implements AfterViewInit, OnInit {
-   public collapsed: boolean;
    public user: UserNew;
+   public navigationItems: Array<{ label: string; link: string }> = [
+      { label: 'Чемпіонат', link: '/championship' },
+      { label: 'Командний', link: '/team' },
+      { label: 'Кубок', link: '/cup' },
+      { label: 'Гостьова', link: '/guestbook' }
+   ];
 
    @ViewChild('logoBackground', { static: true }) public logoBackground: ElementRef;
 
