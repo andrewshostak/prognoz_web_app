@@ -7,7 +7,6 @@ import { SeasonNew } from '@models/new/season-new.model';
 import { PaginatedResponse } from '@models/paginated-response.model';
 import { SeasonSearch } from '@models/search/season-search.model';
 import { SettingsService } from '@services/settings.service';
-import { isNil } from 'lodash';
 import { Observable, of } from 'rxjs';
 import { tap } from 'rxjs/operators';
 
@@ -34,12 +33,8 @@ export class SeasonNewService {
          params = params.set('sequence', search.sequence);
       }
 
-      if (!isNil(search.active)) {
-         params = params.append('active', (search.active as unknown) as string);
-      }
-
-      if (!isNil(search.ended)) {
-         params = params.append('ended', (search.ended as unknown) as string);
+      if (search.state) {
+         params = params.append('state', search.state);
       }
 
       const noSeasonsFilterParams = this.noSeasonsFilterParams(search);
@@ -55,11 +50,7 @@ export class SeasonNewService {
    }
 
    private noSeasonsFilterParams(search: SeasonSearch): boolean {
-      if (!isNil(search.active)) {
-         return false;
-      }
-
-      if (!isNil(search.ended)) {
+      if (search.state) {
          return false;
       }
 
