@@ -5,8 +5,8 @@ import { environment } from '@env';
 import { TeamNew } from '@models/new/team-new.model';
 import { PaginatedResponse } from '@models/paginated-response.model';
 import { TeamSearch } from '@models/search/team-search.model';
-import { RequestPreparationService } from '@services/request-preparation.service';
 import { isNil } from 'lodash';
+import { serialize } from 'object-to-formdata';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
@@ -17,7 +17,7 @@ export class TeamNewService {
    constructor(private httpClient: HttpClient) {}
 
    public createTeam(team: Partial<TeamNew>): Observable<TeamNew> {
-      const body = team.image ? RequestPreparationService.toFormData(team) : team;
+      const body = team.image ? serialize(team, { booleansAsIntegers: true }) : team;
       return this.httpClient.post<{ team: TeamNew }>(this.teamsUrl, body).pipe(map(response => response.team));
    }
 
@@ -73,8 +73,7 @@ export class TeamNewService {
    }
 
    public updateTeam(teamId: number, team: Partial<TeamNew>): Observable<TeamNew> {
-      // todo: use object-to-formdata
-      const body = team.image ? RequestPreparationService.toFormData(team) : team;
+      const body = team.image ? serialize(team, { booleansAsIntegers: true }) : team;
       return this.httpClient.post<{ team: TeamNew }>(`${this.teamsUrl}/${teamId}`, body).pipe(map(response => response.team));
    }
 }
