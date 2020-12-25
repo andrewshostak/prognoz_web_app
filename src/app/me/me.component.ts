@@ -1,15 +1,16 @@
 import { Component, OnInit } from '@angular/core';
-import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
-import { environment } from '@env';
 import { ClubNew } from '@models/new/club-new.model';
 import { UserNew } from '@models/new/user-new.model';
 import { ClubService } from '@services/club.service';
-import { ImageService } from '@services/image.service';
+import { FormValidatorService } from '@services/form-validator.service';
 import { AuthNewService } from '@services/new/auth-new.service';
+import { UserNewService } from '@services/new/user-new.service';
+import { SettingsService } from '@services/settings.service';
 import { TitleService } from '@services/title.service';
-import { UserService } from '@services/user.service';
+import { UtilsService } from '@services/utils.service';
 import { NotificationsService } from 'angular2-notifications';
 import { assign } from 'lodash';
 
@@ -21,32 +22,22 @@ import { assign } from 'lodash';
 export class MeComponent implements OnInit {
    public authenticatedUser: UserNew;
    public clubs: ClubNew[];
-   public clubsImagesUrl: string = environment.apiImageClubs;
-   public errorClubs: string;
-   public errorImage: string;
-   public hasUnsavedChanges: boolean;
    public spinnerButton: boolean;
    public userEditForm: FormGroup;
-   public userImageDefault: string = environment.imageUserDefault;
-   public userImagesUrl: string = environment.apiImageUsers;
+   public userImageDefault: string = SettingsService.userDefaultImage;
+   public userImagesUrl: string = SettingsService.usersLogosPath;
+   public userImageExtensions: string[] = FormValidatorService.fileExtensions.userImage;
+   public userImageSize: number = FormValidatorService.fileSizeLimits.userImage;
 
    constructor(
       private authService: AuthNewService,
       private clubService: ClubService,
-      private imageService: ImageService,
+      private formValidatorService: FormValidatorService,
       private notificationsService: NotificationsService,
       private router: Router,
       private titleService: TitleService,
-      private userService: UserService
-   ) {
-      imageService.uploadedImage$.subscribe(response => {
-         this.userEditForm.patchValue({ image: response });
-         this.errorImage = null;
-      });
-      imageService.uploadError$.subscribe(response => {
-         this.errorImage = response;
-      });
-   }
+      private userService: UserNewService
+   ) {}
 
    get clubUser(): FormArray {
       return this.userEditForm.controls.club_user as FormArray;
@@ -65,11 +56,6 @@ export class MeComponent implements OnInit {
       return this.clubUser.length >= 3;
    }
 
-   public fileChange(event) {
-      this.hasUnsavedChanges = true;
-      this.imageService.fileChange(event, environment.imageSettings.user);
-   }
-
    public findClub(clubId: number): ClubNew {
       return this.clubs.find(club => {
          return club.id.toString() === clubId.toString();
@@ -79,31 +65,22 @@ export class MeComponent implements OnInit {
    public ngOnInit() {
       this.getClubsData();
       this.authenticatedUser = Object.assign({}, this.authService.getUser());
-      this.resetData();
+      this.setForm(this.authenticatedUser);
       this.titleService.setTitle('Редагувати профіль');
-   }
-
-   public onCancel(): void {
-      this.authenticatedUser = Object.assign({}, this.authService.getUser());
-      this.resetData();
    }
 
    public onSubmit() {
       this.spinnerButton = true;
-      this.userService.updateUser(this.userEditForm.value).subscribe(
+      this.userService.updateUser(this.authenticatedUser.id, this.userEditForm.value).subscribe(
          response => {
-            const updated = assign(this.authService.getUser(), response.user);
+            const updated = assign(this.authService.getUser(), response);
             this.authService.setUser(updated);
             this.authenticatedUser = this.authService.getUser();
-            this.notificationsService.success('Успішно', 'Ваш профіль змінено!');
+            this.notificationsService.success('Успішно', 'Інформацію змінено');
             this.spinnerButton = false;
-            this.hasUnsavedChanges = false;
+            this.userEditForm.get('image').reset();
          },
-         errors => {
-            errors.forEach(error => this.notificationsService.error('Помилка', error));
-            this.hasUnsavedChanges = false;
-            this.spinnerButton = false;
-         }
+         () => (this.spinnerButton = false)
       );
    }
 
@@ -132,34 +109,39 @@ export class MeComponent implements OnInit {
       }
    }
 
-   private getClubsData() {
-      this.clubService.getClubs(null, 'clubs').subscribe(
-         response => {
-            if (response) {
-               this.clubs = response.clubs;
-            }
-         },
-         error => {
-            this.errorClubs = error;
-         }
-      );
+   public showFormErrorMessage(abstractControl: AbstractControl, errorKey: string): boolean {
+      return UtilsService.showFormErrorMessage(abstractControl, errorKey);
    }
 
-   private resetData(): void {
-      this.errorImage = null;
+   public showFormInvalidClass(abstractControl: AbstractControl): boolean {
+      return UtilsService.showFormInvalidClass(abstractControl);
+   }
+
+   private getClubsData() {
+      this.clubService.getClubs(null, 'clubs').subscribe(response => {
+         if (response) {
+            this.clubs = response.clubs;
+         }
+      });
+   }
+
+   private setForm(authenticatedUser: UserNew): void {
       this.userEditForm = new FormGroup(
          {
-            id: new FormControl(this.authenticatedUser.id),
-            first_name: new FormControl(this.authenticatedUser.first_name, [Validators.maxLength(50)]),
-            hometown: new FormControl(this.authenticatedUser.hometown, [Validators.maxLength(50)]),
-            image: new FormControl(''),
+            id: new FormControl(authenticatedUser.id),
+            first_name: new FormControl(authenticatedUser.first_name, [Validators.maxLength(50)]),
+            hometown: new FormControl(authenticatedUser.hometown, [Validators.maxLength(50)]),
+            image: new FormControl(null, [
+               this.formValidatorService.fileType(this.userImageExtensions),
+               this.formValidatorService.fileSize(this.userImageSize)
+            ]),
             club_user: new FormArray([])
          },
          this.validateClubUser
       );
 
-      if (this.authenticatedUser.clubs) {
-         this.authenticatedUser.clubs.forEach(club => {
+      if (authenticatedUser.clubs) {
+         authenticatedUser.clubs.forEach(club => {
             this.clubUser.push(
                new FormGroup({
                   club_id: new FormControl(club.id.toString(), [Validators.required]),
@@ -185,7 +167,7 @@ export class MeComponent implements OnInit {
                return null;
             }
             if (values.includes(control.value)) {
-               return { clubUserEqality: true };
+               return { clubUserEquality: true };
             } else {
                values.push(control.value);
             }

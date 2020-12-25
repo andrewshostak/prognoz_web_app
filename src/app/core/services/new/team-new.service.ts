@@ -73,6 +73,7 @@ export class TeamNewService {
    }
 
    public updateTeam(teamId: number, team: Partial<TeamNew>): Observable<TeamNew> {
+      // todo: use object-to-formdata
       const body = team.image ? RequestPreparationService.toFormData(team) : team;
       return this.httpClient.post<{ team: TeamNew }>(`${this.teamsUrl}/${teamId}`, body).pipe(map(response => response.team));
    }

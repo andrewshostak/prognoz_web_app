@@ -4,6 +4,10 @@ import { isBoolean } from 'lodash';
 
 @Injectable()
 export class RequestPreparationService {
+   /**
+    * @deprecated
+    * use object-to-formdata lib
+    */
    public static toFormData<T>(formValue: T, modifyBooleans: boolean = true): FormData {
       const formData = new FormData();
 

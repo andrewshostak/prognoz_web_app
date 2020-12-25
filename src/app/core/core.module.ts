@@ -57,7 +57,6 @@ import { TeamRatingService } from '@services/team/team-rating.service';
 import { TeamTeamMatchService } from '@services/team/team-team-match.service';
 import { TitleService } from '@services/title.service';
 import { TournamentService } from '@services/tournament.service';
-import { UserService } from '@services/user.service';
 import { UtilsService } from '@services/utils.service';
 
 @NgModule({
@@ -110,7 +109,6 @@ import { UtilsService } from '@services/utils.service';
       TeamTeamMatchService,
       TitleService,
       TournamentService,
-      UserService,
       UserNewService,
       UtilsService
    ],

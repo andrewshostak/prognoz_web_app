@@ -5,7 +5,7 @@ import { environment } from '@env';
 import { UserNew } from '@models/new/user-new.model';
 import { PaginatedResponse } from '@models/paginated-response.model';
 import { UserSearch } from '@models/search/user-search.model';
-import { RequestPreparationService } from '@services/request-preparation.service';
+import { serialize } from 'object-to-formdata';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
@@ -40,7 +40,7 @@ export class UserNewService {
    }
 
    public updateUser(userId: number, user: Partial<UserNew>): Observable<UserNew> {
-      const body = user.image ? RequestPreparationService.toFormData(user) : user;
-      return this.httpClient.put<{ user: UserNew }>(`${this.usersUrl}/${userId}`, body).pipe(map(response => response.user));
+      const body = user.image ? serialize(user, { indices: true }) : user;
+      return this.httpClient.post<{ user: UserNew }>(`${this.usersUrl}/${userId}`, body).pipe(map(response => response.user));
    }
 }
