@@ -51,4 +51,6 @@ export class AuthRecoveryComponent implements OnInit {
    public resolved(captchaResponse: string): void {
       this.captchaValidity = !!captchaResponse;
    }
+
+   // todo: move re-captcha siteKey to env vars
 }

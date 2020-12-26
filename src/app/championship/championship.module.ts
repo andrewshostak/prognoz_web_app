@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 
-import { ChartsModule } from 'ng2-charts/ng2-charts';
+import { ChartsModule } from 'ng2-charts';
 import { ChampionshipComponent } from './championship.component';
 import { ChampionshipHomeComponent } from './championship-home/championship-home.component';
 import { ChampionshipMatchComponent } from './championship-match/championship-match.component';
@@ -19,20 +19,20 @@ import { ChampionshipUserComponent } from './championship-user/championship-user
 import { SharedModule } from '../shared/shared.module';
 
 @NgModule({
-    imports: [CommonModule, ReactiveFormsModule, ChampionshipRoutingModule, SharedModule, ChartsModule, ChampionshipSeasonsModule],
-    declarations: [
-        ChampionshipComponent,
-        ChampionshipHomeComponent,
-        ChampionshipMatchComponent,
-        ChampionshipMatchPredictableComponent,
-        ChampionshipMatchPredictionsTableComponent,
-        ChampionshipPredictionsComponent,
-        ChampionshipRatingComponent,
-        ChampionshipRatingTopComponent,
-        ChampionshipResultsComponent,
-        ChampionshipRulesComponent,
-        ChampionshipUserComponent
-    ],
-    exports: [ChampionshipComponent]
+   imports: [CommonModule, ReactiveFormsModule, ChampionshipRoutingModule, SharedModule, ChartsModule, ChampionshipSeasonsModule],
+   declarations: [
+      ChampionshipComponent,
+      ChampionshipHomeComponent,
+      ChampionshipMatchComponent,
+      ChampionshipMatchPredictableComponent,
+      ChampionshipMatchPredictionsTableComponent,
+      ChampionshipPredictionsComponent,
+      ChampionshipRatingComponent,
+      ChampionshipRatingTopComponent,
+      ChampionshipResultsComponent,
+      ChampionshipRulesComponent,
+      ChampionshipUserComponent
+   ],
+   exports: [ChampionshipComponent]
 })
 export class ChampionshipModule {}

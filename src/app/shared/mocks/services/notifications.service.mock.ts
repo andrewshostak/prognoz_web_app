@@ -1,4 +1,4 @@
 export class NotificationsServiceMock {
-   public success(title?: any, content?: any) {}
-   public error(title?: any, content?: any) {}
+   public success(...args: any[]) {}
+   public error(...args: any[]) {}
 }

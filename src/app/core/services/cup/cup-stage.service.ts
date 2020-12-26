@@ -7,7 +7,7 @@ import { HeadersWithToken } from '@services/headers-with-token.service';
 import { environment } from 'environments/environment';
 import { Observable } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
-import { isNullOrUndefined } from 'util';
+import { isNil } from 'lodash';
 
 @Injectable()
 export class CupStageService {
@@ -26,13 +26,13 @@ export class CupStageService {
       if (page) {
          params = params.append('page', page.toString());
       }
-      if (!isNullOrUndefined(active)) {
+      if (!isNil(active)) {
          params = params.append('active', active ? '1' : '0');
       }
-      if (!isNullOrUndefined(ended)) {
+      if (!isNil(ended)) {
          params = params.append('ended', ended ? '1' : '0');
       }
-      if (!isNullOrUndefined(competitionId)) {
+      if (!isNil(competitionId)) {
          params = params.append('competition_id', competitionId.toString());
       }
       return this.httpClient.get(this.cupStageUrl, { params }).pipe(catchError(this.errorHandlerService.handle));

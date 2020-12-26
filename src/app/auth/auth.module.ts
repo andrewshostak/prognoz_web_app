@@ -12,7 +12,7 @@ import { AuthSignUpComponent } from './auth-sign-up/auth-sign-up.component';
 import { AuthComponent } from './auth.component';
 
 @NgModule({
-   imports: [CommonModule, AuthRoutingModule, ReactiveFormsModule, SharedModule, RecaptchaModule.forRoot()],
+   imports: [CommonModule, AuthRoutingModule, ReactiveFormsModule, SharedModule, RecaptchaModule],
    declarations: [AuthComponent, AuthRecoveryComponent, AuthResetComponent, AuthSignInComponent, AuthSignUpComponent],
    exports: [AuthComponent]
 })
