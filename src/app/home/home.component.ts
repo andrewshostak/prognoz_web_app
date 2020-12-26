@@ -21,7 +21,7 @@ export class HomeComponent implements OnInit {
    public clubsLogosPath: string;
    public errorChampionshipMatches: string;
    public errorNews: string;
-   public news: News[]; // test
+   public news: News[];
    public newsImagesUrl: string = environment.apiImageNews;
 
    constructor(
