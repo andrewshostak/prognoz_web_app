@@ -79,12 +79,9 @@
       }
    },
    "lint-staged": {
-      "linters": {
-         "*.ts": [
-            "npm run lint --files",
-            "git add ."
-         ]
-      },
-      "relative": true
+      "*.ts": [
+         "npm run lint --files",
+         "git add ."
+      ]
    }
 }
