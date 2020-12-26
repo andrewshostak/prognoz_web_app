@@ -17,6 +17,7 @@
             "build": {
                "builder": "@angular-devkit/build-angular:browser",
                "options": {
+                  "allowedCommonJsDependencies": ["lodash", "chart.js"],
                   "aot": true,
                   "outputPath": "dist",
                   "index": "src/index.html",

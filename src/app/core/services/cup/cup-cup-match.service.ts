@@ -7,7 +7,7 @@ import { ErrorHandlerService } from '@services/error-handler.service';
 import { HeadersWithToken } from '@services/headers-with-token.service';
 import { Observable } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
-import { isNullOrUndefined } from 'util';
+import { isNil } from 'lodash';
 
 @Injectable()
 export class CupCupMatchService {
@@ -33,19 +33,19 @@ export class CupCupMatchService {
       if (page) {
          params = params.append('page', page.toString());
       }
-      if (!isNullOrUndefined(active)) {
+      if (!isNil(active)) {
          params = params.append('active', active ? '1' : '0');
       }
-      if (!isNullOrUndefined(ended)) {
+      if (!isNil(ended)) {
          params = params.append('ended', ended ? '1' : '0');
       }
-      if (!isNullOrUndefined(cupStageId)) {
+      if (!isNil(cupStageId)) {
          params = params.append('cup_stage_id', cupStageId.toString());
       }
-      if (!isNullOrUndefined(order)) {
+      if (!isNil(order)) {
          params = params.append('order', order);
       }
-      if (!isNullOrUndefined(sequence)) {
+      if (!isNil(sequence)) {
          params = params.append('sequence', sequence);
       }
       return this.httpClient.get(this.cupCupMatchUrl, { params }).pipe(catchError(this.errorHandlerService.handle));

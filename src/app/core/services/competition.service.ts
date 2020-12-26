@@ -7,7 +7,7 @@ import { ErrorHandlerService } from '@services/error-handler.service';
 import { HeadersWithToken } from '@services/headers-with-token.service';
 import { Observable } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
-import { isNullOrUndefined } from 'util';
+import { isNil } from 'lodash';
 
 @Injectable()
 export class CompetitionService {
@@ -44,13 +44,13 @@ export class CompetitionService {
       if (state) {
          params = params.append('state', state.toString());
       }
-      if (!isNullOrUndefined(stated)) {
+      if (!isNil(stated)) {
          params = params.append('stated', (stated ? 1 : 0).toString());
       }
-      if (!isNullOrUndefined(active)) {
+      if (!isNil(active)) {
          params = params.append('active', (active ? 1 : 0).toString());
       }
-      if (!isNullOrUndefined(ended)) {
+      if (!isNil(ended)) {
          params = params.append('ended', (ended ? 1 : 0).toString());
       }
       if (limit) {
