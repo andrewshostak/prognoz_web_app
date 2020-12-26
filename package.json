@@ -75,8 +75,7 @@
    },
    "husky": {
       "hooks": {
-         "pre-commit": "lint-staged && pretty-quick --staged",
-         "post-commit": "git update-index --again"
+         "pre-commit": "lint-staged && pretty-quick --staged"
       }
    },
    "lint-staged": {

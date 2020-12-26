@@ -16,12 +16,12 @@ import { TitleService } from '@services/title.service';
    styleUrls: ['./home.component.scss'],
    templateUrl: './home.component.html'
 })
-export class HomeComponent implements OnInit  {
+export class HomeComponent implements OnInit {
    public championshipMatches: ChampionshipMatchNew[];
    public clubsLogosPath: string;
    public errorChampionshipMatches: string;
    public errorNews: string;
-   public news: News[];
+   public news: News[]; // test
    public newsImagesUrl: string = environment.apiImageNews;
 
    constructor(
