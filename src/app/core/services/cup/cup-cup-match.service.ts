@@ -10,7 +10,7 @@ import { catchError, map } from 'rxjs/operators';
 import { isNil } from 'lodash';
 
 @Injectable()
-export class CupCupMatchService {
+export class CupCupMatchService  {
    private cupCupMatchUrl = `${environment.apiUrl}cup/cup-matches`;
    constructor(
       private errorHandlerService: ErrorHandlerService,
