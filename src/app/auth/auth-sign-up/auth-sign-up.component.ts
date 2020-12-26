@@ -65,4 +65,6 @@ export class AuthSignUpComponent implements OnInit {
       this.authService.setUser(response.user);
       this.authService.setToken(response.token);
    }
+
+   // todo: move re-captcha siteKey to env vars
 }
