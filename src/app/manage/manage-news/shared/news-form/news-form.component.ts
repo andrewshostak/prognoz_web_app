@@ -17,7 +17,7 @@ import { QuillEditorComponent } from 'ngx-quill';
 })
 export class NewsFormComponent implements OnChanges, OnInit {
    @Input() public news: News;
-   @ViewChild('editor', { static: false }) public editor: QuillEditorComponent;
+   @ViewChild('editor') public editor: QuillEditorComponent;
 
    public errorImage: string;
    public editorModules = {};
