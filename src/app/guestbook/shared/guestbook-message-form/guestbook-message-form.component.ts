@@ -14,7 +14,7 @@ import { trim } from 'lodash';
    templateUrl: './guestbook-message-form.component.html'
 })
 export class GuestbookMessageFormComponent implements OnInit {
-   @Output() public guestbookMessageAdded = new EventEmitter<GuestbookMessageNew>();
+   @Output() public guestbookMessageCreated = new EventEmitter<GuestbookMessageNew>();
 
    public guestbookMessageForm: FormGroup;
    public showFormErrorMessage = UtilsService.showFormErrorMessage;
@@ -48,7 +48,7 @@ export class GuestbookMessageFormComponent implements OnInit {
             this.spinnerButton = false;
             this.guestbookMessageForm.reset();
             this.notificationsService.success('Успішно', 'Повідомлення додано');
-            this.guestbookMessageAdded.emit(response);
+            this.guestbookMessageCreated.emit(response);
          },
          () => (this.spinnerButton = false)
       );
