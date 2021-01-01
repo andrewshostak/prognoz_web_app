@@ -8,12 +8,11 @@ import { GuestbookPageComponent } from './guestbook-page/guestbook-page.componen
 import { GuestbookRoutingModule } from './guestbook-routing.module';
 import { GuestbookComponent } from './guestbook.component';
 import { GuestbookMessageFormComponent } from './shared/guestbook-message-form/guestbook-message-form.component';
-import { GuestbookService } from './shared/guestbook.service';
 
 @NgModule({
    imports: [CommonModule, ReactiveFormsModule, GuestbookRoutingModule, SharedModule],
    declarations: [GuestbookComponent, GuestbookPageComponent, GuestbookMessageFormComponent],
-   providers: [GuestbookService, GuestbookMessageNewService],
+   providers: [GuestbookMessageNewService],
    exports: [GuestbookComponent]
 })
 export class GuestbookModule {}
