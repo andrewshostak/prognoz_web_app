@@ -1,18 +1,20 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 
-import { GuestbookService } from '@app/guestbook/shared/guestbook.service';
+import { GuestbookMessageNew } from '@models/new/guestbook-message-new.model';
 import { UserNew } from '@models/new/user-new.model';
 import { AuthNewService } from '@services/new/auth-new.service';
 import { UtilsService } from '@services/utils.service';
 import { NotificationsService } from 'angular2-notifications';
+import { GuestbookMessageNewService } from '@app/guestbook/shared/guestbook-message-new.service';
+import { trim } from 'lodash';
 
 @Component({
    selector: 'app-guestbook-message-form',
    templateUrl: './guestbook-message-form.component.html'
 })
 export class GuestbookMessageFormComponent implements OnInit {
-   @Output() public guestbookMessageAdded = new EventEmitter<void>();
+   @Output() public guestbookMessageAdded = new EventEmitter<GuestbookMessageNew>();
 
    public guestbookMessageForm: FormGroup;
    public showFormErrorMessage = UtilsService.showFormErrorMessage;
@@ -22,7 +24,7 @@ export class GuestbookMessageFormComponent implements OnInit {
 
    constructor(
       private authService: AuthNewService,
-      private guestbookService: GuestbookService,
+      private guestbookService: GuestbookMessageNewService,
       private notificationsService: NotificationsService
    ) {}
 
@@ -40,20 +42,15 @@ export class GuestbookMessageFormComponent implements OnInit {
       }
 
       this.spinnerButton = true;
-      const body = { ...this.guestbookMessageForm.value, user_id: this.user.id };
-      this.guestbookService.createGuestbookMessage(body).subscribe(
-         () => {
+      const message = { body: trim(this.guestbookMessageForm.get('body').value) };
+      this.guestbookService.createGuestbookMessage(message).subscribe(
+         response => {
             this.spinnerButton = false;
             this.guestbookMessageForm.reset();
-            this.notificationsService.success('Успішно', 'Ваше повідомлення додано');
-            this.guestbookMessageAdded.emit();
+            this.notificationsService.success('Успішно', 'Повідомлення додано');
+            this.guestbookMessageAdded.emit(response);
          },
-         errors => {
-            this.spinnerButton = false;
-            for (const error of errors) {
-               this.notificationsService.error('Помилка', error);
-            }
-         }
+         () => (this.spinnerButton = false)
       );
    }
 }

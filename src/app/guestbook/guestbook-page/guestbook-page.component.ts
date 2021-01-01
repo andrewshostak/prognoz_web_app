@@ -41,6 +41,10 @@ export class GuestbookPageComponent implements OnDestroy, OnInit {
       });
    }
 
+   public messageCreated(message: GuestbookMessageNew): void {
+      this.guestbookMessages = [message, ...this.guestbookMessages];
+   }
+
    public ngOnDestroy(): void {
       this.activatedRouteSubscription.unsubscribe();
    }

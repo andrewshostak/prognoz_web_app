@@ -15,9 +15,7 @@
 </div>
 <div *ngIf="paginationData && paginationData.currentPage === 1" class="row">
    <div class="col">
-      <app-guestbook-message-form
-         (guestbookMessageAdded)="getGuestbookMessagesData(paginationData.currentPage)"
-      ></app-guestbook-message-form>
+      <app-guestbook-message-form (guestbookMessageAdded)="messageCreated($event)"></app-guestbook-message-form>
    </div>
 </div>
 <div class="row">

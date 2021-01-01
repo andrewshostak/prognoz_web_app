@@ -4,16 +4,18 @@
          <label class="form-control-label" for="body"><strong>Ваше повідомлення:</strong></label>
          <textarea id="body" placeholder="Напишіть щось..." class="form-control" rows="3" formControlName="body"> </textarea>
          <div [hidden]="!showFormErrorMessage(guestbookMessageForm.get('body'), 'required')" class="error-message">
-            <small>Текст повідомлення обов'язковий.</small>
+            <small>Повідомлення обов'язковe</small>
          </div>
          <div [hidden]="!showFormErrorMessage(guestbookMessageForm.get('body'), 'minlength')" class="error-message">
-            <small>Текст повідомлення повинен бути більшим ніж 10 символів.</small>
+            <small>Повідомлення має бути довшим ніж 10 символів</small>
          </div>
          <div [hidden]="!showFormErrorMessage(guestbookMessageForm.get('body'), 'maxlength')" class="error-message">
-            <small>Текст повідомлення не повинене перевищувати 1000 символів.</small>
+            <small>Повідомлення не має перевищувати 1000 символів</small>
          </div>
       </div>
-      <button [hidden]="spinnerButton" type="submit" class="btn btn-primary">Добавити</button>
-      <app-spinner-button [hidden]="!spinnerButton"></app-spinner-button>
+      <div class="text-right">
+         <button [hidden]="spinnerButton" type="submit" class="btn btn-primary"><i class="fa fa-check"></i> Добавити</button>
+         <app-spinner-button [hidden]="!spinnerButton"></app-spinner-button>
+      </div>
    </form>
 </div>
