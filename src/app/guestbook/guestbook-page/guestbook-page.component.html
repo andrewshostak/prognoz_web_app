@@ -20,8 +20,10 @@
 </div>
 <div class="row">
    <div class="col">
-      <div *ngFor="let message of guestbookMessages">
-         <app-user-message [message]="message"></app-user-message>
+      <div *ngFor="let message of guestbookMessages" class="mt-2">
+         <!-- TODO: remove old component -->
+         <!--         <app-user-message [message]="message"></app-user-message>-->
+         <app-user-message-new [message]="message"></app-user-message-new>
       </div>
    </div>
 </div>

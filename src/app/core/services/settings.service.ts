@@ -38,7 +38,9 @@ export class SettingsService {
    ];
 
    // new image logos paths
+   public static readonly awardsLogosPath: string = environment.imageURL + '/awards';
    public static readonly clubsLogosPath: string = environment.imageURL + '/clubs';
+   public static readonly newsLogosPath: string = environment.imageURL + '/news';
    public static readonly teamsLogosPath: string = environment.imageURL + '/teams';
    public static readonly usersLogosPath: string = environment.imageURL + '/users';
    public static readonly userDefaultImage: string = 'default.png';

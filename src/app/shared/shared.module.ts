@@ -35,9 +35,10 @@ import { TrueFalseIconsComponent } from '@app/shared/components/true-false-icons
 import { UserMessageComponent } from '@app/shared/components/user-message/user-message.component';
 import { UserSelectComponent } from '@app/shared/components/user-select/user-select.component';
 import { TimePipe } from '@app/shared/pipes/time.pipe';
-import { NgbTooltipModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbPopoverModule, NgbTooltipModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { ChartsModule } from 'ng2-charts';
+import { UserMessageNewComponent } from '@app/shared/components/user-message-new/user-message-new.component';
 
 @NgModule({
    declarations: [
@@ -71,6 +72,7 @@ import { ChartsModule } from 'ng2-charts';
       TrueFalseIconsComponent,
       UserLogoWithTooltipComponent,
       UserMessageComponent,
+      UserMessageNewComponent,
       UserSelectComponent,
       WinLogoWithTooltipComponent
    ],
@@ -105,10 +107,20 @@ import { ChartsModule } from 'ng2-charts';
       TrueFalseIconsComponent,
       UserLogoWithTooltipComponent,
       UserMessageComponent,
+      UserMessageNewComponent,
       UserSelectComponent,
       WinLogoWithTooltipComponent
    ],
-   imports: [CommonModule, RouterModule, ChartsModule, ReactiveFormsModule, NgbTooltipModule, NgSelectModule, FormsModule],
+   imports: [
+      CommonModule,
+      RouterModule,
+      ChartsModule,
+      ReactiveFormsModule,
+      NgbTooltipModule,
+      NgbPopoverModule,
+      NgSelectModule,
+      FormsModule
+   ],
    providers: [TimePipe]
 })
 export class SharedModule {}

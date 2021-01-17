@@ -11,7 +11,7 @@
             <div class="card-body">
                <div class="row">
                   <div class="col-12 col-sm-6 text-center bg-light">
-                     <img class="img-fluid rounded" src="{{ newsImagesUrl }}{{ news.image }}" alt="{{ news.title }}" />
+                     <img class="img-fluid rounded" [src]="newsImagesUrl + '/' + news.image" [alt]="news.title" />
                   </div>
                   <div class="col-12 col-sm-6 mt-2 mt-md-0">
                      <p>
@@ -47,10 +47,14 @@
    </div>
    <div *ngIf="comments && comments.length" class="row">
       <div class="col">
-         <div *ngFor="let comment of comments">
-            <app-user-message [message]="comment"></app-user-message>
+         <div *ngFor="let comment of comments" class="mt-2">
+            <!-- TODO: remove old component -->
+            <!--            <app-user-message [message]="comment"></app-user-message>-->
+            <app-user-message-new [message]="comment"></app-user-message-new>
          </div>
       </div>
    </div>
-   <app-comment-form [newsId]="newsId" (commentCreated)="commentCreated($event)"></app-comment-form>
+   <div class="mt-2">
+      <app-comment-form [newsId]="newsId" (commentCreated)="commentCreated($event)"></app-comment-form>
+   </div>
 </div>

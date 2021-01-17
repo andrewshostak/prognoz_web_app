@@ -33,7 +33,7 @@ export class GuestbookPageComponent implements OnDestroy, OnInit {
          page: pageNumber,
          sequence: Sequence.Descending,
          orderBy: 'created_at',
-         relations: ['user.clubs', 'user.winners.award', 'user.winners.competition']
+         relations: ['user.clubs', 'user.winners.award', 'user.winners.competition.season']
       };
       this.guestbookMessageService.getGuestbookMessages(search).subscribe(response => {
          this.guestbookMessages = response.data;

@@ -1,5 +1,5 @@
-<div *ngIf="user" class="text-white">
-   <form novalidate [formGroup]="guestbookMessageForm" (ngSubmit)="submit()" class="bg-dark p-2 mb-2 rounded">
+<div *ngIf="user">
+   <form novalidate [formGroup]="guestbookMessageForm" (ngSubmit)="submit()" class="bg-white shadow rounded p-2 mb-2">
       <div class="form-group" [class.form-group-invalid]="showFormInvalidClass(guestbookMessageForm.get('body'))">
          <label class="form-control-label" for="body"><strong>Ваше повідомлення:</strong></label>
          <textarea id="body" placeholder="Напишіть щось..." class="form-control" rows="3" formControlName="body"> </textarea>

@@ -4,7 +4,6 @@ import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
 
 import { CurrentStateService } from '@services/current-state.service';
-import { environment } from '@env';
 import { NotificationsService } from 'angular2-notifications';
 import { News } from '@models/news.model';
 import { NewsService } from '../shared/news.service';
@@ -15,6 +14,7 @@ import { CommentSearch } from '@models/search/comment-search.model';
 import { SettingsService } from '@services/settings.service';
 import { UserNew } from '@models/new/user-new.model';
 import { Sequence } from '@enums/sequence.enum';
+import { ModelStatus } from '@enums/model-status.enum';
 
 @Component({
    selector: 'app-news-detail',
@@ -36,7 +36,7 @@ export class NewsDetailComponent implements OnInit {
    public comments: CommentNew[];
    public news: News;
    public newsId: number;
-   public newsImagesUrl = environment.apiImageNews;
+   public newsImagesUrl = SettingsService.newsLogosPath;
    public spinnerButton = false;
 
    public assembleHTMLItem(message: string): SafeHtml {
@@ -49,8 +49,9 @@ export class NewsDetailComponent implements OnInit {
          sequence: Sequence.Ascending,
          limit: SettingsService.maxLimitValues.comments,
          page: 1,
-         relations: ['user.clubs', 'user.winners.award', 'user.winners.competition', 'updater', 'deleter'],
-         newsId
+         relations: ['user.clubs', 'user.winners.award', 'user.winners.competition.season', 'updater', 'deleter'],
+         newsId,
+         trashed: ModelStatus.Truthy
       } as CommentSearch;
       this.commentService.getComments(search).subscribe(response => (this.comments = response.data));
    }
