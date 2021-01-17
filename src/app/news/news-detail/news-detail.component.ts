@@ -15,6 +15,7 @@ import { SettingsService } from '@services/settings.service';
 import { UserNew } from '@models/new/user-new.model';
 import { Sequence } from '@enums/sequence.enum';
 import { ModelStatus } from '@enums/model-status.enum';
+import { AuthNewService } from '@services/new/auth-new.service';
 
 @Component({
    selector: 'app-news-detail',
@@ -23,6 +24,7 @@ import { ModelStatus } from '@enums/model-status.enum';
 export class NewsDetailComponent implements OnInit {
    constructor(
       private activatedRoute: ActivatedRoute,
+      private authService: AuthNewService,
       private commentService: CommentNewService,
       private currentStateService: CurrentStateService,
       private domSanitizer: DomSanitizer,
@@ -60,6 +62,7 @@ export class NewsDetailComponent implements OnInit {
       this.newsId = +this.activatedRoute.snapshot.params.id;
       this.getCommentsData(this.newsId);
       this.getNewsData(this.newsId);
+      this.authenticatedUser = this.authService.getUser();
    }
 
    private getNewsData(newsId: number): void {
@@ -72,6 +75,7 @@ export class NewsDetailComponent implements OnInit {
    }
 
    public commentCreated(comment: CommentNew): void {
+      comment.is_changeable = true;
       this.comments = [...this.comments, comment];
    }
 }

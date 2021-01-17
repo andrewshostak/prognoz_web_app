@@ -12,6 +12,8 @@ export class CommentNew {
    public deleted_at: string;
    public deleted_by: number;
 
+   public is_changeable?: boolean;
+
    public user?: UserNew;
    public updater?: Partial<UserNew>;
    public deleter?: Partial<UserNew>;

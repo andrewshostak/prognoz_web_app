@@ -35,10 +35,11 @@ import { TrueFalseIconsComponent } from '@app/shared/components/true-false-icons
 import { UserMessageComponent } from '@app/shared/components/user-message/user-message.component';
 import { UserSelectComponent } from '@app/shared/components/user-select/user-select.component';
 import { TimePipe } from '@app/shared/pipes/time.pipe';
-import { NgbPopoverModule, NgbTooltipModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbDropdownModule, NgbPopoverModule, NgbTooltipModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { ChartsModule } from 'ng2-charts';
 import { UserMessageNewComponent } from '@app/shared/components/user-message-new/user-message-new.component';
+import { HasPermissionsDirective } from '@app/shared/directives/has-permissions.directive';
 
 @NgModule({
    declarations: [
@@ -74,7 +75,8 @@ import { UserMessageNewComponent } from '@app/shared/components/user-message-new
       UserMessageComponent,
       UserMessageNewComponent,
       UserSelectComponent,
-      WinLogoWithTooltipComponent
+      WinLogoWithTooltipComponent,
+      HasPermissionsDirective
    ],
    exports: [
       ChampionshipRatingTableComponent,
@@ -109,7 +111,8 @@ import { UserMessageNewComponent } from '@app/shared/components/user-message-new
       UserMessageComponent,
       UserMessageNewComponent,
       UserSelectComponent,
-      WinLogoWithTooltipComponent
+      WinLogoWithTooltipComponent,
+      HasPermissionsDirective
    ],
    imports: [
       CommonModule,
@@ -119,7 +122,8 @@ import { UserMessageNewComponent } from '@app/shared/components/user-message-new
       NgbTooltipModule,
       NgbPopoverModule,
       NgSelectModule,
-      FormsModule
+      FormsModule,
+      NgbDropdownModule
    ],
    providers: [TimePipe]
 })

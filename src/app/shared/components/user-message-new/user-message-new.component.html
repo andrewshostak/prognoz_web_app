@@ -9,7 +9,28 @@
             <small class="text-muted">{{ message.user.hometown }}</small>
          </div>
       </div>
-      <div class="d-flex align-items-end">
+      <div class="d-flex flex-column align-items-end">
+         <ng-container *ngIf="authenticatedUser && message.is_changeable">
+            <div *ngIf="message.user.id === authenticatedUser.id; else notAuthorActions" ngbDropdown>
+               <button class="btn btn-sm btn-outline-primary" ngbDropdownToggle>
+                  <i class="fa fa-ellipsis-h"></i>
+               </button>
+               <div ngbDropdownMenu>
+                  <button ngbDropdownItem><i class="fa fa-pencil"></i> Змінити</button>
+                  <button ngbDropdownItem><i class="fa fa-trash"></i> Видалити</button>
+               </div>
+            </div>
+            <ng-template #notAuthorActions>
+               <div *appHasPermissions="{ permissions: [permissionForDeleting] }" ngbDropdown>
+                  <button class="btn btn-sm btn-outline-primary" ngbDropdownToggle>
+                     <i class="fa fa-ellipsis-h"></i>
+                  </button>
+                  <div ngbDropdownMenu>
+                     <button ngbDropdownItem><i class="fa fa-trash"></i> Видалити</button>
+                  </div>
+               </div>
+            </ng-template>
+         </ng-container>
          <small class="text-muted">{{ message.created_at | time: 'fromNow' }}</small>
       </div>
    </div>

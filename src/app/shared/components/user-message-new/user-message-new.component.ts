@@ -6,6 +6,7 @@ import { Win } from '@models/win.model';
 import { groupBy } from 'lodash';
 import { SettingsService } from '@services/settings.service';
 import { AwardNewService } from '@services/new/award-new.service';
+import { UserNew } from '@models/new/user-new.model';
 
 @Component({
    selector: 'app-user-message-new',
@@ -14,6 +15,8 @@ import { AwardNewService } from '@services/new/award-new.service';
 })
 export class UserMessageNewComponent implements OnInit {
    @Input() message: GuestbookMessageNew | CommentNew;
+   @Input() authenticatedUser: UserNew;
+   @Input() permissionForDeleting: string;
 
    public awardsLogosPath = SettingsService.awardsLogosPath;
    public groupedWins: { [awardId: number]: Win[] };
