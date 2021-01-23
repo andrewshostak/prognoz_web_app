@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import { CommentNew } from '@models/new/comment-new.model';
 import { GuestbookMessageNew } from '@models/new/guestbook-message-new.model';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
@@ -17,6 +17,7 @@ export class UserMessageNewComponent implements OnInit {
    @Input() message: GuestbookMessageNew | CommentNew;
    @Input() authenticatedUser: UserNew;
    @Input() permissionForDeleting: string;
+   @Output() onDeleteButtonClick = new EventEmitter<number>();
 
    public awardsLogosPath = SettingsService.awardsLogosPath;
    public groupedWins: { [awardId: number]: Win[] };
@@ -26,6 +27,10 @@ export class UserMessageNewComponent implements OnInit {
 
    public assembleHTMLItem(message: string): SafeHtml {
       return this.domSanitizer.bypassSecurityTrustHtml(message);
+   }
+
+   public deleteButtonClick(id: number): void {
+      this.onDeleteButtonClick.emit(id);
    }
 
    public ngOnInit(): void {

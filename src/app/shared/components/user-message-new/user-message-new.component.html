@@ -1,4 +1,4 @@
-<div class="card shadow">
+<div class="card shadow" [ngClass]="{ deleted: message.deleted_at }">
    <div class="card-header d-flex justify-content-between">
       <div class="d-flex align-items-center">
          <div class="pr-2">
@@ -10,14 +10,14 @@
          </div>
       </div>
       <div class="d-flex flex-column align-items-end">
-         <ng-container *ngIf="authenticatedUser && message.is_changeable">
+         <ng-container *ngIf="authenticatedUser && message.is_changeable && !message.deleted_at">
             <div *ngIf="message.user.id === authenticatedUser.id; else notAuthorActions" ngbDropdown>
                <button class="btn btn-sm btn-outline-primary" ngbDropdownToggle>
                   <i class="fa fa-ellipsis-h"></i>
                </button>
                <div ngbDropdownMenu>
                   <button ngbDropdownItem><i class="fa fa-pencil"></i> Змінити</button>
-                  <button ngbDropdownItem><i class="fa fa-trash"></i> Видалити</button>
+                  <button ngbDropdownItem (click)="deleteButtonClick(message.id)"><i class="fa fa-trash"></i> Видалити</button>
                </div>
             </div>
             <ng-template #notAuthorActions>
@@ -26,7 +26,7 @@
                      <i class="fa fa-ellipsis-h"></i>
                   </button>
                   <div ngbDropdownMenu>
-                     <button ngbDropdownItem><i class="fa fa-trash"></i> Видалити</button>
+                     <button ngbDropdownItem (click)="deleteButtonClick(message.id)"><i class="fa fa-trash"></i> Видалити</button>
                   </div>
                </div>
             </ng-template>
@@ -36,10 +36,19 @@
    </div>
    <div class="card-body">
       <div class="card-text break-word">
-         <div [innerHtml]="assembleHTMLItem(message.body)"></div>
+         <div *ngIf="!message.deleted_at; else deleted" [innerHtml]="assembleHTMLItem(message.body)"></div>
+         <ng-template #deleted>
+            <div *ngIf="message.deleted_by === message.user_id; else deletedByAdmin" class="text-muted">Повідомлення видалено автором</div>
+            <ng-template #deletedByAdmin>
+               <div class="text-muted">Повідомлення видалено адіміністратором ({{ message.deleter.name }})</div>
+            </ng-template>
+         </ng-template>
       </div>
    </div>
-   <div *ngIf="message.user.winners?.length || message.user.clubs?.length" class="card-footer d-flex justify-content-between">
+   <div
+      *ngIf="!message.deleted_at && (message.user.winners?.length || message.user.clubs?.length)"
+      class="card-footer d-flex justify-content-between"
+   >
       <div class="d-flex">
          <app-club-logo-with-tooltip *ngFor="let club of message.user.clubs" [club]="club" class="pr-2"></app-club-logo-with-tooltip>
       </div>

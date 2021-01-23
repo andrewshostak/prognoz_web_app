@@ -1,5 +1,5 @@
 import { Location } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, TemplateRef } from '@angular/core';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
 
@@ -13,9 +13,12 @@ import { CommentNewService } from '@app/news/shared/comment-new.service';
 import { CommentSearch } from '@models/search/comment-search.model';
 import { SettingsService } from '@services/settings.service';
 import { UserNew } from '@models/new/user-new.model';
+import { OpenedModal } from '@models/opened-modal.model';
+import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { Sequence } from '@enums/sequence.enum';
 import { ModelStatus } from '@enums/model-status.enum';
 import { AuthNewService } from '@services/new/auth-new.service';
+import * as moment from 'moment';
 
 @Component({
    selector: 'app-news-detail',
@@ -29,6 +32,7 @@ export class NewsDetailComponent implements OnInit {
       private currentStateService: CurrentStateService,
       private domSanitizer: DomSanitizer,
       private location: Location,
+      private ngbModalService: NgbModal,
       private notificationsService: NotificationsService,
       private newsService: NewsService,
       private titleService: TitleService
@@ -39,10 +43,28 @@ export class NewsDetailComponent implements OnInit {
    public news: News;
    public newsId: number;
    public newsImagesUrl = SettingsService.newsLogosPath;
+   public openedModal: OpenedModal<number>;
    public spinnerButton = false;
 
    public assembleHTMLItem(message: string): SafeHtml {
       return this.domSanitizer.bypassSecurityTrustHtml(message);
+   }
+
+   public deleteComment(): void {
+      this.commentService.deleteComment(this.openedModal.data).subscribe(() => {
+         this.openedModal.reference.close();
+         this.notificationsService.success('Успішно', 'Коментар видалено');
+         const index = this.comments.findIndex(comment => comment.id === this.openedModal.data);
+         if (index > -1) {
+            this.comments[index] = {
+               ...this.comments[index],
+               body: null,
+               deleted_by: this.authenticatedUser.id,
+               deleter: this.authenticatedUser,
+               deleted_at: moment().format('YYYY-MM-DD HH:mm:ss')
+            };
+         }
+      });
    }
 
    public getCommentsData(newsId: number): void {
@@ -51,7 +73,7 @@ export class NewsDetailComponent implements OnInit {
          sequence: Sequence.Ascending,
          limit: SettingsService.maxLimitValues.comments,
          page: 1,
-         relations: ['user.clubs', 'user.winners.award', 'user.winners.competition.season', 'updater', 'deleter'],
+         relations: ['user.clubs', 'user.winners.award', 'user.winners.competition.season', 'deleter'],
          newsId,
          trashed: ModelStatus.Truthy
       } as CommentSearch;
@@ -63,6 +85,11 @@ export class NewsDetailComponent implements OnInit {
       this.getCommentsData(this.newsId);
       this.getNewsData(this.newsId);
       this.authenticatedUser = this.authService.getUser();
+   }
+
+   public openConfirmModal(data: number, content: NgbModalRef | TemplateRef<any>, submitted: (event) => void): void {
+      const reference = this.ngbModalService.open(content, { centered: true });
+      this.openedModal = { reference, data, submitted: () => submitted.call(this) };
    }
 
    private getNewsData(newsId: number): void {

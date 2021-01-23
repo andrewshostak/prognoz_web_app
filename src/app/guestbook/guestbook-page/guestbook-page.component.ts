@@ -1,17 +1,22 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, TemplateRef } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 
 import { GuestbookMessageNewService } from '@app/guestbook/shared/guestbook-message-new.service';
+import { ModelStatus } from '@enums/model-status.enum';
 import { Sequence } from '@enums/sequence.enum';
 import { GuestbookMessageNew } from '@models/new/guestbook-message-new.model';
+import { UserNew } from '@models/new/user-new.model';
+import { OpenedModal } from '@models/opened-modal.model';
 import { Pagination } from '@models/pagination.model';
 import { GuestbookMessageSearch } from '@models/search/guestbook-message-search.model';
+import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { AuthNewService } from '@services/new/auth-new.service';
 import { PaginationService } from '@services/pagination.service';
 import { SettingsService } from '@services/settings.service';
 import { TitleService } from '@services/title.service';
+import { NotificationsService } from 'angular2-notifications';
+import * as moment from 'moment';
 import { Subscription } from 'rxjs';
-import { UserNew } from '@models/new/user-new.model';
 
 @Component({
    selector: 'app-guestbook-page',
@@ -22,22 +27,43 @@ export class GuestbookPageComponent implements OnDestroy, OnInit {
    public activatedRouteSubscription: Subscription;
    public authenticatedUser: UserNew;
    public guestbookMessages: GuestbookMessageNew[] = [];
+   public openedModal: OpenedModal<number>;
    public paginationData: Pagination;
 
    constructor(
       private activatedRoute: ActivatedRoute,
       private authService: AuthNewService,
       private guestbookMessageService: GuestbookMessageNewService,
+      private ngbModalService: NgbModal,
+      private notificationsService: NotificationsService,
       private titleService: TitleService
    ) {}
+
+   public deleteGuestbookMessage(): void {
+      this.guestbookMessageService.deleteGuestbookMessage(this.openedModal.data).subscribe(() => {
+         this.openedModal.reference.close();
+         this.notificationsService.success('Успішно', 'Повідомлення видалено');
+         const index = this.guestbookMessages.findIndex(message => message.id === this.openedModal.data);
+         if (index > -1) {
+            this.guestbookMessages[index] = {
+               ...this.guestbookMessages[index],
+               body: null,
+               deleted_by: this.authenticatedUser.id,
+               deleter: this.authenticatedUser,
+               deleted_at: moment().format('YYYY-MM-DD HH:mm:ss')
+            };
+         }
+      });
+   }
 
    public getGuestbookMessagesData(pageNumber: number): void {
       const search: GuestbookMessageSearch = {
          limit: SettingsService.guestbookMessagesPerPage,
          page: pageNumber,
          sequence: Sequence.Descending,
+         trashed: ModelStatus.Truthy,
          orderBy: 'created_at',
-         relations: ['user.clubs', 'user.winners.award', 'user.winners.competition.season']
+         relations: ['user.clubs', 'user.winners.award', 'user.winners.competition.season', 'deleter']
       };
       this.guestbookMessageService.getGuestbookMessages(search).subscribe(response => {
          this.guestbookMessages = response.data;
@@ -62,5 +88,10 @@ export class GuestbookPageComponent implements OnDestroy, OnInit {
       });
 
       this.authenticatedUser = this.authService.getUser();
+   }
+
+   public openConfirmModal(data: number, content: NgbModalRef | TemplateRef<any>, submitted: (event) => void): void {
+      const reference = this.ngbModalService.open(content, { centered: true });
+      this.openedModal = { reference, data, submitted: () => submitted.call(this) };
    }
 }

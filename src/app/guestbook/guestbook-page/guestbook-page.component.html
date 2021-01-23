@@ -21,12 +21,11 @@
 <div class="row">
    <div class="col">
       <div *ngFor="let message of guestbookMessages" class="mt-2">
-         <!-- TODO: remove old component -->
-         <!--         <app-user-message [message]="message"></app-user-message>-->
          <app-user-message-new
             [message]="message"
             [authenticatedUser]="authenticatedUser"
             [permissionForDeleting]="'delete_guestbook_message'"
+            (onDeleteButtonClick)="openConfirmModal($event, confirmModal, deleteGuestbookMessage)"
          >
          </app-user-message-new>
       </div>
@@ -40,3 +39,11 @@
    [path]="paginationData.path"
 >
 </app-pagination>
+<ng-template #confirmModal let-c="close">
+   <app-confirmation-modal
+      [close]="c"
+      [message]="'Ви впевнені що хочете видалити це повідомлення?'"
+      (confirmed)="openedModal.submitted($event)"
+   >
+   </app-confirmation-modal>
+</ng-template>

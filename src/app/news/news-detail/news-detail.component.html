@@ -48,9 +48,12 @@
    <div *ngIf="comments && comments.length" class="row">
       <div class="col">
          <div *ngFor="let comment of comments" class="mt-2">
-            <!-- TODO: remove old component -->
-            <!--            <app-user-message [message]="comment"></app-user-message>-->
-            <app-user-message-new [message]="comment" [authenticatedUser]="authenticatedUser" [permissionForDeleting]="'delete_comment'">
+            <app-user-message-new
+               [message]="comment"
+               [authenticatedUser]="authenticatedUser"
+               [permissionForDeleting]="'delete_comment'"
+               (onDeleteButtonClick)="openConfirmModal($event, confirmModal, deleteComment)"
+            >
             </app-user-message-new>
          </div>
       </div>
@@ -59,3 +62,11 @@
       <app-comment-form [newsId]="newsId" (commentCreated)="commentCreated($event)"></app-comment-form>
    </div>
 </div>
+<ng-template #confirmModal let-c="close">
+   <app-confirmation-modal
+      [close]="c"
+      [message]="'Ви впевнені що хочете видалити цей коментар?'"
+      (confirmed)="openedModal.submitted($event)"
+   >
+   </app-confirmation-modal>
+</ng-template>
