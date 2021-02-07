@@ -105,4 +105,14 @@ export class NewsDetailComponent implements OnInit {
       comment.is_changeable = true;
       this.comments = [...this.comments, comment];
    }
+
+   public updateComment(comment: CommentNew): void {
+      this.commentService.updateComment(comment.id, comment).subscribe(response => {
+         this.notificationsService.success('Успішно', 'Коментар змінено');
+         const index = this.comments.findIndex(c => c.id === comment.id);
+         if (index > -1) {
+            this.comments[index] = response;
+         }
+      });
+   }
 }

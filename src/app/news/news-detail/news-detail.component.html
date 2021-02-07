@@ -53,6 +53,7 @@
                [authenticatedUser]="authenticatedUser"
                [permissionForDeleting]="'delete_comment'"
                (onDeleteButtonClick)="openConfirmModal($event, confirmModal, deleteComment)"
+               (onUpdateButtonClick)="updateComment($event)"
             >
             </app-user-message-new>
          </div>

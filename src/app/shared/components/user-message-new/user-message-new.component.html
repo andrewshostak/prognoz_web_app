@@ -16,7 +16,7 @@
                   <i class="fa fa-ellipsis-h"></i>
                </button>
                <div ngbDropdownMenu>
-                  <button ngbDropdownItem><i class="fa fa-pencil"></i> Змінити</button>
+                  <button ngbDropdownItem (click)="editButtonClick()"><i class="fa fa-pencil"></i> Редагувати</button>
                   <button ngbDropdownItem (click)="deleteButtonClick(message.id)"><i class="fa fa-trash"></i> Видалити</button>
                </div>
             </div>
@@ -31,17 +31,36 @@
                </div>
             </ng-template>
          </ng-container>
-         <small class="text-muted">{{ message.created_at | time: 'fromNow' }}</small>
+         <small class="text-muted"
+            >{{ message.created_at | time: 'fromNow' }} <i *ngIf="message.updated_by" class="fa fa-pencil"></i
+         ></small>
       </div>
    </div>
    <div class="card-body">
       <div class="card-text break-word">
-         <div *ngIf="!message.deleted_at; else deleted" [innerHtml]="assembleHTMLItem(message.body)"></div>
+         <ng-container *ngIf="mode === 'view'; else editMode">
+            <div *ngIf="!message.deleted_at; else deleted" [innerHtml]="assembleHTMLItem(message.body)"></div>
+         </ng-container>
          <ng-template #deleted>
             <div *ngIf="message.deleted_by === message.user_id; else deletedByAdmin" class="text-muted">Повідомлення видалено автором</div>
             <ng-template #deletedByAdmin>
                <div class="text-muted">Повідомлення видалено адіміністратором ({{ message.deleter.name }})</div>
             </ng-template>
+         </ng-template>
+         <ng-template #editMode>
+            <form novalidate [formGroup]="messageEditForm">
+               <app-message-input [fGroup]="messageEditForm" [showLabel]="false"></app-message-input>
+            </form>
+            <div class="d-flex justify-content-between">
+               <button class="btn btn-sm btn-outline-secondary" (click)="mode = 'view'">
+                  <i class="fa fa-times"></i>
+                  Скасувати
+               </button>
+               <button class="btn btn-sm btn-primary" (click)="updateButtonClick()">
+                  <i class="fa fa-check"></i>
+                  Змінити
+               </button>
+            </div>
          </ng-template>
       </div>
    </div>

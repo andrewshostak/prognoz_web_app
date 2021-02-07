@@ -1,0 +1,15 @@
+<ng-container [formGroup]="fGroup">
+   <div class="form-group" [class.form-group-invalid]="showFormInvalidClass(fGroup.get('body'))">
+      <label *ngIf="showLabel" class="form-control-label" for="body"><strong>Ваше повідомлення:</strong></label>
+      <textarea id="body" placeholder="Напишіть щось..." class="form-control" rows="3" formControlName="body"> </textarea>
+      <div [hidden]="!showFormErrorMessage(fGroup.get('body'), 'required')" class="error-message">
+         <small>Повідомлення обов'язковe</small>
+      </div>
+      <div [hidden]="!showFormErrorMessage(fGroup.get('body'), 'minlength')" class="error-message">
+         <small>Повідомлення має бути довшим ніж 10 символів</small>
+      </div>
+      <div [hidden]="!showFormErrorMessage(fGroup.get('body'), 'maxlength')" class="error-message">
+         <small>Повідомлення не має перевищувати 1000 символів</small>
+      </div>
+   </div>
+</ng-container>

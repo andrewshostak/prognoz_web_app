@@ -94,4 +94,14 @@ export class GuestbookPageComponent implements OnDestroy, OnInit {
       const reference = this.ngbModalService.open(content, { centered: true });
       this.openedModal = { reference, data, submitted: () => submitted.call(this) };
    }
+
+   public updateGuestbookMessage(message: GuestbookMessageNew): void {
+      this.guestbookMessageService.updateGuestbookMessage(message.id, message).subscribe(response => {
+         this.notificationsService.success('Успішно', 'Повідомлення змінено');
+         const index = this.guestbookMessages.findIndex(m => m.id === message.id);
+         if (index > -1) {
+            this.guestbookMessages[index] = response;
+         }
+      });
+   }
 }

@@ -26,6 +26,7 @@
             [authenticatedUser]="authenticatedUser"
             [permissionForDeleting]="'delete_guestbook_message'"
             (onDeleteButtonClick)="openConfirmModal($event, confirmModal, deleteGuestbookMessage)"
+            (onUpdateButtonClick)="updateGuestbookMessage($event)"
          >
          </app-user-message-new>
       </div>

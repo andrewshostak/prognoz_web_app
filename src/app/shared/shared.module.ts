@@ -17,6 +17,7 @@ import { LastCommentsComponent } from '@app/shared/components/last-comments/last
 import { LastEndedMatchesComponent } from '@app/shared/components/last-ended-matches/last-ended-matches.component';
 import { LastUserComponent } from '@app/shared/components/last-user/last-user.component';
 import { MatchSelectComponent } from '@app/shared/components/match-select/match-select.component';
+import { MessageInputComponent } from '@app/shared/components/message-input/message-input.component';
 import { NavigationComponent } from '@app/shared/components/navigation/navigation.component';
 import { OnlineUsersListComponent } from '@app/shared/components/online-users-list/online-users-list.component';
 import { PaginationComponent } from '@app/shared/components/pagination/pagination.component';
@@ -59,6 +60,7 @@ import { HasPermissionsDirective } from '@app/shared/directives/has-permissions.
       LastEndedMatchesComponent,
       LastUserComponent,
       MatchSelectComponent,
+      MessageInputComponent,
       NavigationComponent,
       OnlineUsersListComponent,
       PaginationComponent,
@@ -95,6 +97,7 @@ import { HasPermissionsDirective } from '@app/shared/directives/has-permissions.
       LastEndedMatchesComponent,
       LastUserComponent,
       MatchSelectComponent,
+      MessageInputComponent,
       NavigationComponent,
       OnlineUsersListComponent,
       PaginationComponent,

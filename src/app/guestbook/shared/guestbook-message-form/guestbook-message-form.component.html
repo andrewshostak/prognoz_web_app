@@ -1,18 +1,6 @@
 <div *ngIf="user">
    <form novalidate [formGroup]="guestbookMessageForm" (ngSubmit)="submit()" class="bg-white shadow rounded p-2 mb-2">
-      <div class="form-group" [class.form-group-invalid]="showFormInvalidClass(guestbookMessageForm.get('body'))">
-         <label class="form-control-label" for="body"><strong>Ваше повідомлення:</strong></label>
-         <textarea id="body" placeholder="Напишіть щось..." class="form-control" rows="3" formControlName="body"> </textarea>
-         <div [hidden]="!showFormErrorMessage(guestbookMessageForm.get('body'), 'required')" class="error-message">
-            <small>Повідомлення обов'язковe</small>
-         </div>
-         <div [hidden]="!showFormErrorMessage(guestbookMessageForm.get('body'), 'minlength')" class="error-message">
-            <small>Повідомлення має бути довшим ніж 10 символів</small>
-         </div>
-         <div [hidden]="!showFormErrorMessage(guestbookMessageForm.get('body'), 'maxlength')" class="error-message">
-            <small>Повідомлення не має перевищувати 1000 символів</small>
-         </div>
-      </div>
+      <app-message-input [fGroup]="guestbookMessageForm" [showLabel]="true"></app-message-input>
       <div class="text-right">
          <button [hidden]="spinnerButton" type="submit" class="btn btn-primary"><i class="fa fa-check"></i> Добавити</button>
          <app-spinner-button [hidden]="!spinnerButton"></app-spinner-button>
