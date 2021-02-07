@@ -4,7 +4,6 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { GuestbookMessageNew } from '@models/new/guestbook-message-new.model';
 import { UserNew } from '@models/new/user-new.model';
 import { AuthNewService } from '@services/new/auth-new.service';
-import { UtilsService } from '@services/utils.service';
 import { NotificationsService } from 'angular2-notifications';
 import { GuestbookMessageNewService } from '@app/guestbook/shared/guestbook-message-new.service';
 import { trim } from 'lodash';
@@ -17,8 +16,6 @@ export class GuestbookMessageFormComponent implements OnInit {
    @Output() public guestbookMessageCreated = new EventEmitter<GuestbookMessageNew>();
 
    public guestbookMessageForm: FormGroup;
-   public showFormErrorMessage = UtilsService.showFormErrorMessage;
-   public showFormInvalidClass = UtilsService.showFormInvalidClass;
    public spinnerButton = false;
    public user: UserNew;
 

@@ -33,7 +33,6 @@ import { TeamLogoWithTooltipComponent } from '@app/shared/components/tooltips/te
 import { UserLogoWithTooltipComponent } from '@app/shared/components/tooltips/user-logo-with-tooltip/user-logo-with-tooltip.component';
 import { WinLogoWithTooltipComponent } from '@app/shared/components/tooltips/win-logo-with-tooltip/win-logo-with-tooltip.component';
 import { TrueFalseIconsComponent } from '@app/shared/components/true-false-icons/true-false-icons.component';
-import { UserMessageComponent } from '@app/shared/components/user-message/user-message.component';
 import { UserSelectComponent } from '@app/shared/components/user-select/user-select.component';
 import { TimePipe } from '@app/shared/pipes/time.pipe';
 import { NgbDropdownModule, NgbPopoverModule, NgbTooltipModule } from '@ng-bootstrap/ng-bootstrap';
@@ -74,7 +73,6 @@ import { HasPermissionsDirective } from '@app/shared/directives/has-permissions.
       TimePipe,
       TrueFalseIconsComponent,
       UserLogoWithTooltipComponent,
-      UserMessageComponent,
       UserMessageNewComponent,
       UserSelectComponent,
       WinLogoWithTooltipComponent,
@@ -111,7 +109,6 @@ import { HasPermissionsDirective } from '@app/shared/directives/has-permissions.
       TimePipe,
       TrueFalseIconsComponent,
       UserLogoWithTooltipComponent,
-      UserMessageComponent,
       UserMessageNewComponent,
       UserSelectComponent,
       WinLogoWithTooltipComponent,
