@@ -49,6 +49,12 @@ export class CupStageNewService {
          params = params.set('competition_id', search.competitionId.toString());
       }
 
+      if (search.relations) {
+         search.relations.forEach(relation => {
+            params = params.append('relations[]', relation);
+         });
+      }
+
       return this.httpClient.get<PaginatedResponse<CupStageNew>>(this.cupStagesUrl, { params });
    }
 }
