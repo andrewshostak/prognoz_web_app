@@ -3,12 +3,16 @@ import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/cor
 import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
 
 import { CupCupMatch } from '@models/cup/cup-cup-match.model';
-import { CupStage } from '@models/cup/cup-stage.model';
+import { CupStageNew } from '@models/new/cup-stage-new';
 import { UserNew } from '@models/new/user-new.model';
 import { CupCupMatchService } from '@services/cup/cup-cup-match.service';
-import { CupStageService } from '@services/cup/cup-stage.service';
+import { CupStageNewService } from '@services/new/cup-stage-new.service';
 import { UtilsService } from '@services/utils.service';
 import { NotificationsService } from 'angular2-notifications';
+import { CupStageSearch } from '@models/search/cup-stage-search.model';
+import { SettingsService } from '@services/settings.service';
+import { Sequence } from '@enums/sequence.enum';
+import { ModelStatus } from '@enums/model-status.enum';
 
 @Component({
    selector: 'app-cup-cup-match-form',
@@ -19,14 +23,13 @@ export class CupCupMatchFormComponent implements OnChanges, OnInit {
    @Input() public cupCupMatch: CupCupMatch;
 
    public cupCupMatchForm: FormGroup;
-   public cupStages: CupStage[];
-   public errorCupStages: string;
+   public cupStages: CupStageNew[];
    public homeUser: UserNew;
    public awayUser: UserNew;
 
    constructor(
       private cupCupMatchService: CupCupMatchService,
-      private cupStageService: CupStageService,
+      private cupStageService: CupStageNewService,
       private location: Location,
       private notificationsService: NotificationsService
    ) {}
@@ -77,14 +80,15 @@ export class CupCupMatchFormComponent implements OnChanges, OnInit {
    }
 
    private getCupStagesData(): void {
-      this.cupStageService.getCupStages(null, false, false).subscribe(
-         response => {
-            this.cupStages = response.cup_stages;
-         },
-         error => {
-            this.errorCupStages = error;
-         }
-      );
+      const search: CupStageSearch = {
+         limit: SettingsService.maxLimitValues.cupStages,
+         page: 1,
+         orderBy: 'id',
+         sequence: Sequence.Descending,
+         relations: ['competition'],
+         ended: ModelStatus.Falsy
+      };
+      this.cupStageService.getCupStages(search).subscribe(response => (this.cupStages = response.data));
    }
 
    private createCupCupMatch(cupCupMatch: CupCupMatch): void {
