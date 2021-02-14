@@ -2,18 +2,19 @@ import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/cor
 import { AbstractControl, FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 
 import { ModelStatus } from '@enums/model-status.enum';
-import { CupStage } from '@models/cup/cup-stage.model';
+import { CupStageNew } from '@models/new/cup-stage-new';
 import { CupMatchNew } from '@models/new/cup-match-new.model';
 import { OpenedModal } from '@models/opened-modal.model';
 import { PaginatedResponse } from '@models/paginated-response.model';
 import { CupMatchSearch } from '@models/search/cup-match-search.model';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
-import { CupStageService } from '@services/cup/cup-stage.service';
+import { CupStageNewService } from '@services/new/cup-stage-new.service';
 import { CupMatchNewService } from '@services/new/cup-match-new.service';
 import { SettingsService } from '@services/settings.service';
 import { UtilsService } from '@services/utils.service';
 import { NotificationsService } from 'angular2-notifications';
 import { Observable } from 'rxjs';
+import { Sequence } from '@enums/sequence.enum';
 
 @Component({
    selector: 'app-cup-match-form',
@@ -23,7 +24,7 @@ import { Observable } from 'rxjs';
 export class CupMatchFormComponent implements OnChanges, OnInit {
    @Input() public cupMatch: CupMatchNew;
 
-   public cupStages: CupStage[];
+   public cupStages: CupStageNew[];
    public cupMatchForm: FormGroup;
    public cupMatchesObservable: Observable<PaginatedResponse<CupMatchNew>>;
    public lastCreatedMatchId: number;
@@ -31,7 +32,7 @@ export class CupMatchFormComponent implements OnChanges, OnInit {
 
    constructor(
       private cupMatchService: CupMatchNewService,
-      private cupStageService: CupStageService,
+      private cupStageService: CupStageNewService,
       private ngbModalService: NgbModal,
       private notificationsService: NotificationsService
    ) {}
@@ -106,7 +107,7 @@ export class CupMatchFormComponent implements OnChanges, OnInit {
       this.cupMatchForm.reset();
       if (this.cupMatch) {
          this.cupMatch.cup_stages.forEach(cupStage => this.addCupStage(cupStage.id));
-         Object.entries(this.cupMatch).forEach(
+         Object.entries(this.cupMatch as any).forEach(
             ([field, value]) => this.cupMatchForm.get(field) && this.cupMatchForm.patchValue({ [field]: value })
          );
       }
@@ -147,8 +148,16 @@ export class CupMatchFormComponent implements OnChanges, OnInit {
    }
 
    private getCupStagesData(): void {
-      this.cupStageService.getCupStages(null, null, false).subscribe(response => {
-         this.cupStages = response.cup_stages;
+      const search: CupMatchSearch = {
+         limit: SettingsService.maxLimitValues.cupStages,
+         page: 1,
+         relations: ['competition'],
+         ended: ModelStatus.Falsy,
+         sequence: Sequence.Ascending,
+         orderBy: 'round'
+      };
+      this.cupStageService.getCupStages(search).subscribe(response => {
+         this.cupStages = response.data;
       });
    }
 
