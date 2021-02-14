@@ -1,4 +1,4 @@
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
 import { CupStage } from '@models/cup/cup-stage.model';
@@ -7,7 +7,6 @@ import { HeadersWithToken } from '@services/headers-with-token.service';
 import { environment } from 'environments/environment';
 import { Observable } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
-import { isNil } from 'lodash';
 
 @Injectable()
 export class CupStageService {
@@ -17,26 +16,6 @@ export class CupStageService {
       private headersWithToken: HeadersWithToken,
       private httpClient: HttpClient
    ) {}
-
-   /**
-    * @deprecated
-    */
-   public getCupStages(page?: number, active?: boolean, ended?: boolean, competitionId?: number): Observable<any> {
-      let params = new HttpParams();
-      if (page) {
-         params = params.append('page', page.toString());
-      }
-      if (!isNil(active)) {
-         params = params.append('active', active ? '1' : '0');
-      }
-      if (!isNil(ended)) {
-         params = params.append('ended', ended ? '1' : '0');
-      }
-      if (!isNil(competitionId)) {
-         params = params.append('competition_id', competitionId.toString());
-      }
-      return this.httpClient.get(this.cupStageUrl, { params }).pipe(catchError(this.errorHandlerService.handle));
-   }
 
    /**
     * @deprecated
