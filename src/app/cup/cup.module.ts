@@ -25,6 +25,7 @@ import { CupRatingSeasonDetailsComponent } from './shared/cup-rating-season-deta
 import { CupRatingSeasonsSummaryComponent } from './shared/cup-rating-seasons-summary/cup-rating-seasons-summary.component';
 import { CupRatingTableComponent } from './shared/cup-rating-table/cup-rating-table.component';
 import { CupStageSelectComponent } from './shared/cup-stage-select/cup-stage-select.component';
+import { CupCupMatchesGroupRatingComponent } from './shared/cup-cup-matches-group-rating/cup-cup-matches-group-rating.component';
 
 @NgModule({
    imports: [
@@ -56,7 +57,8 @@ import { CupStageSelectComponent } from './shared/cup-stage-select/cup-stage-sel
       CupRatingTableComponent,
       CupRatingUserComponent,
       CupRulesComponent,
-      CupStageSelectComponent
+      CupStageSelectComponent,
+      CupCupMatchesGroupRatingComponent
    ]
 })
 export class CupModule {}

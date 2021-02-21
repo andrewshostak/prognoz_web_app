@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 
+import { CupRatingGroupTab } from '@enums/cup-rating-group-tab.enum';
 import { CupRatingGroup } from '@models/cup/cup-rating-group.model';
 import { CompetitionNew } from '@models/new/competition-new.model';
 import { CupRatingService } from '@services/cup/cup-rating.service';
@@ -15,13 +16,14 @@ import { first, get, last } from 'lodash';
    templateUrl: './cup-rating-group.component.html'
 })
 export class CupRatingGroupComponent implements OnInit {
+   public competitionId: number;
    public cupRatingGroup: CupRatingGroup[];
    public getHomeCityInBrackets = UtilsService.getHomeCityInBrackets;
    public groupNumber: number;
    public groupNumbers: number[];
+   public tab: CupRatingGroupTab = CupRatingGroupTab.Active;
 
    private competition: CompetitionNew;
-   private competitionId: number;
 
    constructor(
       private activatedRoute: ActivatedRoute,
@@ -40,7 +42,7 @@ export class CupRatingGroupComponent implements OnInit {
    }
 
    public navigateToGroup(groupNumber: number): void {
-      this.router.navigate(['/cup', this.competitionId, 'rating-group', groupNumber]);
+      this.router.navigate(['../' + groupNumber], { relativeTo: this.activatedRoute, queryParamsHandling: 'merge' });
    }
 
    public nextGroup(): void {
@@ -52,6 +54,11 @@ export class CupRatingGroupComponent implements OnInit {
    }
 
    public ngOnInit() {
+      this.activatedRoute.queryParams.subscribe((params: Params) => {
+         if (params.tab) {
+            this.tab = params.tab;
+         }
+      });
       this.activatedRoute.params.subscribe((params: Params) => {
          this.competitionId = parseInt(params.competitionId, 10);
          this.groupNumber = parseInt(params.groupNumber, 10);

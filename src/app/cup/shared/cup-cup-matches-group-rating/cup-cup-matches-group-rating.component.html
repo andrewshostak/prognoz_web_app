@@ -1,0 +1,67 @@
+<ul class="nav nav-tabs mb-2">
+   <li class="nav-item cursor-pointer">
+      <a class="nav-link" (click)="selectTab(cupRatingGroupTab.Active)" [ngClass]="{ active: tab === cupRatingGroupTab.Active }"> Матчі </a>
+   </li>
+   <li class="nav-item cursor-pointer">
+      <a class="nav-link" (click)="selectTab(cupRatingGroupTab.Results)" [ngClass]="{ active: tab === cupRatingGroupTab.Results }">
+         Результати
+      </a>
+   </li>
+</ul>
+<ng-container *ngIf="!groupedCupCupMatches.length && !isLoading">
+   <div class="alert alert-info mb-0">
+      <i class="fa fa-info-circle mr-1"></i>
+      {{ tab === cupRatingGroupTab.Active ? 'Матчів не знайдено' : 'Результатів не знайдено' }}
+   </div>
+</ng-container>
+<div *ngIf="groupedCupCupMatches.length" class="card shadow rounded">
+   <div class="card-body p-0">
+      <div *ngFor="let cupCupMatchesInOneGroup of groupedCupCupMatches">
+         <div
+            class="table-secondary cursor-pointer font-italic pl-2 pr-2"
+            [routerLink]="['/cup', 'cup-matches', { cup_stage_id: cupCupMatchesInOneGroup[0].cup_stage_id }]"
+         >
+            {{ cupCupMatchesInOneGroup[0].cup_stage.title }}
+         </div>
+         <div
+            *ngFor="let cupCupMatch of cupCupMatchesInOneGroup"
+            class="row no-gutters cursor-pointer pt-1 pb-1"
+            [routerLink]="'/cup/cup-matches/' + cupCupMatch.id"
+         >
+            <div class="col-5 d-flex align-items-center justify-content-end">
+               <small *ngIf="cupCupMatch.home_user.hometown" class="d-none d-sm-block text-muted text-truncate pr-1"
+                  >({{ cupCupMatch.home_user.hometown }})</small
+               >
+               <app-cup-cup-match-user-name
+                  class="text-right pr-1"
+                  [count]="cupCupMatch.cup_predictions_home_count"
+                  [user]="cupCupMatch.home_user"
+               ></app-cup-cup-match-user-name>
+               <app-user-logo-with-tooltip [user]="cupCupMatch.home_user"></app-user-logo-with-tooltip>
+            </div>
+            <div class="col-2 d-flex align-items-center justify-content-center text-center text-nowrap">
+               <small class="text-muted" *ngIf="isNil(cupCupMatch.home) && isNil(cupCupMatch.away); else score">vs</small>
+               <ng-template #score>
+                  <span class="d-none d-sm-inline">
+                     <strong>{{ cupCupMatch.home }} : {{ cupCupMatch.away }}</strong>
+                  </span>
+                  <span class="d-inline d-sm-none">
+                     <strong>{{ cupCupMatch.home }}:{{ cupCupMatch.away }}</strong>
+                  </span>
+               </ng-template>
+            </div>
+            <div class="col-5 d-flex align-items-center justify-content-start">
+               <app-user-logo-with-tooltip [user]="cupCupMatch.away_user"></app-user-logo-with-tooltip>
+               <app-cup-cup-match-user-name
+                  class="text-left pl-1"
+                  [count]="cupCupMatch.cup_predictions_away_count"
+                  [user]="cupCupMatch.away_user"
+               ></app-cup-cup-match-user-name>
+               <small *ngIf="cupCupMatch.away_user.hometown" class="d-none d-sm-block text-muted text-truncate pl-1"
+                  >({{ cupCupMatch.away_user.hometown }})</small
+               >
+            </div>
+         </div>
+      </div>
+   </div>
+</div>

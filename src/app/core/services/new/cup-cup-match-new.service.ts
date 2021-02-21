@@ -1,6 +1,7 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
+import { Sequence } from '@enums/sequence.enum';
 import { environment } from '@env';
 import { CupCupMatchNew } from '@models/new/cup-cup-match-new.model';
 import { PaginatedResponse } from '@models/paginated-response.model';
@@ -17,9 +18,11 @@ export class CupCupMatchNewService {
    constructor(private authService: AuthNewService, private httpClient: HttpClient) {}
 
    public groupCupCupMatches(cupCupMatches: CupCupMatchNew[]): CupCupMatchNew[][] {
-      const groupedCupCupMatches = Object.values(groupBy<CupCupMatchNew>(cupCupMatches, 'group_number') as {
-         [groupNumber: number]: CupCupMatchNew[];
-      });
+      const groupedCupCupMatches = Object.values(
+         groupBy<CupCupMatchNew>(cupCupMatches, 'group_number') as {
+            [groupNumber: number]: CupCupMatchNew[];
+         }
+      );
 
       const user = this.authService.getUser();
       if (!user) {
@@ -42,6 +45,22 @@ export class CupCupMatchNewService {
       groupedCupCupMatches.unshift(userGroupSortedCupCupMatches);
 
       return groupedCupCupMatches;
+   }
+
+   public groupCupCupMatchesByStage(cupCupMatches: CupCupMatchNew[], sequence: Sequence): CupCupMatchNew[][] {
+      return Object.values(
+         groupBy<CupCupMatchNew>(cupCupMatches, 'cup_stage_id') as {
+            [cupStageId: number]: CupCupMatchNew[];
+         }
+      ).sort((a, b) => {
+         return sequence === Sequence.Ascending
+            ? a[0].cup_stage_id > b[0].cup_stage_id
+               ? 1
+               : -1
+            : a[0].cup_stage_id > b[0].cup_stage_id
+            ? -1
+            : 1;
+      });
    }
 
    public sortCupCupMatches(cupCupMatches: CupCupMatchNew[]): CupCupMatchNew[] {
@@ -90,6 +109,14 @@ export class CupCupMatchNewService {
 
       if (search.cupPredictionsCount) {
          params = params.append('cup_predictions_count', (search.cupPredictionsCount as unknown) as string);
+      }
+
+      if (search.groupNumber) {
+         params = params.set('group_number', search.groupNumber.toString());
+      }
+
+      if (search.competitionId) {
+         params = params.set('competition_id', search.competitionId.toString());
       }
 
       return this.httpClient.get<PaginatedResponse<CupCupMatchNew>>(this.cupCupMatchesUrl, { params });
