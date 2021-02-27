@@ -17,6 +17,9 @@
          >
             <label [attr.for]="'competition_id'" class="font-weight-bold">Змагання:</label>
             <ng-select [items]="competitions" bindValue="id" bindLabel="title" labelForId="competition_id" formControlName="competition_id">
+               <ng-template ng-label-tmp ng-option-tmp let-item="item">
+                  {{ item.title }} <strong>({{ item.number_in_season }})</strong>
+               </ng-template>
             </ng-select>
             <div [hidden]="!showFormErrorMessage(championshipMatchForm.get('competition_id'), 'required')" class="error-message">
                <small>Вибір змагання обов'язковий</small>
