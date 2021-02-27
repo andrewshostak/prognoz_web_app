@@ -7,12 +7,14 @@ import { CupStageNew } from '@models/new/cup-stage-new';
 import { UserNew } from '@models/new/user-new.model';
 import { CupCupMatchService } from '@services/cup/cup-cup-match.service';
 import { CupStageNewService } from '@services/new/cup-stage-new.service';
+import { UserNewService } from '@services/new/user-new.service';
 import { UtilsService } from '@services/utils.service';
 import { NotificationsService } from 'angular2-notifications';
 import { CupStageSearch } from '@models/search/cup-stage-search.model';
 import { SettingsService } from '@services/settings.service';
 import { Sequence } from '@enums/sequence.enum';
 import { ModelStatus } from '@enums/model-status.enum';
+import { omit } from 'lodash';
 
 @Component({
    selector: 'app-cup-cup-match-form',
@@ -30,6 +32,7 @@ export class CupCupMatchFormComponent implements OnChanges, OnInit {
    constructor(
       private cupCupMatchService: CupCupMatchService,
       private cupStageService: CupStageNewService,
+      private userNewService: UserNewService,
       private location: Location,
       private notificationsService: NotificationsService
    ) {}
@@ -49,14 +52,22 @@ export class CupCupMatchFormComponent implements OnChanges, OnInit {
          home_user_id: new FormControl('', [Validators.required]),
          away_user_id: new FormControl('', [Validators.required]),
          group_number: new FormControl(null, [Validators.min(1)]),
-         type: new FormControl('manual', [Validators.required])
+         type: new FormControl('manual', [Validators.required]),
+         preserve: new FormGroup({
+            cup_stage_id: new FormControl(false),
+            user_ids: new FormControl(true),
+            group_number: new FormControl(false)
+         })
       });
    }
 
    public onSubmit(): void {
-      if (this.cupCupMatchForm.valid) {
-         this.cupCupMatch ? this.updateCupCupMatch(this.cupCupMatchForm.value) : this.createCupCupMatch(this.cupCupMatchForm.value);
+      if (this.cupCupMatchForm.invalid) {
+         return;
       }
+
+      const cupCupMatch = omit(this.cupCupMatchForm.value, ['preserve']) as CupCupMatch;
+      this.cupCupMatch ? this.updateCupCupMatch(cupCupMatch) : this.createCupCupMatch(cupCupMatch);
    }
 
    public resetCupCupMatchForm(): void {
@@ -64,10 +75,26 @@ export class CupCupMatchFormComponent implements OnChanges, OnInit {
    }
 
    public swapUsers(): void {
-      [this.homeUser, this.awayUser] = [this.awayUser, this.homeUser];
+      const homeUserId = this.cupCupMatchForm.get('home_user_id').value;
+      if (!this.homeUser && homeUserId) {
+         this.userNewService.getUser(homeUserId).subscribe(response => {
+            this.awayUser = response;
+         });
+      }
+
+      const awayUserId = this.cupCupMatchForm.get('away_user_id').value;
+      if (!this.awayUser && awayUserId) {
+         this.userNewService.getUser(awayUserId).subscribe(response => {
+            this.homeUser = response;
+         });
+      }
+
+      if (this.homeUser && this.awayUser) {
+         [this.homeUser, this.awayUser] = [this.awayUser, this.homeUser];
+      }
       this.cupCupMatchForm.patchValue({
-         home_user_id: this.cupCupMatchForm.get('away_user_id').value,
-         away_user_id: this.cupCupMatchForm.get('home_user_id').value
+         home_user_id: awayUserId,
+         away_user_id: homeUserId
       });
    }
 
@@ -95,7 +122,19 @@ export class CupCupMatchFormComponent implements OnChanges, OnInit {
       this.cupCupMatchService.createCupCupMatch(cupCupMatch).subscribe(
          () => {
             this.notificationsService.success('Успішно', 'Кубок-матч створено');
-            this.cupCupMatchForm.reset({ cup_stage_id: cupCupMatch.cup_stage_id, type: 'manual' });
+            const preserve = this.cupCupMatchForm.get('preserve').value;
+            if (!preserve.cup_stage_id) {
+               this.cupCupMatchForm.get('cup_stage_id').reset();
+            }
+            if (!preserve.user_ids) {
+               this.homeUser = null;
+               this.awayUser = null;
+               this.cupCupMatchForm.get('home_user_id').reset();
+               this.cupCupMatchForm.get('away_user_id').reset();
+            }
+            if (!preserve.group_number) {
+               this.cupCupMatchForm.get('group_number').reset();
+            }
          },
          errors => {
             errors.forEach(error => this.notificationsService.error('Помилка', error));
