@@ -65,7 +65,7 @@ export class SettingsService {
       clubs: 500,
       competitions: 100,
       guestbook: 20,
-      comments: 20,
+      comments: 40,
       matches: 100,
       news: 10,
       seasons: 100,

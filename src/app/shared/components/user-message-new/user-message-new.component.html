@@ -44,7 +44,7 @@
          <ng-template #deleted>
             <div *ngIf="message.deleted_by === message.user_id; else deletedByAdmin" class="text-muted">Повідомлення видалено автором</div>
             <ng-template #deletedByAdmin>
-               <div class="text-muted">Повідомлення видалено адіміністратором ({{ message.deleter.name }})</div>
+               <div class="text-muted">Повідомлення видалено адміністратором ({{ message.deleter.name }})</div>
             </ng-template>
          </ng-template>
          <ng-template #editMode>
