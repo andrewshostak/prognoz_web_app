@@ -1,0 +1,30 @@
+{
+   "current_page": 1,
+   "total": 3,
+   "data": [
+      {
+         "id": 1,
+         "title": "Раунд Чемпіонату",
+         "home_minutes": 60,
+         "away_minutes": 20,
+         "matches_count": 12,
+         "blocks_count": 2
+      },
+      {
+         "id": 1,
+         "title": "Плей-офф (Одноматчева дуель)",
+         "home_minutes": 60,
+         "away_minutes": 60,
+         "matches_count": 12,
+         "blocks_count": 2
+      },
+      {
+         "id": 1,
+         "title": "Фінал",
+         "home_minutes": 60,
+         "away_minutes": 60,
+         "matches_count": 12,
+         "blocks_count": 2
+      }
+   ]
+}
