@@ -44,8 +44,13 @@
             <tbody>
                <tr *ngFor="let cupStageType of cupStageTypes">
                   <th scope="row">{{ cupStageType.title }}</th>
-                  <td class="text-center">{{ cupStageType.home_minutes }} хв.</td>
-                  <td class="text-center">{{ cupStageType.away_minutes }} хв.</td>
+                  <ng-container *ngIf="cupStageType.home_minutes === cupStageType.away_minutes; else differentMinutes">
+                     <td class="text-center" colspan="2">{{ cupStageType.home_minutes }} хв.</td>
+                  </ng-container>
+                  <ng-template #differentMinutes>
+                     <td class="text-center">{{ cupStageType.home_minutes }} хв.</td>
+                     <td class="text-center">{{ cupStageType.away_minutes }} хв.</td>
+                  </ng-template>
                   <td class="text-center">{{ cupStageType.coefficient }}</td>
                </tr>
             </tbody>

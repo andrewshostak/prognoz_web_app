@@ -3,27 +3,28 @@ import { TitleService } from '@services/title.service';
 
 import { CupStageType } from '@models/cup/cup-stage-type.model';
 import { CupStageTypeService } from '@services/cup/cup-stage-type.service';
+import { sortBy } from 'lodash';
 
 @Component({
-    selector: 'app-cup-rules',
-    templateUrl: './cup-rules.component.html',
-    styleUrls: ['./cup-rules.component.scss']
+   selector: 'app-cup-rules',
+   templateUrl: './cup-rules.component.html',
+   styleUrls: ['./cup-rules.component.scss']
 })
 export class CupRulesComponent implements OnInit {
-    constructor(private cupStageTypeService: CupStageTypeService, private titleService: TitleService) {}
+   constructor(private cupStageTypeService: CupStageTypeService, private titleService: TitleService) {}
 
-    cupStageTypes: CupStageType[];
-    errorCupStageTypes: string;
+   cupStageTypes: CupStageType[];
+   errorCupStageTypes: string;
 
-    ngOnInit() {
-        this.titleService.setTitle('Правила конкурсу - Кубок');
-        this.cupStageTypeService.getCupStageTypes().subscribe(
-            response => {
-                this.cupStageTypes = response;
-            },
-            error => {
-                this.errorCupStageTypes = error;
-            }
-        );
-    }
+   ngOnInit() {
+      this.titleService.setTitle('Правила конкурсу - Кубок');
+      this.cupStageTypeService.getCupStageTypes().subscribe(
+         response => {
+            this.cupStageTypes = sortBy(response, ['coefficient', 'title']);
+         },
+         error => {
+            this.errorCupStageTypes = error;
+         }
+      );
+   }
 }
