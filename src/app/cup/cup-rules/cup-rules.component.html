@@ -44,8 +44,13 @@
             <tbody>
                <tr *ngFor="let cupStageType of cupStageTypes">
                   <th scope="row">{{ cupStageType.title }}</th>
-                  <td class="text-center">{{ cupStageType.home_minutes }} хв.</td>
-                  <td class="text-center">{{ cupStageType.away_minutes }} хв.</td>
+                  <ng-container *ngIf="cupStageType.home_minutes === cupStageType.away_minutes; else differentMinutes">
+                     <td class="text-center" colspan="2">{{ cupStageType.home_minutes }} хв.</td>
+                  </ng-container>
+                  <ng-template #differentMinutes>
+                     <td class="text-center">{{ cupStageType.home_minutes }} хв.</td>
+                     <td class="text-center">{{ cupStageType.away_minutes }} хв.</td>
+                  </ng-template>
                   <td class="text-center">{{ cupStageType.coefficient }}</td>
                </tr>
             </tbody>
@@ -55,15 +60,14 @@
       <p>
          <b>11. </b> Нарахування очок в рейтинг відбувається за формулами<br />
          - якщо гравець зробив хоча б один прогноз:<br />
-         <u>Коефіцієнт рейтингу * Очки * Коефіцієнт кубкової стадії</u><br />
+         <u>Коефіцієнт кубкової стадії * 25 * Очки</u><br />
+         <small class="text-muted">(змінено 2021-04-04)</small><br />
          <br />
          - якщо гравець не зробив жодного прогнозу:<br />
          <u>Коефіцієнт кубкової стадії * -25</u><br />
          <small class="text-muted">(додано 2020-12-12)</small><br />
          <br />
-         <strong>Коефіцієнт рейтингу:</strong> якщо суперник знаходиться в рейтингу вище 90-тої позиції = (100 - позиція суперника в
-         рейтингу / 10) | якщо нижче, або його нема в рейтингу = 1<br />
-         <strong>Очки:</strong> перемога = 3 | нічия = 1 | поразка = 0<br />
+         <strong>Очки:</strong> перемога = 1 | нічия = 0.333 | поразка = 0<br />
          <strong>Коефіцієнт стадії:</strong> наведено в таблиці для кожного типу кубкової стадій<br />
       </p>
       <p>
