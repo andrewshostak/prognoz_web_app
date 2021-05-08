@@ -50,7 +50,6 @@ export class TeamStageNewService {
          });
       }
 
-      return this.httpClient.get<PaginatedResponse<TeamStageNew>>('/assets/json/team_stages_cup.json');
-      // todo return this.httpClient.get<PaginatedResponse<TeamStageNew>>(this.teamStagesUrl, { params });
+      return this.httpClient.get<PaginatedResponse<TeamStageNew>>(this.teamStagesUrl, { params });
    }
 }

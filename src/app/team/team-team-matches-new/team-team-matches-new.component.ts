@@ -30,6 +30,7 @@ export class TeamTeamMatchesNewComponent implements OnInit {
    public competitions: CompetitionNew[] = [];
    public selectedCompetitionId: number = null;
    public selectedTeamStage: TeamStageNew = null;
+   public showTeamStageSelect: boolean = false;
    public teamStages: TeamStageNew[] = [];
    public teamTeamMatches: TeamTeamMatchNew = [];
 
@@ -41,6 +42,21 @@ export class TeamTeamMatchesNewComponent implements OnInit {
       private teamStageService: TeamStageNewService,
       private teamTeamMatchService: TeamTeamMatchNewService
    ) {}
+
+   public clickOnCompetitionButton(competition: CompetitionNew): void {
+      if (this.selectedCompetitionId === competition.id) {
+         return;
+      }
+
+      this.getTeamStagesObservable(competition.id)
+         .pipe(first())
+         .subscribe((response: PaginatedResponse<TeamStageNew>) => {
+            this.teamStages = response.data;
+            this.navigateToTeamStage(this.teamStages);
+         });
+      this.currentStateService.cupCompetitionId = competition.id;
+      this.selectedCompetitionId = competition.id;
+   }
 
    public ngOnInit(): void {
       this.initializePageData();
@@ -109,7 +125,7 @@ export class TeamTeamMatchesNewComponent implements OnInit {
       const search: TeamTeamMatchSearch = {
          page: 1,
          teamStageId,
-         relations: includeRelations ? ['', ''] : [], // todo
+         relations: includeRelations ? ['homeTeam', 'awayTeam'] : [],
          limit: SettingsService.maxLimitValues.teamTeamMatches
       };
       return this.teamTeamMatchService.getTeamTeamMatches(search);

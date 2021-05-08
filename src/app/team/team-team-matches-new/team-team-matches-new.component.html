@@ -1,2 +1,44 @@
-<!--TODO-->
-<p>team-team-matches-new works!</p>
+<h2 class="h2">Матчі:</h2>
+<ng-container *ngIf="competitions">
+   <div class="d-block d-md-none">
+      <div class="btn-group btn-group-sm">
+         <ng-container [ngTemplateOutlet]="competitionsNavigation"></ng-container>
+      </div>
+   </div>
+   <div class="d-none d-md-block">
+      <div class="btn-group">
+         <ng-container [ngTemplateOutlet]="competitionsNavigation"></ng-container>
+      </div>
+   </div>
+</ng-container>
+<ng-template #competitionsNavigation>
+   <button
+      *ngFor="let competition of competitions"
+      (click)="clickOnCompetitionButton(competition)"
+      class="btn mb-2"
+      [ngClass]="competition.id === selectedCompetitionId ? 'btn-primary' : 'btn-outline-primary'"
+      type="button"
+   >
+      {{ competition.title }}
+   </button>
+   <button
+      (click)="showTeamStageSelect = !showTeamStageSelect"
+      class="btn btn-outline-secondary mb-2"
+      type="button"
+      title="Попередні змагання"
+   >
+      <i class="fa fa-history"></i>
+      <i [hidden]="showTeamStageSelect" class="fa fa-chevron-down"></i>
+      <i [hidden]="!showTeamStageSelect" class="fa fa-chevron-up"></i>
+   </button>
+</ng-template>
+<!-- TODO: component to view previous team stages -->
+<div class="mb-2">
+   <app-dropdown-navigation
+      [dropdownItems]="teamStages"
+      [selectedId]="selectedTeamStage?.id"
+      [navigationPath]="['/team', 'team-matches', { team_stage_id: ':id' }]"
+      [formSize]="'lg'"
+   >
+   </app-dropdown-navigation>
+</div>

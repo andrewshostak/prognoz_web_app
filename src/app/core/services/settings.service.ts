@@ -59,7 +59,7 @@ export class SettingsService {
       teamMatches: 20,
       teamParticipants: 10,
       teamPredictions: 10,
-      teamStages: 50,
+      teamStages: 40,
       teamTeamMatches: 10,
       teamTeams: 50,
 

@@ -21,6 +21,10 @@ const routes: Routes = [
       component: TeamComponent,
       children: [
          {
+            path: 'team-matches',
+            component: TeamTeamMatchesNewComponent
+         },
+         {
             path: 'competitions/:competitionId',
             component: TeamCompetitionSelectComponent,
             children: [

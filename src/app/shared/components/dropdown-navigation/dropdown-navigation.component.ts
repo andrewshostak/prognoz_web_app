@@ -37,7 +37,11 @@ export class DropdownNavigationComponent implements OnChanges, OnInit {
    }
 
    public ngOnChanges(changes: SimpleChanges): void {
-      if (changes.selectedId && this.form && this.navigationPath.includes('cup-matches')) {
+      if (
+         changes.selectedId &&
+         this.form &&
+         (this.navigationPath.includes('cup-matches') || this.navigationPath.includes('team-matches'))
+      ) {
          if (changes.selectedId.currentValue) {
             this.form.get('id').setValue(changes.selectedId.currentValue);
          }
@@ -57,15 +61,18 @@ export class DropdownNavigationComponent implements OnChanges, OnInit {
 
    public navigateTo(id: number): void {
       if (this.navigationPath.includes('cup-matches')) {
-         this.navigateToCupMatchesByStage(this.navigationPath, id);
+         this.navigateWithParam(this.navigationPath, { cup_stage_id: id });
+         return;
+      } else if (this.navigationPath.includes('team-matches')) {
+         this.navigateWithParam(this.navigationPath, { team_stage_id: id });
          return;
       }
 
       this.router.navigate(this.navigationPath.concat(id));
    }
 
-   public navigateToCupMatchesByStage(path: any[], id: number): void {
-      path[path.length - 1] = { cup_stage_id: id };
+   public navigateWithParam(path: any[], param: { [key: string]: number }): void {
+      path[path.length - 1] = param;
       this.router.navigate(path);
    }
 
