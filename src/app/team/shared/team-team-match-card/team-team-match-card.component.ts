@@ -18,7 +18,7 @@ import { TeamTeamMatch } from '@models/team/team-team-match.model';
 export class TeamTeamMatchCardComponent {
    constructor(private teamMatchService: TeamMatchService, private changeDetectorRef: ChangeDetectorRef, private timePipe: TimePipe) {}
 
-   @Input() teamTeamMatch: TeamTeamMatchNew | TeamTeamMatch;
+   @Input() teamTeamMatch: TeamTeamMatchNew | TeamTeamMatch | any;
 
    clubsImagesUrl: string = environment.apiImageClubs;
    detailsExpanded: boolean;

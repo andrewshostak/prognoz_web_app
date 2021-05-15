@@ -43,6 +43,12 @@ export class TeamTeamMatchesNewComponent implements OnInit {
       private teamTeamMatchService: TeamTeamMatchNewService
    ) {}
 
+   public clickOnTeamStageSelectButton(event: { teamStages: TeamStageNew[]; selected: TeamStageNew }): void {
+      this.teamStages = event.teamStages;
+      this.selectedCompetitionId = event.selected.competition_id;
+      this.router.navigate(['/team', 'team-matches', { team_stage_id: event.selected.id }]);
+   }
+
    public clickOnCompetitionButton(competition: CompetitionNew): void {
       if (this.selectedCompetitionId === competition.id) {
          return;

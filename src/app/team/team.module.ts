@@ -11,6 +11,7 @@ import { TeamRatingTableComponent } from '@team/shared/team-rating-table/team-ra
 import { TeamRatingUserTableComponent } from '@team/shared/team-rating-user-table/team-rating-user-table.component';
 import { TeamResultsTableComponent } from '@team/shared/team-results-table/team-results-table.component';
 import { TeamSelectModalComponent } from '@team/shared/team-select-modal/team-select-modal.component';
+import { TeamStageSelectComponent } from '@team/shared/team-stage-select/team-stage-select.component';
 import { TeamTeamMatchCardComponent } from '@team/shared/team-team-match-card/team-team-match-card.component';
 import { TeamCaptainComponent } from '@team/team-captain/team-captain.component';
 import { TeamCompetitionSelectComponent } from '@team/team-competition-select/team-competition-select.component';
@@ -51,7 +52,8 @@ import { SimpleNotificationsModule } from 'angular2-notifications';
       TeamResultsTableComponent,
       TeamRulesComponent,
       TeamSelectModalComponent,
-      TeamTeamMatchCardComponent
+      TeamTeamMatchCardComponent,
+      TeamStageSelectComponent
    ],
    exports: [TeamComponent]
 })

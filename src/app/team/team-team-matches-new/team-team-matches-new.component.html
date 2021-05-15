@@ -32,7 +32,9 @@
       <i [hidden]="!showTeamStageSelect" class="fa fa-chevron-up"></i>
    </button>
 </ng-template>
-<!-- TODO: component to view previous team stages -->
+<div [hidden]="!showTeamStageSelect" class="mb-2">
+   <app-team-stage-select (teamStageSelected)="clickOnTeamStageSelectButton($event)"></app-team-stage-select>
+</div>
 <div class="mb-2">
    <app-dropdown-navigation
       [dropdownItems]="teamStages"
