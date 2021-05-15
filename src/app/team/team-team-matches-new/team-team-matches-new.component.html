@@ -42,3 +42,12 @@
    >
    </app-dropdown-navigation>
 </div>
+<div *ngIf="teamTeamMatches" class="row no-gutters black-shadow mb-1">
+   <div class="col-12 black-shadow">
+      <app-team-team-match-card *ngFor="let teamTeamMatch of teamTeamMatches" [teamTeamMatch]="teamTeamMatch"> </app-team-team-match-card>
+   </div>
+</div>
+<div *ngIf="teamTeamMatches">
+   <small class="pull-right text-muted"> *прогнози гравців відображаються після початку другого тайму матчу. </small>
+   <small class="pull-right text-muted"> **заблоковані матчі відображаються після добавлення результату. </small>
+</div>

@@ -32,7 +32,7 @@ export class TeamTeamMatchesNewComponent implements OnInit {
    public selectedTeamStage: TeamStageNew = null;
    public showTeamStageSelect: boolean = false;
    public teamStages: TeamStageNew[] = [];
-   public teamTeamMatches: TeamTeamMatchNew = [];
+   public teamTeamMatches: TeamTeamMatchNew[] = [];
 
    constructor(
       private activatedRoute: ActivatedRoute,
@@ -125,7 +125,7 @@ export class TeamTeamMatchesNewComponent implements OnInit {
       const search: TeamTeamMatchSearch = {
          page: 1,
          teamStageId,
-         relations: includeRelations ? ['homeTeam', 'awayTeam'] : [],
+         relations: includeRelations ? ['homeTeam', 'awayTeam', 'homeTeamGoalkeeper', 'awayTeamGoalkeeper'] : [],
          limit: SettingsService.maxLimitValues.teamTeamMatches
       };
       return this.teamTeamMatchService.getTeamTeamMatches(search);
