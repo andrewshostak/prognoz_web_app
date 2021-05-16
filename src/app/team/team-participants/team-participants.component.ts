@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit, TemplateRef } from '@angular/core';
-import { ActivatedRoute, Params } from '@angular/router';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 
 import { ModelStatus } from '@enums/model-status.enum';
 import { Sequence } from '@enums/sequence.enum';
@@ -21,7 +21,7 @@ import { SettingsService } from '@services/settings.service';
 import { TitleService } from '@services/title.service';
 import { NotificationsService } from 'angular2-notifications';
 import { forkJoin, Observable, ObservableInput, of, Subject } from 'rxjs';
-import { map, mergeMap, takeUntil } from 'rxjs/operators';
+import { filter, map, mergeMap, takeUntil } from 'rxjs/operators';
 
 @Component({
    selector: 'app-team-participants',
@@ -45,6 +45,7 @@ export class TeamParticipantsComponent implements OnDestroy, OnInit {
       private competitionService: CompetitionNewService,
       private ngbModalService: NgbModal,
       private notificationsService: NotificationsService,
+      private router: Router,
       private teamCompetitionService: TeamCompetitionNewService,
       private teamParticipantService: TeamParticipantNewService,
       private teamService: TeamNewService,
@@ -53,6 +54,10 @@ export class TeamParticipantsComponent implements OnDestroy, OnInit {
 
    get numberOfConfirmedTeams(): number {
       return this.teams.filter(team => team.confirmed).length;
+   }
+
+   public competitionSelected(event: { selected: CompetitionNew | Partial<CompetitionNew> }): void {
+      this.router.navigate(['/team', 'participants', { competition_id: event.selected.id }]);
    }
 
    public teamParticipantCreated(): void {
@@ -67,9 +72,14 @@ export class TeamParticipantsComponent implements OnDestroy, OnInit {
    public ngOnInit(): void {
       this.user = this.authService.getUser();
       this.titleService.setTitle('Заявки на участь / склади команд - Командний');
-      this.activatedRoute.parent.params.pipe(takeUntil(this.destroyed$)).subscribe((params: Params) => {
-         this.getPageData(params.competitionId);
-      });
+      this.activatedRoute.params
+         .pipe(
+            takeUntil(this.destroyed$),
+            filter(params => params.competition_id)
+         )
+         .subscribe((params: Params) => {
+            this.getPageData(params.competition_id);
+         });
    }
 
    public openTeamSelectModal(content: NgbModalRef | TemplateRef<any>): void {

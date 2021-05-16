@@ -16,7 +16,7 @@ export class TeamComponent implements OnInit {
    public ngOnInit() {
       this.navigationItems = [
          { link: ['/team', 'rules'], title: 'Правила' },
-         { link: ['/team', 'competitions', '', 'participants'], title: 'Заявки / Склади' },
+         { link: ['/team', 'participants'], title: 'Заявки / Склади' },
          { link: ['/team', 'competitions', '', 'matches'], title: 'Матчі' },
          { link: ['/team', 'team-matches'], title: 'Матчі V2' },
          { link: ['/team', 'competitions', '', 'predictions'], title: 'Прогнози' },
