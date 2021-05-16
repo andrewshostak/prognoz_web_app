@@ -29,6 +29,10 @@ const routes: Routes = [
             component: TeamParticipantsComponent
          },
          {
+            path: 'rating',
+            component: TeamRatingComponent
+         },
+         {
             path: 'team-matches',
             component: TeamTeamMatchesNewComponent
          },
@@ -67,10 +71,6 @@ const routes: Routes = [
                {
                   path: 'my',
                   component: TeamMyComponent
-               },
-               {
-                  path: 'rating',
-                  component: TeamRatingComponent
                },
                {
                   path: 'results/round/:round',
