@@ -1,19 +1,26 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
 
+import { ModelStatus } from '@enums/model-status.enum';
 import { Sequence } from '@enums/sequence.enum';
+import { TeamStageState } from '@enums/team-stage-state.enum';
 import { Tournament } from '@enums/tournament.enum';
 import { CompetitionNew } from '@models/new/competition-new.model';
 import { SeasonNew } from '@models/new/season-new.model';
 import { TeamStageNew } from '@models/new/team-stage-new.model';
+import { PaginatedResponse } from '@models/paginated-response.model';
 import { CompetitionSearch } from '@models/search/competition-search.model';
 import { SeasonSearch } from '@models/search/season-search.model';
 import { TeamStageSearch } from '@models/search/team-stage-search.model';
+import { CurrentStateService } from '@services/current-state.service';
 import { CompetitionNewService } from '@services/new/competition-new.service';
 import { SeasonNewService } from '@services/new/season-new.service';
 import { TeamStageNewService } from '@services/new/team-stage-new.service';
 import { SettingsService } from '@services/settings.service';
-import { map } from 'rxjs/operators';
+import { find, findLast, get } from 'lodash';
+import { iif, Observable, of } from 'rxjs';
+import { filter, first, map, mergeMap, tap } from 'rxjs/operators';
 
 @Component({
    selector: 'app-team-stage-select',
@@ -21,16 +28,23 @@ import { map } from 'rxjs/operators';
    styleUrls: ['./team-stage-select.component.scss']
 })
 export class TeamStageSelectComponent implements OnInit {
-   @Output() public teamStageSelected = new EventEmitter<{ teamStages: TeamStageNew[]; selected: TeamStageNew }>();
+   @Output() public teamStageSelected = new EventEmitter<{ teamStageId: number }>();
 
-   public teamStageSelectForm: FormGroup;
+   public competitions: CompetitionNew[] = [];
+   public selectedCompetitionId: number = null;
+   public selectedTeamStage: TeamStageNew = null;
+   public showTeamStageSelect = false;
+   public teamStages: TeamStageNew[] = [];
 
    public competitionsBySeasonId: { [id: number]: CompetitionNew[] } = {};
    public seasons: SeasonNew[] = [];
    public teamStagesByCompetitionId: { [id: number]: TeamStageNew[] } = {};
+   public teamStageSelectForm: FormGroup;
 
    constructor(
+      private activatedRoute: ActivatedRoute,
       private competitionService: CompetitionNewService,
+      private currentStateService: CurrentStateService,
       private seasonService: SeasonNewService,
       private teamStageService: TeamStageNewService
    ) {}
@@ -50,18 +64,57 @@ export class TeamStageSelectComponent implements OnInit {
       return value ? parseInt(value, 10) : null;
    }
 
+   public clickOnCompetitionButton(competition: CompetitionNew): void {
+      if (this.selectedCompetitionId === competition.id) {
+         return;
+      }
+
+      this.getTeamStagesObservable(competition.id)
+         .pipe(first())
+         .subscribe((response: PaginatedResponse<TeamStageNew>) => {
+            this.teamStages = response.data;
+            this.emitTeamStageSelect(this.teamStages);
+         });
+      this.currentStateService.teamCompetitionId = competition.id;
+      this.selectedCompetitionId = competition.id;
+   }
+
    public ngOnInit(): void {
       this.teamStageSelectForm = this.getTeamStageSelectFormGroup();
-      this.getSeasonsData();
       this.subscribeToFormValueChanges();
+      this.initializeComponentData();
    }
 
    public submit(): void {
       const teamStages = this.teamStagesByCompetitionId[this.competitionIdFormValue];
       const selected = teamStages.find(teamStage => teamStage.id === this.teamStageIdFormValue);
       if (selected) {
-         this.teamStageSelected.emit({ teamStages, selected });
+         this.teamStageSelected.emit({ teamStageId: selected.id });
       }
+   }
+
+   private getActiveCompetitions(): Observable<PaginatedResponse<CompetitionNew>> {
+      const search: CompetitionSearch = {
+         activeOrStated: ModelStatus.Truthy,
+         limit: SettingsService.maxLimitValues.competitions,
+         page: 1,
+         tournamentId: Tournament.Team
+      };
+      return this.competitionService.getCompetitions(search);
+   }
+
+   // todo: same as in cup-cup-matches
+   private getCompetitionIdForDownloadingStages(competitions: CompetitionNew[], selectedCompetitionId: number): number {
+      if (!competitions.length && !selectedCompetitionId) {
+         return null;
+      }
+
+      if (!selectedCompetitionId) {
+         return competitions[0].id;
+      }
+
+      const ids = competitions.map(competition => competition.id);
+      return ids.includes(selectedCompetitionId) ? selectedCompetitionId : competitions[0].id;
    }
 
    private getCompetitionsData(seasonId: number): void {
@@ -74,6 +127,30 @@ export class TeamStageSelectComponent implements OnInit {
       this.competitionService.getCompetitions(search).subscribe(response => {
          this.competitionsBySeasonId[seasonId] = response.data;
       });
+   }
+
+   private getCompetitionsObservable(): Observable<PaginatedResponse<CompetitionNew>> {
+      return this.getActiveCompetitions().pipe(
+         mergeMap(response => iif(() => !!response.total, of(response), this.getEndedCompetitions()))
+      );
+   }
+
+   private getEndedCompetitions(): Observable<PaginatedResponse<CompetitionNew>> {
+      const search: CompetitionSearch = {
+         ended: ModelStatus.Truthy,
+         limit: 3,
+         orderBy: 'id',
+         page: 1,
+         sequence: Sequence.Descending,
+         tournamentId: Tournament.Team
+      };
+      return this.competitionService.getCompetitions(search);
+   }
+
+   private getSiblingTeamStagesObservable(teamStageId: number): Observable<PaginatedResponse<TeamStageNew>> {
+      return this.teamStageService
+         .getTeamStage(teamStageId)
+         .pipe(mergeMap(response => this.getTeamStagesObservable(response.competition_id)));
    }
 
    private getTeamStagesData(competitionId: number): void {
@@ -89,6 +166,17 @@ export class TeamStageSelectComponent implements OnInit {
       });
    }
 
+   private getTeamStagesObservable(competitionId: number): Observable<PaginatedResponse<TeamStageNew>> {
+      const search: TeamStageSearch = {
+         orderBy: 'id',
+         sequence: Sequence.Ascending,
+         page: 1,
+         competitionId,
+         limit: SettingsService.maxLimitValues.teamStages
+      };
+      return this.teamStageService.getTeamStages(search);
+   }
+
    private getTeamStageSelectFormGroup(): FormGroup {
       return new FormGroup({
          season_id: new FormControl(null),
@@ -97,14 +185,14 @@ export class TeamStageSelectComponent implements OnInit {
       });
    }
 
-   private getSeasonsData(): void {
+   private getSeasonsObservable(): Observable<PaginatedResponse<SeasonNew>> {
       const search: SeasonSearch = {
          limit: SettingsService.maxLimitValues.seasons,
          orderBy: 'id',
          page: 1,
          sequence: Sequence.Descending
       };
-      this.seasonService.getSeasons(search).subscribe(response => (this.seasons = response.data));
+      return this.seasonService.getSeasons(search);
    }
 
    private formValueCompetitionIdChanged(competitionId: number): void {
@@ -118,6 +206,74 @@ export class TeamStageSelectComponent implements OnInit {
       this.teamStageSelectForm.get('competition_id').reset();
       if (competitionId && !this.competitionsBySeasonId[competitionId]) {
          this.getCompetitionsData(competitionId);
+      }
+   }
+
+   private initializeComponentData(): void {
+      this.getCompetitionsObservable()
+         .pipe(
+            tap(response => (this.competitions = response.data)),
+            mergeMap(response =>
+               iif(
+                  () => this.activatedRoute.snapshot.params.team_stage_id,
+                  this.getSiblingTeamStagesObservable(this.activatedRoute.snapshot.params.team_stage_id),
+                  this.getTeamStagesObservable(
+                     this.getCompetitionIdForDownloadingStages(response.data, this.currentStateService.teamCompetitionId)
+                  )
+               )
+            ),
+            tap(response => {
+               this.teamStages = response.data;
+               this.setSelectedCompetitionId(response);
+
+               this.subscribeToTeamStageIdUrlParamChange();
+               if (!this.activatedRoute.snapshot.params.team_stage_id) {
+                  this.emitTeamStageSelect(this.teamStages);
+               } else {
+                  this.selectedTeamStage = find(this.teamStages, { id: parseInt(this.activatedRoute.snapshot.params.team_stage_id, 10) });
+               }
+            })
+         )
+         .subscribe();
+
+      this.getSeasonsObservable()
+         .pipe(tap(response => (this.seasons = response.data)))
+         .subscribe();
+   }
+
+   private emitTeamStageSelect(teamStages: TeamStageNew[]): void {
+      if (!teamStages.length) {
+         return;
+      }
+
+      const active = teamStages.find(teamStage => teamStage.state === TeamStageState.Active);
+      if (active) {
+         this.teamStageSelected.emit({ teamStageId: active.id });
+         return;
+      }
+
+      const notStarted = teamStages.find(teamStage => teamStage.state === TeamStageState.NotStarted);
+      if (notStarted) {
+         this.teamStageSelected.emit({ teamStageId: notStarted.id });
+         return;
+      }
+
+      const ended = findLast(teamStages, teamStage => teamStage.state === TeamStageState.Ended);
+      if (ended) {
+         this.teamStageSelected.emit({ teamStageId: ended.id });
+         return;
+      }
+
+      this.teamStageSelected.emit({ teamStageId: teamStages[0].id });
+   }
+
+   private setSelectedCompetitionId(response: PaginatedResponse<TeamStageNew>): void {
+      const competitionId = get(response, 'data[0].competition_id');
+      if (!competitionId) {
+         return;
+      }
+      if (this.competitions.map(c => c.id).includes(competitionId)) {
+         this.selectedCompetitionId = competitionId;
       }
    }
 
@@ -135,5 +291,24 @@ export class TeamStageSelectComponent implements OnInit {
          .subscribe(value => {
             this.formValueCompetitionIdChanged(value);
          });
+   }
+
+   private subscribeToTeamStageIdUrlParamChange(): void {
+      this.activatedRoute.params.pipe(filter(value => value.team_stage_id)).subscribe(params => {
+         const found = find(this.teamStages, { id: parseInt(params.team_stage_id, 10) });
+
+         // back browser navigation to team stage from different competition
+         if (!found) {
+            this.getSiblingTeamStagesObservable(params.team_stage_id)
+               .pipe(first())
+               .subscribe((response: PaginatedResponse<TeamStageNew>) => {
+                  this.teamStages = response.data;
+                  this.setSelectedCompetitionId(response);
+                  this.selectedTeamStage = find(this.teamStages, { id: parseInt(params.team_stage_id, 10) });
+               });
+         } else {
+            this.selectedTeamStage = found as TeamStageNew;
+         }
+      });
    }
 }

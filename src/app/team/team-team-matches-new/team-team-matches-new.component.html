@@ -1,49 +1,5 @@
 <h2 class="h2">Матчі:</h2>
-<ng-container *ngIf="competitions">
-   <div class="d-block d-md-none">
-      <div class="btn-group btn-group-sm">
-         <ng-container [ngTemplateOutlet]="competitionsNavigation"></ng-container>
-      </div>
-   </div>
-   <div class="d-none d-md-block">
-      <div class="btn-group">
-         <ng-container [ngTemplateOutlet]="competitionsNavigation"></ng-container>
-      </div>
-   </div>
-</ng-container>
-<ng-template #competitionsNavigation>
-   <button
-      *ngFor="let competition of competitions"
-      (click)="clickOnCompetitionButton(competition)"
-      class="btn mb-2"
-      [ngClass]="competition.id === selectedCompetitionId ? 'btn-primary' : 'btn-outline-primary'"
-      type="button"
-   >
-      {{ competition.title }}
-   </button>
-   <button
-      (click)="showTeamStageSelect = !showTeamStageSelect"
-      class="btn btn-outline-secondary mb-2"
-      type="button"
-      title="Попередні змагання"
-   >
-      <i class="fa fa-history"></i>
-      <i [hidden]="showTeamStageSelect" class="fa fa-chevron-down"></i>
-      <i [hidden]="!showTeamStageSelect" class="fa fa-chevron-up"></i>
-   </button>
-</ng-template>
-<div [hidden]="!showTeamStageSelect" class="mb-2">
-   <app-team-stage-select (teamStageSelected)="clickOnTeamStageSelectButton($event)"></app-team-stage-select>
-</div>
-<div class="mb-2">
-   <app-dropdown-navigation
-      [dropdownItems]="teamStages"
-      [selectedId]="selectedTeamStage?.id"
-      [navigationPath]="['/team', 'team-matches', { team_stage_id: ':id' }]"
-      [formSize]="'lg'"
-   >
-   </app-dropdown-navigation>
-</div>
+<app-team-stage-select (teamStageSelected)="clickOnTeamStageSelectButton($event)"></app-team-stage-select>
 <div *ngIf="teamTeamMatches" class="row no-gutters black-shadow mb-1">
    <div class="col-12 black-shadow">
       <app-team-team-match-card *ngFor="let teamTeamMatch of teamTeamMatches" [teamTeamMatch]="teamTeamMatch"> </app-team-team-match-card>
