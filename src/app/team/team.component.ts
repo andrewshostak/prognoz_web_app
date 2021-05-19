@@ -17,8 +17,7 @@ export class TeamComponent implements OnInit {
       this.navigationItems = [
          { link: ['/team', 'rules'], title: 'Правила' },
          { link: ['/team', 'participants'], title: 'Заявки / Склади' },
-         { link: ['/team', 'competitions', '', 'matches'], title: 'Матчі' },
-         { link: ['/team', 'team-matches'], title: 'Матчі V2' },
+         { link: ['/team', 'team-matches'], title: 'Матчі' },
          { link: ['/team', 'competitions', '', 'predictions'], title: 'Прогнози' },
          { link: ['/team', 'rating'], title: 'Рейтинг' },
          { link: ['/team', 'competitions', '', 'results'], title: 'Результати' },

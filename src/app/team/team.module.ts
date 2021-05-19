@@ -17,7 +17,6 @@ import { TeamCaptainComponent } from '@team/team-captain/team-captain.component'
 import { TeamCompetitionSelectComponent } from '@team/team-competition-select/team-competition-select.component';
 import { TeamCreateComponent } from '@team/team-create/team-create.component';
 import { TeamEditComponent } from '@team/team-edit/team-edit.component';
-import { TeamMatchesComponent } from '@team/team-matches/team-matches.component';
 import { TeamTeamMatchesNewComponent } from '@team/team-team-matches-new/team-team-matches-new.component';
 import { TeamMyComponent } from '@team/team-my/team-my.component';
 import { TeamParticipantsComponent } from '@team/team-participants/team-participants.component';
@@ -39,7 +38,6 @@ import { SimpleNotificationsModule } from 'angular2-notifications';
       TeamCreateComponent,
       TeamEditComponent,
       TeamGoalkeeperFormComponent,
-      TeamMatchesComponent,
       TeamTeamMatchesNewComponent,
       TeamMyComponent,
       TeamParticipantsComponent,

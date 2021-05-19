@@ -5,7 +5,6 @@ import { AuthGuard } from '@app/core/guards/auth.guard.service';
 import { TeamCompetitionSelectComponent } from '@team/team-competition-select/team-competition-select.component';
 import { TeamCreateComponent } from '@team/team-create/team-create.component';
 import { TeamEditComponent } from '@team/team-edit/team-edit.component';
-import { TeamMatchesComponent } from '@team/team-matches/team-matches.component';
 import { TeamTeamMatchesNewComponent } from '@team/team-team-matches-new/team-team-matches-new.component';
 import { TeamMyComponent } from '@team/team-my/team-my.component';
 import { TeamParticipantsComponent } from '@team/team-participants/team-participants.component';
@@ -40,22 +39,6 @@ const routes: Routes = [
             path: 'competitions/:competitionId',
             component: TeamCompetitionSelectComponent,
             children: [
-               {
-                  path: 'matches/round/:round',
-                  component: TeamMatchesComponent
-               },
-               {
-                  path: 'matches',
-                  component: TeamMatchesComponent
-               },
-               {
-                  path: 'team-matches/stage/:stageId',
-                  component: TeamTeamMatchesNewComponent
-               },
-               {
-                  path: 'team-matches',
-                  component: TeamTeamMatchesNewComponent
-               },
                {
                   path: 'predictions/round/:round',
                   component: TeamPredictionsComponent
@@ -93,14 +76,9 @@ const routes: Routes = [
             canActivate: [AuthGuard]
          },
          {
-            path: 'competitions',
-            pathMatch: 'full',
-            redirectTo: 'competitions/get-active'
-         },
-         {
             path: '',
             pathMatch: 'full',
-            redirectTo: 'competitions/get-active'
+            redirectTo: 'team-matches'
          }
       ]
    }
