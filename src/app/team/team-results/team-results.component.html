@@ -1,17 +1,11 @@
 <h2>
-  Результати:
-  <button class="btn btn-sm btn-outline-secondary cursor-pointer"
-          title="Оновити"
-          (click)="getTeamMatchesData(competitionId, round)">
-    <i class="fa fa-refresh fa-fw" aria-hidden="true"></i>
-  </button>
+   Результати:
+   <button class="btn btn-sm btn-outline-secondary cursor-pointer" title="Оновити" (click)="getTeamMatchesData(competitionId, round)">
+      <i class="fa fa-refresh fa-fw" aria-hidden="true"></i>
+   </button>
 </h2>
 <div *ngIf="roundsArray && round" class="mb-2">
-    <app-dropdown-navigation [dropdownItems]="roundsArray"
-                             [selectedId]="round"
-                             [navigationPath]="['/team', 'competitions', competitionId, 'results', 'round']"
-                             [formSize]="'lg'">
-    </app-dropdown-navigation>
+   <!--   TODO: add paramKey input -->
+   <app-dropdown-navigation [dropdownItems]="roundsArray" [selectedId]="round" [formSize]="'lg'"> </app-dropdown-navigation>
 </div>
-<app-team-results-table [teamMatches]="teamMatches" [error]="errorTeamMatches">
-</app-team-results-table>
+<app-team-results-table [teamMatches]="teamMatches" [error]="errorTeamMatches"> </app-team-results-table>

@@ -35,7 +35,7 @@
    <app-dropdown-navigation
       [dropdownItems]="teamStages"
       [selectedId]="selectedTeamStage?.id"
-      [navigationPath]="['/team', 'team-matches', { team_stage_id: ':id' }]"
+      [paramKey]="'team_stage_id'"
       [formSize]="'lg'"
    >
    </app-dropdown-navigation>

@@ -1,41 +1,27 @@
 <h2>Прогнози:</h2>
-<div *ngIf="teamTeamMatches" class="mb-2">
-    <app-dropdown-navigation [dropdownItems]="roundsArray"
-                             [selectedId]="round"
-                             [navigationPath]="['/team', 'competitions', competitionId, 'predictions', 'round']"
-                             [formSize]="'lg'">
-    </app-dropdown-navigation>
-</div>
-<!-- error team predictions -->
-<app-error *ngIf="errorTeamPredictions" [message]="errorTeamPredictions" [additionalInfo]="false"></app-error>
-<!-- predictions -->
-<div *ngIf="authenticatedUser && teamPredictions" class="container-fluid">
-    <app-team-prediction-form *ngFor="let teamPrediction of teamPredictions"
-                              [teamPrediction]="teamPrediction"
-                              (teamPredictionUpdated)="reloadTeamPredictionsData()">
-    </app-team-prediction-form>
-</div>
-<!-- error team matches -->
-<app-error *ngIf="errorTeamMatches" [message]="errorTeamMatches"></app-error>
-<!-- matches to block -->
-<div *ngIf="authenticatedUser" [hidden]="!teamMatches">
-    <h2>{{isGoalkeeper ? 'Заблокувати' : 'Заблоковані'}} матчі суперника:</h2>
-    <app-team-goalkeeper-form [teamMatches]="teamMatches"
-                              [round]="round"
-                              [blockedTeamMatch]="blockedTeamMatchFirst"
-                              [authenticatedUser]="authenticatedUser"
-                              [oppositeTeamId]="oppositeTeamId"
-                              [isGoalkeeper]="isGoalkeeper"
-                              (reloadData)="reloadTeamGoalkeeperData($event)">
-    </app-team-goalkeeper-form>
-    <app-team-goalkeeper-form [teamMatches]="teamMatches"
-                              [round]="round"
-                              [blockedTeamMatch]="blockedTeamMatchSecond"
-                              [authenticatedUser]="authenticatedUser"
-                              [oppositeTeamId]="oppositeTeamId"
-                              [isGoalkeeper]="isGoalkeeper"
-                              (reloadData)="reloadTeamGoalkeeperData($event)">
-    </app-team-goalkeeper-form>
-</div>
-<!-- no access -->
+<!--TODO: don't show this page at all for not authenticated user, as well as my-team -->
 <app-error *ngIf="!authenticatedUser" [message]="noAccess" [additionalInfo]="false"></app-error>
+<ng-container *ngIf="authenticatedUser">
+   <app-team-stage-select (teamStageSelected)="clickOnTeamStageSelectButton($event)"></app-team-stage-select>
+   <div *ngIf="teamPredictions" class="container-fluid">
+      <app-team-prediction-form
+         *ngFor="let teamPrediction of teamPredictions"
+         [teamPrediction]="teamPrediction"
+         (teamPredictionUpdated)="reloadTeamPredictionsData()"
+      >
+      </app-team-prediction-form>
+   </div>
+   <div [hidden]="!teamMatches">
+      <h2>{{ isGoalkeeper ? 'Заблокувати' : 'Заблоковані' }} матчі суперника:</h2>
+      <app-team-goalkeeper-form
+         *ngFor="let blockedTeamMatch of blockedTeamMatches"
+         [teamMatches]="teamMatches"
+         [blockedTeamMatch]="blockedTeamMatch"
+         [authenticatedUser]="authenticatedUser"
+         [oppositeTeamId]="oppositeTeamId"
+         [isGoalkeeper]="isGoalkeeper"
+         (reloadData)="reloadTeamGoalkeeperData()"
+      >
+      </app-team-goalkeeper-form>
+   </div>
+</ng-container>
