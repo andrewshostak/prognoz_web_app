@@ -20,7 +20,7 @@ export class TeamComponent implements OnInit {
          { link: ['/team', 'team-matches'], title: 'Матчі' },
          { link: ['/team', 'predictions'], title: 'Прогнози' },
          { link: ['/team', 'rating'], title: 'Рейтинг' },
-         { link: ['/team', 'competitions', '', 'results'], title: 'Результати' },
+         { link: ['/team', 'results'], title: 'Результати' },
          { link: ['/team', 'competitions', '', 'my'], title: 'Моя команда' }
       ];
 

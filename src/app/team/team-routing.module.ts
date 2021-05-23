@@ -40,6 +40,10 @@ const routes: Routes = [
             component: TeamTeamMatchesNewComponent
          },
          {
+            path: 'results',
+            component: TeamResultsComponent
+         },
+         {
             path: 'competitions/:competitionId',
             component: TeamCompetitionSelectComponent,
             children: [
@@ -50,14 +54,6 @@ const routes: Routes = [
                {
                   path: 'my',
                   component: TeamMyComponent
-               },
-               {
-                  path: 'results/round/:round',
-                  component: TeamResultsComponent
-               },
-               {
-                  path: 'results',
-                  component: TeamResultsComponent
                }
             ]
          },

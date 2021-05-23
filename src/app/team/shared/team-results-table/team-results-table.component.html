@@ -1,51 +1,52 @@
-<!-- error -->
-<app-error *ngIf="error" [message]="error"></app-error>
-<!-- results -->
-<table *ngIf="teamMatches && teamMatches.length"
-       class="table table-striped table-bordered table-hover table-sm table-responsive-xs-custom black-shadow black-border">
-    <thead class="thead-dark">
-        <tr>
-            <th class="text-center d-table-cell">№</th>
-            <th class="text-center">Матч</th>
-            <th class="text-center d-table-cell" title="Кількість зроблених прогнозів">
-                <span class="d-lg-none">П</span>
-                <span class="d-none d-lg-block">Прогнозів</span>
-            </th>
-            <th class="text-center d-table-cell" title="Кількість забитих голів">
-                <span class="d-lg-none">Г (О)</span>
-                <span class="d-none d-lg-block">Голів (О)</span>
-            </th>
-            <th class="text-center d-table-cell" title="Кількість блокувань">
-                <span class="d-lg-none">З</span>
-                <span class="d-none d-lg-block">Заблоковано</span>
-            </th>
-            <th class="text-center">
-                <span class="d-lg-none">Р</span>
-                <span class="d-none d-lg-table-cell">Рахунок</span>
-            </th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr *ngFor="let teamMatch of teamMatches; let i = index;"
-            [ngClass]="{'table-danger': !teamMatch.guessed && teamMatch.ended}">
-            <th scope="row" class="text-center d-table-cell">{{i + 1}}.</th>
-            <td class="text-nowrap">{{teamMatch.club_first.title}} - {{teamMatch.club_second.title}}</td>
-            <td [hidden]="teamMatch.active" class="text-center d-table-cell">{{teamMatch.predictions}}</td>
-            <td [hidden]="teamMatch.active" class="text-center d-table-cell text-nowrap"
-                [ngClass]="{'font-weight-bold': teamMatch.guessed}">
-                {{teamMatch.guessed}}
-                <small class="text-muted">({{teamMatch.points}})</small>
-            </td>
-            <td [hidden]="teamMatch.active" class="text-center d-table-cell">{{teamMatch.blocked}}</td>
-            <td [hidden]="teamMatch.active" class="text-center d-none d-sm-table-cell">
-                <strong>{{teamMatch.home}} : {{teamMatch.away}}</strong>
-            </td>
-            <td [hidden]="teamMatch.active" class="text-center d-sm-none">
-                <strong>{{teamMatch.home}}:{{teamMatch.away}}</strong>
-            </td>
-            <td [hidden]="!teamMatch.active" colspan="5" class="text-center text-nowrap">
-                <span class="text-muted font-italic">Результату немає</span>
-            </td>
-        </tr>
-    </tbody>
+<table
+   *ngIf="teamMatches && teamMatches.length"
+   class="table table-striped table-bordered table-hover table-sm table-responsive-xs-custom black-shadow black-border"
+>
+   <thead class="thead-dark">
+      <tr>
+         <th class="text-center d-table-cell">№</th>
+         <th class="text-center">Матч</th>
+         <th class="text-center d-table-cell" title="Кількість зроблених прогнозів">
+            <span class="d-lg-none">П</span>
+            <span class="d-none d-lg-block">Прогнозів</span>
+         </th>
+         <th class="text-center d-table-cell" title="Кількість забитих голів">
+            <span class="d-lg-none">Г (О)</span>
+            <span class="d-none d-lg-block">Голів (О)</span>
+         </th>
+         <th class="text-center d-table-cell" title="Кількість блокувань">
+            <span class="d-lg-none">З</span>
+            <span class="d-none d-lg-block">Заблоковано</span>
+         </th>
+         <th class="text-center">
+            <span class="d-lg-none">Р</span>
+            <span class="d-none d-lg-table-cell">Рахунок</span>
+         </th>
+      </tr>
+   </thead>
+   <tbody>
+      <tr *ngFor="let teamMatch of teamMatches; let i = index" [ngClass]="{ 'table-danger': !teamMatch.guessed && teamMatch.match.ended }">
+         <th scope="row" class="text-center d-table-cell">{{ i + 1 }}.</th>
+         <td class="text-nowrap">{{ teamMatch.match.club_home.title }} - {{ teamMatch.match.club_away.title }}</td>
+         <td [hidden]="teamMatch.match.active" class="text-center d-table-cell">{{ teamMatch.predictions }}</td>
+         <td
+            [hidden]="teamMatch.match.active"
+            class="text-center d-table-cell text-nowrap"
+            [ngClass]="{ 'font-weight-bold': teamMatch.guessed }"
+         >
+            {{ teamMatch.guessed }}
+            <small class="text-muted">({{ teamMatch.points }})</small>
+         </td>
+         <td [hidden]="teamMatch.match.active" class="text-center d-table-cell">{{ teamMatch.blocked }}</td>
+         <td [hidden]="teamMatch.match.active" class="text-center d-none d-sm-table-cell">
+            <strong>{{ teamMatch.match.home }} : {{ teamMatch.match.away }}</strong>
+         </td>
+         <td [hidden]="teamMatch.match.active" class="text-center d-sm-none">
+            <strong>{{ teamMatch.match.home }}:{{ teamMatch.match.away }}</strong>
+         </td>
+         <td [hidden]="!teamMatch.match.active" colspan="5" class="text-center text-nowrap">
+            <span class="text-muted font-italic">Результату немає</span>
+         </td>
+      </tr>
+   </tbody>
 </table>
