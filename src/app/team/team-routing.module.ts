@@ -44,18 +44,14 @@ const routes: Routes = [
             component: TeamResultsComponent
          },
          {
+            path: 'my',
+            component: TeamMyComponent
+         },
+         // todo: remove
+         {
             path: 'competitions/:competitionId',
             component: TeamCompetitionSelectComponent,
-            children: [
-               {
-                  path: 'my/round/:round',
-                  component: TeamMyComponent
-               },
-               {
-                  path: 'my',
-                  component: TeamMyComponent
-               }
-            ]
+            children: []
          },
          {
             path: 'create',

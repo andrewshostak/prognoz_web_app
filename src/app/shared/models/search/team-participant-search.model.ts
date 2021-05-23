@@ -12,5 +12,6 @@ export class TeamParticipantSearch {
    public refused?: ModelStatus;
    public sequence?: Sequence;
    public teamId?: number;
+   public teamStageId?: number;
    public userId?: number;
 }

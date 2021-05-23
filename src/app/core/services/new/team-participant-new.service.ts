@@ -81,6 +81,10 @@ export class TeamParticipantNewService {
          params = params.set('team_id', search.teamId.toString());
       }
 
+      if (search.teamStageId) {
+         params = params.set('team_stage_id', search.teamStageId.toString());
+      }
+
       if (search.userId) {
          params = params.set('user_id', search.userId.toString());
       }

@@ -21,7 +21,7 @@ export class TeamComponent implements OnInit {
          { link: ['/team', 'predictions'], title: 'Прогнози' },
          { link: ['/team', 'rating'], title: 'Рейтинг' },
          { link: ['/team', 'results'], title: 'Результати' },
-         { link: ['/team', 'competitions', '', 'my'], title: 'Моя команда' }
+         { link: ['/team', 'my'], title: 'Моя команда' }
       ];
 
       // todo: remove after moving to team-stages. search 'get-active' in other places
