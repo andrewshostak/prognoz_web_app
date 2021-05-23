@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
 import { AuthGuard } from '@app/core/guards/auth.guard.service';
-import { TeamCompetitionSelectComponent } from '@team/team-competition-select/team-competition-select.component';
 import { TeamCreateComponent } from '@team/team-create/team-create.component';
 import { TeamEditComponent } from '@team/team-edit/team-edit.component';
 import { TeamTeamMatchesNewComponent } from '@team/team-team-matches-new/team-team-matches-new.component';
@@ -46,12 +45,6 @@ const routes: Routes = [
          {
             path: 'my',
             component: TeamMyComponent
-         },
-         // todo: remove
-         {
-            path: 'competitions/:competitionId',
-            component: TeamCompetitionSelectComponent,
-            children: []
          },
          {
             path: 'create',
