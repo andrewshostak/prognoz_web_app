@@ -1,6 +1,6 @@
 /* tslint:disable:variable-name */
 import { Match } from '@models/match.model';
-import { CompetitionNew } from '@models/new/competition-new.model';
+import { TeamStageNew } from '@models/new/team-stage-new.model';
 
 export class TeamMatchNew {
    public blocked: number;
@@ -14,5 +14,5 @@ export class TeamMatchNew {
    public updated_at: string;
 
    public match?: Match;
-   public competitions?: CompetitionNew[];
+   public team_stages?: TeamStageNew[];
 }

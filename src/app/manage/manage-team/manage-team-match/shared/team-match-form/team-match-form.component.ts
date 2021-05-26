@@ -131,7 +131,8 @@ export class TeamMatchFormComponent implements OnChanges, OnInit {
       const search: TeamMatchSearch = {
          active: ModelStatus.Truthy,
          limit: SettingsService.maxLimitValues.teamMatches,
-         page: 1
+         page: 1,
+         relations: ['match.clubHome', 'match.clubAway', 'teamStages.competition']
       };
       this.teamMatchesObservable = this.teamMatchService.getTeamMatches(search);
    }

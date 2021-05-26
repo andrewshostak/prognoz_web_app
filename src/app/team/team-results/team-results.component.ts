@@ -37,7 +37,12 @@ export class TeamResultsComponent implements OnInit {
 
    private getTeamMatchesObservable(teamStageId: number): Observable<PaginatedResponse<TeamMatchNew>> {
       this.titleService.setTitle('Результати - Командний');
-      const search: TeamMatchSearch = { teamStageId, page: 1, limit: SettingsService.maxLimitValues.teamMatches };
+      const search: TeamMatchSearch = {
+         teamStageId,
+         page: 1,
+         limit: SettingsService.maxLimitValues.teamMatches,
+         relations: ['match.clubHome', 'match.clubAway']
+      };
       return this.teamMatchService.getTeamMatches(search);
    }
 

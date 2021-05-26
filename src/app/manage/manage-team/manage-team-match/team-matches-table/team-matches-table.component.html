@@ -5,16 +5,7 @@
          <th scope="col" class="text-center">ID</th>
          <th scope="col" colspan="2" class="text-right">Команда 1</th>
          <th scope="col" colspan="2">Команда 2</th>
-         <th scope="col">
-            <table class="table-sm">
-               <tr>
-                  <td><b>Тур</b></td>
-                  <td>№ в Турі</td>
-                  <td>№ в Змаганні</td>
-                  <td>Змагання</td>
-               </tr>
-            </table>
-         </th>
+         <th scope="col">Стадії</th>
          <th scope="col" title="Результат" class="text-center">Рез</th>
          <th scope="col" class="text-center" title="К-ть Прогнозів">П</th>
          <th scope="col" class="text-center" title="Кількість вгаданих результатів">Г</th>
@@ -46,16 +37,10 @@
             </table>
          </td>
          <td class="align-middle">
-            <table *ngIf="teamMatch.competitions" align="center" class="table-sm">
-               <tr *ngFor="let competition of teamMatch.competitions">
-                  <td class="align-middle">
-                     <b>{{ competition.pivot.round }}</b>
-                  </td>
-                  <td class="align-middle">{{ competition.pivot.number_in_round }}</td>
-                  <td class="align-middle">{{ competition.pivot.number_in_competition }}</td>
-                  <td class="align-middle">
-                     <small>{{ competition.title }}</small>
-                  </td>
+            <table *ngIf="teamMatch.team_stages" align="center" class="table-sm">
+               <tr *ngFor="let teamStage of teamMatch.team_stages">
+                  <td class="align-middle">{{ teamStage.title }}</td>
+                  <td class="align-middle">{{ teamStage.competition.title }}</td>
                </tr>
             </table>
          </td>
@@ -96,16 +81,7 @@
          <th scope="col" class="text-center">ID</th>
          <th scope="col" colspan="2" class="text-right text-nowrap">Команда 1</th>
          <th scope="col" colspan="2" class="text-nowrap">Команда 2</th>
-         <th scope="col">
-            <table class="table-sm">
-               <tr>
-                  <td><b>Тур</b></td>
-                  <td>№ в Турі</td>
-                  <td>№ в Змаганні</td>
-                  <td>Змагання</td>
-               </tr>
-            </table>
-         </th>
+         <th scope="col">Стадії</th>
          <th scope="col" title="Результат" class="text-center">Рез</th>
          <th scope="col">
             <table align="center" class="table-sm">
@@ -152,16 +128,10 @@
             </table>
          </td>
          <td class="align-middle">
-            <table *ngIf="teamMatch.competitions" align="center" class="table-sm">
-               <tr *ngFor="let competition of teamMatch.competitions">
-                  <td class="align-middle">
-                     <b>{{ competition.pivot.round }}</b>
-                  </td>
-                  <td class="align-middle">{{ competition.pivot.number_in_round }}</td>
-                  <td class="align-middle">{{ competition.pivot.number_in_competition }}</td>
-                  <td class="align-middle">
-                     <small>{{ competition.title }}</small>
-                  </td>
+            <table *ngIf="teamMatch.team_stages" align="center" class="table-sm">
+               <tr *ngFor="let teamStage of teamMatch.team_stages">
+                  <td class="align-middle">{{ teamStage.title }}</td>
+                  <td class="align-middle">{{ teamStage.competition.title }}</td>
                </tr>
             </table>
          </td>
@@ -201,7 +171,7 @@
    <thead>
       <tr>
          <th scope="col">Матч</th>
-         <th scope="col">Змагання</th>
+         <th scope="col">Стадії</th>
          <th scope="col">Результат</th>
       </tr>
    </thead>
@@ -239,16 +209,10 @@
             </table>
          </td>
          <td class="align-middle">
-            <table *ngIf="teamMatch.competitions" align="center">
-               <tr *ngFor="let competition of teamMatch.competitions">
-                  <td class="align-middle">
-                     <b>{{ competition.pivot.round }}</b>
-                  </td>
-                  <td class="align-middle">{{ competition.pivot.number_in_round }}</td>
-                  <td class="align-middle">{{ competition.pivot.number_in_competition }}</td>
-                  <td class="align-middle">
-                     <small>{{ competition.title }}</small>
-                  </td>
+            <table *ngIf="teamMatch.team_stages" align="center" class="table-sm">
+               <tr *ngFor="let teamStage of teamMatch.team_stages">
+                  <td class="align-middle">{{ teamStage.title }}</td>
+                  <td class="align-middle">{{ teamStage.competition.title }}</td>
                </tr>
             </table>
          </td>
@@ -375,16 +339,10 @@
                </tr>
                <tr>
                   <td colspan="2" class="align-middle">
-                     <table *ngIf="teamMatch.competitions" align="center">
-                        <tr *ngFor="let competition of teamMatch.competitions">
-                           <td class="align-middle">
-                              <b>{{ competition.pivot.round }}</b>
-                           </td>
-                           <td class="align-middle">{{ competition.pivot.number_in_round }}</td>
-                           <td class="align-middle">{{ competition.pivot.number_in_competition }}</td>
-                           <td class="align-middle">
-                              <small>{{ competition.title }}</small>
-                           </td>
+                     <table *ngIf="teamMatch.team_stages" align="center" class="table-sm">
+                        <tr *ngFor="let teamStage of teamMatch.team_stages">
+                           <td class="align-middle">{{ teamStage.title }}</td>
+                           <td class="align-middle">{{ teamStage.competition.title }}</td>
                         </tr>
                      </table>
                   </td>
