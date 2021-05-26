@@ -16,6 +16,7 @@ export class SettingsService {
    public static readonly teamMatchesPerPage: number = 12;
    public static readonly teamsPerPage: number = 10;
    public static readonly teamParticipantsPerPage: number = 10;
+   public static readonly teamsStagesPerPage: number = 10;
    public static readonly usersPerPage: number = 10;
 
    public static readonly defaultDebounceTime: number = 750;
@@ -33,6 +34,7 @@ export class SettingsService {
       'v2/team/matches',
       'v2/team/participants',
       'v2/team/teams',
+      'v2/team/stages',
       'v2/users',
       'v2/guestbook-messages',
       'v2/comments'

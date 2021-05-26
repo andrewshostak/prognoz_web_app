@@ -119,10 +119,11 @@ export class TeamMatchFormComponent implements OnChanges, OnInit {
       this.clearCompetitionsFormArray();
       this.teamMatchForm.reset();
       if (this.teamMatch) {
-         this.teamMatch.competitions.forEach(competition => this.addCompetition(competition.pivot));
-         Object.entries(this.teamMatch).forEach(
-            ([field, value]) => this.teamMatchForm.get(field) && this.teamMatchForm.patchValue({ [field]: value })
-         );
+         // todo: fix competitions to teamStages
+         // this.teamMatch.competitions.forEach(competition => this.addCompetition(competition.pivot));
+         // Object.entries(this.teamMatch).forEach(
+         //    ([field, value]) => this.teamMatchForm.get(field) && this.teamMatchForm.patchValue({ [field]: value })
+         // );
       }
       this.openedModal.reference.close();
    }

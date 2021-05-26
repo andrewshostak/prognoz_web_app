@@ -1,6 +1,7 @@
 /* tslint:disable:variable-name */
 import { TeamStageState } from '@enums/team-stage-state.enum';
 import { CompetitionNew } from '@models/new/competition-new.model';
+import { TeamStageTypeNew } from '@models/new/team-stage-type-new.model';
 
 export class TeamStageNew {
    public id: number;
@@ -13,4 +14,5 @@ export class TeamStageNew {
    public updated_at: string;
 
    public competition?: CompetitionNew;
+   public team_stage_type?: TeamStageTypeNew;
 }

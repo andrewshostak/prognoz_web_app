@@ -16,6 +16,8 @@ import { TeamEditComponent } from '@app/manage/manage-team/manage-team-team/team
 import { TeamTeamsTableComponent } from '@app/manage/manage-team/manage-team-team/team-teams-table/team-teams-table.component';
 import { ManageTeamComponent } from '@app/manage/manage-team/manage-team.component';
 import { PermissionGuard } from '@app/manage/shared/permission-guard.service';
+import { TeamStagesTableComponent } from '@app/manage/manage-team/manage-team-stage/team-stages-table/team-stages-table.component';
+import { ManageTeamStageComponent } from '@app/manage/manage-team/manage-team-stage/manage-team-stage.component';
 
 const routes: Routes = [
    {
@@ -83,6 +85,16 @@ const routes: Routes = [
             ],
             component: ManageTeamTeamComponent,
             path: 'teams'
+         },
+         {
+            canActivate: [PermissionGuard],
+            data: { permissions: ['create_team_stage', 'update_team_stage', 'delete_team_stage'] },
+            children: [
+               { path: 'page/:pageNumber', component: TeamStagesTableComponent },
+               { path: '', redirectTo: 'page/1', pathMatch: 'full' }
+            ],
+            component: ManageTeamStageComponent,
+            path: 'stages'
          },
          { path: '', pathMatch: 'full', redirectTo: 'matches' }
       ],
