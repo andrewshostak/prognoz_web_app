@@ -10,76 +10,29 @@
          </app-match-select>
       </div>
       <div class="col-12 col-md-6">
-         <div *ngIf="competitions" formArrayName="competitions" class="mb-2">
-            <label class="font-weight-bold">
-               Змагання ({{ competitionsFormArray.controls.length }}) | Раунд | Номер в раунді | Номер в змаганні:
-            </label>
+         <div *ngIf="teamStages" formArrayName="team_stages" class="mb-2">
+            <label class="font-weight-bold">Командні стадії ({{ teamStagesFormArray.controls.length }}):</label>
             <div [hidden]="teamMatchForm.disabled" class="mb-2">
-               <button type="button" class="btn btn-outline-success" (click)="addCompetition()">
+               <button type="button" class="btn btn-outline-success" (click)="addTeamStage()">
                   <i class="fa fa-plus-circle" aria-hidden="true"></i>
                   Добавити
                </button>
             </div>
             <div
-               *ngFor="let competitionFormGroup of competitionsFormArray.controls; let i = index"
-               [formGroup]="competitionFormGroup"
+               *ngFor="let teamStageFormGroup of teamStagesFormArray.controls; let i = index"
+               [formGroup]="teamStageFormGroup"
                class="form-row mb-2"
             >
                <div class="col d-flex align-items-center justify-content-end">{{ i + 1 }}.</div>
-               <div class="col-4">
-                  <div
-                     class="form-group mb-0"
-                     [class.form-group-invalid]="showFormInvalidClass(competitionFormGroup.get('competition_id'))"
-                  >
-                     <select id="competition_id" class="form-control" formControlName="competition_id">
-                        <option *ngFor="let competition of competitions" [value]="competition.id">
-                           {{ competition.title }}
+               <div class="col-9">
+                  <div class="form-group mb-0" [class.form-group-invalid]="showFormInvalidClass(teamStageFormGroup.get('id'))">
+                     <select id="id" class="form-control" formControlName="id">
+                        <option *ngFor="let teamStage of teamStages" [value]="teamStage.id">
+                           {{ teamStage.title }} ({{ teamStage.round }}) | {{ teamStage.competition?.title }}
                         </option>
                      </select>
-                     <div [hidden]="!showFormErrorMessage(competitionFormGroup.get('competition_id'), 'required')" class="error-message">
-                        <small>Виберіть змагання зі списку або видаліть це поле</small>
-                     </div>
-                  </div>
-               </div>
-               <div class="col-2">
-                  <div class="form-group mb-0" [class.form-group-invalid]="showFormInvalidClass(competitionFormGroup.get('round'))">
-                     <input type="number" id="round" class="form-control" formControlName="round" />
-                     <div [hidden]="!showFormErrorMessage(competitionFormGroup.get('round'), 'required')" class="error-message">
-                        <small>Раунд обов'язковий</small>
-                     </div>
-                     <div [hidden]="!showFormErrorMessage(competitionFormGroup.get('round'), 'min')" class="error-message">
-                        <small>Мінімальне значення: 1</small>
-                     </div>
-                  </div>
-               </div>
-               <div class="col-2">
-                  <div
-                     class="form-group mb-0"
-                     [class.form-group-invalid]="showFormInvalidClass(competitionFormGroup.get('number_in_round'))"
-                  >
-                     <input type="number" id="number_in_round" class="form-control" formControlName="number_in_round" />
-                     <div [hidden]="!showFormErrorMessage(competitionFormGroup.get('number_in_round'), 'required')" class="error-message">
-                        <small>Номер в раунді обов'язковий</small>
-                     </div>
-                     <div [hidden]="!showFormErrorMessage(competitionFormGroup.get('number_in_round'), 'min')" class="error-message">
-                        <small>Мінімальне значення: 1</small>
-                     </div>
-                  </div>
-               </div>
-               <div class="col-2">
-                  <div
-                     class="form-group mb-0"
-                     [class.form-group-invalid]="showFormInvalidClass(competitionFormGroup.get('number_in_competition'))"
-                  >
-                     <input type="number" id="number_in_competition" class="form-control" formControlName="number_in_competition" />
-                     <div
-                        [hidden]="!showFormErrorMessage(competitionFormGroup.get('number_in_competition'), 'required')"
-                        class="error-message"
-                     >
-                        <small>Номер в раунді обов'язковий</small>
-                     </div>
-                     <div [hidden]="!showFormErrorMessage(competitionFormGroup.get('number_in_competition'), 'min')" class="error-message">
-                        <small>Мінімальне значення: 1</small>
+                     <div [hidden]="!showFormErrorMessage(teamStageFormGroup.get('id'), 'required')" class="error-message">
+                        <small>Виберіть стадію зі списку або видаліть це поле</small>
                      </div>
                   </div>
                </div>
@@ -89,7 +42,7 @@
                      type="button"
                      title="Видалити"
                      class="btn btn-danger"
-                     (click)="removeCompetition(i)"
+                     (click)="removeTeamStage(i)"
                   >
                      <i class="fa fa-trash" aria-hidden="true"></i>
                   </button>

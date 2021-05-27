@@ -50,6 +50,12 @@ export class TeamStageNewService {
          });
       }
 
+      if (search.states) {
+         search.states.forEach(state => {
+            params = params.append('states[]', state);
+         });
+      }
+
       return this.httpClient.get<PaginatedResponse<TeamStageNew>>(this.teamStagesUrl, { params });
    }
 }
