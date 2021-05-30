@@ -26,6 +26,7 @@ export class TeamStagesTableComponent implements OnDestroy, OnInit {
    constructor(private activatedRoute: ActivatedRoute, private teamStageService: TeamStageNewService) {}
 
    public getTeamStagesData(pageNumber: number): void {
+      // todo: fix ordering
       const search: TeamStageSearch = {
          page: pageNumber,
          orderBy: 'state',
