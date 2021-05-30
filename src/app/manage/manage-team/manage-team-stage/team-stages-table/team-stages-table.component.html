@@ -76,10 +76,10 @@
          <th scope="col" class="text-center">
             <table align="center" class="table-sm">
                <tr>
-                  <th>Назва: Тип</th>
+                  <th>Змагання</th>
                </tr>
                <tr>
-                  <th>Змагання</th>
+                  <th>Назва: Тип</th>
                </tr>
             </table>
          </th>
@@ -94,13 +94,13 @@
          <td class="text-center align-middle">
             <table align="center" class="table-sm">
                <tr>
+                  <td>{{ teamStage.competition.title }}</td>
+               </tr>
+               <tr>
                   <td>
                      <strong>{{ teamStage.title }}</strong
                      >: {{ teamStage.team_stage_type.title }}
                   </td>
-               </tr>
-               <tr>
-                  <td>{{ teamStage.competition.title }}</td>
                </tr>
             </table>
          </td>
@@ -161,14 +161,14 @@
          <th scope="col" class="text-center">
             <table align="center" class="table-sm">
                <tr>
-                  <th>Стан</th>
-                  <th>Раунд</th>
+                  <th colspan="2">Змагання</th>
                </tr>
                <tr>
                   <th colspan="2">Назва: Тип</th>
                </tr>
                <tr>
-                  <th colspan="2">Змагання</th>
+                  <th>Стан</th>
+                  <th>Раунд</th>
                </tr>
             </table>
          </th>
@@ -181,6 +181,15 @@
          <td class="text-center align-middle">
             <table align="center" class="table-sm">
                <tr>
+                  <td colspan="2">{{ teamStage.competition.title }}</td>
+               </tr>
+               <tr>
+                  <td colspan="2">
+                     <strong>{{ teamStage.title }}</strong
+                     >: {{ teamStage.team_stage_type.title }}
+                  </td>
+               </tr>
+               <tr>
                   <td>
                      <div [ngSwitch]="teamStage.state">
                         <strong *ngSwitchCase="teamStageTypes.Ended" class="text-muted">Завершений</strong>
@@ -191,15 +200,6 @@
                   <td>
                      {{ teamStage.round }}
                   </td>
-               </tr>
-               <tr>
-                  <td colspan="2">
-                     <strong>{{ teamStage.title }}</strong
-                     >: {{ teamStage.team_stage_type.title }}
-                  </td>
-               </tr>
-               <tr>
-                  <td colspan="2">{{ teamStage.competition.title }}</td>
                </tr>
             </table>
          </td>
@@ -246,7 +246,87 @@
    </tbody>
 </table>
 <table class="d-table d-sm-none table table-sm table-dark table-striped table-hover table-bordered">
-   <tbody></tbody>
+   <tbody>
+      <tr *ngFor="let teamStage of teamStages">
+         <td class="text-center align-middle">
+            <table align="center" class="table-sm">
+               <tr>
+                  <td colspan="2">{{ teamStage.competition.title }}</td>
+               </tr>
+               <tr>
+                  <td colspan="2">
+                     <strong>{{ teamStage.title }}</strong
+                     >: {{ teamStage.team_stage_type.title }}
+                  </td>
+               </tr>
+               <tr>
+                  <td>
+                     <div [ngSwitch]="teamStage.state">
+                        <strong *ngSwitchCase="teamStageTypes.Ended" class="text-muted">Завершений</strong>
+                        <strong *ngSwitchCase="teamStageTypes.Active" class="text-success">Активний</strong>
+                        <strong *ngSwitchCase="teamStageTypes.NotStarted" class="text-info">Не початий</strong>
+                     </div>
+                  </td>
+                  <td>
+                     {{ teamStage.round }}
+                  </td>
+               </tr>
+               <tr>
+                  <td class="text-muted text-center" colspan="2">
+                     ID: <strong>{{ teamStage.id }}</strong>
+                  </td>
+               </tr>
+            </table>
+         </td>
+         <td class="text-center align-middle">
+            <ng-container [ngSwitch]="teamStage.state">
+               <table *ngSwitchCase="teamStageTypes.NotStarted" align="center" class="table-sm">
+                  <tr>
+                     <td>
+                        <button type="button" class="btn btn-sm btn-outline-success"><i class="fa fa-play"></i></button>
+                     </td>
+                  </tr>
+                  <tr>
+                     <td>
+                        <a [routerLink]="['/manage', 'team', 'stages', teamStage.id]" class="btn btn-sm btn-outline-warning">
+                           <i class="fa fa-pencil-square-o fa-lg" aria-hidden="true"></i>
+                        </a>
+                     </td>
+                  </tr>
+                  <tr>
+                     <td>
+                        <button type="button" class="btn btn-sm btn-outline-danger">
+                           <i class="fa fa-trash-o fa-lg" aria-hidden="true"></i>
+                        </button>
+                     </td>
+                  </tr>
+               </table>
+               <table *ngSwitchCase="teamStageTypes.Active" align="center" class="table-sm">
+                  <tr>
+                     <td>
+                        <button type="button" class="btn btn-sm btn-outline-danger"><i class="fa fa-square"></i></button>
+                     </td>
+                  </tr>
+                  <tr>
+                     <td>
+                        <a [routerLink]="['/manage', 'team', 'stages', teamStage.id]" class="btn btn-sm btn-outline-warning">
+                           <i class="fa fa-pencil-square-o fa-lg" aria-hidden="true"></i>
+                        </a>
+                     </td>
+                  </tr>
+                  <tr>
+                     <td>
+                        <button type="button" class="btn btn-sm btn-outline-danger">
+                           <i class="fa fa-trash-o fa-lg" aria-hidden="true"></i>
+                        </button>
+                     </td>
+                  </tr>
+               </table>
+               <span *ngSwitchCase="teamStageTypes.Ended" class="text-muted">{{ teamStage.updated_at | time: 'fromNow' }}</span>
+            </ng-container>
+         </td>
+      </tr>
+   </tbody>
 </table>
 <app-pagination
    *ngIf="paginationData"
