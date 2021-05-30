@@ -21,11 +21,7 @@
          <td class="text-center align-middle">{{ teamStage.team_stage_type.title }}</td>
          <td class="text-center align-middle">{{ teamStage.round }}</td>
          <td class="text-center align-middle">
-            <div [ngSwitch]="teamStage.state">
-               <strong *ngSwitchCase="teamStageTypes.Ended" class="text-muted">Завершений</strong>
-               <strong *ngSwitchCase="teamStageTypes.Active" class="text-success">Активний</strong>
-               <strong *ngSwitchCase="teamStageTypes.NotStarted" class="text-info">Не початий</strong>
-            </div>
+            <ng-container [ngTemplateOutlet]="stageState" [ngTemplateOutletContext]="{ state: teamStage.state }"></ng-container>
          </td>
          <td class="text-center align-middle">
             <ng-container [ngSwitch]="teamStage.state">
@@ -106,11 +102,7 @@
          </td>
          <td class="text-center align-middle">{{ teamStage.round }}</td>
          <td class="text-center align-middle">
-            <div [ngSwitch]="teamStage.state">
-               <strong *ngSwitchCase="teamStageTypes.Ended" class="text-muted">Завершений</strong>
-               <strong *ngSwitchCase="teamStageTypes.Active" class="text-success">Активний</strong>
-               <strong *ngSwitchCase="teamStageTypes.NotStarted" class="text-info">Не початий</strong>
-            </div>
+            <ng-container [ngTemplateOutlet]="stageState" [ngTemplateOutletContext]="{ state: teamStage.state }"></ng-container>
          </td>
          <td class="text-center align-middle">
             <ng-container [ngSwitch]="teamStage.state">
@@ -191,11 +183,7 @@
                </tr>
                <tr>
                   <td>
-                     <div [ngSwitch]="teamStage.state">
-                        <strong *ngSwitchCase="teamStageTypes.Ended" class="text-muted">Завершений</strong>
-                        <strong *ngSwitchCase="teamStageTypes.Active" class="text-success">Активний</strong>
-                        <strong *ngSwitchCase="teamStageTypes.NotStarted" class="text-info">Не початий</strong>
-                     </div>
+                     <ng-container [ngTemplateOutlet]="stageState" [ngTemplateOutletContext]="{ state: teamStage.state }"></ng-container>
                   </td>
                   <td>
                      {{ teamStage.round }}
@@ -261,11 +249,7 @@
                </tr>
                <tr>
                   <td>
-                     <div [ngSwitch]="teamStage.state">
-                        <strong *ngSwitchCase="teamStageTypes.Ended" class="text-muted">Завершений</strong>
-                        <strong *ngSwitchCase="teamStageTypes.Active" class="text-success">Активний</strong>
-                        <strong *ngSwitchCase="teamStageTypes.NotStarted" class="text-info">Не початий</strong>
-                     </div>
+                     <ng-container [ngTemplateOutlet]="stageState" [ngTemplateOutletContext]="{ state: teamStage.state }"></ng-container>
                   </td>
                   <td>
                      {{ teamStage.round }}
@@ -335,3 +319,10 @@
    [pageSize]="paginationData.pageSize"
    [path]="paginationData.path"
 ></app-pagination>
+<ng-template #stageState let-state="state">
+   <div [ngSwitch]="state">
+      <strong *ngSwitchCase="teamStageTypes.Ended" class="text-muted">Завершений</strong>
+      <strong *ngSwitchCase="teamStageTypes.Active" class="text-success">Активний</strong>
+      <strong *ngSwitchCase="teamStageTypes.NotStarted" class="text-info">Не початий</strong>
+   </div>
+</ng-template>
