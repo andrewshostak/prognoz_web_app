@@ -23,12 +23,6 @@ export const environment = {
       cup: {
          id: 2,
          numberOfMatchesInStage: 8
-      },
-      team: {
-         id: 3,
-         participantsInTeam: 4,
-         matchesInRound: 12,
-         matchesToBlock: 2
       }
    },
    pusher: {

@@ -3,24 +3,26 @@ import { NgForm } from '@angular/forms';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 
 import { ModelStatus } from '@enums/model-status.enum';
-import { environment } from '@env';
 import { UserNew } from '@models/new/user-new.model';
+import { TeamStageNew } from '@models/new/team-stage-new.model';
 import { TeamTeamMatchNew } from '@models/new/team-team-match-new.model';
 import { TeamMatch } from '@models/team/team-match.model';
 import { TeamParticipant } from '@models/team/team-participant.model';
 import { TeamParticipantSearch } from '@models/search/team-participant-search.model';
 import { TeamTeamMatchSearch } from '@models/search/team-team-match-search.model';
 import { AuthNewService } from '@services/new/auth-new.service';
-import { TeamParticipantNewService } from '@services/new/team-participant-new.service';
-import { TeamTeamMatchNewService } from '@services/new/team-team-match-new.service';
 import { TeamCompetitionService } from '@services/team/team-competition.service';
+import { TeamParticipantNewService } from '@services/new/team-participant-new.service';
+import { TeamStageNewService } from '@services/new/team-stage-new.service';
+import { TeamTeamMatchNewService } from '@services/new/team-team-match-new.service';
 import { TeamMatchService } from '@services/team/team-match.service';
 import { TeamPredictionService } from '@services/team/team-prediction.service';
 import { TeamTeamMatchService } from '@services/team/team-team-match.service';
 import { SettingsService } from '@services/settings.service';
 import { UtilsService } from '@services/utils.service';
 import { NotificationsService } from 'angular2-notifications';
-import { filter, tap } from 'rxjs/operators';
+import { filter, map, tap } from 'rxjs/operators';
+import { forkJoin } from 'rxjs';
 
 @Component({
    selector: 'app-team-captain',
@@ -36,12 +38,13 @@ export class TeamCaptainComponent implements OnInit {
       private teamMatchService: TeamMatchService,
       private teamParticipantService: TeamParticipantNewService,
       private teamPredictionService: TeamPredictionService,
+      private teamStageService: TeamStageNewService,
       private teamTeamMatchService: TeamTeamMatchService,
       private teamTeamMatchNewService: TeamTeamMatchNewService
    ) {}
 
    authenticatedUser: UserNew;
-   availableTeamParticipants: any;
+   public availableTeamParticipants: { [userId: number]: { predictionsLeft: number; participantAvailable: boolean } };
    currentTeamId: number;
    errorTeamMatches: string;
    errorTeamParticipants: string;
@@ -54,7 +57,6 @@ export class TeamCaptainComponent implements OnInit {
    showScoresOrString = UtilsService.showScoresOrString;
    spinnerButton: any = {};
    spinnerButtonGoalkeeper = false;
-   teamEnvironment = environment.tournaments.team; // todo: number of matches should not be static
    teamMatches: TeamMatch[];
    teamParticipants: TeamParticipant[];
    teamTeamMatch: TeamTeamMatchNew;
@@ -200,23 +202,30 @@ export class TeamCaptainComponent implements OnInit {
          { parameter: 'filter', value: 'my' },
          { parameter: 'team_stage_id', value: teamStageId.toString() }
       ];
-      this.teamMatchService.getTeamMatchesAuthUser(param).subscribe(
-         response => {
-            this.errorTeamMatches = null;
-            if (!response) {
-               this.teamMatches = null;
-               return;
-            }
+      const requests = [this.teamMatchService.getTeamMatchesAuthUser(param), this.teamStageService.getTeamStage(teamStageId)];
+      forkJoin(requests)
+         .pipe(
+            map(([teamMatchesResponse, teamStageResponse]) => {
+               return { teamMatches: teamMatchesResponse, teamStage: teamStageResponse };
+            }) as any
+         )
+         .subscribe(
+            (responses: { teamMatches: any; teamStage: TeamStageNew }) => {
+               this.errorTeamMatches = null;
+               if (!responses.teamMatches) {
+                  this.teamMatches = null;
+                  return;
+               }
 
-            this.teamMatches = response.team_matches;
-            this.availableTeamParticipants = this.setAvailableTeamParticipants(response.team_matches);
-            this.getCurrentTeamTeamMatch();
-         },
-         error => {
-            this.teamMatches = null;
-            this.errorTeamMatches = error;
-         }
-      );
+               this.teamMatches = responses.teamMatches.team_matches;
+               this.availableTeamParticipants = this.getAvailableTeamParticipants(responses.teamMatches.team_matches, responses.teamStage);
+               this.getCurrentTeamTeamMatch();
+            },
+            error => {
+               this.teamMatches = null;
+               this.errorTeamMatches = error;
+            }
+         );
    }
 
    private getTeamTeamMatchesData(teamStageId: number) {
@@ -239,14 +248,17 @@ export class TeamCaptainComponent implements OnInit {
       );
    }
 
-   private setAvailableTeamParticipants(teamMatches: TeamMatch[]) {
+   private getAvailableTeamParticipants(
+      teamMatches: TeamMatch[],
+      teamStage: TeamStageNew
+   ): { [userId: number]: { predictionsLeft: number; participantAvailable: boolean } } {
       const teamParticipants: any = {};
-      const initialParticipantNumberOfPredictions = this.teamEnvironment.matchesInRound / this.teamEnvironment.participantsInTeam;
+      const maxParticipantNumberOfPredictions = Math.ceil(teamStage.team_stage_type.matches_count / SettingsService.participantsInTeam);
       teamMatches.forEach(teamMatch => {
          if (this.matchHasPrediction(teamMatch)) {
             if (!teamParticipants[teamMatch.team_predictions[0].user_id]) {
                teamParticipants[teamMatch.team_predictions[0].user_id] = {
-                  predictionsLeft: initialParticipantNumberOfPredictions - 1,
+                  predictionsLeft: maxParticipantNumberOfPredictions - 1,
                   participantAvailable: true
                };
             } else {
