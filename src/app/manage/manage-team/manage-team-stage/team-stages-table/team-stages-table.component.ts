@@ -26,12 +26,11 @@ export class TeamStagesTableComponent implements OnDestroy, OnInit {
    constructor(private activatedRoute: ActivatedRoute, private teamStageService: TeamStageNewService) {}
 
    public getTeamStagesData(pageNumber: number): void {
-      // todo: fix ordering
       const search: TeamStageSearch = {
          page: pageNumber,
          orderBy: 'state',
          limit: SettingsService.teamsStagesPerPage,
-         sequence: Sequence.Descending,
+         sequence: Sequence.Ascending,
          relations: ['competition', 'teamStageType']
       };
       this.teamStageService.getTeamStages(search).subscribe(response => {
