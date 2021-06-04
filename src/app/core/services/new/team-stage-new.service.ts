@@ -14,6 +14,14 @@ export class TeamStageNewService {
 
    constructor(private httpClient: HttpClient) {}
 
+   public createTeamStage(teamStage: Partial<TeamStageNew>): Observable<TeamStageNew> {
+      return this.httpClient.post<{ team_stage: TeamStageNew }>(this.teamStagesUrl, teamStage).pipe(map(response => response.team_stage));
+   }
+
+   public deleteTeamStage(teamStageId: number): Observable<void> {
+      return this.httpClient.delete<void>(`${this.teamStagesUrl}/${teamStageId}`);
+   }
+
    public getTeamStage(teamStageId: number): Observable<TeamStageNew> {
       return this.httpClient
          .get<{ team_stage: TeamStageNew }>(`${this.teamStagesUrl}/${teamStageId}`)
@@ -57,5 +65,11 @@ export class TeamStageNewService {
       }
 
       return this.httpClient.get<PaginatedResponse<TeamStageNew>>(this.teamStagesUrl, { params });
+   }
+
+   public updateTeamStage(teamStageId: number, teamStage: Partial<TeamStageNew>): Observable<TeamStageNew> {
+      return this.httpClient
+         .put<{ team_stage: TeamStageNew }>(`${this.teamStagesUrl}/${teamStageId}`, teamStage)
+         .pipe(map(response => response.team_stage));
    }
 }
