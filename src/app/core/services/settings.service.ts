@@ -34,7 +34,9 @@ export class SettingsService {
       'v2/team/matches',
       'v2/team/participants',
       'v2/team/teams',
+      'v2/team/team-matches',
       'v2/team/stages',
+      'v2/team/stage-types',
       'v2/users',
       'v2/guestbook-messages',
       'v2/comments'

@@ -28,7 +28,13 @@
                <table *ngSwitchCase="teamStageTypes.NotStarted" align="center" class="table-sm">
                   <tr>
                      <td>
-                        <button type="button" class="btn btn-sm btn-outline-success"><i class="fa fa-play"></i> Активувати</button>
+                        <button
+                           type="button"
+                           class="btn btn-sm btn-outline-success"
+                           (click)="openActivateConfirm(confirmModal, teamStage, makeTeamStageActive)"
+                        >
+                           <i class="fa fa-play"></i> Активувати
+                        </button>
                      </td>
                      <td>
                         <a [routerLink]="['/manage', 'team', 'stages', teamStage.id]" class="btn btn-sm btn-outline-warning">
@@ -36,7 +42,11 @@
                         </a>
                      </td>
                      <td>
-                        <button type="button" class="btn btn-sm btn-outline-danger">
+                        <button
+                           type="button"
+                           class="btn btn-sm btn-outline-danger"
+                           (click)="openDeleteConfirm(confirmModal, teamStage, deleteTeamStage)"
+                        >
                            <i class="fa fa-trash-o fa-lg" aria-hidden="true"></i>
                         </button>
                      </td>
@@ -45,17 +55,18 @@
                <table *ngSwitchCase="teamStageTypes.Active" align="center" class="table-sm">
                   <tr>
                      <td>
-                        <button type="button" class="btn btn-sm btn-outline-danger"><i class="fa fa-square"></i> Завершити</button>
+                        <button
+                           type="button"
+                           class="btn btn-sm btn-outline-danger"
+                           (click)="openEndConfirm(confirmModal, teamStage, makeTeamStageEnded)"
+                        >
+                           <i class="fa fa-square"></i> Завершити
+                        </button>
                      </td>
                      <td>
                         <a [routerLink]="['/manage', 'team', 'stages', teamStage.id]" class="btn btn-sm btn-outline-warning">
                            <i class="fa fa-pencil-square-o fa-lg" aria-hidden="true"></i>
                         </a>
-                     </td>
-                     <td>
-                        <button type="button" class="btn btn-sm btn-outline-danger">
-                           <i class="fa fa-trash-o fa-lg" aria-hidden="true"></i>
-                        </button>
                      </td>
                   </tr>
                </table>
@@ -109,7 +120,13 @@
                <table *ngSwitchCase="teamStageTypes.NotStarted" align="center" class="table-sm">
                   <tr>
                      <td>
-                        <button type="button" class="btn btn-sm btn-outline-success"><i class="fa fa-play"></i> Активувати</button>
+                        <button
+                           type="button"
+                           class="btn btn-sm btn-outline-success"
+                           (click)="openActivateConfirm(confirmModal, teamStage, makeTeamStageActive)"
+                        >
+                           <i class="fa fa-play"></i> Активувати
+                        </button>
                      </td>
                      <td>
                         <a [routerLink]="['/manage', 'team', 'stages', teamStage.id]" class="btn btn-sm btn-outline-warning">
@@ -117,7 +134,11 @@
                         </a>
                      </td>
                      <td>
-                        <button type="button" class="btn btn-sm btn-outline-danger">
+                        <button
+                           type="button"
+                           class="btn btn-sm btn-outline-danger"
+                           (click)="openDeleteConfirm(confirmModal, teamStage, deleteTeamStage)"
+                        >
                            <i class="fa fa-trash-o fa-lg" aria-hidden="true"></i>
                         </button>
                      </td>
@@ -126,17 +147,18 @@
                <table *ngSwitchCase="teamStageTypes.Active" align="center" class="table-sm">
                   <tr>
                      <td>
-                        <button type="button" class="btn btn-sm btn-outline-danger"><i class="fa fa-square"></i> Завершити</button>
+                        <button
+                           type="button"
+                           class="btn btn-sm btn-outline-danger"
+                           (click)="openEndConfirm(confirmModal, teamStage, makeTeamStageEnded)"
+                        >
+                           <i class="fa fa-square"></i> Завершити
+                        </button>
                      </td>
                      <td>
                         <a [routerLink]="['/manage', 'team', 'stages', teamStage.id]" class="btn btn-sm btn-outline-warning">
                            <i class="fa fa-pencil-square-o fa-lg" aria-hidden="true"></i>
                         </a>
-                     </td>
-                     <td>
-                        <button type="button" class="btn btn-sm btn-outline-danger">
-                           <i class="fa fa-trash-o fa-lg" aria-hidden="true"></i>
-                        </button>
                      </td>
                   </tr>
                </table>
@@ -196,7 +218,13 @@
                <table *ngSwitchCase="teamStageTypes.NotStarted" align="center" class="table-sm">
                   <tr>
                      <td>
-                        <button type="button" class="btn btn-sm btn-outline-success"><i class="fa fa-play"></i> Активувати</button>
+                        <button
+                           type="button"
+                           class="btn btn-sm btn-outline-success"
+                           (click)="openActivateConfirm(confirmModal, teamStage, makeTeamStageActive)"
+                        >
+                           <i class="fa fa-play"></i> Активувати
+                        </button>
                      </td>
                      <td>
                         <a [routerLink]="['/manage', 'team', 'stages', teamStage.id]" class="btn btn-sm btn-outline-warning">
@@ -204,7 +232,11 @@
                         </a>
                      </td>
                      <td>
-                        <button type="button" class="btn btn-sm btn-outline-danger">
+                        <button
+                           type="button"
+                           class="btn btn-sm btn-outline-danger"
+                           (click)="openDeleteConfirm(confirmModal, teamStage, deleteTeamStage)"
+                        >
                            <i class="fa fa-trash-o fa-lg" aria-hidden="true"></i>
                         </button>
                      </td>
@@ -213,17 +245,18 @@
                <table *ngSwitchCase="teamStageTypes.Active" align="center" class="table-sm">
                   <tr>
                      <td>
-                        <button type="button" class="btn btn-sm btn-outline-danger"><i class="fa fa-square"></i> Завершити</button>
+                        <button
+                           type="button"
+                           class="btn btn-sm btn-outline-danger"
+                           (click)="openEndConfirm(confirmModal, teamStage, makeTeamStageEnded)"
+                        >
+                           <i class="fa fa-square"></i> Завершити
+                        </button>
                      </td>
                      <td>
                         <a [routerLink]="['/manage', 'team', 'stages', teamStage.id]" class="btn btn-sm btn-outline-warning">
                            <i class="fa fa-pencil-square-o fa-lg" aria-hidden="true"></i>
                         </a>
-                     </td>
-                     <td>
-                        <button type="button" class="btn btn-sm btn-outline-danger">
-                           <i class="fa fa-trash-o fa-lg" aria-hidden="true"></i>
-                        </button>
                      </td>
                   </tr>
                </table>
@@ -267,7 +300,13 @@
                <table *ngSwitchCase="teamStageTypes.NotStarted" align="center" class="table-sm">
                   <tr>
                      <td>
-                        <button type="button" class="btn btn-sm btn-outline-success"><i class="fa fa-play"></i></button>
+                        <button
+                           type="button"
+                           class="btn btn-sm btn-outline-success"
+                           (click)="openActivateConfirm(confirmModal, teamStage, makeTeamStageActive)"
+                        >
+                           <i class="fa fa-play"></i>
+                        </button>
                      </td>
                   </tr>
                   <tr>
@@ -279,7 +318,11 @@
                   </tr>
                   <tr>
                      <td>
-                        <button type="button" class="btn btn-sm btn-outline-danger">
+                        <button
+                           type="button"
+                           class="btn btn-sm btn-outline-danger"
+                           (click)="openDeleteConfirm(confirmModal, teamStage, deleteTeamStage)"
+                        >
                            <i class="fa fa-trash-o fa-lg" aria-hidden="true"></i>
                         </button>
                      </td>
@@ -288,7 +331,13 @@
                <table *ngSwitchCase="teamStageTypes.Active" align="center" class="table-sm">
                   <tr>
                      <td>
-                        <button type="button" class="btn btn-sm btn-outline-danger"><i class="fa fa-square"></i></button>
+                        <button
+                           type="button"
+                           class="btn btn-sm btn-outline-danger"
+                           (click)="openEndConfirm(confirmModal, teamStage, makeTeamStageEnded)"
+                        >
+                           <i class="fa fa-square"></i>
+                        </button>
                      </td>
                   </tr>
                   <tr>
@@ -296,13 +345,6 @@
                         <a [routerLink]="['/manage', 'team', 'stages', teamStage.id]" class="btn btn-sm btn-outline-warning">
                            <i class="fa fa-pencil-square-o fa-lg" aria-hidden="true"></i>
                         </a>
-                     </td>
-                  </tr>
-                  <tr>
-                     <td>
-                        <button type="button" class="btn btn-sm btn-outline-danger">
-                           <i class="fa fa-trash-o fa-lg" aria-hidden="true"></i>
-                        </button>
                      </td>
                   </tr>
                </table>
@@ -325,4 +367,8 @@
       <strong *ngSwitchCase="teamStageTypes.Active" class="text-success">Активний</strong>
       <strong *ngSwitchCase="teamStageTypes.NotStarted" class="text-info">Не початий</strong>
    </div>
+</ng-template>
+<ng-template #confirmModal let-c="close">
+   <app-confirmation-modal [close]="c" [message]="openedModal.message" (confirmed)="openedModal.submitted($event)">
+   </app-confirmation-modal>
 </ng-template>
