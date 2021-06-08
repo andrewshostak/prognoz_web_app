@@ -14,9 +14,19 @@
    <div [hidden]="!teamMatches">
       <h2>{{ isGoalkeeper ? 'Заблокувати' : 'Заблоковані' }} матчі суперника:</h2>
       <app-team-goalkeeper-form
-         *ngFor="let index of possibleBlockedTeamMatchesIndexes"
+         *ngIf="blockedTeamMatches.length < maxBlocks"
          [teamMatches]="teamMatches"
-         [blockedTeamMatch]="blockedTeamMatches[index]"
+         [blockedTeamMatch]="null"
+         [authenticatedUser]="authenticatedUser"
+         [oppositeTeamId]="oppositeTeamId"
+         [isGoalkeeper]="isGoalkeeper"
+         (reloadData)="reloadTeamGoalkeeperData()"
+      >
+      </app-team-goalkeeper-form>
+      <app-team-goalkeeper-form
+         *ngFor="let blockedTeamMatch of blockedTeamMatches"
+         [teamMatches]="teamMatches"
+         [blockedTeamMatch]="blockedTeamMatch"
          [authenticatedUser]="authenticatedUser"
          [oppositeTeamId]="oppositeTeamId"
          [isGoalkeeper]="isGoalkeeper"

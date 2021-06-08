@@ -15,7 +15,6 @@ import { TeamPredictionService } from '@services/team/team-prediction.service';
 import { TitleService } from '@services/title.service';
 import { filter, tap } from 'rxjs/operators';
 import { TeamStageNewService } from '@services/new/team-stage-new.service';
-import { range } from 'lodash';
 
 @Component({
    selector: 'app-team-predictions',
@@ -36,7 +35,7 @@ export class TeamPredictionsComponent implements OnInit {
 
    public authenticatedUser: UserNew;
    public blockedTeamMatches: TeamMatch[] = [];
-   public possibleBlockedTeamMatchesIndexes: number[] = [];
+   public maxBlocks: number = 0;
    isGoalkeeper: boolean;
    noAccess = 'Доступ заборонено. Увійдіть на сайт для перегляду цієї сторінки.';
    oppositeTeamId: number;
@@ -102,7 +101,6 @@ export class TeamPredictionsComponent implements OnInit {
    }
 
    setBlockedMatches(teamMatches: TeamMatch[]) {
-      // todo: "nothing blocked" message is shown after blocking a match
       for (const teamMatch of teamMatches) {
          if (teamMatch.team_predictions && teamMatch.team_predictions[0] && teamMatch.team_predictions[0].blocked_by) {
             this.blockedTeamMatches.push(teamMatch);
@@ -140,7 +138,7 @@ export class TeamPredictionsComponent implements OnInit {
    private getTeamStageData(id: number): void {
       this.teamStageService.getTeamStage(id).subscribe(response => {
          if (response.team_stage_type) {
-            this.possibleBlockedTeamMatchesIndexes = range(response.team_stage_type.blocks_count);
+            this.maxBlocks = response.team_stage_type.blocks_count;
          }
       });
    }

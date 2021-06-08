@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import { NotificationsService } from 'angular2-notifications';
@@ -11,7 +11,7 @@ import { User } from '@models/user.model';
    templateUrl: './team-goalkeeper-form.component.html',
    styleUrls: ['./team-goalkeeper-form.component.scss']
 })
-export class TeamGoalkeeperFormComponent implements OnInit, OnChanges {
+export class TeamGoalkeeperFormComponent implements OnChanges {
    @Input() blockedTeamMatch: TeamMatch;
    @Input() teamMatches: TeamMatch[];
    @Input() oppositeTeamId: number;
@@ -19,9 +19,11 @@ export class TeamGoalkeeperFormComponent implements OnInit, OnChanges {
    @Input() isGoalkeeper: boolean;
    @Output() reloadData = new EventEmitter<any>();
 
-   isRoundStarted: boolean;
-   teamGoalkeeperForm: FormGroup;
-   spinnerButton: boolean;
+   public isStageStarted: boolean = false;
+   public teamGoalkeeperForm: FormGroup = this.formBuilder.group({
+      team_match_id: ['', [Validators.required]]
+   });
+   public spinnerButton: boolean;
 
    constructor(
       private formBuilder: FormBuilder,
@@ -35,29 +37,17 @@ export class TeamGoalkeeperFormComponent implements OnInit, OnChanges {
 
    ngOnChanges(changes: SimpleChanges) {
       for (const propName of Object.keys(changes)) {
-         if (!changes[propName].firstChange && propName === 'blockedTeamMatch') {
+         if (propName === 'blockedTeamMatch') {
             if (changes[propName].currentValue) {
                this.teamGoalkeeperForm.patchValue({ team_match_id: changes[propName].currentValue.id });
             }
          }
-         if (!changes[propName].firstChange && propName === 'teamMatches') {
+         if (propName === 'teamMatches') {
             if (changes[propName].currentValue) {
-               this.isRoundStarted = !!this.getStartedMatches(changes[propName].currentValue).length;
-            } else {
-               this.isRoundStarted = false;
+               this.isStageStarted = changes[propName].currentValue.some(teamMatch => !teamMatch.is_predictable);
             }
          }
       }
-   }
-
-   getStartedMatches(teamMatches: TeamMatch[]): TeamMatch[] {
-      return teamMatches.filter(teamMatch => !teamMatch.is_predictable);
-   }
-
-   ngOnInit() {
-      this.teamGoalkeeperForm = this.formBuilder.group({
-         team_match_id: ['', [Validators.required]]
-      });
    }
 
    onSubmit() {
@@ -74,8 +64,11 @@ export class TeamGoalkeeperFormComponent implements OnInit, OnChanges {
             unblock_id: this.blockedTeamMatch ? this.blockedTeamMatch.id : null
          };
          this.teamPredictionService.updateTeamPrediction(teamPrediction).subscribe(
-            response => {
-               this.notificationsService.success('Успішно', 'Матч заблоковано');
+            () => {
+               this.notificationsService.success(
+                  'Успішно',
+                  `Матч ${selectedTeamMatch.club_first.title} - ${selectedTeamMatch.club_second.title} заблоковано`
+               );
                this.reloadData.emit();
                this.spinnerButton = false;
             },

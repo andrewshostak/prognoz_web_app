@@ -34,15 +34,31 @@
                <div class="row align-items-center">
                   <div class="col-6 col-sm-4 col-md-3 col-lg-4 order-1 order-sm-1 text-right text-sm-center text-white">
                      <strong
-                        ><label for="home">{{ teamPrediction.team_match.club_first.title }}</label></strong
+                        ><label [for]="'home-' + teamPrediction.team_match.id">{{
+                           teamPrediction.team_match.club_first.title
+                        }}</label></strong
                      >
                   </div>
                   <div class="col-12 col-sm-4 col-md-6 col-lg-4 order-3 order-sm-2 text-center text-white mb-2">
                      <!-- if team match is predictable -->
                      <div *ngIf="teamPrediction.team_match.is_predictable">
-                        <input id="home" type="number" min="0" max="9" class="predict-input" formControlName="home" /><strong>:</strong
+                        <input
+                           [id]="'home-' + teamPrediction.team_match.id"
+                           type="number"
+                           min="0"
+                           max="9"
+                           class="predict-input"
+                           formControlName="home"
+                        /><strong>:</strong
                         ><!--
-                            --><input id="away" type="number" min="0" max="9" class="predict-input" formControlName="away" />
+                            --><input
+                           [id]="'away' + teamPrediction.team_match.id"
+                           type="number"
+                           min="0"
+                           max="9"
+                           class="predict-input"
+                           formControlName="away"
+                        />
                      </div>
                      <!-- if team match is not predictable -->
                      <div *ngIf="!teamPrediction.team_match.is_predictable">
@@ -51,7 +67,9 @@
                   </div>
                   <div class="col-6 col-sm-4 col-md-3 col-lg-4 order-2 order-sm-3 text-left text-sm-center text-white">
                      <strong
-                        ><label for="away">{{ teamPrediction.team_match.club_second.title }}</label></strong
+                        ><label [for]="'away' + teamPrediction.team_match.id">{{
+                           teamPrediction.team_match.club_second.title
+                        }}</label></strong
                      >
                   </div>
                </div>
