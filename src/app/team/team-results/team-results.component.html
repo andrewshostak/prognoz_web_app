@@ -1,17 +1,3 @@
-<h2>
-  Результати:
-  <button class="btn btn-sm btn-outline-secondary cursor-pointer"
-          title="Оновити"
-          (click)="getTeamMatchesData(competitionId, round)">
-    <i class="fa fa-refresh fa-fw" aria-hidden="true"></i>
-  </button>
-</h2>
-<div *ngIf="roundsArray && round" class="mb-2">
-    <app-dropdown-navigation [dropdownItems]="roundsArray"
-                             [selectedId]="round"
-                             [navigationPath]="['/team', 'competitions', competitionId, 'results', 'round']"
-                             [formSize]="'lg'">
-    </app-dropdown-navigation>
-</div>
-<app-team-results-table [teamMatches]="teamMatches" [error]="errorTeamMatches">
-</app-team-results-table>
+<h2>Результати:</h2>
+<app-team-stage-select (teamStageSelected)="teamStageSelected($event)"></app-team-stage-select>
+<app-team-results-table [teamMatches]="teamMatches"> </app-team-results-table>

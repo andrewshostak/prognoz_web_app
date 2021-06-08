@@ -1,8 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Params } from '@angular/router';
 
 import { NavigationItem } from '@models/navigation-item.model';
-import { CurrentStateService } from '@services/current-state.service';
 
 @Component({
    selector: 'app-team',
@@ -11,30 +9,16 @@ import { CurrentStateService } from '@services/current-state.service';
 })
 export class TeamComponent implements OnInit {
    public navigationItems: NavigationItem[];
-   constructor(private activatedRoute: ActivatedRoute, private currentStateService: CurrentStateService) {}
 
    public ngOnInit() {
       this.navigationItems = [
-         { link: ['/team', 'competitions', '', 'rules'], title: 'Правила' },
-         { link: ['/team', 'competitions', '', 'participants'], title: 'Заявки / Склади' },
-         { link: ['/team', 'competitions', '', 'matches'], title: 'Матчі' },
-         { link: ['/team', 'competitions', '', 'predictions'], title: 'Прогнози' },
-         { link: ['/team', 'competitions', '', 'rating'], title: 'Рейтинг' },
-         { link: ['/team', 'competitions', '', 'results'], title: 'Результати' },
-         { link: ['/team', 'competitions', '', 'my'], title: 'Моя команда' }
+         { link: ['/team', 'rules'], title: 'Правила' },
+         { link: ['/team', 'participants'], title: 'Заявки / Склади' },
+         { link: ['/team', 'team-matches'], title: 'Матчі' },
+         { link: ['/team', 'predictions'], title: 'Прогнози' },
+         { link: ['/team', 'rating'], title: 'Рейтинг' },
+         { link: ['/team', 'results'], title: 'Результати' },
+         { link: ['/team', 'my'], title: 'Моя команда' }
       ];
-
-      if (this.activatedRoute.firstChild) {
-         this.activatedRoute.firstChild.params.subscribe((params: Params) => {
-            this.navigationItems = this.navigationItems.map(navigationItem => {
-               navigationItem.link[2] =
-                  params.competitionId === 'get-active' && this.currentStateService.teamCompetitionId
-                     ? this.currentStateService.teamCompetitionId
-                     : params.competitionId;
-
-               return navigationItem;
-            });
-         });
-      }
    }
 }

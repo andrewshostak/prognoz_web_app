@@ -49,23 +49,13 @@
                            >
                               <td class="d-none d-lg-table-cell">{{ teamMatch.club_first.title }}</td>
                               <td>
-                                 <img
-                                    class="small-image"
-                                    src="{{ clubsImagesUrl }}{{ teamMatch.club_first.image }}"
-                                    alt="{{ teamMatch.club_first.title }}"
-                                    title="{{ teamMatch.club_first.title }}"
-                                 />
+                                 <app-club-logo-with-tooltip [club]="teamMatch.club_first"></app-club-logo-with-tooltip>
                               </td>
                               <td class="d-none d-sm-table-cell">
                                  {{ showScoresOrString(teamMatch.home, teamMatch.away, 'vs') }}
                               </td>
                               <td>
-                                 <img
-                                    class="small-image"
-                                    src="{{ clubsImagesUrl }}{{ teamMatch.club_second.image }}"
-                                    alt="{{ teamMatch.club_second.title }}"
-                                    title="{{ teamMatch.club_second.title }}"
-                                 />
+                                 <app-club-logo-with-tooltip [club]="teamMatch.club_second"></app-club-logo-with-tooltip>
                               </td>
                               <td class="d-none d-lg-table-cell">{{ teamMatch.club_second.title }}</td>
                            </tr>
@@ -101,13 +91,12 @@
                </table>
             </td>
             <td class="align-middle text-center">
-               <img
+               <app-user-logo-with-tooltip
                   *ngIf="matchHasPrediction(teamMatch)"
                   [hidden]="isCaptain && teamMatch.is_predictable"
-                  src="{{ userImagesUrl }}{{ teamMatch.team_predictions[0].user.image || userImageDefault }}"
-                  alt="{{ teamMatch.team_predictions[0].user.name }}"
-                  class="small-image rounded-circle"
-               />
+                  [user]="teamMatch.team_predictions[0].user"
+               >
+               </app-user-logo-with-tooltip>
                <form [hidden]="!isCaptain || !teamMatch.is_predictable" #teamPredictorForm="ngForm" novalidate>
                   <div class="form-group mb-0">
                      <select
@@ -194,18 +183,14 @@
          </tr>
          <tr>
             <td colspan="5">
-               <div class="alert alert-info" role="alert">
-                  При зміні прогнозиста зроблений ним прогноз буде очищено.
-               </div>
+               <div class="alert alert-info" role="alert">При зміні прогнозиста зроблений ним прогноз буде очищено.</div>
             </td>
          </tr>
       </tbody>
    </table>
 </div>
-<!-- error team-team matches -->
 <app-error *ngIf="errorTeamTeamMatches" [message]="errorTeamTeamMatches"></app-error>
 <h2 [hidden]="!teamParticipants || !teamTeamMatches">Воротар:</h2>
-<!-- round goalkeeper -->
 <div *ngIf="teamParticipants && teamTeamMatches" class="card black-shadow">
    <form #teamGoalkeeperForm="ngForm" novalidate class="p-2">
       <div class="form-group" [class.form-group-invalid-custom]="goalkeeper_id.errors?.required && goalkeeper_id.touched">

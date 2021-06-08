@@ -1,0 +1,374 @@
+<h3 class="h3 m-2">Стадії командного:</h3>
+<table class="d-none d-lg-table table table-dark table-striped table-hover table-bordered">
+   <thead>
+      <tr>
+         <th scope="col" class="text-center">ID</th>
+         <th scope="col" class="text-center">Назва</th>
+         <th scope="col" class="text-center">Змагання</th>
+         <th scope="col" class="text-center">Тип</th>
+         <th scope="col" class="text-center">Раунд</th>
+         <th scope="col" class="text-center">Стан</th>
+         <th scope="col" title="Дія / Змінено" class="text-center">Дія/Зм</th>
+      </tr>
+   </thead>
+   <tbody>
+      <tr *ngFor="let teamStage of teamStages">
+         <th scope="row" class="text-center align-middle text-muted">{{ teamStage.id }}</th>
+         <td class="text-center align-middle">
+            <strong>{{ teamStage.title }}</strong>
+         </td>
+         <td class="text-center align-middle">{{ teamStage.competition.title }}</td>
+         <td class="text-center align-middle">{{ teamStage.team_stage_type.title }}</td>
+         <td class="text-center align-middle">{{ teamStage.round }}</td>
+         <td class="text-center align-middle">
+            <ng-container [ngTemplateOutlet]="stageState" [ngTemplateOutletContext]="{ state: teamStage.state }"></ng-container>
+         </td>
+         <td class="text-center align-middle">
+            <ng-container [ngSwitch]="teamStage.state">
+               <table *ngSwitchCase="teamStageTypes.NotStarted" align="center" class="table-sm">
+                  <tr>
+                     <td>
+                        <button
+                           type="button"
+                           class="btn btn-sm btn-outline-success"
+                           (click)="openActivateConfirm(confirmModal, teamStage, makeTeamStageActive)"
+                        >
+                           <i class="fa fa-play"></i> Активувати
+                        </button>
+                     </td>
+                     <td>
+                        <a [routerLink]="['/manage', 'team', 'stages', teamStage.id]" class="btn btn-sm btn-outline-warning">
+                           <i class="fa fa-pencil-square-o fa-lg" aria-hidden="true"></i>
+                        </a>
+                     </td>
+                     <td>
+                        <button
+                           type="button"
+                           class="btn btn-sm btn-outline-danger"
+                           (click)="openDeleteConfirm(confirmModal, teamStage, deleteTeamStage)"
+                        >
+                           <i class="fa fa-trash-o fa-lg" aria-hidden="true"></i>
+                        </button>
+                     </td>
+                  </tr>
+               </table>
+               <table *ngSwitchCase="teamStageTypes.Active" align="center" class="table-sm">
+                  <tr>
+                     <td>
+                        <button
+                           type="button"
+                           class="btn btn-sm btn-outline-danger"
+                           (click)="openEndConfirm(confirmModal, teamStage, makeTeamStageEnded)"
+                        >
+                           <i class="fa fa-square"></i> Завершити
+                        </button>
+                     </td>
+                     <td>
+                        <a [routerLink]="['/manage', 'team', 'stages', teamStage.id]" class="btn btn-sm btn-outline-warning">
+                           <i class="fa fa-pencil-square-o fa-lg" aria-hidden="true"></i>
+                        </a>
+                     </td>
+                  </tr>
+               </table>
+               <span *ngSwitchCase="teamStageTypes.Ended" class="text-muted">{{ teamStage.updated_at | time: 'fromNow' }}</span>
+            </ng-container>
+         </td>
+      </tr>
+   </tbody>
+</table>
+<table class="d-none d-md-table d-lg-none table table-dark table-striped table-hover table-bordered">
+   <thead>
+      <tr>
+         <th scope="col" class="text-center">ID</th>
+         <th scope="col" class="text-center">
+            <table align="center" class="table-sm">
+               <tr>
+                  <th>Змагання</th>
+               </tr>
+               <tr>
+                  <th>Назва: Тип</th>
+               </tr>
+            </table>
+         </th>
+         <th scope="col" class="text-center">Раунд</th>
+         <th scope="col" class="text-center">Стан</th>
+         <th scope="col" title="Дія / Змінено" class="text-center">Дія/Зм</th>
+      </tr>
+   </thead>
+   <tbody>
+      <tr *ngFor="let teamStage of teamStages">
+         <th scope="row" class="text-center align-middle text-muted">{{ teamStage.id }}</th>
+         <td class="text-center align-middle">
+            <table align="center" class="table-sm">
+               <tr>
+                  <td>{{ teamStage.competition.title }}</td>
+               </tr>
+               <tr>
+                  <td>
+                     <strong>{{ teamStage.title }}</strong
+                     >: {{ teamStage.team_stage_type.title }}
+                  </td>
+               </tr>
+            </table>
+         </td>
+         <td class="text-center align-middle">{{ teamStage.round }}</td>
+         <td class="text-center align-middle">
+            <ng-container [ngTemplateOutlet]="stageState" [ngTemplateOutletContext]="{ state: teamStage.state }"></ng-container>
+         </td>
+         <td class="text-center align-middle">
+            <ng-container [ngSwitch]="teamStage.state">
+               <table *ngSwitchCase="teamStageTypes.NotStarted" align="center" class="table-sm">
+                  <tr>
+                     <td>
+                        <button
+                           type="button"
+                           class="btn btn-sm btn-outline-success"
+                           (click)="openActivateConfirm(confirmModal, teamStage, makeTeamStageActive)"
+                        >
+                           <i class="fa fa-play"></i> Активувати
+                        </button>
+                     </td>
+                     <td>
+                        <a [routerLink]="['/manage', 'team', 'stages', teamStage.id]" class="btn btn-sm btn-outline-warning">
+                           <i class="fa fa-pencil-square-o fa-lg" aria-hidden="true"></i>
+                        </a>
+                     </td>
+                     <td>
+                        <button
+                           type="button"
+                           class="btn btn-sm btn-outline-danger"
+                           (click)="openDeleteConfirm(confirmModal, teamStage, deleteTeamStage)"
+                        >
+                           <i class="fa fa-trash-o fa-lg" aria-hidden="true"></i>
+                        </button>
+                     </td>
+                  </tr>
+               </table>
+               <table *ngSwitchCase="teamStageTypes.Active" align="center" class="table-sm">
+                  <tr>
+                     <td>
+                        <button
+                           type="button"
+                           class="btn btn-sm btn-outline-danger"
+                           (click)="openEndConfirm(confirmModal, teamStage, makeTeamStageEnded)"
+                        >
+                           <i class="fa fa-square"></i> Завершити
+                        </button>
+                     </td>
+                     <td>
+                        <a [routerLink]="['/manage', 'team', 'stages', teamStage.id]" class="btn btn-sm btn-outline-warning">
+                           <i class="fa fa-pencil-square-o fa-lg" aria-hidden="true"></i>
+                        </a>
+                     </td>
+                  </tr>
+               </table>
+               <span *ngSwitchCase="teamStageTypes.Ended" class="text-muted">{{ teamStage.updated_at | time: 'fromNow' }}</span>
+            </ng-container>
+         </td>
+      </tr>
+   </tbody>
+</table>
+<table class="d-none d-sm-table d-md-none table table-sm table-dark table-striped table-hover table-bordered">
+   <thead>
+      <tr>
+         <th scope="col" class="text-center">ID</th>
+         <th scope="col" class="text-center">
+            <table align="center" class="table-sm">
+               <tr>
+                  <th colspan="2">Змагання</th>
+               </tr>
+               <tr>
+                  <th colspan="2">Назва: Тип</th>
+               </tr>
+               <tr>
+                  <th>Стан</th>
+                  <th>Раунд</th>
+               </tr>
+            </table>
+         </th>
+         <th scope="col" title="Дія / Змінено" class="text-center">Дія/Зм</th>
+      </tr>
+   </thead>
+   <tbody>
+      <tr *ngFor="let teamStage of teamStages">
+         <th scope="row" class="text-center align-middle text-muted">{{ teamStage.id }}</th>
+         <td class="text-center align-middle">
+            <table align="center" class="table-sm">
+               <tr>
+                  <td colspan="2">{{ teamStage.competition.title }}</td>
+               </tr>
+               <tr>
+                  <td colspan="2">
+                     <strong>{{ teamStage.title }}</strong
+                     >: {{ teamStage.team_stage_type.title }}
+                  </td>
+               </tr>
+               <tr>
+                  <td>
+                     <ng-container [ngTemplateOutlet]="stageState" [ngTemplateOutletContext]="{ state: teamStage.state }"></ng-container>
+                  </td>
+                  <td>
+                     {{ teamStage.round }}
+                  </td>
+               </tr>
+            </table>
+         </td>
+         <td class="text-center align-middle">
+            <ng-container [ngSwitch]="teamStage.state">
+               <table *ngSwitchCase="teamStageTypes.NotStarted" align="center" class="table-sm">
+                  <tr>
+                     <td>
+                        <button
+                           type="button"
+                           class="btn btn-sm btn-outline-success"
+                           (click)="openActivateConfirm(confirmModal, teamStage, makeTeamStageActive)"
+                        >
+                           <i class="fa fa-play"></i> Активувати
+                        </button>
+                     </td>
+                     <td>
+                        <a [routerLink]="['/manage', 'team', 'stages', teamStage.id]" class="btn btn-sm btn-outline-warning">
+                           <i class="fa fa-pencil-square-o fa-lg" aria-hidden="true"></i>
+                        </a>
+                     </td>
+                     <td>
+                        <button
+                           type="button"
+                           class="btn btn-sm btn-outline-danger"
+                           (click)="openDeleteConfirm(confirmModal, teamStage, deleteTeamStage)"
+                        >
+                           <i class="fa fa-trash-o fa-lg" aria-hidden="true"></i>
+                        </button>
+                     </td>
+                  </tr>
+               </table>
+               <table *ngSwitchCase="teamStageTypes.Active" align="center" class="table-sm">
+                  <tr>
+                     <td>
+                        <button
+                           type="button"
+                           class="btn btn-sm btn-outline-danger"
+                           (click)="openEndConfirm(confirmModal, teamStage, makeTeamStageEnded)"
+                        >
+                           <i class="fa fa-square"></i> Завершити
+                        </button>
+                     </td>
+                     <td>
+                        <a [routerLink]="['/manage', 'team', 'stages', teamStage.id]" class="btn btn-sm btn-outline-warning">
+                           <i class="fa fa-pencil-square-o fa-lg" aria-hidden="true"></i>
+                        </a>
+                     </td>
+                  </tr>
+               </table>
+               <span *ngSwitchCase="teamStageTypes.Ended" class="text-muted">{{ teamStage.updated_at | time: 'fromNow' }}</span>
+            </ng-container>
+         </td>
+      </tr>
+   </tbody>
+</table>
+<table class="d-table d-sm-none table table-sm table-dark table-striped table-hover table-bordered">
+   <tbody>
+      <tr *ngFor="let teamStage of teamStages">
+         <td class="text-center align-middle">
+            <table align="center" class="table-sm">
+               <tr>
+                  <td colspan="2">{{ teamStage.competition.title }}</td>
+               </tr>
+               <tr>
+                  <td colspan="2">
+                     <strong>{{ teamStage.title }}</strong
+                     >: {{ teamStage.team_stage_type.title }}
+                  </td>
+               </tr>
+               <tr>
+                  <td>
+                     <ng-container [ngTemplateOutlet]="stageState" [ngTemplateOutletContext]="{ state: teamStage.state }"></ng-container>
+                  </td>
+                  <td>
+                     {{ teamStage.round }}
+                  </td>
+               </tr>
+               <tr>
+                  <td class="text-muted text-center" colspan="2">
+                     ID: <strong>{{ teamStage.id }}</strong>
+                  </td>
+               </tr>
+            </table>
+         </td>
+         <td class="text-center align-middle">
+            <ng-container [ngSwitch]="teamStage.state">
+               <table *ngSwitchCase="teamStageTypes.NotStarted" align="center" class="table-sm">
+                  <tr>
+                     <td>
+                        <button
+                           type="button"
+                           class="btn btn-sm btn-outline-success"
+                           (click)="openActivateConfirm(confirmModal, teamStage, makeTeamStageActive)"
+                        >
+                           <i class="fa fa-play"></i>
+                        </button>
+                     </td>
+                  </tr>
+                  <tr>
+                     <td>
+                        <a [routerLink]="['/manage', 'team', 'stages', teamStage.id]" class="btn btn-sm btn-outline-warning">
+                           <i class="fa fa-pencil-square-o fa-lg" aria-hidden="true"></i>
+                        </a>
+                     </td>
+                  </tr>
+                  <tr>
+                     <td>
+                        <button
+                           type="button"
+                           class="btn btn-sm btn-outline-danger"
+                           (click)="openDeleteConfirm(confirmModal, teamStage, deleteTeamStage)"
+                        >
+                           <i class="fa fa-trash-o fa-lg" aria-hidden="true"></i>
+                        </button>
+                     </td>
+                  </tr>
+               </table>
+               <table *ngSwitchCase="teamStageTypes.Active" align="center" class="table-sm">
+                  <tr>
+                     <td>
+                        <button
+                           type="button"
+                           class="btn btn-sm btn-outline-danger"
+                           (click)="openEndConfirm(confirmModal, teamStage, makeTeamStageEnded)"
+                        >
+                           <i class="fa fa-square"></i>
+                        </button>
+                     </td>
+                  </tr>
+                  <tr>
+                     <td>
+                        <a [routerLink]="['/manage', 'team', 'stages', teamStage.id]" class="btn btn-sm btn-outline-warning">
+                           <i class="fa fa-pencil-square-o fa-lg" aria-hidden="true"></i>
+                        </a>
+                     </td>
+                  </tr>
+               </table>
+               <span *ngSwitchCase="teamStageTypes.Ended" class="text-muted">{{ teamStage.updated_at | time: 'fromNow' }}</span>
+            </ng-container>
+         </td>
+      </tr>
+   </tbody>
+</table>
+<app-pagination
+   *ngIf="paginationData"
+   [totalItems]="paginationData.total"
+   [currentPage]="paginationData.currentPage"
+   [pageSize]="paginationData.pageSize"
+   [path]="paginationData.path"
+></app-pagination>
+<ng-template #stageState let-state="state">
+   <div [ngSwitch]="state">
+      <strong *ngSwitchCase="teamStageTypes.Ended" class="text-muted">Завершений</strong>
+      <strong *ngSwitchCase="teamStageTypes.Active" class="text-success">Активний</strong>
+      <strong *ngSwitchCase="teamStageTypes.NotStarted" class="text-info">Не початий</strong>
+   </div>
+</ng-template>
+<ng-template #confirmModal let-c="close">
+   <app-confirmation-modal [close]="c" [message]="openedModal.message" (confirmed)="openedModal.submitted($event)">
+   </app-confirmation-modal>
+</ng-template>

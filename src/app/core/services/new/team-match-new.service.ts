@@ -49,8 +49,14 @@ export class TeamMatchNewService {
          params = params.set('sequence', search.sequence);
       }
 
-      if (search.competitionId) {
-         params = params.set('competition_id', search.competitionId.toString());
+      if (search.teamStageId) {
+         params = params.set('team_stage_id', search.teamStageId.toString());
+      }
+
+      if (search.relations) {
+         search.relations.forEach(relation => {
+            params = params.append('relations[]', relation);
+         });
       }
 
       return this.httpClient.get<PaginatedResponse<TeamMatchNew>>(this.teamMatchesUrl, { params });

@@ -42,9 +42,9 @@ export class TeamCreateComponent implements OnInit {
       const callbacks = {
          successful: () => {
             this.notificationsService.success('Успішно', `Заявку в команду ${team.name} подано`);
-            this.router.navigate(['/', 'team', 'competitions', competitionId, 'participants']);
+            this.router.navigate(['/', 'team', 'participants', { competition_id: competitionId }]);
          },
-         error: () => this.router.navigate(['/', 'team', 'competitions', competitionId, 'participants'])
+         error: () => this.router.navigate(['/', 'team', 'participants', { competition_id: competitionId }])
       };
       this.teamCompetitionService.updateTeamCreateAndUpdateCaptain(team, competitionId, callbacks);
    }

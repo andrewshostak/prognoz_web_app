@@ -85,16 +85,4 @@ export class UtilsService {
          }
       });
    }
-
-   public static createRoundsArrayFromTeamsQuantity(numberOfTeams: number): Array<{ id: number; title: string }> {
-      const numberOfRounds = numberOfTeams * 2 - 2;
-      return this.createRoundsArray(numberOfRounds);
-   }
-
-   public static createRoundsArray(numberOfRounds: number): Array<{ id: number; title: string }> {
-      return Array.from({ length: numberOfRounds }).map((item, index) => {
-         const round = ++index;
-         return { id: round, title: `Тур ${round}` };
-      });
-   }
 }

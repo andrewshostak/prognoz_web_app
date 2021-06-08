@@ -36,12 +36,7 @@
    <app-cup-stage-select (cupStageSelected)="clickOnCupStageSelectButton($event)"></app-cup-stage-select>
 </div>
 <div class="mb-2">
-   <app-dropdown-navigation
-      [dropdownItems]="cupStages"
-      [selectedId]="selectedCupStage?.id"
-      [navigationPath]="['/cup', 'cup-matches', { cup_stage_id: ':id' }]"
-      [formSize]="'lg'"
-   >
+   <app-dropdown-navigation [dropdownItems]="cupStages" [selectedId]="selectedCupStage?.id" [paramKey]="'cup_stage_id'" [formSize]="'lg'">
    </app-dropdown-navigation>
 </div>
 <div [ngSwitch]="selectedCupStage?.cup_stage_type_id">

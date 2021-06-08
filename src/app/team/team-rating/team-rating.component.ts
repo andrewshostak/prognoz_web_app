@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { ActivatedRoute, Params } from '@angular/router';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 
 import { CompetitionNew } from '@models/new/competition-new.model';
 import { RequestParams } from '@models/request-params.model';
@@ -12,6 +12,7 @@ import { TeamRatingUserService } from '@services/team/team-rating-user.service';
 import { TeamRatingService } from '@services/team/team-rating.service';
 import { TitleService } from '@services/title.service';
 import { Subscription } from 'rxjs';
+import { filter } from 'rxjs/operators';
 
 @Component({
    selector: 'app-team-rating',
@@ -32,10 +33,15 @@ export class TeamRatingComponent implements OnDestroy, OnInit {
       private activatedRoute: ActivatedRoute,
       private competitionNewService: CompetitionNewService,
       private currentStateService: CurrentStateService,
+      private router: Router,
       private teamRatingService: TeamRatingService,
       private teamRatingUserService: TeamRatingUserService,
       private titleService: TitleService
    ) {}
+
+   public competitionSelected(event: { selected: CompetitionNew | Partial<CompetitionNew> }): void {
+      this.router.navigate(['/team', 'rating', { competition_id: event.selected.id }]);
+   }
 
    public ngOnDestroy() {
       if (!this.activatedRouteSubscription.closed) {
@@ -46,16 +52,15 @@ export class TeamRatingComponent implements OnDestroy, OnInit {
    public ngOnInit() {
       this.titleService.setTitle('Рейтинг команд, бомбардирів і воротарів - Командний');
       this.authenticatedUser = this.currentStateService.getUser();
-      this.activatedRouteSubscription = this.activatedRoute.parent.params.subscribe((params: Params) => {
-         if (params.competitionId === 'get-active') {
-            return;
-         }
-         this.competitionId = params.competitionId;
-         this.getTeamRatingData();
-         this.getTeamRatingUserData();
-         this.competition = null;
-         this.getCompetitionData(params.competitionId);
-      });
+      this.activatedRouteSubscription = this.activatedRoute.params
+         .pipe(filter(params => params.competition_id))
+         .subscribe((params: Params) => {
+            this.competitionId = params.competition_id;
+            this.getTeamRatingData();
+            this.getTeamRatingUserData();
+            this.competition = null;
+            this.getCompetitionData(params.competition_id);
+         });
    }
 
    private getCompetitionData(id: number): void {

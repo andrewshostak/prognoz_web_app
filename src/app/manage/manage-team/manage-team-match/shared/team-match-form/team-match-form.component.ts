@@ -2,16 +2,17 @@ import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/cor
 import { AbstractControl, FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 
 import { ModelStatus } from '@enums/model-status.enum';
-import { Tournament } from '@enums/tournament.enum';
-import { CompetitionNew } from '@models/new/competition-new.model';
+import { Sequence } from '@enums/sequence.enum';
+import { TeamStageState } from '@enums/team-stage-state.enum';
 import { TeamMatchNew } from '@models/new/team-match-new.model';
+import { TeamStageNew } from '@models/new/team-stage-new.model';
 import { OpenedModal } from '@models/opened-modal.model';
 import { PaginatedResponse } from '@models/paginated-response.model';
-import { CompetitionSearch } from '@models/search/competition-search.model';
 import { TeamMatchSearch } from '@models/search/team-match-search.model';
+import { TeamStageSearch } from '@models/search/team-stage-search.model';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
-import { CompetitionNewService } from '@services/new/competition-new.service';
 import { TeamMatchNewService } from '@services/new/team-match-new.service';
+import { TeamStageNewService } from '@services/new/team-stage-new.service';
 import { SettingsService } from '@services/settings.service';
 import { UtilsService } from '@services/utils.service';
 import { NotificationsService } from 'angular2-notifications';
@@ -25,56 +26,44 @@ import { Observable } from 'rxjs';
 export class TeamMatchFormComponent implements OnChanges, OnInit {
    @Input() public teamMatch: TeamMatchNew;
 
-   public competitions: CompetitionNew[];
+   public teamStages: TeamStageNew[];
    public lastCreatedMatchId: number;
    public openedModal: OpenedModal<null>;
    public teamMatchesObservable: Observable<PaginatedResponse<TeamMatchNew>>;
    public teamMatchForm: FormGroup;
 
    constructor(
-      private competitionService: CompetitionNewService,
+      private teamStageService: TeamStageNewService,
       private ngbModalService: NgbModal,
       private notificationsService: NotificationsService,
       private teamMatchService: TeamMatchNewService
    ) {}
 
-   get competitionsFormArray(): FormArray {
-      return this.teamMatchForm.get('competitions') as FormArray;
+   get teamStagesFormArray(): FormArray {
+      return this.teamMatchForm.get('team_stages') as FormArray;
    }
 
-   public addCompetition(pivot?: { competition_id: number; round: number; number_in_round: number; number_in_competition: number }): void {
-      this.competitionsFormArray.push(
+   public addTeamStage(teamStageId?: number): void {
+      this.teamStagesFormArray.push(
          new FormGroup({
-            competition_id: new FormControl(pivot ? pivot.competition_id : null, [Validators.required]),
-            number_in_competition: new FormControl({ value: pivot ? pivot.number_in_competition : null, disabled: !this.teamMatch }, [
-               Validators.required,
-               Validators.min(1)
-            ]),
-            number_in_round: new FormControl({ value: pivot ? pivot.number_in_round : null, disabled: !this.teamMatch }, [
-               Validators.required,
-               Validators.min(1)
-            ]),
-            round: new FormControl({ value: pivot ? pivot.round : null, disabled: !this.teamMatch }, [
-               Validators.required,
-               Validators.min(1)
-            ])
+            id: new FormControl(teamStageId || null, [Validators.required])
          })
       );
    }
 
    public ngOnChanges(simpleChanges: SimpleChanges) {
       UtilsService.patchSimpleChangeValuesInForm(simpleChanges, this.teamMatchForm, 'teamMatch', (formGroup, field, value) => {
-         if (field === 'competitions') {
-            this.clearCompetitionsFormArray();
+         if (field === 'team_stages') {
+            this.clearTeamStagesFormArray();
             if (value.length) {
-               value.forEach(competition => {
-                  if (!this.competitions) {
-                     this.competitions = [];
+               value.forEach(teamStage => {
+                  if (!this.teamStages) {
+                     this.teamStages = [];
                   }
-                  if (!this.competitions.find(item => item.id === competition.id)) {
-                     this.competitions.push(competition);
+                  if (!this.teamStages.find(item => item.id === teamStage.id)) {
+                     this.teamStages.push(teamStage);
                   }
-                  this.addCompetition(competition.pivot);
+                  this.addTeamStage(teamStage.id);
                });
             }
          } else {
@@ -84,16 +73,16 @@ export class TeamMatchFormComponent implements OnChanges, OnInit {
          }
       });
       if (!simpleChanges.teamMatch.firstChange && simpleChanges.teamMatch.currentValue.match.ended) {
-         this.competitions = simpleChanges.teamMatch.currentValue.competitions;
+         this.teamStages = simpleChanges.teamMatch.currentValue.team_stages;
          this.teamMatchForm.disable();
       }
    }
 
    public ngOnInit(): void {
       this.setTeamMatchesObservable();
-      this.getCompetitionsData();
+      this.getTeamStagesData();
       this.teamMatchForm = new FormGroup({
-         competitions: new FormArray([]),
+         team_stages: new FormArray([]),
          match_id: new FormControl(null, [Validators.required])
       });
    }
@@ -111,16 +100,16 @@ export class TeamMatchFormComponent implements OnChanges, OnInit {
       this.openedModal = { reference, data, submitted: () => submitted.call(this) };
    }
 
-   public removeCompetition(index: number): void {
-      this.competitionsFormArray.removeAt(index);
+   public removeTeamStage(index: number): void {
+      this.teamStagesFormArray.removeAt(index);
    }
 
    public resetTeamMatchForm(): void {
-      this.clearCompetitionsFormArray();
+      this.clearTeamStagesFormArray();
       this.teamMatchForm.reset();
       if (this.teamMatch) {
-         this.teamMatch.competitions.forEach(competition => this.addCompetition(competition.pivot));
-         Object.entries(this.teamMatch).forEach(
+         this.teamMatch.team_stages.forEach(teamStage => this.addTeamStage(teamStage.id));
+         Object.entries(this.teamMatch as any).forEach(
             ([field, value]) => this.teamMatchForm.get(field) && this.teamMatchForm.patchValue({ [field]: value })
          );
       }
@@ -131,7 +120,8 @@ export class TeamMatchFormComponent implements OnChanges, OnInit {
       const search: TeamMatchSearch = {
          active: ModelStatus.Truthy,
          limit: SettingsService.maxLimitValues.teamMatches,
-         page: 1
+         page: 1,
+         relations: ['match.clubHome', 'match.clubAway', 'teamStages.competition']
       };
       this.teamMatchesObservable = this.teamMatchService.getTeamMatches(search);
    }
@@ -144,30 +134,32 @@ export class TeamMatchFormComponent implements OnChanges, OnInit {
       return UtilsService.showFormInvalidClass(abstractControl);
    }
 
-   private clearCompetitionsFormArray(): void {
-      UtilsService.clearFormArray(this.competitionsFormArray);
+   private clearTeamStagesFormArray(): void {
+      UtilsService.clearFormArray(this.teamStagesFormArray);
    }
 
    private createTeamMatch(teamMatch: TeamMatchNew): void {
       this.teamMatchService.createTeamMatch(teamMatch).subscribe(response => {
          this.notificationsService.success(
             'Успішно',
-            `Матч командного чемпіонату №${response.id} ${response.match.club_home.title} - ${response.match.club_away.title} створено`
+            `Матч командного №${response.id} ${response.match.club_home.title} - ${response.match.club_away.title} створено`
          );
          this.teamMatchForm.get('match_id').reset();
          this.lastCreatedMatchId = response.match_id;
       });
    }
 
-   private getCompetitionsData(): void {
-      const search: CompetitionSearch = {
-         active: ModelStatus.Truthy,
-         limit: SettingsService.maxLimitValues.teamMatches,
+   private getTeamStagesData(): void {
+      const search: TeamStageSearch = {
+         relations: ['competition'],
+         states: [TeamStageState.NotStarted, TeamStageState.Active],
+         limit: SettingsService.maxLimitValues.teamStages,
          page: 1,
-         tournamentId: Tournament.Team
+         sequence: Sequence.Ascending,
+         orderBy: 'round'
       };
-      this.competitionService.getCompetitions(search).subscribe(response => {
-         this.competitions = response.data;
+      this.teamStageService.getTeamStages(search).subscribe(response => {
+         this.teamStages = response.data;
       });
    }
 
@@ -175,7 +167,7 @@ export class TeamMatchFormComponent implements OnChanges, OnInit {
       this.teamMatchService.updateTeamMatch(this.teamMatch.id, teamMatch).subscribe(response => {
          this.notificationsService.success(
             'Успішно',
-            `Матч командного чемпіонату №${response.id} ${response.match.club_home.title} - ${response.match.club_away.title} змінено`
+            `Матч командного №${response.id} ${response.match.club_home.title} - ${response.match.club_away.title} змінено`
          );
       });
    }

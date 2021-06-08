@@ -11,12 +11,12 @@ import { TeamRatingTableComponent } from '@team/shared/team-rating-table/team-ra
 import { TeamRatingUserTableComponent } from '@team/shared/team-rating-user-table/team-rating-user-table.component';
 import { TeamResultsTableComponent } from '@team/shared/team-results-table/team-results-table.component';
 import { TeamSelectModalComponent } from '@team/shared/team-select-modal/team-select-modal.component';
+import { TeamStageSelectComponent } from '@team/shared/team-stage-select/team-stage-select.component';
 import { TeamTeamMatchCardComponent } from '@team/shared/team-team-match-card/team-team-match-card.component';
 import { TeamCaptainComponent } from '@team/team-captain/team-captain.component';
-import { TeamCompetitionSelectComponent } from '@team/team-competition-select/team-competition-select.component';
 import { TeamCreateComponent } from '@team/team-create/team-create.component';
 import { TeamEditComponent } from '@team/team-edit/team-edit.component';
-import { TeamMatchesComponent } from '@team/team-matches/team-matches.component';
+import { TeamTeamMatchesNewComponent } from '@team/team-team-matches-new/team-team-matches-new.component';
 import { TeamMyComponent } from '@team/team-my/team-my.component';
 import { TeamParticipantsComponent } from '@team/team-participants/team-participants.component';
 import { TeamPredictionsComponent } from '@team/team-predictions/team-predictions.component';
@@ -32,12 +32,11 @@ import { SimpleNotificationsModule } from 'angular2-notifications';
    declarations: [
       TeamAndParticipantsComponent,
       TeamCaptainComponent,
-      TeamCompetitionSelectComponent,
       TeamComponent,
       TeamCreateComponent,
       TeamEditComponent,
       TeamGoalkeeperFormComponent,
-      TeamMatchesComponent,
+      TeamTeamMatchesNewComponent,
       TeamMyComponent,
       TeamParticipantsComponent,
       TeamPredictionFormComponent,
@@ -49,7 +48,8 @@ import { SimpleNotificationsModule } from 'angular2-notifications';
       TeamResultsTableComponent,
       TeamRulesComponent,
       TeamSelectModalComponent,
-      TeamTeamMatchCardComponent
+      TeamTeamMatchCardComponent,
+      TeamStageSelectComponent
    ],
    exports: [TeamComponent]
 })

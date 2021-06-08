@@ -139,7 +139,7 @@ export class CupCupMatchesComponent implements OnInit {
    private getEndedCompetitions(): Observable<PaginatedResponse<CompetitionNew>> {
       const search: CompetitionSearch = {
          ended: ModelStatus.Truthy,
-         limit: 2,
+         limit: 3,
          orderBy: 'id',
          page: 1,
          sequence: Sequence.Descending,

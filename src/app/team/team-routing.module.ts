@@ -2,10 +2,9 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
 import { AuthGuard } from '@app/core/guards/auth.guard.service';
-import { TeamCompetitionSelectComponent } from '@team/team-competition-select/team-competition-select.component';
 import { TeamCreateComponent } from '@team/team-create/team-create.component';
 import { TeamEditComponent } from '@team/team-edit/team-edit.component';
-import { TeamMatchesComponent } from '@team/team-matches/team-matches.component';
+import { TeamTeamMatchesNewComponent } from '@team/team-team-matches-new/team-team-matches-new.component';
 import { TeamMyComponent } from '@team/team-my/team-my.component';
 import { TeamParticipantsComponent } from '@team/team-participants/team-participants.component';
 import { TeamPredictionsComponent } from '@team/team-predictions/team-predictions.component';
@@ -20,54 +19,32 @@ const routes: Routes = [
       component: TeamComponent,
       children: [
          {
-            path: 'competitions/:competitionId',
-            component: TeamCompetitionSelectComponent,
-            children: [
-               {
-                  path: 'rules',
-                  component: TeamRulesComponent
-               },
-               {
-                  path: 'participants',
-                  component: TeamParticipantsComponent
-               },
-               {
-                  path: 'matches/round/:round',
-                  component: TeamMatchesComponent
-               },
-               {
-                  path: 'matches',
-                  component: TeamMatchesComponent
-               },
-               {
-                  path: 'predictions/round/:round',
-                  component: TeamPredictionsComponent
-               },
-               {
-                  path: 'predictions',
-                  component: TeamPredictionsComponent
-               },
-               {
-                  path: 'my/round/:round',
-                  component: TeamMyComponent
-               },
-               {
-                  path: 'my',
-                  component: TeamMyComponent
-               },
-               {
-                  path: 'rating',
-                  component: TeamRatingComponent
-               },
-               {
-                  path: 'results/round/:round',
-                  component: TeamResultsComponent
-               },
-               {
-                  path: 'results',
-                  component: TeamResultsComponent
-               }
-            ]
+            path: 'rules',
+            component: TeamRulesComponent
+         },
+         {
+            path: 'participants',
+            component: TeamParticipantsComponent
+         },
+         {
+            path: 'rating',
+            component: TeamRatingComponent
+         },
+         {
+            path: 'predictions',
+            component: TeamPredictionsComponent
+         },
+         {
+            path: 'team-matches',
+            component: TeamTeamMatchesNewComponent
+         },
+         {
+            path: 'results',
+            component: TeamResultsComponent
+         },
+         {
+            path: 'my',
+            component: TeamMyComponent
          },
          {
             path: 'create',
@@ -80,14 +57,9 @@ const routes: Routes = [
             canActivate: [AuthGuard]
          },
          {
-            path: 'competitions',
-            pathMatch: 'full',
-            redirectTo: 'competitions/get-active'
-         },
-         {
             path: '',
             pathMatch: 'full',
-            redirectTo: 'competitions/get-active'
+            redirectTo: 'team-matches'
          }
       ]
    }

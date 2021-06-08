@@ -50,10 +50,12 @@ import { PaginationService } from '@services/pagination.service';
 import { PusherService } from '@services/pusher.service';
 import { SettingsService } from '@services/settings.service';
 import { TeamMatchService } from '@services/team/team-match.service';
-import { TeamParticipantService } from '@services/team/team-participant.service';
 import { TeamPredictionService } from '@services/team/team-prediction.service';
 import { TeamRatingUserService } from '@services/team/team-rating-user.service';
 import { TeamRatingService } from '@services/team/team-rating.service';
+import { TeamStageNewService } from '@services/new/team-stage-new.service';
+import { TeamStageTypeNewService } from '@services/new/team-stage-type-new.service';
+import { TeamTeamMatchNewService } from '@services/new/team-team-match-new.service';
 import { TeamTeamMatchService } from '@services/team/team-team-match.service';
 import { TitleService } from '@services/title.service';
 import { TournamentService } from '@services/tournament.service';
@@ -102,10 +104,12 @@ import { UtilsService } from '@services/utils.service';
       TeamMatchService,
       TeamNewService,
       TeamParticipantNewService,
-      TeamParticipantService,
       TeamPredictionService,
       TeamRatingService,
       TeamRatingUserService,
+      TeamStageNewService,
+      TeamStageTypeNewService,
+      TeamTeamMatchNewService,
       TeamTeamMatchService,
       TitleService,
       TournamentService,

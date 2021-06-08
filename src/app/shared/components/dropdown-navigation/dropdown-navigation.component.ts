@@ -1,6 +1,6 @@
 import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
    selector: 'app-dropdown-navigation',
@@ -10,11 +10,11 @@ import { Router } from '@angular/router';
 export class DropdownNavigationComponent implements OnChanges, OnInit {
    @Input() public dropdownItems: any[];
    @Input() public selectedId: number;
-   @Input() public navigationPath: any[];
+   @Input() public paramKey: string;
    @Input() public formSize: 'sm' | 'lg';
 
    public form: FormGroup;
-   constructor(private router: Router) {}
+   constructor(private activatedRoute: ActivatedRoute, private router: Router) {}
 
    public inputValuesPresent(): boolean {
       return this.dropdownItems && this.dropdownItems.length && !!this.selectedId;
@@ -37,7 +37,7 @@ export class DropdownNavigationComponent implements OnChanges, OnInit {
    }
 
    public ngOnChanges(changes: SimpleChanges): void {
-      if (changes.selectedId && this.form && this.navigationPath.includes('cup-matches')) {
+      if (changes.selectedId && this.form) {
          if (changes.selectedId.currentValue) {
             this.form.get('id').setValue(changes.selectedId.currentValue);
          }
@@ -56,17 +56,7 @@ export class DropdownNavigationComponent implements OnChanges, OnInit {
    }
 
    public navigateTo(id: number): void {
-      if (this.navigationPath.includes('cup-matches')) {
-         this.navigateToCupMatchesByStage(this.navigationPath, id);
-         return;
-      }
-
-      this.router.navigate(this.navigationPath.concat(id));
-   }
-
-   public navigateToCupMatchesByStage(path: any[], id: number): void {
-      path[path.length - 1] = { cup_stage_id: id };
-      this.router.navigate(path);
+      this.router.navigate([{ [this.paramKey]: id }], { relativeTo: this.activatedRoute });
    }
 
    public next(): void {

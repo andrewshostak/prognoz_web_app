@@ -2,16 +2,6 @@
 <a *ngIf="authenticatedUser && isCaptain && team" [routerLink]="['/', 'team', team.id, 'edit']" class="btn btn-outline-primary">
    Редагувати команду
 </a>
-<div *ngIf="authenticatedUser">
-   <div *ngIf="roundsArray && round" class="mt-2 mb-2">
-      <app-dropdown-navigation
-         [dropdownItems]="roundsArray"
-         [selectedId]="round"
-         [navigationPath]="['/', 'team', 'competitions', competitionId, 'my', 'round']"
-         [formSize]="'lg'"
-      >
-      </app-dropdown-navigation>
-   </div>
-   <app-team-captain></app-team-captain>
-</div>
+<app-team-stage-select (teamStageSelected)="teamStageSelected($event)"></app-team-stage-select>
+<app-team-captain *ngIf="authenticatedUser"></app-team-captain>
 <app-error *ngIf="!authenticatedUser" [message]="noAccess" [additionalInfo]="false"></app-error>

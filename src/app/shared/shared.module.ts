@@ -39,6 +39,7 @@ import { NgbDropdownModule, NgbPopoverModule, NgbTooltipModule } from '@ng-boots
 import { NgSelectModule } from '@ng-select/ng-select';
 import { ChartsModule } from 'ng2-charts';
 import { UserMessageNewComponent } from '@app/shared/components/user-message-new/user-message-new.component';
+import { CompetitionSelectNewComponent } from '@app/shared/components/competition-select-new/competition-select-new.component';
 import { HasPermissionsDirective } from '@app/shared/directives/has-permissions.directive';
 
 @NgModule({
@@ -49,6 +50,7 @@ import { HasPermissionsDirective } from '@app/shared/directives/has-permissions.
       ChampionshipUserRatingDetailsComponent,
       CheckboxComponent,
       ClubLogoWithTooltipComponent,
+      CompetitionSelectNewComponent,
       ConfirmationModalComponent,
       CustomContentWithTooltipComponent,
       DropdownNavigationComponent,
@@ -85,6 +87,7 @@ import { HasPermissionsDirective } from '@app/shared/directives/has-permissions.
       ChampionshipUserRatingDetailsComponent,
       CheckboxComponent,
       ClubLogoWithTooltipComponent,
+      CompetitionSelectNewComponent,
       ConfirmationModalComponent,
       CustomContentWithTooltipComponent,
       DropdownNavigationComponent,
