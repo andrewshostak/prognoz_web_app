@@ -14,9 +14,9 @@
    <div [hidden]="!teamMatches">
       <h2>{{ isGoalkeeper ? 'Заблокувати' : 'Заблоковані' }} матчі суперника:</h2>
       <app-team-goalkeeper-form
-         *ngFor="let blockedTeamMatch of blockedTeamMatches"
+         *ngFor="let index of possibleBlockedTeamMatchesIndexes"
          [teamMatches]="teamMatches"
-         [blockedTeamMatch]="blockedTeamMatch"
+         [blockedTeamMatch]="blockedTeamMatches[index]"
          [authenticatedUser]="authenticatedUser"
          [oppositeTeamId]="oppositeTeamId"
          [isGoalkeeper]="isGoalkeeper"

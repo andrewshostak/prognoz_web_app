@@ -14,6 +14,8 @@ import { TeamMatchService } from '@services/team/team-match.service';
 import { TeamPredictionService } from '@services/team/team-prediction.service';
 import { TitleService } from '@services/title.service';
 import { filter, tap } from 'rxjs/operators';
+import { TeamStageNewService } from '@services/new/team-stage-new.service';
+import { range } from 'lodash';
 
 @Component({
    selector: 'app-team-predictions',
@@ -28,11 +30,13 @@ export class TeamPredictionsComponent implements OnInit {
       private teamMatchService: TeamMatchService,
       private teamTeamMatchService: TeamTeamMatchNewService,
       private teamPredictionService: TeamPredictionService,
+      private teamStageService: TeamStageNewService,
       private titleService: TitleService
    ) {}
 
    public authenticatedUser: UserNew;
    public blockedTeamMatches: TeamMatch[] = [];
+   public possibleBlockedTeamMatchesIndexes: number[] = [];
    isGoalkeeper: boolean;
    noAccess = 'Доступ заборонено. Увійдіть на сайт для перегляду цієї сторінки.';
    oppositeTeamId: number;
@@ -98,6 +102,7 @@ export class TeamPredictionsComponent implements OnInit {
    }
 
    setBlockedMatches(teamMatches: TeamMatch[]) {
+      // todo: "nothing blocked" message is shown after blocking a match
       for (const teamMatch of teamMatches) {
          if (teamMatch.team_predictions && teamMatch.team_predictions[0] && teamMatch.team_predictions[0].blocked_by) {
             this.blockedTeamMatches.push(teamMatch);
@@ -132,6 +137,14 @@ export class TeamPredictionsComponent implements OnInit {
       );
    }
 
+   private getTeamStageData(id: number): void {
+      this.teamStageService.getTeamStage(id).subscribe(response => {
+         if (response.team_stage_type) {
+            this.possibleBlockedTeamMatchesIndexes = range(response.team_stage_type.blocks_count);
+         }
+      });
+   }
+
    private resetTeamGoalkeeperData(): void {
       this.blockedTeamMatches = [];
       this.isGoalkeeper = false;
@@ -147,6 +160,7 @@ export class TeamPredictionsComponent implements OnInit {
                this.resetTeamGoalkeeperData();
                this.getTeamTeamMatchesData(params.team_stage_id);
                this.getTeamPredictionsData(params.team_stage_id);
+               this.getTeamStageData(params.team_stage_id);
             }) as any
          )
          .subscribe();

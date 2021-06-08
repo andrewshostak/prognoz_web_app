@@ -21,8 +21,8 @@ import { TeamTeamMatchService } from '@services/team/team-team-match.service';
 import { SettingsService } from '@services/settings.service';
 import { UtilsService } from '@services/utils.service';
 import { NotificationsService } from 'angular2-notifications';
-import { filter, map, tap } from 'rxjs/operators';
-import { forkJoin } from 'rxjs';
+import { filter, map, mergeMap, tap } from 'rxjs/operators';
+import { forkJoin, of } from 'rxjs';
 
 @Component({
    selector: 'app-team-captain',
@@ -169,32 +169,49 @@ export class TeamCaptainComponent implements OnInit {
    }
 
    private getTeamParticipantsData(teamStageId: number) {
-      const search = {
+      const currenParticipantSearch = {
          teamStageId,
          userId: this.authenticatedUser.id,
          confirmed: ModelStatus.Truthy,
          page: 1,
-         limit: SettingsService.maxLimitValues.teamParticipants
+         limit: 1
       } as TeamParticipantSearch;
-      this.teamParticipantService.getTeamParticipants(search).subscribe(
-         response => {
-            this.errorTeamParticipants = null;
-            if (!response.data.length) {
-               this.teamParticipants = null;
-               return;
-            }
+      this.teamParticipantService
+         .getTeamParticipants(currenParticipantSearch)
+         .pipe(
+            mergeMap(response => {
+               if (!response.data.length) {
+                  return of({ data: [] });
+               }
+               const search: TeamParticipantSearch = {
+                  teamStageId,
+                  teamId: response.data[0].team_id,
+                  confirmed: ModelStatus.Truthy,
+                  page: 1,
+                  limit: SettingsService.maxLimitValues.teamParticipants
+               };
+               return this.teamParticipantService.getTeamParticipants(search);
+            })
+         )
+         .subscribe(
+            response => {
+               this.errorTeamParticipants = null;
+               if (!response.data.length) {
+                  this.teamParticipants = null;
+                  return;
+               }
 
-            this.teamParticipants = response.data;
-            this.currentTeamId = response.data[0].team_id;
-            this.getTeamCaptain(response.data);
-            this.getCurrentTeamTeamMatch();
-         },
-         error => {
-            this.teamParticipants = null;
-            this.currentTeamId = null;
-            this.errorTeamParticipants = error;
-         }
-      );
+               this.teamParticipants = response.data;
+               this.currentTeamId = response.data[0].team_id;
+               this.getTeamCaptain(response.data);
+               this.getCurrentTeamTeamMatch();
+            },
+            error => {
+               this.teamParticipants = null;
+               this.currentTeamId = null;
+               this.errorTeamParticipants = error;
+            }
+         );
    }
 
    private getMyTeamMatchesData(teamStageId: number) {
