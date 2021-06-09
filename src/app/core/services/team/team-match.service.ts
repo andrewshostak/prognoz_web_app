@@ -19,9 +19,8 @@ export class TeamMatchService {
    ) {}
 
    /**
-    * Get team matches
-    * @param requestParams
-    * @returns {Observable<any>}
+    * @deprecated
+    * filter values: team-team-match
     */
    public getTeamMatches(requestParams?: RequestParams[]): Observable<any> {
       let params: HttpParams = new HttpParams();
@@ -34,9 +33,8 @@ export class TeamMatchService {
    }
 
    /**
-    * Get matches with current team predictions
-    * @param requestParams
-    * @returns {Observable<any>}
+    * @deprecated
+    * filter values: my, opponents
     */
    public getTeamMatchesAuthUser(requestParams: RequestParams[]): Observable<any> {
       let params: HttpParams = new HttpParams();

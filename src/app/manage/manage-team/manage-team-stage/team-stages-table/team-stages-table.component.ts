@@ -49,8 +49,8 @@ export class TeamStagesTableComponent implements OnDestroy, OnInit {
       );
    }
 
-   public makeTeamStageActive(teamStage: TeamStageNew): void {
-      teamStage.state = TeamStageState.Active;
+   public makeTeamStageActive(notStarted: TeamStageNew): void {
+      const teamStage = { ...notStarted, state: TeamStageState.Active };
       this.teamStageService.updateTeamStage(teamStage.id, teamStage).subscribe(
          response => {
             const index = findIndex(this.teamStages, { id: teamStage.id });
@@ -64,8 +64,8 @@ export class TeamStagesTableComponent implements OnDestroy, OnInit {
       );
    }
 
-   public makeTeamStageEnded(teamStage: TeamStageNew): void {
-      teamStage.state = TeamStageState.Ended;
+   public makeTeamStageEnded(active: TeamStageNew): void {
+      const teamStage = { ...active, state: TeamStageState.Ended };
       this.teamStageService.updateTeamStage(teamStage.id, teamStage).subscribe(
          response => {
             const index = findIndex(this.teamStages, { id: teamStage.id });
