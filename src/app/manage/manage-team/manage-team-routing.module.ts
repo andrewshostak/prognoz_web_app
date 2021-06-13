@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
-import { ManageTeamCompetitionsComponent } from '@app/manage/manage-team/manage-team-competitions/manage-team-competitions.component';
 import { ManageTeamMatchComponent } from '@app/manage/manage-team/manage-team-match/manage-team-match.component';
 import { TeamMatchCreateComponent } from '@app/manage/manage-team/manage-team-match/team-match-create/team-match-create.component';
 import { TeamMatchEditComponent } from '@app/manage/manage-team/manage-team-match/team-match-edit/team-match-edit.component';
@@ -24,12 +23,6 @@ import { TeamStageEditComponent } from '@app/manage/manage-team/manage-team-stag
 const routes: Routes = [
    {
       children: [
-         {
-            canActivate: [PermissionGuard],
-            data: { permissions: ['update_competition'] },
-            component: ManageTeamCompetitionsComponent,
-            path: 'competitions'
-         },
          {
             canActivate: [PermissionGuard],
             data: {
