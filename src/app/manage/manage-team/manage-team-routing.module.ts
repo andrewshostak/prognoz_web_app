@@ -19,6 +19,7 @@ import { PermissionGuard } from '@app/manage/shared/permission-guard.service';
 import { TeamStagesTableComponent } from '@app/manage/manage-team/manage-team-stage/team-stages-table/team-stages-table.component';
 import { ManageTeamStageComponent } from '@app/manage/manage-team/manage-team-stage/manage-team-stage.component';
 import { TeamStageCreateComponent } from '@app/manage/manage-team/manage-team-stage/team-stage-create/team-stage-create.component';
+import { TeamStageEditComponent } from '@app/manage/manage-team/manage-team-stage/team-stage-edit/team-stage-edit.component';
 
 const routes: Routes = [
    {
@@ -97,6 +98,12 @@ const routes: Routes = [
                   component: TeamStageCreateComponent,
                   canActivate: [PermissionGuard],
                   data: { permissions: ['create_team_stage'] }
+               },
+               {
+                  path: ':id',
+                  component: TeamStageEditComponent,
+                  canActivate: [PermissionGuard],
+                  data: { permissions: ['update_team_stage'] }
                },
                { path: '', redirectTo: 'page/1', pathMatch: 'full' }
             ],

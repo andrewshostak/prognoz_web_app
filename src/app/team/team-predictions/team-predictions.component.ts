@@ -136,7 +136,7 @@ export class TeamPredictionsComponent implements OnInit {
    }
 
    private getTeamStageData(id: number): void {
-      this.teamStageService.getTeamStage(id).subscribe(response => {
+      this.teamStageService.getTeamStage(id, ['teamStageType']).subscribe(response => {
          if (response.team_stage_type) {
             this.maxBlocks = response.team_stage_type.blocks_count;
          }

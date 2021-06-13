@@ -149,7 +149,7 @@ export class TeamStageSelectComponent implements OnInit {
 
    private getSiblingTeamStagesObservable(teamStageId: number): Observable<PaginatedResponse<TeamStageNew>> {
       return this.teamStageService
-         .getTeamStage(teamStageId)
+         .getTeamStage(teamStageId, [])
          .pipe(mergeMap(response => this.getTeamStagesObservable(response.competition_id)));
    }
 

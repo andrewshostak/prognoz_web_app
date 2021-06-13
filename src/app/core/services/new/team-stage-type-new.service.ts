@@ -12,6 +12,7 @@ export class TeamStageTypeNewService {
 
    constructor(private httpClient: HttpClient) {}
 
+   // todo: improvement: save first call result and return it
    public getTeamStageTypes(): Observable<PaginatedResponse<TeamStageTypeNew>> {
       return this.httpClient.get<PaginatedResponse<TeamStageTypeNew>>(this.teamStageTypesUrl);
    }

@@ -22,9 +22,10 @@ export class TeamStageNewService {
       return this.httpClient.delete<void>(`${this.teamStagesUrl}/${teamStageId}`);
    }
 
-   public getTeamStage(teamStageId: number): Observable<TeamStageNew> {
+   public getTeamStage(teamStageId: number, relations: string[] = []): Observable<TeamStageNew> {
+      const params = new HttpParams({ fromObject: { 'relations[]': relations } });
       return this.httpClient
-         .get<{ team_stage: TeamStageNew }>(`${this.teamStagesUrl}/${teamStageId}`)
+         .get<{ team_stage: TeamStageNew }>(`${this.teamStagesUrl}/${teamStageId}`, { params })
          .pipe(map(response => response.team_stage));
    }
 

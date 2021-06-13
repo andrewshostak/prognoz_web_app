@@ -219,7 +219,10 @@ export class TeamCaptainComponent implements OnInit {
          { parameter: 'filter', value: 'my' },
          { parameter: 'team_stage_id', value: teamStageId.toString() }
       ];
-      const requests = [this.teamMatchService.getTeamMatchesAuthUser(param), this.teamStageService.getTeamStage(teamStageId)];
+      const requests = [
+         this.teamMatchService.getTeamMatchesAuthUser(param),
+         this.teamStageService.getTeamStage(teamStageId, ['teamStageType'])
+      ];
       forkJoin(requests)
          .pipe(
             map(([teamMatchesResponse, teamStageResponse]) => {
