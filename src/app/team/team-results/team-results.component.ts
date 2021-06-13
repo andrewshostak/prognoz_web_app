@@ -10,6 +10,7 @@ import { PaginatedResponse } from '@models/paginated-response.model';
 import { SettingsService } from '@services/settings.service';
 import { filter, switchMap, tap } from 'rxjs/operators';
 import { Observable } from 'rxjs';
+import { Sequence } from '@enums/sequence.enum';
 
 @Component({
    selector: 'app-team-results',
@@ -41,7 +42,9 @@ export class TeamResultsComponent implements OnInit {
          teamStageId,
          page: 1,
          limit: SettingsService.maxLimitValues.teamMatches,
-         relations: ['match.clubHome', 'match.clubAway']
+         relations: ['match.clubHome', 'match.clubAway'],
+         orderBy: 'id',
+         sequence: Sequence.Ascending
       };
       return this.teamMatchService.getTeamMatches(search);
    }
