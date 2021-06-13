@@ -1,6 +1,5 @@
 import { Component, Input } from '@angular/core';
 
-import { environment } from '@env';
 import { CompetitionNew } from '@models/new/competition-new.model';
 import { TeamRating } from '@models/team/team-rating.model';
 import { UtilsService } from '@services/utils.service';
@@ -14,10 +13,7 @@ import { get } from 'lodash';
 export class TeamRatingTableComponent {
    @Input() public teamRating: TeamRating[];
    @Input() public competition: CompetitionNew;
-   @Input() public errorTeamRating: string;
 
-   public teamImageDefault: string = environment.imageTeamDefault;
-   public teamImagesUrl: string = environment.apiImageTeams;
    public makeUnsigned = UtilsService.makeUnsigned;
 
    public relegation(index: number, count: number): boolean {

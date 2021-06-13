@@ -23,10 +23,8 @@ export class TeamRatingComponent implements OnDestroy, OnInit {
    public activatedRouteSubscription: Subscription;
    public authenticatedUser: User;
    public competitionId: number;
-   public errorTeamRating: string;
-   public errorTeamRatingUser: string;
-   public teamRating: TeamRating[];
-   public teamRatingUser: TeamRatingUser[];
+   public teamRating: TeamRating[] = [];
+   public teamRatingUser: TeamRatingUser[] = [];
    public competition: CompetitionNew;
 
    constructor(
@@ -71,25 +69,11 @@ export class TeamRatingComponent implements OnDestroy, OnInit {
 
    private getTeamRatingData() {
       const params: RequestParams[] = [{ parameter: 'competition_id', value: this.competitionId.toString() }];
-      this.teamRatingService.getTeamRating(params).subscribe(
-         response => {
-            this.teamRating = response ? response : [];
-         },
-         error => {
-            this.errorTeamRating = error;
-         }
-      );
+      this.teamRatingService.getTeamRating(params).subscribe(response => (this.teamRating = response ? response : []));
    }
 
    private getTeamRatingUserData() {
       const params: RequestParams[] = [{ parameter: 'competition_id', value: this.competitionId.toString() }];
-      this.teamRatingUserService.getTeamRatingUser(params).subscribe(
-         response => {
-            this.teamRatingUser = response ? response : [];
-         },
-         error => {
-            this.errorTeamRatingUser = error;
-         }
-      );
+      this.teamRatingUserService.getTeamRatingUser(params).subscribe(response => (this.teamRatingUser = response ? response : []));
    }
 }

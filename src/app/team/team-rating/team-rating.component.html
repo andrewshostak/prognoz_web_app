@@ -1,8 +1,3 @@
 <app-competition-select-new (competitionSelected)="competitionSelected($event)"></app-competition-select-new>
-<app-team-rating-table [teamRating]="teamRating" [competition]="competition" [errorTeamRating]="errorTeamRating"> </app-team-rating-table>
-<app-team-rating-user-table
-   [authenticatedUser]="authenticatedUser"
-   [teamRatingUser]="teamRatingUser"
-   [errorTeamRatingUser]="errorTeamRatingUser"
->
-</app-team-rating-user-table>
+<app-team-rating-table [teamRating]="teamRating" [competition]="competition"> </app-team-rating-table>
+<app-team-rating-user-table [authenticatedUser]="authenticatedUser" [teamRatingUser]="teamRatingUser"></app-team-rating-user-table>
