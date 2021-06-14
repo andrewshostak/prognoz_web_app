@@ -28,6 +28,11 @@ export class TeamTeamMatchNewService {
          params = params.set('team_stage_id', search.teamStageId.toString());
       }
 
+      if (search.orderBy && search.sequence) {
+         params = params.set('order_by', search.orderBy);
+         params = params.set('sequence', search.sequence);
+      }
+
       return this.httpClient.get<PaginatedResponse<TeamTeamMatchNew>>(this.teamTeamMatchesUrl, { params });
    }
 }

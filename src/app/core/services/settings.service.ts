@@ -14,6 +14,7 @@ export class SettingsService {
    public static readonly guestbookMessagesPerPage: number = 15;
    public static readonly matchesPerPage: number = 12;
    public static readonly teamMatchesPerPage: number = 12;
+   public static readonly teamTeamMatchesPerPage: number = 10;
    public static readonly teamsPerPage: number = 10;
    public static readonly teamParticipantsPerPage: number = 10;
    public static readonly teamsStagesPerPage: number = 10;

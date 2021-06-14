@@ -9,6 +9,7 @@ import { ManageTeamStageModule } from '@app/manage/manage-team/manage-team-stage
 import { ManageTeamTeamModule } from '@app/manage/manage-team/manage-team-team/manage-team-team.module';
 import { ManageTeamComponent } from '@app/manage/manage-team/manage-team.component';
 import { SharedModule } from '@app/shared/shared.module';
+import { ManageTeamTeamMatchModule } from '@app/manage/manage-team/manage-team-team-match/manage-team-team-match.module';
 
 @NgModule({
    declarations: [ManageTeamComponent],
@@ -20,6 +21,7 @@ import { SharedModule } from '@app/shared/shared.module';
       ManageTeamRoutingModule,
       ManageTeamStageModule,
       ManageTeamTeamModule,
+      ManageTeamTeamMatchModule,
       ReactiveFormsModule,
       SharedModule
    ]

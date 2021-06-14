@@ -20,5 +20,9 @@
       <small class="font-weight-bold">К</small>
       <span class="d-none d-sm-inline">Команди</span>
    </a>
+   <a routerLink="/manage/team/team-matches" [routerLinkActive]="['btn-primary']" [routerLinkActiveOptions]="{ exact: false }" class="btn">
+      <small class="font-weight-bold">МК</small>
+      <span class="d-none d-sm-inline">Матчі між командами</span>
+   </a>
 </div>
 <router-outlet></router-outlet>

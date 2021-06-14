@@ -1,5 +1,7 @@
 /* tslint:disable:variable-name */
 import { ModelStatus } from '@enums/model-status.enum';
+import { TeamNew } from '@models/new/team-new.model';
+import { TeamStageNew } from '@models/new/team-stage-new.model';
 
 export class TeamTeamMatchNew {
    id: number;
@@ -18,4 +20,8 @@ export class TeamTeamMatchNew {
    ended: ModelStatus;
    created_at: string;
    updated_at: string;
+
+   home_team?: TeamNew;
+   away_team?: TeamNew;
+   team_stage?: TeamStageNew;
 }
