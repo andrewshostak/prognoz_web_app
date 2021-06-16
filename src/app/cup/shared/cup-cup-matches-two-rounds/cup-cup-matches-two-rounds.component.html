@@ -3,6 +3,7 @@
       <div class="d-flex justify-content-between">
          <div *ngIf="cupStage.cup_stage_type_id === cupStageTypes.Qualification"><strong>Кваліфікація</strong></div>
          <div *ngIf="cupStage.cup_stage_type_id === cupStageTypes.PlayOff"><strong>Плей-офф</strong></div>
+         <div *ngIf="cupStage.cup_stage_type_id === cupStageTypes.PlayOff2"><strong>Плей-офф</strong></div>
          <div>Матчів: {{ cupCupMatches.length }}</div>
       </div>
    </div>

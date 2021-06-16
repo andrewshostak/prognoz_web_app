@@ -153,7 +153,7 @@ export class CupCupMatchesComponent implements OnInit {
    }
 
    private hasPreviousCupStage(cupStage: CupStageNew): boolean {
-      const twoMatchCupStages = [CupStageType.Qualification, CupStageType.PlayOff];
+      const twoMatchCupStages = [CupStageType.Qualification, CupStageType.PlayOff, CupStageType.PlayOff2];
       return twoMatchCupStages.includes(cupStage.cup_stage_type_id) && cupStage.round === 2;
    }
 

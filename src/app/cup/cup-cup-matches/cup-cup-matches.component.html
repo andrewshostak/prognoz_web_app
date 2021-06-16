@@ -58,6 +58,13 @@
       [cupCupMatchesOfFirstStage]="cupCupMatchesOfFirstStage"
    >
    </app-cup-cup-matches-two-rounds>
+   <app-cup-cup-matches-two-rounds
+      *ngSwitchCase="cupStageTypes.PlayOff2"
+      [cupStage]="selectedCupStage"
+      [cupCupMatches]="cupCupMatches"
+      [cupCupMatchesOfFirstStage]="cupCupMatchesOfFirstStage"
+   >
+   </app-cup-cup-matches-two-rounds>
    <app-cup-cup-matches-default *ngSwitchDefault [cupStage]="selectedCupStage" [cupCupMatches]="cupCupMatches">
    </app-cup-cup-matches-default>
 </div>
