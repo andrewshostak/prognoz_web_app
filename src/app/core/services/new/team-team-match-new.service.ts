@@ -24,6 +24,13 @@ export class TeamTeamMatchNewService {
       return this.httpClient.delete<void>(`${this.teamTeamMatchesUrl}/${teamTeamMatchId}`);
    }
 
+   public getTeamTeamMatch(teamTeamMatchId: number, relations: string[] = []): Observable<TeamTeamMatchNew> {
+      const params = new HttpParams({ fromObject: { 'relations[]': relations } });
+      return this.httpClient
+         .get<{ team_team_match: TeamTeamMatchNew }>(`${this.teamTeamMatchesUrl}/${teamTeamMatchId}`, { params })
+         .pipe(map(response => response.team_team_match));
+   }
+
    public getTeamTeamMatches(search: TeamTeamMatchSearch): Observable<PaginatedResponse<TeamTeamMatchNew>> {
       let params: HttpParams = new HttpParams({ fromObject: { 'relations[]': search.relations || [] } });
 
@@ -45,5 +52,11 @@ export class TeamTeamMatchNewService {
       }
 
       return this.httpClient.get<PaginatedResponse<TeamTeamMatchNew>>(this.teamTeamMatchesUrl, { params });
+   }
+
+   public updateTeamTeamMatch(teamTeamMatchId: number, teamTeamMatch: Partial<TeamTeamMatchNew>): Observable<TeamTeamMatchNew> {
+      return this.httpClient
+         .put<{ team_team_match: TeamTeamMatchNew }>(`${this.teamTeamMatchesUrl}/${teamTeamMatchId}`, teamTeamMatch)
+         .pipe(map(response => response.team_team_match));
    }
 }
