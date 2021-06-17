@@ -20,6 +20,10 @@ export class TeamTeamMatchNewService {
          .pipe(map(response => response.team_team_match));
    }
 
+   public deleteTeamTeamMatch(teamTeamMatchId: number): Observable<void> {
+      return this.httpClient.delete<void>(`${this.teamTeamMatchesUrl}/${teamTeamMatchId}`);
+   }
+
    public getTeamTeamMatches(search: TeamTeamMatchSearch): Observable<PaginatedResponse<TeamTeamMatchNew>> {
       let params: HttpParams = new HttpParams({ fromObject: { 'relations[]': search.relations || [] } });
 

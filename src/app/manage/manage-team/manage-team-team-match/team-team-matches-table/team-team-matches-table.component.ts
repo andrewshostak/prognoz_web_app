@@ -1,13 +1,18 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Subscription } from 'rxjs';
+import { Component, OnDestroy, OnInit, TemplateRef } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
-import { TeamTeamMatchSearch } from '@models/search/team-team-match-search.model';
-import { SettingsService } from '@services/settings.service';
+
 import { Sequence } from '@enums/sequence.enum';
-import { TeamTeamMatchNewService } from '@services/new/team-team-match-new.service';
+import { TeamTeamMatchSearch } from '@models/search/team-team-match-search.model';
 import { TeamTeamMatchNew } from '@models/new/team-team-match-new.model';
 import { Pagination } from '@models/pagination.model';
+import { OpenedModal } from '@models/opened-modal.model';
+import { SettingsService } from '@services/settings.service';
+import { TeamTeamMatchNewService } from '@services/new/team-team-match-new.service';
 import { PaginationService } from '@services/pagination.service';
+import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
+import { NotificationsService } from 'angular2-notifications';
+import { Subscription } from 'rxjs';
+import { remove } from 'lodash';
 
 @Component({
    selector: 'app-team-team-matches-table',
@@ -16,10 +21,33 @@ import { PaginationService } from '@services/pagination.service';
 })
 export class TeamTeamMatchesTableComponent implements OnDestroy, OnInit {
    public activatedRouteSubscription: Subscription;
+   public openedModal: OpenedModal<TeamTeamMatchNew>;
    public paginationData: Pagination;
    public teamTeamMatches: TeamTeamMatchNew[] = [];
 
-   constructor(private activatedRoute: ActivatedRoute, private teamTeamMatchService: TeamTeamMatchNewService) {}
+   constructor(
+      private activatedRoute: ActivatedRoute,
+      private ngbModalService: NgbModal,
+      private notificationsService: NotificationsService,
+      private teamTeamMatchService: TeamTeamMatchNewService
+   ) {}
+
+   public deleteTeamTeamMatch(): void {
+      this.teamTeamMatchService.deleteTeamTeamMatch(this.openedModal.data.id).subscribe(
+         () => {
+            remove(this.teamTeamMatches, this.openedModal.data);
+            this.paginationData.total--;
+            this.notificationsService.success(
+               'Успішно',
+               `Матч між командами ${this.openedModal.data.home_team.name} - ${this.openedModal.data.away_team.name} видалено`
+            );
+            this.openedModal.reference.close();
+         },
+         () => {
+            this.openedModal.reference.close();
+         }
+      );
+   }
 
    public ngOnDestroy(): void {
       if (!this.activatedRouteSubscription.closed) {
@@ -31,6 +59,12 @@ export class TeamTeamMatchesTableComponent implements OnDestroy, OnInit {
       this.activatedRouteSubscription = this.activatedRoute.params.subscribe((params: Params) => {
          this.getTeamTeamMatchesData(params.pageNumber);
       });
+   }
+
+   public openDeleteConfirm(content: NgbModalRef | TemplateRef<any>, data: TeamTeamMatchNew, submitted: (event) => void): void {
+      const message = `Ви впевнені що хочете видалити ${data.home_team.name} - ${data.away_team.name} ?`;
+      const reference = this.ngbModalService.open(content, { centered: true });
+      this.openedModal = { reference, data, submitted: () => submitted.call(this), message };
    }
 
    private getTeamTeamMatchesData(pageNumber: number): void {

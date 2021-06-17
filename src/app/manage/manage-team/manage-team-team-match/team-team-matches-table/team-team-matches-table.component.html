@@ -63,7 +63,11 @@
                <a [routerLink]="['/manage', 'team', 'team-matches', teamTeamMatch.id]" class="btn btn-sm btn-outline-warning">
                   <i class="fa fa-pencil-square-o fa-lg" aria-hidden="true"></i>
                </a>
-               <button type="button" class="btn btn-sm btn-outline-danger">
+               <button
+                  type="button"
+                  class="btn btn-sm btn-outline-danger"
+                  (click)="openDeleteConfirm(confirmModal, teamTeamMatch, deleteTeamTeamMatch)"
+               >
                   <i class="fa fa-trash-o fa-lg" aria-hidden="true"></i>
                </button>
             </div>
@@ -81,3 +85,7 @@
    [pageSize]="paginationData.pageSize"
    [path]="paginationData.path"
 ></app-pagination>
+<ng-template #confirmModal let-c="close">
+   <app-confirmation-modal [close]="c" [message]="openedModal.message" (confirmed)="openedModal.submitted($event)">
+   </app-confirmation-modal>
+</ng-template>
