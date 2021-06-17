@@ -54,9 +54,10 @@
             {{ teamTeamMatch.team_stage.title }}
          </td>
          <td class="align-middle">
-            <strong *ngIf="!teamTeamMatch.active && !teamTeamMatch.ended" class="text-info text-nowrap">Не початий</strong>
-            <strong *ngIf="teamTeamMatch.active && !teamTeamMatch.ended" class="text-success">Активний</strong>
-            <strong *ngIf="!teamTeamMatch.active && teamTeamMatch.ended" class="text-muted">Завершений</strong>
+            <ng-container
+               [ngTemplateOutlet]="teamTeamMatchState"
+               [ngTemplateOutletContext]="{ teamTeamMatch: teamTeamMatch }"
+            ></ng-container>
          </td>
          <td class="align-middle text-center">
             <div *ngIf="!teamTeamMatch.active && !teamTeamMatch.ended">
@@ -78,6 +79,255 @@
       </tr>
    </tbody>
 </table>
+<table class="d-none d-md-table d-lg-none table table-dark table-striped table-hover table-bordered">
+   <thead>
+      <tr>
+         <th scope="col" class="text-center">ID</th>
+         <th scope="col" colspan="2">Команди</th>
+         <th scope="col">Стадія</th>
+         <th scope="col" class="text-center">
+            <table class="table-sm" align="center">
+               <tr>
+                  <th>Стан</th>
+               </tr>
+               <tr>
+                  <th title="Дія / Змінено">Дія/Зм</th>
+               </tr>
+            </table>
+         </th>
+      </tr>
+   </thead>
+   <tbody>
+      <tr *ngFor="let teamTeamMatch of teamTeamMatches">
+         <th scope="row" class="text-center align-middle text-muted">{{ teamTeamMatch.id }}</th>
+         <td class="text-right align-middle">
+            <table class="table-sm mb-0 table-borderless" align="right">
+               <tr>
+                  <td colspan="3">
+                     <strong class="mr-1">{{ teamTeamMatch.home_team.name }}</strong>
+                     <app-team-logo-with-tooltip [team]="teamTeamMatch.home_team"></app-team-logo-with-tooltip>
+                  </td>
+               </tr>
+               <tr *ngIf="teamTeamMatch.active || teamTeamMatch.ended">
+                  <td>
+                     <small class="text-muted">{{ teamTeamMatch.home_dc_sum }}</small>
+                  </td>
+                  <td>({{ teamTeamMatch.home_points }})</td>
+                  <td>
+                     <strong>{{ teamTeamMatch.home }}</strong>
+                  </td>
+               </tr>
+            </table>
+         </td>
+         <td class="text-left align-middle">
+            <table class="table-sm mb-0 table-borderless" align="left">
+               <tr>
+                  <td colspan="3">
+                     <app-team-logo-with-tooltip [team]="teamTeamMatch.away_team"></app-team-logo-with-tooltip>
+                     <strong class="ml-1">{{ teamTeamMatch.away_team.name }}</strong>
+                  </td>
+               </tr>
+               <tr *ngIf="teamTeamMatch.active || teamTeamMatch.ended">
+                  <td>
+                     <strong>{{ teamTeamMatch.away }}</strong>
+                  </td>
+                  <td>({{ teamTeamMatch.away_points }})</td>
+                  <td>
+                     <small class="text-muted">{{ teamTeamMatch.away_dc_sum }}</small>
+                  </td>
+               </tr>
+            </table>
+         </td>
+         <td class="align-middle">
+            {{ teamTeamMatch.team_stage.title }}
+         </td>
+         <td class="align-middle text-center">
+            <div>
+               <ng-container
+                  [ngTemplateOutlet]="teamTeamMatchState"
+                  [ngTemplateOutletContext]="{ teamTeamMatch: teamTeamMatch }"
+               ></ng-container>
+            </div>
+            <div *ngIf="!teamTeamMatch.active && !teamTeamMatch.ended">
+               <a [routerLink]="['/manage', 'team', 'team-matches', teamTeamMatch.id]" class="btn btn-sm btn-outline-warning">
+                  <i class="fa fa-pencil-square-o fa-lg" aria-hidden="true"></i>
+               </a>
+               <button
+                  type="button"
+                  class="btn btn-sm btn-outline-danger"
+                  (click)="openDeleteConfirm(confirmModal, teamTeamMatch, deleteTeamTeamMatch)"
+               >
+                  <i class="fa fa-trash-o fa-lg" aria-hidden="true"></i>
+               </button>
+            </div>
+            <div>
+               <span class="text-muted">Змінено {{ teamTeamMatch.updated_at | time: 'fromNow' }}</span>
+            </div>
+         </td>
+      </tr>
+   </tbody>
+</table>
+<table class="d-none d-sm-table d-md-none table table-sm table-dark table-striped table-hover table-bordered">
+   <thead>
+      <tr>
+         <th scope="col" class="text-center">ID</th>
+         <th scope="col" colspan="2">Команди</th>
+         <th scope="col">Стадія</th>
+         <th scope="col" class="text-center">
+            <table class="table-sm" align="center">
+               <tr>
+                  <th>Стан</th>
+               </tr>
+               <tr>
+                  <th title="Дія / Змінено">Дія/Зм</th>
+               </tr>
+            </table>
+         </th>
+      </tr>
+   </thead>
+   <tbody>
+      <tr *ngFor="let teamTeamMatch of teamTeamMatches">
+         <th scope="row" class="text-center align-middle text-muted">{{ teamTeamMatch.id }}</th>
+         <td class="text-right align-middle">
+            <table class="table-sm mb-0 table-borderless" align="right">
+               <tr>
+                  <td colspan="3">
+                     <strong class="mr-1">{{ teamTeamMatch.home_team.name }}</strong>
+                     <app-team-logo-with-tooltip [team]="teamTeamMatch.home_team"></app-team-logo-with-tooltip>
+                  </td>
+               </tr>
+               <tr *ngIf="teamTeamMatch.active || teamTeamMatch.ended">
+                  <td>
+                     <small class="text-muted">{{ teamTeamMatch.home_dc_sum }}</small>
+                  </td>
+                  <td>({{ teamTeamMatch.home_points }})</td>
+                  <td>
+                     <strong>{{ teamTeamMatch.home }}</strong>
+                  </td>
+               </tr>
+            </table>
+         </td>
+         <td class="text-left align-middle">
+            <table class="table-sm mb-0 table-borderless" align="left">
+               <tr>
+                  <td colspan="3">
+                     <app-team-logo-with-tooltip [team]="teamTeamMatch.away_team"></app-team-logo-with-tooltip>
+                     <strong class="ml-1">{{ teamTeamMatch.away_team.name }}</strong>
+                  </td>
+               </tr>
+               <tr *ngIf="teamTeamMatch.active || teamTeamMatch.ended">
+                  <td>
+                     <strong>{{ teamTeamMatch.away }}</strong>
+                  </td>
+                  <td>({{ teamTeamMatch.away_points }})</td>
+                  <td>
+                     <small class="text-muted">{{ teamTeamMatch.away_dc_sum }}</small>
+                  </td>
+               </tr>
+            </table>
+         </td>
+         <td class="align-middle">
+            {{ teamTeamMatch.team_stage.title }}
+         </td>
+         <td class="align-middle text-center">
+            <div>
+               <ng-container
+                  [ngTemplateOutlet]="teamTeamMatchState"
+                  [ngTemplateOutletContext]="{ teamTeamMatch: teamTeamMatch }"
+               ></ng-container>
+            </div>
+            <div *ngIf="!teamTeamMatch.active && !teamTeamMatch.ended">
+               <a [routerLink]="['/manage', 'team', 'team-matches', teamTeamMatch.id]" class="btn btn-sm btn-outline-warning">
+                  <i class="fa fa-pencil-square-o fa-lg" aria-hidden="true"></i>
+               </a>
+               <button
+                  type="button"
+                  class="btn btn-sm btn-outline-danger"
+                  (click)="openDeleteConfirm(confirmModal, teamTeamMatch, deleteTeamTeamMatch)"
+               >
+                  <i class="fa fa-trash-o fa-lg" aria-hidden="true"></i>
+               </button>
+            </div>
+            <div>
+               <span class="text-muted">Змінено {{ teamTeamMatch.updated_at | time: 'fromNow' }}</span>
+            </div>
+         </td>
+      </tr>
+   </tbody>
+</table>
+<table class="d-table d-sm-none table table-sm table-dark table-striped table-hover table-bordered">
+   <tbody>
+      <tr *ngFor="let teamTeamMatch of teamTeamMatches">
+         <td>
+            <table class="table-sm mb-0 table-borderless w-100" align="center">
+               <tr>
+                  <td colspan="3" class="text-muted">
+                     ID: <strong>{{ teamTeamMatch.id }}</strong>
+                  </td>
+                  <td colspan="3" class="text-right"><span class="text-muted">Стадія:</span> {{ teamTeamMatch.team_stage.title }}</td>
+               </tr>
+               <tr>
+                  <td colspan="3" class="text-right">
+                     <app-team-logo-with-tooltip [team]="teamTeamMatch.home_team"></app-team-logo-with-tooltip>
+                  </td>
+                  <td colspan="3" class="text-left">
+                     <app-team-logo-with-tooltip [team]="teamTeamMatch.away_team"></app-team-logo-with-tooltip>
+                  </td>
+               </tr>
+               <tr>
+                  <td colspan="3" class="text-right">
+                     <strong class="mr-1">{{ teamTeamMatch.home_team.name }}</strong>
+                  </td>
+                  <td colspan="3" class="text-left">
+                     <strong class="ml-1">{{ teamTeamMatch.away_team.name }}</strong>
+                  </td>
+               </tr>
+               <tr *ngIf="teamTeamMatch.active || teamTeamMatch.ended">
+                  <td>
+                     <small class="text-muted">{{ teamTeamMatch.home_dc_sum }}</small>
+                  </td>
+                  <td>({{ teamTeamMatch.home_points }})</td>
+                  <td>
+                     <strong>{{ teamTeamMatch.home }}</strong>
+                  </td>
+                  <td>
+                     <strong>{{ teamTeamMatch.away }}</strong>
+                  </td>
+                  <td>({{ teamTeamMatch.away_points }})</td>
+                  <td>
+                     <small class="text-muted">{{ teamTeamMatch.away_dc_sum }}</small>
+                  </td>
+               </tr>
+               <tr class="text-right">
+                  <td colspan="3" class="text-muted text-left">
+                     <small> Змінено {{ teamTeamMatch.updated_at | time: 'fromNow' }} </small>
+                  </td>
+                  <td colspan="3" class="text-right">
+                     <ng-container
+                        [ngTemplateOutlet]="teamTeamMatchState"
+                        [ngTemplateOutletContext]="{ teamTeamMatch: teamTeamMatch }"
+                     ></ng-container>
+                  </td>
+               </tr>
+               <tr *ngIf="!teamTeamMatch.active && !teamTeamMatch.ended">
+                  <td colspan="6" class="text-center">
+                     <a [routerLink]="['/manage', 'team', 'team-matches', teamTeamMatch.id]" class="btn btn-sm btn-outline-warning">
+                        <i class="fa fa-pencil-square-o fa-lg" aria-hidden="true"></i>
+                     </a>
+                     <button
+                        type="button"
+                        class="btn btn-sm btn-outline-danger"
+                        (click)="openDeleteConfirm(confirmModal, teamTeamMatch, deleteTeamTeamMatch)"
+                     >
+                        <i class="fa fa-trash-o fa-lg" aria-hidden="true"></i>
+                     </button>
+                  </td>
+               </tr>
+            </table>
+         </td>
+      </tr>
+   </tbody>
+</table>
 <app-pagination
    *ngIf="paginationData"
    [totalItems]="paginationData.total"
@@ -88,4 +338,9 @@
 <ng-template #confirmModal let-c="close">
    <app-confirmation-modal [close]="c" [message]="openedModal.message" (confirmed)="openedModal.submitted($event)">
    </app-confirmation-modal>
+</ng-template>
+<ng-template #teamTeamMatchState let-teamTeamMatch="teamTeamMatch">
+   <strong *ngIf="!teamTeamMatch.active && !teamTeamMatch.ended" class="text-info text-nowrap">Не початий</strong>
+   <strong *ngIf="teamTeamMatch.active && !teamTeamMatch.ended" class="text-success">Активний</strong>
+   <strong *ngIf="!teamTeamMatch.active && teamTeamMatch.ended" class="text-muted">Завершений</strong>
 </ng-template>
