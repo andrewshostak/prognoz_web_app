@@ -6,12 +6,19 @@ import { TeamTeamMatchNew } from '@models/new/team-team-match-new.model';
 import { PaginatedResponse } from '@models/paginated-response.model';
 import { TeamTeamMatchSearch } from '@models/search/team-team-match-search.model';
 import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 @Injectable()
 export class TeamTeamMatchNewService {
    public readonly teamTeamMatchesUrl: string = `${environment.apiUrl}v2/team/team-matches`;
 
    constructor(private httpClient: HttpClient) {}
+
+   public createTeamTeamMatch(teamTeamMatch: Partial<TeamTeamMatchNew>): Observable<TeamTeamMatchNew> {
+      return this.httpClient
+         .post<{ team_team_match: TeamTeamMatchNew }>(this.teamTeamMatchesUrl, teamTeamMatch)
+         .pipe(map(response => response.team_team_match));
+   }
 
    public getTeamTeamMatches(search: TeamTeamMatchSearch): Observable<PaginatedResponse<TeamTeamMatchNew>> {
       let params: HttpParams = new HttpParams({ fromObject: { 'relations[]': search.relations || [] } });

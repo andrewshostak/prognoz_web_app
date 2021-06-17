@@ -1,0 +1,42 @@
+<h3 class="h3 m-2">Створити матч між командами:</h3>
+<form novalidate [formGroup]="teamTeamMatchForm" (ngSubmit)="onSubmit()" class="bg-white p-2 pl-lg-5 pr-lg-5">
+   <div class="form-row">
+      <div class="col-12 col-md-6 col-lg-4">
+         <div class="form-group" [class.form-group-invalid]="showFormInvalidClass(teamTeamMatchForm.get('team_stage_id'))">
+            <label for="team_stage_id" class="font-weight-bold">Стадія:</label>
+            <select id="team_stage_id" class="form-control" formControlName="team_stage_id">
+               <option *ngFor="let teamStage of teamStages" [value]="teamStage.id">
+                  {{ teamStage.title }} ({{ teamStage.competition.title }})
+               </option>
+            </select>
+            <div [hidden]="!showFormErrorMessage(teamTeamMatchForm.get('team_stage_id'), 'required')" class="error-message">
+               <small>Стадія обов'язкова</small>
+            </div>
+         </div>
+      </div>
+      <div class="col-md-6 d-sm-none d-md-block d-lg-none"></div>
+      <div class="col-12 col-md-6 col-lg-4">
+         <div class="form-group" [class.form-group-invalid]="showFormInvalidClass(teamTeamMatchForm.get('home_team_id'))">
+            <label [attr.for]="'home_team_id'" class="font-weight-bold">Команда 1:</label>
+            <app-team-select [formGroup]="teamTeamMatchForm" [teamsList]="[]" [fControlName]="'home_team_id'"></app-team-select>
+            <div [hidden]="!showFormErrorMessage(teamTeamMatchForm.get('home_team_id'), 'required')" class="error-message">
+               <small>Команда 1 обов'язкова</small>
+            </div>
+         </div>
+      </div>
+      <div class="col-12 col-md-6 col-lg-4">
+         <div class="form-group" [class.form-group-invalid]="showFormInvalidClass(teamTeamMatchForm.get('away_team_id'))">
+            <label [attr.for]="'away_team_id'" class="font-weight-bold">Команда 2:</label>
+            <app-team-select [formGroup]="teamTeamMatchForm" [teamsList]="[]" [fControlName]="'away_team_id'"></app-team-select>
+            <div [hidden]="!showFormErrorMessage(teamTeamMatchForm.get('away_team_id'), 'required')" class="error-message">
+               <small>Команда 2 обов'язкова</small>
+            </div>
+         </div>
+      </div>
+   </div>
+   <div class="form-row">
+      <div class="col-12 text-right">
+         <button type="submit" class="btn btn-primary"><i class="fa fa-plus-circle" aria-hidden="true"></i> Створити</button>
+      </div>
+   </div>
+</form>

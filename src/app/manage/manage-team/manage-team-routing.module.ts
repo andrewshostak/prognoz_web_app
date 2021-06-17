@@ -21,6 +21,7 @@ import { TeamStageCreateComponent } from '@app/manage/manage-team/manage-team-st
 import { TeamStageEditComponent } from '@app/manage/manage-team/manage-team-stage/team-stage-edit/team-stage-edit.component';
 import { ManageTeamTeamMatchComponent } from '@app/manage/manage-team/manage-team-team-match/manage-team-team-match.component';
 import { TeamTeamMatchesTableComponent } from '@app/manage/manage-team/manage-team-team-match/team-team-matches-table/team-team-matches-table.component';
+import { TeamTeamMatchCreateComponent } from '@app/manage/manage-team/manage-team-team-match/team-team-match-create/team-team-match-create.component';
 
 const routes: Routes = [
    {
@@ -112,6 +113,12 @@ const routes: Routes = [
             path: 'team-matches',
             children: [
                { path: 'page/:pageNumber', component: TeamTeamMatchesTableComponent },
+               {
+                  path: 'create',
+                  component: TeamTeamMatchCreateComponent,
+                  canActivate: [PermissionGuard],
+                  data: { permissions: ['create_team_team_match'] }
+               },
                { path: '', redirectTo: 'page/1', pathMatch: 'full' }
             ]
          },

@@ -19,6 +19,7 @@ import { catchError, debounceTime, distinctUntilChanged, filter, map, switchMap,
 export class TeamSelectComponent implements OnChanges, OnInit {
    @Input() public teamsList: TeamNew[] = [];
    @Input() public formGroup: FormGroup;
+   @Input() public fControlName: string = 'team_id';
 
    public ngSelectTexts: { [key: string]: string };
    public teams$: Observable<TeamNew[]>;
@@ -55,7 +56,7 @@ export class TeamSelectComponent implements OnChanges, OnInit {
             tap(() => (this.teamsLoading = true)),
             switchMap((term: string) => {
                const search: TeamSearch = {
-                  limit: SettingsService.maxLimitValues.users,
+                  limit: SettingsService.maxLimitValues.teamTeams,
                   name: trim(term),
                   orderBy: 'name',
                   page: 1,
