@@ -23,6 +23,7 @@ import { UtilsService } from '@services/utils.service';
 import { NotificationsService } from 'angular2-notifications';
 import { filter, map, mergeMap, tap } from 'rxjs/operators';
 import { forkJoin, of } from 'rxjs';
+import { isEqual } from 'lodash';
 
 @Component({
    selector: 'app-team-captain',
@@ -201,7 +202,9 @@ export class TeamCaptainComponent implements OnInit {
                   return;
                }
 
-               this.teamParticipants = response.data;
+               if (!isEqual(response.data, this.teamParticipants)) {
+                  this.teamParticipants = response.data;
+               }
                this.currentTeamId = response.data[0].team_id;
                this.getTeamCaptain(response.data);
                this.getCurrentTeamTeamMatch();
@@ -301,6 +304,8 @@ export class TeamCaptainComponent implements OnInit {
             tap((params: Params) => {
                this.teamStageId = params.team_stage_id;
                this.getMyTeamMatchesData(params.team_stage_id);
+               // todo: why do we even need to call participants on each stage change
+               // this endpoint returns always the same participants
                this.getTeamParticipantsData(params.team_stage_id);
                this.getTeamTeamMatchesData(params.team_stage_id);
             })
