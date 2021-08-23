@@ -306,6 +306,7 @@ export class TeamCaptainComponent implements OnInit {
                this.getMyTeamMatchesData(params.team_stage_id);
                // todo: why do we even need to call participants on each stage change
                // this endpoint returns always the same participants
+               // (only if we navigate to team-stage in other competition)
                this.getTeamParticipantsData(params.team_stage_id);
                this.getTeamTeamMatchesData(params.team_stage_id);
             })

@@ -1,7 +1,14 @@
-<h2>Моя команда {{ team ? '- ' + team.name : '' }}:</h2>
-<a *ngIf="authenticatedUser && isCaptain && team" [routerLink]="['/', 'team', team.id, 'edit']" class="btn btn-outline-primary">
-   Редагувати команду
-</a>
-<app-team-stage-select (teamStageSelected)="teamStageSelected($event)"></app-team-stage-select>
-<app-team-captain *ngIf="authenticatedUser"></app-team-captain>
-<app-error *ngIf="!authenticatedUser" [message]="noAccess" [additionalInfo]="false"></app-error>
+<ng-container *ngIf="authenticatedUser; else noAccessError">
+   <h2>
+      Моя команда {{ team ? '- ' + team.name : '' }}:
+      <a *ngIf="isCaptain && team" [routerLink]="['/', 'team', team.id, 'edit']" class="btn btn-sm btn-outline-primary">
+         <i class="fa fa-cogs"></i> Редагувати
+      </a>
+   </h2>
+   <app-team-stage-select (teamStageSelected)="teamStageSelected($event)"></app-team-stage-select>
+   <app-team-captain></app-team-captain>
+</ng-container>
+<ng-template #noAccessError>
+   <h2>Моя команда:</h2>
+   <app-error [message]="noAccess" [additionalInfo]="false"></app-error>
+</ng-template>
