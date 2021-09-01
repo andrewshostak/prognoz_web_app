@@ -13,4 +13,5 @@ export class TeamSearch {
    public sequence?: Sequence;
    public stated?: ModelStatus;
    public teamParticipantId?: number;
+   public teamStageId?: number;
 }

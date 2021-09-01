@@ -26,6 +26,7 @@ export class TeamMyComponent implements OnInit {
    public noAccess = 'Доступ заборонено. Увійдіть на сайт для перегляду цієї сторінки.';
    public team: TeamNew;
    public teamTeamMatches: TeamTeamMatchNew[];
+   public lastTeamStageId: number = 0;
 
    constructor(
       private authService: AuthNewService,
@@ -55,9 +56,9 @@ export class TeamMyComponent implements OnInit {
       this.router.navigate(['/team', 'my', { team_stage_id: event.teamStageId }]);
    }
 
-   private getTeamData(competitionId: number) {
+   private getTeamData(teamStageId: number) {
       const search: TeamSearch = {
-         competitionId,
+         teamStageId,
          limit: 1,
          page: 1,
          teamParticipantId: this.authenticatedUser.id
@@ -78,8 +79,13 @@ export class TeamMyComponent implements OnInit {
          .pipe(
             filter(params => params.team_stage_id),
             tap((params: Params) => {
-               this.getTeamData(params.team_stage_id);
-               this.getTeamTeamMatchesData(params.team_stage_id);
+               const teamStageId = parseInt(params.team_stage_id, 10);
+               this.getTeamTeamMatchesData(teamStageId);
+               // possible navigation to other competition
+               if (this.lastTeamStageId - 1 !== teamStageId && this.lastTeamStageId + 1 !== teamStageId) {
+                  this.getTeamData(teamStageId);
+               }
+               this.lastTeamStageId = teamStageId;
             }) as any
          )
          .subscribe();

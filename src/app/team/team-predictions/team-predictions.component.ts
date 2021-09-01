@@ -15,6 +15,7 @@ import { TeamPredictionService } from '@services/team/team-prediction.service';
 import { TitleService } from '@services/title.service';
 import { filter, tap } from 'rxjs/operators';
 import { TeamStageNewService } from '@services/new/team-stage-new.service';
+import { fill } from 'lodash';
 
 @Component({
    selector: 'app-team-predictions',
@@ -101,9 +102,12 @@ export class TeamPredictionsComponent implements OnInit {
    }
 
    setBlockedMatches(teamMatches: TeamMatch[]) {
+      this.blockedTeamMatches = fill(Array(this.maxBlocks), null);
+      let index = 0;
       for (const teamMatch of teamMatches) {
          if (teamMatch.team_predictions && teamMatch.team_predictions[0] && teamMatch.team_predictions[0].blocked_by) {
-            this.blockedTeamMatches.push(teamMatch);
+            this.blockedTeamMatches[index] = teamMatch;
+            index++;
          }
       }
    }
