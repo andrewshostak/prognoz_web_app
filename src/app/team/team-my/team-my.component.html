@@ -1,4 +1,4 @@
-<h2>Моя команда {{ team ? '- ' + team.name : '' }}:</h2>
+<h4 *ngIf="team">{{ team.name }}</h4>
 <a *ngIf="authenticatedUser && isCaptain && team" [routerLink]="['/', 'team', team.id, 'edit']" class="btn btn-outline-primary">
    Редагувати команду
 </a>

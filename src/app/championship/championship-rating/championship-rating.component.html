@@ -1,8 +1,5 @@
 <div class="row align-items-end">
-   <div class="col-12 col-sm-6 col-md-5">
-      <h2>Рейтинг:</h2>
-   </div>
-   <div *ngIf="ratingUpdatedAt" class="col-12 col-sm-6 col-md-7 text-right">
+   <div *ngIf="ratingUpdatedAt" class="col-6 offset-6 text-right">
       <small class="text-muted">Рейтинг оновлено {{ ratingUpdatedAt | time: 'fromNow' }}</small>
    </div>
 </div>

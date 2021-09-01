@@ -1,4 +1,3 @@
-<h2>Результати:</h2>
 <app-team-stage-select (teamStageSelected)="teamStageSelected($event)"></app-team-stage-select>
 <app-team-results-table [teamMatches]="teamMatches"> </app-team-results-table>
 <app-info *ngIf="!teamMatches.length" [message]="'Результатів не знайдено'"></app-info>

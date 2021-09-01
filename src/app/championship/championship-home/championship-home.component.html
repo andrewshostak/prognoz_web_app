@@ -1,9 +1,9 @@
-<h2 *ngIf="championshipMatches?.length">
-   Найближчі матчі:
+<h4 *ngIf="championshipMatches?.length">
+   Найближчі матчі
    <button (click)="getChampionshipMatchesData()" title="Оновити" class="btn btn-sm btn-outline-secondary cursor-pointer">
       <i class="fa fa-refresh fa-fw" aria-hidden="true"></i>
    </button>
-</h2>
+</h4>
 <!-- error -->
 <app-error *ngIf="errorChampionshipMatches" [message]="errorChampionshipMatches"></app-error>
 <!-- championship-match-predictable component-->
@@ -44,12 +44,12 @@
 <!-- RATING TOP -->
 <div *ngIf="championshipRatingItems" class="row align-items-end mt-2">
    <div class="col-12 col-sm-5 col-md-6">
-      <h2>
-         Топ-{{ championshipRatingItems.length }} рейтингу:
+      <h4>
+         Топ-{{ championshipRatingItems.length }} рейтингу
          <button (click)="getChampionshipRatingData()" title="Оновити" class="btn btn-sm btn-outline-secondary cursor-pointer">
             <i class="fa fa-refresh fa-fw" aria-hidden="true"></i>
          </button>
-      </h2>
+      </h4>
    </div>
    <div *ngIf="ratingUpdatedAt" class="col-12 col-sm-7 col-md-6 text-right">
       <small class="text-muted">Рейтинг оновлено {{ ratingUpdatedAt | time: 'fromNow' }}</small>
@@ -59,12 +59,12 @@
 <app-championship-rating-table [rating]="championshipRatingItems" [error]="errorChampionshipRating" [authenticatedUser]="authenticatedUser">
 </app-championship-rating-table>
 <!-- LAST PREDICTIONS -->
-<h2 *ngIf="championshipPredictions" class="mt-2">
-   Останні прогнози:
+<h4 *ngIf="championshipPredictions" class="mt-2">
+   Останні прогнози
    <button (click)="getChampionshipPredictionsData()" title="Оновити" class="btn btn-sm btn-outline-secondary cursor-pointer">
       <i class="fa fa-refresh fa-fw" aria-hidden="true"></i>
    </button>
-</h2>
+</h4>
 <!-- error -->
 <app-error *ngIf="errorChampionshipPredictions" [message]="errorChampionshipPredictions"></app-error>
 <!-- predictions -->

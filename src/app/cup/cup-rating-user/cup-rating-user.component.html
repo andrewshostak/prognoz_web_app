@@ -1,12 +1,7 @@
 <div *ngIf="cupRating">
-    <h2 class="h2">Рейтинг {{cupRating.user.name}}:</h2>
-    <app-cup-rating-seasons-summary [cupRating]="cupRating">
-    </app-cup-rating-seasons-summary>
-    <app-cup-rating-season-details [cupRating]="cupRating.active_season">
-    </app-cup-rating-season-details>
-    <app-cup-rating-season-details [cupRating]="cupRating.previous_season">
-    </app-cup-rating-season-details>
-    <app-cup-rating-season-details [cupRating]="cupRating.before_previous_season">
-    </app-cup-rating-season-details>
+   <app-cup-rating-seasons-summary [cupRating]="cupRating"> </app-cup-rating-seasons-summary>
+   <app-cup-rating-season-details [cupRating]="cupRating.active_season"> </app-cup-rating-season-details>
+   <app-cup-rating-season-details [cupRating]="cupRating.previous_season"> </app-cup-rating-season-details>
+   <app-cup-rating-season-details [cupRating]="cupRating.before_previous_season"> </app-cup-rating-season-details>
 </div>
 <app-error *ngIf="errorCupRating" [message]="errorCupRating"></app-error>

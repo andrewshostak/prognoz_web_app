@@ -1,4 +1,4 @@
-<h2 [hidden]="!teamMatches || !teamParticipants">Стратегія:</h2>
+<h4 [hidden]="!teamMatches || !teamParticipants">Стратегія</h4>
 <!-- error matches-->
 <app-error *ngIf="errorTeamMatches" [message]="errorTeamMatches"></app-error>
 <!-- error participants -->
@@ -190,7 +190,7 @@
    </table>
 </div>
 <app-error *ngIf="errorTeamTeamMatches" [message]="errorTeamTeamMatches"></app-error>
-<h2 [hidden]="!teamParticipants || !teamTeamMatches">Воротар:</h2>
+<h4 [hidden]="!teamParticipants || !teamTeamMatches">Воротар</h4>
 <div *ngIf="teamParticipants && teamTeamMatches" class="card black-shadow">
    <form #teamGoalkeeperForm="ngForm" novalidate class="p-2">
       <div class="form-group" [class.form-group-invalid-custom]="goalkeeper_id.errors?.required && goalkeeper_id.touched">

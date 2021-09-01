@@ -99,5 +99,8 @@
          }
       }
    },
-   "defaultProject": "prognoz-angular"
+   "defaultProject": "prognoz-angular",
+   "cli": {
+      "analytics": false
+   }
 }

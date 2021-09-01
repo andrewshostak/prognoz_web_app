@@ -1,9 +1,8 @@
-<h2>Матч:</h2>
 <div *ngIf="championshipMatch" class="container-fluid">
    <app-championship-match-predictable [championshipMatch]="championshipMatch" [authenticatedUser]="null" [championshipPredictsForm]="null">
    </app-championship-match-predictable>
 </div>
-<h2>Прогнози:</h2>
+<h4>Прогнози</h4>
 <app-championship-match-predictions-table
    *ngIf="championshipMatch && championshipPredictions"
    [championshipMatch]="championshipMatch"

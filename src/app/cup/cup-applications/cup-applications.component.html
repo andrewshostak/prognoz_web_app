@@ -1,16 +1,13 @@
-<h2 class="h2">
-   Заявки / Склади:
-   <button (click)="getApplicationsAndCompetitions()" title="Оновити" class="btn btn-sm btn-outline-secondary">
+<div *ngIf="competitions">
+   <button (click)="getApplicationsAndCompetitions()" title="Оновити" class="btn btn-outline-secondary">
       <i class="fa fa-refresh fa-fw" aria-hidden="true"></i>
    </button>
-</h2>
-<div *ngIf="competitions">
    <button *ngFor="let competition of competitions" class="btn btn-outline-primary m-1" type="button" (click)="onClick(competition)">
       {{ competition.title }}
    </button>
    <div *ngFor="let competition of competitions">
-      <h2 class="h2" [attr.id]="'competition-' + competition.id">
-         {{ competition.title }}:
+      <h4 [attr.id]="'competition-' + competition.id">
+         {{ competition.title }}
          <button
             *ngIf="hasAddApplicationAbility(competition)"
             type="button"
@@ -19,7 +16,7 @@
          >
             Подати заявку
          </button>
-      </h2>
+      </h4>
       <div class="card mb-2">
          <div class="table-responsive black-border black-shadow">
             <table class="table table-bordered table-hover mb-0">

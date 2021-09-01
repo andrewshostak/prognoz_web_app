@@ -33,7 +33,6 @@ export class ChampionshipHomeComponent implements OnInit {
    public championshipPredictions: ChampionshipPrediction[];
    public championshipPredictionsForm: FormGroup;
    public championshipRatingItems: ChampionshipRating[];
-   public clubsImagesUrl: string = environment.apiImageClubs;
    public errorChampionshipMatches: string;
    public errorChampionshipPredictions: string;
    public errorChampionshipRating: string;

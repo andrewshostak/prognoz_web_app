@@ -1,10 +1,8 @@
 <div [hidden]="!championshipRatingItems" class="row">
-    <div class="col">
-        <h2>Рейтинг: </h2>
-    </div>
+   <div class="col">
+      <h4>Рейтинг</h4>
+   </div>
 </div>
 <!-- rating table -->
-<app-championship-rating-table [rating]="championshipRatingItems"
-                               [error]="errorChampionshipRating"
-                               [authenticatedUser]="authenticatedUser">
+<app-championship-rating-table [rating]="championshipRatingItems" [error]="errorChampionshipRating" [authenticatedUser]="authenticatedUser">
 </app-championship-rating-table>

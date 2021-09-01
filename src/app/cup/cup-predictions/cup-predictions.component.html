@@ -1,10 +1,11 @@
-<h2>Прогнози:</h2>
 <div *ngIf="authenticatedUser && cupMatches" class="container-fluid">
-    <app-cup-prediction-form *ngFor="let cupMatch of cupMatches"
-                              [authenticatedUser]="authenticatedUser"
-                              [cupMatch]="cupMatch"
-                              (cupPredictionUpdated)="cupPredictionUpdated($event)">
-    </app-cup-prediction-form>
+   <app-cup-prediction-form
+      *ngFor="let cupMatch of cupMatches"
+      [authenticatedUser]="authenticatedUser"
+      [cupMatch]="cupMatch"
+      (cupPredictionUpdated)="cupPredictionUpdated($event)"
+   >
+   </app-cup-prediction-form>
 </div>
 <app-error *ngIf="errorCupMatches" [message]="errorCupMatches" [additionalInfo]="false"></app-error>
 <app-error *ngIf="!authenticatedUser" [message]="noAccess" [additionalInfo]="false"></app-error>

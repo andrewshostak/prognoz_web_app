@@ -1,97 +1,126 @@
 <div class="container">
-    <div *ngIf="!user" class="row">
-        <div class="col-12">
-            <h2>Зміна паролю:</h2>
-        </div>
-    </div>
-    <!-- reset form -->
-    <div *ngIf="!user" class="row">
-        <div class="col-12 col-sm-10 offset-sm-1 col-md-8 offset-md-2 col-lg-6 offset-lg-3 text-white">
-            <form novalidate [formGroup]="resetForm" (ngSubmit)="onSubmit()" class="bg-dark p-2 rounded">
-                <!-- email input -->
-                <div class="form-group"
-                     [class.form-group-invalid-custom]="resetForm.get('email').invalid && (resetForm.get('email').touched || !resetForm.get('email').pristine)">
-                    <label class="form-control-label" for="email"><strong>Email:</strong></label>
-                    <div class="input-group">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text"><i class="fa fa-envelope-o fa-fw"></i></span>
-                        </div>
-                        <input type="email"
-                               id="email"
-                               placeholder="Введіть свій email"
-                               class="form-control"
-                               formControlName="email">
-                    </div>
-                    <div *ngIf="resetForm.get('email').hasError('required') && (resetForm.get('email').touched || !resetForm.get('email').pristine)">
-                        <small>Email обов'язковий.</small>
-                    </div>
-                    <div *ngIf="resetForm.get('email').hasError('pattern') && !resetForm.get('email').pristine">
-                        <small>Email введено неправильно.</small>
-                    </div>
-                </div>
-                <!-- new password input -->
-                <div class="form-group"
-                     [class.form-group-invalid-custom]="resetForm.get('password').invalid && (resetForm.get('password').touched || !resetForm.get('password').pristine)">
-                    <label class="form-control-label" for="password"><strong>Новий пароль:</strong></label>
-                    <div class="input-group">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text"><i class="fa fa-key" aria-hidden="true"></i></span>
-                        </div>
-                        <input type="password"
-                               id="password"
-                               placeholder="Придумайте новий пароль"
-                               class="form-control"
-                               formControlName="password">
-                    </div>
-                    <div *ngIf="resetForm.get('password').hasError('required') && (resetForm.get('password').touched || !resetForm.get('password').pristine)">
-                        <small>Пароль обов'язковий.</small>
-                    </div>
-                    <div *ngIf="resetForm.get('password').hasError('minlength') && !resetForm.get('password').pristine">
-                        <small>Пароль повинен бути більшим ніж шість символів.</small>
-                    </div>
-                </div>
-                <!-- new password repeating input -->
-                <div class="form-group"
-                     [class.form-group-invalid-custom]="(resetForm.get('password_confirmation').invalid || (resetForm.value.password != resetForm.value.password_confirmation))
-                                        && (resetForm.get('password_confirmation').touched || !resetForm.get('password_confirmation').pristine)">
-                    <label class="form-control-label" for="password_confirmation"><strong>Повторіть новий
-                        пароль:</strong></label>
-                    <div class="input-group">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text"><i class="fa fa-key" aria-hidden="true"></i></span>
-                        </div>
-                        <input type="password"
-                               id="password_confirmation"
-                               placeholder="Повторіть новий пароль"
-                               class="form-control"
-                               formControlName="password_confirmation">
-                    </div>
-                    <div *ngIf="resetForm.get('password_confirmation').hasError('required') && (resetForm.get('password_confirmation').touched || !resetForm.get('password_confirmation').pristine)">
-                        <small>Повторення паролю обов'язкове.</small>
-                    </div>
-                    <div *ngIf="(resetForm.value.password != resetForm.value.password_confirmation) && !resetForm.get('password_confirmation').pristine">
-                        <small>Паролі не співпадають.</small>
-                    </div>
-                </div>
-                <input type="hidden" id="token" formControlName="token">
-                <!-- submit button -->
-                <button [hidden]="spinnerButton"
-                        [disabled]="resetForm.invalid || (resetForm.value.password != resetForm.value.password_confirmation)"
-                        type="submit"
-                        class="btn btn-primary">
-                    <i class="fa fa-question-circle" aria-hidden="true"></i> Продовжити
-                </button>
-                <!-- spinner button -->
-                <app-spinner-button [hidden]="!spinnerButton"></app-spinner-button>
-            </form>
-        </div>
-    </div>
-    <!-- show profile and logout buttons if user is authenticated -->
-    <div *ngIf="user" class="row">
-        <div class="col-12 col-sm-10 offset-sm-1 col-md-8 offset-md-2 col-lg-6 offset-lg-3 text-center">
-            <button routerLink="/me" class="btn btn-primary">
-                <i class="fa fa-user-circle" aria-hidden="true"></i> {{user.name}}
+   <div *ngIf="!user" class="row">
+      <div class="col-12 col-sm-10 offset-sm-1 col-md-8 offset-md-2 col-lg-6 offset-lg-3">
+         <h4>Зміна паролю</h4>
+      </div>
+   </div>
+   <!-- reset form -->
+   <div *ngIf="!user" class="row">
+      <div class="col-12 col-sm-10 offset-sm-1 col-md-8 offset-md-2 col-lg-6 offset-lg-3 text-white">
+         <form novalidate [formGroup]="resetForm" (ngSubmit)="onSubmit()" class="bg-dark p-2 rounded">
+            <!-- email input -->
+            <div
+               class="form-group"
+               [class.form-group-invalid-custom]="
+                  resetForm.get('email').invalid && (resetForm.get('email').touched || !resetForm.get('email').pristine)
+               "
+            >
+               <label class="form-control-label" for="email"><strong>Email:</strong></label>
+               <div class="input-group">
+                  <div class="input-group-prepend">
+                     <span class="input-group-text"><i class="fa fa-envelope-o fa-fw"></i></span>
+                  </div>
+                  <input type="email" id="email" placeholder="Введіть свій email" class="form-control" formControlName="email" />
+               </div>
+               <div
+                  *ngIf="
+                     resetForm.get('email').hasError('required') && (resetForm.get('email').touched || !resetForm.get('email').pristine)
+                  "
+               >
+                  <small>Email обов'язковий.</small>
+               </div>
+               <div *ngIf="resetForm.get('email').hasError('pattern') && !resetForm.get('email').pristine">
+                  <small>Email введено неправильно.</small>
+               </div>
+            </div>
+            <!-- new password input -->
+            <div
+               class="form-group"
+               [class.form-group-invalid-custom]="
+                  resetForm.get('password').invalid && (resetForm.get('password').touched || !resetForm.get('password').pristine)
+               "
+            >
+               <label class="form-control-label" for="password"><strong>Новий пароль:</strong></label>
+               <div class="input-group">
+                  <div class="input-group-prepend">
+                     <span class="input-group-text"><i class="fa fa-key" aria-hidden="true"></i></span>
+                  </div>
+                  <input
+                     type="password"
+                     id="password"
+                     placeholder="Придумайте новий пароль"
+                     class="form-control"
+                     formControlName="password"
+                  />
+               </div>
+               <div
+                  *ngIf="
+                     resetForm.get('password').hasError('required') &&
+                     (resetForm.get('password').touched || !resetForm.get('password').pristine)
+                  "
+               >
+                  <small>Пароль обов'язковий.</small>
+               </div>
+               <div *ngIf="resetForm.get('password').hasError('minlength') && !resetForm.get('password').pristine">
+                  <small>Пароль повинен бути більшим ніж шість символів.</small>
+               </div>
+            </div>
+            <!-- new password repeating input -->
+            <div
+               class="form-group"
+               [class.form-group-invalid-custom]="
+                  (resetForm.get('password_confirmation').invalid || resetForm.value.password != resetForm.value.password_confirmation) &&
+                  (resetForm.get('password_confirmation').touched || !resetForm.get('password_confirmation').pristine)
+               "
+            >
+               <label class="form-control-label" for="password_confirmation"><strong>Повторіть новий пароль:</strong></label>
+               <div class="input-group">
+                  <div class="input-group-prepend">
+                     <span class="input-group-text"><i class="fa fa-key" aria-hidden="true"></i></span>
+                  </div>
+                  <input
+                     type="password"
+                     id="password_confirmation"
+                     placeholder="Повторіть новий пароль"
+                     class="form-control"
+                     formControlName="password_confirmation"
+                  />
+               </div>
+               <div
+                  *ngIf="
+                     resetForm.get('password_confirmation').hasError('required') &&
+                     (resetForm.get('password_confirmation').touched || !resetForm.get('password_confirmation').pristine)
+                  "
+               >
+                  <small>Повторення паролю обов'язкове.</small>
+               </div>
+               <div
+                  *ngIf="
+                     resetForm.value.password != resetForm.value.password_confirmation && !resetForm.get('password_confirmation').pristine
+                  "
+               >
+                  <small>Паролі не співпадають.</small>
+               </div>
+            </div>
+            <input type="hidden" id="token" formControlName="token" />
+            <!-- submit button -->
+            <button
+               [hidden]="spinnerButton"
+               [disabled]="resetForm.invalid || resetForm.value.password != resetForm.value.password_confirmation"
+               type="submit"
+               class="btn btn-primary"
+            >
+               <i class="fa fa-question-circle" aria-hidden="true"></i> Продовжити
             </button>
-        </div>
-    </div>
+            <!-- spinner button -->
+            <app-spinner-button [hidden]="!spinnerButton"></app-spinner-button>
+         </form>
+      </div>
+   </div>
+   <!-- show profile and logout buttons if user is authenticated -->
+   <div *ngIf="user" class="row">
+      <div class="col-12 col-sm-10 offset-sm-1 col-md-8 offset-md-2 col-lg-6 offset-lg-3 text-center">
+         <button routerLink="/me" class="btn btn-primary"><i class="fa fa-user-circle" aria-hidden="true"></i> {{ user.name }}</button>
+      </div>
+   </div>
 </div>

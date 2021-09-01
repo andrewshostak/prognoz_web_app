@@ -1,18 +1,3 @@
-<div class="row">
-   <div class="col">
-      <h2>
-         Гостьова:
-         <button
-            *ngIf="paginationData"
-            (click)="getGuestbookMessagesData(paginationData.currentPage)"
-            title="Оновити"
-            class="btn btn-sm btn-outline-secondary cursor-pointer"
-         >
-            <i class="fa fa-refresh fa-fw" aria-hidden="true"></i>
-         </button>
-      </h2>
-   </div>
-</div>
 <div *ngIf="paginationData && paginationData.currentPage === 1" class="row">
    <div class="col">
       <app-guestbook-message-form (guestbookMessageCreated)="messageCreated($event)"></app-guestbook-message-form>

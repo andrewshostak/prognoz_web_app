@@ -1,4 +1,3 @@
-<h2>Прогнози:</h2>
 <app-error *ngIf="errorChampionshipMatches" [message]="errorChampionshipMatches"></app-error>
 <div *ngIf="championshipMatches" class="container-fluid">
    <form novalidate [formGroup]="championshipPredictionsForm" (ngSubmit)="onSubmit()">

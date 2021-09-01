@@ -1,34 +1,31 @@
 <div class="container">
-    <div class="row">
-        <div class="col">
-            <h2>Всі новини:</h2>
-        </div>
-    </div>
-    <!-- error -->
-    <app-error *ngIf="errorNews" [message]="errorNews"></app-error>
-    <!-- news -->
-    <div *ngIf="news" class="row">
-        <div class="col">
-            <div class="card-columns">
-                <div *ngFor="let one of news" class="card mb-0 mb-sm-2 black-shadow">
-                    <ul class="list-group list-group-flush">
-                        <li class="list-group-item">Категорія: {{one.tournament ? one.tournament.title : 'Інше'}}</li>
-                    </ul>
-                    <img class="card-img-top img-fluid p-sm-2" src="{{newsImagesUrl}}{{one.image}}" alt="{{one.title}}">
-                    <div class="card-body">
-                        <h4 class="card-title">{{one.title}}</h4>
-                        <a routerLink="/news/{{one.id}}" class="btn btn-outline-primary">Читати далі</a>
-                        <p class="card-text"><small class="text-muted">{{one.created_at | time:'fromNow'}}</small></p>
-                    </div>
-                </div>
+   <div class="row">
+      <div class="col">
+         <h4>Всі новини</h4>
+      </div>
+   </div>
+   <!-- error -->
+   <app-error *ngIf="errorNews" [message]="errorNews"></app-error>
+   <!-- news -->
+   <div *ngIf="news" class="row">
+      <div class="col">
+         <div class="card-columns">
+            <div *ngFor="let one of news" class="card mb-0 mb-sm-2 black-shadow">
+               <ul class="list-group list-group-flush">
+                  <li class="list-group-item">Категорія: {{ one.tournament ? one.tournament.title : 'Інше' }}</li>
+               </ul>
+               <img class="card-img-top img-fluid p-sm-2" src="{{ newsImagesUrl }}{{ one.image }}" alt="{{ one.title }}" />
+               <div class="card-body">
+                  <h4 class="card-title">{{ one.title }}</h4>
+                  <a routerLink="/news/{{ one.id }}" class="btn btn-outline-primary">Читати далі</a>
+                  <p class="card-text">
+                     <small class="text-muted">{{ one.created_at | time: 'fromNow' }}</small>
+                  </p>
+               </div>
             </div>
-        </div>
-    </div>
-    <!-- pagination -->
-    <app-pagination *ngIf="news"
-                    [totalItems]="total"
-                    [currentPage]="currentPage"
-                    [pageSize]="perPage"
-                    [path]="path">
-    </app-pagination>
+         </div>
+      </div>
+   </div>
+   <!-- pagination -->
+   <app-pagination *ngIf="news" [totalItems]="total" [currentPage]="currentPage" [pageSize]="perPage" [path]="path"> </app-pagination>
 </div>

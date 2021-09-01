@@ -1,13 +1,13 @@
 /* tslint:disable:object-literal-sort-keys */
 export const environment = {
    production: false,
-   imageURL: 'http://prognoz-rest.local/img',
-   apiUrl: 'http://prognoz-rest.local/api/',
-   apiImageNews: 'http://prognoz-rest.local/img/news/',
-   apiImageClubs: 'http://prognoz-rest.local/img/clubs/',
-   apiImageUsers: 'http://prognoz-rest.local/img/users/',
-   apiImageAwards: 'http://prognoz-rest.local/img/awards/',
-   apiImageTeams: 'http://prognoz-rest.local/img/teams/',
+   imageURL: 'http://localhost:8000/img',
+   apiUrl: 'http://localhost:8000/api/',
+   apiImageNews: 'http://localhost:8000/img/news/',
+   apiImageClubs: 'http://localhost:8000/img/clubs/',
+   apiImageUsers: 'http://localhost:8000/img/users/',
+   apiImageAwards: 'http://localhost:8000/img/awards/',
+   apiImageTeams: 'http://localhost:8000/img/teams/',
    imageUserDefault: 'default.png',
    imageTeamDefault: 'default.jpeg',
    imageSettings: {

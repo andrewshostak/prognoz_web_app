@@ -2,23 +2,20 @@
 <app-error *ngIf="errorCompetition" [message]="errorCompetition"></app-error>
 <!-- competition winners -->
 <div *ngIf="competition && competition.winners.length">
-    <h2>Переможці:</h2>
-    <div class="container-fluid">
-        <div class="row">
-            <div class="card-group black-shadow">
-                <div *ngFor="let winner of competition.winners | slice:0:3"
-                     class="card text-center mb-2 mb-sm-0">
-                    <div routerLink="../users/{{winner.user_id}}" class="card-header cursor-pointer">
-                        <app-user-logo-with-tooltip [user]="winner.user"></app-user-logo-with-tooltip>
-                        <strong class="align-middle ml-2">{{winner.user.name}}</strong>
-                    </div>
-                    <div class="card-body">
-                        <img class="img-fluid p-2"
-                             src="{{awardsImagesUrl}}{{winner.award.image}}"
-                             alt="{{winner.award.title}}">
-                    </div>
-                </div>
+   <h4>Переможці</h4>
+   <div class="container-fluid">
+      <div class="row">
+         <div class="card-group black-shadow">
+            <div *ngFor="let winner of competition.winners | slice: 0:3" class="card text-center mb-2 mb-sm-0">
+               <div routerLink="../users/{{ winner.user_id }}" class="card-header cursor-pointer">
+                  <app-user-logo-with-tooltip [user]="winner.user"></app-user-logo-with-tooltip>
+                  <strong class="align-middle ml-2">{{ winner.user.name }}</strong>
+               </div>
+               <div class="card-body">
+                  <img class="img-fluid p-2" src="{{ awardsImagesUrl }}{{ winner.award.image }}" alt="{{ winner.award.title }}" />
+               </div>
             </div>
-        </div>
-    </div>
+         </div>
+      </div>
+   </div>
 </div>
