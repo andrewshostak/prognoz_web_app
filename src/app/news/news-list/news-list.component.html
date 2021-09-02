@@ -10,7 +10,7 @@
    <div *ngIf="news" class="row">
       <div class="col">
          <div class="card-columns">
-            <div *ngFor="let one of news" class="card mb-0 mb-sm-2 black-shadow">
+            <div *ngFor="let one of news" class="card mb-0 mb-sm-2 shadow">
                <ul class="list-group list-group-flush">
                   <li class="list-group-item">Категорія: {{ one.tournament ? one.tournament.title : 'Інше' }}</li>
                </ul>

@@ -5,7 +5,7 @@
    <h4>Переможці</h4>
    <div class="container-fluid">
       <div class="row">
-         <div class="card-group black-shadow">
+         <div class="card-group shadow">
             <div *ngFor="let winner of competition.winners | slice: 0:3" class="card text-center mb-2 mb-sm-0">
                <div routerLink="../users/{{ winner.user_id }}" class="card-header cursor-pointer">
                   <app-user-logo-with-tooltip [user]="winner.user"></app-user-logo-with-tooltip>

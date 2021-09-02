@@ -1,6 +1,6 @@
 <div *ngIf="seasons" class="row">
    <div *ngFor="let season of seasons" class="col col-sm-6">
-      <div class="card text-center blue-shadow p-2 mb-2">
+      <div class="card text-center shadow p-2 mb-2">
          <div class="btn-group-vertical" role="group" aria-label="Basic example">
             <button
                routerLink="{{ season.id + '/competitions' }}"

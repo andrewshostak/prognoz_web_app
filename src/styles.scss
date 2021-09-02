@@ -17,18 +17,6 @@ body {
       background-color: $white;
    }
 
-   .black-shadow {
-      box-shadow: 0 0 5px $black;
-   }
-
-   .black-border {
-      border: 2px solid $black;
-   }
-
-   .blue-shadow {
-      box-shadow: 0 0 5px $primary;
-   }
-
    .break-word {
       word-wrap: break-word;
    }
@@ -106,7 +94,7 @@ body {
    }
 
    .green-inset-and-black-shadow {
-      box-shadow: inset 0 0 5px $success, 0 0 5px $black;
+      box-shadow: inset 0 0 5px $success, 0 0.5rem 1rem $gray-500;
    }
 
    .green-shadow {
@@ -127,7 +115,7 @@ body {
    }
 
    .red-inset-and-black-shadow {
-      box-shadow: inset 0 0 5px $danger, 0 0 5px $black;
+      box-shadow: inset 0 0 5px $danger, 0 0.5rem 1rem $gray-500;
    }
    .red-shadow {
       box-shadow: 0 0 5px $danger;

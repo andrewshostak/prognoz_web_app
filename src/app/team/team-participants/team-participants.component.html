@@ -1,5 +1,5 @@
 <app-competition-select-new (competitionSelected)="competitionSelected($event)"></app-competition-select-new>
-<div *ngIf="competition" class="card black-shadow mb-2">
+<div *ngIf="competition" class="card shadow mb-2">
    <div class="card-header">
       {{ competition.title }}
    </div>
@@ -34,7 +34,7 @@
       <i class="fa fa-plus-circle"></i> Заявити команду
    </button>
 </div>
-<div *ngIf="teams" class="black-shadow">
+<div *ngIf="teams" class="shadow">
    <ul class="list-group">
       <li
          *ngFor="let team of teams"

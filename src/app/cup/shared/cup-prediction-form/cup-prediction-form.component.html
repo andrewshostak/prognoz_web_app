@@ -2,7 +2,7 @@
    <div class="row">
       <div class="col-12 col-md-10 mb-2">
          <div
-            class="row align-items-center p-md-1 rounded bg-white black-shadow black-border h-100"
+            class="row align-items-center p-md-1 rounded bg-white border border-dark h-100"
             [ngClass]="{
                'green-inset-and-black-shadow': isScore(cupPrediction.home, cupPrediction.away),
                'red-inset-and-black-shadow': !isScore(cupPrediction.home, cupPrediction.away)
@@ -61,7 +61,7 @@
       <div class="col-12 col-md-2 mb-2 pl-0 pl-md-2 pr-0">
          <button
             *ngIf="!spinnerButton"
-            class="btn btn-block full-height"
+            class="btn btn-block full-height shadow"
             [ngClass]="{
                'btn-outline-primary': isScore(cupPrediction.home, cupPrediction.away),
                'btn-primary': !isScore(cupPrediction.home, cupPrediction.away)
@@ -92,7 +92,7 @@
                {{ isScore(cupPrediction.home, cupPrediction.away) ? 'Змінити прогноз' : 'Зберегти прогноз' }}
             </span>
          </button>
-         <button *ngIf="spinnerButton" class="btn btn-primary btn-block full-height mt-0" type="button">
+         <button *ngIf="spinnerButton" class="btn btn-primary btn-block shadow full-height mt-0" type="button">
             <i class="fa fa-spinner fa-spin fa-fw fa-lg d-md-none"></i>
             <i class="fa fa-spinner fa-spin fa-fw fa-2x d-none d-md-inline-block"></i>
             <br class="d-none d-lg-block" /><small class="d-none d-lg-block">Зачекайте</small>

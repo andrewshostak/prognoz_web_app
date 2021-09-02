@@ -1,7 +1,7 @@
 <!-- one match row (if user not authenticated)-->
 <div
    *ngIf="championshipMatch && !authenticatedUser"
-   class="row align-items-center mb-2 p-md-1 rounded bg-white black-shadow black-border position-relative"
+   class="row align-items-center mb-2 p-md-1 rounded bg-white border border-dark shadow position-relative"
 >
    <!-- home club logo -->
    <div class="d-none d-md-block col-md-2">
@@ -32,9 +32,7 @@
          <!-- expandable statistic -->
          <div class="col-12 mb-2" [hidden]="isCollapsed">
             <div class="card text-center">
-               <div class="card-header">
-                  Статистика
-               </div>
+               <div class="card-header">Статистика</div>
                <!-- error statistic -->
                <app-error *ngIf="errorStatistic" [message]="errorStatistic"></app-error>
                <!-- statistic -->
@@ -81,7 +79,7 @@
 <!-- one match row (if user is authenticated)-->
 <div
    *ngIf="championshipMatch && authenticatedUser && championshipMatch.championship_predicts"
-   class="row align-items-center mb-2 p-md-1 rounded bg-white black-shadow black-border position-relative"
+   class="row align-items-center mb-2 p-md-1 rounded bg-white border border-dark position-relative"
    [ngClass]="{
       'green-inset-and-black-shadow': championshipMatch.championship_predicts[0],
       'red-inset-and-black-shadow': !championshipMatch.championship_predicts[0]
@@ -152,9 +150,7 @@
          <!-- expandable statistic -->
          <div class="col-12 mb-2 order-4" [hidden]="isCollapsed">
             <div class="card text-center">
-               <div class="card-header">
-                  Статистика
-               </div>
+               <div class="card-header">Статистика</div>
                <!-- error statistic -->
                <app-error *ngIf="errorStatistic" [message]="errorStatistic"></app-error>
                <!-- statistic -->

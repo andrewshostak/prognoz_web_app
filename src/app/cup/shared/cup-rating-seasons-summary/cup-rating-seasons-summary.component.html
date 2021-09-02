@@ -1,49 +1,51 @@
-<div *ngIf="cupRating" class="card black-shadow mb-2">
-    <div class="card-header d-flex justify-content-between">
-        <div>
-            <app-user-logo-with-tooltip [user]="cupRating.user"></app-user-logo-with-tooltip>
-            <strong class="align-middle ml-1 ml-sm-2">{{cupRating.user.name}}</strong>
-            <small *ngIf="cupRating.user.hometown" class="text-muted">({{cupRating.user.hometown}})</small>
-        </div>
-        <div *ngIf="cupRating.user.clubs.length" class="d-flex flex-row">
-            <div *ngFor="let club of cupRating.user.clubs" class="ml-1 mr-1 ml-sm-2 mr-sm-2">
-                <app-club-logo-with-tooltip [club]="club"></app-club-logo-with-tooltip>
-            </div>
-        </div>
-    </div>
-    <div class="card-body">
-        <div class="table-responsive">
-            <table class="table table-bordered">
-                <tr>
-                    <td>Підсумкова кількість очок</td>
-                    <td class="text-center">{{cupRating.points_summary}}</td>
-                </tr>
-                <tr>
-                    <td>Забиті : Пропущені</td>
-                    <td class="text-center">{{cupRating.scored}}:{{cupRating.missed}}</td>
-                </tr>
-                <tr>
-                    <td>Виграші - Нічиї - Програші</td>
-                    <td class="text-center">{{cupRating.win}}-{{cupRating.draw}}-{{cupRating.loss}}</td>
-                </tr>
-                <tr>
-                    <td class="align-middle">Матчі</td>
-                    <td class="text-center">
-                        <button disabled type="button" class="btn btn-primary">Переглянути</button>
-                    </td>
-                </tr>
-            </table>
-        </div>
-        <div *ngIf="winDrawLossChartData" class="d-block">
-            <canvas baseChart
-                    class="border"
-                    [datasets]="winDrawLossChartData"
-                    [labels]="winDrawLossChartLabels"
-                    [options]="winDrawLossChartOptions"
-                    [colors]="winDrawLossChartColors"
-                    [legend]="winDrawLossChartLegend"
-                    [chartType]="winDrawLossChartType">
-            </canvas>
-        </div>
-    </div>
+<div *ngIf="cupRating" class="card shadow mb-2">
+   <div class="card-header d-flex justify-content-between">
+      <div>
+         <app-user-logo-with-tooltip [user]="cupRating.user"></app-user-logo-with-tooltip>
+         <strong class="align-middle ml-1 ml-sm-2">{{ cupRating.user.name }}</strong>
+         <small *ngIf="cupRating.user.hometown" class="text-muted">({{ cupRating.user.hometown }})</small>
+      </div>
+      <div *ngIf="cupRating.user.clubs.length" class="d-flex flex-row">
+         <div *ngFor="let club of cupRating.user.clubs" class="ml-1 mr-1 ml-sm-2 mr-sm-2">
+            <app-club-logo-with-tooltip [club]="club"></app-club-logo-with-tooltip>
+         </div>
+      </div>
+   </div>
+   <div class="card-body">
+      <div class="table-responsive">
+         <table class="table table-bordered">
+            <tr>
+               <td>Підсумкова кількість очок</td>
+               <td class="text-center">{{ cupRating.points_summary }}</td>
+            </tr>
+            <tr>
+               <td>Забиті : Пропущені</td>
+               <td class="text-center">{{ cupRating.scored }}:{{ cupRating.missed }}</td>
+            </tr>
+            <tr>
+               <td>Виграші - Нічиї - Програші</td>
+               <td class="text-center">{{ cupRating.win }}-{{ cupRating.draw }}-{{ cupRating.loss }}</td>
+            </tr>
+            <tr>
+               <td class="align-middle">Матчі</td>
+               <td class="text-center">
+                  <button disabled type="button" class="btn btn-primary">Переглянути</button>
+               </td>
+            </tr>
+         </table>
+      </div>
+      <div *ngIf="winDrawLossChartData" class="d-block">
+         <canvas
+            baseChart
+            class="border"
+            [datasets]="winDrawLossChartData"
+            [labels]="winDrawLossChartLabels"
+            [options]="winDrawLossChartOptions"
+            [colors]="winDrawLossChartColors"
+            [legend]="winDrawLossChartLegend"
+            [chartType]="winDrawLossChartType"
+         >
+         </canvas>
+      </div>
+   </div>
 </div>

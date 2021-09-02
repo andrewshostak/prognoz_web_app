@@ -3,7 +3,7 @@
       <!-- form block -->
       <div class="col-12 col-md-10 mb-2">
          <div
-            class="row align-items-center p-md-1 rounded bg-white black-shadow black-border h-100"
+            class="row align-items-center p-md-1 rounded bg-white border border-dark h-100"
             [ngClass]="{
                'green-inset-and-black-shadow': isScore(teamPrediction.home, teamPrediction.away),
                'red-inset-and-black-shadow': !isScore(teamPrediction.home, teamPrediction.away)
@@ -90,7 +90,7 @@
          <!-- submit button -->
          <button
             *ngIf="!spinnerButton && teamPrediction.team_match.is_predictable"
-            class="btn btn-block full-height"
+            class="btn btn-block full-height shadow"
             [ngClass]="{
                'btn-outline-primary': isScore(teamPrediction.home, teamPrediction.away),
                'btn-primary': !isScore(teamPrediction.home, teamPrediction.away)
@@ -128,7 +128,7 @@
          <!-- disabled button -->
          <button
             *ngIf="!teamPrediction.team_match.is_predictable"
-            class="btn btn-outline-secondary btn-block full-height mt-0"
+            class="btn btn-outline-secondary btn-block full-height shadow mt-0"
             type="button"
             disabled
          >
@@ -141,7 +141,7 @@
             <span class="d-md-none">Заборонено</span>
          </button>
          <!-- spinner -->
-         <button *ngIf="spinnerButton" class="btn btn-primary btn-block full-height mt-0" type="button">
+         <button *ngIf="spinnerButton" class="btn btn-primary btn-block full-height shadow mt-0" type="button">
             <!-- xs sm -->
             <i class="fa fa-spinner fa-spin fa-fw fa-lg d-md-none"></i>
             <!-- md lg xl -->

@@ -1,14 +1,12 @@
-<div class="card black-shadow mb-2 mt-2">
-    <h4 class="card-header text-xs-center">Зараз на сайті</h4>
-    <ul *ngIf="users.length" class="list-group list-group-flush text-center">
-        <li *ngFor="let user of users" class="list-group-item">{{user.name}}</li>
-    </ul>
-    <div *ngIf="users.length" class="card-footer text-muted">
-        Кількість: {{users.length}}
-    </div>
-    <div [hidden]="users.length" class="card-body">
-        <p class="card-text">
-            <a routerLink="/signin">Увійдійть</a> на сайт або <a routerLink="/signup">зареєструйтесь</a>, щоб бачити тих хто онлайн.
-        </p>
-    </div>
+<div class="card shadow mb-2 mt-2">
+   <h4 class="card-header text-xs-center">Зараз на сайті</h4>
+   <ul *ngIf="users.length" class="list-group list-group-flush text-center">
+      <li *ngFor="let user of users" class="list-group-item">{{ user.name }}</li>
+   </ul>
+   <div *ngIf="users.length" class="card-footer text-muted">Кількість: {{ users.length }}</div>
+   <div [hidden]="users.length" class="card-body">
+      <p class="card-text">
+         <a routerLink="/signin">Увійдійть</a> на сайт або <a routerLink="/signup">зареєструйтесь</a>, щоб бачити тих хто онлайн.
+      </p>
+   </div>
 </div>

@@ -2,21 +2,21 @@
 <app-error *ngIf="errorCompetitions" [message]="errorCompetitions"></app-error>
 <!-- competitions -->
 <div *ngIf="competitions" class="row mb-2">
-    <div class="col">
-        <div class="card blue-shadow">
-            <div class="text-center">
-                <div *ngFor="let competition of competitions" ngbDropdown class="d-inline-block m-2">
-                    <div ngbDropdown class="d-inline-block">
-                        <button class="btn btn-outline-primary" id="dropdownBasic1" ngbDropdownToggle>{{competition.number_in_season}}</button>
-                        <div ngbDropdownMenu aria-labelledby="dropdownBasic1" class="blue-shadow">
-                            <a routerLink="{{competition.id}}/winners" routerLinkActive="active" class="dropdown-item">Переможці</a>
-                            <a routerLink="{{competition.id}}/rating" routerLinkActive="active" class="dropdown-item">Рейтинг</a>
-                            <a routerLink="{{competition.id}}/results" routerLinkActive="active" class="dropdown-item">Результати</a>
-                        </div>
-                    </div>
-                </div>
+   <div class="col">
+      <div class="card shadow">
+         <div class="text-center">
+            <div *ngFor="let competition of competitions" ngbDropdown class="d-inline-block m-2">
+               <div ngbDropdown class="d-inline-block">
+                  <button class="btn btn-outline-primary" id="dropdownBasic1" ngbDropdownToggle>{{ competition.number_in_season }}</button>
+                  <div ngbDropdownMenu aria-labelledby="dropdownBasic1" class="shadow">
+                     <a routerLink="{{ competition.id }}/winners" routerLinkActive="active" class="dropdown-item">Переможці</a>
+                     <a routerLink="{{ competition.id }}/rating" routerLinkActive="active" class="dropdown-item">Рейтинг</a>
+                     <a routerLink="{{ competition.id }}/results" routerLinkActive="active" class="dropdown-item">Результати</a>
+                  </div>
+               </div>
             </div>
-        </div>
-    </div>
+         </div>
+      </div>
+   </div>
 </div>
 <router-outlet></router-outlet>

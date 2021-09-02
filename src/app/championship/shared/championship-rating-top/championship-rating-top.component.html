@@ -1,40 +1,49 @@
 <!-- error -->
 <app-error *ngIf="errorRating" [message]="errorRating"></app-error>
 <!-- rating leader -->
-<div *ngIf="championshipRatingItems" class="card mt-2 mb-2 black-shadow">
-    <h4 class="card-header text-xs-center">Лідер рейтингу</h4>
-    <div class="card-body text-center cursor-pointer" routerLink="/championship/users/{{championshipRatingItems[0].user_id}}">
-        <img class="card-img-top img-fluid rounded"
-             src="{{userImagesUrl}}{{championshipRatingItems[0].user.image || userImageDefault}}"
-             alt="{{championshipRatingItems[0].user.name}}">
-    </div>
-    <div class="card-body pt-0 cursor-pointer" routerLink="/championship/users/{{championshipRatingItems[0].user_id}}">
-        <p class="card-text text-center">
-            <strong>{{championshipRatingItems[0].user.name}}</strong> {{getHomeCityInBrackets(championshipRatingItems[0].user.hometown)}}
-        </p>
-    </div>
+<div *ngIf="championshipRatingItems" class="card mt-2 mb-2 shadow">
+   <h4 class="card-header text-xs-center">Лідер рейтингу</h4>
+   <div class="card-body text-center cursor-pointer" routerLink="/championship/users/{{ championshipRatingItems[0].user_id }}">
+      <img
+         class="card-img-top img-fluid rounded"
+         src="{{ userImagesUrl }}{{ championshipRatingItems[0].user.image || userImageDefault }}"
+         alt="{{ championshipRatingItems[0].user.name }}"
+      />
+   </div>
+   <div class="card-body pt-0 cursor-pointer" routerLink="/championship/users/{{ championshipRatingItems[0].user_id }}">
+      <p class="card-text text-center">
+         <strong>{{ championshipRatingItems[0].user.name }}</strong> {{ getHomeCityInBrackets(championshipRatingItems[0].user.hometown) }}
+      </p>
+   </div>
 </div>
 <!-- rating card -->
-<div *ngIf="championshipRatingItems" class="card black-shadow mt-2 mb-2">
-    <h4 class="card-header text-xs-center">Топ-{{championshipRatingItems.length}} рейтингу</h4>
-    <table class="table table-hover mb-0">
-        <tbody>
-            <tr *ngFor="let championshipRatingItem of championshipRatingItems" routerLink="/championship/users/{{championshipRatingItem.user_id}}" class="cursor-pointer">
-                <th scope="row" class="text-center">{{championshipRatingItem.position}}.</th>
-                <td class="text-left">
-                    <img class="rounded-circle small-image mr-1"
-                         src="{{userImagesUrl}}{{championshipRatingItem.user.image || userImageDefault}}"
-                         alt="{{championshipRatingItem.user.name}}">
-                    {{championshipRatingItem.user.name}}
-                </td>
-                <td class="text-center">
-                    <strong>{{championshipRatingItem.points}}</strong>
-                </td>
-            </tr>
-        </tbody>
-    </table>
-    <div class="card-footer text-muted">
-        <button (click)="topRating()" title="Оновити" class="btn btn-sm btn-outline-secondary cursor-pointer"><i
-                class="fa fa-refresh fa-fw" aria-hidden="true"></i></button>
-    </div>
+<div *ngIf="championshipRatingItems" class="card shadow mt-2 mb-2">
+   <h4 class="card-header text-xs-center">Топ-{{ championshipRatingItems.length }} рейтингу</h4>
+   <table class="table table-hover mb-0">
+      <tbody>
+         <tr
+            *ngFor="let championshipRatingItem of championshipRatingItems"
+            routerLink="/championship/users/{{ championshipRatingItem.user_id }}"
+            class="cursor-pointer"
+         >
+            <th scope="row" class="text-center">{{ championshipRatingItem.position }}.</th>
+            <td class="text-left">
+               <img
+                  class="rounded-circle small-image mr-1"
+                  src="{{ userImagesUrl }}{{ championshipRatingItem.user.image || userImageDefault }}"
+                  alt="{{ championshipRatingItem.user.name }}"
+               />
+               {{ championshipRatingItem.user.name }}
+            </td>
+            <td class="text-center">
+               <strong>{{ championshipRatingItem.points }}</strong>
+            </td>
+         </tr>
+      </tbody>
+   </table>
+   <div class="card-footer text-muted">
+      <button (click)="topRating()" title="Оновити" class="btn btn-sm btn-outline-secondary cursor-pointer">
+         <i class="fa fa-refresh fa-fw" aria-hidden="true"></i>
+      </button>
+   </div>
 </div>

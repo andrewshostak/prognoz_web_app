@@ -1,50 +1,50 @@
 <!-- error user/rating -->
 <app-error *ngIf="errorUser && errorChampionshipRating" [message]="errorUser + errorChampionshipRating"></app-error>
 <!-- user -->
-<div *ngIf="user" class="card black-shadow mb-2">
-    <div class="card-header d-flex justify-content-between">
-        <div>
-            <app-user-logo-with-tooltip [user]="user"></app-user-logo-with-tooltip>
-            <strong class="align-middle ml-1 ml-sm-2">{{user.name}}</strong>
-            <small *ngIf="user.hometown" class="text-muted">({{user.hometown}})</small>
-        </div>
-        <div *ngIf="user.clubs.length" class="d-flex flex-row">
-            <div *ngFor="let club of user.clubs" class="ml-1 mr-1 ml-sm-2 mr-sm-2">
-                <app-club-logo-with-tooltip [club]="club"></app-club-logo-with-tooltip>
-            </div>
-        </div>
-    </div>
-    <div class="card-body">
-        <div class="card-text break-word">
-            <table *ngIf="championshipRatingItem" class="table table-sm table-striped table-bordered mb-0">
-                <tbody>
-                <tr>
-                    <td>Позиція в рейтингу</td>
-                    <td class="text-center">{{championshipRatingItem.position}}</td>
-                </tr>
-                <tr>
-                    <td>Очки</td>
-                    <td class="text-center">{{championshipRatingItem.points}}</td>
-                </tr>
-                <tr>
-                    <td>x3 <small class="text-muted">(Трьохочкові)</small></td>
-                    <td class="text-center">{{championshipRatingItem.x3}}</td>
-                </tr>
-                <tr>
-                    <td>x2 <small class="text-muted">(Двохочкові)</small></td>
-                    <td class="text-center">{{championshipRatingItem.x2}}</td>
-                </tr>
-                <tr>
-                    <td>Коефіцієнт складності</td>
-                    <td class="text-center">{{championshipRatingItem.dc}}</td>
-                </tr>
-                </tbody>
-            </table>
-        </div>
-    </div>
-    <div *ngIf="user.winners.length" class="card-footer d-flex align-items-center pt-1 pb-1">
-        <div class="border bg-white rounded p-1">
-            <app-win-logo-with-tooltip *ngFor="let win of user.winners" [win]="win"></app-win-logo-with-tooltip>
-        </div>
-    </div>
+<div *ngIf="user" class="card shadow mb-2">
+   <div class="card-header d-flex justify-content-between">
+      <div>
+         <app-user-logo-with-tooltip [user]="user"></app-user-logo-with-tooltip>
+         <strong class="align-middle ml-1 ml-sm-2">{{ user.name }}</strong>
+         <small *ngIf="user.hometown" class="text-muted">({{ user.hometown }})</small>
+      </div>
+      <div *ngIf="user.clubs.length" class="d-flex flex-row">
+         <div *ngFor="let club of user.clubs" class="ml-1 mr-1 ml-sm-2 mr-sm-2">
+            <app-club-logo-with-tooltip [club]="club"></app-club-logo-with-tooltip>
+         </div>
+      </div>
+   </div>
+   <div class="card-body">
+      <div class="card-text break-word">
+         <table *ngIf="championshipRatingItem" class="table table-sm table-striped table-bordered mb-0">
+            <tbody>
+               <tr>
+                  <td>Позиція в рейтингу</td>
+                  <td class="text-center">{{ championshipRatingItem.position }}</td>
+               </tr>
+               <tr>
+                  <td>Очки</td>
+                  <td class="text-center">{{ championshipRatingItem.points }}</td>
+               </tr>
+               <tr>
+                  <td>x3 <small class="text-muted">(Трьохочкові)</small></td>
+                  <td class="text-center">{{ championshipRatingItem.x3 }}</td>
+               </tr>
+               <tr>
+                  <td>x2 <small class="text-muted">(Двохочкові)</small></td>
+                  <td class="text-center">{{ championshipRatingItem.x2 }}</td>
+               </tr>
+               <tr>
+                  <td>Коефіцієнт складності</td>
+                  <td class="text-center">{{ championshipRatingItem.dc }}</td>
+               </tr>
+            </tbody>
+         </table>
+      </div>
+   </div>
+   <div *ngIf="user.winners.length" class="card-footer d-flex align-items-center pt-1 pb-1">
+      <div class="border bg-white rounded p-1">
+         <app-win-logo-with-tooltip *ngFor="let win of user.winners" [win]="win"></app-win-logo-with-tooltip>
+      </div>
+   </div>
 </div>
