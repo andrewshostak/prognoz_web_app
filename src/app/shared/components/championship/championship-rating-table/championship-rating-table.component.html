@@ -21,9 +21,11 @@
    <tbody>
       <tr
          *ngFor="let ratingItem of rating; let i = index"
-         routerLink="{{ (ratingItem.position ? '../users/' : '/championship/users/') + ratingItem.user_id }}"
-         class="cursor-pointer"
-         [ngClass]="{ 'table-active': authenticatedUser && ratingItem.user_id === authenticatedUser.id }"
+         [routerLink]="!!ratingItem.user_id ? '../users/' + ratingItem.user_id : null"
+         [ngClass]="{
+            'table-active': authenticatedUser && ratingItem.user_id === authenticatedUser.id,
+            'cursor-pointer': !!ratingItem.user_id
+         }"
       >
          <th scope="row" class="text-center">{{ i + 1 }}.</th>
          <!-- no moving -->
