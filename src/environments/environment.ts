@@ -4,7 +4,6 @@ export const environment = {
    imageURL: 'http://localhost:8000/img',
    apiUrl: 'http://localhost:8000/api/',
    apiImageNews: 'http://localhost:8000/img/news/',
-   apiImageClubs: 'http://localhost:8000/img/clubs/',
    apiImageUsers: 'http://localhost:8000/img/users/',
    apiImageAwards: 'http://localhost:8000/img/awards/',
    imageUserDefault: 'default.png',

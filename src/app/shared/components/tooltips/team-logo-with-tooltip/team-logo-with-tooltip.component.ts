@@ -11,7 +11,7 @@ import { SettingsService } from '@services/settings.service';
 export class TeamLogoWithTooltipComponent {
    @Input() public team: TeamNew;
 
-   public teamLogosPath: string = SettingsService.teamsLogosPath + '/';
+   private teamLogosPath: string = SettingsService.teamsLogosPath + '/';
 
    get src(): string {
       return this.teamLogosPath + (this.team.image || 'default.jpeg');

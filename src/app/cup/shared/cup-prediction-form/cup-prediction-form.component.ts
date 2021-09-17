@@ -1,13 +1,13 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 
-import { environment } from '@env';
 import { CupMatch } from '@models/cup/cup-match.model';
 import { CupPrediction } from '@models/cup/cup-prediction.model';
 import { User } from '@models/user.model';
 import { CupPredictionService } from '@services/cup/cup-prediction.service';
 import { UtilsService } from '@services/utils.service';
 import { NotificationsService } from 'angular2-notifications';
+import { SettingsService } from '@services/settings.service';
 
 @Component({
    selector: 'app-cup-prediction-form',
@@ -15,7 +15,7 @@ import { NotificationsService } from 'angular2-notifications';
    styleUrls: ['./cup-prediction-form.component.scss']
 })
 export class CupPredictionFormComponent implements OnInit {
-   public clubsImagesUrl: string = environment.apiImageClubs;
+   public clubsLogosPath: string = SettingsService.clubsLogosPath + '/';
    public cupPredictionForm: FormGroup;
    public spinnerButton: boolean;
    public cupPrediction: CupPrediction;
@@ -69,7 +69,7 @@ export class CupPredictionFormComponent implements OnInit {
                cupPrediction: response
             });
             const message = `прогноз
-               ${cupPredictionToUpdate.home}:${cupPredictionToUpdate.away} на матч<br> 
+               ${cupPredictionToUpdate.home}:${cupPredictionToUpdate.away} на матч<br>
                ${this.cupMatch.club_first.title} - ${this.cupMatch.club_second.title}`;
             this.notificationsService.success('Збережено', message);
          },

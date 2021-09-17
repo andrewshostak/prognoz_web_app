@@ -20,7 +20,6 @@ export class TeamTeamMatchCardComponent {
 
    @Input() teamTeamMatch: TeamTeamMatchNew | TeamTeamMatch | any;
 
-   clubsImagesUrl: string = environment.apiImageClubs;
    detailsExpanded: boolean;
    errorTeamMatches: string;
    isTeamMatchBlocked = TeamCompetitionService.isTeamMatchBlocked;

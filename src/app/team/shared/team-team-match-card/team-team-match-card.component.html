@@ -193,23 +193,13 @@
                      </span>
                      <small class="d-none d-lg-inline d-xl-none">{{ teamMatch.club_first.title }}</small>
                      <span class="d-none d-xl-inline">{{ teamMatch.club_first.title }}</span>
-                     <img
-                        class="small-image"
-                        src="{{ clubsImagesUrl }}{{ teamMatch.club_first.image }}"
-                        alt="{{ teamMatch.club_first.title }}"
-                        title="{{ teamMatch.club_first.title }}"
-                     />
+                     <app-club-logo-with-tooltip [club]="teamMatch.club_first"></app-club-logo-with-tooltip>
                   </td>
                   <td class="align-middle text-center">
                      <strong>{{ showScoresOrString(teamMatch.home, teamMatch.away, 'vs') }}</strong>
                   </td>
                   <td class="align-middle text-left">
-                     <img
-                        class="small-image"
-                        src="{{ clubsImagesUrl }}{{ teamMatch.club_second.image }}"
-                        alt="{{ teamMatch.club_second.title }}"
-                        title="{{ teamMatch.club_second.title }}"
-                     />
+                     <app-club-logo-with-tooltip [club]="teamMatch.club_second"></app-club-logo-with-tooltip>
                      <small class="d-none d-lg-inline d-xl-none">{{ teamMatch.club_second.title }}</small>
                      <span class="d-none d-xl-inline">{{ teamMatch.club_second.title }}</span>
                      <span

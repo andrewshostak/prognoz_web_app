@@ -4,7 +4,6 @@ export const environment = {
    imageURL: 'https://api.prognoz.org.ua/img',
    apiUrl: 'https://api.prognoz.org.ua/api/',
    apiImageNews: 'https://api.prognoz.org.ua/img/news/',
-   apiImageClubs: 'https://api.prognoz.org.ua/img/clubs/',
    apiImageUsers: 'https://api.prognoz.org.ua/img/users/',
    apiImageAwards: 'https://api.prognoz.org.ua/img/awards/',
    imageUserDefault: 'default.png',

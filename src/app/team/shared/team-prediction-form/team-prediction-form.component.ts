@@ -6,6 +6,7 @@ import { TeamPrediction } from '@models/team/team-prediction.model';
 import { TeamPredictionService } from '@services/team/team-prediction.service';
 import { UtilsService } from '@services/utils.service';
 import { NotificationsService } from 'angular2-notifications';
+import { SettingsService } from '@services/settings.service';
 
 @Component({
    selector: 'app-team-prediction-form',
@@ -16,7 +17,7 @@ export class TeamPredictionFormComponent implements OnInit {
    @Input() public teamPrediction: TeamPrediction;
    @Output() public teamPredictionUpdated = new EventEmitter<any>();
 
-   public clubsImagesUrl: string = environment.apiImageClubs;
+   public clubsLogosPath: string = SettingsService.clubsLogosPath + '/';
    public isScore = UtilsService.isScore;
    public showScoresOrString = UtilsService.showScoresOrString;
    public spinnerButton: boolean;
@@ -59,7 +60,7 @@ export class TeamPredictionFormComponent implements OnInit {
             this.spinnerButton = false;
             this.teamPredictionUpdated.emit();
             const message = `прогноз
-                     ${this.teamPredictionUpdateForm.value.home}:${this.teamPredictionUpdateForm.value.away} на матч<br> 
+                     ${this.teamPredictionUpdateForm.value.home}:${this.teamPredictionUpdateForm.value.away} на матч<br>
                      ${this.teamPrediction.team_match.club_first.title} - ${this.teamPrediction.team_match.club_second.title}`;
             this.notificationsService.success('Збережено', message);
          },

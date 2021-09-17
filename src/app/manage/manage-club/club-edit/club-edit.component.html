@@ -14,15 +14,13 @@
       <!-- left column(current club data) -->
       <div class="col-12 col-lg-6">
          <div class="card bg-dark text-white">
-            <h5 class="card-header">
-               Інформація про команду
-            </h5>
+            <h5 class="card-header">Інформація про команду</h5>
             <br />
             <div class="row">
                <div class="text-center" [ngClass]="{ 'col-6': club.parent, 'col-12': !club.parent }">
                   <img
                      class="card-img-top img-fluid"
-                     src="{{ clubImagesUrl }}{{ club.image }}"
+                     src="{{ clubsLogosPath }}{{ club.image }}"
                      alt="{{ club.title }}"
                      title="{{ club.title }}"
                   />
@@ -30,7 +28,7 @@
                <div *ngIf="club.parent" class="text-center" [ngClass]="{ 'col-6': club.parent }">
                   <img
                      class="card-img-top img-fluid"
-                     src="{{ clubImagesUrl }}{{ club.parent.image }}"
+                     src="{{ clubsLogosPath }}{{ club.parent.image }}"
                      alt="{{ club.parent.title }}"
                      title="{{ club.parent.title }}"
                   />

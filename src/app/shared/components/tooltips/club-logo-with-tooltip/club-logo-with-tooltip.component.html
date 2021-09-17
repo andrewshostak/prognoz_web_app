@@ -1,7 +1,4 @@
 <ng-template #tipContent>
-    <img [attr.src]="clubImagesUrl + club.image" [attr.alt]="club.title" class="club-logo">
+   <img [attr.src]="src" [attr.alt]="club.title" class="club-logo" />
 </ng-template>
-<img [ngbTooltip]="tipContent"
-     [attr.src]="clubImagesUrl + club.image"
-     [attr.alt]="club.title"
-     class="small-image">
+<img [ngbTooltip]="tipContent" [attr.src]="src" [attr.alt]="club.title" class="small-image" />

@@ -1,72 +1,60 @@
 <div class="container">
-    <div class="row">
-        <div class="col">
-            <h2>Таблиця команд:</h2>
-        </div>
-    </div>
-    <!-- error -->
-    <app-error *ngIf="errorClubs" [message]="errorClubs"></app-error>
-    <!-- clubs table -->
-    <div *ngIf="clubs" class="row">
-        <div class="col-12">
-            <table class="table table-striped table-bordered table-hover table-dark">
-                <thead class="bg-light text-dark">
-                    <tr>
-                        <th>№</th>
-                        <th>Лого</th>
-                        <th>Назва</th>
-                        <th>Name</th>
-                        <th>Створено</th>
-                        <th>Змінено</th>
-                        <th>Змінити</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr *ngFor="let club of clubs">
-                        <th scope="row">
-                            {{club.id}}.
-                        </th>
-                        <td class="text-xs-center">
-                            <img class="small-image" src="{{clubsImagesUrl}}{{club.image}}" alt="{{club.link}}">
-                            <img *ngIf="club.parent" class="small-image" src="{{clubsImagesUrl}}{{club.parent.image}}" alt="{{club.parent.link}}" title="{{club.parent.title}}">
-                        </td>
-                        <td>
-                            {{club.title}}
-                        </td>
-                        <td>
-                            {{club.link}}
-                        </td>
-                        <td>
-                            <small>{{club.created_at}}</small>
-                        </td>
-                        <td>
-                            <small>{{club.updated_at}}</small>
-                        </td>
-                        <td class="text-xs-center">
-                            <a routerLink="/manage/clubs/{{club.id}}/edit" type="button" class="btn btn-sm btn-outline-warning">
-                                <i class="fa fa-pencil-square-o fa-lg" aria-hidden="true"></i>
-                            </a>
-                            <button type="button"
-                                    class="btn btn-sm btn-outline-danger"
-                                    (click)="openConfirmModal(confirmModal, club)">
-                                <i class="fa fa-trash-o fa-lg" aria-hidden="true"></i>
-                            </button>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-    </div>
-    <app-pagination *ngIf="clubs"
-                    [totalItems]="total"
-                    [currentPage]="currentPage"
-                    [pageSize]="perPage"
-                    [path]="path">
-    </app-pagination>
+   <div class="row">
+      <div class="col">
+         <h2>Таблиця команд:</h2>
+      </div>
+   </div>
+   <!-- error -->
+   <app-error *ngIf="errorClubs" [message]="errorClubs"></app-error>
+   <!-- clubs table -->
+   <div *ngIf="clubs" class="row">
+      <div class="col-12">
+         <table class="table table-striped table-bordered table-hover table-dark">
+            <thead class="bg-light text-dark">
+               <tr>
+                  <th>№</th>
+                  <th>Лого</th>
+                  <th>Назва</th>
+                  <th>Name</th>
+                  <th>Створено</th>
+                  <th>Змінено</th>
+                  <th>Змінити</th>
+               </tr>
+            </thead>
+            <tbody>
+               <tr *ngFor="let club of clubs">
+                  <th scope="row">{{ club.id }}.</th>
+                  <td class="text-xs-center">
+                     <app-club-logo-with-tooltip [club]="club"></app-club-logo-with-tooltip>
+                     <app-club-logo-with-tooltip *ngIf="club.parent" [club]="club.parent"></app-club-logo-with-tooltip>
+                  </td>
+                  <td>
+                     {{ club.title }}
+                  </td>
+                  <td>
+                     {{ club.link }}
+                  </td>
+                  <td>
+                     <small>{{ club.created_at }}</small>
+                  </td>
+                  <td>
+                     <small>{{ club.updated_at }}</small>
+                  </td>
+                  <td class="text-xs-center">
+                     <a routerLink="/manage/clubs/{{ club.id }}/edit" type="button" class="btn btn-sm btn-outline-warning">
+                        <i class="fa fa-pencil-square-o fa-lg" aria-hidden="true"></i>
+                     </a>
+                     <button type="button" class="btn btn-sm btn-outline-danger" (click)="openConfirmModal(confirmModal, club)">
+                        <i class="fa fa-trash-o fa-lg" aria-hidden="true"></i>
+                     </button>
+                  </td>
+               </tr>
+            </tbody>
+         </table>
+      </div>
+   </div>
+   <app-pagination *ngIf="clubs" [totalItems]="total" [currentPage]="currentPage" [pageSize]="perPage" [path]="path"> </app-pagination>
 </div>
 <ng-template #confirmModal let-c="close">
-    <app-confirmation-modal [close]="c"
-                            [message]="confirmModalMessage"
-                            (confirmed)="deleteClub()">
-    </app-confirmation-modal>
+   <app-confirmation-modal [close]="c" [message]="confirmModalMessage" (confirmed)="deleteClub()"> </app-confirmation-modal>
 </ng-template>
