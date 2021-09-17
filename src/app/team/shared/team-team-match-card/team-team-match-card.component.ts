@@ -28,8 +28,6 @@ export class TeamTeamMatchCardComponent {
    noTeamMatches = 'Цей раунд ще не почався / матчів не знайдено';
    showScoresOrString = UtilsService.showScoresOrString;
    spinnerTeamMatches: boolean;
-   teamImageDefault: string = environment.imageTeamDefault;
-   teamsImagesUrl: string = environment.apiImageTeams;
    teamMatches: TeamMatch[];
    userImageDefault: string = environment.imageUserDefault;
    userImagesUrl: string = environment.apiImageUsers;

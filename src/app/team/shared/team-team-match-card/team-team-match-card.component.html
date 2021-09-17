@@ -1,216 +1,295 @@
-<div class="card cursor-pointer list-group-item-action"
-     (click)="toggleDetailsVisibility()">
-    <div class="card-body">
-        <div class="row" title="Натисніть для більш детальної інформації">
-            <div class="col-4 col-sm-5 text-right">
-                <strong class="d-none d-sm-inline">{{teamTeamMatch.home_team.name}}</strong>
-                <small class="d-sm-none">{{teamTeamMatch.home_team.name}}</small>
-                <img class="small-image rounded d-none d-sm-inline ml-1"
-                     src="{{teamsImagesUrl}}{{teamTeamMatch.home_team.image || teamImageDefault}}"
-                     alt="{{teamTeamMatch.home_team.name}}">
+<div class="card cursor-pointer list-group-item-action" (click)="toggleDetailsVisibility()">
+   <div class="card-body">
+      <div class="row" title="Натисніть для більш детальної інформації">
+         <div class="col-4 col-sm-5 text-right">
+            <strong class="d-none d-sm-inline">{{ teamTeamMatch.home_team.name }}</strong>
+            <small class="d-sm-none">{{ teamTeamMatch.home_team.name }}</small>
+            <div class="d-none d-sm-inline ml-1">
+               <app-team-logo-with-tooltip [team]="teamTeamMatch.home_team"></app-team-logo-with-tooltip>
             </div>
-            <div class="col-4 col-sm-2 text-center">
-                <strong>{{showScoresOrString(teamTeamMatch.home, teamTeamMatch.away, 'vs')}}</strong>
-                <br class="d-sm-none">
-                <i [hidden]="detailsExpanded || spinnerTeamMatches" class="fa fa-chevron-down fa-lg text-primary d-sm-none"></i>
-                <i [hidden]="!detailsExpanded || spinnerTeamMatches" class="fa fa-chevron-up fa-lg text-primary d-sm-none"></i>
-                <i [hidden]="!spinnerTeamMatches" class="fa fa-spinner fa-spin fa-lg text-primary d-sm-none"></i>
+         </div>
+         <div class="col-4 col-sm-2 text-center">
+            <strong>{{ showScoresOrString(teamTeamMatch.home, teamTeamMatch.away, 'vs') }}</strong>
+            <br class="d-sm-none" />
+            <i [hidden]="detailsExpanded || spinnerTeamMatches" class="fa fa-chevron-down fa-lg text-primary d-sm-none"></i>
+            <i [hidden]="!detailsExpanded || spinnerTeamMatches" class="fa fa-chevron-up fa-lg text-primary d-sm-none"></i>
+            <i [hidden]="!spinnerTeamMatches" class="fa fa-spinner fa-spin fa-lg text-primary d-sm-none"></i>
+         </div>
+         <div class="col-4 col-sm-5 text-left">
+            <div class="d-none d-sm-inline mr-1">
+               <app-team-logo-with-tooltip [team]="teamTeamMatch.away_team"></app-team-logo-with-tooltip>
             </div>
-            <div class="col-4 col-sm-5 text-left">
-                <img class="small-image rounded d-none d-sm-inline mr-1"
-                     src="{{teamsImagesUrl}}{{teamTeamMatch.away_team.image || teamImageDefault}}"
-                     alt="{{teamTeamMatch.away_team.name}}">
-                <small class="d-sm-none">{{teamTeamMatch.away_team.name}}</small>
-                <strong class="d-none d-sm-inline">{{teamTeamMatch.away_team.name}}</strong>
-                <i [hidden]="detailsExpanded || spinnerTeamMatches" class="pull-right fa fa-chevron-down fa-lg text-primary d-none d-sm-inline"></i>
-                <i [hidden]="!detailsExpanded || spinnerTeamMatches" class="pull-right fa fa-chevron-up fa-lg text-primary d-none d-sm-inline"></i>
-                <i [hidden]="!spinnerTeamMatches" class="pull-right fa fa-spinner fa-spin fa-lg fa-fw text-primary d-none d-sm-inline"></i>
-                <span class="sr-only">Loading...</span>
-            </div>
-        </div>
-    </div>
+            <small class="d-sm-none">{{ teamTeamMatch.away_team.name }}</small>
+            <strong class="d-none d-sm-inline">{{ teamTeamMatch.away_team.name }}</strong>
+            <i
+               [hidden]="detailsExpanded || spinnerTeamMatches"
+               class="pull-right fa fa-chevron-down fa-lg text-primary d-none d-sm-inline"
+            ></i>
+            <i
+               [hidden]="!detailsExpanded || spinnerTeamMatches"
+               class="pull-right fa fa-chevron-up fa-lg text-primary d-none d-sm-inline"
+            ></i>
+            <i [hidden]="!spinnerTeamMatches" class="pull-right fa fa-spinner fa-spin fa-lg fa-fw text-primary d-none d-sm-inline"></i>
+            <span class="sr-only">Loading...</span>
+         </div>
+      </div>
+   </div>
 </div>
-<div [hidden]="!detailsExpanded" [ngClass]="{'mt-1': teamMatches}">
-    <!-- error -->
-    <app-error *ngIf="errorTeamMatches" [message]="errorTeamMatches"></app-error>
-    <!-- no team matches -->
-    <app-info *ngIf="!spinnerTeamMatches && !errorTeamMatches && !teamMatches" [message]="noTeamMatches"></app-info>
-    <div class="row">
-        <div *ngIf="teamMatches" class="col-12">
-            <!-- team-team match details -->
-            <table class="table table-sm table-bordered bg-white mb-1">
-                <tr>
-                    <td class="text-center align-middle">
-                        {{teamTeamMatch.home_points ? teamTeamMatch.home_points : 0}} / {{teamTeamMatch.home_dc_sum ? teamTeamMatch.home_dc_sum : '0.000'}}
-                    </td>
-                    <td class="text-center text-muted"><small>Очки / <abbr title="Коефіцієнт складноті">КС</abbr> за схемою чемпіонату</small></td>
-                    <td class="text-center align-middle">
-                        {{teamTeamMatch.away_points ? teamTeamMatch.away_points : 0}} / {{teamTeamMatch.away_dc_sum ? teamTeamMatch.away_dc_sum : '0.000'}}
-                    </td>
-                </tr>
-                <tr>
-                    <td class="text-center"
-                        [ngClass]="{'font-weight-bold': teamTeamMatch.home_team_goalkeeper_id}">
-                        <img *ngIf="teamTeamMatch.home_team_goalkeeper_id"
-                             class="small-image rounded-circle d-none d-lg-inline"
-                             src="{{userImagesUrl}}{{teamTeamMatch.home_team_goalkeeper.image || userImageDefault}}"
-                             alt="{{teamTeamMatch.home_team_goalkeeper.name}}">
-                        {{teamTeamMatch.home_team_goalkeeper_id ? teamTeamMatch.home_team_goalkeeper.name : '-'}}
-                    </td>
-                    <td class="text-center text-muted align-middle"><small>Воротар</small></td>
-                    <td class="text-center"
-                        [ngClass]="{'font-weight-bold': teamTeamMatch.home_team_goalkeeper_id}">
-                        {{teamTeamMatch.away_team_goalkeeper_id ? teamTeamMatch.away_team_goalkeeper.name : '-'}}
-                        <img *ngIf="teamTeamMatch.away_team_goalkeeper_id"
-                             class="small-image rounded-circle d-none d-lg-inline"
-                             src="{{userImagesUrl}}{{teamTeamMatch.away_team_goalkeeper.image || userImageDefault}}"
-                             alt="{{teamTeamMatch.away_team_goalkeeper.name}}">
-                    </td>
-                </tr>
-            </table>
-            <table class="table table-sm table-bordered table-striped table-hover bg-white mb-1">
-                <thead>
-                    <tr>
-                        <th class="text-muted text-center" title="Прогноз першої команди">
-                            <small class="d-none d-sm-inline">Прогноз</small>
-                            <small class="d-sm-none">П.</small>
-                        </th>
-                        <th class="text-muted text-center" title="Прогнозист першої команди">
-                            <small class="d-none d-sm-inline">Гравець</small>
-                            <small class="d-sm-none">Г.</small>
-                        </th>
-                        <th class="text-muted text-right" title="Господарі">
-                            <i class="fa fa-home d-lg-none pr-1" aria-hidden="true"></i>
-                            <small class="d-none d-lg-inline">Господарі</small>
-                        </th>
-                        <th class="text-muted text-center" title="Результат матчу">
-                            <small class="d-none d-xl-inline">Результат</small>
-                            <small class="d-none d-lg-inline d-xl-none">Р.</small>
-                            <i class="fa fa-soccer-ball-o d-lg-none" aria-hidden="true"></i>
-                        </th>
-                        <th class="text-muted text-left" title="Гості">
-                            <i class="fa fa-plane d-lg-none pl-1" aria-hidden="true"></i>
-                            <small class="d-none d-lg-inline">Гості</small>
-                        </th>
-                        <th class="text-muted text-center" title="Прогнозист другої команди">
-                            <small class="d-none d-sm-inline">Гравець</small>
-                            <small class="d-sm-none">Г.</small>
-                        </th>
-                        <th class="text-muted text-center" title="Прогноз другої комади">
-                            <small class="d-none d-sm-inline">Прогноз</small>
-                            <small class="d-sm-none">П.</small>
-                        </th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr *ngFor="let teamMatch of teamMatches">
-                        <td colspan="2"
-                            class="p-0 align-middle"
-                            [ngClass]="{'bg-success': isTeamMatchGuessed(teamMatch, teamTeamMatch.home_team_id) &&
-                                                     !isTeamMatchBlocked(teamMatch, teamTeamMatch.home_team_id),
-                                        'bg-danger': isTeamMatchBlocked(teamMatch, teamTeamMatch.home_team_id),
-                                        'text-white': isTeamMatchBlocked(teamMatch, teamTeamMatch.home_team_id) ||
-                                                    isTeamMatchGuessed(teamMatch, teamTeamMatch.home_team_id)}">
-                            <app-custom-content-with-tooltip [tooltipText]="getTitle(teamMatch, teamTeamMatch.home_team_id)" [placement]="'right'">
-                                <table class="w-100">
-                                    <tr *ngIf="!isTeamMatchPredictable(teamMatch)" class="text-center bg-transparent">
-                                        <td class="w-50 border-left-0 border-top-0 border-bottom-0 text-nowrap align-middle">
-                                            <span class="d-none d-sm-inline">{{(getPredictionDetails(teamMatch, teamTeamMatch.home_team_id).prediction?.long || '-')}}</span>
-                                            <small class="d-sm-none">{{(getPredictionDetails(teamMatch, teamTeamMatch.home_team_id).prediction?.short || '-')}}</small>
-                                        </td>
-                                        <td class="w-50 border-right-0 border-top-0 border-bottom-0 align-middle">
-                                            <span class="d-none d-sm-inline">{{(getPredictionDetails(teamMatch, teamTeamMatch.home_team_id).user?.name || '-')}}</span>
-                                            <img class="d-sm-none small-image rounded-circle"
-                                                 src="{{getUserImageSource(getPredictionDetails(teamMatch, teamTeamMatch.home_team_id).user)}}" alt="-">
-                                        </td>
-                                    </tr>
-                                    <tr *ngIf="isTeamMatchPredictable(teamMatch)" class="text-center bg-transparent">
-                                        <td colspan="2" class="text-muted">
-                                            <i class="fa fa-question-circle" aria-hidden="true"></i>
-                                            <span class="d-none d-sm-inline">Приховано</span>
-                                        </td>
-                                    </tr>
-                                </table>
-                            </app-custom-content-with-tooltip>
-                        </td>
-                        <td class="align-middle text-right">
-                            <span *ngIf="isTeamMatchGuessed(teamMatch, teamTeamMatch.home_team_id) && !isTeamMatchBlocked(teamMatch, teamTeamMatch.home_team_id)"
-                                  class="pull-left text-success d-none d-lg-inline">
-                                <i class="fa fa-lg fa-check-circle-o" aria-hidden="true"></i>
-                            </span>
-                            <span *ngIf="!isTeamMatchGuessed(teamMatch, teamTeamMatch.home_team_id) && isTeamMatchBlocked(teamMatch, teamTeamMatch.home_team_id)"
-                                  class="pull-left text-danger d-none d-lg-inline"
-                                  title="">
-                                <i class="fa fa-lg fa-lock" aria-hidden="true"></i>
-                            </span>
-                            <span *ngIf="isTeamMatchGuessed(teamMatch, teamTeamMatch.home_team_id) && isTeamMatchBlocked(teamMatch, teamTeamMatch.home_team_id)"
-                                  class="pull-left d-none d-lg-inline">
-                                <span class="fa-stack">
-                                    <i class="fa fa-check-circle fa-stack-1x text-success"></i>
-                                    <i class="fa fa-ban fa-stack-2x text-danger"></i>
-                                </span>
-                            </span>
-                            <small class="d-none d-lg-inline d-xl-none">{{teamMatch.club_first.title}}</small>
-                            <span class="d-none d-xl-inline">{{teamMatch.club_first.title}}</span>
-                            <img class="small-image" src="{{clubsImagesUrl}}{{teamMatch.club_first.image}}" alt="{{teamMatch.club_first.title}}"
-                                 title="{{teamMatch.club_first.title}}">
-                        </td>
-                        <td class="align-middle text-center">
-                            <strong>{{showScoresOrString(teamMatch.home, teamMatch.away, 'vs')}}</strong>
-                        </td>
-                        <td class="align-middle text-left">
-                            <img class="small-image" src="{{clubsImagesUrl}}{{teamMatch.club_second.image}}" alt="{{teamMatch.club_second.title}}"
-                                 title="{{teamMatch.club_second.title}}">
-                            <small class="d-none d-lg-inline d-xl-none">{{teamMatch.club_second.title}}</small>
-                            <span class="d-none d-xl-inline">{{teamMatch.club_second.title}}</span>
-                            <span *ngIf="isTeamMatchGuessed(teamMatch, teamTeamMatch.away_team_id) && !isTeamMatchBlocked(teamMatch, teamTeamMatch.away_team_id)"
-                                  class="pull-right text-success d-none d-lg-inline">
-                                <i class="fa fa-lg fa-check-circle-o" aria-hidden="true"></i>
-                            </span>
-                            <span *ngIf="!isTeamMatchGuessed(teamMatch, teamTeamMatch.away_team_id) && isTeamMatchBlocked(teamMatch, teamTeamMatch.away_team_id)"
-                                  class="pull-right text-danger d-none d-lg-inline">
-                                <i class="fa fa-lg fa-lock" aria-hidden="true"></i>
-                            </span>
-                            <span *ngIf="isTeamMatchGuessed(teamMatch, teamTeamMatch.away_team_id) && isTeamMatchBlocked(teamMatch, teamTeamMatch.away_team_id)"
-                                  class="pull-right d-none d-lg-inline">
-                                <span class="fa-stack">
-                                    <i class="fa fa-check-circle fa-stack-1x text-success"></i>
-                                    <i class="fa fa-ban fa-stack-2x text-danger"></i>
-                                </span>
-                            </span>
-                        </td>
-                        <td colspan="2"
-                            class="p-0 align-middle"
-                            [ngClass]="{'bg-success': isTeamMatchGuessed(teamMatch, teamTeamMatch.away_team_id) &&
-                                                    !isTeamMatchBlocked(teamMatch, teamTeamMatch.away_team_id),
-                                        'bg-danger': isTeamMatchBlocked(teamMatch, teamTeamMatch.away_team_id),
-                                        'text-white': isTeamMatchBlocked(teamMatch, teamTeamMatch.away_team_id) ||
-                                                    isTeamMatchGuessed(teamMatch, teamTeamMatch.away_team_id)}">
-                            <app-custom-content-with-tooltip [tooltipText]="getTitle(teamMatch, teamTeamMatch.away_team_id)" [placement]="'left'">
-                                <table class="w-100">
-                                    <tr *ngIf="!isTeamMatchPredictable(teamMatch)" class="text-center bg-transparent">
-                                        <td class="w-50 border-left-0 border-top-0 border-bottom-0 align-middle">
-                                            <span class="d-none d-sm-inline">{{(getPredictionDetails(teamMatch, teamTeamMatch.away_team_id).user?.name || '-')}}</span>
-                                            <img class="d-sm-none small-image rounded-circle"
-                                                 src="{{getUserImageSource(getPredictionDetails(teamMatch, teamTeamMatch.away_team_id).user)}}" alt="-">
-                                        </td>
-                                        <td class="w-50 border-right-0 border-top-0 border-bottom-0 text-nowrap align-middle">
-                                            <span class="d-none d-sm-inline">{{(getPredictionDetails(teamMatch, teamTeamMatch.away_team_id).prediction?.long || '-')}}</span>
-                                            <small class="d-sm-none">{{(getPredictionDetails(teamMatch, teamTeamMatch.away_team_id).prediction?.short || '-')}}</small>
-                                        </td>
-                                    </tr>
-                                    <tr *ngIf="isTeamMatchPredictable(teamMatch)" class="text-center bg-transparent">
-                                        <td colspan="2" class="text-muted">
-                                            <span class="d-none d-sm-inline">Приховано</span>
-                                            <i class="fa fa-question-circle" aria-hidden="true"></i>
-                                        </td>
-                                    </tr>
-                                </table>
-                            </app-custom-content-with-tooltip>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-    </div>
+<div [hidden]="!detailsExpanded" [ngClass]="{ 'mt-1': teamMatches }">
+   <!-- error -->
+   <app-error *ngIf="errorTeamMatches" [message]="errorTeamMatches"></app-error>
+   <!-- no team matches -->
+   <app-info *ngIf="!spinnerTeamMatches && !errorTeamMatches && !teamMatches" [message]="noTeamMatches"></app-info>
+   <div class="row">
+      <div *ngIf="teamMatches" class="col-12">
+         <!-- team-team match details -->
+         <table class="table table-sm table-bordered bg-white mb-1">
+            <tr>
+               <td class="text-center align-middle">
+                  {{ teamTeamMatch.home_points ? teamTeamMatch.home_points : 0 }} /
+                  {{ teamTeamMatch.home_dc_sum ? teamTeamMatch.home_dc_sum : '0.000' }}
+               </td>
+               <td class="text-center text-muted">
+                  <small>Очки / <abbr title="Коефіцієнт складноті">КС</abbr> за схемою чемпіонату</small>
+               </td>
+               <td class="text-center align-middle">
+                  {{ teamTeamMatch.away_points ? teamTeamMatch.away_points : 0 }} /
+                  {{ teamTeamMatch.away_dc_sum ? teamTeamMatch.away_dc_sum : '0.000' }}
+               </td>
+            </tr>
+            <tr>
+               <td class="text-center" [ngClass]="{ 'font-weight-bold': teamTeamMatch.home_team_goalkeeper_id }">
+                  <img
+                     *ngIf="teamTeamMatch.home_team_goalkeeper_id"
+                     class="small-image rounded-circle d-none d-lg-inline"
+                     src="{{ userImagesUrl }}{{ teamTeamMatch.home_team_goalkeeper.image || userImageDefault }}"
+                     alt="{{ teamTeamMatch.home_team_goalkeeper.name }}"
+                  />
+                  {{ teamTeamMatch.home_team_goalkeeper_id ? teamTeamMatch.home_team_goalkeeper.name : '-' }}
+               </td>
+               <td class="text-center text-muted align-middle"><small>Воротар</small></td>
+               <td class="text-center" [ngClass]="{ 'font-weight-bold': teamTeamMatch.home_team_goalkeeper_id }">
+                  {{ teamTeamMatch.away_team_goalkeeper_id ? teamTeamMatch.away_team_goalkeeper.name : '-' }}
+                  <img
+                     *ngIf="teamTeamMatch.away_team_goalkeeper_id"
+                     class="small-image rounded-circle d-none d-lg-inline"
+                     src="{{ userImagesUrl }}{{ teamTeamMatch.away_team_goalkeeper.image || userImageDefault }}"
+                     alt="{{ teamTeamMatch.away_team_goalkeeper.name }}"
+                  />
+               </td>
+            </tr>
+         </table>
+         <table class="table table-sm table-bordered table-striped table-hover bg-white mb-1">
+            <thead>
+               <tr>
+                  <th class="text-muted text-center" title="Прогноз першої команди">
+                     <small class="d-none d-sm-inline">Прогноз</small>
+                     <small class="d-sm-none">П.</small>
+                  </th>
+                  <th class="text-muted text-center" title="Прогнозист першої команди">
+                     <small class="d-none d-sm-inline">Гравець</small>
+                     <small class="d-sm-none">Г.</small>
+                  </th>
+                  <th class="text-muted text-right" title="Господарі">
+                     <i class="fa fa-home d-lg-none pr-1" aria-hidden="true"></i>
+                     <small class="d-none d-lg-inline">Господарі</small>
+                  </th>
+                  <th class="text-muted text-center" title="Результат матчу">
+                     <small class="d-none d-xl-inline">Результат</small>
+                     <small class="d-none d-lg-inline d-xl-none">Р.</small>
+                     <i class="fa fa-soccer-ball-o d-lg-none" aria-hidden="true"></i>
+                  </th>
+                  <th class="text-muted text-left" title="Гості">
+                     <i class="fa fa-plane d-lg-none pl-1" aria-hidden="true"></i>
+                     <small class="d-none d-lg-inline">Гості</small>
+                  </th>
+                  <th class="text-muted text-center" title="Прогнозист другої команди">
+                     <small class="d-none d-sm-inline">Гравець</small>
+                     <small class="d-sm-none">Г.</small>
+                  </th>
+                  <th class="text-muted text-center" title="Прогноз другої комади">
+                     <small class="d-none d-sm-inline">Прогноз</small>
+                     <small class="d-sm-none">П.</small>
+                  </th>
+               </tr>
+            </thead>
+            <tbody>
+               <tr *ngFor="let teamMatch of teamMatches">
+                  <td
+                     colspan="2"
+                     class="p-0 align-middle"
+                     [ngClass]="{
+                        'bg-success':
+                           isTeamMatchGuessed(teamMatch, teamTeamMatch.home_team_id) &&
+                           !isTeamMatchBlocked(teamMatch, teamTeamMatch.home_team_id),
+                        'bg-danger': isTeamMatchBlocked(teamMatch, teamTeamMatch.home_team_id),
+                        'text-white':
+                           isTeamMatchBlocked(teamMatch, teamTeamMatch.home_team_id) ||
+                           isTeamMatchGuessed(teamMatch, teamTeamMatch.home_team_id)
+                     }"
+                  >
+                     <app-custom-content-with-tooltip [tooltipText]="getTitle(teamMatch, teamTeamMatch.home_team_id)" [placement]="'right'">
+                        <table class="w-100">
+                           <tr *ngIf="!isTeamMatchPredictable(teamMatch)" class="text-center bg-transparent">
+                              <td class="w-50 border-left-0 border-top-0 border-bottom-0 text-nowrap align-middle">
+                                 <span class="d-none d-sm-inline">{{
+                                    getPredictionDetails(teamMatch, teamTeamMatch.home_team_id).prediction?.long || '-'
+                                 }}</span>
+                                 <small class="d-sm-none">{{
+                                    getPredictionDetails(teamMatch, teamTeamMatch.home_team_id).prediction?.short || '-'
+                                 }}</small>
+                              </td>
+                              <td class="w-50 border-right-0 border-top-0 border-bottom-0 align-middle">
+                                 <span class="d-none d-sm-inline">{{
+                                    getPredictionDetails(teamMatch, teamTeamMatch.home_team_id).user?.name || '-'
+                                 }}</span>
+                                 <img
+                                    class="d-sm-none small-image rounded-circle"
+                                    src="{{ getUserImageSource(getPredictionDetails(teamMatch, teamTeamMatch.home_team_id).user) }}"
+                                    alt="-"
+                                 />
+                              </td>
+                           </tr>
+                           <tr *ngIf="isTeamMatchPredictable(teamMatch)" class="text-center bg-transparent">
+                              <td colspan="2" class="text-muted">
+                                 <i class="fa fa-question-circle" aria-hidden="true"></i>
+                                 <span class="d-none d-sm-inline">Приховано</span>
+                              </td>
+                           </tr>
+                        </table>
+                     </app-custom-content-with-tooltip>
+                  </td>
+                  <td class="align-middle text-right">
+                     <span
+                        *ngIf="
+                           isTeamMatchGuessed(teamMatch, teamTeamMatch.home_team_id) &&
+                           !isTeamMatchBlocked(teamMatch, teamTeamMatch.home_team_id)
+                        "
+                        class="pull-left text-success d-none d-lg-inline"
+                     >
+                        <i class="fa fa-lg fa-check-circle-o" aria-hidden="true"></i>
+                     </span>
+                     <span
+                        *ngIf="
+                           !isTeamMatchGuessed(teamMatch, teamTeamMatch.home_team_id) &&
+                           isTeamMatchBlocked(teamMatch, teamTeamMatch.home_team_id)
+                        "
+                        class="pull-left text-danger d-none d-lg-inline"
+                        title=""
+                     >
+                        <i class="fa fa-lg fa-lock" aria-hidden="true"></i>
+                     </span>
+                     <span
+                        *ngIf="
+                           isTeamMatchGuessed(teamMatch, teamTeamMatch.home_team_id) &&
+                           isTeamMatchBlocked(teamMatch, teamTeamMatch.home_team_id)
+                        "
+                        class="pull-left d-none d-lg-inline"
+                     >
+                        <span class="fa-stack">
+                           <i class="fa fa-check-circle fa-stack-1x text-success"></i>
+                           <i class="fa fa-ban fa-stack-2x text-danger"></i>
+                        </span>
+                     </span>
+                     <small class="d-none d-lg-inline d-xl-none">{{ teamMatch.club_first.title }}</small>
+                     <span class="d-none d-xl-inline">{{ teamMatch.club_first.title }}</span>
+                     <img
+                        class="small-image"
+                        src="{{ clubsImagesUrl }}{{ teamMatch.club_first.image }}"
+                        alt="{{ teamMatch.club_first.title }}"
+                        title="{{ teamMatch.club_first.title }}"
+                     />
+                  </td>
+                  <td class="align-middle text-center">
+                     <strong>{{ showScoresOrString(teamMatch.home, teamMatch.away, 'vs') }}</strong>
+                  </td>
+                  <td class="align-middle text-left">
+                     <img
+                        class="small-image"
+                        src="{{ clubsImagesUrl }}{{ teamMatch.club_second.image }}"
+                        alt="{{ teamMatch.club_second.title }}"
+                        title="{{ teamMatch.club_second.title }}"
+                     />
+                     <small class="d-none d-lg-inline d-xl-none">{{ teamMatch.club_second.title }}</small>
+                     <span class="d-none d-xl-inline">{{ teamMatch.club_second.title }}</span>
+                     <span
+                        *ngIf="
+                           isTeamMatchGuessed(teamMatch, teamTeamMatch.away_team_id) &&
+                           !isTeamMatchBlocked(teamMatch, teamTeamMatch.away_team_id)
+                        "
+                        class="pull-right text-success d-none d-lg-inline"
+                     >
+                        <i class="fa fa-lg fa-check-circle-o" aria-hidden="true"></i>
+                     </span>
+                     <span
+                        *ngIf="
+                           !isTeamMatchGuessed(teamMatch, teamTeamMatch.away_team_id) &&
+                           isTeamMatchBlocked(teamMatch, teamTeamMatch.away_team_id)
+                        "
+                        class="pull-right text-danger d-none d-lg-inline"
+                     >
+                        <i class="fa fa-lg fa-lock" aria-hidden="true"></i>
+                     </span>
+                     <span
+                        *ngIf="
+                           isTeamMatchGuessed(teamMatch, teamTeamMatch.away_team_id) &&
+                           isTeamMatchBlocked(teamMatch, teamTeamMatch.away_team_id)
+                        "
+                        class="pull-right d-none d-lg-inline"
+                     >
+                        <span class="fa-stack">
+                           <i class="fa fa-check-circle fa-stack-1x text-success"></i>
+                           <i class="fa fa-ban fa-stack-2x text-danger"></i>
+                        </span>
+                     </span>
+                  </td>
+                  <td
+                     colspan="2"
+                     class="p-0 align-middle"
+                     [ngClass]="{
+                        'bg-success':
+                           isTeamMatchGuessed(teamMatch, teamTeamMatch.away_team_id) &&
+                           !isTeamMatchBlocked(teamMatch, teamTeamMatch.away_team_id),
+                        'bg-danger': isTeamMatchBlocked(teamMatch, teamTeamMatch.away_team_id),
+                        'text-white':
+                           isTeamMatchBlocked(teamMatch, teamTeamMatch.away_team_id) ||
+                           isTeamMatchGuessed(teamMatch, teamTeamMatch.away_team_id)
+                     }"
+                  >
+                     <app-custom-content-with-tooltip [tooltipText]="getTitle(teamMatch, teamTeamMatch.away_team_id)" [placement]="'left'">
+                        <table class="w-100">
+                           <tr *ngIf="!isTeamMatchPredictable(teamMatch)" class="text-center bg-transparent">
+                              <td class="w-50 border-left-0 border-top-0 border-bottom-0 align-middle">
+                                 <span class="d-none d-sm-inline">{{
+                                    getPredictionDetails(teamMatch, teamTeamMatch.away_team_id).user?.name || '-'
+                                 }}</span>
+                                 <img
+                                    class="d-sm-none small-image rounded-circle"
+                                    src="{{ getUserImageSource(getPredictionDetails(teamMatch, teamTeamMatch.away_team_id).user) }}"
+                                    alt="-"
+                                 />
+                              </td>
+                              <td class="w-50 border-right-0 border-top-0 border-bottom-0 text-nowrap align-middle">
+                                 <span class="d-none d-sm-inline">{{
+                                    getPredictionDetails(teamMatch, teamTeamMatch.away_team_id).prediction?.long || '-'
+                                 }}</span>
+                                 <small class="d-sm-none">{{
+                                    getPredictionDetails(teamMatch, teamTeamMatch.away_team_id).prediction?.short || '-'
+                                 }}</small>
+                              </td>
+                           </tr>
+                           <tr *ngIf="isTeamMatchPredictable(teamMatch)" class="text-center bg-transparent">
+                              <td colspan="2" class="text-muted">
+                                 <span class="d-none d-sm-inline">Приховано</span>
+                                 <i class="fa fa-question-circle" aria-hidden="true"></i>
+                              </td>
+                           </tr>
+                        </table>
+                     </app-custom-content-with-tooltip>
+                  </td>
+               </tr>
+            </tbody>
+         </table>
+      </div>
+   </div>
 </div>

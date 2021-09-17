@@ -7,9 +7,7 @@ export const environment = {
    apiImageClubs: 'http://localhost:8000/img/clubs/',
    apiImageUsers: 'http://localhost:8000/img/users/',
    apiImageAwards: 'http://localhost:8000/img/awards/',
-   apiImageTeams: 'http://localhost:8000/img/teams/',
    imageUserDefault: 'default.png',
-   imageTeamDefault: 'default.jpeg',
    imageSettings: {
       club: { maxSize: 204800, types: ['image/png'] },
       user: { maxSize: 524288, types: ['image/png', 'image/jpg', 'image/jpeg'] },

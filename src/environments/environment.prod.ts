@@ -7,9 +7,7 @@ export const environment = {
    apiImageClubs: 'https://api.prognoz.org.ua/img/clubs/',
    apiImageUsers: 'https://api.prognoz.org.ua/img/users/',
    apiImageAwards: 'https://api.prognoz.org.ua/img/awards/',
-   apiImageTeams: 'https://api.prognoz.org.ua/img/teams/',
    imageUserDefault: 'default.png',
-   imageTeamDefault: 'default.jpeg',
    imageSettings: {
       club: { maxSize: 204800, types: ['image/png'] },
       user: { maxSize: 524288, types: ['image/png', 'image/jpg', 'image/jpeg'] },
