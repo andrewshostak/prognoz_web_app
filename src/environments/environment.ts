@@ -5,7 +5,6 @@ export const environment = {
    apiUrl: 'http://localhost:8000/api/',
    apiImageNews: 'http://localhost:8000/img/news/',
    apiImageUsers: 'http://localhost:8000/img/users/',
-   apiImageAwards: 'http://localhost:8000/img/awards/',
    imageUserDefault: 'default.png',
    imageSettings: {
       club: { maxSize: 204800, types: ['image/png'] },

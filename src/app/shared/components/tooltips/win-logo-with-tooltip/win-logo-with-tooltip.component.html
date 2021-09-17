@@ -1,10 +1,7 @@
 <ng-template #tipContent>
-    <img [attr.src]="awardsImagesUrl + win.award.image" [attr.alt]="win.award.title" class="win-logo">
-    <hr class="bg-white m-1">
-    <div class="font-weight-bold">{{win.award.title}}</div>
-    <div>{{win.competition.title}}</div>
+   <img [attr.src]="src" [attr.alt]="win.award.title" class="win-logo" />
+   <hr class="bg-white m-1" />
+   <div class="font-weight-bold">{{ win.award.title }}</div>
+   <div>{{ win.competition.title }}</div>
 </ng-template>
-<img [ngbTooltip]="tipContent"
-     [attr.src]="awardsImagesUrl + win.award.image"
-     [attr.alt]="win.award.title"
-     class="small-image">
+<img [ngbTooltip]="tipContent" [attr.src]="src" [attr.alt]="win.award.title" class="small-image" />
