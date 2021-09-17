@@ -59,23 +59,17 @@
             </tr>
             <tr>
                <td class="text-center" [ngClass]="{ 'font-weight-bold': teamTeamMatch.home_team_goalkeeper_id }">
-                  <img
-                     *ngIf="teamTeamMatch.home_team_goalkeeper_id"
-                     class="small-image rounded-circle d-none d-lg-inline"
-                     src="{{ userImagesUrl }}{{ teamTeamMatch.home_team_goalkeeper.image || userImageDefault }}"
-                     alt="{{ teamTeamMatch.home_team_goalkeeper.name }}"
-                  />
+                  <div *ngIf="teamTeamMatch.home_team_goalkeeper_id" class="d-none d-lg-inline">
+                     <app-user-logo-with-tooltip [user]="teamTeamMatch.home_team_goalkeeper"></app-user-logo-with-tooltip>
+                  </div>
                   {{ teamTeamMatch.home_team_goalkeeper_id ? teamTeamMatch.home_team_goalkeeper.name : '-' }}
                </td>
                <td class="text-center text-muted align-middle"><small>Воротар</small></td>
                <td class="text-center" [ngClass]="{ 'font-weight-bold': teamTeamMatch.home_team_goalkeeper_id }">
                   {{ teamTeamMatch.away_team_goalkeeper_id ? teamTeamMatch.away_team_goalkeeper.name : '-' }}
-                  <img
-                     *ngIf="teamTeamMatch.away_team_goalkeeper_id"
-                     class="small-image rounded-circle d-none d-lg-inline"
-                     src="{{ userImagesUrl }}{{ teamTeamMatch.away_team_goalkeeper.image || userImageDefault }}"
-                     alt="{{ teamTeamMatch.away_team_goalkeeper.name }}"
-                  />
+                  <div *ngIf="teamTeamMatch.away_team_goalkeeper" class="d-none d-lg-inline">
+                     <app-user-logo-with-tooltip [user]="teamTeamMatch.away_team_goalkeeper"></app-user-logo-with-tooltip>
+                  </div>
                </td>
             </tr>
          </table>
@@ -143,11 +137,12 @@
                                  <span class="d-none d-sm-inline">{{
                                     getPredictionDetails(teamMatch, teamTeamMatch.home_team_id).user?.name || '-'
                                  }}</span>
-                                 <img
-                                    class="d-sm-none small-image rounded-circle"
-                                    src="{{ getUserImageSource(getPredictionDetails(teamMatch, teamTeamMatch.home_team_id).user) }}"
-                                    alt="-"
-                                 />
+                                 <div
+                                    *ngIf="getPredictionDetails(teamMatch, teamTeamMatch.home_team_id).user as homePredictionUser"
+                                    class="d-sm-none"
+                                 >
+                                    <app-user-logo-with-tooltip [user]="homePredictionUser"></app-user-logo-with-tooltip>
+                                 </div>
                               </td>
                            </tr>
                            <tr *ngIf="isTeamMatchPredictable(teamMatch)" class="text-center bg-transparent">
@@ -253,11 +248,12 @@
                                  <span class="d-none d-sm-inline">{{
                                     getPredictionDetails(teamMatch, teamTeamMatch.away_team_id).user?.name || '-'
                                  }}</span>
-                                 <img
-                                    class="d-sm-none small-image rounded-circle"
-                                    src="{{ getUserImageSource(getPredictionDetails(teamMatch, teamTeamMatch.away_team_id).user) }}"
-                                    alt="-"
-                                 />
+                                 <div
+                                    *ngIf="getPredictionDetails(teamMatch, teamTeamMatch.away_team_id).user as awayPredictionUser"
+                                    class="d-sm-none"
+                                 >
+                                    <app-user-logo-with-tooltip [user]="awayPredictionUser"></app-user-logo-with-tooltip>
+                                 </div>
                               </td>
                               <td class="w-50 border-right-0 border-top-0 border-bottom-0 text-nowrap align-middle">
                                  <span class="d-none d-sm-inline">{{

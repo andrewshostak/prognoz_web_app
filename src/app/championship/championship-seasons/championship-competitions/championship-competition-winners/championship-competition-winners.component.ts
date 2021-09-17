@@ -23,8 +23,6 @@ export class ChampionshipCompetitionWinnersComponent implements OnInit {
    awardsLogosPath: string = SettingsService.awardsLogosPath + '/';
    competition: Competition;
    errorCompetition: string | string[];
-   userImageDefault: string = environment.imageUserDefault;
-   userImagesUrl: string = environment.apiImageUsers;
 
    ngOnInit() {
       this.activatedRoute.params.forEach((params: Params) => {

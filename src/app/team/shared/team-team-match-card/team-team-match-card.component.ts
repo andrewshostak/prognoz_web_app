@@ -1,12 +1,10 @@
 import { Component, Input, ChangeDetectorRef } from '@angular/core';
 
-import { environment } from '@env';
 import { TeamCompetitionService } from '@services/team/team-competition.service';
 import { TeamMatch } from '@models/team/team-match.model';
 import { TeamMatchService } from '@services/team/team-match.service';
 import { TeamTeamMatchNew } from '@models/new/team-team-match-new.model';
 import { TimePipe } from '@app/shared/pipes/time.pipe';
-import { User } from '@models/user.model';
 import { UtilsService } from '@services/utils.service';
 import { TeamTeamMatch } from '@models/team/team-team-match.model';
 
@@ -28,8 +26,6 @@ export class TeamTeamMatchCardComponent {
    showScoresOrString = UtilsService.showScoresOrString;
    spinnerTeamMatches: boolean;
    teamMatches: TeamMatch[];
-   userImageDefault: string = environment.imageUserDefault;
-   userImagesUrl: string = environment.apiImageUsers;
 
    getTeamMatchesData(teamTeamMatch: TeamTeamMatchNew) {
       this.spinnerTeamMatches = true;
@@ -92,14 +88,6 @@ export class TeamTeamMatchCardComponent {
       }
 
       return 'Прогноз не зроблено';
-   }
-
-   getUserImageSource(user: User): string | null {
-      if (!user) {
-         return null;
-      }
-
-      return this.userImagesUrl + (user.image || this.userImageDefault);
    }
 
    toggleDetailsVisibility(): void {

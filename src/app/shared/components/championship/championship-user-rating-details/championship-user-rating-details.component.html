@@ -44,6 +44,7 @@
    </div>
    <div *ngIf="user.winners.length" class="card-footer d-flex align-items-center pt-1 pb-1">
       <div class="border bg-white rounded p-1">
+         <!-- TODO: replace this with same component as guestbook message -->
          <app-win-logo-with-tooltip *ngFor="let win of user.winners" [win]="win"></app-win-logo-with-tooltip>
       </div>
    </div>

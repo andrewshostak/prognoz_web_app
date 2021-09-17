@@ -1,7 +1,6 @@
 import { Component, Input, OnInit, OnChanges, SimpleChanges } from '@angular/core';
 
 import { CupRating } from '@models/cup/cup-rating.model';
-import { environment } from '@env';
 
 @Component({
    selector: 'app-cup-rating-seasons-summary',
@@ -11,8 +10,6 @@ import { environment } from '@env';
 export class CupRatingSeasonsSummaryComponent implements OnInit, OnChanges {
    @Input() cupRating: CupRating;
 
-   userImageDefault: string;
-   userImagesUrl: string;
    winDrawLossChartColors: any[];
    winDrawLossChartData: any[];
    winDrawLossChartLabels: string[];
@@ -53,8 +50,6 @@ export class CupRatingSeasonsSummaryComponent implements OnInit, OnChanges {
    }
 
    ngOnInit() {
-      this.userImageDefault = environment.imageUserDefault;
-      this.userImagesUrl = environment.apiImageUsers;
       this.winDrawLossChartType = 'bar';
       this.winDrawLossChartColors = [{ backgroundColor: '#28a745' }, { backgroundColor: '#ffc107' }, { backgroundColor: '#dc3545' }];
       this.winDrawLossChartLegend = true;

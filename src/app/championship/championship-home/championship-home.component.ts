@@ -3,7 +3,6 @@ import { FormControl, FormGroup } from '@angular/forms';
 
 import { ModelStatus } from '@enums/model-status.enum';
 import { Sequence } from '@enums/sequence.enum';
-import { environment } from '@env';
 import { ChampionshipPrediction } from '@models/championship/championship-prediction.model';
 import { ChampionshipRating } from '@models/championship/championship-rating.model';
 import { ChampionshipMatchNew } from '@models/new/championship-match-new.model';
@@ -39,8 +38,6 @@ export class ChampionshipHomeComponent implements OnInit {
    public getHomeCityInBrackets = UtilsService.getHomeCityInBrackets;
    public ratingUpdatedAt: string;
    public spinnerButton = false;
-   public userImageDefault: string = environment.imageUserDefault;
-   public userImagesUrl: string = environment.apiImageUsers;
 
    constructor(
       private championshipMatchService: ChampionshipMatchNewService,

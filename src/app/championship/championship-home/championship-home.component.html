@@ -78,11 +78,9 @@
                class="list-group-item list-group-item-action d-flex justify-content-between align-items-center"
             >
                <div>
-                  <img
-                     class="rounded-circle small-image mr-2"
-                     src="{{ userImagesUrl }}{{ championshipPrediction.user.image || userImageDefault }}"
-                     alt="{{ championshipPrediction.user.name }}"
-                  />
+                  <span class="mr-2">
+                     <app-user-logo-with-tooltip [user]="championshipPrediction.user"></app-user-logo-with-tooltip>
+                  </span>
                   <strong>{{ championshipPrediction.user.name }}</strong>
                   <span class="text-muted d-none d-md-inline">{{ getHomeCityInBrackets(championshipPrediction.user.hometown) }}</span>
                </div>

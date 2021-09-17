@@ -6,7 +6,7 @@
    <div class="card-body text-center cursor-pointer" routerLink="/championship/users/{{ championshipRatingItems[0].user_id }}">
       <img
          class="card-img-top img-fluid rounded"
-         src="{{ userImagesUrl }}{{ championshipRatingItems[0].user.image || userImageDefault }}"
+         src="{{ usersLogosPath }}{{ championshipRatingItems[0].user.image || userDefaultImage }}"
          alt="{{ championshipRatingItems[0].user.name }}"
       />
    </div>
@@ -28,11 +28,7 @@
          >
             <th scope="row" class="text-center">{{ championshipRatingItem.position }}.</th>
             <td class="text-left">
-               <img
-                  class="rounded-circle small-image mr-1"
-                  src="{{ userImagesUrl }}{{ championshipRatingItem.user.image || userImageDefault }}"
-                  alt="{{ championshipRatingItem.user.name }}"
-               />
+               <app-user-logo-with-tooltip [user]="championshipRatingItem.user"></app-user-logo-with-tooltip>
                {{ championshipRatingItem.user.name }}
             </td>
             <td class="text-center">

@@ -1,8 +1,8 @@
 import { Component, Input } from '@angular/core';
 
-import { environment } from '@env';
 import { UserNew } from '@models/new/user-new.model';
 import { User } from '@models/user.model';
+import { SettingsService } from '@services/settings.service';
 
 @Component({
    selector: 'app-user-logo-with-tooltip',
@@ -12,10 +12,10 @@ import { User } from '@models/user.model';
 export class UserLogoWithTooltipComponent {
    @Input() public user: User | UserNew;
 
-   public userImageDefault: string = environment.imageUserDefault;
-   public userImagesUrl: string = environment.apiImageUsers;
+   public userDefaultImage: string = SettingsService.userDefaultImage;
+   public usersLogosPath: string = SettingsService.usersLogosPath + '/';
 
    get src(): string {
-      return this.userImagesUrl + (this.user.image || this.userImageDefault);
+      return this.usersLogosPath + (this.user.image || this.userDefaultImage);
    }
 }
