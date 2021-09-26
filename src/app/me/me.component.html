@@ -86,7 +86,7 @@
                         </div>
                         <div *ngIf="clubs" formArrayName="club_user" class="form-group">
                            <label class="form-control-label font-weight-bold">Улюблені команди:</label>
-                           <div class="clubs rounded p-1" [class.border-danger]="userEditForm.hasError('clubUserEquality')">
+                           <div class="clubs border rounded p-1" [class.border-danger]="userEditForm.hasError('clubUserEquality')">
                               <div [hidden]="userEditForm.hasError('clubUserEquality')" class="alert alert-info mb-1" role="alert">
                                  <i class="fa fa-info-circle" aria-hidden="true"></i>
                                  Добавте улюблені команди, вказавши головну.
@@ -99,7 +99,7 @@
                                  *ngFor="let club of clubUser.controls; let i = index"
                                  [formGroup]="club"
                                  class="form-row align-items-center mt-1 mb-1 pt-2 pb-2"
-                                 [ngClass]="{ 'club-selected': club.get('main').value }"
+                                 [ngClass]="{ 'border bg-primary': club.get('main').value }"
                               >
                                  <div class="form-group col-3 col-sm-2 text-right mb-0">
                                     <div class="form-check mb-2 mb-sm-0">
