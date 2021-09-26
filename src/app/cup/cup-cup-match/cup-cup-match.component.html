@@ -82,7 +82,7 @@
       <div class="card-body p-0">
          <div class="table-responsive">
             <table class="table table-bordered table-sm mb-0">
-               <tr class="bg-light">
+               <tr>
                   <td class="text-center text-muted pt-0 pb-0" colspan="3"><small>Додаткові показники</small></td>
                </tr>
                <tr>
@@ -99,7 +99,7 @@
          </div>
          <div class="table-responsive">
             <table class="table table-bordered table-striped table-sm mb-0">
-               <tr class="bg-light">
+               <tr>
                   <td class="text-center text-nowrap pb-0 pt-0">
                      <i *ngIf="numberOfMatchesInStage === predictionsNumber.home" class="fa fa-check-circle text-success"></i>
                      <i *ngIf="!predictionsNumber.home" class="fa fa-times text-danger"></i>
@@ -173,7 +173,7 @@
                   <strong *ngIf="cupCupMatch.home_rating_points < 0" class="text-danger"> {{ cupCupMatch.home_rating_points }} </strong>
                   <span *ngIf="cupCupMatch.home_rating_points == 0">0</span>
                </td>
-               <td class="text-center text-muted bg-light"><small>Рейтингові очки</small></td>
+               <td class="text-center text-muted"><small>Рейтингові очки</small></td>
                <td class="points-cell text-center">
                   <strong *ngIf="cupCupMatch.away_rating_points > 0"> +{{ cupCupMatch.away_rating_points }} </strong>
                   <strong *ngIf="cupCupMatch.away_rating_points < 0" class="text-danger"> {{ cupCupMatch.away_rating_points }} </strong>

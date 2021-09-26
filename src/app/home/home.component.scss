@@ -1,50 +1,50 @@
-@import '~bootstrap/scss/functions', '~bootstrap/scss/variables';
+@import '~bootstrap/scss/functions', '~bootstrap/scss/variables'; // todo: remove
 
 #carousel {
-    margin-top: -8px;
-    height: 400px;
-    color: $white;
-    background: url('/assets/img/field.jpg') center center no-repeat;
-    background-size: cover;
+   margin-top: -8px;
+   height: 400px;
+   color: $white;
+   background: url('/assets/img/field.jpg') center center no-repeat;
+   background-size: cover;
 
-    .carousel-caption {
-        h3 {
-            display: inline-block;
+   .carousel-caption {
+      h3 {
+         display: inline-block;
+         border: 1px solid $gray-400;
+      }
+   }
+
+   .logo {
+      height: 100%;
+      background-repeat: no-repeat;
+      background-position: center center;
+      background-size: contain;
+      -webkit-filter: drop-shadow(0 0 5px $white);
+      filter: drop-shadow(0 0 5px $white);
+   }
+
+   .logo-block {
+      height: 300px;
+   }
+
+   .title-block {
+      height: 100px;
+
+      .col {
+         h2 {
+            font-weight: bold;
+            font-style: italic;
+            margin: 0 25px;
             border: 1px solid $gray-400;
-        }
-    }
+         }
+      }
+   }
 
-    .logo {
-        height: 100%;
-        background-repeat: no-repeat;
-        background-position: center center;
-        background-size: contain;
-        -webkit-filter: drop-shadow(0 0 5px $white);
-        filter: drop-shadow(0 0 5px $white);
-    }
-
-    .logo-block {
-        height: 300px;
-    }
-
-    .title-block {
-        height: 100px;
-
-        .col {
-            h2 {
-                font-weight: bold;
-                font-style: italic;
-                margin: 0 25px;
-                border: 1px solid $gray-400;
-            }
-        }
-    }
-
-    .vs {
-        height: 400px;
-        background: url('/assets/img/vs.png') center center no-repeat;
-        background-size: contain;
-        -webkit-filter: drop-shadow(0 0 5px $white);
-        filter: drop-shadow(0 0 5px $white);
-    }
+   .vs {
+      height: 400px;
+      background: url('/assets/img/vs.png') center center no-repeat;
+      background-size: contain;
+      -webkit-filter: drop-shadow(0 0 5px $white);
+      filter: drop-shadow(0 0 5px $white);
+   }
 }
