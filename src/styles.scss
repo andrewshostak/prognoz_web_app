@@ -19,6 +19,10 @@ body {
       word-wrap: break-word;
    }
 
+   .text-shadow {
+      text-shadow: $dark 1px 0 2px;
+   }
+
    .cursor-pointer,
    .btn {
       cursor: pointer;

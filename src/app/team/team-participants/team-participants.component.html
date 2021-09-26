@@ -39,7 +39,7 @@
       <li
          *ngFor="let team of teams"
          class="list-group-item"
-         [ngClass]="{ 'list-group-item-info': currentUserTeamId && currentUserTeamId === team.id }"
+         [ngClass]="{ 'list-group-item-dark': currentUserTeamId && currentUserTeamId === team.id }"
       >
          <app-team-and-participants
             [team]="team"

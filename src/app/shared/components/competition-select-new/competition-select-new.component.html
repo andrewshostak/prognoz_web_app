@@ -31,32 +31,34 @@
       <i [hidden]="!showCompetitionSelect" class="fa fa-chevron-up"></i>
    </button>
 </ng-template>
-<form *ngIf="showCompetitionSelect" novalidate [formGroup]="competitionSelectForm" class="bg-white border rounded shadow p-2 mb-2">
-   <div class="form-row">
-      <div class="form-group col-12 col-md-6 col-lg-4 col-xl-3">
-         <label for="season_id" class="font-weight-bold">Сезон:</label>
-         <select id="season_id" class="form-control" formControlName="season_id">
-            <option [ngValue]="null" disabled>Виберіть сезон</option>
-            <option *ngFor="let season of seasons" [value]="season.id">{{ season.title }}</option>
-         </select>
+<div *ngIf="showCompetitionSelect" class="card shadow p-2 mb-2">
+   <form novalidate [formGroup]="competitionSelectForm">
+      <div class="form-row">
+         <div class="form-group col-12 col-md-6 col-lg-4 col-xl-3">
+            <label for="season_id" class="font-weight-bold">Сезон:</label>
+            <select id="season_id" class="form-control" formControlName="season_id">
+               <option [ngValue]="null" disabled>Виберіть сезон</option>
+               <option *ngFor="let season of seasons" [value]="season.id">{{ season.title }}</option>
+            </select>
+         </div>
+         <div *ngIf="competitionsBySeasonId[seasonIdFormValue]" class="form-group col-12 col-md-6 col-lg-4 col-xl-3">
+            <label for="competition_id" class="font-weight-bold">Змагання:</label>
+            <select id="competition_id" class="form-control" formControlName="competition_id">
+               <option [ngValue]="null" disabled>Виберіть змагання</option>
+               <option *ngFor="let competition of competitionsBySeasonId[seasonIdFormValue]" [value]="competition.id">
+                  {{ competition.title }}
+               </option>
+            </select>
+         </div>
+         <div
+            *ngIf="competitionIdFormValue"
+            class="form-group d-flex align-items-end col-12 col-md-6 col-lg-4 col-xl-3 offset-0 offset-lg-8 offset-xl-0"
+         >
+            <button (click)="submit()" class="btn btn-primary text-nowrap" type="button">
+               <i class="fa fa-search"></i>
+               Показати
+            </button>
+         </div>
       </div>
-      <div *ngIf="competitionsBySeasonId[seasonIdFormValue]" class="form-group col-12 col-md-6 col-lg-4 col-xl-3">
-         <label for="competition_id" class="font-weight-bold">Змагання:</label>
-         <select id="competition_id" class="form-control" formControlName="competition_id">
-            <option [ngValue]="null" disabled>Виберіть змагання</option>
-            <option *ngFor="let competition of competitionsBySeasonId[seasonIdFormValue]" [value]="competition.id">
-               {{ competition.title }}
-            </option>
-         </select>
-      </div>
-      <div
-         *ngIf="competitionIdFormValue"
-         class="form-group d-flex align-items-end col-12 col-md-6 col-lg-4 col-xl-3 offset-0 offset-lg-8 offset-xl-0"
-      >
-         <button (click)="submit()" class="btn btn-primary text-nowrap" type="button">
-            <i class="fa fa-search"></i>
-            Показати
-         </button>
-      </div>
-   </div>
-</form>
+   </form>
+</div>
