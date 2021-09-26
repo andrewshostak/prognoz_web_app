@@ -33,6 +33,7 @@ import { ImageService } from '@services/image.service';
 import { AuthNewService } from '@services/new/auth-new.service';
 import { ChampionshipMatchNewService } from '@services/new/championship-match-new.service';
 import { ChampionshipPredictionNewService } from '@services/new/championship-prediction-new.service';
+import { ClubNewService } from '@services/new/club-new.service';
 import { CompetitionNewService } from '@services/new/competition-new.service';
 import { CupCupMatchNewService } from '@services/new/cup-cup-match-new.service';
 import { CupMatchNewService } from '@services/new/cup-match-new.service';
@@ -74,6 +75,7 @@ import { UtilsService } from '@services/utils.service';
       ChampionshipPredictionNewService,
       ChampionshipPredictionService,
       ChampionshipRatingService,
+      ClubNewService,
       CompetitionService,
       CompetitionNewService,
       CupApplicationService,

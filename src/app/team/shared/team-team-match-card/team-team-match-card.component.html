@@ -43,7 +43,7 @@
    <div class="row">
       <div *ngIf="teamMatches" class="col-12">
          <!-- team-team match details -->
-         <table class="table table-sm table-bordered bg-white mb-1">
+         <table class="table table-sm table-bordered mb-1">
             <tr>
                <td class="text-center align-middle">
                   {{ teamTeamMatch.home_points ? teamTeamMatch.home_points : 0 }} /
@@ -73,7 +73,7 @@
                </td>
             </tr>
          </table>
-         <table class="table table-sm table-bordered table-striped table-hover bg-white mb-1">
+         <table class="table table-sm table-bordered table-striped table-hover mb-1">
             <thead>
                <tr>
                   <th class="text-muted text-center" title="Прогноз першої команди">
@@ -116,10 +116,7 @@
                         'bg-success':
                            isTeamMatchGuessed(teamMatch, teamTeamMatch.home_team_id) &&
                            !isTeamMatchBlocked(teamMatch, teamTeamMatch.home_team_id),
-                        'bg-danger': isTeamMatchBlocked(teamMatch, teamTeamMatch.home_team_id),
-                        'text-white':
-                           isTeamMatchBlocked(teamMatch, teamTeamMatch.home_team_id) ||
-                           isTeamMatchGuessed(teamMatch, teamTeamMatch.home_team_id)
+                        'bg-danger': isTeamMatchBlocked(teamMatch, teamTeamMatch.home_team_id)
                      }"
                   >
                      <app-custom-content-with-tooltip [tooltipText]="getTitle(teamMatch, teamTeamMatch.home_team_id)" [placement]="'right'">
@@ -235,10 +232,7 @@
                         'bg-success':
                            isTeamMatchGuessed(teamMatch, teamTeamMatch.away_team_id) &&
                            !isTeamMatchBlocked(teamMatch, teamTeamMatch.away_team_id),
-                        'bg-danger': isTeamMatchBlocked(teamMatch, teamTeamMatch.away_team_id),
-                        'text-white':
-                           isTeamMatchBlocked(teamMatch, teamTeamMatch.away_team_id) ||
-                           isTeamMatchGuessed(teamMatch, teamTeamMatch.away_team_id)
+                        'bg-danger': isTeamMatchBlocked(teamMatch, teamTeamMatch.away_team_id)
                      }"
                   >
                      <app-custom-content-with-tooltip [tooltipText]="getTitle(teamMatch, teamTeamMatch.away_team_id)" [placement]="'left'">

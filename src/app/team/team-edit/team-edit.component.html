@@ -1,5 +1,5 @@
 <h4>Редагувати команду</h4>
 <app-info *ngIf="notCaptainsTeamMessage" [message]="notCaptainsTeamMessage"></app-info>
-<div [hidden]="notCaptainsTeamMessage" class="rounded bg-white shadow p-2">
+<div [hidden]="notCaptainsTeamMessage" class="card shadow p-2">
    <app-team-form [captainsList]="[user]" [team]="team" [includeAdvancedFormControls]="true"> </app-team-form>
 </div>

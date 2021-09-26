@@ -16,32 +16,29 @@ export class TeamRatingUserTableComponent implements OnChanges {
    goalkeepersRating: TeamRatingUser[] = [];
    goalkeepersRatingAll: TeamRatingUser[] = [];
    teams: Team[] = [];
-   teamIdsFiltered: number[];
    topScorersRating: TeamRatingUser[] = [];
    topScorersRatingAll: TeamRatingUser[] = [];
+   selectedTeamId: number = null;
 
-   filterTeamRatingUser(team: Team): void {
-      if (!this.teamIdsFiltered) {
-         this.teamIdsFiltered = [team.id];
-      } else {
-         const alreadyInFilteredTeams = this.teamIdsFiltered.findIndex(teamIdFiltered => teamIdFiltered === team.id);
-         alreadyInFilteredTeams < 0 ? this.teamIdsFiltered.push(team.id) : this.teamIdsFiltered.splice(alreadyInFilteredTeams, 1);
-      }
-      if (!this.teamIdsFiltered.length) {
-         this.topScorersRating = this.topScorersRatingAll;
-         this.goalkeepersRating = this.goalkeepersRatingAll;
-      } else {
+   clickOnTeamButton(teamId: number): void {
+      if (this.selectedTeamId !== teamId) {
+         this.selectedTeamId = teamId;
+
          this.topScorersRating = this.topScorersRatingAll.filter(user => {
-            return this.teamIdsFiltered.includes(user.team_id);
+            return user.team_id === this.selectedTeamId;
          });
          this.goalkeepersRating = this.goalkeepersRatingAll.filter(user => {
-            return this.teamIdsFiltered.includes(user.team_id);
+            return user.team_id === this.selectedTeamId;
          });
+      } else {
+         this.selectedTeamId = null;
+         this.topScorersRating = this.topScorersRatingAll;
+         this.goalkeepersRating = this.goalkeepersRatingAll;
       }
    }
 
    isTeamSelected(teamId: number): boolean {
-      return this.teamIdsFiltered && this.teamIdsFiltered.length ? this.teamIdsFiltered.includes(teamId) : true;
+      return this.selectedTeamId === teamId;
    }
 
    ngOnChanges(changes: SimpleChanges) {
@@ -51,7 +48,7 @@ export class TeamRatingUserTableComponent implements OnChanges {
             this.topScorersRatingAll = this.topScorersRating;
             this.goalkeepersRating = this.formTeamUserRating(changes[propName].currentValue, 'blocked');
             this.goalkeepersRatingAll = this.goalkeepersRating;
-            this.teamIdsFiltered = [];
+            this.selectedTeamId = null;
             this.teams = [];
             changes[propName].currentValue.forEach(user => {
                const filteredTeamIds = this.teams.map(item => item.id);

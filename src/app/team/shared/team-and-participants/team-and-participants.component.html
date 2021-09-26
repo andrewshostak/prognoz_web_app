@@ -1,4 +1,4 @@
-<div class="d-flex justify-content-between text-dark">
+<div class="d-flex justify-content-between">
    <div>
       <app-team-logo-with-tooltip [team]="team"></app-team-logo-with-tooltip>
       <span class="font-weight-bold">{{ team.name }}</span>
@@ -26,7 +26,7 @@
       </button>
    </div>
 </div>
-<div [ngbCollapse]="!isExpanded" class="bg-white text-dark">
+<div [ngbCollapse]="!isExpanded">
    <table *ngIf="teamParticipants" class="table table-sm table-bordered mb-0">
       <tr *ngFor="let participant of teamParticipants">
          <td class="align-middle">

@@ -3,7 +3,7 @@
       <!-- form block -->
       <div class="col-12 col-md-10 mb-2">
          <div
-            class="row align-items-center p-md-1 rounded bg-white border border-dark h-100"
+            class="row align-items-center p-md-1 rounded border border-dark h-100"
             [ngClass]="{
                'green-inset-and-black-shadow': isScore(teamPrediction.home, teamPrediction.away),
                'red-inset-and-black-shadow': !isScore(teamPrediction.home, teamPrediction.away)
@@ -27,19 +27,19 @@
                }"
             >
                <div class="row">
-                  <div class="col-12 text-center text-white">
+                  <div class="col-12 text-center">
                      {{ teamPrediction.team_match.starts_at | time: 'DD MMMM HH:mm' }}
                   </div>
                </div>
                <div class="row align-items-center">
-                  <div class="col-6 col-sm-4 col-md-3 col-lg-4 order-1 order-sm-1 text-right text-sm-center text-white">
+                  <div class="col-6 col-sm-4 col-md-3 col-lg-4 order-1 order-sm-1 text-right text-sm-center">
                      <strong
                         ><label [for]="'home-' + teamPrediction.team_match.id">{{
                            teamPrediction.team_match.club_first.title
                         }}</label></strong
                      >
                   </div>
-                  <div class="col-12 col-sm-4 col-md-6 col-lg-4 order-3 order-sm-2 text-center text-white mb-2">
+                  <div class="col-12 col-sm-4 col-md-6 col-lg-4 order-3 order-sm-2 text-center mb-2">
                      <!-- if team match is predictable -->
                      <div *ngIf="teamPrediction.team_match.is_predictable">
                         <input
@@ -65,7 +65,7 @@
                         <strong>{{ showScoresOrString(teamPrediction.home, teamPrediction.away, '- : -') }}</strong>
                      </div>
                   </div>
-                  <div class="col-6 col-sm-4 col-md-3 col-lg-4 order-2 order-sm-3 text-left text-sm-center text-white">
+                  <div class="col-6 col-sm-4 col-md-3 col-lg-4 order-2 order-sm-3 text-left text-sm-center">
                      <strong
                         ><label [for]="'away' + teamPrediction.team_match.id">{{
                            teamPrediction.team_match.club_second.title

@@ -1,4 +1,6 @@
-@import '~bootstrap/scss/functions', '~bootstrap/scss/variables';
+@import '../node_modules/bootswatch/dist/darkly/_variables.scss';
+@import '../node_modules/bootstrap/scss/bootstrap.scss';
+@import '../node_modules/bootswatch/dist/darkly/_bootswatch.scss';
 @import '~@ng-select/ng-select/themes/default.theme.css';
 
 html,
@@ -7,18 +9,16 @@ body,
    height: 100%;
 }
 body {
-   background-color: #eeeeee;
-
    .bg-transparent {
       background-color: transparent;
    }
 
-   .bg-white {
-      background-color: $white;
-   }
-
    .break-word {
       word-wrap: break-word;
+   }
+
+   .text-shadow {
+      text-shadow: $dark 1px 0 2px;
    }
 
    .cursor-pointer,
@@ -94,7 +94,7 @@ body {
    }
 
    .green-inset-and-black-shadow {
-      box-shadow: inset 0 0 5px $success, 0 0.5rem 1rem $gray-500;
+      box-shadow: inset 0 0 5px $success, 0 0.5rem 1rem $secondary;
    }
 
    .green-shadow {
@@ -115,7 +115,7 @@ body {
    }
 
    .red-inset-and-black-shadow {
-      box-shadow: inset 0 0 5px $danger, 0 0.5rem 1rem $gray-500;
+      box-shadow: inset 0 0 5px $danger, 0 0.5rem 1rem $secondary;
    }
    .red-shadow {
       box-shadow: 0 0 5px $danger;
@@ -147,6 +147,63 @@ body {
       background-color: $white;
       color: $black;
    }
+
+   // to make list items look like a table rows
+   .cup-match-row:nth-child(odd) {
+      background-color: $table-accent-bg;
+   }
+   .cup-match-row:hover {
+      background-color: $table-hover-bg;
+   }
+
+   #carousel {
+      margin-top: -8px;
+      height: 400px;
+      color: $white;
+      background: url('/assets/img/field.jpg') center center no-repeat;
+      background-size: cover;
+
+      .carousel-caption {
+         h3 {
+            display: inline-block;
+            border: 1px solid $gray-400;
+         }
+      }
+
+      .logo {
+         height: 100%;
+         background-repeat: no-repeat;
+         background-position: center center;
+         background-size: contain;
+         -webkit-filter: drop-shadow(0 0 5px $white);
+         filter: drop-shadow(0 0 5px $white);
+      }
+
+      .logo-block {
+         height: 300px;
+      }
+
+      .title-block {
+         height: 100px;
+
+         .col {
+            h2 {
+               font-weight: bold;
+               font-style: italic;
+               margin: 0 25px;
+               border: 1px solid $gray-400;
+            }
+         }
+      }
+
+      .vs {
+         height: 400px;
+         background: url('/assets/img/vs.png') center center no-repeat;
+         background-size: contain;
+         -webkit-filter: drop-shadow(0 0 5px $white);
+         filter: drop-shadow(0 0 5px $white);
+      }
+   }
 }
 
 [hidden] {
@@ -164,4 +221,15 @@ body {
    .table-responsive-xs-custom.table-bordered {
       border: 0;
    }
+}
+
+// to rewrite default notification colors. other methods are not used
+.simple-notification.success {
+   background-color: $success !important;
+}
+.simple-notification.info {
+   background-color: $info !important;
+}
+.simple-notification.error {
+   background-color: $danger !important;
 }

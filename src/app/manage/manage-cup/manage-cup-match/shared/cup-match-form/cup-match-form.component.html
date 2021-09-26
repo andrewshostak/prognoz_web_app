@@ -1,68 +1,70 @@
-<form novalidate [formGroup]="cupMatchForm" (ngSubmit)="onSubmit()" class="bg-white p-2 pl-lg-5 pr-lg-5">
-   <div class="form-row">
-      <div class="col-12 col-md-6">
-         <app-match-select
-            [fGroup]="cupMatchForm"
-            [match]="cupMatch?.match"
-            [tournamentMatchesObservable]="cupMatchesObservable"
-            [createdMatchId]="lastCreatedMatchId"
-         >
-         </app-match-select>
-      </div>
-      <div class="col-12 col-md-6">
-         <div *ngIf="cupStages" formArrayName="cup_stages" class="mb-2">
-            <label class="font-weight-bold">Кубкові стадії ({{ cupStagesFormArray.controls.length }}):</label>
-            <div [hidden]="cupMatchForm.disabled" class="mb-2">
-               <button type="button" class="btn btn-outline-success" (click)="addCupStage()">
-                  <i class="fa fa-plus-circle" aria-hidden="true"></i>
-                  Добавити
-               </button>
-            </div>
-            <div
-               *ngFor="let cupStageFormGroup of cupStagesFormArray.controls; let i = index"
-               [formGroup]="cupStageFormGroup"
-               class="form-row mb-2"
+<div class="card p-2 pl-lg-5 pr-lg-5">
+   <form novalidate [formGroup]="cupMatchForm" (ngSubmit)="onSubmit()">
+      <div class="form-row">
+         <div class="col-12 col-md-6">
+            <app-match-select
+               [fGroup]="cupMatchForm"
+               [match]="cupMatch?.match"
+               [tournamentMatchesObservable]="cupMatchesObservable"
+               [createdMatchId]="lastCreatedMatchId"
             >
-               <div class="col d-flex align-items-center justify-content-end">{{ i + 1 }}.</div>
-               <div class="col-9">
-                  <div class="form-group mb-0" [class.form-group-invalid]="showFormInvalidClass(cupStageFormGroup.get('id'))">
-                     <select id="id" class="form-control" formControlName="id">
-                        <option *ngFor="let cupStage of cupStages" [value]="cupStage.id">
-                           {{ cupStage.title }} ({{ cupStage.round }}) | {{ cupStage.competition?.title }}
-                        </option>
-                     </select>
-                     <div [hidden]="!showFormErrorMessage(cupStageFormGroup.get('id'), 'required')" class="error-message">
-                        <small>Виберіть стадію зі списку або видаліть це поле</small>
+            </app-match-select>
+         </div>
+         <div class="col-12 col-md-6">
+            <div *ngIf="cupStages" formArrayName="cup_stages" class="mb-2">
+               <label class="font-weight-bold">Кубкові стадії ({{ cupStagesFormArray.controls.length }}):</label>
+               <div [hidden]="cupMatchForm.disabled" class="mb-2">
+                  <button type="button" class="btn btn-outline-success" (click)="addCupStage()">
+                     <i class="fa fa-plus-circle" aria-hidden="true"></i>
+                     Добавити
+                  </button>
+               </div>
+               <div
+                  *ngFor="let cupStageFormGroup of cupStagesFormArray.controls; let i = index"
+                  [formGroup]="cupStageFormGroup"
+                  class="form-row mb-2"
+               >
+                  <div class="col d-flex align-items-center justify-content-end">{{ i + 1 }}.</div>
+                  <div class="col-9">
+                     <div class="form-group mb-0" [class.form-group-invalid]="showFormInvalidClass(cupStageFormGroup.get('id'))">
+                        <select id="id" class="form-control" formControlName="id">
+                           <option *ngFor="let cupStage of cupStages" [value]="cupStage.id">
+                              {{ cupStage.title }} ({{ cupStage.round }}) | {{ cupStage.competition?.title }}
+                           </option>
+                        </select>
+                        <div [hidden]="!showFormErrorMessage(cupStageFormGroup.get('id'), 'required')" class="error-message">
+                           <small>Виберіть стадію зі списку або видаліть це поле</small>
+                        </div>
                      </div>
                   </div>
-               </div>
-               <div class="col">
-                  <button
-                     [hidden]="cupMatchForm.disabled"
-                     type="button"
-                     title="Видалити"
-                     class="btn btn-danger"
-                     (click)="removeCupStage(i)"
-                  >
-                     <i class="fa fa-trash" aria-hidden="true"></i>
-                  </button>
+                  <div class="col">
+                     <button
+                        [hidden]="cupMatchForm.disabled"
+                        type="button"
+                        title="Видалити"
+                        class="btn btn-danger"
+                        (click)="removeCupStage(i)"
+                     >
+                        <i class="fa fa-trash" aria-hidden="true"></i>
+                     </button>
+                  </div>
                </div>
             </div>
          </div>
       </div>
-   </div>
-   <div [hidden]="cupMatchForm.disabled" class="d-flex justify-content-between">
-      <button type="button" class="btn btn-outline-danger" (click)="openConfirmModal(confirmModal, null, resetCupMatchForm)">
-         <i class="fa fa-refresh" aria-hidden="true"></i>
-         Відмінити зміни
-      </button>
-      <button type="submit" class="btn btn-primary">
-         <i class="fa fa-check-circle-o" aria-hidden="true"></i>
-         {{ cupMatch ? 'Змінити' : 'Зберегти' }}
-      </button>
-   </div>
-</form>
-<ng-template #confirmModal let-c="close">
-   <app-confirmation-modal [close]="c" [message]="'Очистити форму від змін?'" (confirmed)="openedModal.submitted($event)">
-   </app-confirmation-modal>
-</ng-template>
+      <div [hidden]="cupMatchForm.disabled" class="d-flex justify-content-between">
+         <button type="button" class="btn btn-outline-danger" (click)="openConfirmModal(confirmModal, null, resetCupMatchForm)">
+            <i class="fa fa-refresh" aria-hidden="true"></i>
+            Відмінити зміни
+         </button>
+         <button type="submit" class="btn btn-primary">
+            <i class="fa fa-check-circle-o" aria-hidden="true"></i>
+            {{ cupMatch ? 'Змінити' : 'Зберегти' }}
+         </button>
+      </div>
+   </form>
+   <ng-template #confirmModal let-c="close">
+      <app-confirmation-modal [close]="c" [message]="'Очистити форму від змін?'" (confirmed)="openedModal.submitted($event)">
+      </app-confirmation-modal>
+   </ng-template>
+</div>

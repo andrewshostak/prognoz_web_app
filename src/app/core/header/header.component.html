@@ -35,7 +35,7 @@
 <nav class="d-none d-sm-flex navbar navbar-dark bg-dark justify-content-center mb-2">
    <ul class="nav nav-pills nav-fill justify-content-center">
       <li *ngFor="let navigationItem of navigationItems" class="nav-item">
-         <a [routerLink]="navigationItem.link" routerLinkActive="btn-warning text-dark" class="btn btn-block text-white font-weight-bold">
+         <a [routerLink]="navigationItem.link" routerLinkActive="btn-warning text-dark" class="btn btn-block font-weight-bold">
             {{ navigationItem.label }}
          </a>
       </li>
@@ -45,11 +45,7 @@
    <div class="container">
       <div class="row justify-content-center">
          <div *ngFor="let navigationItem of navigationItems" class="col-6">
-            <a
-               class="btn btn-sm btn-block font-weight-bold text-white"
-               routerLinkActive="btn-warning text-dark"
-               [routerLink]="navigationItem.link"
-            >
+            <a class="btn btn-sm btn-block font-weight-bold" routerLinkActive="btn-warning text-dark" [routerLink]="navigationItem.link">
                {{ navigationItem.label }}
             </a>
          </div>

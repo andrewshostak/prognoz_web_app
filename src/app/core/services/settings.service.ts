@@ -40,7 +40,8 @@ export class SettingsService {
       'v2/team/stage-types',
       'v2/users',
       'v2/guestbook-messages',
-      'v2/comments'
+      'v2/comments',
+      'v2/clubs'
    ];
 
    // new image logos paths
