@@ -1,63 +1,62 @@
 <div class="container">
-    <div class="row">
-        <div class="col">
-            <h2 class="h2">Таблиця кубкових стадій:</h2>
-        </div>
-    </div>
-    <div *ngIf="cupStages" class="row">
-        <div class="col-12">
-            <div class="table-responsive bg-white">
-                <table class="table table-bordered table-striped table-hover mb-0">
-                    <thead class="thead-dark">
-                    <tr>
-                        <th scope="col">Id</th>
-                        <th scope="col">Змагання: Назва Стадії</th>
-                        <th scope="col">Тип</th>
-                        <th scope="col">Раунд</th>
-                        <th scope="col" class="text-center" title="Активна">А.</th>
-                        <th scope="col" class="text-center" title="Завершена">З.</th>
-                        <th scope="col">Дія</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr *ngFor="let cupStage of cupStages">
-                        <th scope="row" class="align-middle">{{cupStage.id}}</th>
-                        <td class="align-middle">{{cupStage.competition.title}}: <strong>{{cupStage.title}}</strong></td>
-                        <td class="align-middle">{{cupStage.cup_stage_type.title}}</td>
-                        <td class="text-center align-middle">{{cupStage.round}}</td>
-                        <td class="text-center align-middle">
-                            <i *ngIf="cupStage.active" class="text-success fa fa-check-circle fa-lg" aria-hidden="true"></i>
-                            <i *ngIf="!cupStage.active" class="text-danger fa fa-times fa-lg" aria-hidden="true"></i>
-                        </td>
-                        <td class="text-center align-middle">
-                            <i *ngIf="cupStage.ended" class="text-success fa fa-check-circle fa-lg" aria-hidden="true"></i>
-                            <i *ngIf="!cupStage.ended" class="text-danger fa fa-times fa-lg" aria-hidden="true"></i>
-                        </td>
-                        <td class="text-center text-nowrap align-middle">
-                            <button routerLink="/manage/cup/stages/{{cupStage.id}}/edit" type="button" class="btn btn-sm btn-warning">
-                                <i class="fa fa-pencil-square-o fa-lg" aria-hidden="true"></i>
-                            </button>
-                            <button [hidden]="cupStage.ended" type="button" class="btn btn-sm btn-danger" (click)="openConfirmModal(confirmModal, cupStage)">
-                                <i class="fa fa-trash-o fa-lg" aria-hidden="true"></i>
-                            </button>
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </div>
-    <app-error *ngIf="errorCupStages" [message]="errorCupStages"></app-error>
-    <app-pagination *ngIf="cupStages"
-                    [totalItems]="total"
-                    [currentPage]="currentPage"
-                    [pageSize]="perPage"
-                    [path]="path">
-    </app-pagination>
+   <div class="row">
+      <div class="col">
+         <h2 class="h2">Таблиця кубкових стадій:</h2>
+      </div>
+   </div>
+   <div *ngIf="cupStages" class="row">
+      <div class="col-12">
+         <div class="table-responsive">
+            <table class="table table-bordered table-striped table-hover mb-0">
+               <thead class="thead-dark">
+                  <tr>
+                     <th scope="col">Id</th>
+                     <th scope="col">Змагання: Назва Стадії</th>
+                     <th scope="col">Тип</th>
+                     <th scope="col">Раунд</th>
+                     <th scope="col" class="text-center" title="Активна">А.</th>
+                     <th scope="col" class="text-center" title="Завершена">З.</th>
+                     <th scope="col">Дія</th>
+                  </tr>
+               </thead>
+               <tbody>
+                  <tr *ngFor="let cupStage of cupStages">
+                     <th scope="row" class="align-middle">{{ cupStage.id }}</th>
+                     <td class="align-middle">
+                        {{ cupStage.competition.title }}: <strong>{{ cupStage.title }}</strong>
+                     </td>
+                     <td class="align-middle">{{ cupStage.cup_stage_type.title }}</td>
+                     <td class="text-center align-middle">{{ cupStage.round }}</td>
+                     <td class="text-center align-middle">
+                        <i *ngIf="cupStage.active" class="text-success fa fa-check-circle fa-lg" aria-hidden="true"></i>
+                        <i *ngIf="!cupStage.active" class="text-danger fa fa-times fa-lg" aria-hidden="true"></i>
+                     </td>
+                     <td class="text-center align-middle">
+                        <i *ngIf="cupStage.ended" class="text-success fa fa-check-circle fa-lg" aria-hidden="true"></i>
+                        <i *ngIf="!cupStage.ended" class="text-danger fa fa-times fa-lg" aria-hidden="true"></i>
+                     </td>
+                     <td class="text-center text-nowrap align-middle">
+                        <button routerLink="/manage/cup/stages/{{ cupStage.id }}/edit" type="button" class="btn btn-sm btn-warning">
+                           <i class="fa fa-pencil-square-o fa-lg" aria-hidden="true"></i>
+                        </button>
+                        <button
+                           [hidden]="cupStage.ended"
+                           type="button"
+                           class="btn btn-sm btn-danger"
+                           (click)="openConfirmModal(confirmModal, cupStage)"
+                        >
+                           <i class="fa fa-trash-o fa-lg" aria-hidden="true"></i>
+                        </button>
+                     </td>
+                  </tr>
+               </tbody>
+            </table>
+         </div>
+      </div>
+   </div>
+   <app-error *ngIf="errorCupStages" [message]="errorCupStages"></app-error>
+   <app-pagination *ngIf="cupStages" [totalItems]="total" [currentPage]="currentPage" [pageSize]="perPage" [path]="path"> </app-pagination>
 </div>
 <ng-template #confirmModal let-c="close">
-    <app-confirmation-modal [close]="c"
-                            [message]="confirmModalMessage"
-                            (confirmed)="confirmModalSubmit($event)">
-    </app-confirmation-modal>
+   <app-confirmation-modal [close]="c" [message]="confirmModalMessage" (confirmed)="confirmModalSubmit($event)"> </app-confirmation-modal>
 </ng-template>
