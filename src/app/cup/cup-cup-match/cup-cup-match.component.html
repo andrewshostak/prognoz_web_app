@@ -117,10 +117,7 @@
                   </td>
                </tr>
                <tr *ngFor="let matchWithPredictions of matchesWithPredictions">
-                  <td
-                     class="text-center text-nowrap"
-                     [ngClass]="{ 'bg-success text-white': matchWithPredictions.homePredictionInfo.scored }"
-                  >
+                  <td class="text-center text-nowrap" [ngClass]="{ 'bg-success': matchWithPredictions.homePredictionInfo.scored }">
                      <app-prediction-with-tooltip
                         *ngIf="matchWithPredictions.homePredictionInfo.prediction; else hiddenPrediction"
                         [componentText]="matchWithPredictions.homePredictionInfo.readable"
@@ -151,10 +148,7 @@
                         <i class="fa fa-lg fa-check-circle-o"></i>
                      </span>
                   </td>
-                  <td
-                     class="text-center text-nowrap"
-                     [ngClass]="{ 'bg-success text-white': matchWithPredictions.awayPredictionInfo.scored }"
-                  >
+                  <td class="text-center text-nowrap" [ngClass]="{ 'bg-success': matchWithPredictions.awayPredictionInfo.scored }">
                      <app-prediction-with-tooltip
                         *ngIf="matchWithPredictions.awayPredictionInfo.prediction; else hiddenPrediction"
                         [componentText]="matchWithPredictions.awayPredictionInfo.readable"
