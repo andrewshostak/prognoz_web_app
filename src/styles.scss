@@ -222,3 +222,14 @@ body {
       border: 0;
    }
 }
+
+// to rewrite default notification colors. other methods are not used
+.simple-notification.success {
+   background-color: $success !important;
+}
+.simple-notification.info {
+   background-color: $info !important;
+}
+.simple-notification.error {
+   background-color: $danger !important;
+}
