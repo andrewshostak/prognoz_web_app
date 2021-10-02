@@ -1,81 +1,77 @@
 <div class="container">
-    <div class="row">
-        <div class="col">
-            <h2>Створити команду:</h2>
-        </div>
-    </div>
-    <!-- error -->
-    <app-error *ngIf="errorClubs" [message]="errorClubs"></app-error>
-    <!-- club create form -->
-    <div *ngIf="clubs" class="row">
-        <div class="col-12 col-sm-10 offset-sm-1 col-md-8 offset-md-2 col-lg-6 offset-lg-3 text-white">
-            <form novalidate [formGroup]="clubCreateForm" (ngSubmit)="onSubmit(clubCreateForm)" class="bg-dark p-2 rounded">
-                <!-- title -->
-                <div class="form-group"
-                     [class.form-group-invalid-custom]="clubCreateForm.get('title').invalid && clubCreateForm.get('title').touched">
-                    <label class="form-control-label" for="title"><strong>Назва:</strong></label>
-                    <input type="text"
-                           id="title"
-                           placeholder="Введіть назву команди"
-                           class="form-control"
-                           formControlName="title">
-                    <div *ngIf="clubCreateForm.get('title').hasError('required') && clubCreateForm.get('title').touched">
-                        <small>Назва команди обов'язкова</small>
-                    </div>
-                    <div *ngIf="clubCreateForm.get('title').hasError('minlength') && clubCreateForm.get('title').touched">
-                        <small>Назва повинна бути більша ніж 2 символи</small>
-                    </div>
-                    <div *ngIf="clubCreateForm.get('title').hasError('maxlength') && clubCreateForm.get('title').touched">
-                        <small>Назва перевищує 50 символів</small>
-                    </div>
-                </div>
-                <!-- link -->
-                <div class="form-group"
-                     [class.form-group-invalid-custom]="clubCreateForm.get('link').invalid && clubCreateForm.get('link').touched">
-                    <label class="form-control-label" for="link"><strong>Назва англійською:</strong></label>
-                    <input type="text"
-                           id="link"
-                           placeholder="Введіть назву команди англійською"
-                           class="form-control"
-                           formControlName="link">
-                    <div *ngIf="clubCreateForm.get('link').hasError('required') && clubCreateForm.get('link').touched">
-                        <small>Назва команди обов'язкова</small>
-                    </div>
-                    <div *ngIf="clubCreateForm.get('link').hasError('minlength') && clubCreateForm.get('link').touched">
-                        <small>Назва повинна бути більша ніж 2 символи</small>
-                    </div>
-                    <div *ngIf="clubCreateForm.get('link').hasError('maxlength') && clubCreateForm.get('link').touched">
-                        <small>Назва перевищує 50 символів</small>
-                    </div>
-                </div>
-                <!-- parent_id -->
-                <div class="form-group">
-                    <label class="form-control-label" for="parent_id"><strong>Країна:</strong></label>
-                    <select id="parent_id"
-                            class="form-control"
-                            formControlName="parent_id">
-                        <option [value]="'country'" selected>Це збірна команда</option>
-                        <option *ngFor="let club of clubs" [value]="club.id">{{club.title}}</option>
-                    </select>
-                </div>
-                <!-- logo -->
-                <div class="form-group" [class.form-group-invalid-custom]="errorImage">
-                    <label class="form-control-label" for="image"><strong>Зображення:</strong></label>
-                    <input type="file"
-                           id="image"
-                           placeholder="Завантажте зображення для команди"
-                           class="form-control"
-                           (change)="fileChange($event)"
-                           accept=".png,.jpg,.gif">
-                    <div *ngIf="errorImage">
-                        <small>{{errorImage}}</small>
-                    </div>
-                </div>
-                <!-- submit button -->
-                <button [hidden]="spinnerButton" [disabled]="clubCreateForm.invalid" type="submit" class="btn btn-primary">Створити</button>
-                <!-- spinner button -->
-                <app-spinner-button [hidden]="!spinnerButton"></app-spinner-button>
-            </form>
-        </div>
-    </div>
+   <div class="row">
+      <div class="col">
+         <h2>Створити команду:</h2>
+      </div>
+   </div>
+   <!-- error -->
+   <app-error *ngIf="errorClubs" [message]="errorClubs"></app-error>
+   <!-- club create form -->
+   <div *ngIf="clubs" class="row">
+      <div class="col-12 col-sm-10 offset-sm-1 col-md-8 offset-md-2 col-lg-6 offset-lg-3">
+         <form novalidate [formGroup]="clubCreateForm" (ngSubmit)="onSubmit()" class="bg-dark p-2 rounded">
+            <!-- title -->
+            <div
+               class="form-group"
+               [class.form-group-invalid-custom]="clubCreateForm.get('title').invalid && clubCreateForm.get('title').touched"
+            >
+               <label class="form-control-label" for="title"><strong>Назва:</strong></label>
+               <input type="text" id="title" placeholder="Введіть назву команди" class="form-control" formControlName="title" />
+               <div *ngIf="clubCreateForm.get('title').hasError('required') && clubCreateForm.get('title').touched">
+                  <small>Назва команди обов'язкова</small>
+               </div>
+               <div *ngIf="clubCreateForm.get('title').hasError('minlength') && clubCreateForm.get('title').touched">
+                  <small>Назва повинна бути більша ніж 2 символи</small>
+               </div>
+               <div *ngIf="clubCreateForm.get('title').hasError('maxlength') && clubCreateForm.get('title').touched">
+                  <small>Назва перевищує 50 символів</small>
+               </div>
+            </div>
+            <!-- link -->
+            <div
+               class="form-group"
+               [class.form-group-invalid-custom]="clubCreateForm.get('link').invalid && clubCreateForm.get('link').touched"
+            >
+               <label class="form-control-label" for="link"><strong>Назва англійською:</strong></label>
+               <input type="text" id="link" placeholder="Введіть назву команди англійською" class="form-control" formControlName="link" />
+               <div *ngIf="clubCreateForm.get('link').hasError('required') && clubCreateForm.get('link').touched">
+                  <small>Назва команди обов'язкова</small>
+               </div>
+               <div *ngIf="clubCreateForm.get('link').hasError('minlength') && clubCreateForm.get('link').touched">
+                  <small>Назва повинна бути більша ніж 2 символи</small>
+               </div>
+               <div *ngIf="clubCreateForm.get('link').hasError('maxlength') && clubCreateForm.get('link').touched">
+                  <small>Назва перевищує 50 символів</small>
+               </div>
+            </div>
+            <!-- parent_id -->
+            <div class="form-group">
+               <label class="form-control-label" for="parent_id"><strong>Країна:</strong></label>
+               <select id="parent_id" class="form-control" formControlName="parent_id">
+                  <option [value]="'country'" selected>Це збірна команда</option>
+                  <option *ngFor="let club of clubs" [value]="club.id">{{ club.title }}</option>
+               </select>
+            </div>
+            <!-- logo -->
+            <div class="form-group" [class.form-group-invalid-custom]="errorImage">
+               <label class="form-control-label" for="image"><strong>Зображення:</strong></label>
+               <input
+                  type="file"
+                  id="image"
+                  placeholder="Завантажте зображення для команди"
+                  class="form-control"
+                  (change)="fileChange($event)"
+                  accept=".png,.jpg,.gif"
+               />
+               <div *ngIf="errorImage">
+                  <small>{{ errorImage }}</small>
+               </div>
+            </div>
+            <!-- submit button -->
+            <button [hidden]="spinnerButton" [disabled]="clubCreateForm.invalid" type="submit" class="btn btn-primary">Створити</button>
+            <!-- spinner button -->
+            <app-spinner-button [hidden]="!spinnerButton"></app-spinner-button>
+         </form>
+      </div>
+   </div>
 </div>

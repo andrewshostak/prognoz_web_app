@@ -1,72 +1,74 @@
 <h3 class="h3 m-2">Редагувати командну стадію:</h3>
-<form novalidate [formGroup]="teamStageForm" (ngSubmit)="onSubmit()" class="bg-white p-2 pl-lg-5 pr-lg-5">
-   <div class="form-row">
-      <div class="col-12 col-md-6 col-lg-4 offset-0 offset-lg-2">
-         <div class="form-group" [class.form-group-invalid]="showFormInvalidClass(teamStageForm.get('competition_id'))">
-            <label for="competition_id" class="font-weight-bold">Змагання:</label>
-            <select id="competition_id" class="form-control" formControlName="competition_id">
-               <option *ngFor="let competition of competitions" [value]="competition.id">{{ competition.title }}</option>
-            </select>
-            <div [hidden]="!showFormErrorMessage(teamStageForm.get('competition_id'), 'required')" class="error-message">
-               <small>Змагання обов'язкове</small>
-            </div>
-         </div>
-      </div>
-      <div class="col-12 col-md-6 col-lg-4">
-         <div class="form-group" [class.form-group-invalid]="showFormInvalidClass(teamStageForm.get('team_stage_type_id'))">
-            <label [attr.for]="'team_stage_type_id'" class="font-weight-bold">Тип командної стадії:</label>
-            <div>
-               <div *ngFor="let teamStageType of teamStageTypes" class="form-check form-check-inline">
-                  <input
-                     class="form-check-input cursor-pointer"
-                     formControlName="team_stage_type_id"
-                     type="radio"
-                     name="team_stage_type_id"
-                     [id]="'stage' + teamStageType.id"
-                     [value]="teamStageType.id"
-                  />
-                  <label class="form-check-label cursor-pointer" [for]="'stage' + teamStageType.id">
-                     {{ teamStageType.title }}
-                  </label>
+<div class="card p-2 pl-lg-5 pr-lg-5">
+   <form novalidate [formGroup]="teamStageForm" (ngSubmit)="onSubmit()">
+      <div class="form-row">
+         <div class="col-12 col-md-6 col-lg-4 offset-0 offset-lg-2">
+            <div class="form-group" [class.form-group-invalid]="showFormInvalidClass(teamStageForm.get('competition_id'))">
+               <label for="competition_id" class="font-weight-bold">Змагання:</label>
+               <select id="competition_id" class="form-control" formControlName="competition_id">
+                  <option *ngFor="let competition of competitions" [value]="competition.id">{{ competition.title }}</option>
+               </select>
+               <div [hidden]="!showFormErrorMessage(teamStageForm.get('competition_id'), 'required')" class="error-message">
+                  <small>Змагання обов'язкове</small>
                </div>
             </div>
-            <div [hidden]="!showFormErrorMessage(teamStageForm.get('team_stage_type_id'), 'required')" class="error-message">
-               <small>Тип командної стадії обов'язковий</small>
+         </div>
+         <div class="col-12 col-md-6 col-lg-4">
+            <div class="form-group" [class.form-group-invalid]="showFormInvalidClass(teamStageForm.get('team_stage_type_id'))">
+               <label [attr.for]="'team_stage_type_id'" class="font-weight-bold">Тип командної стадії:</label>
+               <div>
+                  <div *ngFor="let teamStageType of teamStageTypes" class="form-check form-check-inline">
+                     <input
+                        class="form-check-input cursor-pointer"
+                        formControlName="team_stage_type_id"
+                        type="radio"
+                        name="team_stage_type_id"
+                        [id]="'stage' + teamStageType.id"
+                        [value]="teamStageType.id"
+                     />
+                     <label class="form-check-label cursor-pointer" [for]="'stage' + teamStageType.id">
+                        {{ teamStageType.title }}
+                     </label>
+                  </div>
+               </div>
+               <div [hidden]="!showFormErrorMessage(teamStageForm.get('team_stage_type_id'), 'required')" class="error-message">
+                  <small>Тип командної стадії обов'язковий</small>
+               </div>
             </div>
          </div>
       </div>
-   </div>
-   <div class="form-row">
-      <div class="col-12 col-md-6 col-lg-4 offset-0 offset-lg-2">
-         <div class="form-group" [class.form-group-invalid]="showFormInvalidClass(teamStageForm.get('title'))">
-            <label for="title" class="font-weight-bold">Назва</label>
-            <input type="text" id="title" class="form-control" formControlName="title" />
-            <div [hidden]="!showFormErrorMessage(teamStageForm.get('title'), 'required')" class="error-message">
-               <small>Назва обов'язкова</small>
+      <div class="form-row">
+         <div class="col-12 col-md-6 col-lg-4 offset-0 offset-lg-2">
+            <div class="form-group" [class.form-group-invalid]="showFormInvalidClass(teamStageForm.get('title'))">
+               <label for="title" class="font-weight-bold">Назва</label>
+               <input type="text" id="title" class="form-control" formControlName="title" />
+               <div [hidden]="!showFormErrorMessage(teamStageForm.get('title'), 'required')" class="error-message">
+                  <small>Назва обов'язкова</small>
+               </div>
+               <div [hidden]="!showFormErrorMessage(teamStageForm.get('title'), 'maxlength')" class="error-message">
+                  <small>Назва повинна бути від 1 до 50 символів</small>
+               </div>
             </div>
-            <div [hidden]="!showFormErrorMessage(teamStageForm.get('title'), 'maxlength')" class="error-message">
-               <small>Назва повинна бути від 1 до 50 символів</small>
+         </div>
+         <div class="col-12 col-md-6 col-lg-4">
+            <div class="form-group" [class.form-group-invalid]="showFormInvalidClass(teamStageForm.get('round'))">
+               <label for="round" class="font-weight-bold">Раунд</label>
+               <input type="number" id="round" class="form-control" min="1" formControlName="round" />
+               <div [hidden]="!showFormErrorMessage(teamStageForm.get('round'), 'required')" class="error-message">
+                  <small>Раунд обов'язковий</small>
+               </div>
+               <div [hidden]="!showFormErrorMessage(teamStageForm.get('round'), 'min')" class="error-message">
+                  <small>Раунд повинен бути більшим 0</small>
+               </div>
             </div>
          </div>
       </div>
-      <div class="col-12 col-md-6 col-lg-4">
-         <div class="form-group" [class.form-group-invalid]="showFormInvalidClass(teamStageForm.get('round'))">
-            <label for="round" class="font-weight-bold">Раунд</label>
-            <input type="number" id="round" class="form-control" min="1" formControlName="round" />
-            <div [hidden]="!showFormErrorMessage(teamStageForm.get('round'), 'required')" class="error-message">
-               <small>Раунд обов'язковий</small>
-            </div>
-            <div [hidden]="!showFormErrorMessage(teamStageForm.get('round'), 'min')" class="error-message">
-               <small>Раунд повинен бути більшим 0</small>
-            </div>
+      <div class="form-row">
+         <div class="col-12 col-md-6 col-lg-4 offset-0 offset-md-6 offset-lg-6 text-right">
+            <button type="submit" class="btn btn-primary" [disabled]="teamStageForm.disabled">
+               <i class="fa fa-plus-circle" aria-hidden="true"></i> Змінити
+            </button>
          </div>
       </div>
-   </div>
-   <div class="form-row">
-      <div class="col-12 col-md-6 col-lg-4 offset-0 offset-md-6 offset-lg-6 text-right">
-         <button type="submit" class="btn btn-primary" [disabled]="teamStageForm.disabled">
-            <i class="fa fa-plus-circle" aria-hidden="true"></i> Змінити
-         </button>
-      </div>
-   </div>
-</form>
+   </form>
+</div>

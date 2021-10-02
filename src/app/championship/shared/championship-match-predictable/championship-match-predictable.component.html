@@ -1,7 +1,7 @@
 <!-- one match row (if user not authenticated)-->
 <div
    *ngIf="championshipMatch && !authenticatedUser"
-   class="row align-items-center mb-2 p-md-1 rounded bg-white border border-dark shadow position-relative"
+   class="row align-items-center mb-2 p-md-1 rounded border border-dark shadow position-relative"
 >
    <!-- home club logo -->
    <div class="d-none d-md-block col-md-2">
@@ -15,18 +15,18 @@
    <!-- club names, starts_at -->
    <div class="col-12 col-md-8 bg-dark rounded">
       <div class="row">
-         <div class="col-12 text-center text-white">
+         <div class="col-12 text-center">
             {{ championshipMatch.match.started_at | time: 'DD MMMM HH:mm' }}
          </div>
       </div>
       <div class="row align-items-center mb-2">
-         <div class="col-5 text-center text-white">
+         <div class="col-5 text-center">
             <strong>{{ championshipMatch.match.club_home.title }}</strong>
          </div>
-         <div class="col-2 text-center text-white">
+         <div class="col-2 text-center">
             <strong>vs</strong>
          </div>
-         <div class="col-5 text-center text-white">
+         <div class="col-5 text-center">
             <strong>{{ championshipMatch.match.club_away.title }}</strong>
          </div>
          <!-- expandable statistic -->
@@ -36,7 +36,7 @@
                <!-- error statistic -->
                <app-error *ngIf="errorStatistic" [message]="errorStatistic"></app-error>
                <!-- statistic -->
-               <div *ngIf="statistic" class="card-body bg-white">
+               <div *ngIf="statistic" class="card-body">
                   <div class="col-12">
                      <canvas baseChart [data]="resultChartData" [labels]="resultChartLabels" [chartType]="resultChartType"> </canvas>
                   </div>
@@ -61,25 +61,25 @@
    >
       <span [hidden]="!isCollapsed || spinnerStatistic" class="fa-stack">
          <i class="fa fa-circle fa-stack-2x fa-inverse" aria-hidden="true"></i>
-         <i class="fa fa-circle-o fa-stack-2x" aria-hidden="true"></i>
-         <i class="fa fa-chevron-down fa-stack-1x" aria-hidden="true"></i>
+         <i class="fa fa-circle-o fa-stack-2x text-dark" aria-hidden="true"></i>
+         <i class="fa fa-chevron-down fa-stack-1x text-dark" aria-hidden="true"></i>
       </span>
       <span [hidden]="isCollapsed || spinnerStatistic" class="fa-stack">
          <i class="fa fa-circle fa-stack-2x fa-inverse" aria-hidden="true"></i>
-         <i class="fa fa-circle-o fa-stack-2x" aria-hidden="true"></i>
-         <i class="fa fa-chevron-up fa-stack-1x" aria-hidden="true"></i>
+         <i class="fa fa-circle-o fa-stack-2x text-dark" aria-hidden="true"></i>
+         <i class="fa fa-chevron-up fa-stack-1x text-dark" aria-hidden="true"></i>
       </span>
       <span [hidden]="!spinnerStatistic" class="fa-stack">
          <i class="fa fa-circle fa-stack-2x fa-inverse" aria-hidden="true"></i>
-         <i class="fa fa-circle-o fa-stack-2x" aria-hidden="true"></i>
-         <i class="fa fa-spinner fa-spin fa-stack-1x" aria-hidden="true"></i>
+         <i class="fa fa-circle-o fa-stack-2x text-dark" aria-hidden="true"></i>
+         <i class="fa fa-spinner fa-spin fa-stack-1x text-dark" aria-hidden="true"></i>
       </span>
    </div>
 </div>
 <!-- one match row (if user is authenticated)-->
 <div
    *ngIf="championshipMatch && authenticatedUser && championshipMatch.championship_predicts"
-   class="row align-items-center mb-2 p-md-1 rounded bg-white border border-dark position-relative"
+   class="row align-items-center mb-2 p-md-1 rounded border border-dark position-relative"
    [ngClass]="{
       'green-inset-and-black-shadow': championshipMatch.championship_predicts[0],
       'red-inset-and-black-shadow': !championshipMatch.championship_predicts[0]
@@ -101,17 +101,17 @@
       [formGroup]="championshipPredictsForm"
    >
       <div class="row">
-         <div class="col-12 text-center text-white">
+         <div class="col-12 text-center">
             {{ championshipMatch.match.started_at | time: 'DD MMMM HH:mm' }}
          </div>
       </div>
       <div class="row align-items-center">
-         <div class="col-6 col-sm-3 col-lg-4 order-1 order-sm-1 text-right text-sm-center text-white">
+         <div class="col-6 col-sm-3 col-lg-4 order-1 order-sm-1 text-right text-sm-center">
             <strong
                ><label [attr.for]="championshipMatch.id + '_home'">{{ championshipMatch.match.club_home.title }}</label></strong
             >
          </div>
-         <div class="col-12 col-sm-6 col-lg-4 order-3 order-sm-2 text-center text-white mb-2">
+         <div class="col-12 col-sm-6 col-lg-4 order-3 order-sm-2 text-center mb-2">
             <img
                class="small-image d-lg-none"
                [attr.src]="clubsLogosPath + championshipMatch.match.club_home.image"
@@ -142,7 +142,7 @@
                title="{{ championshipMatch.match.club_away.title }}"
             />
          </div>
-         <div class="col-6 col-sm-3 col-lg-4 order-2 order-sm-3 text-left text-sm-center text-white">
+         <div class="col-6 col-sm-3 col-lg-4 order-2 order-sm-3 text-left text-sm-center">
             <strong
                ><label [attr.for]="championshipMatch.id + '_away'">{{ championshipMatch.match.club_away.title }}</label></strong
             >
@@ -154,7 +154,7 @@
                <!-- error statistic -->
                <app-error *ngIf="errorStatistic" [message]="errorStatistic"></app-error>
                <!-- statistic -->
-               <div *ngIf="statistic" class="card-body bg-white">
+               <div *ngIf="statistic" class="card-body">
                   <div class="col-12">
                      <canvas baseChart [data]="resultChartData" [labels]="resultChartLabels" [chartType]="resultChartType"> </canvas>
                   </div>
@@ -179,18 +179,18 @@
    >
       <span [hidden]="!isCollapsed || spinnerStatistic" class="fa-stack">
          <i class="fa fa-circle fa-stack-2x fa-inverse" aria-hidden="true"></i>
-         <i class="fa fa-circle-o fa-stack-2x" aria-hidden="true"></i>
-         <i class="fa fa-chevron-down fa-stack-1x" aria-hidden="true"></i>
+         <i class="fa fa-circle-o fa-stack-2x text-dark" aria-hidden="true"></i>
+         <i class="fa fa-chevron-down fa-stack-1x text-dark" aria-hidden="true"></i>
       </span>
       <span [hidden]="isCollapsed || spinnerStatistic" class="fa-stack">
          <i class="fa fa-circle fa-stack-2x fa-inverse" aria-hidden="true"></i>
-         <i class="fa fa-circle-o fa-stack-2x" aria-hidden="true"></i>
-         <i class="fa fa-chevron-up fa-stack-1x" aria-hidden="true"></i>
+         <i class="fa fa-circle-o fa-stack-2x text-dark" aria-hidden="true"></i>
+         <i class="fa fa-chevron-up fa-stack-1x text-dark" aria-hidden="true"></i>
       </span>
       <span [hidden]="!spinnerStatistic" class="fa-stack">
          <i class="fa fa-circle fa-stack-2x fa-inverse" aria-hidden="true"></i>
-         <i class="fa fa-circle-o fa-stack-2x" aria-hidden="true"></i>
-         <i class="fa fa-spinner fa-spin fa-stack-1x" aria-hidden="true"></i>
+         <i class="fa fa-circle-o fa-stack-2x text-dark" aria-hidden="true"></i>
+         <i class="fa fa-spinner fa-spin fa-stack-1x text-dark" aria-hidden="true"></i>
       </span>
    </div>
 </div>

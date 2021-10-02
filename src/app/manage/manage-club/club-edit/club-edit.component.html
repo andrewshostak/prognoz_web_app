@@ -13,7 +13,7 @@
    <div *ngIf="club && clubs" class="row">
       <!-- left column(current club data) -->
       <div class="col-12 col-lg-6">
-         <div class="card bg-dark text-white">
+         <div class="card bg-dark">
             <h5 class="card-header">Інформація про команду</h5>
             <br />
             <div class="row">
@@ -44,8 +44,8 @@
          </div>
       </div>
       <!-- right column (form) -->
-      <div class="col-12 col-lg-6 text-white">
-         <form novalidate [formGroup]="clubEditForm" (ngSubmit)="onSubmit(clubEditForm)" class="bg-dark p-2 rounded">
+      <div class="col-12 col-lg-6">
+         <form novalidate [formGroup]="clubEditForm" (ngSubmit)="onSubmit()" class="bg-dark p-2 rounded">
             <input type="hidden" formControlName="id" />
             <!-- title -->
             <div

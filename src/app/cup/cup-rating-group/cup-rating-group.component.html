@@ -63,7 +63,7 @@
             *ngFor="let cupRatingGroupItem of cupRatingGroup; let i = index"
             [ngClass]="{
                'table-primary': showPositionHighlight(i, 'config.cup.group.promotion'),
-               'table-info': showPositionHighlight(i, 'config.cup.group.other_competition')
+               'table-secondary': showPositionHighlight(i, 'config.cup.group.other_competition')
             }"
          >
             <th scope="row" class="text-center align-middle">{{ i + 1 }}.</th>
@@ -107,7 +107,7 @@
             *ngFor="let cupRatingGroupItem of cupRatingGroup; let i = index"
             [ngClass]="{
                'table-primary': showPositionHighlight(i, 'config.cup.group.promotion'),
-               'table-info': showPositionHighlight(i, 'config.cup.group.other_competition')
+               'table-secondary': showPositionHighlight(i, 'config.cup.group.other_competition')
             }"
          >
             <th scope="row" class="text-center align-middle">{{ i + 1 }}.</th>
@@ -159,7 +159,7 @@
             *ngFor="let cupRatingGroupItem of cupRatingGroup; let i = index"
             [ngClass]="{
                'table-primary': showPositionHighlight(i, 'config.cup.group.promotion'),
-               'table-info': showPositionHighlight(i, 'config.cup.group.other_competition')
+               'table-secondary': showPositionHighlight(i, 'config.cup.group.other_competition')
             }"
          >
             <th scope="row" class="text-center align-middle">{{ i + 1 }}.</th>

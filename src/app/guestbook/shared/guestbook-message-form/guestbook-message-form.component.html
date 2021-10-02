@@ -1,5 +1,5 @@
-<div *ngIf="user">
-   <form novalidate [formGroup]="guestbookMessageForm" (ngSubmit)="submit()" class="bg-white shadow rounded p-2 mb-2">
+<div *ngIf="user" class="card shadow">
+   <form novalidate [formGroup]="guestbookMessageForm" (ngSubmit)="submit()" class="card-body">
       <app-message-input [fGroup]="guestbookMessageForm" [showLabel]="true"></app-message-input>
       <div class="text-right">
          <button [hidden]="spinnerButton" type="submit" class="btn btn-primary"><i class="fa fa-check"></i> Добавити</button>

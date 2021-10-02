@@ -82,7 +82,7 @@
       <div class="card-body p-0">
          <div class="table-responsive">
             <table class="table table-bordered table-sm mb-0">
-               <tr class="bg-light">
+               <tr>
                   <td class="text-center text-muted pt-0 pb-0" colspan="3"><small>Додаткові показники</small></td>
                </tr>
                <tr>
@@ -99,7 +99,7 @@
          </div>
          <div class="table-responsive">
             <table class="table table-bordered table-striped table-sm mb-0">
-               <tr class="bg-light">
+               <tr>
                   <td class="text-center text-nowrap pb-0 pt-0">
                      <i *ngIf="numberOfMatchesInStage === predictionsNumber.home" class="fa fa-check-circle text-success"></i>
                      <i *ngIf="!predictionsNumber.home" class="fa fa-times text-danger"></i>
@@ -117,10 +117,7 @@
                   </td>
                </tr>
                <tr *ngFor="let matchWithPredictions of matchesWithPredictions">
-                  <td
-                     class="text-center text-nowrap"
-                     [ngClass]="{ 'bg-success text-white': matchWithPredictions.homePredictionInfo.scored }"
-                  >
+                  <td class="text-center text-nowrap" [ngClass]="{ 'bg-success': matchWithPredictions.homePredictionInfo.scored }">
                      <app-prediction-with-tooltip
                         *ngIf="matchWithPredictions.homePredictionInfo.prediction; else hiddenPrediction"
                         [componentText]="matchWithPredictions.homePredictionInfo.readable"
@@ -151,10 +148,7 @@
                         <i class="fa fa-lg fa-check-circle-o"></i>
                      </span>
                   </td>
-                  <td
-                     class="text-center text-nowrap"
-                     [ngClass]="{ 'bg-success text-white': matchWithPredictions.awayPredictionInfo.scored }"
-                  >
+                  <td class="text-center text-nowrap" [ngClass]="{ 'bg-success': matchWithPredictions.awayPredictionInfo.scored }">
                      <app-prediction-with-tooltip
                         *ngIf="matchWithPredictions.awayPredictionInfo.prediction; else hiddenPrediction"
                         [componentText]="matchWithPredictions.awayPredictionInfo.readable"
@@ -173,7 +167,7 @@
                   <strong *ngIf="cupCupMatch.home_rating_points < 0" class="text-danger"> {{ cupCupMatch.home_rating_points }} </strong>
                   <span *ngIf="cupCupMatch.home_rating_points == 0">0</span>
                </td>
-               <td class="text-center text-muted bg-light"><small>Рейтингові очки</small></td>
+               <td class="text-center text-muted"><small>Рейтингові очки</small></td>
                <td class="points-cell text-center">
                   <strong *ngIf="cupCupMatch.away_rating_points > 0"> +{{ cupCupMatch.away_rating_points }} </strong>
                   <strong *ngIf="cupCupMatch.away_rating_points < 0" class="text-danger"> {{ cupCupMatch.away_rating_points }} </strong>
