@@ -1,9 +1,7 @@
 import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
 
-import { Club } from '@models/club.model';
 import { Match } from '@models/match.model';
-import { ClubService } from '@services/club.service';
 import { MatchService } from '@services/new/match.service';
 import { SettingsService } from '@services/settings.service';
 import { UtilsService } from '@services/utils.service';
@@ -19,12 +17,11 @@ import * as moment from 'moment';
 export class MatchFormComponent implements OnChanges, OnInit {
    @Input() public match: Match;
 
-   public clubs: Club[];
    public clubsLogosPath: string;
    public matchForm: FormGroup;
-   public timeTemplates: Array<{ hour: number; minute: number }>;
+   public timeTemplates: { hour: number; minute: number }[];
 
-   constructor(private clubService: ClubService, private matchService: MatchService, private notificationsService: NotificationsService) {}
+   constructor(private matchService: MatchService, private notificationsService: NotificationsService) {}
 
    get momentDateFromForm(): moment.Moment {
       let date: moment.Moment;
@@ -45,11 +42,7 @@ export class MatchFormComponent implements OnChanges, OnInit {
    }
 
    get defaultMomentFormDate(): moment.Moment {
-      return moment()
-         .add(1, 'day')
-         .add(1, 'hour')
-         .minute(0)
-         .second(0);
+      return moment().add(1, 'day').add(1, 'hour').minute(0).second(0);
    }
 
    get startDateFormGroup(): FormGroup {
@@ -74,12 +67,6 @@ export class MatchFormComponent implements OnChanges, OnInit {
          );
          this.matchForm.get('home_club_id').reset();
          this.matchForm.get('away_club_id').reset();
-      });
-   }
-
-   public getClubsData(): void {
-      this.clubService.getClubs().subscribe(response => {
-         this.clubs = response.clubs;
       });
    }
 
@@ -153,7 +140,6 @@ export class MatchFormComponent implements OnChanges, OnInit {
    }
 
    public ngOnInit() {
-      this.getClubsData();
       this.setTimeTemplates();
       this.clubsLogosPath = SettingsService.clubsLogosPath + '/';
       const date = this.defaultMomentFormDate;

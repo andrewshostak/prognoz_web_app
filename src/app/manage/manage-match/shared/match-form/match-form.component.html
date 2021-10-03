@@ -2,23 +2,9 @@
    <form novalidate [formGroup]="matchForm" (ngSubmit)="submitted()">
       <div class="form-row">
          <div class="col-12 col-md-4 order-5 order-md-1">
-            <div *ngIf="clubs" class="form-group" [class.form-group-invalid]="showFormInvalidClass(matchForm.get('home_club_id'))">
+            <div class="form-group" [class.form-group-invalid]="showFormInvalidClass(matchForm.get('home_club_id'))">
                <label [attr.for]="'home_club_id'" class="font-weight-bold">Господарі:</label>
-               <ng-select [items]="clubs" bindValue="id" bindLabel="title" labelForId="home_club_id" formControlName="home_club_id">
-                  <ng-template ng-label-tmp let-item="item">
-                     <div class="d-flex flex-row">
-                        <img class="small-image mr-2" [attr.src]="clubsLogosPath + item.image" />
-                        <div class="font-weight-bold mr-2">{{ item.title }}</div>
-                        <div *ngIf="item.parent">({{ item.parent.title }})</div>
-                     </div>
-                  </ng-template>
-                  <ng-template ng-option-tmp let-item="item">
-                     <div class="d-flex flex-row justify-content-between">
-                        <div class="font-weight-bold">{{ item.title }}</div>
-                        <div *ngIf="item.parent">{{ item.parent.title }}</div>
-                     </div>
-                  </ng-template>
-               </ng-select>
+               <app-club-select formControlName="home_club_id" [clubsList]="match ? [match.club_home] : []"></app-club-select>
                <div [hidden]="!showFormErrorMessage(matchForm.get('home_club_id'), 'required')" class="error-message">
                   <small>Вибір першої команди обов'язковий</small>
                </div>
@@ -85,23 +71,9 @@
             <label [attr.for]="'away'" class="m-0"><span class="font-weight-bold">Голи</span> <span class="text-muted">Гості</span></label>
          </div>
          <div class="col-12 col-md-4 order-7">
-            <div *ngIf="clubs" class="form-group" [class.form-group-invalid]="showFormInvalidClass(matchForm.get('away_club_id'))">
+            <div class="form-group" [class.form-group-invalid]="showFormInvalidClass(matchForm.get('away_club_id'))">
                <label [attr.for]="'away_club_id'" class="font-weight-bold">Гості:</label>
-               <ng-select [items]="clubs" bindValue="id" bindLabel="title" labelForId="away_club_id" formControlName="away_club_id">
-                  <ng-template ng-label-tmp let-item="item">
-                     <div class="d-flex flex-row">
-                        <img class="small-image mr-2" [attr.src]="clubsLogosPath + item.image" />
-                        <div class="font-weight-bold mr-2">{{ item.title }}</div>
-                        <div *ngIf="item.parent">({{ item.parent.title }})</div>
-                     </div>
-                  </ng-template>
-                  <ng-template ng-option-tmp let-item="item">
-                     <div class="d-flex flex-row justify-content-between">
-                        <div class="font-weight-bold">{{ item.title }}</div>
-                        <div *ngIf="item.parent">{{ item.parent.title }}</div>
-                     </div>
-                  </ng-template>
-               </ng-select>
+               <app-club-select formControlName="away_club_id" [clubsList]="match ? [match.club_away] : []"></app-club-select>
                <div [hidden]="!showFormErrorMessage(matchForm.get('away_club_id'), 'required')" class="error-message">
                   <small>Вибір другої команди обов'язковий</small>
                </div>

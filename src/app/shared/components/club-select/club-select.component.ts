@@ -49,6 +49,7 @@ export class ClubSelectComponent implements OnChanges, OnInit, ControlValueAcces
    public clubsInput$: Subject<string>;
    public clubSelectFormGroup: FormGroup;
    public clubsTypeAhead: EventEmitter<string>;
+   public clubsLogosPath = SettingsService.clubsLogosPath + '/';
 
    constructor(private clubsService: ClubNewService) {}
 
