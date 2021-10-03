@@ -84,7 +84,7 @@
                               <small>Місто повинно бути коротшим ніж 50 символів</small>
                            </div>
                         </div>
-                        <div *ngIf="clubs" formArrayName="club_user" class="form-group">
+                        <div formArrayName="club_user" class="form-group">
                            <label class="form-control-label font-weight-bold">Улюблені команди:</label>
                            <div class="clubs border rounded p-1" [class.border-danger]="userEditForm.hasError('clubUserEquality')">
                               <div [hidden]="userEditForm.hasError('clubUserEquality')" class="alert alert-info mb-1" role="alert">
@@ -101,27 +101,10 @@
                                  class="form-row align-items-center mt-1 mb-1 pt-2 pb-2"
                                  [ngClass]="{ 'border bg-primary': club.get('main').value }"
                               >
-                                 <div class="form-group col-3 col-sm-2 text-right mb-0">
+                                 <div class="form-group col-3 col-sm-2 text-right mb-0" (click)="onSelectMainClub(i)">
                                     <div class="form-check mb-2 mb-sm-0">
                                        <label class="form-check-label">
-                                          <input
-                                             type="radio"
-                                             class="form-check-input"
-                                             [value]="1"
-                                             formControlName="main"
-                                             (change)="onSelectMainClub(i)"
-                                          />
-                                          <app-club-logo-with-tooltip
-                                             *ngIf="club.get('club_id').value"
-                                             [club]="findClub(club.get('club_id').value)"
-                                          >
-                                          </app-club-logo-with-tooltip>
-                                          <i
-                                             *ngIf="!club.get('club_id').value"
-                                             class="fa fa-shield fa-lg text-muted ml-1 mr-1"
-                                             aria-hidden="true"
-                                          >
-                                          </i>
+                                          <input type="radio" class="form-check-input" [value]="1" formControlName="main" />
                                        </label>
                                     </div>
                                  </div>
@@ -129,9 +112,11 @@
                                     class="form-group col-6 col-sm-8 mb-0"
                                     [class.form-group-invalid]="showFormInvalidClass(club.get('club_id'))"
                                  >
-                                    <select id="club_id" class="form-control" formControlName="club_id">
-                                       <option *ngFor="let c of clubs" [value]="c.id">{{ c.title }}</option>
-                                    </select>
+                                    <app-club-select
+                                       formControlName="club_id"
+                                       [clubsList]="authenticatedUser.clubs"
+                                       [type]="'clubs'"
+                                    ></app-club-select>
                                     <div [hidden]="!showFormErrorMessage(club.get('club_id'), 'required')" class="error-message">
                                        <small>Виберіть команду зі списку або видаліть це поле</small>
                                     </div>

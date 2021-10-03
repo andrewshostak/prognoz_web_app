@@ -2,9 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
-import { ClubNew } from '@models/new/club-new.model';
 import { UserNew } from '@models/new/user-new.model';
-import { ClubService } from '@services/club.service';
 import { FormValidatorService } from '@services/form-validator.service';
 import { AuthNewService } from '@services/new/auth-new.service';
 import { UserNewService } from '@services/new/user-new.service';
@@ -21,7 +19,6 @@ import { assign } from 'lodash';
 })
 export class MeComponent implements OnInit {
    public authenticatedUser: UserNew;
-   public clubs: ClubNew[];
    public spinnerButton: boolean;
    public userEditForm: FormGroup;
    public userImageDefault: string = SettingsService.userDefaultImage;
@@ -31,7 +28,6 @@ export class MeComponent implements OnInit {
 
    constructor(
       private authService: AuthNewService,
-      private clubService: ClubService,
       private formValidatorService: FormValidatorService,
       private notificationsService: NotificationsService,
       private router: Router,
@@ -56,14 +52,7 @@ export class MeComponent implements OnInit {
       return this.clubUser.length >= 3;
    }
 
-   public findClub(clubId: number): ClubNew {
-      return this.clubs.find(club => {
-         return club.id.toString() === clubId.toString();
-      });
-   }
-
    public ngOnInit() {
-      this.getClubsData();
       this.authenticatedUser = Object.assign({}, this.authService.getUser());
       this.setForm(this.authenticatedUser);
       this.titleService.setTitle('Редагувати профіль');
@@ -86,9 +75,7 @@ export class MeComponent implements OnInit {
 
    public onSelectMainClub(index: number): void {
       this.clubUser.controls.forEach((item, i) => {
-         if (index !== i) {
-            item.patchValue({ main: 0 });
-         }
+         item.patchValue({ main: index === i ? 1 : 0 });
       });
    }
 
@@ -117,14 +104,6 @@ export class MeComponent implements OnInit {
       return UtilsService.showFormInvalidClass(abstractControl);
    }
 
-   private getClubsData() {
-      this.clubService.getClubs(null, 'clubs').subscribe(response => {
-         if (response) {
-            this.clubs = response.clubs;
-         }
-      });
-   }
-
    private setForm(authenticatedUser: UserNew): void {
       this.userEditForm = new FormGroup(
          {
@@ -144,7 +123,7 @@ export class MeComponent implements OnInit {
          authenticatedUser.clubs.forEach(club => {
             this.clubUser.push(
                new FormGroup({
-                  club_id: new FormControl(club.id.toString(), [Validators.required]),
+                  club_id: new FormControl(club.id, [Validators.required]),
                   main: new FormControl(club.pivot.main)
                })
             );
