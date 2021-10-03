@@ -15,18 +15,18 @@
    <!-- club names, starts_at -->
    <div class="col-12 col-md-8 bg-dark rounded">
       <div class="row">
-         <div class="col-12 text-center">
+         <div class="col-12 text-center text-light">
             {{ championshipMatch.match.started_at | time: 'DD MMMM HH:mm' }}
          </div>
       </div>
       <div class="row align-items-center mb-2">
-         <div class="col-5 text-center">
+         <div class="col-5 text-center text-light">
             <strong>{{ championshipMatch.match.club_home.title }}</strong>
          </div>
-         <div class="col-2 text-center">
+         <div class="col-2 text-center text-light">
             <strong>vs</strong>
          </div>
-         <div class="col-5 text-center">
+         <div class="col-5 text-center text-light">
             <strong>{{ championshipMatch.match.club_away.title }}</strong>
          </div>
          <!-- expandable statistic -->
@@ -101,17 +101,17 @@
       [formGroup]="championshipPredictsForm"
    >
       <div class="row">
-         <div class="col-12 text-center">
+         <div class="col-12 text-center text-light">
             {{ championshipMatch.match.started_at | time: 'DD MMMM HH:mm' }}
          </div>
       </div>
       <div class="row align-items-center">
-         <div class="col-6 col-sm-3 col-lg-4 order-1 order-sm-1 text-right text-sm-center">
+         <div class="col-6 col-sm-3 col-lg-4 order-1 order-sm-1 text-right text-light text-sm-center">
             <strong
                ><label [attr.for]="championshipMatch.id + '_home'">{{ championshipMatch.match.club_home.title }}</label></strong
             >
          </div>
-         <div class="col-12 col-sm-6 col-lg-4 order-3 order-sm-2 text-center mb-2">
+         <div class="col-12 col-sm-6 col-lg-4 order-3 order-sm-2 text-center text-light mb-2">
             <img
                class="small-image d-lg-none"
                [attr.src]="clubsLogosPath + championshipMatch.match.club_home.image"
@@ -142,7 +142,7 @@
                title="{{ championshipMatch.match.club_away.title }}"
             />
          </div>
-         <div class="col-6 col-sm-3 col-lg-4 order-2 order-sm-3 text-left text-sm-center">
+         <div class="col-6 col-sm-3 col-lg-4 order-2 order-sm-3 text-left text-light text-sm-center">
             <strong
                ><label [attr.for]="championshipMatch.id + '_away'">{{ championshipMatch.match.club_away.title }}</label></strong
             >

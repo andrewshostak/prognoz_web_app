@@ -43,7 +43,7 @@
                [ngClass]="{ 'table-primary': promotion(i), 'table-danger': relegation(i, c) }"
             >
                <th scope="row" class="text-center">{{ teamRatingItem.position ? teamRatingItem.position : i + 1 }}.</th>
-               <td class="text-center d-none d-lg-table-cell text-shadow">
+               <td class="text-center d-none d-lg-table-cell">
                   <!-- no moving -->
                   <span *ngIf="!teamRatingItem.moving" class="text-center text-muted">
                      <i class="fa fa-circle-o" aria-hidden="true"></i>

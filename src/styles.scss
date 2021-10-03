@@ -1,6 +1,6 @@
-@import '../node_modules/bootswatch/dist/darkly/_variables.scss';
+@import '../node_modules/bootswatch/dist/sandstone/_variables.scss';
 @import '../node_modules/bootstrap/scss/bootstrap.scss';
-@import '../node_modules/bootswatch/dist/darkly/_bootswatch.scss';
+@import '../node_modules/bootswatch/dist/sandstone/_bootswatch.scss';
 @import '~@ng-select/ng-select/themes/default.theme.css';
 
 html,
@@ -15,10 +15,6 @@ body {
 
    .break-word {
       word-wrap: break-word;
-   }
-
-   .text-shadow {
-      text-shadow: $dark 1px 0 2px;
    }
 
    .cursor-pointer,

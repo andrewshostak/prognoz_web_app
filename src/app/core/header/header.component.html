@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand navbar-dark bg-dark">
+<nav class="navbar navbar-expand navbar-dark bg-primary">
    <a class="navbar-brand mr-auto d-none d-md-block" routerLink="/">Prognoz.org.ua</a>
    <div *ngIf="!user" class="form-inline ml-auto ml-2">
       <div class="btn-group ml-2" role="group" aria-label="header-buttons">
@@ -17,7 +17,7 @@
          <button *ngIf="user.roles?.length" routerLink="/manage" class="btn btn-outline-light">
             <i class="fa fa-pencil-square-o" aria-hidden="true"></i> <span class="d-none d-sm-inline">Керування</span>
          </button>
-         <button (click)="logout()" class="btn btn-outline-danger">
+         <button (click)="logout()" class="btn btn-danger">
             <i class="fa fa-sign-out" aria-hidden="true"></i> <span class="d-none d-sm-inline">Вихід</span>
          </button>
       </div>
@@ -32,20 +32,24 @@
       </div>
    </div>
 </div>
-<nav class="d-none d-sm-flex navbar navbar-dark bg-dark justify-content-center mb-2">
+<nav class="d-none d-sm-flex navbar navbar-dark bg-primary justify-content-center mb-2">
    <ul class="nav nav-pills nav-fill justify-content-center">
       <li *ngFor="let navigationItem of navigationItems" class="nav-item">
-         <a [routerLink]="navigationItem.link" routerLinkActive="btn-warning text-dark" class="btn btn-block font-weight-bold">
+         <a [routerLink]="navigationItem.link" routerLinkActive="btn-light text-dark" class="btn btn-block font-weight-bold text-light">
             {{ navigationItem.label }}
          </a>
       </li>
    </ul>
 </nav>
-<nav class="d-flex d-sm-none navbar navbar-dark bg-dark justify-content-center mb-2">
+<nav class="d-flex d-sm-none navbar navbar-dark bg-primary justify-content-center mb-2">
    <div class="container">
       <div class="row justify-content-center">
          <div *ngFor="let navigationItem of navigationItems" class="col-6">
-            <a class="btn btn-sm btn-block font-weight-bold" routerLinkActive="btn-warning text-dark" [routerLink]="navigationItem.link">
+            <a
+               class="btn btn-sm btn-block font-weight-bold text-light"
+               routerLinkActive="btn-light text-dark"
+               [routerLink]="navigationItem.link"
+            >
                {{ navigationItem.label }}
             </a>
          </div>
