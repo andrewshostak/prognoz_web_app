@@ -9,6 +9,7 @@ export class SettingsService {
 
    // pagination
    public static readonly championshipMatchesPerPage: number = 10;
+   public static readonly clubsPerPage: number = 10;
    public static readonly cupMatchesPerPage: number = 16;
    public static readonly cupStagesPerPage: number = 10;
    public static readonly guestbookMessagesPerPage: number = 15;

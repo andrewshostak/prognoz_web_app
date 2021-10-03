@@ -14,7 +14,7 @@ const routes: Routes = [
       canActivate: [PermissionGuard],
       data: { permissions: ['create_club', 'update_club', 'delete_club'] },
       children: [
-         { path: 'page/:number', component: ClubTableComponent },
+         { path: 'page/:pageNumber', component: ClubTableComponent },
          { path: 'create', component: ClubCreateComponent, canActivate: [PermissionGuard], data: { permissions: ['create_club'] } },
          { path: ':id/edit', component: ClubEditComponent, canActivate: [PermissionGuard], data: { permissions: ['update_club'] } },
          { path: '', component: ClubTableComponent }

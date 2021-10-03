@@ -5,7 +5,10 @@ export class ClubNew {
    public title: string;
    public link: string;
    public image: string;
+   public created_at: string;
+   public updated_at: string;
 
+   public parent?: ClubNew;
    public pivot?: {
       main: boolean;
    };

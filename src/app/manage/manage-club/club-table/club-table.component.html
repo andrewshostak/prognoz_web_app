@@ -4,8 +4,6 @@
          <h2>Таблиця команд:</h2>
       </div>
    </div>
-   <!-- error -->
-   <app-error *ngIf="errorClubs" [message]="errorClubs"></app-error>
    <!-- clubs table -->
    <div *ngIf="clubs" class="row">
       <div class="col-12">
@@ -44,7 +42,7 @@
                      <a routerLink="/manage/clubs/{{ club.id }}/edit" type="button" class="btn btn-sm btn-outline-warning">
                         <i class="fa fa-pencil-square-o fa-lg" aria-hidden="true"></i>
                      </a>
-                     <button type="button" class="btn btn-sm btn-outline-danger" (click)="openConfirmModal(confirmModal, club)">
+                     <button type="button" class="btn btn-sm btn-outline-danger" (click)="openConfirmModal(confirmModal, club, deleteClub)">
                         <i class="fa fa-trash-o fa-lg" aria-hidden="true"></i>
                      </button>
                   </td>
@@ -53,8 +51,16 @@
          </table>
       </div>
    </div>
-   <app-pagination *ngIf="clubs" [totalItems]="total" [currentPage]="currentPage" [pageSize]="perPage" [path]="path"> </app-pagination>
+   <app-pagination
+      *ngIf="paginationData"
+      [totalItems]="paginationData.total"
+      [currentPage]="paginationData.currentPage"
+      [pageSize]="paginationData.pageSize"
+      [path]="paginationData.path"
+   >
+   </app-pagination>
 </div>
 <ng-template #confirmModal let-c="close">
-   <app-confirmation-modal [close]="c" [message]="confirmModalMessage" (confirmed)="deleteClub()"> </app-confirmation-modal>
+   <app-confirmation-modal [close]="c" [message]="'Видалити ' + openedModal.data.title + '?'" (confirmed)="openedModal.submitted($event)">
+   </app-confirmation-modal>
 </ng-template>

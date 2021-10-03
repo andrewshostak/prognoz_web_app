@@ -9,7 +9,7 @@ import { Observable } from 'rxjs';
 
 @Injectable()
 export class ClubNewService {
-   public readonly clubsUrl: string = `${environment.apiUrl}/v2/clubs`;
+   public readonly clubsUrl: string = `${environment.apiUrl}v2/clubs`;
 
    constructor(private httpClient: HttpClient) {}
 

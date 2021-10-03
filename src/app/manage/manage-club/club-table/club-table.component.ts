@@ -1,45 +1,49 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 
-import { Club } from '@models/club.model';
 import { ClubService } from '@services/club.service';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { NotificationsService } from 'angular2-notifications';
+import { ClubNewService } from '@services/new/club-new.service';
+import { ClubNew } from '@models/new/club-new.model';
+import { Subscription } from 'rxjs';
+import { ClubSearch } from '@models/search/club-search.model';
+import { SettingsService } from '@services/settings.service';
+import { Sequence } from '@enums/sequence.enum';
+import { Pagination } from '@models/pagination.model';
+import { PaginationService } from '@services/pagination.service';
+import { OpenedModal } from '@models/opened-modal.model';
+import { remove } from 'lodash';
 
 @Component({
    selector: 'app-club-table',
    templateUrl: './club-table.component.html',
    styleUrls: ['./club-table.component.scss']
 })
-export class ClubTableComponent implements OnInit {
+export class ClubTableComponent implements OnDestroy, OnInit {
    constructor(
       private activatedRoute: ActivatedRoute,
       private clubService: ClubService,
+      private clubNewService: ClubNewService,
       private ngbModalService: NgbModal,
       private notificationsService: NotificationsService
    ) {}
 
-   clubs: Club[];
-   confirmModalMessage: string;
-   confirmModalReference: NgbModalRef;
-   currentPage: number;
-   errorClubs: string | string[];
-   lastPage: number;
-   path = '/manage/clubs/page/';
-   perPage: number;
-   selectedClub: Club;
-   total: number;
+   public activatedRouteSubscription: Subscription;
+   public clubs: ClubNew[];
+   public openedModal: OpenedModal<ClubNew>;
+   public paginationData: Pagination;
 
-   deleteClub(): void {
-      this.clubService.deleteClub(this.selectedClub.id).subscribe(
+   public deleteClub(): void {
+      this.clubService.deleteClub(this.openedModal.data.id).subscribe(
          () => {
-            this.confirmModalReference.close();
-            this.total--;
-            this.clubs = this.clubs.filter(n => n.id !== this.selectedClub.id);
-            this.notificationsService.success('Успішно', this.selectedClub.title + ' видалено');
+            remove(this.clubs, this.openedModal.data);
+            this.paginationData.total--;
+            this.notificationsService.success('Успішно', `${this.openedModal.data.title} видалено`);
+            this.openedModal.reference.close();
          },
          errors => {
-            this.confirmModalReference.close();
+            // todo: remove after moving to v2 endpoint
             for (const error of errors) {
                this.notificationsService.error('Помилка', error);
             }
@@ -47,33 +51,32 @@ export class ClubTableComponent implements OnInit {
       );
    }
 
-   ngOnInit() {
-      this.activatedRoute.params.subscribe((params: Params) => {
-         const page = params.number ? params.number : 1;
-         this.clubService.getClubs(page).subscribe(
-            response => {
-               if (response) {
-                  this.currentPage = response.current_page;
-                  this.lastPage = response.last_page;
-                  this.perPage = response.per_page;
-                  this.total = response.total;
-                  this.clubs = response.data;
-               }
-            },
-            error => {
-               this.errorClubs = error;
-            }
-         );
+   public ngOnDestroy(): void {
+      this.activatedRouteSubscription.unsubscribe();
+   }
+
+   public ngOnInit(): void {
+      this.activatedRouteSubscription = this.activatedRoute.params.subscribe((params: Params) => {
+         this.getClubsData(params.pageNumber);
       });
    }
 
-   openConfirmModal(content: NgbModalRef, club: Club): void {
-      this.confirmModalMessage = `Видалити ${club.title}?`;
-      this.selectedClub = club;
-      this.confirmModalReference = this.ngbModalService.open(content);
-      this.confirmModalReference.result.then(
-         () => (this.selectedClub = null),
-         () => (this.selectedClub = null)
-      );
+   public openConfirmModal(content: NgbModalRef | HTMLElement, data: ClubNew, submitted: (event) => void): void {
+      const reference = this.ngbModalService.open(content, { centered: true });
+      this.openedModal = { reference, data, submitted: () => submitted.call(this) };
+   }
+
+   private getClubsData(pageNumber: number): void {
+      const search: ClubSearch = {
+         limit: SettingsService.clubsPerPage,
+         orderBy: 'title',
+         page: pageNumber,
+         sequence: Sequence.Ascending,
+         relations: ['parent']
+      };
+      this.clubNewService.getClubs(search).subscribe(response => {
+         this.clubs = response.data;
+         this.paginationData = PaginationService.getPaginationData(response, '/manage/clubs/page/');
+      });
    }
 }
