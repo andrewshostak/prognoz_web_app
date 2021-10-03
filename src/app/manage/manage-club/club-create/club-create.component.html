@@ -4,10 +4,8 @@
          <h2>Створити команду:</h2>
       </div>
    </div>
-   <!-- error -->
-   <app-error *ngIf="errorClubs" [message]="errorClubs"></app-error>
    <!-- club create form -->
-   <div *ngIf="clubs" class="row">
+   <div class="row">
       <div class="col-12 col-sm-10 offset-sm-1 col-md-8 offset-md-2 col-lg-6 offset-lg-3">
          <form novalidate [formGroup]="clubCreateForm" (ngSubmit)="onSubmit()" class="bg-dark p-2 rounded">
             <!-- title -->
@@ -46,11 +44,8 @@
             </div>
             <!-- parent_id -->
             <div class="form-group">
-               <label class="form-control-label" for="parent_id"><strong>Країна:</strong></label>
-               <select id="parent_id" class="form-control" formControlName="parent_id">
-                  <option [value]="'country'" selected>Це збірна команда</option>
-                  <option *ngFor="let club of clubs" [value]="club.id">{{ club.title }}</option>
-               </select>
+               <label class="form-control-label" [attr.for]="'parent_id'"><strong>Країна:</strong></label>
+               <app-club-select formControlName="parent_id" [clubsList]="[]" [type]="'national_teams'"></app-club-select>
             </div>
             <!-- logo -->
             <div class="form-group" [class.form-group-invalid-custom]="errorImage">

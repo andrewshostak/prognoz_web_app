@@ -10,7 +10,7 @@
    <!-- error -->
    <app-error *ngIf="errorClub" [message]="errorClub"></app-error>
    <app-error *ngIf="errorClubs" [message]="errorClubs"></app-error>
-   <div *ngIf="club && clubs" class="row">
+   <div *ngIf="club" class="row">
       <!-- left column(current club data) -->
       <div class="col-12 col-lg-6">
          <div class="card bg-dark">
@@ -102,11 +102,12 @@
             </div>
             <!-- parent -->
             <div class="form-group">
-               <label class="form-control-label" for="parent_id"><strong>Країна:</strong></label>
-               <select id="parent_id" class="form-control" formControlName="parent_id">
-                  <option [ngValue]="null">Це збірна команда</option>
-                  <option *ngFor="let c of clubs" [value]="c.id">{{ c.title }}</option>
-               </select>
+               <label class="form-control-label" [attr.for]="'parent_id'"><strong>Країна:</strong></label>
+               <app-club-select
+                  formControlName="parent_id"
+                  [clubsList]="club.parent ? [club.parent] : []"
+                  [type]="'national_teams'"
+               ></app-club-select>
             </div>
             <!-- submit button -->
             <button [hidden]="spinnerButton" [disabled]="clubEditForm.invalid || errorImage" type="submit" class="btn btn-primary">

@@ -1,7 +1,7 @@
 import { Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute, Router, Params } from '@angular/router';
+import { ActivatedRoute, Params } from '@angular/router';
 
 import { Club } from '@models/club.model';
 import { ClubService } from '@services/club.service';
@@ -34,7 +34,6 @@ export class ClubEditComponent implements OnInit {
    }
 
    club: Club;
-   clubs: Club[];
    clubEditForm: FormGroup;
    clubsLogosPath = SettingsService.clubsLogosPath + '/';
    errorClub: string | string[];
@@ -58,7 +57,6 @@ export class ClubEditComponent implements OnInit {
       this.activatedRoute.params.forEach((params: Params) => {
          this.getClubData(params.id);
       });
-      this.getClubsData();
    }
 
    onSubmit() {
@@ -94,17 +92,6 @@ export class ClubEditComponent implements OnInit {
          },
          error => {
             this.errorClub = error;
-         }
-      );
-   }
-
-   private getClubsData() {
-      this.clubService.getClubs(null, 'national_teams').subscribe(
-         response => {
-            this.clubs = response.clubs;
-         },
-         error => {
-            this.errorClubs = error;
          }
       );
    }

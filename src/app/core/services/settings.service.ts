@@ -70,7 +70,7 @@ export class SettingsService {
       teamTeamMatches: 16,
       teamTeams: 50,
 
-      clubs: 500,
+      clubs: 10,
       competitions: 100,
       guestbook: 20,
       comments: 40,

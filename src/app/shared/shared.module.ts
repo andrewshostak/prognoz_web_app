@@ -8,6 +8,7 @@ import { ChampionshipResultsTableComponent } from '@app/shared/components/champi
 import { ChampionshipUserPredictionsTableComponent } from '@app/shared/components/championship/championship-user-predictions-table/championship-user-predictions-table.component';
 import { ChampionshipUserRatingDetailsComponent } from '@app/shared/components/championship/championship-user-rating-details/championship-user-rating-details.component';
 import { CheckboxComponent } from '@app/shared/components/checkbox/checkbox.component';
+import { ClubSelectComponent } from '@app/shared/components/club-select/club-select.component';
 import { ConfirmationModalComponent } from '@app/shared/components/confirmation-modal/confirmation-modal.component';
 import { DropdownNavigationComponent } from '@app/shared/components/dropdown-navigation/dropdown-navigation.component';
 import { ErrorComponent } from '@app/shared/components/error/error.component';
@@ -50,6 +51,7 @@ import { HasPermissionsDirective } from '@app/shared/directives/has-permissions.
       ChampionshipUserRatingDetailsComponent,
       CheckboxComponent,
       ClubLogoWithTooltipComponent,
+      ClubSelectComponent,
       CompetitionSelectNewComponent,
       ConfirmationModalComponent,
       CustomContentWithTooltipComponent,
@@ -87,6 +89,7 @@ import { HasPermissionsDirective } from '@app/shared/directives/has-permissions.
       ChampionshipUserRatingDetailsComponent,
       CheckboxComponent,
       ClubLogoWithTooltipComponent,
+      ClubSelectComponent,
       CompetitionSelectNewComponent,
       ConfirmationModalComponent,
       CustomContentWithTooltipComponent,

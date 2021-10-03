@@ -37,6 +37,10 @@ export class ClubNewService {
          params = params.set('search', search.search);
       }
 
+      if (search.type) {
+         params = params.set('type', search.type);
+      }
+
       if (search.relations) {
          search.relations.forEach(relation => {
             params = params.append('relations[]', relation);

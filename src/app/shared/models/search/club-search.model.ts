@@ -8,4 +8,5 @@ export class ClubSearch {
    public parentId?: number;
    public search?: string;
    public relations?: string[];
+   public type?: 'national_teams' | 'clubs';
 }

@@ -1,0 +1,16 @@
+<ng-container [formGroup]="clubSelectFormGroup">
+   <ng-select
+      [items]="clubs$ | async"
+      bindValue="id"
+      bindLabel="title"
+      labelForId="club_id"
+      formControlName="club_id"
+      [loading]="clubsLoading"
+      [loadingText]="ngSelectTexts.loadingText"
+      [notFoundText]="ngSelectTexts.notFoundText"
+      [typeToSearchText]="ngSelectTexts.typeToSearchText"
+      (focusout)="focusOut()"
+      [typeahead]="clubsInput$"
+   >
+   </ng-select>
+</ng-container>
