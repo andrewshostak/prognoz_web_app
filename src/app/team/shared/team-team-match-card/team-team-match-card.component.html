@@ -188,7 +188,14 @@
                      <app-club-logo-with-tooltip [club]="teamMatch.club_first"></app-club-logo-with-tooltip>
                   </td>
                   <td class="align-middle text-center">
-                     <strong>{{ showScoresOrString(teamMatch.home, teamMatch.away, 'vs') }}</strong>
+                     <strong>
+                        <app-prediction-with-tooltip
+                           [componentText]="showScoresOrString(teamMatch.home, teamMatch.away, 'vs')"
+                           [tooltipText]="teamMatch.starts_at"
+                           [placement]="'top'"
+                        >
+                        </app-prediction-with-tooltip>
+                     </strong>
                   </td>
                   <td class="align-middle text-left">
                      <app-club-logo-with-tooltip [club]="teamMatch.club_second"></app-club-logo-with-tooltip>
