@@ -2,7 +2,7 @@
    <div class="card-header d-flex justify-content-between">
       <div class="d-flex align-items-center">
          <div class="pr-2">
-            <app-user-logo-with-tooltip [user]="message.user"></app-user-logo-with-tooltip>
+            <app-user-logo [user]="message.user"></app-user-logo>
          </div>
          <div class="d-flex flex-column">
             <strong>{{ message.user.name }}</strong>
@@ -69,7 +69,7 @@
       class="card-footer d-flex justify-content-between"
    >
       <div class="d-flex">
-         <app-club-logo-with-tooltip *ngFor="let club of message.user.clubs" [club]="club" class="pr-2"></app-club-logo-with-tooltip>
+         <app-club-logo *ngFor="let club of message.user.clubs" [club]="club" class="pr-2"></app-club-logo>
       </div>
       <div class="d-flex flex-wrap justify-content-end">
          <div

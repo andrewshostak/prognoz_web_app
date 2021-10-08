@@ -38,7 +38,7 @@
       <div class="col-12 col-md-6">
          <div class="form-group" [class.form-group-invalid]="showFormInvalidClass(teamForm.get('image'))">
             <label [for]="'image'" class="font-weight-bold">
-               <app-team-logo-with-tooltip *ngIf="team" [team]="team"></app-team-logo-with-tooltip>
+               <app-team-logo *ngIf="team" [team]="team"></app-team-logo>
                Зображення:
             </label>
             <app-file-upload formControlName="image" [fileExtensions]="teamImageExtensions"></app-file-upload>

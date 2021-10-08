@@ -37,7 +37,7 @@
                   [count]="cupCupMatch.cup_predictions_home_count"
                   [user]="cupCupMatch.home_user"
                ></app-cup-cup-match-user-name>
-               <app-user-logo-with-tooltip [user]="cupCupMatch.home_user"></app-user-logo-with-tooltip>
+               <app-user-logo [user]="cupCupMatch.home_user"></app-user-logo>
             </div>
             <div class="col-2 d-flex align-items-center justify-content-center text-center text-nowrap">
                <small class="text-muted" *ngIf="isNil(cupCupMatch.home) && isNil(cupCupMatch.away); else score">vs</small>
@@ -51,7 +51,7 @@
                </ng-template>
             </div>
             <div class="col-5 d-flex align-items-center justify-content-start">
-               <app-user-logo-with-tooltip [user]="cupCupMatch.away_user"></app-user-logo-with-tooltip>
+               <app-user-logo [user]="cupCupMatch.away_user"></app-user-logo>
                <app-cup-cup-match-user-name
                   class="text-left pl-1"
                   [count]="cupCupMatch.cup_predictions_away_count"

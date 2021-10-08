@@ -43,8 +43,7 @@
             <strong>{{ makeUnsigned(ratingItem.moving) }}</strong>
          </td>
          <td class="text-center p-1">
-            <app-club-logo-with-tooltip *ngIf="ratingItem.user?.main_club?.length" [club]="ratingItem.user.main_club[0]">
-            </app-club-logo-with-tooltip>
+            <app-club-logo *ngIf="ratingItem.user?.main_club?.length" [club]="ratingItem.user.main_club[0]"> </app-club-logo>
          </td>
          <td class="text-left">
             <strong>{{ ratingItem.user.name }}</strong>

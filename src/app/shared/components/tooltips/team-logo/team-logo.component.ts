@@ -4,12 +4,13 @@ import { TeamNew } from '@models/new/team-new.model';
 import { SettingsService } from '@services/settings.service';
 
 @Component({
-   selector: 'app-team-logo-with-tooltip',
-   styleUrls: ['./team-logo-with-tooltip.component.scss'],
-   templateUrl: './team-logo-with-tooltip.component.html'
+   selector: 'app-team-logo',
+   styleUrls: ['./team-logo.component.scss'],
+   templateUrl: './team-logo.component.html'
 })
-export class TeamLogoWithTooltipComponent {
+export class TeamLogoComponent {
    @Input() public team: TeamNew;
+   @Input() public showTooltip: boolean = true;
 
    private teamLogosPath: string = SettingsService.teamsLogosPath + '/';
 

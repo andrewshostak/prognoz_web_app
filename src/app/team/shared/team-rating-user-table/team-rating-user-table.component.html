@@ -6,7 +6,7 @@
          class="btn pl-2 pr-2"
          [ngClass]="{ 'btn-primary': isTeamSelected(team.id), 'btn-outline-primary': !isTeamSelected(team.id) }"
       >
-         <app-team-logo-with-tooltip [team]="team"></app-team-logo-with-tooltip>
+         <app-team-logo [team]="team" [showTooltip]="false"></app-team-logo>
       </button>
    </div>
 </div>
@@ -33,11 +33,11 @@
          >
             <th scope="row" class="pl-1">{{ i + 1 }}.</th>
             <td class="font-weight-bold">
-               <app-user-logo-with-tooltip [user]="ratingItem.user"></app-user-logo-with-tooltip>
+               <app-user-logo [user]="ratingItem.user"></app-user-logo>
                {{ ratingItem.user.name }}
             </td>
             <td class="d-none d-sm-table-cell">
-               <app-team-logo-with-tooltip [team]="ratingItem.team"></app-team-logo-with-tooltip>
+               <app-team-logo [team]="ratingItem.team"></app-team-logo>
                {{ ratingItem.team.name }}
             </td>
             <td class="text-center font-weight-bold">{{ ratingItem.scored }}</td>
@@ -67,11 +67,11 @@
          >
             <th scope="row" class="pl-1">{{ i + 1 }}.</th>
             <td class="font-weight-bold">
-               <app-user-logo-with-tooltip [user]="ratingItem.user"></app-user-logo-with-tooltip>
+               <app-user-logo [user]="ratingItem.user"></app-user-logo>
                {{ ratingItem.user.name }}
             </td>
             <td class="d-none d-sm-table-cell">
-               <app-team-logo-with-tooltip [team]="ratingItem.team"></app-team-logo-with-tooltip>
+               <app-team-logo [team]="ratingItem.team"></app-team-logo>
                {{ ratingItem.team.name }}
             </td>
             <td class="text-center font-weight-bold">{{ ratingItem.blocked }}</td>

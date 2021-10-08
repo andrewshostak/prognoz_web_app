@@ -4,11 +4,11 @@ import { Club } from '@models/club.model';
 import { SettingsService } from '@services/settings.service';
 
 @Component({
-   selector: 'app-club-logo-with-tooltip',
-   templateUrl: './club-logo-with-tooltip.component.html',
-   styleUrls: ['./club-logo-with-tooltip.component.scss']
+   selector: 'app-club-logo',
+   templateUrl: './club-logo.component.html',
+   styleUrls: ['./club-logo.component.scss']
 })
-export class ClubLogoWithTooltipComponent {
+export class ClubLogoComponent {
    @Input() club: Club;
 
    private clubsLogosPath: string = SettingsService.clubsLogosPath + '/';

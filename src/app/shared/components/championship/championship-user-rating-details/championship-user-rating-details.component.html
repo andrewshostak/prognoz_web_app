@@ -4,13 +4,13 @@
 <div *ngIf="user" class="card shadow mb-2">
    <div class="card-header d-flex justify-content-between">
       <div>
-         <app-user-logo-with-tooltip [user]="user"></app-user-logo-with-tooltip>
+         <app-user-logo [user]="user"></app-user-logo>
          <strong class="align-middle ml-1 ml-sm-2">{{ user.name }}</strong>
          <small *ngIf="user.hometown" class="text-muted">({{ user.hometown }})</small>
       </div>
       <div *ngIf="user.clubs.length" class="d-flex flex-row">
          <div *ngFor="let club of user.clubs" class="ml-1 mr-1 ml-sm-2 mr-sm-2">
-            <app-club-logo-with-tooltip [club]="club"></app-club-logo-with-tooltip>
+            <app-club-logo [club]="club"></app-club-logo>
          </div>
       </div>
    </div>

@@ -190,7 +190,7 @@
 </div>
 <ng-template #userInfo let-item="item">
    <div class="d-flex flex-row align-items-center">
-      <app-user-logo-with-tooltip [user]="item.user"></app-user-logo-with-tooltip>
+      <app-user-logo [user]="item.user"></app-user-logo>
       <div class="ml-1 d-flex flex-column">
          <strong>{{ item.user.name }}</strong>
          <small class="text-muted break-word">{{ getHomeCityInBrackets(item.user.hometown) }}</small>

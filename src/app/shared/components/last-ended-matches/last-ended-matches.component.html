@@ -4,9 +4,9 @@
       <li *ngFor="let match of matches" class="list-group-item">
          <div class="col-12 text-center">{{ match.club_home.title }} - {{ match.club_away.title }}</div>
          <div class="col-12 text-center">
-            <app-club-logo-with-tooltip [club]="match.club_home"></app-club-logo-with-tooltip>
+            <app-club-logo [club]="match.club_home"></app-club-logo>
             <strong>{{ match.home }} : {{ match.away }}</strong>
-            <app-club-logo-with-tooltip [club]="match.club_away"></app-club-logo-with-tooltip>
+            <app-club-logo [club]="match.club_away"></app-club-logo>
          </div>
       </li>
    </ul>

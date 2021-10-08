@@ -34,14 +34,11 @@
                   <tr *ngFor="let cupApplication of competition.cup_applications; let i = index">
                      <th scope="row">{{ i + 1 }}.</th>
                      <td class="text-nowrap">
-                        <app-user-logo-with-tooltip [user]="cupApplication.applicant"></app-user-logo-with-tooltip>
+                        <app-user-logo [user]="cupApplication.applicant"></app-user-logo>
                         {{ cupApplication.applicant.name }}
                      </td>
                      <td *ngIf="isFriendlyCompetition(competition)" class="text-nowrap">
-                        <app-user-logo-with-tooltip
-                           *ngIf="cupApplication.receiver"
-                           [user]="cupApplication.receiver"
-                        ></app-user-logo-with-tooltip>
+                        <app-user-logo *ngIf="cupApplication.receiver" [user]="cupApplication.receiver"></app-user-logo>
                         {{ cupApplication.receiver?.name || 'Будь-хто' }}
                      </td>
                      <td *ngIf="isFriendlyCompetition(competition)" class="text-nowrap">

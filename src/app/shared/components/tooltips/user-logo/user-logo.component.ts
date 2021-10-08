@@ -5,11 +5,11 @@ import { User } from '@models/user.model';
 import { SettingsService } from '@services/settings.service';
 
 @Component({
-   selector: 'app-user-logo-with-tooltip',
-   styleUrls: ['./user-logo-with-tooltip.component.scss'],
-   templateUrl: './user-logo-with-tooltip.component.html'
+   selector: 'app-user-logo',
+   styleUrls: ['./user-logo.component.scss'],
+   templateUrl: './user-logo.component.html'
 })
-export class UserLogoWithTooltipComponent {
+export class UserLogoComponent {
    @Input() public user: User | UserNew;
 
    public userDefaultImage: string = SettingsService.userDefaultImage;

@@ -5,7 +5,7 @@
             <strong class="d-none d-sm-inline">{{ teamTeamMatch.home_team.name }}</strong>
             <small class="d-sm-none">{{ teamTeamMatch.home_team.name }}</small>
             <div class="d-none d-sm-inline ml-1">
-               <app-team-logo-with-tooltip [team]="teamTeamMatch.home_team"></app-team-logo-with-tooltip>
+               <app-team-logo [team]="teamTeamMatch.home_team"></app-team-logo>
             </div>
          </div>
          <div class="col-4 col-sm-2 text-center">
@@ -17,7 +17,7 @@
          </div>
          <div class="col-4 col-sm-5 text-left">
             <div class="d-none d-sm-inline mr-1">
-               <app-team-logo-with-tooltip [team]="teamTeamMatch.away_team"></app-team-logo-with-tooltip>
+               <app-team-logo [team]="teamTeamMatch.away_team"></app-team-logo>
             </div>
             <small class="d-sm-none">{{ teamTeamMatch.away_team.name }}</small>
             <strong class="d-none d-sm-inline">{{ teamTeamMatch.away_team.name }}</strong>
@@ -60,7 +60,7 @@
             <tr>
                <td class="text-center" [ngClass]="{ 'font-weight-bold': teamTeamMatch.home_team_goalkeeper_id }">
                   <div *ngIf="teamTeamMatch.home_team_goalkeeper_id" class="d-none d-lg-inline">
-                     <app-user-logo-with-tooltip [user]="teamTeamMatch.home_team_goalkeeper"></app-user-logo-with-tooltip>
+                     <app-user-logo [user]="teamTeamMatch.home_team_goalkeeper"></app-user-logo>
                   </div>
                   {{ teamTeamMatch.home_team_goalkeeper_id ? teamTeamMatch.home_team_goalkeeper.name : '-' }}
                </td>
@@ -68,7 +68,7 @@
                <td class="text-center" [ngClass]="{ 'font-weight-bold': teamTeamMatch.home_team_goalkeeper_id }">
                   {{ teamTeamMatch.away_team_goalkeeper_id ? teamTeamMatch.away_team_goalkeeper.name : '-' }}
                   <div *ngIf="teamTeamMatch.away_team_goalkeeper" class="d-none d-lg-inline">
-                     <app-user-logo-with-tooltip [user]="teamTeamMatch.away_team_goalkeeper"></app-user-logo-with-tooltip>
+                     <app-user-logo [user]="teamTeamMatch.away_team_goalkeeper"></app-user-logo>
                   </div>
                </td>
             </tr>
@@ -138,12 +138,12 @@
                                     *ngIf="getPredictionDetails(teamMatch, teamTeamMatch.home_team_id).user as homePredictionUser"
                                     class="d-sm-none"
                                  >
-                                    <app-user-logo-with-tooltip [user]="homePredictionUser"></app-user-logo-with-tooltip>
+                                    <app-user-logo [user]="homePredictionUser"></app-user-logo>
                                  </div>
                               </td>
                            </tr>
                            <tr *ngIf="isTeamMatchPredictable(teamMatch)" class="text-center bg-transparent">
-                              <td colspan="2" class="text-muted">
+                              <td colspan="2" class="text-muted border-0">
                                  <i class="fa fa-question-circle" aria-hidden="true"></i>
                                  <span class="d-none d-sm-inline">Приховано</span>
                               </td>
@@ -185,7 +185,7 @@
                      </span>
                      <small class="d-none d-lg-inline d-xl-none">{{ teamMatch.club_first.title }}</small>
                      <span class="d-none d-xl-inline">{{ teamMatch.club_first.title }}</span>
-                     <app-club-logo-with-tooltip [club]="teamMatch.club_first"></app-club-logo-with-tooltip>
+                     <app-club-logo [club]="teamMatch.club_first"></app-club-logo>
                   </td>
                   <td class="align-middle text-center">
                      <strong>
@@ -198,7 +198,7 @@
                      </strong>
                   </td>
                   <td class="align-middle text-left">
-                     <app-club-logo-with-tooltip [club]="teamMatch.club_second"></app-club-logo-with-tooltip>
+                     <app-club-logo [club]="teamMatch.club_second"></app-club-logo>
                      <small class="d-none d-lg-inline d-xl-none">{{ teamMatch.club_second.title }}</small>
                      <span class="d-none d-xl-inline">{{ teamMatch.club_second.title }}</span>
                      <span
@@ -253,7 +253,7 @@
                                     *ngIf="getPredictionDetails(teamMatch, teamTeamMatch.away_team_id).user as awayPredictionUser"
                                     class="d-sm-none"
                                  >
-                                    <app-user-logo-with-tooltip [user]="awayPredictionUser"></app-user-logo-with-tooltip>
+                                    <app-user-logo [user]="awayPredictionUser"></app-user-logo>
                                  </div>
                               </td>
                               <td class="w-50 border-right-0 border-top-0 border-bottom-0 text-nowrap align-middle">
@@ -266,7 +266,7 @@
                               </td>
                            </tr>
                            <tr *ngIf="isTeamMatchPredictable(teamMatch)" class="text-center bg-transparent">
-                              <td colspan="2" class="text-muted">
+                              <td colspan="2" class="text-muted border-0">
                                  <span class="d-none d-sm-inline">Приховано</span>
                                  <i class="fa fa-question-circle" aria-hidden="true"></i>
                               </td>

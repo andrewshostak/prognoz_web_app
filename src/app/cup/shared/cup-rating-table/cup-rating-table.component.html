@@ -31,8 +31,7 @@
             >
                <th scope="row" class="text-center">{{ i + 1 }}.</th>
                <td class="text-center p-1">
-                  <app-club-logo-with-tooltip *ngIf="cupRatingItem.user?.main_club?.length" [club]="cupRatingItem.user?.main_club[0]">
-                  </app-club-logo-with-tooltip>
+                  <app-club-logo *ngIf="cupRatingItem.user?.main_club?.length" [club]="cupRatingItem.user?.main_club[0]"> </app-club-logo>
                </td>
                <td>
                   <strong>{{ cupRatingItem.user.name }}</strong>

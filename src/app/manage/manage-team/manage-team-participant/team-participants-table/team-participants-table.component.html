@@ -26,7 +26,7 @@
       <tr *ngFor="let teamParticipant of teamParticipants">
          <th scope="row" class="text-center align-middle">{{ teamParticipant.id }}</th>
          <td class="text-nowrap align-middle">
-            <app-user-logo-with-tooltip [user]="teamParticipant.user"></app-user-logo-with-tooltip>
+            <app-user-logo [user]="teamParticipant.user"></app-user-logo>
             {{ teamParticipant.user.name }}
          </td>
          <td class="text-center align-middle">
@@ -36,7 +36,7 @@
             <table class="table-sm" align="center">
                <tr>
                   <td>
-                     <app-team-logo-with-tooltip [team]="teamParticipant.team"></app-team-logo-with-tooltip>
+                     <app-team-logo [team]="teamParticipant.team"></app-team-logo>
                      {{ teamParticipant.team.name }}
                   </td>
                </tr>
@@ -107,7 +107,7 @@
             <table class="table-sm">
                <tr>
                   <td>
-                     <app-user-logo-with-tooltip [user]="teamParticipant.user"></app-user-logo-with-tooltip>
+                     <app-user-logo [user]="teamParticipant.user"></app-user-logo>
                      <strong>{{ teamParticipant.user.name }}</strong>
                      <ng-container
                         [ngTemplateOutlet]="isCaptain"
@@ -117,7 +117,7 @@
                </tr>
                <tr>
                   <td>
-                     <app-team-logo-with-tooltip [team]="teamParticipant.team"></app-team-logo-with-tooltip>
+                     <app-team-logo [team]="teamParticipant.team"></app-team-logo>
                      {{ teamParticipant.team.name }}
                   </td>
                </tr>
@@ -210,7 +210,7 @@
                <tr>
                   <th>ID: {{ teamParticipant.id }}</th>
                   <td colspan="2">
-                     <app-user-logo-with-tooltip [user]="teamParticipant.user"></app-user-logo-with-tooltip>
+                     <app-user-logo [user]="teamParticipant.user"></app-user-logo>
                      <strong>{{ teamParticipant.user.name }}</strong>
                      <ng-container
                         [ngTemplateOutlet]="isCaptain"
@@ -220,7 +220,7 @@
                </tr>
                <tr>
                   <td colspan="3">
-                     <app-team-logo-with-tooltip [team]="teamParticipant.team"></app-team-logo-with-tooltip>
+                     <app-team-logo [team]="teamParticipant.team"></app-team-logo>
                      {{ teamParticipant.team.name }}
                   </td>
                </tr>
@@ -281,7 +281,7 @@
                <tr>
                   <td>ID: {{ teamParticipant.id }}</td>
                   <td>
-                     <app-user-logo-with-tooltip [user]="teamParticipant.user"></app-user-logo-with-tooltip>
+                     <app-user-logo [user]="teamParticipant.user"></app-user-logo>
                      <strong>{{ teamParticipant.user.name }}</strong>
                      <ng-container
                         [ngTemplateOutlet]="isCaptain"
@@ -291,7 +291,7 @@
                </tr>
                <tr>
                   <td colspan="2" class="text-nowrap">
-                     <app-team-logo-with-tooltip [team]="teamParticipant.team"></app-team-logo-with-tooltip>
+                     <app-team-logo [team]="teamParticipant.team"></app-team-logo>
                      {{ teamParticipant.team.name }}
                   </td>
                </tr>

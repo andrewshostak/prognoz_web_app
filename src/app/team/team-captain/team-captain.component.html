@@ -49,13 +49,13 @@
                            >
                               <td class="d-none d-lg-table-cell">{{ teamMatch.club_first.title }}</td>
                               <td>
-                                 <app-club-logo-with-tooltip [club]="teamMatch.club_first"></app-club-logo-with-tooltip>
+                                 <app-club-logo [club]="teamMatch.club_first"></app-club-logo>
                               </td>
                               <td class="d-none d-sm-table-cell">
                                  {{ showScoresOrString(teamMatch.home, teamMatch.away, 'vs') }}
                               </td>
                               <td>
-                                 <app-club-logo-with-tooltip [club]="teamMatch.club_second"></app-club-logo-with-tooltip>
+                                 <app-club-logo [club]="teamMatch.club_second"></app-club-logo>
                               </td>
                               <td class="d-none d-lg-table-cell">{{ teamMatch.club_second.title }}</td>
                            </tr>
@@ -91,12 +91,12 @@
                </table>
             </td>
             <td class="align-middle text-center">
-               <app-user-logo-with-tooltip
+               <app-user-logo
                   *ngIf="matchHasPrediction(teamMatch)"
                   [hidden]="isCaptain && teamMatch.is_predictable"
                   [user]="teamMatch.team_predictions[0].user"
                >
-               </app-user-logo-with-tooltip>
+               </app-user-logo>
                <form [hidden]="!isCaptain || !teamMatch.is_predictable" #teamPredictorForm="ngForm" novalidate>
                   <div class="form-group mb-0">
                      <select

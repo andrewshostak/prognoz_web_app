@@ -23,8 +23,8 @@
                <tr *ngFor="let club of clubs">
                   <th scope="row">{{ club.id }}.</th>
                   <td class="text-xs-center">
-                     <app-club-logo-with-tooltip [club]="club"></app-club-logo-with-tooltip>
-                     <app-club-logo-with-tooltip *ngIf="club.parent" [club]="club.parent"></app-club-logo-with-tooltip>
+                     <app-club-logo [club]="club"></app-club-logo>
+                     <app-club-logo *ngIf="club.parent" [club]="club.parent"></app-club-logo>
                   </td>
                   <td>
                      {{ club.title }}

@@ -1,0 +1,9 @@
+<ng-template #tipContent>
+   <img [attr.src]="src" [attr.alt]="team.name" class="team-logo" />
+</ng-template>
+<ng-container *ngIf="showTooltip">
+   <img [ngbTooltip]="tipContent" [attr.src]="src" [attr.alt]="team.name" class="rounded small-image" />
+</ng-container>
+<ng-container *ngIf="!showTooltip">
+   <img [attr.src]="src" [attr.alt]="team.name" class="rounded small-image" />
+</ng-container>

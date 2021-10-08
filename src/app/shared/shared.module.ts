@@ -27,11 +27,11 @@ import { SpinnerButtonComponent } from '@app/shared/components/spinner-button/sp
 import { SpinnerComponent } from '@app/shared/components/spinner/spinner.component';
 import { TeamFormComponent } from '@app/shared/components/team/team-form/team-form.component';
 import { TeamSelectComponent } from '@app/shared/components/team/team-select/team-select.component';
-import { ClubLogoWithTooltipComponent } from '@app/shared/components/tooltips/club-logo-with-tooltip/club-logo-with-tooltip.component';
+import { ClubLogoComponent } from '@app/shared/components/tooltips/club-logo/club-logo.component';
 import { CustomContentWithTooltipComponent } from '@app/shared/components/tooltips/custom-content-with-tooltip/custom-content-with-tooltip.component';
 import { PredictionWithTooltipComponent } from '@app/shared/components/tooltips/prediction-with-tooltip/prediction-with-tooltip.component';
-import { TeamLogoWithTooltipComponent } from '@app/shared/components/tooltips/team-logo-with-tooltip/team-logo-with-tooltip.component';
-import { UserLogoWithTooltipComponent } from '@app/shared/components/tooltips/user-logo-with-tooltip/user-logo-with-tooltip.component';
+import { TeamLogoComponent } from '@app/shared/components/tooltips/team-logo/team-logo.component';
+import { UserLogoComponent } from '@app/shared/components/tooltips/user-logo/user-logo.component';
 import { WinLogoWithTooltipComponent } from '@app/shared/components/tooltips/win-logo-with-tooltip/win-logo-with-tooltip.component';
 import { TrueFalseIconsComponent } from '@app/shared/components/true-false-icons/true-false-icons.component';
 import { UserSelectComponent } from '@app/shared/components/user-select/user-select.component';
@@ -50,7 +50,7 @@ import { HasPermissionsDirective } from '@app/shared/directives/has-permissions.
       ChampionshipUserPredictionsTableComponent,
       ChampionshipUserRatingDetailsComponent,
       CheckboxComponent,
-      ClubLogoWithTooltipComponent,
+      ClubLogoComponent,
       ClubSelectComponent,
       CompetitionSelectNewComponent,
       ConfirmationModalComponent,
@@ -71,12 +71,12 @@ import { HasPermissionsDirective } from '@app/shared/directives/has-permissions.
       SocialMedialLinksComponent,
       SpinnerComponent,
       SpinnerButtonComponent,
-      TeamLogoWithTooltipComponent,
+      TeamLogoComponent,
       TeamFormComponent,
       TeamSelectComponent,
       TimePipe,
       TrueFalseIconsComponent,
-      UserLogoWithTooltipComponent,
+      UserLogoComponent,
       UserMessageNewComponent,
       UserSelectComponent,
       WinLogoWithTooltipComponent,
@@ -88,7 +88,7 @@ import { HasPermissionsDirective } from '@app/shared/directives/has-permissions.
       ChampionshipUserPredictionsTableComponent,
       ChampionshipUserRatingDetailsComponent,
       CheckboxComponent,
-      ClubLogoWithTooltipComponent,
+      ClubLogoComponent,
       ClubSelectComponent,
       CompetitionSelectNewComponent,
       ConfirmationModalComponent,
@@ -109,12 +109,12 @@ import { HasPermissionsDirective } from '@app/shared/directives/has-permissions.
       SocialMedialLinksComponent,
       SpinnerComponent,
       SpinnerButtonComponent,
-      TeamLogoWithTooltipComponent,
+      TeamLogoComponent,
       TeamFormComponent,
       TeamSelectComponent,
       TimePipe,
       TrueFalseIconsComponent,
-      UserLogoWithTooltipComponent,
+      UserLogoComponent,
       UserMessageNewComponent,
       UserSelectComponent,
       WinLogoWithTooltipComponent,

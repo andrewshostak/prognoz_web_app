@@ -22,7 +22,7 @@
                [count]="wrappedCupCupMatch.current.cup_predictions_home_count"
                [user]="wrappedCupCupMatch.current.home_user"
             ></app-cup-cup-match-user-name>
-            <app-user-logo-with-tooltip [user]="wrappedCupCupMatch.current.home_user"></app-user-logo-with-tooltip>
+            <app-user-logo [user]="wrappedCupCupMatch.current.home_user"></app-user-logo>
          </div>
          <div class="col-2 d-flex flex-column align-items-center justify-content-center text-center text-nowrap">
             <small class="text-muted" *ngIf="isNil(wrappedCupCupMatch.current.home) && isNil(wrappedCupCupMatch.current.away); else score"
@@ -43,7 +43,7 @@
             </ng-template>
          </div>
          <div class="col-5 d-flex align-items-center justify-content-start">
-            <app-user-logo-with-tooltip [user]="wrappedCupCupMatch.current.away_user"></app-user-logo-with-tooltip>
+            <app-user-logo [user]="wrappedCupCupMatch.current.away_user"></app-user-logo>
             <app-cup-cup-match-user-name
                class="text-left pl-1"
                [count]="wrappedCupCupMatch.current.cup_predictions_away_count"

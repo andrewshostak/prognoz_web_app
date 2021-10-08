@@ -31,9 +31,9 @@
                         {{ cupCupMatch.group_number ? ' Група ' + cupCupMatch.group_number : '' }}
                      </td>
                      <td class="text-nowrap align-middle">
-                        <app-user-logo-with-tooltip [user]="cupCupMatch.home_user"></app-user-logo-with-tooltip>
+                        <app-user-logo [user]="cupCupMatch.home_user"></app-user-logo>
                         {{ cupCupMatch.home_user.name + ' - ' + cupCupMatch.away_user.name }}
-                        <app-user-logo-with-tooltip [user]="cupCupMatch.away_user"></app-user-logo-with-tooltip>
+                        <app-user-logo [user]="cupCupMatch.away_user"></app-user-logo>
                      </td>
                      <td class="text-nowrap align-middle font-weight-bold">
                         {{ isScore(cupCupMatch.home, cupCupMatch.away) ? cupCupMatch.home + ':' + cupCupMatch.away : '' }}

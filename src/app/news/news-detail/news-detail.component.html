@@ -11,7 +11,7 @@
                   <div class="col-12 col-sm-6 mt-2 mt-md-0">
                      <p>
                         <i>Автор:</i>
-                        <app-user-logo-with-tooltip *ngIf="news.author" [user]="news.author"></app-user-logo-with-tooltip>
+                        <app-user-logo *ngIf="news.author" [user]="news.author"></app-user-logo>
                         <strong>{{ news.author_id ? news.author.name : '-' }}</strong>
                      </p>
                      <p>

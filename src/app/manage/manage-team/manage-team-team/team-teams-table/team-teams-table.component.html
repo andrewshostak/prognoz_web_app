@@ -16,18 +16,18 @@
       <tr *ngFor="let team of teams">
          <th scope="row" class="text-center align-middle">{{ team.id }}</th>
          <td class="align-middle text-center">
-            <app-team-logo-with-tooltip [team]="team"></app-team-logo-with-tooltip>
+            <app-team-logo [team]="team"></app-team-logo>
          </td>
          <td class="align-middle">
             <span class="font-weight-bold">{{ team.name }}</span>
          </td>
          <td class="text-nowrap align-middle">
-            <app-user-logo-with-tooltip [user]="team.captain"></app-user-logo-with-tooltip>
+            <app-user-logo [user]="team.captain"></app-user-logo>
             {{ team.captain.name }}
          </td>
          <td class="text-nowrap align-middle">
             <ng-template [ngIf]="team.club">
-               <app-club-logo-with-tooltip [club]="team.club"></app-club-logo-with-tooltip>
+               <app-club-logo [club]="team.club"></app-club-logo>
                {{ team.club.title }}
             </ng-template>
          </td>
@@ -71,18 +71,18 @@
             <table class="table-sm w-100">
                <tr>
                   <td class="text-nowrap">
-                     <app-team-logo-with-tooltip [team]="team"></app-team-logo-with-tooltip>
+                     <app-team-logo [team]="team"></app-team-logo>
                      <span class="font-weight-bold">{{ team.name }}</span>
                   </td>
                   <td class="text-nowrap text-right">
-                     <app-user-logo-with-tooltip [user]="team.captain"></app-user-logo-with-tooltip>
+                     <app-user-logo [user]="team.captain"></app-user-logo>
                      {{ team.captain.name }}
                   </td>
                </tr>
             </table>
          </td>
          <td class="text-nowrap align-middle">
-            <app-club-logo-with-tooltip *ngIf="team.club" [club]="team.club"></app-club-logo-with-tooltip>
+            <app-club-logo *ngIf="team.club" [club]="team.club"></app-club-logo>
          </td>
          <td class="text-nowrap align-middle">
             <app-true-false-icons [value]="team.stated"></app-true-false-icons>
@@ -125,18 +125,18 @@
                </tr>
                <tr>
                   <td class="text-nowrap">
-                     <app-team-logo-with-tooltip [team]="team"></app-team-logo-with-tooltip>
+                     <app-team-logo [team]="team"></app-team-logo>
                      <span class="font-weight-bold">{{ team.name }}</span>
                   </td>
                   <td class="text-nowrap text-right">ID: {{ team.id }}</td>
                </tr>
                <tr>
                   <td class="text-nowrap">
-                     <app-user-logo-with-tooltip [user]="team.captain"></app-user-logo-with-tooltip>
+                     <app-user-logo [user]="team.captain"></app-user-logo>
                      {{ team.captain.name }}
                   </td>
                   <td class="text-nowrap">
-                     <app-club-logo-with-tooltip *ngIf="team.club" [club]="team.club"></app-club-logo-with-tooltip>
+                     <app-club-logo *ngIf="team.club" [club]="team.club"></app-club-logo>
                      <span *ngIf="team.club">{{ team.club.title }}</span>
                   </td>
                </tr>
@@ -172,17 +172,17 @@
             <table align="center">
                <tr>
                   <td class="text-nowrap">ID: {{ team.id }}</td>
-                  <td class="text-right"><app-club-logo-with-tooltip *ngIf="team.club" [club]="team.club"></app-club-logo-with-tooltip></td>
+                  <td class="text-right"><app-club-logo *ngIf="team.club" [club]="team.club"></app-club-logo></td>
                </tr>
                <tr>
                   <td class="text-nowrap" colspan="2">
-                     <app-team-logo-with-tooltip [team]="team"></app-team-logo-with-tooltip>
+                     <app-team-logo [team]="team"></app-team-logo>
                      <span class="font-weight-bold">{{ team.name }}</span>
                   </td>
                </tr>
                <tr>
                   <td class="text-nowrap" colspan="2">
-                     <app-user-logo-with-tooltip [user]="team.captain"></app-user-logo-with-tooltip>
+                     <app-user-logo [user]="team.captain"></app-user-logo>
                      {{ team.captain.name }}
                   </td>
                </tr>
