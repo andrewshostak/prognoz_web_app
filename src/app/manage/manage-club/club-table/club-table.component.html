@@ -1,44 +1,210 @@
-<div class="container">
-   <div class="row">
-      <div class="col">
-         <h2>Таблиця команд:</h2>
-      </div>
-   </div>
-   <!-- clubs table -->
-   <div *ngIf="clubs" class="row">
-      <div class="col-12">
-         <table class="table table-striped table-bordered table-hover table-dark">
-            <thead>
+<h3 class="h3 m-2">Команди:</h3>
+<table class="d-none d-lg-table table table-dark table-striped table-hover table-bordered">
+   <thead>
+      <tr>
+         <th class="text-right">№</th>
+         <th>Назва</th>
+         <th>Назва (англ.)</th>
+         <th>Країна</th>
+         <th>Створено</th>
+         <th>Змінено</th>
+         <th class="text-center">Дія</th>
+      </tr>
+   </thead>
+   <tbody>
+      <tr *ngFor="let club of clubs">
+         <th scope="row" class="text-right align-middle">{{ club.id }}</th>
+         <td class="align-middle">
+            <app-club-logo [club]="club"></app-club-logo>
+            <strong>{{ club.title }}</strong>
+         </td>
+         <td class="align-middle">{{ club.link }}</td>
+         <td class="align-middle">
+            <ng-container *ngIf="club.parent">
+               <app-club-logo [club]="club.parent"></app-club-logo>
+               {{ club.parent.title }}
+            </ng-container>
+         </td>
+         <td class="text-muted align-middle">
+            {{ club.created_at | time: 'YYYY-MM-DD HH:mm' }}
+         </td>
+         <td class="text-muted align-middle">
+            {{ club.updated_at | time: 'YYYY-MM-DD HH:mm' }}
+         </td>
+         <td class="text-center align-middle">
+            <a routerLink="/manage/clubs/{{ club.id }}/edit" type="button" class="btn btn-sm btn-outline-warning">
+               <i class="fa fa-pencil-square-o fa-lg" aria-hidden="true"></i>
+            </a>
+            <button type="button" class="btn btn-sm btn-outline-danger" (click)="openConfirmModal(confirmModal, club, deleteClub)">
+               <i class="fa fa-trash-o fa-lg" aria-hidden="true"></i>
+            </button>
+         </td>
+      </tr>
+   </tbody>
+</table>
+<table class="d-none d-md-table d-lg-none table table-dark table-striped table-hover table-bordered">
+   <thead>
+      <tr>
+         <th class="text-right">№</th>
+         <th>Назви</th>
+         <th>Країна</th>
+         <th>
+            <table class="table-sm">
                <tr>
-                  <th>№</th>
-                  <th>Лого</th>
-                  <th>Назва</th>
-                  <th>Name</th>
-                  <th>Створено</th>
-                  <th>Змінено</th>
-                  <th>Змінити</th>
+                  <td>Створено</td>
                </tr>
-            </thead>
-            <tbody>
-               <tr *ngFor="let club of clubs">
-                  <th scope="row">{{ club.id }}.</th>
-                  <td class="text-xs-center">
+               <tr>
+                  <td>Змінено</td>
+               </tr>
+            </table>
+         </th>
+         <th class="text-center">Дія</th>
+      </tr>
+   </thead>
+   <tbody>
+      <tr *ngFor="let club of clubs">
+         <th scope="row" class="text-right align-middle">{{ club.id }}</th>
+         <td>
+            <table class="table-sm w-100">
+               <tr>
+                  <td rowspan="2" class="text-center align-middle w-25">
                      <app-club-logo [club]="club"></app-club-logo>
-                     <app-club-logo *ngIf="club.parent" [club]="club.parent"></app-club-logo>
+                  </td>
+                  <td class="text-nowrap">
+                     <strong>{{ club.title }}</strong>
+                  </td>
+               </tr>
+               <tr>
+                  <td>{{ club.link }}</td>
+               </tr>
+            </table>
+         </td>
+         <td class="align-middle">
+            <ng-container *ngIf="club.parent">
+               <app-club-logo [club]="club.parent"></app-club-logo>
+               {{ club.parent.title }}
+            </ng-container>
+         </td>
+         <td class="text-muted align-middle">
+            <table class="table-sm">
+               <tr>
+                  <td class="text-nowrap">{{ club.created_at | time: 'YYYY-MM-DD HH:mm' }}</td>
+               </tr>
+               <tr>
+                  <td class="text-nowrap">{{ club.updated_at | time: 'YYYY-MM-DD HH:mm' }}</td>
+               </tr>
+            </table>
+         </td>
+         <td class="text-center align-middle">
+            <a routerLink="/manage/clubs/{{ club.id }}/edit" type="button" class="btn btn-sm btn-outline-warning">
+               <i class="fa fa-pencil-square-o fa-lg" aria-hidden="true"></i>
+            </a>
+            <button type="button" class="btn btn-sm btn-outline-danger" (click)="openConfirmModal(confirmModal, club, deleteClub)">
+               <i class="fa fa-trash-o fa-lg" aria-hidden="true"></i>
+            </button>
+         </td>
+      </tr>
+   </tbody>
+</table>
+<table class="d-none d-sm-table d-md-none table table-sm table-dark table-striped table-hover table-bordered">
+   <thead>
+      <tr>
+         <th class="text-right">№</th>
+         <th>
+            <table class="table-sm">
+               <tr>
+                  <td>Назви</td>
+               </tr>
+               <tr>
+                  <td>Країна</td>
+               </tr>
+            </table>
+         </th>
+         <th>
+            <table class="table-sm" align="center">
+               <tr>
+                  <td>Створено</td>
+               </tr>
+               <tr>
+                  <td>Змінено</td>
+               </tr>
+            </table>
+         </th>
+         <th class="text-center">Дія</th>
+      </tr>
+   </thead>
+   <tbody>
+      <tr *ngFor="let club of clubs">
+         <th scope="row" class="text-right align-middle">{{ club.id }}</th>
+         <td>
+            <table class="table-sm w-100">
+               <tr>
+                  <td rowspan="2" class="text-center align-middle w-25">
+                     <app-club-logo [club]="club"></app-club-logo>
+                  </td>
+                  <td class="text-nowrap">
+                     <strong>{{ club.title }}</strong>
+                  </td>
+               </tr>
+               <tr>
+                  <td>{{ club.link }}</td>
+               </tr>
+               <tr *ngIf="club.parent">
+                  <td class="text-center align-middle"><app-club-logo [club]="club.parent"></app-club-logo></td>
+                  <td>{{ club.parent.title }}</td>
+               </tr>
+            </table>
+         </td>
+         <td class="text-muted align-middle">
+            <table class="table-sm" align="center">
+               <tr>
+                  <td class="text-nowrap">{{ club.created_at | time: 'YYYY-MM-DD HH:mm' }}</td>
+               </tr>
+               <tr>
+                  <td class="text-nowrap">{{ club.updated_at | time: 'YYYY-MM-DD HH:mm' }}</td>
+               </tr>
+            </table>
+         </td>
+         <td class="text-center align-middle text-nowrap">
+            <a routerLink="/manage/clubs/{{ club.id }}/edit" type="button" class="btn btn-sm btn-outline-warning">
+               <i class="fa fa-pencil-square-o fa-lg" aria-hidden="true"></i>
+            </a>
+            <button type="button" class="btn btn-sm btn-outline-danger" (click)="openConfirmModal(confirmModal, club, deleteClub)">
+               <i class="fa fa-trash-o fa-lg" aria-hidden="true"></i>
+            </button>
+         </td>
+      </tr>
+   </tbody>
+</table>
+<table class="d-table d-sm-none table table-sm table-dark table-striped table-hover table-bordered">
+   <tbody>
+      <tr *ngFor="let club of clubs">
+         <td class="align-middle">
+            <table class="table-sm w-100">
+               <tr>
+                  <td colspan="2" class="text-center">ID: {{ club.id }}</td>
+               </tr>
+               <tr>
+                  <td rowspan="2" class="text-center align-middle w-25">
+                     <app-club-logo [club]="club"></app-club-logo>
                   </td>
                   <td>
-                     {{ club.title }}
+                     <strong>{{ club.title }}</strong>
                   </td>
-                  <td>
-                     {{ club.link }}
-                  </td>
-                  <td>
-                     <small>{{ club.created_at }}</small>
-                  </td>
-                  <td>
-                     <small>{{ club.updated_at }}</small>
-                  </td>
-                  <td class="text-xs-center">
+               </tr>
+               <tr>
+                  <td>{{ club.link }}</td>
+               </tr>
+               <tr *ngIf="club.parent">
+                  <td class="text-center align-middle"><app-club-logo [club]="club.parent"></app-club-logo></td>
+                  <td>{{ club.parent.title }}</td>
+               </tr>
+            </table>
+         </td>
+         <td class="text-center align-middle text-nowrap">
+            <table class="table-sm" align="center">
+               <tr>
+                  <td class="text-nowrap">
                      <a routerLink="/manage/clubs/{{ club.id }}/edit" type="button" class="btn btn-sm btn-outline-warning">
                         <i class="fa fa-pencil-square-o fa-lg" aria-hidden="true"></i>
                      </a>
@@ -47,19 +213,29 @@
                      </button>
                   </td>
                </tr>
-            </tbody>
-         </table>
-      </div>
-   </div>
-   <app-pagination
-      *ngIf="paginationData"
-      [totalItems]="paginationData.total"
-      [currentPage]="paginationData.currentPage"
-      [pageSize]="paginationData.pageSize"
-      [path]="paginationData.path"
-   >
-   </app-pagination>
-</div>
+               <tr>
+                  <td class="text-nowrap">
+                     С: <span class="text-muted">{{ club.created_at | time: 'YYYY-MM-DD HH:mm' }}</span>
+                  </td>
+               </tr>
+               <tr>
+                  <td class="text-nowrap">
+                     З: <span class="text-muted">{{ club.updated_at | time: 'YYYY-MM-DD HH:mm' }}</span>
+                  </td>
+               </tr>
+            </table>
+         </td>
+      </tr>
+   </tbody>
+</table>
+<app-pagination
+   *ngIf="paginationData"
+   [totalItems]="paginationData.total"
+   [currentPage]="paginationData.currentPage"
+   [pageSize]="paginationData.pageSize"
+   [path]="paginationData.path"
+>
+</app-pagination>
 <ng-template #confirmModal let-c="close">
    <app-confirmation-modal [close]="c" [message]="'Видалити ' + openedModal.data.title + '?'" (confirmed)="openedModal.submitted($event)">
    </app-confirmation-modal>

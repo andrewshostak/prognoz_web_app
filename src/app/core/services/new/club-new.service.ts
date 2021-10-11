@@ -13,6 +13,10 @@ export class ClubNewService {
 
    constructor(private httpClient: HttpClient) {}
 
+   public deleteClub(clubId: number): Observable<void> {
+      return this.httpClient.delete<void>(`${this.clubsUrl}/${clubId}`);
+   }
+
    public getClubs(search: ClubSearch): Observable<PaginatedResponse<ClubNew>> {
       let params: HttpParams = new HttpParams();
 

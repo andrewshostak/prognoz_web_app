@@ -1,7 +1,6 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, TemplateRef } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 
-import { ClubService } from '@services/club.service';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { NotificationsService } from 'angular2-notifications';
 import { ClubNewService } from '@services/new/club-new.service';
@@ -23,32 +22,23 @@ import { remove } from 'lodash';
 export class ClubTableComponent implements OnDestroy, OnInit {
    constructor(
       private activatedRoute: ActivatedRoute,
-      private clubService: ClubService,
       private clubNewService: ClubNewService,
       private ngbModalService: NgbModal,
       private notificationsService: NotificationsService
    ) {}
 
    public activatedRouteSubscription: Subscription;
-   public clubs: ClubNew[];
+   public clubs: ClubNew[] = [];
    public openedModal: OpenedModal<ClubNew>;
    public paginationData: Pagination;
 
    public deleteClub(): void {
-      this.clubService.deleteClub(this.openedModal.data.id).subscribe(
-         () => {
-            remove(this.clubs, this.openedModal.data);
-            this.paginationData.total--;
-            this.notificationsService.success('Успішно', `${this.openedModal.data.title} видалено`);
-            this.openedModal.reference.close();
-         },
-         errors => {
-            // todo: remove after moving to v2 endpoint
-            for (const error of errors) {
-               this.notificationsService.error('Помилка', error);
-            }
-         }
-      );
+      this.clubNewService.deleteClub(this.openedModal.data.id).subscribe(() => {
+         remove(this.clubs, this.openedModal.data);
+         this.paginationData.total--;
+         this.notificationsService.success('Успішно', `${this.openedModal.data.title} видалено`);
+         this.openedModal.reference.close();
+      });
    }
 
    public ngOnDestroy(): void {
@@ -61,7 +51,7 @@ export class ClubTableComponent implements OnDestroy, OnInit {
       });
    }
 
-   public openConfirmModal(content: NgbModalRef | HTMLElement, data: ClubNew, submitted: (event) => void): void {
+   public openConfirmModal(content: NgbModalRef | HTMLElement | TemplateRef<any>, data: ClubNew, submitted: (event) => void): void {
       const reference = this.ngbModalService.open(content, { centered: true });
       this.openedModal = { reference, data, submitted: () => submitted.call(this) };
    }

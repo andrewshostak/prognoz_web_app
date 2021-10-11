@@ -43,15 +43,6 @@ export class ClubService {
    }
 
    /**
-    * Delete club
-    * @param id
-    * @returns {Observable<void>}
-    */
-   deleteClub(id: number): Observable<void> {
-      return this.headersWithToken.delete(`${this.clubUrl}/${id}`).pipe(catchError(this.errorHandlerService.handle));
-   }
-
-   /**
     * Update club
     * @param club
     * @returns {Observable<Club>}
