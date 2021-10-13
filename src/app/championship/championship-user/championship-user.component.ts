@@ -105,7 +105,7 @@ export class ChampionshipUserComponent implements OnInit {
    }
 
    private getUserData(id: number) {
-      this.userService.getUser(id, ['clubs', 'winners.award', 'winners.competition']).subscribe(response => {
+      this.userService.getUser(id, ['clubs', 'winners.award', 'winners.competition.season']).subscribe(response => {
          this.user = response;
          this.titleService.setTitle(`Прогнози ${this.user.name}
                     ${UtilsService.getHomeCityInBrackets(this.user.hometown)} - Чемпіонат`);

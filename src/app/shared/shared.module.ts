@@ -32,7 +32,6 @@ import { CustomContentWithTooltipComponent } from '@app/shared/components/toolti
 import { PredictionWithTooltipComponent } from '@app/shared/components/tooltips/prediction-with-tooltip/prediction-with-tooltip.component';
 import { TeamLogoComponent } from '@app/shared/components/tooltips/team-logo/team-logo.component';
 import { UserLogoComponent } from '@app/shared/components/tooltips/user-logo/user-logo.component';
-import { WinLogoWithTooltipComponent } from '@app/shared/components/tooltips/win-logo-with-tooltip/win-logo-with-tooltip.component';
 import { TrueFalseIconsComponent } from '@app/shared/components/true-false-icons/true-false-icons.component';
 import { UserSelectComponent } from '@app/shared/components/user-select/user-select.component';
 import { TimePipe } from '@app/shared/pipes/time.pipe';
@@ -42,6 +41,7 @@ import { ChartsModule } from 'ng2-charts';
 import { UserMessageNewComponent } from '@app/shared/components/user-message-new/user-message-new.component';
 import { CompetitionSelectNewComponent } from '@app/shared/components/competition-select-new/competition-select-new.component';
 import { HasPermissionsDirective } from '@app/shared/directives/has-permissions.directive';
+import { UserWinsAwardsComponent } from '@app/shared/components/user-wins-awards/user-wins-awards.component';
 
 @NgModule({
    declarations: [
@@ -79,7 +79,7 @@ import { HasPermissionsDirective } from '@app/shared/directives/has-permissions.
       UserLogoComponent,
       UserMessageNewComponent,
       UserSelectComponent,
-      WinLogoWithTooltipComponent,
+      UserWinsAwardsComponent,
       HasPermissionsDirective
    ],
    exports: [
@@ -117,7 +117,7 @@ import { HasPermissionsDirective } from '@app/shared/directives/has-permissions.
       UserLogoComponent,
       UserMessageNewComponent,
       UserSelectComponent,
-      WinLogoWithTooltipComponent,
+      UserWinsAwardsComponent,
       HasPermissionsDirective
    ],
    imports: [

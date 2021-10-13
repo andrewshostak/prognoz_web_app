@@ -40,7 +40,10 @@ export class ChampionshipCompetitionUserComponent implements OnInit {
    }
 
    private getChampionshipPredictionsData(userId: number, competitionId: number) {
-      const param = [{ parameter: 'user_id', value: userId.toString() }, { parameter: 'competition_id', value: competitionId.toString() }];
+      const param = [
+         { parameter: 'user_id', value: userId.toString() },
+         { parameter: 'competition_id', value: competitionId.toString() }
+      ];
       this.championshipPredictionService.getChampionshipPredictions(param).subscribe(
          response => {
             if (response) {
@@ -65,7 +68,7 @@ export class ChampionshipCompetitionUserComponent implements OnInit {
    }
 
    private getUserData(id: number) {
-      this.userService.getUser(id, ['clubs', 'winners.award', 'winners.competition']).subscribe(response => {
+      this.userService.getUser(id, ['clubs', 'winners.award', 'winners.competition.season']).subscribe(response => {
          this.user = response;
          this.titleService.setTitle(`Прогнози ${this.user.name}
                     ${UtilsService.getHomeCityInBrackets(this.user.hometown)} в конкурсі ${this.competitionId} - Чемпіонат`);

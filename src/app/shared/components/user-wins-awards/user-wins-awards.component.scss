@@ -1,0 +1,37 @@
+.win-image {
+   z-index: 1;
+}
+
+.win-number-circle {
+   top: -7px;
+   right: 1px;
+   width: 16px;
+   height: 16px;
+   border-radius: 50%;
+   font-size: 15px;
+   line-height: 15px;
+   text-align: center;
+
+   .win-number-text {
+      font-weight: 600;
+   }
+}
+
+::ng-deep {
+   .popover-class {
+      max-width: 270px;
+
+      .popover-image {
+         width: 100px;
+      }
+   }
+}
+
+.competitions {
+   .competition-icon {
+      left: -14px;
+   }
+   .competition-title {
+      line-height: 14px;
+   }
+}

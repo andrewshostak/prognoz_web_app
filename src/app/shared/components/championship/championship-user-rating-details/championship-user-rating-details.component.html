@@ -3,14 +3,13 @@
 <!-- user -->
 <div *ngIf="user" class="card shadow mb-2">
    <div class="card-header d-flex justify-content-between">
-      <div>
-         <app-user-logo [user]="user"></app-user-logo>
-         <strong class="align-middle ml-1 ml-sm-2">{{ user.name }}</strong>
-         <small *ngIf="user.hometown" class="text-muted">({{ user.hometown }})</small>
-      </div>
-      <div *ngIf="user.clubs.length" class="d-flex flex-row">
-         <div *ngFor="let club of user.clubs" class="ml-1 mr-1 ml-sm-2 mr-sm-2">
-            <app-club-logo [club]="club"></app-club-logo>
+      <div class="d-flex align-items-center">
+         <div class="pr-2">
+            <app-user-logo [user]="user"></app-user-logo>
+         </div>
+         <div class="d-flex flex-column">
+            <strong>{{ user.name }}</strong>
+            <small class="text-muted">{{ user.hometown }}</small>
          </div>
       </div>
    </div>
@@ -42,10 +41,10 @@
          </table>
       </div>
    </div>
-   <div *ngIf="user.winners.length" class="card-footer d-flex align-items-center pt-1 pb-1">
-      <div class="p-1">
-         <!-- TODO: replace this with same component as guestbook message -->
-         <app-win-logo-with-tooltip *ngFor="let win of user.winners" [win]="win"></app-win-logo-with-tooltip>
+   <div *ngIf="user.winners?.length || user.clubs?.length" class="card-footer d-flex justify-content-between">
+      <div class="d-flex">
+         <app-club-logo *ngFor="let club of user.clubs" [club]="club" class="pr-2"></app-club-logo>
       </div>
+      <app-user-wins-awards [wins]="user.winners"></app-user-wins-awards>
    </div>
 </div>

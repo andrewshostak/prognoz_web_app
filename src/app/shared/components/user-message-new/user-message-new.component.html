@@ -71,50 +71,6 @@
       <div class="d-flex">
          <app-club-logo *ngFor="let club of message.user.clubs" [club]="club" class="pr-2"></app-club-logo>
       </div>
-      <div class="d-flex flex-wrap justify-content-end">
-         <div
-            *ngFor="let win of groupedWins | keyvalue"
-            class="position-relative cursor-pointer pr-2"
-            [ngbPopover]="popContent"
-            [popoverTitle]="popTitle"
-            popoverClass="popover-class"
-         >
-            <ng-template #popContent>
-               <div class="d-flex align-items-center">
-                  <img
-                     [attr.src]="awardsLogosPath + '/' + win.value[0].award.image"
-                     [attr.alt]="win.value[0].award.title"
-                     class="popover-image"
-                  />
-                  <div class="competitions d-flex align-self-stretch flex-column justify-content-center border-left border-warning p-2">
-                     <div *ngFor="let win of win.value" class="position-relative competition-title mb-3">
-                        <i class="competition-icon fa fa-circle text-warning position-absolute"></i>
-                        <ng-container *ngIf="!isChampionshipSeasonWinner(win.award); else championshipSeasonWin">
-                           <p class="ml-1 mb-0">{{ win.competition.title }}</p>
-                           <p class="ml-1 mb-0">№{{ win.competition.number_in_season }} в сезоні</p>
-                           <p class="ml-1 mb-0">{{ win.competition.season.title }}</p>
-                        </ng-container>
-                        <ng-template #championshipSeasonWin>
-                           {{ win.competition.season.title }}
-                        </ng-template>
-                     </div>
-                  </div>
-               </div>
-            </ng-template>
-            <ng-template #popTitle>
-               <div class="text-center">
-                  <strong>{{ win.value[0].award.title }}</strong>
-               </div>
-            </ng-template>
-            <img
-               [attr.src]="awardsLogosPath + '/' + win.value[0].award.image"
-               [attr.alt]="win.value[0].award.title"
-               class="win-image small-image position-relative"
-            />
-            <div *ngIf="win.value.length > 1" class="win-number-circle position-absolute bg-warning">
-               <small class="win-number-text text-dark">{{ win.value.length }}</small>
-            </div>
-         </div>
-      </div>
+      <app-user-wins-awards [wins]="message.user.winners"></app-user-wins-awards>
    </div>
 </div>

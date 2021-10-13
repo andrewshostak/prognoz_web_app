@@ -6,6 +6,8 @@ import { ClubNew } from '@models/new/club-new.model';
 import { PaginatedResponse } from '@models/paginated-response.model';
 import { ClubSearch } from '@models/search/club-search.model';
 import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
+import { serialize } from 'object-to-formdata';
 
 @Injectable()
 export class ClubNewService {
@@ -13,8 +15,17 @@ export class ClubNewService {
 
    constructor(private httpClient: HttpClient) {}
 
+   public createClub(club: Partial<ClubNew>): Observable<ClubNew> {
+      const body = serialize(club, { indices: true });
+      return this.httpClient.post<{ club: ClubNew }>(this.clubsUrl, body).pipe(map(response => response.club));
+   }
+
    public deleteClub(clubId: number): Observable<void> {
       return this.httpClient.delete<void>(`${this.clubsUrl}/${clubId}`);
+   }
+
+   public getClub(clubId: number): Observable<ClubNew> {
+      return this.httpClient.get<{ club: ClubNew }>(`${this.clubsUrl}/${clubId}`).pipe(map(response => response.club));
    }
 
    public getClubs(search: ClubSearch): Observable<PaginatedResponse<ClubNew>> {
@@ -52,5 +63,10 @@ export class ClubNewService {
       }
 
       return this.httpClient.get<PaginatedResponse<ClubNew>>(this.clubsUrl, { params });
+   }
+
+   public updateClub(clubId: number, club: Partial<ClubNew>): Observable<ClubNew> {
+      const body = club.image ? serialize(club, { indices: true }) : club;
+      return this.httpClient.put<{ club: ClubNew }>(`${this.clubsUrl}/${clubId}`, body).pipe(map(response => response.club));
    }
 }
