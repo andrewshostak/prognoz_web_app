@@ -7,11 +7,11 @@ import { GuestbookMessageNew } from '@models/new/guestbook-message-new.model';
 import { UserNew } from '@models/new/user-new.model';
 
 @Component({
-   selector: 'app-user-message-new',
-   templateUrl: './user-message-new.component.html',
-   styleUrls: ['./user-message-new.component.scss']
+   selector: 'app-user-message',
+   templateUrl: './user-message.component.html',
+   styleUrls: ['./user-message.component.scss']
 })
-export class UserMessageNewComponent {
+export class UserMessageComponent {
    @Input() message: GuestbookMessageNew | CommentNew;
    @Input() authenticatedUser: UserNew;
    @Input() permissionForDeleting: string;

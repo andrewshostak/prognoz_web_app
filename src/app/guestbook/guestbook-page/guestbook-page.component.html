@@ -6,14 +6,14 @@
 <div class="row">
    <div class="col">
       <div *ngFor="let message of guestbookMessages" class="mt-2">
-         <app-user-message-new
+         <app-user-message
             [message]="message"
             [authenticatedUser]="authenticatedUser"
             [permissionForDeleting]="'delete_guestbook_message'"
             (onDeleteButtonClick)="openConfirmModal($event, confirmModal, deleteGuestbookMessage)"
             (onUpdateButtonClick)="updateGuestbookMessage($event)"
          >
-         </app-user-message-new>
+         </app-user-message>
       </div>
    </div>
 </div>

@@ -43,14 +43,14 @@
    <div *ngIf="comments && comments.length" class="row">
       <div class="col">
          <div *ngFor="let comment of comments" class="mt-2">
-            <app-user-message-new
+            <app-user-message
                [message]="comment"
                [authenticatedUser]="authenticatedUser"
                [permissionForDeleting]="'delete_comment'"
                (onDeleteButtonClick)="openConfirmModal($event, confirmModal, deleteComment)"
                (onUpdateButtonClick)="updateComment($event)"
             >
-            </app-user-message-new>
+            </app-user-message>
          </div>
       </div>
    </div>

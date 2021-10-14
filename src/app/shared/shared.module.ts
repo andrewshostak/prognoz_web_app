@@ -38,7 +38,7 @@ import { TimePipe } from '@app/shared/pipes/time.pipe';
 import { NgbDropdownModule, NgbPopoverModule, NgbTooltipModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { ChartsModule } from 'ng2-charts';
-import { UserMessageNewComponent } from '@app/shared/components/user-message-new/user-message-new.component';
+import { UserMessageComponent } from '@app/shared/components/user-message/user-message.component';
 import { CompetitionSelectNewComponent } from '@app/shared/components/competition-select-new/competition-select-new.component';
 import { HasPermissionsDirective } from '@app/shared/directives/has-permissions.directive';
 import { UserWinsAwardsComponent } from '@app/shared/components/user-wins-awards/user-wins-awards.component';
@@ -77,7 +77,7 @@ import { UserWinsAwardsComponent } from '@app/shared/components/user-wins-awards
       TimePipe,
       TrueFalseIconsComponent,
       UserLogoComponent,
-      UserMessageNewComponent,
+      UserMessageComponent,
       UserSelectComponent,
       UserWinsAwardsComponent,
       HasPermissionsDirective
@@ -115,7 +115,7 @@ import { UserWinsAwardsComponent } from '@app/shared/components/user-wins-awards
       TimePipe,
       TrueFalseIconsComponent,
       UserLogoComponent,
-      UserMessageNewComponent,
+      UserMessageComponent,
       UserSelectComponent,
       UserWinsAwardsComponent,
       HasPermissionsDirective
