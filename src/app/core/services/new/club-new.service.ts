@@ -16,7 +16,7 @@ export class ClubNewService {
    constructor(private httpClient: HttpClient) {}
 
    public createClub(club: Partial<ClubNew>): Observable<ClubNew> {
-      const body = serialize(club, { indices: true });
+      const body = serialize(club, { indices: true, nullsAsUndefineds: true });
       return this.httpClient.post<{ club: ClubNew }>(this.clubsUrl, body).pipe(map(response => response.club));
    }
 
@@ -24,8 +24,11 @@ export class ClubNewService {
       return this.httpClient.delete<void>(`${this.clubsUrl}/${clubId}`);
    }
 
-   public getClub(clubId: number): Observable<ClubNew> {
-      return this.httpClient.get<{ club: ClubNew }>(`${this.clubsUrl}/${clubId}`).pipe(map(response => response.club));
+   public getClub(clubId: number, relations: string[] = []): Observable<ClubNew> {
+      const params = new HttpParams({ fromObject: { 'relations[]': relations } });
+      return this.httpClient
+         .get<{ club: ClubNew }>(`${this.clubsUrl}/${clubId}`, { params })
+         .pipe(map(response => response.club));
    }
 
    public getClubs(search: ClubSearch): Observable<PaginatedResponse<ClubNew>> {
@@ -66,7 +69,7 @@ export class ClubNewService {
    }
 
    public updateClub(clubId: number, club: Partial<ClubNew>): Observable<ClubNew> {
-      const body = club.image ? serialize(club, { indices: true }) : club;
-      return this.httpClient.put<{ club: ClubNew }>(`${this.clubsUrl}/${clubId}`, body).pipe(map(response => response.club));
+      const body = club.image ? serialize(club, { indices: true, nullsAsUndefineds: true }) : club;
+      return this.httpClient.post<{ club: ClubNew }>(`${this.clubsUrl}/${clubId}`, body).pipe(map(response => response.club));
    }
 }

@@ -65,7 +65,7 @@ export class TeamFormComponent implements OnChanges, OnInit {
          return;
       }
 
-      this.team && this.team.id ? this.updateTeam(this.teamForm.getRawValue()) : this.createTeam(this.teamForm.getRawValue());
+      this.isUpdatePage ? this.updateTeam(this.teamForm.getRawValue()) : this.createTeam(this.teamForm.getRawValue());
    }
 
    private addAdvancedFormControls(disabled: boolean): void {

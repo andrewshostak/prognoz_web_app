@@ -5,10 +5,7 @@ export const environment = {
    apiUrl: 'https://api.prognoz.org.ua/api/',
    apiImageNews: 'https://api.prognoz.org.ua/img/news/',
    imageSettings: {
-      club: { maxSize: 204800, types: ['image/png'] },
-      user: { maxSize: 524288, types: ['image/png', 'image/jpg', 'image/jpeg'] },
-      news: { maxSize: 524288, types: ['image/jpg', 'image/jpeg', 'image/png'] },
-      team: { maxSize: 524288, types: ['image/png', 'image/jpg', 'image/jpeg'] }
+      news: { maxSize: 524288, types: ['image/jpg', 'image/jpeg', 'image/png'] }
    },
    tournaments: {
       championship: {

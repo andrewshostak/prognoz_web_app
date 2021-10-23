@@ -4,11 +4,13 @@ import { AbstractControl, FormControl, ValidatorFn } from '@angular/forms';
 @Injectable()
 export class FormValidatorService {
    public static fileSizeLimits: { [key: string]: number } = {
+      clubImage: 204800,
       teamImage: 524288,
       userImage: 524288
    };
 
    public static fileExtensions: { [key: string]: string[] } = {
+      clubImage: ['png'],
       teamImage: ['png', 'jpeg', 'jpg'],
       userImage: ['png', 'jpeg', 'jpg']
    };
