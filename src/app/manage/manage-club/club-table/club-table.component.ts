@@ -1,5 +1,6 @@
 import { Component, OnDestroy, OnInit, TemplateRef } from '@angular/core';
-import { ActivatedRoute, Params } from '@angular/router';
+import { FormControl, FormGroup } from '@angular/forms';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { NotificationsService } from 'angular2-notifications';
@@ -13,6 +14,7 @@ import { Pagination } from '@models/pagination.model';
 import { PaginationService } from '@services/pagination.service';
 import { OpenedModal } from '@models/opened-modal.model';
 import { remove } from 'lodash';
+import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 
 @Component({
    selector: 'app-club-table',
@@ -24,13 +26,15 @@ export class ClubTableComponent implements OnDestroy, OnInit {
       private activatedRoute: ActivatedRoute,
       private clubNewService: ClubNewService,
       private ngbModalService: NgbModal,
-      private notificationsService: NotificationsService
+      private notificationsService: NotificationsService,
+      private router: Router
    ) {}
 
    public activatedRouteSubscription: Subscription;
    public clubs: ClubNew[] = [];
    public openedModal: OpenedModal<ClubNew>;
    public paginationData: Pagination;
+   public searchForm: FormGroup;
 
    public deleteClub(): void {
       this.clubNewService.deleteClub(this.openedModal.data.id).subscribe(() => {
@@ -46,8 +50,12 @@ export class ClubTableComponent implements OnDestroy, OnInit {
    }
 
    public ngOnInit(): void {
+      this.searchForm = new FormGroup({ search: new FormControl(null) });
       this.activatedRouteSubscription = this.activatedRoute.params.subscribe((params: Params) => {
          this.getClubsData(params.pageNumber);
+      });
+      this.searchForm.valueChanges.pipe(distinctUntilChanged(), debounceTime(SettingsService.defaultDebounceTime)).subscribe(search => {
+         this.paginationData.currentPage === 1 ? this.getClubsData(1) : this.router.navigate(['../1'], { relativeTo: this.activatedRoute });
       });
    }
 
@@ -59,9 +67,10 @@ export class ClubTableComponent implements OnDestroy, OnInit {
    private getClubsData(pageNumber: number): void {
       const search: ClubSearch = {
          limit: SettingsService.clubsPerPage,
-         orderBy: 'title',
+         orderBy: 'updated_at',
          page: pageNumber,
-         sequence: Sequence.Ascending,
+         sequence: Sequence.Descending,
+         search: this.searchForm.get('search').value,
          relations: ['parent']
       };
       this.clubNewService.getClubs(search).subscribe(response => {
