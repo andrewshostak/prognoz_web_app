@@ -1,0 +1,59 @@
+<form novalidate [formGroup]="generationForm" (ngSubmit)="submit()">
+   <div class="modal-content">
+      <div class="modal-header">
+         <h5 class="modal-title">Автоматично згенерувати стадії</h5>
+         <button type="button" class="close" aria-label="Close" (click)="close()">
+            <span aria-hidden="true">&times;</span>
+         </button>
+      </div>
+      <div class="modal-body">
+         <div class="form-group" [class.form-group-invalid]="showFormInvalidClass(generationForm.get('competition_id'))">
+            <label [attr.for]="'competition_id'" class="font-weight-bold">Змагання:</label>
+            <select formControlName="competition_id" id="competition_id" class="form-control">
+               <option *ngFor="let competition of competitions" [ngValue]="competition.id">{{ competition.title }}</option>
+            </select>
+            <div [hidden]="!showFormErrorMessage(generationForm.get('competition_id'), 'required')" class="error-message">
+               <small>Змагання обов'язковe</small>
+            </div>
+         </div>
+         <div class="form-row">
+            <div class="form-group col-6" [class.form-group-invalid]="showFormInvalidClass(generationForm.get('from'))">
+               <label for="from" class="font-weight-bold">Початкова стадія:</label>
+               <input id="from" type="number" formControlName="from" autocomplete="off" class="form-control" />
+               <div [hidden]="!showFormErrorMessage(generationForm.get('from'), 'required')" class="error-message">
+                  <small>Початкова стадія обов'язкова</small>
+               </div>
+               <div [hidden]="!showFormErrorMessage(generationForm.get('from'), 'min')" class="error-message">
+                  <small>Початкова стадія повинна бути більшою 0</small>
+               </div>
+               <div [hidden]="!showFormErrorMessage(generationForm.get('from'), 'max')" class="error-message">
+                  <small>Початкова стадія повинна бути меншою 100</small>
+               </div>
+            </div>
+            <div class="form-group col-6" [class.form-group-invalid]="showFormInvalidClass(generationForm.get('to'))">
+               <label for="to" class="font-weight-bold">Остання стадія:</label>
+               <input id="to" type="number" formControlName="to" autocomplete="off" class="form-control" />
+               <div [hidden]="!showFormErrorMessage(generationForm.get('to'), 'required')" class="error-message">
+                  <small>Остання стадія обов'язкова</small>
+               </div>
+               <div [hidden]="!showFormErrorMessage(generationForm.get('to'), 'min')" class="error-message">
+                  <small>Остання стадія повинна бути більшою 1</small>
+               </div>
+               <div [hidden]="!showFormErrorMessage(generationForm.get('to'), 'max')" class="error-message">
+                  <small>Остання стадія повинна бути меншою 100</small>
+               </div>
+            </div>
+         </div>
+         <app-info
+            [message]="
+               'Остання стадія - це (кількість команд в чемпіонаті * 2) - 2. Наприклад, якщо в чемпіонаті 10 команд то (10 * 2) - 2 = 18.'
+            "
+         ></app-info>
+      </div>
+      <div class="modal-footer d-flex justify-content-between">
+         <button type="button" class="btn btn-secondary" (click)="close()">Скасувати</button>
+         <button [hidden]="spinnerButton" type="submit" class="btn btn-primary">Згенерувати</button>
+         <app-spinner-button [hidden]="!spinnerButton"></app-spinner-button>
+      </div>
+   </div>
+</form>

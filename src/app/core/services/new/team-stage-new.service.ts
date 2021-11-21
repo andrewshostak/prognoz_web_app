@@ -5,6 +5,7 @@ import { environment } from '@env';
 import { TeamStageNew } from '@models/new/team-stage-new.model';
 import { PaginatedResponse } from '@models/paginated-response.model';
 import { TeamStageSearch } from '@models/search/team-stage-search.model';
+import { GenerateTeamStagesNew } from '@models/new/generate-team-stages-new.model';
 import { map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 
@@ -20,6 +21,10 @@ export class TeamStageNewService {
 
    public deleteTeamStage(teamStageId: number): Observable<void> {
       return this.httpClient.delete<void>(`${this.teamStagesUrl}/${teamStageId}`);
+   }
+
+   public generateTeamStages(generationOptions: GenerateTeamStagesNew): Observable<number> {
+      return this.httpClient.post<number>(`${this.teamStagesUrl}/generate`, generationOptions);
    }
 
    public getTeamStage(teamStageId: number, relations: string[] = []): Observable<TeamStageNew> {

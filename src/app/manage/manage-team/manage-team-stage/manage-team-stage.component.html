@@ -8,5 +8,13 @@
       <i class="fa fa-plus-circle" aria-hidden="true"></i>
       <span class="d-none d-sm-inline">Створити стадію</span>
    </button>
+   <button class="btn btn-success" (click)="openGenerationModal(teamStageGenerationModal)">
+      <i class="fa fa-list-ol" aria-hidden="true"></i>
+      <span class="d-none d-sm-inline">Згенерувати стадії</span>
+   </button>
 </div>
 <router-outlet></router-outlet>
+<ng-template #teamStageGenerationModal let-c="close">
+   <app-team-stages-generation-modal [close]="c" (successfullySubmitted)="teamStageGenerationModalSubmitted()">
+   </app-team-stages-generation-modal>
+</ng-template>
