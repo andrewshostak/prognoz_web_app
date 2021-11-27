@@ -40,6 +40,7 @@ import { CupPredictionNewService } from '@services/new/cup-prediction-new.servic
 import { CupStageNewService } from '@services/new/cup-stage-new.service';
 import { HeaderImageService } from '@services/new/header-image.service';
 import { MatchService } from '@services/new/match.service';
+import { NewsNewService } from '@services/new/news-new.service';
 import { SeasonNewService } from '@services/new/season-new.service';
 import { TeamCompetitionNewService } from '@services/new/team-competition-new.service';
 import { TeamMatchNewService } from '@services/new/team-match-new.service';
@@ -95,6 +96,7 @@ import { UtilsService } from '@services/utils.service';
       HeadersWithToken,
       ImageService,
       MatchService,
+      NewsNewService,
       PaginationService,
       PusherService,
       SeasonNewService,

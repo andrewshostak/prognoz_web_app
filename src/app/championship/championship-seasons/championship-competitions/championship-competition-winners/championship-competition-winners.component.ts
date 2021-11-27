@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 
+import { Tournament } from '@enums/tournament.enum';
 import { Competition } from '@models/competition.model';
 import { CompetitionService } from '@services/competition.service';
-import { environment } from '@env';
 import { TitleService } from '@services/title.service';
 import { SettingsService } from '@services/settings.service';
 
@@ -30,7 +30,7 @@ export class ChampionshipCompetitionWinnersComponent implements OnInit {
          this.competitionService.getCompetition(params.competitionId).subscribe(
             response => {
                this.resetCompetitionWinnerData();
-               if (response.tournament_id !== environment.tournaments.championship.id) {
+               if (response.tournament_id !== Tournament.Championship) {
                   this.router.navigate(['/404']);
                }
                this.competition = response;

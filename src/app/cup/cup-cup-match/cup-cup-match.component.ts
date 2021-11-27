@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { environment } from '@env';
 
 import { TimePipe } from '@app/shared/pipes/time.pipe';
 import { Sequence } from '@enums/sequence.enum';
@@ -10,6 +9,7 @@ import { CupPredictionNew } from '@models/new/cup-prediction-new.model';
 import { UserNew } from '@models/new/user-new.model';
 import { PaginatedResponse } from '@models/paginated-response.model';
 import { CupMatchSearch } from '@models/search/cup-match-search.model';
+import { CupStageTypeService } from '@services/cup/cup-stage-type.service';
 import { AuthNewService } from '@services/new/auth-new.service';
 import { CupCupMatchNewService } from '@services/new/cup-cup-match-new.service';
 import { CupMatchNewService } from '@services/new/cup-match-new.service';
@@ -29,12 +29,12 @@ import { map, mergeMap, tap } from 'rxjs/operators';
 export class CupCupMatchComponent implements OnInit {
    public cupCupMatch: CupCupMatchNew;
    public cupCupMatchReadableResult: string;
-   public matchesWithPredictions: Array<{
+   public matchesWithPredictions: {
       matchInfo: { match: CupMatchNew; readable: string };
       homePredictionInfo: { prediction: CupPredictionNew; readable: string; scored: boolean };
       awayPredictionInfo: { prediction: CupPredictionNew; readable: string; scored: boolean };
-   }> = [];
-   public numberOfMatchesInStage = environment.tournaments.cup.numberOfMatchesInStage;
+   }[] = [];
+   public numberOfMatchesInStage = CupStageTypeService.numberOfMatchesInStage;
    public predictionsNumber = { home: 0, away: 0 };
    public user: UserNew;
 

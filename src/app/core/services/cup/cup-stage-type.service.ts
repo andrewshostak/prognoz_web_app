@@ -9,18 +9,20 @@ import { Observable } from 'rxjs';
 
 @Injectable()
 export class CupStageTypeService {
-    constructor(private errorHandlerService: ErrorHandlerService, private httpClient: HttpClient) {}
+   public static readonly numberOfMatchesInStage: number = 8;
 
-    private cupStageTypeUrl = `${environment.apiUrl}cup/stage-types`;
+   constructor(private errorHandlerService: ErrorHandlerService, private httpClient: HttpClient) {}
 
-    /**
-     * Get cup stage types
-     * @returns {Observable<CupStageType[]>}
-     */
-    getCupStageTypes(): Observable<CupStageType[]> {
-        return this.httpClient.get(this.cupStageTypeUrl).pipe(
-            map(response => response['cup_stage_types']),
-            catchError(this.errorHandlerService.handle)
-        );
-    }
+   private cupStageTypeUrl = `${environment.apiUrl}cup/stage-types`;
+
+   /**
+    * Get cup stage types
+    * @returns {Observable<CupStageType[]>}
+    */
+   getCupStageTypes(): Observable<CupStageType[]> {
+      return this.httpClient.get<{ cup_stage_types: CupStageType[] }>(this.cupStageTypeUrl).pipe(
+         map(response => response.cup_stage_types),
+         catchError(this.errorHandlerService.handle)
+      );
+   }
 }

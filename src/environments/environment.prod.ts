@@ -7,15 +7,6 @@ export const environment = {
    imageSettings: {
       news: { maxSize: 524288, types: ['image/jpg', 'image/jpeg', 'image/png'] }
    },
-   tournaments: {
-      championship: {
-         id: 1
-      },
-      cup: {
-         id: 2,
-         numberOfMatchesInStage: 8
-      }
-   },
    pusher: {
       apiKey: 'd0200d5a8e86a9d21577'
    }

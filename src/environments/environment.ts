@@ -7,16 +7,6 @@ export const environment = {
    imageSettings: {
       news: { maxSize: 524288, types: ['image/jpg', 'image/jpeg', 'image/png'] }
    },
-   tournaments: {
-      championship: {
-         // todo: change tournament ids to Tournament enum and remove from both env files
-         id: 1
-      },
-      cup: {
-         id: 2,
-         numberOfMatchesInStage: 8
-      }
-   },
    pusher: {
       apiKey: 'no-key-needed-for-development'
    }
