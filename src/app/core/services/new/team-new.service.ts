@@ -16,6 +16,7 @@ export class TeamNewService {
 
    constructor(private httpClient: HttpClient) {}
 
+   // todo: add to postman collection
    public createTeam(team: Partial<TeamNew>): Observable<TeamNew> {
       const body = team.image ? serialize(team, { booleansAsIntegers: true }) : team;
       return this.httpClient.post<{ team: TeamNew }>(this.teamsUrl, body).pipe(map(response => response.team));
@@ -76,6 +77,7 @@ export class TeamNewService {
       return this.httpClient.get<PaginatedResponse<TeamNew>>(this.teamsUrl, { params });
    }
 
+   // todo: add to postman collection
    public updateTeam(teamId: number, team: Partial<TeamNew>): Observable<TeamNew> {
       const body = team.image ? serialize(team, { booleansAsIntegers: true }) : team;
       return this.httpClient.post<{ team: TeamNew }>(`${this.teamsUrl}/${teamId}`, body).pipe(map(response => response.team));
