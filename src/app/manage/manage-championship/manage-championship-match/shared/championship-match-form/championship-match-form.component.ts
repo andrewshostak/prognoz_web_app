@@ -1,6 +1,7 @@
 import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
 
+import { MatchState } from '@enums/match-state.enum';
 import { ModelStatus } from '@enums/model-status.enum';
 import { Tournament } from '@enums/tournament.enum';
 import { ChampionshipMatchNew } from '@models/new/championship-match-new.model';
@@ -69,7 +70,7 @@ export class ChampionshipMatchFormComponent implements OnChanges, OnInit {
          this.addNumberInCompetitionFormControl();
       }
       UtilsService.patchSimpleChangeValuesInForm(changes, this.championshipMatchForm, 'championshipMatch');
-      if (!changes.championshipMatch.firstChange && changes.championshipMatch.currentValue.match.ended) {
+      if (!changes.championshipMatch.firstChange && changes.championshipMatch.currentValue.match.state === MatchState.Ended) {
          this.competitions = [changes.championshipMatch.currentValue.competition];
          this.championshipMatchForm.disable();
       }

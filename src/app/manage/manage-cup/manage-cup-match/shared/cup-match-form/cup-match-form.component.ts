@@ -1,6 +1,7 @@
 import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { AbstractControl, FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 
+import { MatchState } from '@enums/match-state.enum';
 import { ModelStatus } from '@enums/model-status.enum';
 import { CupStageNew } from '@models/new/cup-stage-new';
 import { CupMatchNew } from '@models/new/cup-match-new.model';
@@ -70,7 +71,7 @@ export class CupMatchFormComponent implements OnChanges, OnInit {
             }
          }
       });
-      if (!simpleChanges.cupMatch.firstChange && simpleChanges.cupMatch.currentValue.match.ended) {
+      if (!simpleChanges.cupMatch.firstChange && simpleChanges.cupMatch.currentValue.match.state === MatchState.Ended) {
          this.cupStages = simpleChanges.cupMatch.currentValue.cup_stages;
          this.cupMatchForm.disable();
       }

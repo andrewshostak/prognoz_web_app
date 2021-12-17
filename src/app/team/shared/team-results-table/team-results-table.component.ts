@@ -1,5 +1,6 @@
 import { Component, Input } from '@angular/core';
 
+import { MatchState } from '@enums/match-state.enum';
 import { TeamMatchNew } from '@models/new/team-match-new.model';
 
 @Component({
@@ -9,4 +10,6 @@ import { TeamMatchNew } from '@models/new/team-match-new.model';
 })
 export class TeamResultsTableComponent {
    @Input() teamMatches: TeamMatchNew[];
+
+   public matchStates = MatchState;
 }

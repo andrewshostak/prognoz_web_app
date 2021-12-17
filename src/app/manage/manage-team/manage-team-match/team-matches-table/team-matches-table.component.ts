@@ -2,6 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 
 import { Sequence } from '@enums/sequence.enum';
+import { MatchState } from '@enums/match-state.enum';
 import { TeamMatchNew } from '@models/new/team-match-new.model';
 import { OpenedModal } from '@models/opened-modal.model';
 import { Pagination } from '@models/pagination.model';
@@ -22,6 +23,7 @@ import { Subscription } from 'rxjs';
 export class TeamMatchesTableComponent implements OnDestroy, OnInit {
    public activatedRouteSubscription: Subscription;
    public clubsLogosPath: string;
+   public matchStates = MatchState;
    public openedModal: OpenedModal<TeamMatchNew>;
    public teamMatches: TeamMatchNew[];
    public paginationData: Pagination;

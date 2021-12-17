@@ -36,14 +36,14 @@
          <td class="text-muted align-middle">{{ championshipMatch.updated_at | time: 'fromNow' }}</td>
          <td class="text-nowrap text-center align-middle">
             <a
-               [hidden]="championshipMatch.match.ended"
+               [hidden]="championshipMatch.match.state === matchStates.Ended"
                class="btn btn-sm btn-outline-warning"
                [routerLink]="['/', 'manage', 'championship', 'matches', championshipMatch.id]"
             >
                <i class="fa fa-cogs" aria-hidden="true"></i>
             </a>
             <button
-               [hidden]="championshipMatch.match.ended"
+               [hidden]="championshipMatch.match.state === matchStates.Ended"
                type="button"
                class="btn btn-sm btn-outline-danger"
                (click)="openConfirmModal(confirmModal, championshipMatch, deleteChampionshipMatch)"
@@ -97,14 +97,14 @@
          <td class="text-center align-middle">{{ championshipMatch.dc }}</td>
          <td class="text-nowrap text-center align-middle">
             <a
-               [hidden]="championshipMatch.match.ended"
+               [hidden]="championshipMatch.match.state === matchStates.Ended"
                class="btn btn-sm btn-outline-warning"
                [routerLink]="['/', 'manage', 'championship', 'matches', championshipMatch.id]"
             >
                <i class="fa fa-cogs" aria-hidden="true"></i>
             </a>
             <button
-               [hidden]="championshipMatch.match.ended"
+               [hidden]="championshipMatch.match.state === matchStates.Ended"
                type="button"
                class="btn btn-sm btn-outline-danger"
                (click)="openConfirmModal(confirmModal, championshipMatch, deleteChampionshipMatch)"
@@ -158,7 +158,7 @@
             </table>
          </td>
          <td class="text-center text-nowrap align-middle">
-            <table [hidden]="championshipMatch.match.active" align="center" class="table-sm">
+            <table [hidden]="championshipMatch.match.state === matchStates.Active" align="center" class="table-sm">
                <tr>
                   <td>{{ championshipMatch.predicts }} / {{ championshipMatch.points }}</td>
                </tr>
@@ -168,14 +168,14 @@
             </table>
 
             <a
-               [hidden]="championshipMatch.match.ended"
+               [hidden]="championshipMatch.match.state === matchStates.Ended"
                class="btn btn-sm btn-outline-warning"
                [routerLink]="['/', 'manage', 'championship', 'matches', championshipMatch.id]"
             >
                <i class="fa fa-cogs" aria-hidden="true"></i>
             </a>
             <button
-               [hidden]="championshipMatch.match.ended"
+               [hidden]="championshipMatch.match.state === matchStates.Ended"
                type="button"
                class="btn btn-sm btn-outline-danger"
                (click)="openConfirmModal(confirmModal, championshipMatch, deleteChampionshipMatch)"
@@ -213,7 +213,7 @@
                </tr>
             </table>
          </td>
-         <td [hidden]="championshipMatch.match.ended" class="align-middle">
+         <td [hidden]="championshipMatch.match.state === matchStates.Ended" class="align-middle">
             <table align="center" class="table-sm">
                <tr>
                   <td>
@@ -235,7 +235,7 @@
                </tr>
             </table>
          </td>
-         <td [hidden]="championshipMatch.match.active">
+         <td [hidden]="championshipMatch.match.state === matchStates.Active">
             <table align="center" class="table-sm">
                <tr>
                   <td>{{ championshipMatch.predicts }} / {{ championshipMatch.points }}</td>

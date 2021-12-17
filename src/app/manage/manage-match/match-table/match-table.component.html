@@ -80,7 +80,7 @@
                <i class="fa fa-cogs" aria-hidden="true"></i>
             </a>
             <button
-               [hidden]="match.ended"
+               [hidden]="match.state === matchStates.Ended"
                type="button"
                class="btn btn-sm btn-outline-danger"
                (click)="openConfirmModal(confirmModal, match, deleteMatch)"
@@ -100,8 +100,8 @@
 >
 </app-pagination>
 <ng-template #matchStatusIcon let-match="match">
-   <i [hidden]="match.active" title="Завершений" class="fa fa-check-circle text-success" aria-hidden="true"></i>
-   <i [hidden]="match.ended" title="Активний" class="fa fa-circle-o text-primary" aria-hidden="true"></i>
+   <i *ngIf="match.state === matchStates.Ended" title="Завершений" class="fa fa-check-circle text-success" aria-hidden="true"></i>
+   <i *ngIf="match.state === matchStates.Active" title="Активний" class="fa fa-circle-o text-primary" aria-hidden="true"></i>
 </ng-template>
 <ng-template #homeResultInput let-match="match">
    <input
@@ -110,7 +110,7 @@
       max="99"
       maxlength="2"
       [(ngModel)]="match.home"
-      [disabled]="match.ended"
+      [disabled]="match.state === matchStates.Ended"
       class="form-control form-control-sm font-weight-bold text-center result-input"
    />
 </ng-template>
@@ -121,7 +121,7 @@
       max="99"
       maxlength="2"
       [(ngModel)]="match.away"
-      [disabled]="match.ended"
+      [disabled]="match.state === matchStates.Ended"
       class="form-control form-control-sm font-weight-bold text-center result-input"
    />
 </ng-template>
@@ -129,11 +129,11 @@
    <button
       type="button"
       class="btn btn-sm"
-      [ngClass]="match.ended ? 'btn-outline-secondary' : 'btn-primary'"
-      [disabled]="match.ended"
+      [ngClass]="match.state === matchStates.Ended ? 'btn-outline-secondary' : 'btn-primary'"
+      [disabled]="match.state === matchStates.Ended"
       (click)="addResult(match)"
    >
-      <i class="fa" [ngClass]="match.ended ? 'fa-ban' : 'fa-plus-circle'" aria-hidden="true"></i>
+      <i class="fa" [ngClass]="match.state === matchStates.Ended ? 'fa-ban' : 'fa-plus-circle'" aria-hidden="true"></i>
    </button>
 </ng-template>
 <ng-template #updatedAtText let-match="match">

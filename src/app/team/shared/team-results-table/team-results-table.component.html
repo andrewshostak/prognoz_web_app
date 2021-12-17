@@ -25,26 +25,29 @@
       </tr>
    </thead>
    <tbody>
-      <tr *ngFor="let teamMatch of teamMatches; let i = index" [ngClass]="{ 'table-danger': !teamMatch.guessed && teamMatch.match.ended }">
+      <tr
+         *ngFor="let teamMatch of teamMatches; let i = index"
+         [ngClass]="{ 'table-danger': !teamMatch.guessed && teamMatch.match.state === matchStates.Ended }"
+      >
          <th scope="row" class="text-center d-table-cell">{{ i + 1 }}.</th>
          <td class="text-nowrap">{{ teamMatch.match.club_home.title }} - {{ teamMatch.match.club_away.title }}</td>
-         <td [hidden]="teamMatch.match.active" class="text-center d-table-cell">{{ teamMatch.predictions }}</td>
+         <td [hidden]="teamMatch.match.state === matchStates.Active" class="text-center d-table-cell">{{ teamMatch.predictions }}</td>
          <td
-            [hidden]="teamMatch.match.active"
+            [hidden]="teamMatch.match.state === matchStates.Active"
             class="text-center d-table-cell text-nowrap"
             [ngClass]="{ 'font-weight-bold': teamMatch.guessed }"
          >
             {{ teamMatch.guessed }}
             <small class="text-muted">({{ teamMatch.points }})</small>
          </td>
-         <td [hidden]="teamMatch.match.active" class="text-center d-table-cell">{{ teamMatch.blocked }}</td>
-         <td [hidden]="teamMatch.match.active" class="text-center d-none d-sm-table-cell">
+         <td [hidden]="teamMatch.match.state === matchStates.Active" class="text-center d-table-cell">{{ teamMatch.blocked }}</td>
+         <td [hidden]="teamMatch.match.state === matchStates.Active" class="text-center d-none d-sm-table-cell">
             <strong>{{ teamMatch.match.home }} : {{ teamMatch.match.away }}</strong>
          </td>
-         <td [hidden]="teamMatch.match.active" class="text-center d-sm-none">
+         <td [hidden]="teamMatch.match.state === matchStates.Active" class="text-center d-sm-none">
             <strong>{{ teamMatch.match.home }}:{{ teamMatch.match.away }}</strong>
          </td>
-         <td [hidden]="!teamMatch.match.active" colspan="5" class="text-center text-nowrap">
+         <td [hidden]="teamMatch.match.state === matchStates.Ended" colspan="5" class="text-center text-nowrap">
             <span class="text-muted font-italic">Результату немає</span>
          </td>
       </tr>

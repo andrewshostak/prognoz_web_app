@@ -49,11 +49,11 @@
          <td class="text-center align-middle" [ngClass]="{ 'text-danger': teamMatch.guessed === 0 }">{{ teamMatch.guessed }}</td>
          <td class="text-center align-middle" [ngClass]="{ 'text-danger': teamMatch.blocked === 0 }">{{ teamMatch.blocked }}</td>
          <td class="text-center align-middle" [ngClass]="{ 'text-danger': teamMatch.points === 0 }">
-            {{ teamMatch.match.ended ? teamMatch.points + ' / ' + teamMatch.dc : '' }}
+            {{ teamMatch.match.state === matchStates.Ended ? teamMatch.points + ' / ' + teamMatch.dc : '' }}
          </td>
          <td class="text-center align-middle">
             <table align="center" class="table-sm">
-               <tr *ngIf="teamMatch.match.active">
+               <tr *ngIf="teamMatch.match.state === matchStates.Active">
                   <td class="text-nowrap">
                      <a routerLink="/manage/team/matches/{{ teamMatch.id }}/edit" class="btn btn-sm btn-outline-warning">
                         <i class="fa fa-pencil-square-o fa-lg" aria-hidden="true"></i>
@@ -137,7 +137,7 @@
          </td>
          <td class="text-center text-nowrap align-middle font-weight-bold">{{ teamMatch.match.home }}:{{ teamMatch.match.away }}</td>
          <td class="text-center text-nowrap align-middle">
-            <table *ngIf="teamMatch.match.ended" align="center" class="table-sm">
+            <table *ngIf="teamMatch.match.state === matchStates.Ended" align="center" class="table-sm">
                <tr>
                   <td class="text-center">{{ teamMatch.predictions }}</td>
                   <td class="text-center" [ngClass]="{ 'text-danger': teamMatch.guessed === 0 }">{{ teamMatch.guessed }}</td>
@@ -151,7 +151,7 @@
                </tr>
             </table>
 
-            <span *ngIf="teamMatch.match.active">
+            <span *ngIf="teamMatch.match.state === matchStates.Active">
                <a routerLink="/manage/team/matches/{{ teamMatch.id }}/edit" class="btn btn-sm btn-outline-warning">
                   <i class="fa fa-pencil-square-o fa-lg" aria-hidden="true"></i>
                </a>
@@ -217,7 +217,7 @@
             </table>
          </td>
          <td class="align-middle">
-            <table *ngIf="teamMatch.match.ended" align="center" class="table-sm">
+            <table *ngIf="teamMatch.match.state === matchStates.Ended" align="center" class="table-sm">
                <tr>
                   <td colspan="3" class="text-center font-weight-bold">{{ teamMatch.match.home }}:{{ teamMatch.match.away }}</td>
                </tr>
@@ -234,7 +234,7 @@
                </tr>
             </table>
 
-            <table *ngIf="teamMatch.match.active" align="center">
+            <table *ngIf="teamMatch.match.state === matchStates.Active" align="center">
                <tr>
                   <td class="text-center">
                      <a routerLink="/manage/team/matches/{{ teamMatch.id }}/edit" class="btn btn-sm btn-outline-warning">
@@ -298,7 +298,7 @@
                      </table>
                   </td>
                   <td class="align-middle">
-                     <table *ngIf="teamMatch.match.ended" align="center" class="table-sm">
+                     <table *ngIf="teamMatch.match.state === matchStates.Ended" align="center" class="table-sm">
                         <tr>
                            <td colspan="3" class="text-center font-weight-bold">{{ teamMatch.match.home }}:{{ teamMatch.match.away }}</td>
                         </tr>
@@ -315,7 +315,7 @@
                         </tr>
                      </table>
 
-                     <table *ngIf="teamMatch.match.active" align="center">
+                     <table *ngIf="teamMatch.match.state === matchStates.Active" align="center">
                         <tr>
                            <td class="text-center">
                               <a routerLink="/manage/team/matches/{{ teamMatch.id }}/edit" class="btn btn-sm btn-outline-warning">

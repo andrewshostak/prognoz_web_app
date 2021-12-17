@@ -3,6 +3,7 @@ import { ActivatedRoute, Params } from '@angular/router';
 
 import { Sequence } from '@enums/sequence.enum';
 import { Match } from '@models/match.model';
+import { MatchState } from '@enums/match-state.enum';
 import { OpenedModal } from '@models/opened-modal.model';
 import { Pagination } from '@models/pagination.model';
 import { MatchSearch } from '@models/search/match-search.model';
@@ -24,6 +25,7 @@ export class MatchTableComponent implements OnDestroy, OnInit {
    public activatedRouteSubscription: Subscription;
    public clubsLogosPath: string;
    public matches: Match[];
+   public matchStates = MatchState;
    public openedModal: OpenedModal<Match>;
    public paginationData: Pagination;
 
@@ -90,7 +92,7 @@ export class MatchTableComponent implements OnDestroy, OnInit {
    }
 
    public showEditButton(match: Match): boolean {
-      if (match.active) {
+      if (match.state === MatchState.Active) {
          return true;
       }
 

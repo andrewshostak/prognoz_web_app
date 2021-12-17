@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
 import { TimePipe } from '@app/shared/pipes/time.pipe';
+import { MatchState } from '@enums/match-state.enum';
 import { Sequence } from '@enums/sequence.enum';
 import { CupCupMatchNew } from '@models/new/cup-cup-match-new.model';
 import { CupMatchNew } from '@models/new/cup-match-new.model';
@@ -55,7 +56,7 @@ export class CupCupMatchComponent implements OnInit {
          return false;
       }
 
-      if (cupMatch.match.active) {
+      if (cupMatch.match.state === MatchState.Active) {
          return false;
       }
 

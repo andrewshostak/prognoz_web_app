@@ -2,6 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 
 import { Sequence } from '@enums/sequence.enum';
+import { MatchState } from '@enums/match-state.enum';
 import { ChampionshipMatchNew } from '@models/new/championship-match-new.model';
 import { OpenedModal } from '@models/opened-modal.model';
 import { Pagination } from '@models/pagination.model';
@@ -23,6 +24,7 @@ export class ChampionshipMatchTableComponent implements OnDestroy, OnInit {
    public activatedRouteSubscription: Subscription;
    public championshipMatches: ChampionshipMatchNew[];
    public clubsLogosPath: string;
+   public matchStates = MatchState;
    public openedModal: OpenedModal<ChampionshipMatchNew>;
    public paginationData: Pagination;
 
@@ -39,9 +41,7 @@ export class ChampionshipMatchTableComponent implements OnDestroy, OnInit {
          this.paginationData.total--;
          this.notificationsService.success(
             'Успішно',
-            `Матч №${this.openedModal.data.id} ${this.openedModal.data.match.club_home.title} - ${
-               this.openedModal.data.match.club_away.title
-            } видалено`
+            `Матч №${this.openedModal.data.id} ${this.openedModal.data.match.club_home.title} - ${this.openedModal.data.match.club_away.title} видалено`
          );
          this.openedModal.reference.close();
       });

@@ -48,12 +48,12 @@
          </td>
          <td class="text-center text-nowrap align-middle font-weight-bold">{{ cupMatch.match.home }} : {{ cupMatch.match.away }}</td>
          <td class="text-center text-nowrap align-middle">{{ cupMatch.predictions }}</td>
-         <td class="text-center text-nowrap  align-middle" [ngClass]="{ 'text-danger': cupMatch.guessed === 0 }">{{ cupMatch.guessed }}</td>
+         <td class="text-center text-nowrap align-middle" [ngClass]="{ 'text-danger': cupMatch.guessed === 0 }">{{ cupMatch.guessed }}</td>
          <td class="text-center text-nowrap align-middle" [ngClass]="{ 'text-danger': cupMatch.points === 0 }">{{ cupMatch.points }}</td>
          <td class="text-center text-nowrap align-middle" [ngClass]="{ 'text-danger': cupMatch.dc_sum >= 1 }">{{ cupMatch.dc_sum }}</td>
          <td class="text-center align-middle">
             <table align="center" class="table-sm">
-               <tr *ngIf="cupMatch.match.active">
+               <tr *ngIf="cupMatch.match.state === matchStates.Active">
                   <td class="text-nowrap">
                      <a routerLink="/manage/cup/matches/{{ cupMatch.id }}/edit" class="btn btn-sm btn-outline-warning">
                         <i class="fa fa-pencil-square-o fa-lg" aria-hidden="true"></i>
@@ -127,7 +127,7 @@
          </td>
          <td class="text-center text-nowrap align-middle font-weight-bold">{{ cupMatch.match.home }}:{{ cupMatch.match.away }}</td>
          <td class="text-center text-nowrap align-middle">
-            <table *ngIf="cupMatch.match.ended" align="center" class="table-sm">
+            <table *ngIf="cupMatch.match.state === matchStates.Ended" align="center" class="table-sm">
                <tr>
                   <td class="text-center">{{ cupMatch.predictions }}</td>
                   <td class="text-center" [ngClass]="{ 'text-danger': cupMatch.guessed === 0 }">{{ cupMatch.guessed }}</td>
@@ -140,7 +140,7 @@
                </tr>
             </table>
 
-            <span *ngIf="cupMatch.match.active">
+            <span *ngIf="cupMatch.match.state === matchStates.Active">
                <a routerLink="/manage/cup/matches/{{ cupMatch.id }}/edit" class="btn btn-sm btn-outline-warning">
                   <i class="fa fa-pencil-square-o fa-lg" aria-hidden="true"></i>
                </a>
@@ -208,7 +208,7 @@
             </table>
          </td>
          <td class="align-middle">
-            <table *ngIf="cupMatch.match.ended" align="center">
+            <table *ngIf="cupMatch.match.state === matchStates.Ended" align="center">
                <tr>
                   <td colspan="2" class="text-center font-weight-bold">{{ cupMatch.match.home }} : {{ cupMatch.match.away }}</td>
                </tr>
@@ -224,7 +224,7 @@
                </tr>
             </table>
 
-            <table *ngIf="cupMatch.match.active" align="center">
+            <table *ngIf="cupMatch.match.state === matchStates.Active" align="center">
                <tr>
                   <td class="text-center">
                      <a routerLink="/manage/cup/matches/{{ cupMatch.id }}/edit" class="btn btn-sm btn-outline-warning">
@@ -288,7 +288,7 @@
                      </table>
                   </td>
                   <td class="align-middle">
-                     <table *ngIf="cupMatch.match.ended" align="center">
+                     <table *ngIf="cupMatch.match.state === matchStates.Ended" align="center">
                         <tr>
                            <td colspan="2" class="text-center font-weight-bold">{{ cupMatch.match.home }} : {{ cupMatch.match.away }}</td>
                         </tr>
@@ -304,7 +304,7 @@
                         </tr>
                      </table>
 
-                     <table *ngIf="cupMatch.match.active" align="center">
+                     <table *ngIf="cupMatch.match.state === matchStates.Active" align="center">
                         <tr>
                            <td class="text-center">
                               <a routerLink="/manage/cup/matches/{{ cupMatch.id }}/edit" class="btn btn-sm btn-outline-warning">

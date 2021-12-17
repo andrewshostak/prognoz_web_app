@@ -1,6 +1,7 @@
 import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { AbstractControl, FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 
+import { MatchState } from '@enums/match-state.enum';
 import { ModelStatus } from '@enums/model-status.enum';
 import { Sequence } from '@enums/sequence.enum';
 import { TeamStageState } from '@enums/team-stage-state.enum';
@@ -72,7 +73,7 @@ export class TeamMatchFormComponent implements OnChanges, OnInit {
             }
          }
       });
-      if (!simpleChanges.teamMatch.firstChange && simpleChanges.teamMatch.currentValue.match.ended) {
+      if (!simpleChanges.teamMatch.firstChange && simpleChanges.teamMatch.currentValue.match.state === MatchState.Ended) {
          this.teamStages = simpleChanges.teamMatch.currentValue.team_stages;
          this.teamMatchForm.disable();
       }
