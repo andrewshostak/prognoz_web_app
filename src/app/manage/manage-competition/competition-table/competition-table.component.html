@@ -34,16 +34,32 @@
                <td class="text-center text-muted">{{ competition.number_in_season }}</td>
                <td class="text-center">{{ competition.tournament.title }}</td>
                <td class="text-center">
-                  <i *ngIf="competition.stated" class="text-success fa fa-check-circle fa-lg" aria-hidden="true"></i>
-                  <i *ngIf="!competition.stated" class="text-danger fa fa-times fa-lg" aria-hidden="true"></i>
+                  <i
+                     *ngIf="competition.state === competitionStates.Applications"
+                     class="text-success fa fa-check-circle fa-lg"
+                     aria-hidden="true"
+                  ></i>
+                  <i
+                     *ngIf="competition.state !== competitionStates.Applications"
+                     class="text-danger fa fa-times fa-lg"
+                     aria-hidden="true"
+                  ></i>
                </td>
                <td class="text-center">
-                  <i *ngIf="competition.active" class="text-success fa fa-check-circle fa-lg" aria-hidden="true"></i>
-                  <i *ngIf="!competition.active" class="text-danger fa fa-times fa-lg" aria-hidden="true"></i>
+                  <i
+                     *ngIf="competition.state === competitionStates.Active"
+                     class="text-success fa fa-check-circle fa-lg"
+                     aria-hidden="true"
+                  ></i>
+                  <i *ngIf="competition.state !== competitionStates.Active" class="text-danger fa fa-times fa-lg" aria-hidden="true"></i>
                </td>
                <td class="text-center">
-                  <i *ngIf="competition.ended" class="text-success fa fa-check-circle fa-lg" aria-hidden="true"></i>
-                  <i *ngIf="!competition.ended" class="text-danger fa fa-times fa-lg" aria-hidden="true"></i>
+                  <i
+                     *ngIf="competition.state === competitionStates.Ended"
+                     class="text-success fa fa-check-circle fa-lg"
+                     aria-hidden="true"
+                  ></i>
+                  <i *ngIf="competition.state !== competitionStates.Ended" class="text-danger fa fa-times fa-lg" aria-hidden="true"></i>
                </td>
                <td class="text-center">
                   <button type="button" routerLink="/manage/competitions/{{ competition.id }}/edit" class="btn btn-sm btn-outline-warning">

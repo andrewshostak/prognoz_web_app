@@ -18,7 +18,7 @@
       >
          <i class="fa fa-arrow-right"></i> <span class="d-none d-md-inline">Подати заявку</span>
       </button>
-      <span [hidden]="!team.confirmed || competition.ended" class="text-nowrap text-success">
+      <span [hidden]="!team.confirmed || competition.state === competitionStates.Ended" class="text-nowrap text-success">
          <i class="fa fa-check-circle"></i> <span class="d-none d-md-inline">Підтверджено</span>
       </span>
       <button type="button" class="btn btn-sm btn-outline-primary" (click)="toggleParticipants()">

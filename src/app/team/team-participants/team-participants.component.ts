@@ -1,6 +1,7 @@
 import { Component, OnDestroy, OnInit, TemplateRef } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 
+import { CompetitionState } from '@enums/competition-state.enum';
 import { ModelStatus } from '@enums/model-status.enum';
 import { Sequence } from '@enums/sequence.enum';
 import { CompetitionNew } from '@models/new/competition-new.model';
@@ -31,6 +32,7 @@ import { filter, map, mergeMap, takeUntil } from 'rxjs/operators';
 export class TeamParticipantsComponent implements OnDestroy, OnInit {
    public allUserApplications: TeamParticipantNew[];
    public competition: CompetitionNew;
+   public competitionStates = CompetitionState;
    public openedModal: OpenedModal<null>;
    public showCreateTeamButton: boolean;
    public teams: TeamNew[];
@@ -153,7 +155,9 @@ export class TeamParticipantsComponent implements OnDestroy, OnInit {
                ] = [of(null), of(null)];
                if (this.user) {
                   applicationRequests = [
-                     this.competition.stated ? this.getOpenedUserApplicationsObservable(this.user.id) : of(null),
+                     this.competition.state === CompetitionState.Applications
+                        ? this.getOpenedUserApplicationsObservable(this.user.id)
+                        : of(null),
                      this.getAllUserApplicationsObservable(competitionId, this.user.id)
                   ];
                }

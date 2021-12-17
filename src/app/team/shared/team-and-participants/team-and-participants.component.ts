@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, TemplateRef } from '@angular/core';
 
+import { CompetitionState } from '@enums/competition-state.enum';
 import { Device } from '@models/device.model';
 import { CompetitionNew } from '@models/new/competition-new.model';
 import { TeamNew } from '@models/new/team-new.model';
@@ -29,6 +30,7 @@ export class TeamAndParticipantsComponent implements OnInit, OnChanges {
 
    @Output() public teamParticipantCreated = new EventEmitter();
 
+   public competitionStates = CompetitionState;
    public isExpanded: boolean;
    public openedModal: OpenedModal<{ message: string; teamParticipant: TeamParticipantNew }>;
    public showCaptainButtons: boolean;
@@ -158,7 +160,7 @@ export class TeamAndParticipantsComponent implements OnInit, OnChanges {
          return false;
       }
 
-      if (!competition.stated) {
+      if (competition.state !== CompetitionState.Applications) {
          return false;
       }
 

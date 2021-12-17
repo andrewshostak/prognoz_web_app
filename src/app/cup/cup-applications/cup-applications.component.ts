@@ -1,5 +1,6 @@
 import { Component, ElementRef, OnInit, TemplateRef } from '@angular/core';
 
+import { CompetitionState } from '@enums/competition-state.enum';
 import { CupApplicationPlace } from '@enums/cup-application-place.enum';
 import { Tournament } from '@enums/tournament.enum';
 import { Competition } from '@models/competition.model';
@@ -92,7 +93,7 @@ export class CupApplicationsComponent implements OnInit {
          !this.hasUnConfirmedRequisition(this.authenticatedUser) &&
          !this.hasConfirmedRequisitionAsApplicant(this.authenticatedUser) &&
          !this.hasConfirmedRequisitionAsReceiver(this.authenticatedUser) &&
-         competition.stated
+         competition.state === CompetitionState.Applications
       );
    }
 
@@ -187,7 +188,7 @@ export class CupApplicationsComponent implements OnInit {
       if (!this.authenticatedUser) {
          return false;
       }
-      if (!competition.stated) {
+      if (competition.state !== CompetitionState.Applications) {
          return false;
       }
       if (this.authenticatedUser.id === cupApplication.applicant_id || this.hasModeratorRights()) {

@@ -2,6 +2,7 @@ import { Location } from '@angular/common';
 import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 
+import { CompetitionState } from '@enums/competition-state.enum';
 import { SeasonState } from '@enums/season-state.enum';
 import { Competition } from '@models/competition.model';
 import { SeasonNew } from '@models/new/season-new.model';
@@ -50,7 +51,29 @@ export class CompetitionFormComponent implements OnChanges, OnInit {
    }
 
    public ngOnChanges(simpleChanges: SimpleChanges) {
-      UtilsService.patchSimpleChangeValuesInForm(simpleChanges, this.competitionForm, 'competition');
+      UtilsService.patchSimpleChangeValuesInForm(simpleChanges, this.competitionForm, 'competition', (formGroup, field, value) => {
+         if (['stated', 'active', 'ended'].includes(field)) {
+            return;
+         }
+
+         if (field === 'state') {
+            switch (value) {
+               case CompetitionState.Applications:
+                  formGroup.get('stated').setValue(true);
+                  break;
+               case CompetitionState.Active:
+                  formGroup.get('active').setValue(true);
+                  break;
+               case CompetitionState.Ended:
+                  formGroup.get('ended').setValue(true);
+                  break;
+            }
+         } else {
+            if (formGroup.get(field)) {
+               formGroup.patchValue({ [field]: value });
+            }
+         }
+      });
    }
 
    public ngOnInit() {

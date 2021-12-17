@@ -52,10 +52,12 @@
    </ul>
 </div>
 <ng-template #teamCompetitionState let-competition>
-   <span *ngIf="!competition.stated && !competition.active && !competition.ended">Майбутнє змагання</span>
-   <span *ngIf="competition.stated">Відкрито подачу заявок</span>
-   <span *ngIf="competition.active">Активне змагання</span>
-   <span *ngIf="competition.ended">Завершене змагання</span>
+   <ng-container [ngSwitch]="competition.state">
+      <span *ngSwitchCase="competitionStates.NotStarted">Майбутнє змагання</span>
+      <span *ngSwitchCase="competitionStates.Applications">Відкрито подачу заявок</span>
+      <span *ngSwitchCase="competitionStates.Active">Активне змагання</span>
+      <span *ngSwitchCase="competitionStates.Ended">Завершене змагання</span>
+   </ng-container>
 </ng-template>
 <ng-template #teamSelectModal let-c="close">
    <app-team-select-modal [close]="c" (submitted)="teamSelected($event)"> </app-team-select-modal>
