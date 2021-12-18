@@ -2,6 +2,7 @@
 import { ModelStatus } from '@enums/model-status.enum';
 import { TeamNew } from '@models/new/team-new.model';
 import { TeamStageNew } from '@models/new/team-stage-new.model';
+import { TeamTeamMatchState } from '@enums/team-team-match-state.enum';
 
 export class TeamTeamMatchNew {
    id: number;
@@ -18,6 +19,7 @@ export class TeamTeamMatchNew {
    away_dc_sum: number;
    active: ModelStatus;
    ended: ModelStatus;
+   state: TeamTeamMatchState;
    created_at: string;
    updated_at: string;
 

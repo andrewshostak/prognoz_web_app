@@ -200,7 +200,7 @@
             id="goalkeeper_id"
             class="form-control"
             [ngModel]="goalkeeperId ? goalkeeperId : ''"
-            [disabled]="!isCaptain || (teamTeamMatch && teamTeamMatch.ended) || !teamTeamMatch"
+            [disabled]="!isCaptain || (teamTeamMatch && teamTeamMatch.state === teamTeamMatchStates.Ended) || !teamTeamMatch"
             #goalkeeper_id="ngModel"
             required
          >
@@ -218,7 +218,7 @@
       </div>
       <div class="text-center">
          <button
-            *ngIf="isCaptain && teamTeamMatch && !teamTeamMatch.ended"
+            *ngIf="isCaptain && teamTeamMatch && teamTeamMatch.state !== teamTeamMatchStates.Ended"
             class="btn btn-primary"
             [ngClass]="{ 'btn-outline-primary': goalkeeperId, 'btn-primary': !goalkeeperId }"
             [hidden]="spinnerButtonGoalkeeper"
@@ -229,7 +229,11 @@
             <i [hidden]="!goalkeeperId" class="fa fa-pencil-square-o" aria-hidden="true"></i>
             {{ goalkeeperId ? 'Змінити' : 'Підтвердити' }}
          </button>
-         <button *ngIf="!isCaptain || (teamTeamMatch && teamTeamMatch.ended) || !teamTeamMatch" class="btn btn-outline-secondary" disabled>
+         <button
+            *ngIf="!isCaptain || (teamTeamMatch && teamTeamMatch.state === teamTeamMatchStates.Ended) || !teamTeamMatch"
+            class="btn btn-outline-secondary"
+            disabled
+         >
             <i class="fa fa-ban" aria-hidden="true"></i> Заборонено
          </button>
          <app-spinner-button [hidden]="!spinnerButtonGoalkeeper"></app-spinner-button>

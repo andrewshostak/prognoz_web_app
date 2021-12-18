@@ -20,7 +20,7 @@
                      <app-team-logo [team]="teamTeamMatch.home_team"></app-team-logo>
                   </td>
                </tr>
-               <tr *ngIf="teamTeamMatch.active || teamTeamMatch.ended">
+               <tr *ngIf="teamTeamMatch.state !== teamTeamMatchStates.NotStarted">
                   <td>
                      <small class="text-muted">{{ teamTeamMatch.home_dc_sum }}</small>
                   </td>
@@ -39,7 +39,7 @@
                      <strong class="ml-1">{{ teamTeamMatch.away_team.name }}</strong>
                   </td>
                </tr>
-               <tr *ngIf="teamTeamMatch.active || teamTeamMatch.ended">
+               <tr *ngIf="teamTeamMatch.state !== teamTeamMatchStates.NotStarted">
                   <td>
                      <strong>{{ teamTeamMatch.away }}</strong>
                   </td>
@@ -60,7 +60,7 @@
             ></ng-container>
          </td>
          <td class="align-middle text-center">
-            <div *ngIf="!teamTeamMatch.active && !teamTeamMatch.ended">
+            <div *ngIf="teamTeamMatch.state === teamTeamMatchStates.NotStarted">
                <a [routerLink]="['/manage', 'team', 'team-matches', teamTeamMatch.id]" class="btn btn-sm btn-outline-warning">
                   <i class="fa fa-pencil-square-o fa-lg" aria-hidden="true"></i>
                </a>
@@ -108,7 +108,7 @@
                      <app-team-logo [team]="teamTeamMatch.home_team"></app-team-logo>
                   </td>
                </tr>
-               <tr *ngIf="teamTeamMatch.active || teamTeamMatch.ended">
+               <tr *ngIf="teamTeamMatch.state !== teamTeamMatchStates.NotStarted">
                   <td>
                      <small class="text-muted">{{ teamTeamMatch.home_dc_sum }}</small>
                   </td>
@@ -127,7 +127,7 @@
                      <strong class="ml-1">{{ teamTeamMatch.away_team.name }}</strong>
                   </td>
                </tr>
-               <tr *ngIf="teamTeamMatch.active || teamTeamMatch.ended">
+               <tr *ngIf="teamTeamMatch.state !== teamTeamMatchStates.NotStarted">
                   <td>
                      <strong>{{ teamTeamMatch.away }}</strong>
                   </td>
@@ -148,7 +148,7 @@
                   [ngTemplateOutletContext]="{ teamTeamMatch: teamTeamMatch }"
                ></ng-container>
             </div>
-            <div *ngIf="!teamTeamMatch.active && !teamTeamMatch.ended">
+            <div *ngIf="teamTeamMatch.state === teamTeamMatchStates.NotStarted">
                <a [routerLink]="['/manage', 'team', 'team-matches', teamTeamMatch.id]" class="btn btn-sm btn-outline-warning">
                   <i class="fa fa-pencil-square-o fa-lg" aria-hidden="true"></i>
                </a>
@@ -196,7 +196,7 @@
                      <app-team-logo [team]="teamTeamMatch.home_team"></app-team-logo>
                   </td>
                </tr>
-               <tr *ngIf="teamTeamMatch.active || teamTeamMatch.ended">
+               <tr *ngIf="teamTeamMatch.state !== teamTeamMatchStates.NotStarted">
                   <td>
                      <small class="text-muted">{{ teamTeamMatch.home_dc_sum }}</small>
                   </td>
@@ -215,7 +215,7 @@
                      <strong class="ml-1">{{ teamTeamMatch.away_team.name }}</strong>
                   </td>
                </tr>
-               <tr *ngIf="teamTeamMatch.active || teamTeamMatch.ended">
+               <tr *ngIf="teamTeamMatch.state !== teamTeamMatchStates.NotStarted">
                   <td>
                      <strong>{{ teamTeamMatch.away }}</strong>
                   </td>
@@ -236,7 +236,7 @@
                   [ngTemplateOutletContext]="{ teamTeamMatch: teamTeamMatch }"
                ></ng-container>
             </div>
-            <div *ngIf="!teamTeamMatch.active && !teamTeamMatch.ended">
+            <div *ngIf="teamTeamMatch.state === teamTeamMatchStates.NotStarted">
                <a [routerLink]="['/manage', 'team', 'team-matches', teamTeamMatch.id]" class="btn btn-sm btn-outline-warning">
                   <i class="fa fa-pencil-square-o fa-lg" aria-hidden="true"></i>
                </a>
@@ -282,7 +282,7 @@
                      <strong class="ml-1">{{ teamTeamMatch.away_team.name }}</strong>
                   </td>
                </tr>
-               <tr *ngIf="teamTeamMatch.active || teamTeamMatch.ended">
+               <tr *ngIf="teamTeamMatch.state !== teamTeamMatchStates.NotStarted">
                   <td>
                      <small class="text-muted">{{ teamTeamMatch.home_dc_sum }}</small>
                   </td>
@@ -309,7 +309,7 @@
                      ></ng-container>
                   </td>
                </tr>
-               <tr *ngIf="!teamTeamMatch.active && !teamTeamMatch.ended">
+               <tr *ngIf="teamTeamMatch.state === teamTeamMatchStates.NotStarted">
                   <td colspan="6" class="text-center">
                      <a [routerLink]="['/manage', 'team', 'team-matches', teamTeamMatch.id]" class="btn btn-sm btn-outline-warning">
                         <i class="fa fa-pencil-square-o fa-lg" aria-hidden="true"></i>
@@ -340,7 +340,9 @@
    </app-confirmation-modal>
 </ng-template>
 <ng-template #teamTeamMatchState let-teamTeamMatch="teamTeamMatch">
-   <strong *ngIf="!teamTeamMatch.active && !teamTeamMatch.ended" class="text-info text-nowrap">Не початий</strong>
-   <strong *ngIf="teamTeamMatch.active && !teamTeamMatch.ended" class="text-success">Активний</strong>
-   <strong *ngIf="!teamTeamMatch.active && teamTeamMatch.ended" class="text-muted">Завершений</strong>
+   <ng-container [ngSwitch]="teamTeamMatch.state">
+      <strong *ngSwitchCase="teamTeamMatchStates.NotStarted" class="text-info text-nowrap">Не початий</strong>
+      <strong *ngSwitchCase="teamTeamMatchStates.Active" class="text-success">Активний</strong>
+      <strong *ngSwitchCase="teamTeamMatchStates.Ended" class="text-muted">Завершений</strong>
+   </ng-container>
 </ng-template>

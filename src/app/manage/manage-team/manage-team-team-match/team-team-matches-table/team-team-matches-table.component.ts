@@ -2,6 +2,7 @@ import { Component, OnDestroy, OnInit, TemplateRef } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 
 import { Sequence } from '@enums/sequence.enum';
+import { TeamTeamMatchState } from '@enums/team-team-match-state.enum';
 import { TeamTeamMatchSearch } from '@models/search/team-team-match-search.model';
 import { TeamTeamMatchNew } from '@models/new/team-team-match-new.model';
 import { Pagination } from '@models/pagination.model';
@@ -24,6 +25,7 @@ export class TeamTeamMatchesTableComponent implements OnDestroy, OnInit {
    public openedModal: OpenedModal<TeamTeamMatchNew>;
    public paginationData: Pagination;
    public teamTeamMatches: TeamTeamMatchNew[] = [];
+   public teamTeamMatchStates = TeamTeamMatchState;
 
    constructor(
       private activatedRoute: ActivatedRoute,

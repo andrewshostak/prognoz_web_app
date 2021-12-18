@@ -3,6 +3,7 @@ import { NgForm } from '@angular/forms';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 
 import { ModelStatus } from '@enums/model-status.enum';
+import { TeamTeamMatchState } from '@enums/team-team-match-state.enum';
 import { UserNew } from '@models/new/user-new.model';
 import { TeamStageNew } from '@models/new/team-stage-new.model';
 import { TeamTeamMatchNew } from '@models/new/team-team-match-new.model';
@@ -61,6 +62,7 @@ export class TeamCaptainComponent implements OnInit {
    teamMatches: TeamMatch[];
    teamParticipants: TeamParticipant[];
    teamTeamMatch: TeamTeamMatchNew;
+   teamTeamMatchStates = TeamTeamMatchState;
    teamTeamMatches: TeamTeamMatchNew[];
 
    getCurrentTeamTeamMatch() {

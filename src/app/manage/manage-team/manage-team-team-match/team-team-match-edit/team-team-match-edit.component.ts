@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 
 import { Sequence } from '@enums/sequence.enum';
 import { TeamStageState } from '@enums/team-stage-state.enum';
+import { TeamTeamMatchState } from '@enums/team-team-match-state.enum';
 import { TeamStageNew } from '@models/new/team-stage-new.model';
 import { TeamStageSearch } from '@models/search/team-stage-search.model';
 import { TeamTeamMatchNew } from '@models/new/team-team-match-new.model';
@@ -85,7 +86,7 @@ export class TeamTeamMatchEditComponent implements OnInit {
          this.teamStages = uniqBy(this.teamStages.concat([teamTeamMatch.team_stage]), 'id');
       }
 
-      if (teamTeamMatch.active || teamTeamMatch.ended) {
+      if (teamTeamMatch.state !== TeamTeamMatchState.NotStarted) {
          this.teamTeamMatchForm.disable();
       }
    }
