@@ -1,13 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
+import { CupStageState } from '@enums/cup-stage-state.enum';
 import { CupStageType } from '@enums/cup-stage-type.enum';
 import { ModelStatus } from '@enums/model-status.enum';
 import { Sequence } from '@enums/sequence.enum';
 import { Tournament } from '@enums/tournament.enum';
 import { CompetitionNew } from '@models/new/competition-new.model';
 import { CupCupMatchNew } from '@models/new/cup-cup-match-new.model';
-import { CupStageNew } from '@models/new/cup-stage-new';
+import { CupStageNew } from '@models/new/cup-stage-new.model';
 import { PaginatedResponse } from '@models/paginated-response.model';
 import { CompetitionSearch } from '@models/search/competition-search.model';
 import { CupCupMatchSearch } from '@models/search/cup-cup-match-search.model';
@@ -190,19 +191,19 @@ export class CupCupMatchesComponent implements OnInit {
          return;
       }
 
-      const active = cupStages.find(cupStage => cupStage.active);
+      const active = cupStages.find(cupStage => cupStage.state === CupStageState.Active);
       if (active) {
          this.router.navigate(['/cup', 'cup-matches', { cup_stage_id: active.id }]);
          return;
       }
 
-      const stated = cupStages.find(cupStage => !cupStage.active && !cupStage.ended);
-      if (stated) {
-         this.router.navigate(['/cup', 'cup-matches', { cup_stage_id: stated.id }]);
+      const notStarted = cupStages.find(cupStage => cupStage.state === CupStageState.NotStarted);
+      if (notStarted) {
+         this.router.navigate(['/cup', 'cup-matches', { cup_stage_id: notStarted.id }]);
          return;
       }
 
-      const ended = findLast(cupStages, cupStage => cupStage.ended) as CupStageNew;
+      const ended = findLast(cupStages, cupStage => cupStage.state === CupStageState.Ended) as CupStageNew;
       if (ended) {
          this.router.navigate(['/cup', 'cup-matches', { cup_stage_id: ended.id }]);
          return;
@@ -247,7 +248,10 @@ export class CupCupMatchesComponent implements OnInit {
    }
 
    private updateFirstStageCupCupMatches(): void {
-      if (this.hasPreviousCupStage(this.selectedCupStage) && (this.selectedCupStage.active || this.selectedCupStage.ended)) {
+      if (
+         this.hasPreviousCupStage(this.selectedCupStage) &&
+         (this.selectedCupStage.state === CupStageState.Active || this.selectedCupStage.state === CupStageState.Ended)
+      ) {
          const previousCupStage = this.findPreviousCupStage(this.cupStages, this.selectedCupStage);
          this.getCupCupMatchesObservable(previousCupStage.id, false).subscribe(response => {
             this.cupCupMatchesOfFirstStage = response.data;

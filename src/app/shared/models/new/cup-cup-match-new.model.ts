@@ -1,7 +1,7 @@
 /* tslint:disable:variable-name */
 import { CupCupMatchState } from '@enums/cup-cup-match-state.enum';
 import { ModelStatus } from '@enums/model-status.enum';
-import { CupStageNew } from '@models/new/cup-stage-new';
+import { CupStageNew } from '@models/new/cup-stage-new.model';
 import { UserNew } from '@models/new/user-new.model';
 
 export class CupCupMatchNew {

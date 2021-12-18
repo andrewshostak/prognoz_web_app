@@ -5,7 +5,7 @@ import { CupCupMatch } from '@models/cup/cup-cup-match.model';
 import { CupCupMatchService } from '@services/cup/cup-cup-match.service';
 import { CupStageNewService } from '@services/new/cup-stage-new.service';
 import { NotificationsService } from 'angular2-notifications';
-import { CupStageNew } from '@models/new/cup-stage-new';
+import { CupStageNew } from '@models/new/cup-stage-new.model';
 import { CupStageSearch } from '@models/search/cup-stage-search.model';
 import { ModelStatus } from '@enums/model-status.enum';
 import { Sequence } from '@enums/sequence.enum';

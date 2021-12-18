@@ -3,7 +3,7 @@ import { AbstractControl, FormArray, FormControl, FormGroup, Validators } from '
 
 import { MatchState } from '@enums/match-state.enum';
 import { ModelStatus } from '@enums/model-status.enum';
-import { CupStageNew } from '@models/new/cup-stage-new';
+import { CupStageNew } from '@models/new/cup-stage-new.model';
 import { CupMatchNew } from '@models/new/cup-match-new.model';
 import { OpenedModal } from '@models/opened-modal.model';
 import { PaginatedResponse } from '@models/paginated-response.model';

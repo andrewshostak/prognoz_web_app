@@ -2,6 +2,7 @@ import { Location } from '@angular/common';
 import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 
+import { CupStageState } from '@enums/cup-stage-state.enum';
 import { Tournament } from '@enums/tournament.enum';
 import { Competition } from '@models/competition.model';
 import { CompetitionService } from '@services/competition.service';
@@ -58,7 +59,20 @@ export class CupStageFormComponent implements OnChanges, OnInit {
 
    ngOnChanges(simpleChanges: SimpleChanges) {
       UtilsService.patchSimpleChangeValuesInForm(simpleChanges, this.cupStageForm, 'cupStage', (formGroup, field, value) => {
-         if (field === 'cup_matches') {
+         if (['active', 'ended'].includes(field)) {
+            return;
+         }
+
+         if (field === 'state') {
+            switch (value) {
+               case CupStageState.Active:
+                  formGroup.get('active').setValue(true);
+                  break;
+               case CupStageState.Ended:
+                  formGroup.get('ended').setValue(true);
+                  break;
+            }
+         } else if (field === 'cup_matches') {
             this.clearCupMatchesFormArray();
             if (value.length) {
                value.forEach(cupMatch => {

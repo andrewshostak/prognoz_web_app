@@ -2,7 +2,7 @@ import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 
 import { CupStageType } from '@enums/cup-stage-type.enum';
 import { CupCupMatchNew } from '@models/new/cup-cup-match-new.model';
-import { CupStageNew } from '@models/new/cup-stage-new';
+import { CupStageNew } from '@models/new/cup-stage-new.model';
 import { CupCupMatchNewService } from '@services/new/cup-cup-match-new.service';
 import { isNil } from 'lodash';
 

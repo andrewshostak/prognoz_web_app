@@ -28,19 +28,27 @@
                      <td class="align-middle">{{ cupStage.cup_stage_type.title }}</td>
                      <td class="text-center align-middle">{{ cupStage.round }}</td>
                      <td class="text-center align-middle">
-                        <i *ngIf="cupStage.active" class="text-success fa fa-check-circle fa-lg" aria-hidden="true"></i>
-                        <i *ngIf="!cupStage.active" class="text-danger fa fa-times fa-lg" aria-hidden="true"></i>
+                        <i
+                           *ngIf="cupStage.state === cupStageStates.Active"
+                           class="text-success fa fa-check-circle fa-lg"
+                           aria-hidden="true"
+                        ></i>
+                        <i *ngIf="cupStage.state !== cupStageStates.Active" class="text-danger fa fa-times fa-lg" aria-hidden="true"></i>
                      </td>
                      <td class="text-center align-middle">
-                        <i *ngIf="cupStage.ended" class="text-success fa fa-check-circle fa-lg" aria-hidden="true"></i>
-                        <i *ngIf="!cupStage.ended" class="text-danger fa fa-times fa-lg" aria-hidden="true"></i>
+                        <i
+                           *ngIf="cupStage.state === cupStageStates.Ended"
+                           class="text-success fa fa-check-circle fa-lg"
+                           aria-hidden="true"
+                        ></i>
+                        <i *ngIf="cupStage.state !== cupStageStates.Ended" class="text-danger fa fa-times fa-lg" aria-hidden="true"></i>
                      </td>
                      <td class="text-center text-nowrap align-middle">
                         <button routerLink="/manage/cup/stages/{{ cupStage.id }}/edit" type="button" class="btn btn-sm btn-warning">
                            <i class="fa fa-pencil-square-o fa-lg" aria-hidden="true"></i>
                         </button>
                         <button
-                           [hidden]="cupStage.ended"
+                           [hidden]="cupStage.state === cupStageStates.Ended"
                            type="button"
                            class="btn btn-sm btn-danger"
                            (click)="openConfirmModal(confirmModal, cupStage)"

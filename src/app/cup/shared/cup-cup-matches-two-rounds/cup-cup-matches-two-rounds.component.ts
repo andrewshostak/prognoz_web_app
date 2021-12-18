@@ -2,7 +2,7 @@ import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 
 import { CupStageType } from '@enums/cup-stage-type.enum';
 import { CupCupMatchNew } from '@models/new/cup-cup-match-new.model';
-import { CupStageNew } from '@models/new/cup-stage-new';
+import { CupStageNew } from '@models/new/cup-stage-new.model';
 import { CupCupMatchNewService } from '@services/new/cup-cup-match-new.service';
 import { isNil } from 'lodash';
 
@@ -18,7 +18,7 @@ export class CupCupMatchesTwoRoundsComponent implements OnChanges {
 
    public cupStageTypes = CupStageType;
    public isNil = isNil;
-   public wrappedCupCupMatches: Array<{ current: CupCupMatchNew; first: CupCupMatchNew }> = [];
+   public wrappedCupCupMatches: { current: CupCupMatchNew; first: CupCupMatchNew }[] = [];
 
    constructor(private cupCupMatchService: CupCupMatchNewService) {}
 
@@ -38,7 +38,7 @@ export class CupCupMatchesTwoRoundsComponent implements OnChanges {
    public wrapCupCupMatches(
       current: CupCupMatchNew[] = [],
       first: CupCupMatchNew[] = []
-   ): Array<{ current: CupCupMatchNew; first: CupCupMatchNew }> {
+   ): { current: CupCupMatchNew; first: CupCupMatchNew }[] {
       return current.reduce((acc, cupCupMatch) => {
          acc.push({
             current: cupCupMatch,

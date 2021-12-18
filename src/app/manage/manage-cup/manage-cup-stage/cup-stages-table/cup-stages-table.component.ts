@@ -1,16 +1,17 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 
+import { CupStageState } from '@enums/cup-stage-state.enum';
+import { Sequence } from '@enums/sequence.enum';
 import { CupStage } from '@models/cup/cup-stage.model';
 import { CupStageService } from '@services/cup/cup-stage.service';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { NotificationsService } from 'angular2-notifications';
 import { Subscription } from 'rxjs';
 import { CupStageNewService } from '@services/new/cup-stage-new.service';
-import { CupStageNew } from '@models/new/cup-stage-new';
+import { CupStageNew } from '@models/new/cup-stage-new.model';
 import { CupStageSearch } from '@models/search/cup-stage-search.model';
 import { SettingsService } from '@services/settings.service';
-import { Sequence } from '@enums/sequence.enum';
 
 @Component({
    selector: 'app-cup-stages-table',
@@ -30,6 +31,7 @@ export class CupStagesTableComponent implements OnInit, OnDestroy {
    confirmModalMessage: string;
    confirmModalSubmit: (event) => void;
    public cupStages: CupStageNew[];
+   public cupStageStates = CupStageState;
    currentPage: number;
    errorCupStages: string;
    lastPage: number;

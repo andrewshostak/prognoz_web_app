@@ -3,7 +3,7 @@ import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/cor
 import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
 
 import { CupCupMatch } from '@models/cup/cup-cup-match.model';
-import { CupStageNew } from '@models/new/cup-stage-new';
+import { CupStageNew } from '@models/new/cup-stage-new.model';
 import { UserNew } from '@models/new/user-new.model';
 import { CupCupMatchService } from '@services/cup/cup-cup-match.service';
 import { CupStageNewService } from '@services/new/cup-stage-new.service';

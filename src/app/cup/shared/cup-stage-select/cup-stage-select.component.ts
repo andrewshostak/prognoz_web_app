@@ -4,7 +4,7 @@ import { FormControl, FormGroup } from '@angular/forms';
 import { Sequence } from '@enums/sequence.enum';
 import { Tournament } from '@enums/tournament.enum';
 import { CompetitionNew } from '@models/new/competition-new.model';
-import { CupStageNew } from '@models/new/cup-stage-new';
+import { CupStageNew } from '@models/new/cup-stage-new.model';
 import { SeasonNew } from '@models/new/season-new.model';
 import { CompetitionSearch } from '@models/search/competition-search.model';
 import { CupStageSearch } from '@models/search/cup-stage-search.model';
