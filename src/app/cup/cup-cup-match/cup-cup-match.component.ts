@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
 import { TimePipe } from '@app/shared/pipes/time.pipe';
+import { CupCupMatchState } from '@enums/cup-cup-match-state.enum';
 import { MatchState } from '@enums/match-state.enum';
 import { Sequence } from '@enums/sequence.enum';
 import { CupCupMatchNew } from '@models/new/cup-cup-match-new.model';
@@ -30,6 +31,7 @@ import { map, mergeMap, tap } from 'rxjs/operators';
 export class CupCupMatchComponent implements OnInit {
    public cupCupMatch: CupCupMatchNew;
    public cupCupMatchReadableResult: string;
+   public cupCupMatchStates = CupCupMatchState;
    public matchesWithPredictions: {
       matchInfo: { match: CupMatchNew; readable: string };
       homePredictionInfo: { prediction: CupPredictionNew; readable: string; scored: boolean };

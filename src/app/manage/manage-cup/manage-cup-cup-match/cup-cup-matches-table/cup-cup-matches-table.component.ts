@@ -1,6 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 
+import { CupCupMatchState } from '@enums/cup-cup-match-state.enum';
 import { CupCupMatch } from '@models/cup/cup-cup-match.model';
 import { CupCupMatchService } from '@services/cup/cup-cup-match.service';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
@@ -25,6 +26,7 @@ export class CupCupMatchesTableComponent implements OnDestroy, OnInit {
    confirmModalMessage: string;
    confirmModalSubmit: (event) => void;
    cupCupMatches: CupCupMatch[];
+   cupCupMatchStates = CupCupMatchState;
    errorCupCupMatches: string;
    currentPage: number;
    lastPage: number;

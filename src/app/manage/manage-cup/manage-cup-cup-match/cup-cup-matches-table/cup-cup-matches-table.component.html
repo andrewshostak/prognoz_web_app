@@ -39,7 +39,11 @@
                         {{ isScore(cupCupMatch.home, cupCupMatch.away) ? cupCupMatch.home + ':' + cupCupMatch.away : '' }}
                      </td>
                      <td class="text-nowrap align-middle">
-                        {{ cupCupMatch.ended ? cupCupMatch.home_rating_points + ' / ' + cupCupMatch.away_rating_points : '' }}
+                        {{
+                           cupCupMatch.state === cupCupMatchStates.Ended
+                              ? cupCupMatch.home_rating_points + ' / ' + cupCupMatch.away_rating_points
+                              : ''
+                        }}
                      </td>
                      <td class="text-nowrap align-middle">
                         {{ isScore(cupCupMatch.home, cupCupMatch.away) ? cupCupMatch.home_points + ' / ' + cupCupMatch.away_points : '' }}
@@ -48,16 +52,32 @@
                         {{ isScore(cupCupMatch.home, cupCupMatch.away) ? cupCupMatch.home_dc_sum + ' / ' + cupCupMatch.away_dc_sum : '' }}
                      </td>
                      <td class="align-middle">
-                        <i *ngIf="cupCupMatch.active" class="text-success fa fa-check-circle fa-lg" aria-hidden="true"></i>
-                        <i *ngIf="!cupCupMatch.active" class="text-danger fa fa-times fa-lg" aria-hidden="true"></i>
+                        <i
+                           *ngIf="cupCupMatch.state === cupCupMatchStates.Active"
+                           class="text-success fa fa-check-circle fa-lg"
+                           aria-hidden="true"
+                        ></i>
+                        <i
+                           *ngIf="cupCupMatch.state !== cupCupMatchStates.Active"
+                           class="text-danger fa fa-times fa-lg"
+                           aria-hidden="true"
+                        ></i>
                      </td>
                      <td class="align-middle">
-                        <i *ngIf="cupCupMatch.ended" class="text-success fa fa-check-circle fa-lg" aria-hidden="true"></i>
-                        <i *ngIf="!cupCupMatch.ended" class="text-danger fa fa-times fa-lg" aria-hidden="true"></i>
+                        <i
+                           *ngIf="cupCupMatch.state === cupCupMatchStates.Ended"
+                           class="text-success fa fa-check-circle fa-lg"
+                           aria-hidden="true"
+                        ></i>
+                        <i
+                           *ngIf="cupCupMatch.state !== cupCupMatchStates.Ended"
+                           class="text-danger fa fa-times fa-lg"
+                           aria-hidden="true"
+                        ></i>
                      </td>
                      <td class="text-nowrap align-middle">
                         <button
-                           [hidden]="cupCupMatch.ended"
+                           [hidden]="cupCupMatch.state === cupCupMatchStates.Ended"
                            routerLink="/manage/cup/cup-matches/{{ cupCupMatch.id }}/edit"
                            type="button"
                            class="btn btn-sm btn-warning"
@@ -65,14 +85,14 @@
                            <i class="fa fa-pencil-square-o fa-lg" aria-hidden="true"></i>
                         </button>
                         <button
-                           [hidden]="cupCupMatch.ended"
+                           [hidden]="cupCupMatch.state === cupCupMatchStates.Ended"
                            type="button"
                            class="btn btn-sm btn-danger"
                            (click)="openConfirmModal(confirmModal, cupCupMatch)"
                         >
                            <i class="fa fa-trash-o fa-lg" aria-hidden="true"></i>
                         </button>
-                        <button [hidden]="!cupCupMatch.ended" disabled class="btn btn-sm btn-outline-secondary">
+                        <button [hidden]="cupCupMatch.state !== cupCupMatchStates.Ended" disabled class="btn btn-sm btn-outline-secondary">
                            <i class="fa fa-ban fa-lg" aria-hidden="true"></i>
                         </button>
                      </td>

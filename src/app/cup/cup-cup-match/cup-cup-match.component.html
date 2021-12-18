@@ -160,7 +160,7 @@
                </tr>
             </table>
          </div>
-         <table *ngIf="cupCupMatch.ended" class="table table-bordered table-sm mb-0">
+         <table *ngIf="cupCupMatch.state === cupCupMatchStates.Ended" class="table table-bordered table-sm mb-0">
             <tr>
                <td class="points-cell text-center">
                   <strong *ngIf="cupCupMatch.home_rating_points > 0"> +{{ cupCupMatch.home_rating_points }} </strong>
