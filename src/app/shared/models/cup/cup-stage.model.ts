@@ -7,8 +7,6 @@ export class CupStage {
    cup_stage_type_id: number;
    round: number;
    title: string;
-   active: boolean;
-   ended: boolean;
    state: CupStageState;
    competition: {
       title: string;

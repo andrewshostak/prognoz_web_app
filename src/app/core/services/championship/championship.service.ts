@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 
+import { MatchState } from '@enums/match-state.enum';
 import { ChampionshipPrediction } from '@models/championship/championship-prediction.model';
 import { ChampionshipMatchNew } from '@models/new/championship-match-new.model';
 import { ChampionshipPredictionNew } from '@models/new/championship-prediction-new.model';
@@ -76,7 +77,7 @@ export class ChampionshipService {
       championshipMatch: ChampionshipMatchNew,
       championshipPrediction: ChampionshipPredictionNew
    ): boolean {
-      if (!championshipMatch.match.ended) {
+      if (championshipMatch.match.state !== MatchState.Ended) {
          return false;
       }
       if (UtilsService.isScore(championshipPrediction.home, championshipPrediction.away)) {

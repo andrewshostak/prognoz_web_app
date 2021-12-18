@@ -15,8 +15,6 @@ export class CupCupMatch {
    away_points: number;
    home_dc_sum: number;
    away_dc_sum: number;
-   active: boolean;
-   ended: boolean;
    state: CupCupMatchState;
    cup_stage: {
       id: number;

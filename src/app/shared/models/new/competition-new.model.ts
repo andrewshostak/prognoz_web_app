@@ -1,9 +1,7 @@
-import { ModelStatus } from '@enums/model-status.enum';
 import { CompetitionState } from '@enums/competition-state.enum';
 
 /* tslint:disable:variable-name */
 export class CompetitionNew {
-   public active: ModelStatus;
    public active_round: number;
    public config: {
       team?: {
@@ -11,7 +9,6 @@ export class CompetitionNew {
          promotion?: number;
       };
    };
-   public ended: ModelStatus;
    public first_playoff_stage: number;
    public id: number;
    public number_in_season: number;
@@ -21,7 +18,6 @@ export class CompetitionNew {
    public title: string;
    public season_id: number;
    public state: CompetitionState;
-   public stated: ModelStatus;
    public updated_at: string;
 
    public pivot?: {

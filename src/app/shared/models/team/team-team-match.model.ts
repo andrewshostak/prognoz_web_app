@@ -15,8 +15,6 @@ export class TeamTeamMatch {
    home_dc_sum: number;
    away_dc_sum: number;
    round: number;
-   active: boolean;
-   ended: boolean;
    state: TeamTeamMatchState;
    home_team: any;
    away_team: any;

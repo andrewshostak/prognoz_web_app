@@ -1,11 +1,9 @@
 /* tslint:disable:variable-name */
 import { CupCupMatchState } from '@enums/cup-cup-match-state.enum';
-import { ModelStatus } from '@enums/model-status.enum';
 import { CupStageNew } from '@models/new/cup-stage-new.model';
 import { UserNew } from '@models/new/user-new.model';
 
 export class CupCupMatchNew {
-   public active: ModelStatus;
    public away: number;
    public away_dc_sum: number;
    public away_points: number;
@@ -13,7 +11,6 @@ export class CupCupMatchNew {
    public away_user_id: number;
    public created_at: string;
    public cup_stage_id: number;
-   public ended: ModelStatus;
    public group_number: number;
    public home: number;
    public home_dc_sum: number;
