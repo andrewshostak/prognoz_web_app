@@ -62,16 +62,6 @@ export class CompetitionService {
    /**
     * @deprecated
     */
-   public getCompetition(id: number): Observable<Competition> {
-      return this.httpClient.get<{ competition: Competition }>(`${this.competitionUrl}/${id}`).pipe(
-         map(response => response.competition),
-         catchError(this.errorHandlerService.handle)
-      );
-   }
-
-   /**
-    * @deprecated
-    */
    public createCompetition(competition: Competition): Observable<Competition> {
       return this.headersWithToken.post(this.competitionUrl, competition).pipe(
          map(response => response.competition),

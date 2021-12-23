@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 
 import { Tournament } from '@enums/tournament.enum';
-import { Competition } from '@models/competition.model';
-import { CompetitionService } from '@services/competition.service';
+import { CompetitionNew } from '@models/new/competition-new.model';
+import { CompetitionNewService } from '@services/new/competition-new.service';
 import { TitleService } from '@services/title.service';
 import { SettingsService } from '@services/settings.service';
 
@@ -15,36 +15,25 @@ import { SettingsService } from '@services/settings.service';
 export class ChampionshipCompetitionWinnersComponent implements OnInit {
    constructor(
       private activatedRoute: ActivatedRoute,
-      private competitionService: CompetitionService,
+      private competitionService: CompetitionNewService,
       private router: Router,
       private titleService: TitleService
    ) {}
 
    awardsLogosPath: string = SettingsService.awardsLogosPath + '/';
-   competition: Competition;
-   errorCompetition: string | string[];
+   competition: CompetitionNew;
 
    ngOnInit() {
       this.activatedRoute.params.forEach((params: Params) => {
-         this.titleService.setTitle(`Переможці конкурсу ${params.competitionId} - Чемпіонат`);
-         this.competitionService.getCompetition(params.competitionId).subscribe(
-            response => {
-               this.resetCompetitionWinnerData();
-               if (response.tournament_id !== Tournament.Championship) {
-                  this.router.navigate(['/404']);
-               }
-               this.competition = response;
-            },
-            error => {
-               this.resetCompetitionWinnerData();
-               this.errorCompetition = error;
+         this.competition = null;
+         this.competitionService.getCompetition(params.competitionId, ['winners.user', 'winners.award']).subscribe(response => {
+            if (response.tournament_id !== Tournament.Championship) {
+               this.router.navigate(['/404']);
             }
-         );
-      });
-   }
 
-   private resetCompetitionWinnerData(): void {
-      this.competition = null;
-      this.errorCompetition = null;
+            this.titleService.setTitle(`Переможці конкурсу ${response.title} - Чемпіонат`);
+            this.competition = response;
+         });
+      });
    }
 }

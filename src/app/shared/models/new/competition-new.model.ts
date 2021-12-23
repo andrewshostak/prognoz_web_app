@@ -1,4 +1,5 @@
 import { CompetitionState } from '@enums/competition-state.enum';
+import { WinNew } from '@models/new/win-new.model';
 
 /* tslint:disable:variable-name */
 export class CompetitionNew {
@@ -18,6 +19,7 @@ export class CompetitionNew {
    public title: string;
    public season_id: number;
    public state: CompetitionState;
+   public tournament_id: number;
    public updated_at: string;
 
    public pivot?: {
@@ -26,4 +28,6 @@ export class CompetitionNew {
       number_in_round: number;
       round: number;
    };
+
+   public winners?: WinNew[];
 }

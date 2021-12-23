@@ -15,9 +15,10 @@ export class CompetitionNewService {
 
    constructor(private httpClient: HttpClient) {}
 
-   public getCompetition(id: number): Observable<CompetitionNew> {
+   public getCompetition(id: number, relations: string[] = []): Observable<CompetitionNew> {
+      const params = new HttpParams({ fromObject: { 'relations[]': relations } });
       return this.httpClient
-         .get<{ competition: CompetitionNew }>(`${this.competitionsUrl}/${id}`)
+         .get<{ competition: CompetitionNew }>(`${this.competitionsUrl}/${id}`, { params })
          .pipe(map(response => response.competition));
    }
 

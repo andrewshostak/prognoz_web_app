@@ -1,34 +1,24 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Params } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 
-import { Competition } from '@models/competition.model';
-import { CompetitionService } from '@services/competition.service';
+import { CompetitionNew } from '@models/new/competition-new.model';
+import { CompetitionNewService } from '@services/new/competition-new.service';
 
 @Component({
-    selector: 'app-competition-edit',
-    templateUrl: './competition-edit.component.html',
-    styleUrls: ['./competition-edit.component.scss']
+   selector: 'app-competition-edit',
+   templateUrl: './competition-edit.component.html',
+   styleUrls: ['./competition-edit.component.scss']
 })
 export class CompetitionEditComponent implements OnInit {
-    constructor(private activatedRoute: ActivatedRoute, private competitionService: CompetitionService) {}
+   constructor(private activatedRoute: ActivatedRoute, private competitionService: CompetitionNewService) {}
 
-    competition: Competition;
-    errorCompetition: string;
+   competition: CompetitionNew;
 
-    ngOnInit() {
-        this.activatedRoute.params.forEach((params: Params) => {
-            this.getCompetitionData(params['id']);
-        });
-    }
+   ngOnInit() {
+      this.getCompetitionData(this.activatedRoute.snapshot.params.id);
+   }
 
-    private getCompetitionData(id: number) {
-        this.competitionService.getCompetition(id).subscribe(
-            response => {
-                this.competition = response;
-            },
-            error => {
-                this.errorCompetition = error;
-            }
-        );
-    }
+   private getCompetitionData(id: number) {
+      this.competitionService.getCompetition(id).subscribe(response => (this.competition = response));
+   }
 }

@@ -5,6 +5,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { CompetitionState } from '@enums/competition-state.enum';
 import { SeasonState } from '@enums/season-state.enum';
 import { Competition } from '@models/competition.model';
+import { CompetitionNew } from '@models/new/competition-new.model';
 import { SeasonNew } from '@models/new/season-new.model';
 import { SeasonSearch } from '@models/search/season-search.model';
 import { Tournament } from '@models/tournament.model';
@@ -22,7 +23,7 @@ import { NotificationsService } from 'angular2-notifications';
    styleUrls: ['./competition-form.component.scss']
 })
 export class CompetitionFormComponent implements OnChanges, OnInit {
-   @Input() public competition: Competition;
+   @Input() public competition: Competition | CompetitionNew;
 
    public competitionForm: FormGroup;
    public errorTournaments: string;
