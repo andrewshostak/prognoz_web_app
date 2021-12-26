@@ -3,7 +3,6 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { User } from '@models/user.model';
 import { CurrentStateService } from '@services/current-state.service';
 import { Subscription } from 'rxjs';
-import { sortBy } from 'lodash';
 
 @Component({
    selector: 'app-online-users-list',
@@ -13,7 +12,7 @@ import { sortBy } from 'lodash';
 export class OnlineUsersListComponent implements OnDestroy, OnInit {
    constructor(private currentStateService: CurrentStateService) {}
 
-   users: User[] = [];
+   users: Partial<User>[] = [];
    onlineUserSubscription: Subscription;
 
    ngOnDestroy() {
@@ -23,9 +22,15 @@ export class OnlineUsersListComponent implements OnDestroy, OnInit {
    }
 
    ngOnInit() {
-      this.users = this.currentStateService.onlineUsers;
+      this.users = this.sortUsers(this.currentStateService.onlineUsers);
       this.onlineUserSubscription = this.currentStateService.onlineUserObservable.subscribe(() => {
-         this.users = sortBy(this.currentStateService.onlineUsers, ['name']);
+         this.users = this.sortUsers(this.currentStateService.onlineUsers);
+      });
+   }
+
+   private sortUsers(users: { id: number; name: string }[]): { id: number; name: string }[] {
+      return users.sort((a, b) => {
+         return a.name.toLowerCase().localeCompare(b.name.toLowerCase());
       });
    }
 }
