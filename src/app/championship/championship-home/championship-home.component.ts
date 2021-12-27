@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 
+import { MatchState } from '@enums/match-state.enum';
 import { ModelStatus } from '@enums/model-status.enum';
 import { Sequence } from '@enums/sequence.enum';
 import { ChampionshipPrediction } from '@models/championship/championship-prediction.model';
@@ -51,12 +52,12 @@ export class ChampionshipHomeComponent implements OnInit {
 
    public getChampionshipMatchesData(): void {
       const search: ChampionshipMatchSearch = {
-         active: ModelStatus.Truthy,
          limit: SettingsService.maxLimitValues.championshipMatches,
          orderBy: 'started_at',
          page: 1,
          sequence: Sequence.Ascending,
-         soon: ModelStatus.Truthy
+         soon: ModelStatus.Truthy,
+         states: [MatchState.Active]
       };
 
       if (this.authenticatedUser) {
@@ -114,11 +115,11 @@ export class ChampionshipHomeComponent implements OnInit {
 
    public getLastMatchData(): void {
       const search: ChampionshipMatchSearch = {
-         ended: ModelStatus.Truthy,
          orderBy: 'updated_at',
          limit: 1,
          page: 1,
-         sequence: Sequence.Descending
+         sequence: Sequence.Descending,
+         states: [MatchState.Ended]
       };
       this.championshipMatchService.getChampionshipMatches(search).subscribe(response => {
          this.ratingUpdatedAt = get(response, 'data[0].updated_at', null);

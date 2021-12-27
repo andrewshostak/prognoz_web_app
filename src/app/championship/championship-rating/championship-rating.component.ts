@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
-import { ModelStatus } from '@enums/model-status.enum';
+import { MatchState } from '@enums/match-state.enum';
 import { Sequence } from '@enums/sequence.enum';
 import { ChampionshipRating } from '@models/championship/championship-rating.model';
 import { ChampionshipMatchSearch } from '@models/search/championship-match-search.model';
@@ -30,11 +30,11 @@ export class ChampionshipRatingComponent implements OnInit {
 
    public getLastMatchData(): void {
       const search: ChampionshipMatchSearch = {
-         ended: ModelStatus.Truthy,
          orderBy: 'updated_at',
          limit: 1,
          page: 1,
-         sequence: Sequence.Descending
+         sequence: Sequence.Descending,
+         states: [MatchState.Ended]
       };
       this.championshipMatchService.getChampionshipMatches(search).subscribe(response => {
          this.ratingUpdatedAt = get(response, 'data[0].updated_at', null);

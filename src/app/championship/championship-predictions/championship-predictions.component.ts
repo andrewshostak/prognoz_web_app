@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 
-import { ModelStatus } from '@enums/model-status.enum';
+import { MatchState } from '@enums/match-state.enum';
 import { Sequence } from '@enums/sequence.enum';
 import { ChampionshipMatchNew } from '@models/new/championship-match-new.model';
 import { ChampionshipMatchSearch } from '@models/search/championship-match-search.model';
@@ -60,11 +60,11 @@ export class ChampionshipPredictionsComponent implements OnInit {
 
    private getChampionshipMatchesData(): void {
       const search: ChampionshipMatchSearch = {
-         active: ModelStatus.Truthy,
          limit: SettingsService.maxLimitValues.championshipMatches,
          orderBy: 'started_at',
          page: 1,
-         sequence: Sequence.Ascending
+         sequence: Sequence.Ascending,
+         states: [MatchState.Active]
       };
 
       if (this.authenticatedUser) {

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 import { ModelStatus } from '@enums/model-status.enum';
+import { MatchState } from '@enums/match-state.enum';
 import { Sequence } from '@enums/sequence.enum';
 import { Tournament } from '@enums/tournament.enum';
 import { ChampionshipMatchNew } from '@models/new/championship-match-new.model';
@@ -44,11 +45,11 @@ export class ChampionshipResultsComponent implements OnInit {
    public getEndedChampionshipMatches(competitionId: number): Observable<PaginatedResponse<ChampionshipMatchNew>> {
       const search: ChampionshipMatchSearch = {
          competitionId,
-         ended: ModelStatus.Truthy,
          limit: SettingsService.maxLimitValues.championshipMatches,
          orderBy: 'number_in_competition',
          page: 1,
-         sequence: Sequence.Descending
+         sequence: Sequence.Descending,
+         states: [MatchState.Ended]
       };
 
       return this.championshipMatchService.getChampionshipMatches(search);

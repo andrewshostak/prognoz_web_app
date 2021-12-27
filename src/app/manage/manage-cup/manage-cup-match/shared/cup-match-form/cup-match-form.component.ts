@@ -2,7 +2,6 @@ import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/cor
 import { AbstractControl, FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 
 import { MatchState } from '@enums/match-state.enum';
-import { ModelStatus } from '@enums/model-status.enum';
 import { CupStageNew } from '@models/new/cup-stage-new.model';
 import { CupMatchNew } from '@models/new/cup-match-new.model';
 import { OpenedModal } from '@models/opened-modal.model';
@@ -117,10 +116,10 @@ export class CupMatchFormComponent implements OnChanges, OnInit {
 
    public setCupMatchesObservable(): void {
       const search: CupMatchSearch = {
-         active: ModelStatus.Truthy,
          limit: SettingsService.maxLimitValues.cupMatches,
          page: 1,
-         relations: ['match.clubHome', 'match.clubAway']
+         relations: ['match.clubHome', 'match.clubAway'],
+         states: [MatchState.Active]
       };
       this.cupMatchesObservable = this.cupMatchService.getCupMatches(search);
    }
@@ -153,9 +152,9 @@ export class CupMatchFormComponent implements OnChanges, OnInit {
          limit: SettingsService.maxLimitValues.cupStages,
          page: 1,
          relations: ['competition'],
-         ended: ModelStatus.Falsy,
          sequence: Sequence.Ascending,
-         orderBy: 'round'
+         orderBy: 'round',
+         states: [MatchState.Active]
       };
       this.cupStageService.getCupStages(search).subscribe(response => {
          this.cupStages = response.data;

@@ -2,7 +2,6 @@ import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/cor
 import { AbstractControl, FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 
 import { MatchState } from '@enums/match-state.enum';
-import { ModelStatus } from '@enums/model-status.enum';
 import { Sequence } from '@enums/sequence.enum';
 import { TeamStageState } from '@enums/team-stage-state.enum';
 import { TeamMatchNew } from '@models/new/team-match-new.model';
@@ -119,10 +118,10 @@ export class TeamMatchFormComponent implements OnChanges, OnInit {
 
    public setTeamMatchesObservable(): void {
       const search: TeamMatchSearch = {
-         active: ModelStatus.Truthy,
          limit: SettingsService.maxLimitValues.teamMatches,
          page: 1,
-         relations: ['match.clubHome', 'match.clubAway', 'teamStages.competition']
+         relations: ['match.clubHome', 'match.clubAway', 'teamStages.competition'],
+         states: [MatchState.Active]
       };
       this.teamMatchesObservable = this.teamMatchService.getTeamMatches(search);
    }

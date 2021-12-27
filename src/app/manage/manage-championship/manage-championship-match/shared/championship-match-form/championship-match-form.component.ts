@@ -87,9 +87,9 @@ export class ChampionshipMatchFormComponent implements OnChanges, OnInit {
 
    public setChampionshipMatchesObservable(): void {
       const search: ChampionshipMatchSearch = {
-         active: ModelStatus.Truthy,
          limit: SettingsService.maxLimitValues.championshipMatches,
-         page: 1
+         page: 1,
+         states: [MatchState.Active]
       };
       this.championshipMatchesObservable = this.championshipMatchService.getChampionshipMatches(search);
    }

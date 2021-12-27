@@ -39,12 +39,10 @@ export class ChampionshipMatchNewService {
    public getChampionshipMatches(search: ChampionshipMatchSearch): Observable<PaginatedResponse<ChampionshipMatchNew>> {
       let params: HttpParams = new HttpParams();
 
-      if (!isNil(search.active)) {
-         params = params.append('active', (search.active as unknown) as string);
-      }
-
-      if (!isNil(search.ended)) {
-         params = params.append('ended', (search.ended as unknown) as string);
+      if (search.states) {
+         search.states.forEach(relation => {
+            params = params.append('states[]', relation);
+         });
       }
 
       if (search.limit) {

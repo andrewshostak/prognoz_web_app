@@ -5,7 +5,6 @@ import { environment } from '@env';
 import { CupMatchNew } from '@models/new/cup-match-new.model';
 import { PaginatedResponse } from '@models/paginated-response.model';
 import { CupMatchSearch } from '@models/search/cup-match-search.model';
-import { isNil } from 'lodash';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
@@ -32,6 +31,12 @@ export class CupMatchNewService {
    public getCupMatches(search: CupMatchSearch): Observable<PaginatedResponse<CupMatchNew>> {
       let params: HttpParams = new HttpParams({ fromObject: { 'relations[]': search.relations || [] } });
 
+      if (search.states) {
+         search.states.forEach(relation => {
+            params = params.append('states[]', relation);
+         });
+      }
+
       if (search.cupCupMatchId) {
          params = params.set('cup_cup_match_id', search.cupCupMatchId.toString());
       }
@@ -47,20 +52,6 @@ export class CupMatchNewService {
       if (search.orderBy && search.sequence) {
          params = params.set('order_by', search.orderBy);
          params = params.set('sequence', search.sequence);
-      }
-
-      if (!isNil(search.active)) {
-         params = params.append('active', (search.active as unknown) as string);
-      }
-
-      if (!isNil(search.ended)) {
-         params = params.append('ended', (search.ended as unknown) as string);
-      }
-
-      if (search.states) {
-         search.states.forEach(relation => {
-            params = params.append('states[]', relation);
-         });
       }
 
       return this.httpClient.get<PaginatedResponse<CupMatchNew>>(this.cupMatchesUrl, { params });

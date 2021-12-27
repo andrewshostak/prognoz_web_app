@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 
-import { ModelStatus } from '@enums/model-status.enum';
+import { MatchState } from '@enums/match-state.enum';
 import { Sequence } from '@enums/sequence.enum';
 import { ChampionshipMatchNew } from '@models/new/championship-match-new.model';
 import { ChampionshipMatchSearch } from '@models/search/championship-match-search.model';
@@ -27,11 +27,11 @@ export class ChampionshipCompetitionResultsComponent implements OnInit {
    public getEndedChampionshipMatchesData(competitionId: number): void {
       const search: ChampionshipMatchSearch = {
          competitionId,
-         ended: ModelStatus.Truthy,
          limit: SettingsService.maxLimitValues.championshipMatches,
          orderBy: 'number_in_competition',
          page: 1,
-         sequence: Sequence.Descending
+         sequence: Sequence.Descending,
+         states: [MatchState.Ended]
       };
 
       this.championshipMatchService.getChampionshipMatches(search).subscribe(

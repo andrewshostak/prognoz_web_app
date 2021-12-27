@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 
 import { NewsService } from '@app/news/shared/news.service';
 import { ModelStatus } from '@enums/model-status.enum';
+import { MatchState } from '@enums/match-state.enum';
 import { Sequence } from '@enums/sequence.enum';
 import { environment } from '@env';
 import { ChampionshipMatchNew } from '@models/new/championship-match-new.model';
@@ -39,12 +40,12 @@ export class HomeComponent implements OnInit {
 
    private getMatchesData() {
       const search: ChampionshipMatchSearch = {
-         active: ModelStatus.Truthy,
          limit: SettingsService.maxLimitValues.championshipMatches,
          orderBy: 'started_at',
          page: 1,
          sequence: Sequence.Ascending,
-         soon: ModelStatus.Truthy
+         soon: ModelStatus.Truthy,
+         states: [MatchState.Active]
       };
 
       this.championshipMatchService.getChampionshipMatches(search).subscribe(
