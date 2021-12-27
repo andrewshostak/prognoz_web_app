@@ -1,5 +1,6 @@
 import { ModelStatus } from '@enums/model-status.enum';
 import { Sequence } from '@enums/sequence.enum';
+import { MatchState } from '@enums/match-state.enum';
 
 export class CupMatchSearch {
    public active?: ModelStatus;
@@ -10,4 +11,5 @@ export class CupMatchSearch {
    public page: number;
    public relations?: string[];
    public sequence?: Sequence;
+   public states?: MatchState[];
 }

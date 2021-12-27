@@ -57,6 +57,12 @@ export class CupMatchNewService {
          params = params.append('ended', (search.ended as unknown) as string);
       }
 
+      if (search.states) {
+         search.states.forEach(relation => {
+            params = params.append('states[]', relation);
+         });
+      }
+
       return this.httpClient.get<PaginatedResponse<CupMatchNew>>(this.cupMatchesUrl, { params });
    }
 

@@ -5,9 +5,9 @@ import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import { CupStageState } from '@enums/cup-stage-state.enum';
 import { Tournament } from '@enums/tournament.enum';
 import { Competition } from '@models/competition.model';
+import { CupMatchNew } from '@models/new/cup-match-new.model';
+import { CupMatchNewService } from '@services/new/cup-match-new.service';
 import { CompetitionService } from '@services/competition.service';
-import { CupMatch } from '@models/cup/cup-match.model';
-import { CupMatchService } from '@services/cup/cup-match.service';
 import { CupStage } from '@models/cup/cup-stage.model';
 import { CupStageService } from '@services/cup/cup-stage.service';
 import { CupStageType } from '@models/cup/cup-stage-type.model';
@@ -15,6 +15,9 @@ import { CupStageTypeService } from '@services/cup/cup-stage-type.service';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { NotificationsService } from 'angular2-notifications';
 import { UtilsService } from '@services/utils.service';
+import { CupMatchSearch } from '@models/search/cup-match-search.model';
+import { MatchState } from '@enums/match-state.enum';
+import { SettingsService } from '@services/settings.service';
 
 @Component({
    selector: 'app-cup-stage-form',
@@ -24,7 +27,7 @@ import { UtilsService } from '@services/utils.service';
 export class CupStageFormComponent implements OnChanges, OnInit {
    constructor(
       private competitionService: CompetitionService,
-      private cupMatchService: CupMatchService,
+      private cupMatchService: CupMatchNewService,
       private cupStageService: CupStageService,
       private cupStageTypeService: CupStageTypeService,
       private location: Location,
@@ -35,14 +38,13 @@ export class CupStageFormComponent implements OnChanges, OnInit {
    @Input() cupStage: CupStage;
 
    competitions: Competition[];
-   cupMatches: CupMatch[];
+   cupMatches: CupMatchNew[];
    cupStageForm: FormGroup;
    cupStageTypes: CupStageType[];
    confirmModalMessage: string;
    confirmModalSubmit: (event) => void;
    errorCompetitions: string;
    errorCupStageTypes: string;
-   errorCupMatches: string;
    openedModalReference: NgbModalRef;
 
    get cupMatchesFormArray(): FormArray {
@@ -155,22 +157,23 @@ export class CupStageFormComponent implements OnChanges, OnInit {
    }
 
    private getCupMatchesData(): void {
-      this.cupMatchService.getCupMatches(null, true, false).subscribe(
-         response => {
-            if (!this.cupMatches) {
-               this.cupMatches = response.cup_matches;
-            } else {
-               response.cup_matches.forEach(cupMatch => {
-                  if (!this.cupMatches.find(item => item.id === cupMatch.id)) {
-                     this.cupMatches.push(cupMatch);
-                  }
-               });
-            }
-         },
-         error => {
-            this.errorCupMatches = error;
+      const search: CupMatchSearch = {
+         limit: SettingsService.maxLimitValues.cupMatches,
+         page: 1,
+         states: [MatchState.Active],
+         relations: ['match.clubHome', 'match.clubAway']
+      };
+      this.cupMatchService.getCupMatches(search).subscribe(response => {
+         if (!this.cupMatches) {
+            this.cupMatches = response.data;
+         } else {
+            response.data.forEach(cupMatch => {
+               if (!this.cupMatches.find(item => item.id === cupMatch.id)) {
+                  this.cupMatches.push(cupMatch);
+               }
+            });
          }
-      );
+      });
    }
 
    private getCompetitionsData(): void {
