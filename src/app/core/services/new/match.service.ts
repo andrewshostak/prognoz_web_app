@@ -5,7 +5,6 @@ import { environment } from '@env';
 import { Match } from '@models/match.model';
 import { PaginatedResponse } from '@models/paginated-response.model';
 import { MatchSearch } from '@models/search/match-search.model';
-import { isNil } from 'lodash';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
@@ -30,11 +29,10 @@ export class MatchService {
    public getMatches(matchSearch: MatchSearch): Observable<PaginatedResponse<Match>> {
       let params: HttpParams = new HttpParams();
 
-      if (!isNil(matchSearch.active)) {
-         params = params.append('active', (matchSearch.active as unknown) as string);
-      }
-      if (!isNil(matchSearch.ended)) {
-         params = params.append('ended', (matchSearch.ended as unknown) as string);
+      if (matchSearch.states) {
+         matchSearch.states.forEach(relation => {
+            params = params.append('states[]', relation);
+         });
       }
 
       if (matchSearch.limit) {

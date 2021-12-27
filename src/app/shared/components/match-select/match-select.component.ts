@@ -1,7 +1,7 @@
 import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { AbstractControl, FormGroup } from '@angular/forms';
 
-import { ModelStatus } from '@enums/model-status.enum';
+import { MatchState } from '@enums/match-state.enum';
 import { Sequence } from '@enums/sequence.enum';
 import { Match } from '@models/match.model';
 import { PaginatedResponse } from '@models/paginated-response.model';
@@ -31,7 +31,7 @@ export class MatchSelectComponent implements OnChanges, OnInit {
 
    get matchSearch(): MatchSearch {
       return {
-         ended: ModelStatus.Falsy,
+         states: [MatchState.Active],
          limit: SettingsService.maxLimitValues.matches,
          orderBy: 'started_at',
          page: 1,

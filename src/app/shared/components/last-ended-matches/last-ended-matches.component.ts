@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
-import { ModelStatus } from '@enums/model-status.enum';
+import { MatchState } from '@enums/match-state.enum';
 import { Sequence } from '@enums/sequence.enum';
 import { Match } from '@models/match.model';
 import { MatchSearch } from '@models/search/match-search.model';
@@ -18,7 +18,7 @@ export class LastEndedMatchesComponent implements OnInit {
 
    public getMatchesData(): void {
       const search: MatchSearch = {
-         ended: ModelStatus.Truthy,
+         states: [MatchState.Ended],
          limit: 5,
          orderBy: 'started_at',
          page: 1,
