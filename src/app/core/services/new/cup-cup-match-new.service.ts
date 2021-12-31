@@ -7,7 +7,7 @@ import { CupCupMatchNew } from '@models/new/cup-cup-match-new.model';
 import { PaginatedResponse } from '@models/paginated-response.model';
 import { CupCupMatchSearch } from '@models/search/cup-cup-match-search.model';
 import { AuthNewService } from '@services/new/auth-new.service';
-import { groupBy, isNil } from 'lodash';
+import { groupBy } from 'lodash';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
@@ -95,14 +95,6 @@ export class CupCupMatchNewService {
          params = params.set('sequence', search.sequence);
       }
 
-      if (!isNil(search.active)) {
-         params = params.append('active', (search.active as unknown) as string);
-      }
-
-      if (!isNil(search.ended)) {
-         params = params.append('ended', (search.ended as unknown) as string);
-      }
-
       if (search.cupStageId) {
          params = params.set('cup_stage_id', search.cupStageId.toString());
       }
@@ -117,6 +109,12 @@ export class CupCupMatchNewService {
 
       if (search.competitionId) {
          params = params.set('competition_id', search.competitionId.toString());
+      }
+
+      if (search.states) {
+         search.states.forEach(state => {
+            params = params.append('states[]', state);
+         });
       }
 
       return this.httpClient.get<PaginatedResponse<CupCupMatchNew>>(this.cupCupMatchesUrl, { params });

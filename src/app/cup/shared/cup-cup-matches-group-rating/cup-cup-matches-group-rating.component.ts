@@ -2,7 +2,7 @@ import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { CupRatingGroupTab } from '@enums/cup-rating-group-tab.enum';
-import { ModelStatus } from '@enums/model-status.enum';
+import { CupCupMatchState } from '@enums/cup-cup-match-state.enum';
 import { Sequence } from '@enums/sequence.enum';
 import { CupCupMatchNew } from '@models/new/cup-cup-match-new.model';
 import { CupCupMatchSearch } from '@models/search/cup-cup-match-search.model';
@@ -41,7 +41,7 @@ export class CupCupMatchesGroupRatingComponent implements OnChanges {
             ...this.search,
             groupNumber: this.groupNumber,
             competitionId: this.competitionId,
-            ended: isActiveTab ? ModelStatus.Falsy : ModelStatus.Truthy
+            states: isActiveTab ? [CupCupMatchState.Active, CupCupMatchState.NotStarted] : [CupCupMatchState.Ended]
          };
          this.isLoading = true;
          this.cupCupMatchService.getCupCupMatches(search).subscribe(
