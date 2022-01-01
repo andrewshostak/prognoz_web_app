@@ -4,7 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 
 import { Sequence } from '@enums/sequence.enum';
 import { Tournament } from '@enums/tournament.enum';
-import { ModelStatus } from '@enums/model-status.enum';
+import { CompetitionState } from '@enums/competition-state.enum';
 import { CompetitionNew } from '@models/new/competition-new.model';
 import { SeasonNew } from '@models/new/season-new.model';
 import { PaginatedResponse } from '@models/paginated-response.model';
@@ -77,9 +77,9 @@ export class CompetitionSelectNewComponent implements OnInit {
 
    private getActiveCompetitions(): Observable<PaginatedResponse<CompetitionNew>> {
       const search: CompetitionSearch = {
-         activeOrStated: ModelStatus.Truthy,
          limit: SettingsService.maxLimitValues.competitions,
          page: 1,
+         states: [CompetitionState.Applications, CompetitionState.Active],
          tournamentId: Tournament.Team
       };
       return this.competitionService.getCompetitions(search);
@@ -125,11 +125,11 @@ export class CompetitionSelectNewComponent implements OnInit {
 
    private getEndedCompetitions(): Observable<PaginatedResponse<CompetitionNew>> {
       const search: CompetitionSearch = {
-         ended: ModelStatus.Truthy,
          limit: 3,
          orderBy: 'id',
          page: 1,
          sequence: Sequence.Descending,
+         states: [CompetitionState.Ended],
          tournamentId: Tournament.Team
       };
       return this.competitionService.getCompetitions(search);

@@ -5,7 +5,6 @@ import { environment } from '@env';
 import { CompetitionNew } from '@models/new/competition-new.model';
 import { PaginatedResponse } from '@models/paginated-response.model';
 import { CompetitionSearch } from '@models/search/competition-search.model';
-import { isNil } from 'lodash';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
@@ -37,18 +36,10 @@ export class CompetitionNewService {
          params = params.set('season_id', (search.seasonId as unknown) as string);
       }
 
-      if (search.activeOrStated) {
-         params = params.append('active_or_stated', (true as unknown) as string);
-      }
-
-      if (!isNil(search.active)) {
-         params = params.append('active', (search.active as unknown) as string);
-      }
-      if (!isNil(search.ended)) {
-         params = params.append('ended', (search.ended as unknown) as string);
-      }
-      if (!isNil(search.stated)) {
-         params = params.append('stated', (search.stated as unknown) as string);
+      if (search.states) {
+         search.states.forEach(state => {
+            params = params.append('states[]', state);
+         });
       }
 
       return this.httpClient.get<PaginatedResponse<CompetitionNew>>(this.competitionsUrl, { params });

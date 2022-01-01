@@ -2,7 +2,7 @@ import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 
-import { ModelStatus } from '@enums/model-status.enum';
+import { CompetitionState } from '@enums/competition-state.enum';
 import { Sequence } from '@enums/sequence.enum';
 import { TeamStageState } from '@enums/team-stage-state.enum';
 import { Tournament } from '@enums/tournament.enum';
@@ -95,9 +95,9 @@ export class TeamStageSelectComponent implements OnInit {
 
    private getActiveCompetitions(): Observable<PaginatedResponse<CompetitionNew>> {
       const search: CompetitionSearch = {
-         activeOrStated: ModelStatus.Truthy,
          limit: SettingsService.maxLimitValues.competitions,
          page: 1,
+         states: [CompetitionState.Applications, CompetitionState.Active],
          tournamentId: Tournament.Team
       };
       return this.competitionService.getCompetitions(search);
@@ -137,11 +137,11 @@ export class TeamStageSelectComponent implements OnInit {
 
    private getEndedCompetitions(): Observable<PaginatedResponse<CompetitionNew>> {
       const search: CompetitionSearch = {
-         ended: ModelStatus.Truthy,
          limit: 3,
          orderBy: 'id',
          page: 1,
          sequence: Sequence.Descending,
+         states: [CompetitionState.Ended],
          tournamentId: Tournament.Team
       };
       return this.competitionService.getCompetitions(search);

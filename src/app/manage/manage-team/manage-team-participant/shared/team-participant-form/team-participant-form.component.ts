@@ -2,7 +2,7 @@ import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/cor
 import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
-import { ModelStatus } from '@enums/model-status.enum';
+import { CompetitionState } from '@enums/competition-state.enum';
 import { Tournament } from '@enums/tournament.enum';
 import { CompetitionNew } from '@models/new/competition-new.model';
 import { TeamNew } from '@models/new/team-new.model';
@@ -90,9 +90,9 @@ export class TeamParticipantFormComponent implements OnChanges, OnInit {
 
    private getNotEndedCompetitionsData(): void {
       const search: CompetitionSearch = {
-         ended: ModelStatus.Falsy,
          limit: SettingsService.maxLimitValues.competitions,
          page: 1,
+         states: [CompetitionState.NotStarted, CompetitionState.Applications, CompetitionState.Active],
          tournamentId: Tournament.Team
       };
 

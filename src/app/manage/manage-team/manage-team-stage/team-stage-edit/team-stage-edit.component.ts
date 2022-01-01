@@ -3,7 +3,7 @@ import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/fo
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { Tournament } from '@enums/tournament.enum';
-import { ModelStatus } from '@enums/model-status.enum';
+import { CompetitionState } from '@enums/competition-state.enum';
 import { TeamStageNew } from '@models/new/team-stage-new.model';
 import { CompetitionSearch } from '@models/search/competition-search.model';
 import { CompetitionNew } from '@models/new/competition-new.model';
@@ -68,9 +68,9 @@ export class TeamStageEditComponent implements OnInit {
 
    private getCompetitionsData(): void {
       const search: CompetitionSearch = {
-         ended: ModelStatus.Falsy,
          page: 1,
          limit: SettingsService.maxLimitValues.competitions,
+         states: [CompetitionState.NotStarted, CompetitionState.Applications, CompetitionState.Active],
          tournamentId: Tournament.Team
       };
       this.competitionService.getCompetitions(search).subscribe(response => {

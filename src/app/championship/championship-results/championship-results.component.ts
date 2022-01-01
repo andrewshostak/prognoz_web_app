@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
-import { ModelStatus } from '@enums/model-status.enum';
+import { CompetitionState } from '@enums/competition-state.enum';
 import { MatchState } from '@enums/match-state.enum';
 import { Sequence } from '@enums/sequence.enum';
 import { Tournament } from '@enums/tournament.enum';
@@ -33,9 +33,9 @@ export class ChampionshipResultsComponent implements OnInit {
 
    public getActiveChampionshipCompetition(): Observable<PaginatedResponse<CompetitionNew>> {
       const search: CompetitionSearch = {
-         active: ModelStatus.Truthy,
          limit: 1,
          page: 1,
+         states: [CompetitionState.Active],
          tournamentId: Tournament.Championship
       };
 

@@ -1,16 +1,13 @@
-import { ModelStatus } from '@enums/model-status.enum';
+import { CompetitionState } from '@enums/competition-state.enum';
 import { Sequence } from '@enums/sequence.enum';
 import { Tournament } from '@enums/tournament.enum';
 
 export class CompetitionSearch {
-   public activeOrStated?: ModelStatus;
-   public active?: ModelStatus;
-   public ended?: ModelStatus;
    public limit: number;
    public orderBy?: string;
    public page: number;
    public seasonId?: number;
    public sequence?: Sequence;
-   public stated?: ModelStatus;
+   public states?: CompetitionState[];
    public tournamentId?: Tournament;
 }

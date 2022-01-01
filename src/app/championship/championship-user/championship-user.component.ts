@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 
-import { ModelStatus } from '@enums/model-status.enum';
+import { CompetitionState } from '@enums/competition-state.enum';
 import { Sequence } from '@enums/sequence.enum';
 import { Tournament } from '@enums/tournament.enum';
 import { ChampionshipRating } from '@models/championship/championship-rating.model';
@@ -52,9 +52,9 @@ export class ChampionshipUserComponent implements OnInit {
 
    private getActiveChampionshipCompetition(): Observable<PaginatedResponse<CompetitionNew>> {
       const search: CompetitionSearch = {
-         active: ModelStatus.Truthy,
          limit: 1,
          page: 1,
+         states: [CompetitionState.Active],
          tournamentId: Tournament.Championship
       };
 

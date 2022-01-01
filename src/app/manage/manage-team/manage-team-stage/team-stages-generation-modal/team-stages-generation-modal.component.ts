@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
 
-import { ModelStatus } from '@enums/model-status.enum';
+import { CompetitionState } from '@enums/competition-state.enum';
 import { Sequence } from '@enums/sequence.enum';
 import { Tournament } from '@enums/tournament.enum';
 import { CompetitionNew } from '@models/new/competition-new.model';
@@ -44,10 +44,10 @@ export class TeamStagesGenerationModalComponent implements OnInit {
       const search: CompetitionSearch = {
          page: 1,
          limit: SettingsService.maxLimitValues.competitions,
-         ended: ModelStatus.Falsy,
          tournamentId: Tournament.Team,
          orderBy: 'number_in_season',
-         sequence: Sequence.Descending
+         sequence: Sequence.Descending,
+         states: [CompetitionState.NotStarted, CompetitionState.Applications, CompetitionState.Active]
       };
       this.competitionService.getCompetitions(search).subscribe(response => {
          this.competitions = response.data;

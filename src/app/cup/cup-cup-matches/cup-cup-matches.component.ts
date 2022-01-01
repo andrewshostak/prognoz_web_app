@@ -3,7 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 
 import { CupStageState } from '@enums/cup-stage-state.enum';
 import { CupStageType } from '@enums/cup-stage-type.enum';
-import { ModelStatus } from '@enums/model-status.enum';
+import { CompetitionState } from '@enums/competition-state.enum';
 import { Sequence } from '@enums/sequence.enum';
 import { Tournament } from '@enums/tournament.enum';
 import { CompetitionNew } from '@models/new/competition-new.model';
@@ -101,9 +101,9 @@ export class CupCupMatchesComponent implements OnInit {
 
    private getActiveCompetitions(): Observable<PaginatedResponse<CompetitionNew>> {
       const search: CompetitionSearch = {
-         activeOrStated: ModelStatus.Truthy,
          limit: SettingsService.maxLimitValues.competitions,
          page: 1,
+         states: [CompetitionState.Applications, CompetitionState.Active],
          tournamentId: Tournament.Cup
       };
       return this.competitionService.getCompetitions(search);
@@ -139,11 +139,11 @@ export class CupCupMatchesComponent implements OnInit {
 
    private getEndedCompetitions(): Observable<PaginatedResponse<CompetitionNew>> {
       const search: CompetitionSearch = {
-         ended: ModelStatus.Truthy,
          limit: 3,
          orderBy: 'id',
          page: 1,
          sequence: Sequence.Descending,
+         states: [CompetitionState.Ended],
          tournamentId: Tournament.Cup
       };
       return this.competitionService.getCompetitions(search);
