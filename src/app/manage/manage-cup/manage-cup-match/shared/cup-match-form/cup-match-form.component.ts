@@ -15,6 +15,8 @@ import { UtilsService } from '@services/utils.service';
 import { NotificationsService } from 'angular2-notifications';
 import { Observable } from 'rxjs';
 import { Sequence } from '@enums/sequence.enum';
+import { CupStageSearch } from '@models/search/cup-stage-search.model';
+import { CupStageState } from '@enums/cup-stage-state.enum';
 
 @Component({
    selector: 'app-cup-match-form',
@@ -148,13 +150,13 @@ export class CupMatchFormComponent implements OnChanges, OnInit {
    }
 
    private getCupStagesData(): void {
-      const search: CupMatchSearch = {
+      const search: CupStageSearch = {
          limit: SettingsService.maxLimitValues.cupStages,
          page: 1,
          relations: ['competition'],
          sequence: Sequence.Ascending,
          orderBy: 'round',
-         states: [MatchState.Active]
+         states: [CupStageState.Active]
       };
       this.cupStageService.getCupStages(search).subscribe(response => {
          this.cupStages = response.data;

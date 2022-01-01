@@ -5,7 +5,6 @@ import { environment } from '@env';
 import { CupStageNew } from '@models/new/cup-stage-new.model';
 import { PaginatedResponse } from '@models/paginated-response.model';
 import { CupStageSearch } from '@models/search/cup-stage-search.model';
-import { isNil } from 'lodash';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
@@ -37,14 +36,6 @@ export class CupStageNewService {
          params = params.set('sequence', search.sequence);
       }
 
-      if (!isNil(search.active)) {
-         params = params.append('active', (search.active as unknown) as string);
-      }
-
-      if (!isNil(search.ended)) {
-         params = params.append('ended', (search.ended as unknown) as string);
-      }
-
       if (search.competitionId) {
          params = params.set('competition_id', search.competitionId.toString());
       }
@@ -52,6 +43,12 @@ export class CupStageNewService {
       if (search.relations) {
          search.relations.forEach(relation => {
             params = params.append('relations[]', relation);
+         });
+      }
+
+      if (search.states) {
+         search.states.forEach(state => {
+            params = params.append('states[]', state);
          });
       }
 

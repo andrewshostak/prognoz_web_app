@@ -13,7 +13,7 @@ import { NotificationsService } from 'angular2-notifications';
 import { CupStageSearch } from '@models/search/cup-stage-search.model';
 import { SettingsService } from '@services/settings.service';
 import { Sequence } from '@enums/sequence.enum';
-import { ModelStatus } from '@enums/model-status.enum';
+import { CupStageState } from '@enums/cup-stage-state.enum';
 import { omit } from 'lodash';
 
 @Component({
@@ -113,7 +113,7 @@ export class CupCupMatchFormComponent implements OnChanges, OnInit {
          orderBy: 'id',
          sequence: Sequence.Descending,
          relations: ['competition'],
-         ended: ModelStatus.Falsy
+         states: [CupStageState.NotStarted, CupStageState.Active]
       };
       this.cupStageService.getCupStages(search).subscribe(response => (this.cupStages = response.data));
    }

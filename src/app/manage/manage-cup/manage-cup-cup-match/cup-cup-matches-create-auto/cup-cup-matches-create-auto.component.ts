@@ -7,7 +7,7 @@ import { CupStageNewService } from '@services/new/cup-stage-new.service';
 import { NotificationsService } from 'angular2-notifications';
 import { CupStageNew } from '@models/new/cup-stage-new.model';
 import { CupStageSearch } from '@models/search/cup-stage-search.model';
-import { ModelStatus } from '@enums/model-status.enum';
+import { CupStageState } from '@enums/cup-stage-state.enum';
 import { Sequence } from '@enums/sequence.enum';
 import { SettingsService } from '@services/settings.service';
 
@@ -34,8 +34,7 @@ export class CupCupMatchesCreateAutoComponent implements OnInit {
          number_of_matches: new FormControl(null, [Validators.min(1)])
       });
       const search: CupStageSearch = {
-         active: ModelStatus.Falsy,
-         ended: ModelStatus.Falsy,
+         states: [CupStageState.NotStarted],
          limit: SettingsService.maxLimitValues.cupStages,
          orderBy: 'id',
          page: 1,
