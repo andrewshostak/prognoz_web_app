@@ -51,6 +51,12 @@ export class TeamTeamMatchNewService {
          params = params.set('sequence', search.sequence);
       }
 
+      if (search.states) {
+         search.states.forEach(state => {
+            params = params.append('states[]', state);
+         });
+      }
+
       return this.httpClient.get<PaginatedResponse<TeamTeamMatchNew>>(this.teamTeamMatchesUrl, { params });
    }
 
