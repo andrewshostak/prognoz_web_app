@@ -2,9 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 
 import { Tournament } from '@enums/tournament.enum';
-import { Competition } from '@models/competition.model';
-import { CompetitionService } from '@services/competition.service';
 import { TitleService } from '@services/title.service';
+import { CompetitionNewService } from '@services/new/competition-new.service';
+import { CompetitionNew } from '@models/new/competition-new.model';
+import { CompetitionSearch } from '@models/search/competition-search.model';
+import { SettingsService } from '@services/settings.service';
 
 @Component({
    selector: 'app-championship-competitions',
@@ -14,33 +16,23 @@ import { TitleService } from '@services/title.service';
 export class ChampionshipCompetitionsComponent implements OnInit {
    constructor(
       private activatedRoute: ActivatedRoute,
-      private competitionService: CompetitionService,
+      private competitionService: CompetitionNewService,
       private titleService: TitleService
    ) {}
 
-   competitions: Competition[];
-   errorCompetitions: string;
+   competitions: CompetitionNew[] = [];
 
    ngOnInit() {
       this.activatedRoute.params.forEach((params: Params) => {
          this.titleService.setTitle(`Конкурси сезону ${params.id} - Чемпіонат`);
-         this.competitionService.getCompetitions(null, Tournament.Championship, params.id).subscribe(
-            response => {
-               this.resetCompetitionsData();
-               if (response) {
-                  this.competitions = response.competitions;
-               }
-            },
-            error => {
-               this.resetCompetitionsData();
-               this.errorCompetitions = error;
-            }
-         );
+         const search: CompetitionSearch = {
+            tournamentId: Tournament.Championship,
+            seasonId: params.id,
+            page: 1,
+            limit: SettingsService.maxLimitValues.competitions
+         };
+         this.competitions = [];
+         this.competitionService.getCompetitions(search).subscribe(response => (this.competitions = response.data));
       });
-   }
-
-   private resetCompetitionsData(): void {
-      this.competitions = null;
-      this.errorCompetitions = null;
    }
 }

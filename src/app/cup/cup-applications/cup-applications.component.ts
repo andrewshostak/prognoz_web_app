@@ -3,11 +3,12 @@ import { Component, ElementRef, OnInit, TemplateRef } from '@angular/core';
 import { CompetitionState } from '@enums/competition-state.enum';
 import { CupApplicationPlace } from '@enums/cup-application-place.enum';
 import { Tournament } from '@enums/tournament.enum';
+import { CompetitionNew } from '@models/new/competition-new.model';
 import { Competition } from '@models/competition.model';
 import { CupApplication } from '@models/cup/cup-application.model';
 import { UserNew } from '@models/new/user-new.model';
-import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
-import { CompetitionService } from '@services/competition.service';
+import { CompetitionSearch } from '@models/search/competition-search.model';
+import { CompetitionNewService } from '@services/new/competition-new.service';
 import { CupApplicationService } from '@services/cup/cup-application.service';
 import { AuthNewService } from '@services/new/auth-new.service';
 import { SettingsService } from '@services/settings.service';
@@ -15,6 +16,7 @@ import { TitleService } from '@services/title.service';
 import { UtilsService } from '@services/utils.service';
 import { NotificationsService } from 'angular2-notifications';
 import { forkJoin } from 'rxjs';
+import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
    selector: 'app-cup-applications',
@@ -22,7 +24,7 @@ import { forkJoin } from 'rxjs';
    styleUrls: ['./cup-applications.component.scss']
 })
 export class CupApplicationsComponent implements OnInit {
-   public competitions: Competition[];
+   public competitions: CompetitionNew[];
    public confirmModalMessage: string;
    public confirmModalSubmit: (event) => void;
    public selectedCompetitionForNewApplication: Competition;
@@ -36,7 +38,7 @@ export class CupApplicationsComponent implements OnInit {
 
    constructor(
       private authNewService: AuthNewService,
-      private competitionService: CompetitionService,
+      private competitionService: CompetitionNewService,
       private cupApplicationService: CupApplicationService,
       private elementRef: ElementRef,
       private notificationsService: NotificationsService,
@@ -53,12 +55,18 @@ export class CupApplicationsComponent implements OnInit {
 
    public getApplicationsAndCompetitions(): void {
       const cupApplications = this.cupApplicationService.getCupApplications();
-      const competitions = this.competitionService.getCompetitions(null, Tournament.Cup, null, null, true, true);
+      const search: CompetitionSearch = {
+         page: 1,
+         limit: SettingsService.maxLimitValues.competitions,
+         states: [CompetitionState.Applications, CompetitionState.Active],
+         tournamentId: Tournament.Cup
+      };
+      const competitions = this.competitionService.getCompetitions(search);
 
       forkJoin([cupApplications, competitions]).subscribe(
          response => {
             this.cupApplications = response[0];
-            this.competitions = response[1] ? response[1].competitions : [];
+            this.competitions = response[1] ? response[1].data : [];
             this.attachApplicationsToCompetitions();
          },
          error => {

@@ -1,7 +1,4 @@
-<!-- error -->
-<app-error *ngIf="errorCompetitions" [message]="errorCompetitions"></app-error>
-<!-- competitions -->
-<div *ngIf="competitions" class="row mb-2">
+<div *ngIf="competitions?.length" class="row mb-2">
    <div class="col">
       <div class="card shadow">
          <div class="text-center">
