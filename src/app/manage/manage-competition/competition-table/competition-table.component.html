@@ -4,11 +4,6 @@
          <h2>Таблиця змагань:</h2>
       </div>
    </div>
-   <!-- error -->
-   <app-error *ngIf="errorCompetitions" [message]="errorCompetitions"></app-error>
-   <!-- no data -->
-   <app-info *ngIf="noCompetitions" [message]="noCompetitions"></app-info>
-   <!-- competitions -->
    <div *ngIf="competitions">
       <table class="table table-striped table-bordered table-hover table-dark">
          <thead>

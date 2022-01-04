@@ -1,6 +1,8 @@
 import { CompetitionState } from '@enums/competition-state.enum';
 import { WinNew } from '@models/new/win-new.model';
 import { CupApplication } from '@models/cup/cup-application.model';
+import { SeasonNew } from '@models/new/season-new.model';
+import { Tournament } from '@models/tournament.model';
 
 /* tslint:disable:variable-name */
 export class CompetitionNew {
@@ -32,4 +34,6 @@ export class CompetitionNew {
 
    public winners?: WinNew[];
    public cup_applications?: CupApplication[];
+   public season?: SeasonNew;
+   public tournament?: Tournament;
 }

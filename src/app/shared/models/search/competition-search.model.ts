@@ -6,6 +6,7 @@ export class CompetitionSearch {
    public limit: number;
    public orderBy?: string;
    public page: number;
+   public relations?: string[];
    public seasonId?: number;
    public sequence?: Sequence;
    public states?: CompetitionState[];

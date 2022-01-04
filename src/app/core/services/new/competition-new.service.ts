@@ -28,6 +28,10 @@ export class CompetitionNewService {
          params = params.set('limit', search.limit.toString());
       }
 
+      if (search.page) {
+         params = params.set('page', search.page.toString());
+      }
+
       if (search.tournamentId) {
          params = params.set('tournament_id', (search.tournamentId as unknown) as string);
       }
@@ -39,6 +43,12 @@ export class CompetitionNewService {
       if (search.states) {
          search.states.forEach(state => {
             params = params.append('states[]', state);
+         });
+      }
+
+      if (search.relations) {
+         search.relations.forEach(relation => {
+            params = params.append('relations[]', relation);
          });
       }
 

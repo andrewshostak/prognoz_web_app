@@ -99,7 +99,6 @@
       <button type="submit" class="btn btn-primary">{{ cupStage ? 'Змінити' : 'Зберегти' }}</button>
    </div>
 </form>
-<app-error *ngIf="errorCompetitions" [message]="errorCompetitions"></app-error>
 <app-error *ngIf="errorCupStageTypes" [message]="errorCupStageTypes"></app-error>
 <ng-template #confirmModal let-c="close">
    <app-confirmation-modal [close]="c" [message]="confirmModalMessage" (confirmed)="confirmModalSubmit($event)"> </app-confirmation-modal>

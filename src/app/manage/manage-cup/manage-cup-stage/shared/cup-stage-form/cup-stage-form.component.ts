@@ -4,10 +4,12 @@ import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 
 import { CupStageState } from '@enums/cup-stage-state.enum';
 import { Tournament } from '@enums/tournament.enum';
-import { Competition } from '@models/competition.model';
+import { CompetitionState } from '@enums/competition-state.enum';
+import { CompetitionNew } from '@models/new/competition-new.model';
 import { CupMatchNew } from '@models/new/cup-match-new.model';
 import { CupMatchNewService } from '@services/new/cup-match-new.service';
-import { CompetitionService } from '@services/competition.service';
+import { CompetitionNewService } from '@services/new/competition-new.service';
+import { CompetitionSearch } from '@models/search/competition-search.model';
 import { CupStage } from '@models/cup/cup-stage.model';
 import { CupStageService } from '@services/cup/cup-stage.service';
 import { CupStageType } from '@models/cup/cup-stage-type.model';
@@ -26,7 +28,7 @@ import { SettingsService } from '@services/settings.service';
 })
 export class CupStageFormComponent implements OnChanges, OnInit {
    constructor(
-      private competitionService: CompetitionService,
+      private competitionService: CompetitionNewService,
       private cupMatchService: CupMatchNewService,
       private cupStageService: CupStageService,
       private cupStageTypeService: CupStageTypeService,
@@ -37,13 +39,12 @@ export class CupStageFormComponent implements OnChanges, OnInit {
 
    @Input() cupStage: CupStage;
 
-   competitions: Competition[];
+   competitions: CompetitionNew[];
    cupMatches: CupMatchNew[];
    cupStageForm: FormGroup;
    cupStageTypes: CupStageType[];
    confirmModalMessage: string;
    confirmModalSubmit: (event) => void;
-   errorCompetitions: string;
    errorCupStageTypes: string;
    openedModalReference: NgbModalRef;
 
@@ -177,16 +178,13 @@ export class CupStageFormComponent implements OnChanges, OnInit {
    }
 
    private getCompetitionsData(): void {
-      this.competitionService.getCompetitions(null, Tournament.Cup, null, null, true, true).subscribe(
-         response => {
-            if (response) {
-               this.competitions = response.competitions;
-            }
-         },
-         error => {
-            this.errorCompetitions = error;
-         }
-      );
+      const search: CompetitionSearch = {
+         page: 1,
+         limit: SettingsService.maxLimitValues.competitions,
+         tournamentId: Tournament.Cup,
+         states: [CompetitionState.NotStarted, CompetitionState.Applications, CompetitionState.Active]
+      };
+      this.competitionService.getCompetitions(search).subscribe(response => (this.competitions = response.data));
    }
 
    private getCupStageTypesData(): void {

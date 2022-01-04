@@ -2,8 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 
 import { CompetitionState } from '@enums/competition-state.enum';
-import { Competition } from '@models/competition.model';
-import { CompetitionService } from '@services/competition.service';
+import { CompetitionNew } from '@models/new/competition-new.model';
+import { CompetitionNewService } from '@services/new/competition-new.service';
+import { SettingsService } from '@services/settings.service';
+import { CompetitionSearch } from '@models/search/competition-search.model';
 
 @Component({
    selector: 'app-competition-table',
@@ -11,36 +13,30 @@ import { CompetitionService } from '@services/competition.service';
    styleUrls: ['./competition-table.component.scss']
 })
 export class CompetitionTableComponent implements OnInit {
-   constructor(private activatedRoute: ActivatedRoute, private competitionService: CompetitionService) {}
+   constructor(private activatedRoute: ActivatedRoute, private competitionService: CompetitionNewService) {}
 
-   competitions: Competition[];
+   competitions: CompetitionNew[];
    competitionStates = CompetitionState;
    currentPage: number;
-   errorCompetitions: string;
    lastPage: number;
-   noCompetitions: string;
    path = '/manage/competitions/page/';
    perPage: number;
    total: number;
 
    ngOnInit() {
       this.activatedRoute.params.subscribe((params: Params) => {
-         this.competitionService.getCompetitions(params.number || 1).subscribe(
-            response => {
-               if (response.data) {
-                  this.currentPage = response.current_page;
-                  this.lastPage = response.last_page;
-                  this.perPage = response.per_page;
-                  this.total = response.total;
-                  this.competitions = response.data;
-               } else {
-                  this.noCompetitions = 'В базі даних змагань не знайдено.';
-               }
-            },
-            error => {
-               this.errorCompetitions = error;
-            }
-         );
+         const search: CompetitionSearch = {
+            relations: ['season', 'tournament'],
+            page: params.number || 1,
+            limit: SettingsService.competitionsPerPage
+         };
+         this.competitionService.getCompetitions(search).subscribe(response => {
+            this.currentPage = response.current_page;
+            this.lastPage = response.last_page;
+            this.perPage = response.per_page;
+            this.total = response.total;
+            this.competitions = response.data;
+         });
       });
    }
 }
