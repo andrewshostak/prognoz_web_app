@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 
+import { MatchState } from '@enums/match-state.enum';
 import { TeamMatch } from '@models/team/team-match.model';
 import { ChampionshipService } from '@services/championship/championship.service';
 
@@ -9,7 +10,7 @@ import { ChampionshipService } from '@services/championship/championship.service
  */
 export class TeamCompetitionService {
    public static isTeamMatchBlocked(teamMatch: TeamMatch, teamId: number): boolean {
-      if (!teamMatch.ended) {
+      if (teamMatch.match.state !== MatchState.Ended) {
          return false;
       }
       if (teamMatch.team_predictions) {
@@ -26,7 +27,7 @@ export class TeamCompetitionService {
    }
 
    public static isTeamMatchGuessed(teamMatch: TeamMatch, teamId: number): boolean {
-      if (!teamMatch.ended) {
+      if (teamMatch.match.state !== MatchState.Ended) {
          return false;
       }
       if (teamMatch.team_predictions) {
