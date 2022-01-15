@@ -21,23 +21,10 @@ export class CupCupMatchService {
    /**
     * @deprecated
     */
-   public getCupCupMatches(
-      active?: boolean,
-      cupStageId?: number,
-      page?: number,
-      ended?: boolean,
-      order?: string,
-      sequence?: 'asc' | 'desc'
-   ): Observable<any> {
+   public getCupCupMatches(cupStageId?: number, page?: number, order?: string, sequence?: 'asc' | 'desc'): Observable<any> {
       let params: HttpParams = new HttpParams();
       if (page) {
          params = params.append('page', page.toString());
-      }
-      if (!isNil(active)) {
-         params = params.append('active', active ? '1' : '0');
-      }
-      if (!isNil(ended)) {
-         params = params.append('ended', ended ? '1' : '0');
       }
       if (!isNil(cupStageId)) {
          params = params.append('cup_stage_id', cupStageId.toString());

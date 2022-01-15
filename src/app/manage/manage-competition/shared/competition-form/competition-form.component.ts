@@ -100,7 +100,16 @@ export class CompetitionFormComponent implements OnChanges, OnInit {
       }
    }
 
-   public updateCompetition(competition: Competition): void {
+   public updateCompetition(competition: any): void {
+      if (!competition.stated && !competition.active && !competition.ended) {
+         competition.state = CompetitionState.NotStarted;
+      } else if (competition.stated) {
+         competition.state = CompetitionState.Applications;
+      } else if (competition.active) {
+         competition.state = CompetitionState.Active;
+      } else if (competition.ended) {
+         competition.state = CompetitionState.Ended;
+      }
       this.competitionService.updateCompetition(competition, this.competition.id).subscribe(
          response => {
             this.notificationsService.success('Успішно', 'Змагання змінено');

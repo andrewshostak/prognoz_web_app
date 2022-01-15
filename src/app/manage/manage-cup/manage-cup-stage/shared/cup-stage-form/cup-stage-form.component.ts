@@ -198,7 +198,14 @@ export class CupStageFormComponent implements OnChanges, OnInit {
       );
    }
 
-   private updateCupStage(cupStage: CupStage): void {
+   private updateCupStage(cupStage: any): void {
+      if (!cupStage.active && !cupStage.ended) {
+         cupStage.state = CupStageState.NotStarted;
+      } else if (cupStage.active) {
+         cupStage.state = CupStageState.Active;
+      } else if (cupStage.Ended) {
+         cupStage.state = CupStageState.Ended;
+      }
       this.cupStageService.updateCupStage(cupStage, this.cupStage.id).subscribe(
          response => {
             this.notificationsService.success('Успішно', 'Кубкову стадію змінено');
