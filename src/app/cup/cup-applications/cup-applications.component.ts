@@ -29,6 +29,7 @@ export class CupApplicationsComponent implements OnInit {
    public confirmModalSubmit: (event) => void;
    public selectedCompetitionForNewApplication: Competition;
    public selectedCupApplication: Partial<CupApplication>;
+   public competitionStates = CompetitionState;
 
    private applicationModalReference: NgbModalRef;
    private authenticatedUser: UserNew;
@@ -65,7 +66,9 @@ export class CupApplicationsComponent implements OnInit {
 
       forkJoin([cupApplications, competitions]).subscribe(
          response => {
-            this.cupApplications = response[0];
+            this.cupApplications = response[0].sort((a, b) => {
+               return a.points > b.points ? -1 : 1;
+            });
             this.competitions = response[1] ? response[1].data : [];
             this.attachApplicationsToCompetitions();
          },
@@ -86,7 +89,7 @@ export class CupApplicationsComponent implements OnInit {
       }
    }
 
-   public isFriendlyCompetition(competition: Competition): boolean {
+   public isFriendlyCompetition(competition: Competition | CompetitionNew): boolean {
       return !competition.participants;
    }
 
@@ -162,6 +165,14 @@ export class CupApplicationsComponent implements OnInit {
       this.confirmModalMessage = `Відхилити заявку ${cupApplication.applicant.name}?`;
       this.confirmModalSubmit = () => this.refuseApplication(cupApplication);
       this.confirmModalReference = this.ngbModalService.open(content);
+   }
+
+   public showPointsColumn(competition: Competition | CompetitionNew): boolean {
+      if (this.isFriendlyCompetition(competition)) {
+         return false;
+      }
+
+      return competition.state === CompetitionState.Active || competition.state === CompetitionState.Ended;
    }
 
    public showActionButtons(competition: Competition, cupApplication: CupApplication): boolean {

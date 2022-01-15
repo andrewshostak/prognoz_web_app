@@ -27,6 +27,9 @@
                      <th *ngIf="isFriendlyCompetition(competition)">Отримувач</th>
                      <th *ngIf="isFriendlyCompetition(competition)">Місце</th>
                      <th class="text-center">Статус</th>
+                     <th *ngIf="showPointsColumn(competition)" class="text-center" title="Рейтингові очки станом на початок змагання">
+                        <i class="fa fa-lock"></i> Очки
+                     </th>
                      <th class="text-center">Змінити</th>
                   </tr>
                </thead>
@@ -84,6 +87,9 @@
                               >
                            </div>
                         </ng-template>
+                     </td>
+                     <td *ngIf="showPointsColumn(competition)" class="text-center">
+                        {{ cupApplication.points }}
                      </td>
                      <td class="text-center">
                         <div *ngIf="showEditAndDeleteButtons(competition, cupApplication); else noActionsblock" class="text-nowrap">

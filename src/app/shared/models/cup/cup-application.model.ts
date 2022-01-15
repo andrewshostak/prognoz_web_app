@@ -10,6 +10,7 @@ export class CupApplication {
    ended: boolean;
    created_at: string;
    updated_at: string;
+   points: number;
    applicant: {
       name: string;
       image: string;
