@@ -156,7 +156,7 @@ export class CupMatchFormComponent implements OnChanges, OnInit {
          relations: ['competition'],
          sequence: Sequence.Ascending,
          orderBy: 'round',
-         states: [CupStageState.Active]
+         states: [CupStageState.Active, CupStageState.NotStarted]
       };
       this.cupStageService.getCupStages(search).subscribe(response => {
          this.cupStages = response.data;
