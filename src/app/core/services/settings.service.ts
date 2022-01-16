@@ -12,6 +12,7 @@ export class SettingsService {
    public static readonly competitionsPerPage: number = 10;
    public static readonly clubsPerPage: number = 10;
    public static readonly cupMatchesPerPage: number = 16;
+   public static readonly cupCupMatchesPerPage: number = 10;
    public static readonly cupStagesPerPage: number = 10;
    public static readonly guestbookMessagesPerPage: number = 15;
    public static readonly matchesPerPage: number = 12;

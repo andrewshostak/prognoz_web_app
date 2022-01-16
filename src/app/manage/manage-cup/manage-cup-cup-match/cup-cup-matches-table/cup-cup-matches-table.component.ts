@@ -8,6 +8,11 @@ import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { NotificationsService } from 'angular2-notifications';
 import { Subscription } from 'rxjs';
 import { UtilsService } from '@services/utils.service';
+import { CupCupMatchNewService } from '@services/new/cup-cup-match-new.service';
+import { CupCupMatchSearch } from '@models/search/cup-cup-match-search.model';
+import { SettingsService } from '@services/settings.service';
+import { Sequence } from '@enums/sequence.enum';
+import { CupCupMatchNew } from '@models/new/cup-cup-match-new.model';
 
 @Component({
    selector: 'app-cup-cup-matches-table',
@@ -18,6 +23,7 @@ export class CupCupMatchesTableComponent implements OnDestroy, OnInit {
    constructor(
       private activatedRoute: ActivatedRoute,
       private cupCupMatchService: CupCupMatchService,
+      private cupCupMatchNewService: CupCupMatchNewService,
       private ngbModalService: NgbModal,
       private notificationsService: NotificationsService
    ) {}
@@ -25,7 +31,7 @@ export class CupCupMatchesTableComponent implements OnDestroy, OnInit {
    activatedRouteSubscription: Subscription;
    confirmModalMessage: string;
    confirmModalSubmit: (event) => void;
-   cupCupMatches: CupCupMatch[];
+   cupCupMatches: CupCupMatchNew[];
    cupCupMatchStates = CupCupMatchState;
    errorCupCupMatches: string;
    currentPage: number;
@@ -63,7 +69,14 @@ export class CupCupMatchesTableComponent implements OnDestroy, OnInit {
    ngOnInit() {
       this.path = '/manage/cup/cup-matches/page/';
       this.activatedRouteSubscription = this.activatedRoute.params.subscribe((params: Params) => {
-         this.cupCupMatchService.getCupCupMatches(null, params.number, 'id', 'desc').subscribe(
+         const search: CupCupMatchSearch = {
+            page: params.number,
+            limit: SettingsService.cupCupMatchesPerPage,
+            orderBy: 'id',
+            sequence: Sequence.Descending,
+            relations: ['cupStage.competition', 'homeUser', 'awayUser']
+         };
+         this.cupCupMatchNewService.getCupCupMatches(search).subscribe(
             response => {
                this.currentPage = response.current_page;
                this.lastPage = response.last_page;
