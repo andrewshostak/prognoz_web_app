@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, TemplateRef } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 
 import { CupStageState } from '@enums/cup-stage-state.enum';
@@ -12,6 +12,10 @@ import { CupStageNewService } from '@services/new/cup-stage-new.service';
 import { CupStageNew } from '@models/new/cup-stage-new.model';
 import { CupStageSearch } from '@models/search/cup-stage-search.model';
 import { SettingsService } from '@services/settings.service';
+import { OpenedModal } from '@models/opened-modal.model';
+import { findIndex, remove } from 'lodash';
+import { Pagination } from '@models/pagination.model';
+import { PaginationService } from '@services/pagination.service';
 
 @Component({
    selector: 'app-cup-stages-table',
@@ -19,6 +23,13 @@ import { SettingsService } from '@services/settings.service';
    styleUrls: ['./cup-stages-table.component.scss']
 })
 export class CupStagesTableComponent implements OnInit, OnDestroy {
+   public activatedRouteSubscription: Subscription;
+   public cupStages: CupStageNew[];
+   public cupStageStates = CupStageState;
+   public openedModal: OpenedModal<CupStageNew>;
+   public paginationData: Pagination;
+   public path = '/manage/cup/stages/page/';
+
    constructor(
       private activatedRoute: ActivatedRoute,
       private cupStageService: CupStageService,
@@ -27,29 +38,17 @@ export class CupStagesTableComponent implements OnInit, OnDestroy {
       private notificationsService: NotificationsService
    ) {}
 
-   activatedRouteSubscription: Subscription;
-   confirmModalMessage: string;
-   confirmModalSubmit: (event) => void;
-   public cupStages: CupStageNew[];
-   public cupStageStates = CupStageState;
-   currentPage: number;
-   errorCupStages: string;
-   lastPage: number;
-   openedModalReference: NgbModalRef;
-   path: string;
-   perPage: number;
-   total: number;
-
-   deleteCupStage(cupStage: CupStage): void {
-      this.cupStageService.deleteCupStage(cupStage.id).subscribe(
+   public deleteCupStage(): void {
+      this.cupStageService.deleteCupStage(this.openedModal.data.id).subscribe(
          () => {
-            this.openedModalReference.close();
-            this.total--;
-            this.cupStages = this.cupStages.filter(stage => stage.id !== cupStage.id);
-            this.notificationsService.success('Успішно', cupStage.title + ' видалено');
+            remove(this.cupStages, this.openedModal.data);
+            this.paginationData.total--;
+            this.notificationsService.success('Успішно', `Кубкову стадію ${this.openedModal.data.title} видалено`);
+            this.openedModal.reference.close();
          },
          errors => {
-            this.openedModalReference.close();
+            this.openedModal.reference.close();
+            // todo: remove after migrating to v2 endpoint
             for (const error of errors) {
                this.notificationsService.error('Помилка', error);
             }
@@ -57,14 +56,45 @@ export class CupStagesTableComponent implements OnInit, OnDestroy {
       );
    }
 
-   ngOnDestroy() {
+   public makeCupStageActive(notStarted: CupStageNew): void {
+      const cupStage = { ...notStarted, state: CupStageState.Active };
+      this.cupStageService.updateCupStage((cupStage as any) as CupStage, cupStage.id).subscribe(
+         response => {
+            const index = findIndex(this.cupStages, { id: cupStage.id });
+            if (index > -1) {
+               // todo: replace the whole object after migration to v2
+               this.cupStages[index].state = response.state;
+               this.notificationsService.success('Успішно', `Кубкова стадія ${this.openedModal.data.title} активна`);
+            }
+            this.openedModal.reference.close();
+         },
+         () => this.openedModal.reference.close()
+      );
+   }
+
+   public makeCupStageEnded(active: CupStageNew): void {
+      const cupStage = { ...active, state: CupStageState.Ended };
+      this.cupStageService.updateCupStage((cupStage as any) as CupStage, cupStage.id).subscribe(
+         response => {
+            const index = findIndex(this.cupStages, { id: cupStage.id });
+            if (index > -1) {
+               // todo: replace the whole object after migration to v2
+               this.cupStages[index].state = response.state;
+               this.notificationsService.success('Успішно', `Кубкова стадія ${this.openedModal.data.title} завершена`);
+            }
+            this.openedModal.reference.close();
+         },
+         () => this.openedModal.reference.close()
+      );
+   }
+
+   public ngOnDestroy() {
       if (!this.activatedRouteSubscription.closed) {
          this.activatedRouteSubscription.unsubscribe();
       }
    }
 
-   ngOnInit() {
-      this.path = '/manage/cup/stages/page/';
+   public ngOnInit() {
       this.activatedRouteSubscription = this.activatedRoute.params.subscribe((params: Params) => {
          const search: CupStageSearch = {
             page: params.number,
@@ -73,24 +103,30 @@ export class CupStagesTableComponent implements OnInit, OnDestroy {
             sequence: Sequence.Descending,
             relations: ['competition', 'cupStageType']
          };
-         this.cupStageNewService.getCupStages(search).subscribe(
-            response => {
-               this.currentPage = response.current_page;
-               this.lastPage = response.last_page;
-               this.perPage = response.per_page;
-               this.total = response.total;
-               this.cupStages = response.data;
-            },
-            error => {
-               this.errorCupStages = error;
-            }
-         );
+         this.cupStageNewService.getCupStages(search).subscribe(response => {
+            this.cupStages = response.data;
+            this.paginationData = PaginationService.getPaginationData(response, this.path);
+         });
       });
    }
 
-   openConfirmModal(content: NgbModalRef, cupStage: CupStage): void {
-      this.confirmModalMessage = `Видалити ${cupStage.title}?`;
-      this.confirmModalSubmit = () => this.deleteCupStage(cupStage);
-      this.openedModalReference = this.ngbModalService.open(content);
+   public openActivateConfirm(content: NgbModalRef | TemplateRef<any>, data: CupStageNew, submitted: (event) => void): void {
+      const message = `Активувати стадію ${data.title}?`;
+      this.openConfirmModal(content, data, submitted, message);
+   }
+
+   public openDeleteConfirm(content: NgbModalRef | TemplateRef<any>, data: CupStageNew, submitted: (event) => void): void {
+      const message = `Ви впевнені що хочете видалити ${data.title}?`;
+      this.openConfirmModal(content, data, submitted, message);
+   }
+
+   public openEndConfirm(content: NgbModalRef | TemplateRef<any>, data: CupStageNew, submitted: (event) => void): void {
+      const message = `Завершити стадію ${data.title}?`;
+      this.openConfirmModal(content, data, submitted, message);
+   }
+
+   private openConfirmModal(content: NgbModalRef | TemplateRef<any>, data: CupStageNew, submitted: (event) => void, message: string): void {
+      const reference = this.ngbModalService.open(content, { centered: true });
+      this.openedModal = { reference, data, submitted: () => submitted.call(this), message };
    }
 }
