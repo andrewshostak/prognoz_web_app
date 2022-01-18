@@ -22,7 +22,7 @@ export class PusherService {
    createInstance() {
       return new Pusher(environment.pusher.apiKey, {
          cluster: 'eu',
-         authEndpoint: environment.apiUrl + 'auth/pusher',
+         authEndpoint: environment.apiUrl + 'v2/auth/pusher',
          auth: {
             params: {},
             headers: {
