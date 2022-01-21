@@ -5,20 +5,112 @@
          <th scope="col" class="text-center">ID</th>
          <th scope="col">Назва</th>
          <th scope="col">Тип</th>
-         <th scope="col">Раунд</th>
+         <th scope="col" class="text-center">Раунд</th>
          <th scope="col">Змагання</th>
-         <th scope="col">Стан</th>
-         <th scope="col">Дія</th>
+         <th scope="col" class="text-center">Стан</th>
+         <th scope="col" class="text-center">Дія / Змінено</th>
       </tr>
    </thead>
    <tbody>
       <tr *ngFor="let cupStage of cupStages">
          <th scope="row" class="align-middle">{{ cupStage.id }}</th>
          <td class="font-weight-bold align-middle">{{ cupStage.title }}</td>
-         <td class="align-middle">{{ cupStage.cup_stage_type.title }}</td>
-         <td class="align-middle">{{ cupStage.round }}</td>
+         <td class="align-middle text-muted">{{ cupStage.cup_stage_type.title }}</td>
+         <td class="align-middle text-center">{{ cupStage.round }}</td>
          <td class="align-middle">{{ cupStage.competition.title }}</td>
-         <td class="align-middle">
+         <td class="align-middle text-center">
+            <ng-container [ngTemplateOutlet]="stageState" [ngTemplateOutletContext]="{ state: cupStage.state }"></ng-container>
+         </td>
+         <td class="text-center align-middle">
+            <ng-container [ngSwitch]="cupStage.state">
+               <table *ngSwitchCase="cupStageStates.NotStarted" align="center" class="table-sm">
+                  <tr>
+                     <td>
+                        <button
+                           type="button"
+                           class="btn btn-sm btn-outline-success"
+                           (click)="openActivateConfirm(confirmModal, cupStage, makeCupStageActive.bind(this, cupStage))"
+                        >
+                           <i class="fa fa-play"></i> Активувати
+                        </button>
+                     </td>
+                     <td>
+                        <a [routerLink]="['/manage', 'cup', 'stages', cupStage.id]" class="btn btn-sm btn-outline-warning">
+                           <i class="fa fa-pencil-square-o fa-lg" aria-hidden="true"></i>
+                        </a>
+                     </td>
+                     <td>
+                        <button
+                           type="button"
+                           class="btn btn-sm btn-outline-danger"
+                           (click)="openDeleteConfirm(confirmModal, cupStage, deleteCupStage)"
+                        >
+                           <i class="fa fa-trash-o fa-lg" aria-hidden="true"></i>
+                        </button>
+                     </td>
+                  </tr>
+               </table>
+               <table *ngSwitchCase="cupStageStates.Active" align="center" class="table-sm">
+                  <tr>
+                     <td>
+                        <button
+                           type="button"
+                           class="btn btn-sm btn-outline-danger"
+                           (click)="openEndConfirm(confirmModal, cupStage, makeCupStageEnded.bind(this, cupStage))"
+                        >
+                           <i class="fa fa-square"></i> Завершити
+                        </button>
+                     </td>
+                     <td>
+                        <a [routerLink]="['/manage', 'cup', 'stages', cupStage.id]" class="btn btn-sm btn-outline-warning">
+                           <i class="fa fa-pencil-square-o fa-lg" aria-hidden="true"></i>
+                        </a>
+                     </td>
+                  </tr>
+               </table>
+               <span *ngSwitchCase="cupStageStates.Ended" class="text-muted">{{ cupStage.updated_at | time: 'fromNow' }}</span>
+            </ng-container>
+         </td>
+      </tr>
+   </tbody>
+</table>
+<table *ngIf="cupStages" class="d-none d-md-table d-lg-none table table-dark table-striped table-hover table-bordered">
+   <thead>
+      <tr>
+         <th scope="col" class="text-center">ID</th>
+         <th scope="col" class="text-center">
+            <table align="center" class="table-sm">
+               <tr>
+                  <th>Змагання</th>
+               </tr>
+               <tr>
+                  <th>Назва: Тип</th>
+               </tr>
+            </table>
+         </th>
+         <th scope="col" class="text-center">Раунд</th>
+         <th scope="col" class="text-center">Стан</th>
+         <th scope="col" class="text-center">Дія / Змінено</th>
+      </tr>
+   </thead>
+   <tbody>
+      <tr *ngFor="let cupStage of cupStages">
+         <th scope="row" class="align-middle">{{ cupStage.id }}</th>
+         <td class="align-middle text-center">
+            <table align="center" class="table-sm">
+               <tr>
+                  <td>{{ cupStage.competition.title }}</td>
+               </tr>
+               <tr>
+                  <td>
+                     <strong>{{ cupStage.title }}</strong
+                     >: {{ cupStage.cup_stage_type.title }}
+                  </td>
+               </tr>
+            </table>
+         </td>
+         <td class="align-middle text-center">{{ cupStage.round }}</td>
+         <td class="align-middle text-center">
             <ng-container [ngTemplateOutlet]="stageState" [ngTemplateOutletContext]="{ state: cupStage.state }"></ng-container>
          </td>
          <td class="text-center align-middle">

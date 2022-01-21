@@ -32,7 +32,7 @@ const routes: Routes = [
                   data: { permissions: ['create_cup_stage'] }
                },
                {
-                  path: ':id/edit',
+                  path: ':id',
                   component: CupStageEditComponent,
                   canActivate: [PermissionGuard],
                   data: { permissions: ['update_cup_stage'] }
