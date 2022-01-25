@@ -14,9 +14,10 @@ export class CupStageNewService {
 
    constructor(private httpClient: HttpClient) {}
 
-   public getCupStage(cupStageId: number): Observable<CupStageNew> {
+   public getCupStage(cupStageId: number, relations: string[] = []): Observable<CupStageNew> {
+      const params = new HttpParams({ fromObject: { 'relations[]': relations } });
       return this.httpClient
-         .get<{ cup_stage: CupStageNew }>(`${this.cupStagesUrl}/${cupStageId}`)
+         .get<{ cup_stage: CupStageNew }>(`${this.cupStagesUrl}/${cupStageId}`, { params })
          .pipe(map(response => response.cup_stage));
    }
 
