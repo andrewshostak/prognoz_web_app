@@ -2,44 +2,42 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 
 import { environment } from '@env';
-import { News } from '@models/news.model';
-import { NewsService } from '../shared/news.service';
 import { TitleService } from '@services/title.service';
+import { NewsNewService } from '@services/new/news-new.service';
+import { NewsNew } from '@models/new/news-new.model';
+import { Pagination } from '@models/pagination.model';
+import { PaginationService } from '@services/pagination.service';
+import { NewsSearch } from '@models/search/news-search.model';
+import { SettingsService } from '@services/settings.service';
+import { Sequence } from '@enums/sequence.enum';
 
 @Component({
-    selector: 'app-news-list',
-    templateUrl: './news-list.component.html',
-    styleUrls: ['./news-list.component.scss']
+   selector: 'app-news-list',
+   templateUrl: './news-list.component.html',
+   styleUrls: ['./news-list.component.scss']
 })
 export class NewsListComponent implements OnInit {
-    constructor(private activatedRoute: ActivatedRoute, private newsService: NewsService, private titleService: TitleService) {}
+   constructor(private activatedRoute: ActivatedRoute, private newsService: NewsNewService, private titleService: TitleService) {}
 
-    currentPage: number;
-    errorNews: string | Array<string>;
-    news: News[];
-    lastPage: number;
-    newsImagesUrl: string = environment.apiImageNews;
-    path = '/news/page/';
-    perPage: number;
-    total: number;
+   news: NewsNew[];
+   paginationData: Pagination;
+   newsImagesUrl: string = environment.apiImageNews;
+   path = '/news/page/';
 
-    ngOnInit() {
-        this.activatedRoute.params.subscribe((params: Params) => {
-            this.titleService.setTitle(`Новини${params['number'] ? ', сторінка ' + params['number'] : ''}`);
-            this.newsService.getNews(params['number']).subscribe(
-                response => {
-                    if (response) {
-                        this.currentPage = response.current_page;
-                        this.lastPage = response.last_page;
-                        this.perPage = response.per_page;
-                        this.total = response.total;
-                        this.news = response.data;
-                    }
-                },
-                error => {
-                    this.errorNews = error;
-                }
-            );
-        });
-    }
+   ngOnInit() {
+      this.titleService.setTitle('Новини');
+      this.activatedRoute.params.subscribe((params: Params) => {
+         const search: NewsSearch = {
+            page: params.number,
+            limit: SettingsService.newsPerPage,
+            relations: ['tournament'],
+            orderBy: 'created_at',
+            sequence: Sequence.Descending
+         };
+         this.newsService.getNews(search).subscribe(response => {
+            this.news = response.data;
+            this.paginationData = PaginationService.getPaginationData(response, this.path);
+         });
+      });
+   }
 }

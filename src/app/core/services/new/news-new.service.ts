@@ -49,6 +49,12 @@ export class NewsNewService {
          params = params.set('sequence', search.sequence);
       }
 
+      if (search.relations) {
+         search.relations.forEach(relation => {
+            params = params.append('relations[]', relation);
+         });
+      }
+
       return this.httpClient.get<PaginatedResponse<NewsNew>>(this.newsUrl, { params });
    }
 

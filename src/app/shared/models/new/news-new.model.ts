@@ -1,4 +1,6 @@
 /* tslint:disable:variable-name */
+import { Tournament } from '@models/tournament.model';
+
 export class NewsNew {
    id: number;
    title: string;
@@ -8,4 +10,6 @@ export class NewsNew {
    author_id: number;
    created_at: string;
    updated_at: string;
+
+   tournament?: Tournament;
 }

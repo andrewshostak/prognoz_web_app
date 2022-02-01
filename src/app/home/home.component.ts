@@ -1,16 +1,17 @@
 import { Component, OnInit } from '@angular/core';
 
-import { NewsService } from '@app/news/shared/news.service';
 import { ModelStatus } from '@enums/model-status.enum';
 import { MatchState } from '@enums/match-state.enum';
 import { Sequence } from '@enums/sequence.enum';
 import { environment } from '@env';
 import { ChampionshipMatchNew } from '@models/new/championship-match-new.model';
-import { News } from '@models/news.model';
 import { ChampionshipMatchSearch } from '@models/search/championship-match-search.model';
 import { ChampionshipMatchNewService } from '@services/new/championship-match-new.service';
 import { SettingsService } from '@services/settings.service';
 import { TitleService } from '@services/title.service';
+import { NewsNewService } from '@services/new/news-new.service';
+import { NewsNew } from '@models/new/news-new.model';
+import { NewsSearch } from '@models/search/news-search.model';
 
 @Component({
    selector: 'app-home',
@@ -21,13 +22,12 @@ export class HomeComponent implements OnInit {
    public championshipMatches: ChampionshipMatchNew[];
    public clubsLogosPath: string;
    public errorChampionshipMatches: string;
-   public errorNews: string;
-   public news: News[];
+   public news: NewsNew[];
    public newsImagesUrl: string = environment.apiImageNews;
 
    constructor(
       private championshipMatchService: ChampionshipMatchNewService,
-      private newsService: NewsService,
+      private newsService: NewsNewService,
       private titleService: TitleService
    ) {}
 
@@ -59,15 +59,12 @@ export class HomeComponent implements OnInit {
    }
 
    private getNewsData() {
-      this.newsService.getNews().subscribe(
-         response => {
-            if (response) {
-               this.news = response.data;
-            }
-         },
-         error => {
-            this.errorNews = error;
-         }
-      );
+      const search: NewsSearch = {
+         page: 1,
+         limit: 3,
+         orderBy: 'created_at',
+         sequence: Sequence.Descending
+      };
+      this.newsService.getNews(search).subscribe(response => (this.news = response.data));
    }
 }

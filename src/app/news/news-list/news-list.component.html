@@ -4,8 +4,6 @@
          <h4>Всі новини</h4>
       </div>
    </div>
-   <!-- error -->
-   <app-error *ngIf="errorNews" [message]="errorNews"></app-error>
    <!-- news -->
    <div *ngIf="news" class="row">
       <div class="col">
@@ -26,6 +24,12 @@
          </div>
       </div>
    </div>
-   <!-- pagination -->
-   <app-pagination *ngIf="news" [totalItems]="total" [currentPage]="currentPage" [pageSize]="perPage" [path]="path"> </app-pagination>
+   <app-pagination
+      *ngIf="paginationData"
+      [totalItems]="paginationData.total"
+      [currentPage]="paginationData.currentPage"
+      [pageSize]="paginationData.pageSize"
+      [path]="path"
+   >
+   </app-pagination>
 </div>
