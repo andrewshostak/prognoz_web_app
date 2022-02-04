@@ -100,9 +100,7 @@ describe('MatchTableComponent', () => {
          matchTableComponent.deleteMatch();
          expect(notificationsService.success).toHaveBeenCalledWith(
             'Успішно',
-            `Матч №${matchTableComponent.openedModal.data.id} ${matchTableComponent.openedModal.data.club_home.title} - ${
-               matchTableComponent.openedModal.data.club_away.title
-            } видалено`
+            `Матч №${matchTableComponent.openedModal.data.id} ${matchTableComponent.openedModal.data.club_home.title} - ${matchTableComponent.openedModal.data.club_away.title} видалено`
          );
       });
 
@@ -119,9 +117,9 @@ describe('MatchTableComponent', () => {
          matchTableComponent.getMatchesData(2);
          const expectedParam: MatchSearch = {
             limit: SettingsService.matchesPerPage,
-            orderBy: 'started_at',
+            orderBy: 'state',
             page: 2,
-            sequence: Sequence.Descending
+            sequence: Sequence.Ascending
          };
 
          expect(matchService.getMatches).toHaveBeenCalledWith(expectedParam);
