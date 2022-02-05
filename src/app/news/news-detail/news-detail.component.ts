@@ -5,8 +5,6 @@ import { ActivatedRoute } from '@angular/router';
 
 import { CurrentStateService } from '@services/current-state.service';
 import { NotificationsService } from 'angular2-notifications';
-import { News } from '@models/news.model';
-import { NewsService } from '../shared/news.service';
 import { TitleService } from '@services/title.service';
 import { CommentNew } from '@models/new/comment-new.model';
 import { CommentNewService } from '@app/news/shared/comment-new.service';
@@ -19,6 +17,8 @@ import { Sequence } from '@enums/sequence.enum';
 import { ModelStatus } from '@enums/model-status.enum';
 import { AuthNewService } from '@services/new/auth-new.service';
 import * as moment from 'moment';
+import { NewsNewService } from '@services/new/news-new.service';
+import { NewsNew } from '@models/new/news-new.model';
 
 @Component({
    selector: 'app-news-detail',
@@ -34,13 +34,13 @@ export class NewsDetailComponent implements OnInit {
       private location: Location,
       private ngbModalService: NgbModal,
       private notificationsService: NotificationsService,
-      private newsService: NewsService,
+      private newsService: NewsNewService,
       private titleService: TitleService
    ) {}
 
    public authenticatedUser: UserNew;
    public comments: CommentNew[];
-   public news: News;
+   public news: NewsNew;
    public newsId: number;
    public newsImagesUrl = SettingsService.newsLogosPath;
    public openedModal: OpenedModal<number>;
@@ -93,11 +93,9 @@ export class NewsDetailComponent implements OnInit {
    }
 
    private getNewsData(newsId: number): void {
-      this.newsService.getNewsItem(newsId).subscribe(response => {
-         if (response) {
-            this.news = response;
-            this.titleService.setTitle(this.news.title);
-         }
+      this.newsService.getNewsItem(newsId, ['author']).subscribe(response => {
+         this.news = response;
+         this.titleService.setTitle(this.news.title);
       });
    }
 

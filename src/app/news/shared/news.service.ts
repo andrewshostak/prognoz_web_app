@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 import { catchError, map } from 'rxjs/operators';
@@ -10,25 +9,9 @@ import { News } from '@models/news.model';
 
 @Injectable()
 export class NewsService {
-   constructor(
-      private errorHandlerService: ErrorHandlerService,
-      private headersWithToken: HeadersWithToken,
-      private httpClient: HttpClient
-   ) {}
+   constructor(private errorHandlerService: ErrorHandlerService, private headersWithToken: HeadersWithToken) {}
 
    private newsUrl = environment.apiUrl + 'news';
-
-   /**
-    * Get one news item
-    * @param id
-    * @returns {Observable<News>}
-    */
-   getNewsItem(id: number): Observable<News> {
-      return this.httpClient.get<{ news: News }>(`${this.newsUrl}/${id}`).pipe(
-         map(response => response.news),
-         catchError(this.errorHandlerService.handle)
-      );
-   }
 
    /**
     * Delete one news item
