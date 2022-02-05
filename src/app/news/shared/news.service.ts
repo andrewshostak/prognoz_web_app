@@ -14,15 +14,6 @@ export class NewsService {
    private newsUrl = environment.apiUrl + 'news';
 
    /**
-    * Delete one news item
-    * @param id
-    * @returns {Observable<void>}
-    */
-   deleteNewsItem(id: number): Observable<void> {
-      return this.headersWithToken.delete(`${this.newsUrl}/${id}`).pipe(catchError(this.errorHandlerService.handle));
-   }
-
-   /**
     * Create one news item
     * @param news
     * @returns {Observable<News>}

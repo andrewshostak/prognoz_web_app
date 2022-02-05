@@ -45,7 +45,8 @@ export class SettingsService {
       'v2/users',
       'v2/guestbook-messages',
       'v2/comments',
-      'v2/clubs'
+      'v2/clubs',
+      'v2/news'
    ];
 
    // new image logos paths

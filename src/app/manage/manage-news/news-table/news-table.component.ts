@@ -34,18 +34,13 @@ export class NewsTableComponent implements OnInit {
    paginationData: Pagination;
 
    deleteNewsItem(news: NewsNew) {
-      this.newsService.deleteNewsItem(news.id).subscribe(
+      this.newsNewService.deleteNews(news.id).subscribe(
          () => {
             this.confirmModalReference.close();
             this.news = this.news.filter(n => n.id !== news.id);
             this.notificationsService.success('Успішно', news.title + ' видалено');
          },
-         errors => {
-            this.confirmModalReference.close();
-            for (const error of errors) {
-               this.notificationsService.error('Помилка', error);
-            }
-         }
+         () => this.confirmModalReference.close()
       );
    }
 
