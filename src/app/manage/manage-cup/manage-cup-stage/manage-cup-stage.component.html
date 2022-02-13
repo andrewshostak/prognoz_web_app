@@ -1,9 +1,12 @@
-<div class="container">
-    <div class="row mb-2">
-        <div class="col-12">
-            <button routerLink="/manage/cup/stages" type="button" class="btn btn-success">Таблиця кубкових стадій</button>
-            <button routerLink="/manage/cup/stages/create" type="button" class="btn btn-success">Створити кубкову стадію</button>
-        </div>
-    </div>
+<div class="m-2">
+   <h2 class="h2">Керування стадіями:</h2>
+   <button routerLink="/manage/cup/stages" type="button" class="btn btn-dark">
+      <i class="fa fa-table" aria-hidden="true"></i>
+      <span class="d-none d-sm-inline">Таблиця стадій</span>
+   </button>
+   <button routerLink="/manage/cup/stages/create" type="button" class="btn btn-success">
+      <i class="fa fa-plus-circle" aria-hidden="true"></i>
+      <span class="d-none d-sm-inline">Створити стадію</span>
+   </button>
 </div>
 <router-outlet></router-outlet>
