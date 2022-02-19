@@ -99,8 +99,8 @@ export class CupStagesTableComponent implements OnInit, OnDestroy {
          const search: CupStageSearch = {
             page: params.number,
             limit: SettingsService.cupStagesPerPage,
-            orderBy: 'id',
-            sequence: Sequence.Descending,
+            orderBy: 'state',
+            sequence: Sequence.Ascending,
             relations: ['competition', 'cupStageType']
          };
          this.cupStageNewService.getCupStages(search).subscribe(response => {
