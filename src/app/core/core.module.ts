@@ -28,7 +28,6 @@ import { DeviceService } from '@services/device.service';
 import { ErrorHandlerService } from '@services/error-handler.service';
 import { FormValidatorService } from '@services/form-validator.service';
 import { HeadersWithToken } from '@services/headers-with-token.service';
-import { ImageService } from '@services/image.service';
 import { AuthNewService } from '@services/new/auth-new.service';
 import { ChampionshipMatchNewService } from '@services/new/championship-match-new.service';
 import { ChampionshipPredictionNewService } from '@services/new/championship-prediction-new.service';
@@ -94,7 +93,6 @@ import { UtilsService } from '@services/utils.service';
       FormValidatorService,
       HeaderImageService,
       HeadersWithToken,
-      ImageService,
       MatchService,
       NewsNewService,
       PaginationService,

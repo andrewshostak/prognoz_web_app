@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
-import { NewsService } from '@app/news/shared/news.service';
 import { NotificationsService } from 'angular2-notifications';
 import { NewsNewService } from '@services/new/news-new.service';
 import { NewsNew } from '@models/new/news-new.model';
@@ -21,7 +20,6 @@ export class NewsTableComponent implements OnInit {
    constructor(
       private activatedRoute: ActivatedRoute,
       private ngbModalService: NgbModal,
-      private newsService: NewsService,
       private newsNewService: NewsNewService,
       private notificationsService: NotificationsService
    ) {}
