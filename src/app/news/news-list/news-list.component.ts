@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 
-import { environment } from '@env';
 import { TitleService } from '@services/title.service';
 import { NewsNewService } from '@services/new/news-new.service';
 import { NewsNew } from '@models/new/news-new.model';
@@ -21,7 +20,7 @@ export class NewsListComponent implements OnInit {
 
    news: NewsNew[];
    paginationData: Pagination;
-   newsImagesUrl: string = environment.apiImageNews;
+   newsImagesUrl = SettingsService.newsLogosPath;
    path = '/news/page/';
 
    ngOnInit() {

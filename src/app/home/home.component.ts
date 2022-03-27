@@ -3,7 +3,6 @@ import { Component, OnInit } from '@angular/core';
 import { ModelStatus } from '@enums/model-status.enum';
 import { MatchState } from '@enums/match-state.enum';
 import { Sequence } from '@enums/sequence.enum';
-import { environment } from '@env';
 import { ChampionshipMatchNew } from '@models/new/championship-match-new.model';
 import { ChampionshipMatchSearch } from '@models/search/championship-match-search.model';
 import { ChampionshipMatchNewService } from '@services/new/championship-match-new.service';
@@ -23,7 +22,7 @@ export class HomeComponent implements OnInit {
    public clubsLogosPath: string;
    public errorChampionshipMatches: string;
    public news: NewsNew[];
-   public newsImagesUrl: string = environment.apiImageNews;
+   public newsImagesUrl = SettingsService.newsLogosPath;
 
    constructor(
       private championshipMatchService: ChampionshipMatchNewService,

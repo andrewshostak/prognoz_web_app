@@ -12,7 +12,7 @@
                <ul class="list-group list-group-flush">
                   <li class="list-group-item">Категорія: {{ one.tournament ? one.tournament.title : 'Інше' }}</li>
                </ul>
-               <img class="card-img-top img-fluid p-sm-2" src="{{ newsImagesUrl }}{{ one.image }}" alt="{{ one.title }}" />
+               <img class="card-img-top img-fluid p-sm-2" src="{{ newsImagesUrl }}/{{ one.image }}" alt="{{ one.title }}" />
                <div class="card-body">
                   <h4 class="card-title">{{ one.title }}</h4>
                   <a routerLink="/news/{{ one.id }}" class="btn btn-outline-primary">Читати далі</a>
