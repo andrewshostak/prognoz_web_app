@@ -1,14 +1,13 @@
 import { Component, Input, OnChanges, OnInit, SimpleChanges, ViewChild } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
-import { NewsService } from '@app/news/shared/news.service';
-import { environment } from '@env';
-import { News } from '@models/news.model';
-import { ImageService } from '@services/image.service';
 import { UtilsService } from '@services/utils.service';
 import { NotificationsService } from 'angular2-notifications';
 import { QuillEditorComponent } from 'ngx-quill';
+import { NewsNewService } from '@services/new/news-new.service';
+import { NewsNew } from '@models/new/news-new.model';
+import { FormValidatorService } from '@services/form-validator.service';
 
 @Component({
    selector: 'app-news-form',
@@ -16,50 +15,49 @@ import { QuillEditorComponent } from 'ngx-quill';
    styleUrls: ['./news-form.component.scss']
 })
 export class NewsFormComponent implements OnChanges, OnInit {
-   @Input() public news: News;
+   @Input() public news: NewsNew;
    @ViewChild('editor') public editor: QuillEditorComponent;
 
-   public errorImage: string;
    public editorModules = {};
    public newsForm: FormGroup;
-   public newsImagesUrl = environment.apiImageNews;
+   public newsImageExtensions: string[];
+   public newsImageSize: number;
    public spinnerButton = false;
+
    constructor(
-      private imageService: ImageService,
-      private newsService: NewsService,
+      private formValidatorService: FormValidatorService,
+      private newsNewService: NewsNewService,
       private notificationsService: NotificationsService,
       private router: Router
-   ) {
-      imageService.uploadedImage$.subscribe(response => {
-         this.newsForm.patchValue({ image: response });
-         this.errorImage = null;
-      });
-      imageService.uploadError$.subscribe(response => {
-         this.errorImage = response;
-      });
-   }
-
-   public fileChange(event) {
-      this.imageService.fileChange(event, environment.imageSettings.news);
-   }
+   ) {}
 
    public ngOnChanges(simpleChanges: SimpleChanges) {
-      UtilsService.patchSimpleChangeValuesInForm(simpleChanges, this.newsForm, 'news', (formGroup, field, value) => {
-         if (field !== 'image' && formGroup.get(field)) {
-            formGroup.patchValue({ [field]: value });
-         } else if (field === 'image') {
-            this.newsForm.get('image').setValidators([]);
-            this.newsForm.get('image').updateValueAndValidity();
-         }
-      });
+      UtilsService.patchSimpleChangeValuesInForm(simpleChanges, this.newsForm, 'news', this.patchNewsValuesInForm);
+      if (!simpleChanges.news.isFirstChange()) {
+         this.newsForm.removeControl('image');
+         this.newsForm.addControl(
+            'image',
+            new FormControl(null, [
+               this.formValidatorService.fileType(this.newsImageExtensions),
+               this.formValidatorService.fileSize(this.newsImageSize)
+            ])
+         );
+      }
    }
 
    public ngOnInit() {
+      this.newsImageExtensions = FormValidatorService.fileExtensions.newsImage;
+      this.newsImageSize = FormValidatorService.fileSizeLimits.newsImage;
+
       this.newsForm = new FormGroup({
-         title: new FormControl('', [Validators.required, Validators.minLength(10), Validators.maxLength(100)]),
-         body: new FormControl('', [Validators.required, Validators.minLength(50)]),
+         title: new FormControl(null, [Validators.required, Validators.minLength(10), Validators.maxLength(100)]),
+         body: new FormControl(null, [Validators.required, Validators.minLength(50)]),
          tournament_id: new FormControl(null),
-         image: new FormControl('', [Validators.required])
+         image: new FormControl(null, [
+            Validators.required,
+            this.formValidatorService.fileType(this.newsImageExtensions),
+            this.formValidatorService.fileSize(this.newsImageSize)
+         ])
       });
 
       this.editorModules = {
@@ -75,41 +73,51 @@ export class NewsFormComponent implements OnChanges, OnInit {
    }
 
    public onSubmit(): void {
-      if (this.newsForm.valid) {
-         this.news ? this.updateNews(this.newsForm.value) : this.createNews(this.newsForm.value);
+      if (this.newsForm.invalid) {
+         return;
       }
+
+      this.news ? this.updateNews(this.newsForm.value) : this.createNews(this.newsForm.value);
    }
 
-   private updateNews(news: News): void {
+   public showFormErrorMessage(abstractControl: AbstractControl, errorKey: string): boolean {
+      return UtilsService.showFormErrorMessage(abstractControl, errorKey);
+   }
+
+   public showFormInvalidClass(abstractControl: AbstractControl): boolean {
+      return UtilsService.showFormInvalidClass(abstractControl);
+   }
+
+   private updateNews(news: Partial<NewsNew>): void {
       this.spinnerButton = true;
-      this.newsService.updateNewsItem(news, this.news.id).subscribe(
-         () => {
+      this.newsNewService.updateNews(this.news.id, news).subscribe(
+         response => {
+            this.spinnerButton = false;
             this.notificationsService.success('Успішно', 'Новину змінено!');
-            this.spinnerButton = false;
+            this.news = response;
          },
-         errors => {
-            for (const error of errors) {
-               this.notificationsService.error('Помилка', error);
-            }
-            this.spinnerButton = false;
-         }
+         () => (this.spinnerButton = false)
       );
    }
 
-   private createNews(news: News): void {
+   private createNews(news: Partial<NewsNew>): void {
       this.spinnerButton = true;
-      this.newsService.createNewsItem(news).subscribe(
+      this.newsNewService.createNews(news).subscribe(
          response => {
-            this.notificationsService.success('Успішно', 'Новину створено!');
             this.spinnerButton = false;
+            this.notificationsService.success('Успішно', 'Новину створено');
             this.router.navigate(['/manage', 'news', response.id, 'edit']);
          },
-         errors => {
-            for (const error of errors) {
-               this.notificationsService.error('Помилка', error);
-            }
-            this.spinnerButton = false;
-         }
+         () => (this.spinnerButton = false)
       );
+   }
+
+   private patchNewsValuesInForm(formGroup, field, value) {
+      switch (field) {
+         case 'image':
+            return formGroup.get('image').setValue(null);
+         default:
+            return formGroup.get(field) && formGroup.patchValue({ [field]: value });
+      }
    }
 }

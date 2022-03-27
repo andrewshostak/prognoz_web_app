@@ -1,0 +1,4 @@
+<ng-template #tipContent>
+   <img [attr.src]="src" [attr.alt]="news.title" class="user-logo rounded" />
+</ng-template>
+<img [ngbTooltip]="tipContent" [attr.src]="src" [attr.alt]="news.title" class="small-image rounded" />

@@ -18,6 +18,7 @@ export class NewsService {
     * @param news
     * @returns {Observable<News>}
     */
+   // todo: remove
    createNewsItem(news: News): Observable<News> {
       return this.headersWithToken.post(this.newsUrl, news).pipe(
          map(response => response.news),

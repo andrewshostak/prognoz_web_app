@@ -20,6 +20,7 @@ import { LastUserComponent } from '@app/shared/components/last-user/last-user.co
 import { MatchSelectComponent } from '@app/shared/components/match-select/match-select.component';
 import { MessageInputComponent } from '@app/shared/components/message-input/message-input.component';
 import { NavigationComponent } from '@app/shared/components/navigation/navigation.component';
+import { NewsLogoComponent } from '@app/shared/components/tooltips/news-logo/news-logo.component';
 import { OnlineUsersListComponent } from '@app/shared/components/online-users-list/online-users-list.component';
 import { PaginationComponent } from '@app/shared/components/pagination/pagination.component';
 import { SocialMedialLinksComponent } from '@app/shared/components/social-medial-links/social-medial-links.component';
@@ -65,6 +66,7 @@ import { UserWinsAwardsComponent } from '@app/shared/components/user-wins-awards
       MatchSelectComponent,
       MessageInputComponent,
       NavigationComponent,
+      NewsLogoComponent,
       OnlineUsersListComponent,
       PaginationComponent,
       PredictionWithTooltipComponent,
@@ -103,6 +105,7 @@ import { UserWinsAwardsComponent } from '@app/shared/components/user-wins-awards
       MatchSelectComponent,
       MessageInputComponent,
       NavigationComponent,
+      NewsLogoComponent,
       OnlineUsersListComponent,
       PaginationComponent,
       PredictionWithTooltipComponent,

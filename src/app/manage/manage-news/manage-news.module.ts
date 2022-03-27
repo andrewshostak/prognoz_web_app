@@ -10,9 +10,10 @@ import { NewsCreateComponent } from './news-create/news-create.component';
 import { NewsEditComponent } from './news-edit/news-edit.component';
 import { NewsTableComponent } from './news-table/news-table.component';
 import { NewsFormComponent } from './shared/news-form/news-form.component';
+import { NgbTooltipModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
-   imports: [CommonModule, ReactiveFormsModule, ManageNewsRoutingModule, QuillModule, SharedModule],
+   imports: [CommonModule, ReactiveFormsModule, ManageNewsRoutingModule, QuillModule, SharedModule, NgbTooltipModule],
    declarations: [ManageNewsComponent, NewsTableComponent, NewsCreateComponent, NewsEditComponent, NewsFormComponent]
 })
 export class ManageNewsModule {}

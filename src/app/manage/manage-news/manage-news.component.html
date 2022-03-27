@@ -1,15 +1,16 @@
-<div class="container">
-    <div class="row">
-        <div class="col">
-            <h2>Керування новинами:</h2>
-        </div>
-    </div>
-    <div class="row mb-2">
-        <div class="col-12">
-            <button routerLink="/manage" type="button" class="btn btn-outline-primary">Назад до меню керування</button>
-            <button routerLink="/manage/news" type="button" class="btn btn-success">Таблиця новин</button>
-            <button routerLink="/manage/news/create" type="button" class="btn btn-success">Створити новину</button>
-        </div>
-    </div>
+<div class="m-2">
+   <h2 class="h2">Керування новинами:</h2>
+   <button routerLink="/manage" type="button" class="btn btn-outline-primary">
+      <i class="fa fa-arrow-left" aria-hidden="true"></i>
+      <span class="d-none d-sm-inline">Назад</span>
+   </button>
+   <button routerLink="/manage/news" type="button" class="btn btn-dark">
+      <i class="fa fa-table" aria-hidden="true"></i>
+      <span class="d-none d-sm-inline">Таблиця новин</span>
+   </button>
+   <button routerLink="/manage/news/create" type="button" class="btn btn-success">
+      <i class="fa fa-plus-circle" aria-hidden="true"></i>
+      <span class="d-none d-sm-inline">Створити новину</span>
+   </button>
 </div>
 <router-outlet></router-outlet>
