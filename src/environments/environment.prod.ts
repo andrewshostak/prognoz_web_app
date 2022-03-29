@@ -1,9 +1,9 @@
 /* tslint:disable:object-literal-sort-keys */
+declare const process: any;
+
 export const environment = {
    production: true,
    imageURL: 'https://api.prognoz.org.ua/img',
    apiUrl: 'https://api.prognoz.org.ua/api/',
-   pusher: {
-      apiKey: 'd0200d5a8e86a9d21577'
-   }
+   pusherApiKey: process.env.PUSHER_API_KEY
 };
