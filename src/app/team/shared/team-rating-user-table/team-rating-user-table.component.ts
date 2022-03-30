@@ -1,7 +1,7 @@
 import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 
 import { Team } from '@models/team/team.model';
-import { TeamRatingUser } from '@models/team/team-rating-user.model';
+import { TeamRatingUserNew } from '@models/new/team-rating-user-new.model';
 import { User } from '@models/user.model';
 
 @Component({
@@ -10,14 +10,14 @@ import { User } from '@models/user.model';
    styleUrls: ['./team-rating-user-table.component.scss']
 })
 export class TeamRatingUserTableComponent implements OnChanges {
-   @Input() teamRatingUser: TeamRatingUser[];
+   @Input() teamRatingUser: TeamRatingUserNew[];
    @Input() authenticatedUser: User;
 
-   goalkeepersRating: TeamRatingUser[] = [];
-   goalkeepersRatingAll: TeamRatingUser[] = [];
+   goalkeepersRating: TeamRatingUserNew[] = [];
+   goalkeepersRatingAll: TeamRatingUserNew[] = [];
    teams: Team[] = [];
-   topScorersRating: TeamRatingUser[] = [];
-   topScorersRatingAll: TeamRatingUser[] = [];
+   topScorersRating: TeamRatingUserNew[] = [];
+   topScorersRatingAll: TeamRatingUserNew[] = [];
    selectedTeamId: number = null;
 
    clickOnTeamButton(teamId: number): void {
@@ -60,15 +60,15 @@ export class TeamRatingUserTableComponent implements OnChanges {
       }
    }
 
-   private filterTeamUserRating(teamRatingUser: TeamRatingUser[], column: string): TeamRatingUser[] {
+   private filterTeamUserRating(teamRatingUser: TeamRatingUserNew[], column: string): TeamRatingUserNew[] {
       return teamRatingUser.filter(ratingItem => ratingItem[column]);
    }
 
-   private sortTeamUserRating(teamRatingUser: TeamRatingUser[], column: string): TeamRatingUser[] {
+   private sortTeamUserRating(teamRatingUser: TeamRatingUserNew[], column: string): TeamRatingUserNew[] {
       return teamRatingUser.sort((a, b) => b[column] - a[column]);
    }
 
-   private formTeamUserRating(teamRatingUser: TeamRatingUser[], column: string = 'scored'): TeamRatingUser[] {
+   private formTeamUserRating(teamRatingUser: TeamRatingUserNew[], column: string = 'scored'): TeamRatingUserNew[] {
       const filtered = this.filterTeamUserRating(teamRatingUser, column);
       return this.sortTeamUserRating(filtered, column);
    }

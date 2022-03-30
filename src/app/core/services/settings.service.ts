@@ -46,7 +46,9 @@ export class SettingsService {
       'v2/guestbook-messages',
       'v2/comments',
       'v2/clubs',
-      'v2/news'
+      'v2/news',
+      'v2/team/rating',
+      'v2/team/rating-user'
    ];
 
    // new image logos paths
@@ -73,6 +75,8 @@ export class SettingsService {
       teamStages: 40,
       teamTeamMatches: 16,
       teamTeams: 50,
+      teamRatingItems: 20,
+      teamRatingUsers: 200,
 
       clubs: 10,
       competitions: 100,

@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
 
 import { CompetitionNew } from '@models/new/competition-new.model';
-import { TeamRating } from '@models/team/team-rating.model';
+import { TeamRatingNew } from '@models/new/team-rating-new.model';
 import { UtilsService } from '@services/utils.service';
 import { get } from 'lodash';
 
@@ -11,7 +11,7 @@ import { get } from 'lodash';
    templateUrl: './team-rating-table.component.html'
 })
 export class TeamRatingTableComponent {
-   @Input() public teamRating: TeamRating[];
+   @Input() public teamRating: TeamRatingNew[];
    @Input() public competition: CompetitionNew;
 
    public makeUnsigned = UtilsService.makeUnsigned;

@@ -51,8 +51,8 @@ import { PusherService } from '@services/pusher.service';
 import { SettingsService } from '@services/settings.service';
 import { TeamMatchService } from '@services/team/team-match.service';
 import { TeamPredictionService } from '@services/team/team-prediction.service';
-import { TeamRatingUserService } from '@services/team/team-rating-user.service';
-import { TeamRatingService } from '@services/team/team-rating.service';
+import { TeamRatingUserNewService } from '@services/new/team-rating-user-new.service';
+import { TeamRatingNewService } from '@services/new/team-rating-new.service';
 import { TeamStageNewService } from '@services/new/team-stage-new.service';
 import { TeamStageTypeNewService } from '@services/new/team-stage-type-new.service';
 import { TeamTeamMatchNewService } from '@services/new/team-team-match-new.service';
@@ -105,8 +105,8 @@ import { UtilsService } from '@services/utils.service';
       TeamNewService,
       TeamParticipantNewService,
       TeamPredictionService,
-      TeamRatingService,
-      TeamRatingUserService,
+      TeamRatingNewService,
+      TeamRatingUserNewService,
       TeamStageNewService,
       TeamStageTypeNewService,
       TeamTeamMatchNewService,

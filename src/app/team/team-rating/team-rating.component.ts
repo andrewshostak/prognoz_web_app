@@ -2,17 +2,19 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 
 import { CompetitionNew } from '@models/new/competition-new.model';
-import { RequestParams } from '@models/request-params.model';
-import { TeamRatingUser } from '@models/team/team-rating-user.model';
-import { TeamRating } from '@models/team/team-rating.model';
+import { TeamRatingUserNew } from '@models/new/team-rating-user-new.model';
+import { TeamRatingNew } from '@models/new/team-rating-new.model';
+import { TeamRatingUserSearch } from '@models/search/team-rating-user-search.model';
 import { User } from '@models/user.model';
 import { CurrentStateService } from '@services/current-state.service';
 import { CompetitionNewService } from '@services/new/competition-new.service';
-import { TeamRatingUserService } from '@services/team/team-rating-user.service';
-import { TeamRatingService } from '@services/team/team-rating.service';
+import { TeamRatingUserNewService } from '@services/new/team-rating-user-new.service';
+import { TeamRatingNewService } from '@services/new/team-rating-new.service';
 import { TitleService } from '@services/title.service';
 import { Subscription } from 'rxjs';
 import { filter } from 'rxjs/operators';
+import { TeamRatingSearch } from '@models/search/team-rating-search.model';
+import { SettingsService } from '@services/settings.service';
 
 @Component({
    selector: 'app-team-rating',
@@ -23,8 +25,8 @@ export class TeamRatingComponent implements OnDestroy, OnInit {
    public activatedRouteSubscription: Subscription;
    public authenticatedUser: User;
    public competitionId: number;
-   public teamRating: TeamRating[] = [];
-   public teamRatingUser: TeamRatingUser[] = [];
+   public teamRating: TeamRatingNew[] = [];
+   public teamRatingUser: TeamRatingUserNew[] = [];
    public competition: CompetitionNew;
 
    constructor(
@@ -32,8 +34,8 @@ export class TeamRatingComponent implements OnDestroy, OnInit {
       private competitionNewService: CompetitionNewService,
       private currentStateService: CurrentStateService,
       private router: Router,
-      private teamRatingService: TeamRatingService,
-      private teamRatingUserService: TeamRatingUserService,
+      private teamRatingService: TeamRatingNewService,
+      private teamRatingUserService: TeamRatingUserNewService,
       private titleService: TitleService
    ) {}
 
@@ -68,12 +70,22 @@ export class TeamRatingComponent implements OnDestroy, OnInit {
    }
 
    private getTeamRatingData() {
-      const params: RequestParams[] = [{ parameter: 'competition_id', value: this.competitionId.toString() }];
-      this.teamRatingService.getTeamRating(params).subscribe(response => (this.teamRating = response ? response : []));
+      const search: TeamRatingSearch = {
+         competitionId: this.competitionId,
+         page: 1,
+         relations: ['team'],
+         limit: SettingsService.maxLimitValues.teamRatingItems
+      };
+      this.teamRatingService.getTeamRating(search).subscribe(response => (this.teamRating = response.data));
    }
 
    private getTeamRatingUserData() {
-      const params: RequestParams[] = [{ parameter: 'competition_id', value: this.competitionId.toString() }];
-      this.teamRatingUserService.getTeamRatingUser(params).subscribe(response => (this.teamRatingUser = response ? response : []));
+      const search: TeamRatingUserSearch = {
+         competitionId: this.competitionId,
+         page: 1,
+         relations: ['team', 'user'],
+         limit: SettingsService.maxLimitValues.teamRatingUsers
+      };
+      this.teamRatingUserService.getTeamRatingUser(search).subscribe(response => (this.teamRatingUser = response.data));
    }
 }
