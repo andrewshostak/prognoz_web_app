@@ -2,13 +2,14 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 
 import { ChampionshipPrediction } from '@models/championship/championship-prediction.model';
-import { ChampionshipRating } from '@models/championship/championship-rating.model';
+import { ChampionshipRatingNew } from '@models/new/championship-rating-new.model';
 import { UserNew } from '@models/new/user-new.model';
 import { ChampionshipPredictionService } from '@services/championship/championship-prediction.service';
-import { ChampionshipRatingService } from '@services/championship/championship-rating.service';
+import { ChampionshipRatingNewService } from '@services/new/championship-rating-new.service';
 import { UserNewService } from '@services/new/user-new.service';
 import { TitleService } from '@services/title.service';
 import { UtilsService } from '@services/utils.service';
+import { ChampionshipRatingSearch } from '@models/search/championship-rating-search.model';
 
 @Component({
    selector: 'app-championship-competition-user',
@@ -17,15 +18,14 @@ import { UtilsService } from '@services/utils.service';
 })
 export class ChampionshipCompetitionUserComponent implements OnInit {
    public championshipPredictions: ChampionshipPrediction[];
-   public championshipRatingItem: ChampionshipRating;
+   public championshipRatingItem: ChampionshipRatingNew;
    public competitionId: number;
    public errorChampionshipPredictions: string;
-   public errorRating: string;
    public user: UserNew;
    constructor(
       private activatedRoute: ActivatedRoute,
       private championshipPredictionService: ChampionshipPredictionService,
-      private championshipRatingService: ChampionshipRatingService,
+      private championshipRatingService: ChampionshipRatingNewService,
       private titleService: TitleService,
       private userService: UserNewService
    ) {}
@@ -57,14 +57,10 @@ export class ChampionshipCompetitionUserComponent implements OnInit {
    }
 
    private getChampionshipRatingItemData(userId: number, competitionId: number) {
-      this.championshipRatingService.getChampionshipRatingItem(userId, competitionId).subscribe(
-         response => {
-            this.championshipRatingItem = response;
-         },
-         error => {
-            this.errorRating = error;
-         }
-      );
+      const search: ChampionshipRatingSearch = { limit: 1, competitionId, page: 1, userId };
+      this.championshipRatingService
+         .getChampionshipRating(search)
+         .subscribe(response => (this.championshipRatingItem = response.total ? response.data[0] : null));
    }
 
    private getUserData(id: number) {
