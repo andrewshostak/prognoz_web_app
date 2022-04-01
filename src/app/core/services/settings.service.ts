@@ -48,7 +48,8 @@ export class SettingsService {
       'v2/clubs',
       'v2/news',
       'v2/team/rating',
-      'v2/team/rating-user'
+      'v2/team/rating-user',
+      'v2/championship/rating'
    ];
 
    // new image logos paths
