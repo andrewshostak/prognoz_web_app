@@ -1,18 +1,18 @@
 import { Component, Input } from '@angular/core';
 
-import { ChampionshipRating } from '@models/championship/championship-rating.model';
+import { ChampionshipRatingNew } from '@models/new/championship-rating-new.model';
 import { UtilsService } from '@services/utils.service';
 
 @Component({
-    selector: 'app-championship-rating-table',
-    templateUrl: './championship-rating-table.component.html',
-    styleUrls: ['./championship-rating-table.component.scss']
+   selector: 'app-championship-rating-table',
+   templateUrl: './championship-rating-table.component.html',
+   styleUrls: ['./championship-rating-table.component.scss']
 })
 export class ChampionshipRatingTableComponent {
-    @Input() rating: ChampionshipRating[];
-    @Input() error: string;
-    @Input() authenticatedUser: any;
+   @Input() rating: Partial<ChampionshipRatingNew>[];
+   @Input() error: string;
+   @Input() authenticatedUser: any;
 
-    getHomeCityInBrackets = UtilsService.getHomeCityInBrackets;
-    makeUnsigned = UtilsService.makeUnsigned;
+   getHomeCityInBrackets = UtilsService.getHomeCityInBrackets;
+   makeUnsigned = UtilsService.makeUnsigned;
 }
