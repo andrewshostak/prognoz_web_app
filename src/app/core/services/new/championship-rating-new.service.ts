@@ -6,6 +6,7 @@ import { PaginatedResponse } from '@models/paginated-response.model';
 import { ChampionshipRatingSearch } from '@models/search/championship-rating-search.model';
 import { ChampionshipRatingNew } from '@models/new/championship-rating-new.model';
 import { Observable } from 'rxjs';
+import { ChampionshipSeasonRatingItem } from '@models/new/cmapionship-rating-season-new.model';
 
 @Injectable()
 export class ChampionshipRatingNewService {
@@ -40,5 +41,9 @@ export class ChampionshipRatingNewService {
       }
 
       return this.httpClient.get<PaginatedResponse<ChampionshipRatingNew>>(this.championshipRatingUrl, { params });
+   }
+
+   public getChampionshipRatingSeason(seasonId: number): Observable<ChampionshipSeasonRatingItem[]> {
+      return this.httpClient.get<ChampionshipSeasonRatingItem[]>(`${this.championshipRatingUrl}-season/${seasonId}`);
    }
 }

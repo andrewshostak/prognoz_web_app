@@ -11,7 +11,5 @@ import { ChampionshipRatingNew } from '@models/new/championship-rating-new.model
 })
 export class ChampionshipUserRatingDetailsComponent {
    @Input() championshipRatingItem: ChampionshipRating | ChampionshipRatingNew;
-   @Input() errorUser: string;
-   @Input() errorChampionshipRating: string;
    @Input() user: User;
 }
