@@ -13,7 +13,6 @@ import { SharedModule } from '@app/shared/shared.module';
 import { AuthGuard } from '@app/core/guards/auth.guard.service';
 import { AwardNewService } from '@services/new/award-new.service';
 import { ChampionshipPredictionService } from '@services/championship/championship-prediction.service';
-import { ChampionshipRatingService } from '@services/championship/championship-rating.service';
 import { ChampionshipRatingNewService } from '@services/new/championship-rating-new.service';
 import { ChampionshipService } from '@services/championship/championship.service';
 import { CompetitionService } from '@services/competition.service';
@@ -73,7 +72,6 @@ import { UtilsService } from '@services/utils.service';
       ChampionshipMatchNewService,
       ChampionshipPredictionNewService,
       ChampionshipPredictionService,
-      ChampionshipRatingService,
       ChampionshipRatingNewService,
       ClubNewService,
       CompetitionService,

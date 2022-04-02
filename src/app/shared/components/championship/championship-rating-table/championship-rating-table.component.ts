@@ -10,7 +10,6 @@ import { UtilsService } from '@services/utils.service';
 })
 export class ChampionshipRatingTableComponent {
    @Input() rating: Partial<ChampionshipRatingNew>[];
-   @Input() error: string;
    @Input() authenticatedUser: any;
 
    getHomeCityInBrackets = UtilsService.getHomeCityInBrackets;

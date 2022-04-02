@@ -1,9 +1,19 @@
 import { Component, OnInit } from '@angular/core';
 
-import { ChampionshipRating } from '@models/championship/championship-rating.model';
-import { ChampionshipRatingService } from '@services/championship/championship-rating.service';
 import { UtilsService } from '@services/utils.service';
 import { SettingsService } from '@services/settings.service';
+import { iif, Observable, of } from 'rxjs';
+import { PaginatedResponse } from '@models/paginated-response.model';
+import { ChampionshipRatingNew } from '@models/new/championship-rating-new.model';
+import { ChampionshipRatingSearch } from '@models/search/championship-rating-search.model';
+import { Sequence } from '@enums/sequence.enum';
+import { ChampionshipRatingNewService } from '@services/new/championship-rating-new.service';
+import { CompetitionNew } from '@models/new/competition-new.model';
+import { CompetitionSearch } from '@models/search/competition-search.model';
+import { CompetitionState } from '@enums/competition-state.enum';
+import { Tournament } from '@enums/tournament.enum';
+import { CompetitionNewService } from '@services/new/competition-new.service';
+import { mergeMap } from 'rxjs/operators';
 
 @Component({
    selector: 'app-championship-rating-top',
@@ -11,9 +21,9 @@ import { SettingsService } from '@services/settings.service';
    styleUrls: ['./championship-rating-top.component.scss']
 })
 export class ChampionshipRatingTopComponent implements OnInit {
-   constructor(private championshipRatingService: ChampionshipRatingService) {}
+   constructor(private championshipRatingService: ChampionshipRatingNewService, private competitionService: CompetitionNewService) {}
 
-   championshipRatingItems: ChampionshipRating[];
+   championshipRatingItems: ChampionshipRatingNew[];
    errorRating: string;
    userDefaultImage: string = SettingsService.userDefaultImage;
    usersLogosPath: string = SettingsService.usersLogosPath + '/';
@@ -24,16 +34,38 @@ export class ChampionshipRatingTopComponent implements OnInit {
    }
 
    topRating() {
-      const param = [{ parameter: 'limit', value: '5' }];
-      this.championshipRatingService.getChampionshipRatingItems(param).subscribe(
-         response => {
-            if (response) {
-               this.championshipRatingItems = response.championship_ratings;
-            }
-         },
-         error => {
-            this.errorRating = error;
-         }
-      );
+      this.getActiveCompetitionObservable()
+         .pipe(
+            mergeMap(competitionsResponse =>
+               iif(
+                  () => !!competitionsResponse.total,
+                  this.getChampionshipRatingObservable(competitionsResponse.data[0].id),
+                  of({ data: [] })
+               )
+            )
+         )
+         .subscribe(response => (this.championshipRatingItems = response.data));
+   }
+
+   private getActiveCompetitionObservable(): Observable<PaginatedResponse<CompetitionNew>> {
+      const search: CompetitionSearch = {
+         limit: 1,
+         states: [CompetitionState.Active],
+         page: 1,
+         tournamentId: Tournament.Championship
+      };
+      return this.competitionService.getCompetitions(search);
+   }
+
+   private getChampionshipRatingObservable(competitionId: number): Observable<PaginatedResponse<ChampionshipRatingNew>> {
+      const search: ChampionshipRatingSearch = {
+         limit: 5,
+         relations: ['user.mainClub'],
+         competitionId,
+         page: 1,
+         orderBy: 'rating',
+         sequence: Sequence.Descending
+      };
+      return this.championshipRatingService.getChampionshipRating(search);
    }
 }

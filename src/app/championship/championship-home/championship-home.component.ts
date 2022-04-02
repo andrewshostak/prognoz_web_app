@@ -5,12 +5,10 @@ import { MatchState } from '@enums/match-state.enum';
 import { ModelStatus } from '@enums/model-status.enum';
 import { Sequence } from '@enums/sequence.enum';
 import { ChampionshipPrediction } from '@models/championship/championship-prediction.model';
-import { ChampionshipRating } from '@models/championship/championship-rating.model';
 import { ChampionshipMatchNew } from '@models/new/championship-match-new.model';
 import { ChampionshipMatchSearch } from '@models/search/championship-match-search.model';
 import { User } from '@models/user.model';
 import { ChampionshipPredictionService } from '@services/championship/championship-prediction.service';
-import { ChampionshipRatingService } from '@services/championship/championship-rating.service';
 import { ChampionshipService } from '@services/championship/championship.service';
 import { CurrentStateService } from '@services/current-state.service';
 import { ChampionshipMatchNewService } from '@services/new/championship-match-new.service';
@@ -19,8 +17,17 @@ import { TitleService } from '@services/title.service';
 import { UtilsService } from '@services/utils.service';
 import { NotificationsService } from 'angular2-notifications';
 import { get } from 'lodash';
-import { of } from 'rxjs';
+import { iif, Observable, of } from 'rxjs';
 import { mergeMap } from 'rxjs/operators';
+import { PaginatedResponse } from '@models/paginated-response.model';
+import { CompetitionNew } from '@models/new/competition-new.model';
+import { CompetitionSearch } from '@models/search/competition-search.model';
+import { CompetitionState } from '@enums/competition-state.enum';
+import { Tournament } from '@enums/tournament.enum';
+import { CompetitionNewService } from '@services/new/competition-new.service';
+import { ChampionshipRatingNew } from '@models/new/championship-rating-new.model';
+import { ChampionshipRatingSearch } from '@models/search/championship-rating-search.model';
+import { ChampionshipRatingNewService } from '@services/new/championship-rating-new.service';
 
 @Component({
    selector: 'app-championship-home',
@@ -32,10 +39,9 @@ export class ChampionshipHomeComponent implements OnInit {
    public championshipMatches: ChampionshipMatchNew[];
    public championshipPredictions: ChampionshipPrediction[];
    public championshipPredictionsForm: FormGroup;
-   public championshipRatingItems: ChampionshipRating[];
+   public championshipRatingItems: ChampionshipRatingNew[];
    public errorChampionshipMatches: string;
    public errorChampionshipPredictions: string;
-   public errorChampionshipRating: string;
    public getHomeCityInBrackets = UtilsService.getHomeCityInBrackets;
    public ratingUpdatedAt: string;
    public spinnerButton = false;
@@ -44,7 +50,8 @@ export class ChampionshipHomeComponent implements OnInit {
       private championshipMatchService: ChampionshipMatchNewService,
       private championshipPredictionService: ChampionshipPredictionService,
       private championshipService: ChampionshipService,
-      private championshipRatingService: ChampionshipRatingService,
+      private championshipRatingService: ChampionshipRatingNewService,
+      private competitionService: CompetitionNewService,
       private currentStateService: CurrentStateService,
       private notificationsService: NotificationsService,
       private titleService: TitleService
@@ -100,17 +107,17 @@ export class ChampionshipHomeComponent implements OnInit {
    }
 
    public getChampionshipRatingData(): void {
-      const param = [{ parameter: 'limit', value: '5' }];
-      this.championshipRatingService.getChampionshipRatingItems(param).subscribe(
-         response => {
-            if (response) {
-               this.championshipRatingItems = response.championship_ratings;
-            }
-         },
-         error => {
-            this.errorChampionshipRating = error;
-         }
-      );
+      this.getActiveCompetitionObservable()
+         .pipe(
+            mergeMap(competitionsResponse =>
+               iif(
+                  () => !!competitionsResponse.total,
+                  this.getChampionshipRatingObservable(competitionsResponse.data[0].id),
+                  of({ data: [] })
+               )
+            )
+         )
+         .subscribe(response => (this.championshipRatingItems = response.data));
    }
 
    public getLastMatchData(): void {
@@ -151,6 +158,28 @@ export class ChampionshipHomeComponent implements OnInit {
             this.notificationsService.error('Помилка', error);
          }
       );
+   }
+
+   private getActiveCompetitionObservable(): Observable<PaginatedResponse<CompetitionNew>> {
+      const search: CompetitionSearch = {
+         limit: 1,
+         states: [CompetitionState.Active],
+         page: 1,
+         tournamentId: Tournament.Championship
+      };
+      return this.competitionService.getCompetitions(search);
+   }
+
+   private getChampionshipRatingObservable(competitionId: number): Observable<PaginatedResponse<ChampionshipRatingNew>> {
+      const search: ChampionshipRatingSearch = {
+         limit: 5,
+         relations: ['user.mainClub'],
+         competitionId,
+         page: 1,
+         orderBy: 'rating',
+         sequence: Sequence.Descending
+      };
+      return this.championshipRatingService.getChampionshipRating(search);
    }
 
    private updateForm(championshipMatches: ChampionshipMatchNew[], isAuthenticatedUser: boolean): void {
