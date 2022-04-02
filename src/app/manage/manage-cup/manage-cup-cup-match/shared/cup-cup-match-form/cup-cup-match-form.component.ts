@@ -3,6 +3,7 @@ import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/cor
 import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
 
 import { CupCupMatch } from '@models/cup/cup-cup-match.model';
+import { CupCupMatchNew } from '@models/new/cup-cup-match-new.model';
 import { CupStageNew } from '@models/new/cup-stage-new.model';
 import { UserNew } from '@models/new/user-new.model';
 import { CupCupMatchService } from '@services/cup/cup-cup-match.service';
@@ -14,7 +15,7 @@ import { CupStageSearch } from '@models/search/cup-stage-search.model';
 import { SettingsService } from '@services/settings.service';
 import { Sequence } from '@enums/sequence.enum';
 import { CupStageState } from '@enums/cup-stage-state.enum';
-import { omit } from 'lodash';
+import { omit, uniqBy } from 'lodash';
 
 @Component({
    selector: 'app-cup-cup-match-form',
@@ -22,10 +23,10 @@ import { omit } from 'lodash';
    styleUrls: ['./cup-cup-match-form.component.scss']
 })
 export class CupCupMatchFormComponent implements OnChanges, OnInit {
-   @Input() public cupCupMatch: CupCupMatch;
+   @Input() public cupCupMatch: CupCupMatchNew | CupCupMatch;
 
    public cupCupMatchForm: FormGroup;
-   public cupStages: CupStageNew[];
+   public cupStages: CupStageNew[] = [];
    public homeUser: UserNew;
    public awayUser: UserNew;
 
@@ -42,6 +43,7 @@ export class CupCupMatchFormComponent implements OnChanges, OnInit {
       if (simpleChanges.cupCupMatch.currentValue) {
          this.homeUser = simpleChanges.cupCupMatch.currentValue.home_user;
          this.awayUser = simpleChanges.cupCupMatch.currentValue.away_user;
+         this.cupStages = uniqBy(this.cupStages.concat([simpleChanges.cupCupMatch.currentValue.cup_stage]), 'id');
       }
    }
 
@@ -115,7 +117,9 @@ export class CupCupMatchFormComponent implements OnChanges, OnInit {
          relations: ['competition'],
          states: [CupStageState.NotStarted, CupStageState.Active]
       };
-      this.cupStageService.getCupStages(search).subscribe(response => (this.cupStages = response.data));
+      this.cupStageService
+         .getCupStages(search)
+         .subscribe(response => (this.cupStages = uniqBy(this.cupStages.concat(response.data), 'id')));
    }
 
    private createCupCupMatch(cupCupMatch: CupCupMatch): void {

@@ -1,34 +1,34 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 
-import { CupCupMatchService } from '@services/cup/cup-cup-match.service';
-import { CupCupMatch } from '@models/cup/cup-cup-match.model';
+import { CupCupMatchNewService } from '@services/new/cup-cup-match-new.service';
+import { CupCupMatchNew } from '@models/new/cup-cup-match-new.model';
 
 @Component({
-    selector: 'app-cup-cup-match-edit',
-    templateUrl: './cup-cup-match-edit.component.html',
-    styleUrls: ['./cup-cup-match-edit.component.scss']
+   selector: 'app-cup-cup-match-edit',
+   templateUrl: './cup-cup-match-edit.component.html',
+   styleUrls: ['./cup-cup-match-edit.component.scss']
 })
 export class CupCupMatchEditComponent implements OnInit {
-    constructor(private activatedRoute: ActivatedRoute, private cupCupMatchService: CupCupMatchService) {}
+   constructor(private activatedRoute: ActivatedRoute, private cupCupMatchService: CupCupMatchNewService) {}
 
-    cupCupMatch: CupCupMatch;
-    errorCupCupMatch: string;
+   cupCupMatch: CupCupMatchNew;
+   errorCupCupMatch: string;
 
-    ngOnInit() {
-        this.activatedRoute.params.forEach((params: Params) => {
-            this.getCupCupMatchData(params['id']);
-        });
-    }
+   ngOnInit() {
+      this.activatedRoute.params.forEach((params: Params) => {
+         this.getCupCupMatchData(params.id);
+      });
+   }
 
-    private getCupCupMatchData(cupCupMatchId: number): void {
-        this.cupCupMatchService.getCupCupMatch(cupCupMatchId).subscribe(
-            response => {
-                this.cupCupMatch = response;
-            },
-            error => {
-                this.errorCupCupMatch = error;
-            }
-        );
-    }
+   private getCupCupMatchData(cupCupMatchId: number): void {
+      this.cupCupMatchService.getCupCupMatch(cupCupMatchId, ['homeUser', 'awayUser', 'cupStage.competition']).subscribe(
+         response => {
+            this.cupCupMatch = response;
+         },
+         error => {
+            this.errorCupCupMatch = error;
+         }
+      );
+   }
 }

@@ -1,4 +1,3 @@
-import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
 import { environment } from '@env';
@@ -11,21 +10,7 @@ import { catchError, map } from 'rxjs/operators';
 @Injectable()
 export class CupCupMatchService {
    private cupCupMatchUrl = `${environment.apiUrl}cup/cup-matches`;
-   constructor(
-      private errorHandlerService: ErrorHandlerService,
-      private headersWithToken: HeadersWithToken,
-      private httpClient: HttpClient
-   ) {}
-
-   /**
-    * @deprecated
-    */
-   public getCupCupMatch(cupCupMatchId: number): Observable<CupCupMatch> {
-      return this.httpClient.get<{ cup_cup_match: CupCupMatch }>(`${this.cupCupMatchUrl}/${cupCupMatchId}`).pipe(
-         map(response => response.cup_cup_match),
-         catchError(this.errorHandlerService.handle)
-      );
-   }
+   constructor(private errorHandlerService: ErrorHandlerService, private headersWithToken: HeadersWithToken) {}
 
    public createCupCupMatchesAuto(params: { type: 'auto' | 'manual'; to: number; number_of_matches: number }): Observable<CupCupMatch[]> {
       return this.headersWithToken.post(this.cupCupMatchUrl, params).pipe(
