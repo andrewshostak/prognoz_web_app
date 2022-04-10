@@ -6,7 +6,6 @@ import { Tournament } from '@models/tournament.model';
 
 /* tslint:disable:variable-name */
 export class CompetitionNew {
-   public active_round: number;
    public config: {
       team?: {
          relegation?: number;

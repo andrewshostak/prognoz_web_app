@@ -11,7 +11,6 @@ import { UtilsService } from '@services/utils.service';
 })
 export class ChampionshipUserPredictionsTableComponent {
    @Input() public predictions: ChampionshipPredictionNew[];
-   @Input() public error: string;
 
    public getUserPointsOnMatch = ChampionshipService.getUserPointsOnMatch;
    public isChampionshipMatchGuessed = ChampionshipService.isChampionshipMatchGuessed;

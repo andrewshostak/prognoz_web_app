@@ -1,15 +1,18 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 
-import { ChampionshipPrediction } from '@models/championship/championship-prediction.model';
 import { ChampionshipRatingNew } from '@models/new/championship-rating-new.model';
 import { UserNew } from '@models/new/user-new.model';
-import { ChampionshipPredictionService } from '@services/championship/championship-prediction.service';
 import { ChampionshipRatingNewService } from '@services/new/championship-rating-new.service';
 import { UserNewService } from '@services/new/user-new.service';
 import { TitleService } from '@services/title.service';
 import { UtilsService } from '@services/utils.service';
 import { ChampionshipRatingSearch } from '@models/search/championship-rating-search.model';
+import { ChampionshipPredictionNewService } from '@services/new/championship-prediction-new.service';
+import { ChampionshipPredictionNew } from '@models/new/championship-prediction-new.model';
+import { ChampionshipPredictionSearch } from '@models/search/championship-prediction-search.model';
+import { SettingsService } from '@services/settings.service';
+import { Sequence } from '@enums/sequence.enum';
 
 @Component({
    selector: 'app-championship-competition-user',
@@ -17,14 +20,13 @@ import { ChampionshipRatingSearch } from '@models/search/championship-rating-sea
    styleUrls: ['./championship-competition-user.component.scss']
 })
 export class ChampionshipCompetitionUserComponent implements OnInit {
-   public championshipPredictions: ChampionshipPrediction[];
+   public championshipPredictions: ChampionshipPredictionNew[];
    public championshipRatingItem: ChampionshipRatingNew;
    public competitionId: number;
-   public errorChampionshipPredictions: string;
    public user: UserNew;
    constructor(
       private activatedRoute: ActivatedRoute,
-      private championshipPredictionService: ChampionshipPredictionService,
+      private championshipPredictionService: ChampionshipPredictionNewService,
       private championshipRatingService: ChampionshipRatingNewService,
       private titleService: TitleService,
       private userService: UserNewService
@@ -40,20 +42,17 @@ export class ChampionshipCompetitionUserComponent implements OnInit {
    }
 
    private getChampionshipPredictionsData(userId: number, competitionId: number) {
-      const param = [
-         { parameter: 'user_id', value: userId.toString() },
-         { parameter: 'competition_id', value: competitionId.toString() }
-      ];
-      this.championshipPredictionService.getChampionshipPredictions(param).subscribe(
-         response => {
-            if (response) {
-               this.championshipPredictions = response.championship_predicts;
-            }
-         },
-         error => {
-            this.errorChampionshipPredictions = error;
-         }
-      );
+      const search: ChampionshipPredictionSearch = {
+         competitionId,
+         limit: SettingsService.maxLimitValues.championshipPredictions,
+         orderBy: 'number_in_competition',
+         page: 1,
+         sequence: Sequence.Descending,
+         userId
+      };
+      this.championshipPredictionService
+         .getPredictionsByUserId(search)
+         .subscribe(response => (this.championshipPredictions = response.data));
    }
 
    private getChampionshipRatingItemData(userId: number, competitionId: number) {
