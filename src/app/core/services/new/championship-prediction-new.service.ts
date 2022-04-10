@@ -6,6 +6,7 @@ import { ChampionshipPredictionNew } from '@models/new/championship-prediction-n
 import { PaginatedResponse } from '@models/paginated-response.model';
 import { ChampionshipPredictionSearch } from '@models/search/championship-prediction-search.model';
 import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 @Injectable()
 export class ChampionshipPredictionNewService {
@@ -63,5 +64,11 @@ export class ChampionshipPredictionNewService {
       }
 
       return this.httpClient.get<PaginatedResponse<ChampionshipPredictionNew>>(`${this.championshipPredictionsUrl}/by/user`, { params });
+   }
+
+   public getLastDistinctPredictions(): Observable<Partial<ChampionshipPredictionNew[]>> {
+      return this.httpClient
+         .get<{ championship_predicts: Partial<ChampionshipPredictionNew[]> }>(`${this.championshipPredictionsUrl}/last`)
+         .pipe(map(response => response.championship_predicts));
    }
 }

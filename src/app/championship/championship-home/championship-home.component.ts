@@ -8,7 +8,7 @@ import { ChampionshipPrediction } from '@models/championship/championship-predic
 import { ChampionshipMatchNew } from '@models/new/championship-match-new.model';
 import { ChampionshipMatchSearch } from '@models/search/championship-match-search.model';
 import { User } from '@models/user.model';
-import { ChampionshipPredictionService } from '@services/championship/championship-prediction.service';
+import { ChampionshipPredictionNewService } from '@services/new/championship-prediction-new.service';
 import { ChampionshipService } from '@services/championship/championship.service';
 import { CurrentStateService } from '@services/current-state.service';
 import { ChampionshipMatchNewService } from '@services/new/championship-match-new.service';
@@ -28,6 +28,7 @@ import { CompetitionNewService } from '@services/new/competition-new.service';
 import { ChampionshipRatingNew } from '@models/new/championship-rating-new.model';
 import { ChampionshipRatingSearch } from '@models/search/championship-rating-search.model';
 import { ChampionshipRatingNewService } from '@services/new/championship-rating-new.service';
+import { ChampionshipPredictionService } from '@services/championship/championship-prediction.service';
 
 @Component({
    selector: 'app-championship-home',
@@ -37,17 +38,17 @@ import { ChampionshipRatingNewService } from '@services/new/championship-rating-
 export class ChampionshipHomeComponent implements OnInit {
    public authenticatedUser: User;
    public championshipMatches: ChampionshipMatchNew[];
-   public championshipPredictions: ChampionshipPrediction[];
+   public championshipPredictions: Partial<ChampionshipPrediction>[];
    public championshipPredictionsForm: FormGroup;
    public championshipRatingItems: ChampionshipRatingNew[];
    public errorChampionshipMatches: string;
-   public errorChampionshipPredictions: string;
    public getHomeCityInBrackets = UtilsService.getHomeCityInBrackets;
    public ratingUpdatedAt: string;
    public spinnerButton = false;
 
    constructor(
       private championshipMatchService: ChampionshipMatchNewService,
+      private championshipPredictionNewService: ChampionshipPredictionNewService,
       private championshipPredictionService: ChampionshipPredictionService,
       private championshipService: ChampionshipService,
       private championshipRatingService: ChampionshipRatingNewService,
@@ -93,17 +94,7 @@ export class ChampionshipHomeComponent implements OnInit {
    }
 
    public getChampionshipPredictionsData(): void {
-      const param = [{ parameter: 'distinct', value: 'true' }];
-      this.championshipPredictionService.getChampionshipPredictions(param).subscribe(
-         response => {
-            if (response) {
-               this.championshipPredictions = response.championship_predicts;
-            }
-         },
-         error => {
-            this.errorChampionshipPredictions = error;
-         }
-      );
+      this.championshipPredictionNewService.getLastDistinctPredictions().subscribe(response => (this.championshipPredictions = response));
    }
 
    public getChampionshipRatingData(): void {

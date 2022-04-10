@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpParams } from '@angular/common/http';
 
 import { catchError } from 'rxjs/operators';
 import { ChampionshipPrediction } from '@models/championship/championship-prediction.model';
@@ -7,40 +6,20 @@ import { environment } from '@env';
 import { ErrorHandlerService } from '@services/error-handler.service';
 import { HeadersWithToken } from '@services/headers-with-token.service';
 import { Observable } from 'rxjs';
-import { RequestParams } from '@models/request-params.model';
 
 @Injectable()
 export class ChampionshipPredictionService {
-    constructor(
-        private errorHandlerService: ErrorHandlerService,
-        private headersWithToken: HeadersWithToken,
-        private httpClient: HttpClient
-    ) {}
+   constructor(private errorHandlerService: ErrorHandlerService, private headersWithToken: HeadersWithToken) {}
 
-    private championshipPredictionUrl = environment.apiUrl + 'championship/predictions';
+   private championshipPredictionUrl = environment.apiUrl + 'championship/predictions';
 
-    /**
-     * Update championship predictions
-     * @returns {Observable<any>}
-     */
-    updateChampionshipPredictions(championshipPredictions: ChampionshipPrediction[]): Observable<any> {
-        return this.headersWithToken
-            .put(this.championshipPredictionUrl, championshipPredictions)
-            .pipe(catchError(this.errorHandlerService.handle));
-    }
-
-    /**
-     * Get championship predictions
-     * @param requestParams
-     * @returns {Observable<any>}
-     */
-    getChampionshipPredictions(requestParams?: RequestParams[]): Observable<any> {
-        let params: HttpParams = new HttpParams();
-        if (requestParams) {
-            for (const requestParam of requestParams) {
-                params = params.append(requestParam.parameter, requestParam.value);
-            }
-        }
-        return this.httpClient.get(this.championshipPredictionUrl, { params: params }).pipe(catchError(this.errorHandlerService.handle));
-    }
+   /**
+    * Update championship predictions
+    * @returns {Observable<any>}
+    */
+   updateChampionshipPredictions(championshipPredictions: ChampionshipPrediction[]): Observable<any> {
+      return this.headersWithToken
+         .put(this.championshipPredictionUrl, championshipPredictions)
+         .pipe(catchError(this.errorHandlerService.handle));
+   }
 }
