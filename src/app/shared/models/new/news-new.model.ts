@@ -1,5 +1,5 @@
 /* tslint:disable:variable-name */
-import { Tournament } from '@models/tournament.model';
+import { TournamentNew } from '@models/new/tournament-new.model';
 import { CommentNew } from '@models/new/comment-new.model';
 import { UserNew } from '@models/new/user-new.model';
 
@@ -13,7 +13,7 @@ export class NewsNew {
    created_at: string;
    updated_at: string;
 
-   tournament?: Tournament;
+   tournament?: TournamentNew;
    comments?: CommentNew[];
    author?: UserNew;
 }

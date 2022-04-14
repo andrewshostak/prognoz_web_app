@@ -8,12 +8,12 @@ import { Competition } from '@models/competition.model';
 import { CompetitionNew } from '@models/new/competition-new.model';
 import { SeasonNew } from '@models/new/season-new.model';
 import { SeasonSearch } from '@models/search/season-search.model';
-import { Tournament } from '@models/tournament.model';
+import { TournamentNew } from '@models/new/tournament-new.model';
 import { CompetitionService } from '@services/competition.service';
 import { FormValidatorService } from '@services/form-validator.service';
 import { SeasonNewService } from '@services/new/season-new.service';
 import { SettingsService } from '@services/settings.service';
-import { TournamentService } from '@services/tournament.service';
+import { TournamentNewService } from '@services/new/tournament-new.service';
 import { UtilsService } from '@services/utils.service';
 import { NotificationsService } from 'angular2-notifications';
 
@@ -26,16 +26,15 @@ export class CompetitionFormComponent implements OnChanges, OnInit {
    @Input() public competition: Competition | CompetitionNew;
 
    public competitionForm: FormGroup;
-   public errorTournaments: string;
    public seasons: SeasonNew[];
-   public tournaments: Tournament[];
+   public tournaments: TournamentNew[];
 
    constructor(
       private competitionService: CompetitionService,
       private location: Location,
       private notificationsService: NotificationsService,
       private seasonService: SeasonNewService,
-      private tournamentService: TournamentService,
+      private tournamentService: TournamentNewService,
       private formValidatorService: FormValidatorService
    ) {}
 
@@ -131,15 +130,6 @@ export class CompetitionFormComponent implements OnChanges, OnInit {
    }
 
    private getTournamentsData() {
-      this.tournamentService.getTournaments().subscribe(
-         response => {
-            if (response) {
-               this.tournaments = response.tournaments;
-            }
-         },
-         error => {
-            this.errorTournaments = error;
-         }
-      );
+      this.tournamentService.getTournaments().subscribe(response => (this.tournaments = response));
    }
 }

@@ -58,7 +58,7 @@ import { TeamStageTypeNewService } from '@services/new/team-stage-type-new.servi
 import { TeamTeamMatchNewService } from '@services/new/team-team-match-new.service';
 import { TeamTeamMatchService } from '@services/team/team-team-match.service';
 import { TitleService } from '@services/title.service';
-import { TournamentService } from '@services/tournament.service';
+import { TournamentNewService } from '@services/new/tournament-new.service';
 import { UtilsService } from '@services/utils.service';
 
 @NgModule({
@@ -112,7 +112,7 @@ import { UtilsService } from '@services/utils.service';
       TeamTeamMatchNewService,
       TeamTeamMatchService,
       TitleService,
-      TournamentService,
+      TournamentNewService,
       UserNewService,
       UtilsService
    ],
