@@ -1,6 +1,6 @@
 import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 
-import { Team } from '@models/team/team.model';
+import { TeamNew } from '@models/new/team-new.model';
 import { TeamRatingUserNew } from '@models/new/team-rating-user-new.model';
 import { User } from '@models/user.model';
 
@@ -15,7 +15,7 @@ export class TeamRatingUserTableComponent implements OnChanges {
 
    goalkeepersRating: TeamRatingUserNew[] = [];
    goalkeepersRatingAll: TeamRatingUserNew[] = [];
-   teams: Team[] = [];
+   teams: TeamNew[] = [];
    topScorersRating: TeamRatingUserNew[] = [];
    topScorersRatingAll: TeamRatingUserNew[] = [];
    selectedTeamId: number = null;

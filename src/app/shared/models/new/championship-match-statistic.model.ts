@@ -1,12 +1,12 @@
 /* tslint:disable:variable-name */
-import { ChampionshipMatch } from '@models/championship/championship-match.model';
+import { ChampionshipMatchNew } from '@models/new/championship-match-new.model';
 
 export class ChampionshipMatchStatistic {
-   public championship_match: ChampionshipMatch;
+   public championship_match: ChampionshipMatchNew;
    public results: {
       away: number;
       draw: number;
       home: number;
    };
-   public scores: Array<{ [key: string]: number }>;
+   public scores: { [key: string]: number }[];
 }
