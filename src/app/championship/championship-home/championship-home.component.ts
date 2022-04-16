@@ -4,7 +4,7 @@ import { FormControl, FormGroup } from '@angular/forms';
 import { MatchState } from '@enums/match-state.enum';
 import { ModelStatus } from '@enums/model-status.enum';
 import { Sequence } from '@enums/sequence.enum';
-import { ChampionshipPrediction } from '@models/championship/championship-prediction.model';
+import { ChampionshipPredictionNew } from '@models/new/championship-prediction-new.model';
 import { ChampionshipMatchNew } from '@models/new/championship-match-new.model';
 import { ChampionshipMatchSearch } from '@models/search/championship-match-search.model';
 import { User } from '@models/user.model';
@@ -28,7 +28,6 @@ import { CompetitionNewService } from '@services/new/competition-new.service';
 import { ChampionshipRatingNew } from '@models/new/championship-rating-new.model';
 import { ChampionshipRatingSearch } from '@models/search/championship-rating-search.model';
 import { ChampionshipRatingNewService } from '@services/new/championship-rating-new.service';
-import { ChampionshipPredictionService } from '@services/championship/championship-prediction.service';
 
 @Component({
    selector: 'app-championship-home',
@@ -38,7 +37,7 @@ import { ChampionshipPredictionService } from '@services/championship/championsh
 export class ChampionshipHomeComponent implements OnInit {
    public authenticatedUser: User;
    public championshipMatches: ChampionshipMatchNew[];
-   public championshipPredictions: Partial<ChampionshipPrediction>[];
+   public championshipPredictions: Partial<ChampionshipPredictionNew>[];
    public championshipPredictionsForm: FormGroup;
    public championshipRatingItems: ChampionshipRatingNew[];
    public errorChampionshipMatches: string;
@@ -49,7 +48,6 @@ export class ChampionshipHomeComponent implements OnInit {
    constructor(
       private championshipMatchService: ChampionshipMatchNewService,
       private championshipPredictionNewService: ChampionshipPredictionNewService,
-      private championshipPredictionService: ChampionshipPredictionService,
       private championshipService: ChampionshipService,
       private championshipRatingService: ChampionshipRatingNewService,
       private competitionService: CompetitionNewService,
@@ -137,17 +135,14 @@ export class ChampionshipHomeComponent implements OnInit {
    public onSubmit(): void {
       this.spinnerButton = true;
       const championshipPredictionsToUpdate = this.championshipService.createChampionshipPredictionsArray(this.championshipPredictionsForm);
-      this.championshipPredictionService.updateChampionshipPredictions(championshipPredictionsToUpdate).subscribe(
+      this.championshipPredictionNewService.upsertPredictions(championshipPredictionsToUpdate).subscribe(
          () => {
             this.spinnerButton = false;
             this.notificationsService.success('Успішно', 'Прогнози прийнято');
             this.getChampionshipMatchesData();
             this.getChampionshipPredictionsData();
          },
-         error => {
-            this.spinnerButton = false;
-            this.notificationsService.error('Помилка', error);
-         }
+         () => (this.spinnerButton = false)
       );
    }
 

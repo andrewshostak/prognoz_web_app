@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 
 import { MatchState } from '@enums/match-state.enum';
-import { ChampionshipPrediction } from '@models/championship/championship-prediction.model';
 import { ChampionshipMatchNew } from '@models/new/championship-match-new.model';
 import { ChampionshipPredictionNew } from '@models/new/championship-prediction-new.model';
 import { UtilsService } from '@services/utils.service';
@@ -100,10 +99,10 @@ export class ChampionshipService {
     * Receives form of championship predictions, validates it,
     * and returns ready to send array
     * @param championshipPredictionsForm
-    * @returns {ChampionshipPrediction[]}
+    * @returns {Partial<ChampionshipPredictionNew>[]}
     */
-   public createChampionshipPredictionsArray(championshipPredictionsForm: FormGroup): ChampionshipPrediction[] {
-      const championshipPredictionsToUpdate: ChampionshipPrediction[] = [];
+   public createChampionshipPredictionsArray(championshipPredictionsForm: FormGroup): Partial<ChampionshipPredictionNew>[] {
+      const championshipPredictionsToUpdate: Partial<ChampionshipPredictionNew>[] = [];
       for (const championshipPrediction of Object.keys(championshipPredictionsForm.value)) {
          const championshipMatchId = parseInt(championshipPrediction.split('_')[0], 10);
          // If there is no predictions on match
@@ -114,7 +113,7 @@ export class ChampionshipService {
             continue;
          }
          // I don't know why I did that, but it works:
-         const currentMatch = championshipPredictionsToUpdate.find(myObj => myObj.match_id === championshipMatchId);
+         const currentMatch = championshipPredictionsToUpdate.find(myObj => myObj.championship_match_id === championshipMatchId);
          if (!currentMatch) {
             // If there is prediction only on home team
             if (
@@ -124,7 +123,7 @@ export class ChampionshipService {
                championshipPredictionsToUpdate.push({
                   away: 0,
                   home: championshipPredictionsForm.value[championshipMatchId + '_home'],
-                  match_id: championshipMatchId
+                  championship_match_id: championshipMatchId
                });
                continue;
             }
@@ -136,14 +135,14 @@ export class ChampionshipService {
                championshipPredictionsToUpdate.push({
                   away: championshipPredictionsForm.value[championshipMatchId + '_away'],
                   home: 0,
-                  match_id: championshipMatchId
+                  championship_match_id: championshipMatchId
                });
                continue;
             }
             championshipPredictionsToUpdate.push({
                away: championshipPredictionsForm.value[championshipMatchId + '_away'],
                home: championshipPredictionsForm.value[championshipMatchId + '_home'],
-               match_id: championshipMatchId
+               championship_match_id: championshipMatchId
             });
          }
       }

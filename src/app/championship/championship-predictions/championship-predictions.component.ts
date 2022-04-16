@@ -6,7 +6,7 @@ import { Sequence } from '@enums/sequence.enum';
 import { ChampionshipMatchNew } from '@models/new/championship-match-new.model';
 import { ChampionshipMatchSearch } from '@models/search/championship-match-search.model';
 import { User } from '@models/user.model';
-import { ChampionshipPredictionService } from '@services/championship/championship-prediction.service';
+import { ChampionshipPredictionNewService } from '@services/new/championship-prediction-new.service';
 import { ChampionshipService } from '@services/championship/championship.service';
 import { CurrentStateService } from '@services/current-state.service';
 import { ChampionshipMatchNewService } from '@services/new/championship-match-new.service';
@@ -28,7 +28,7 @@ export class ChampionshipPredictionsComponent implements OnInit {
 
    constructor(
       private championshipMatchService: ChampionshipMatchNewService,
-      private championshipPredictionService: ChampionshipPredictionService,
+      private championshipPredictionNewService: ChampionshipPredictionNewService,
       private championshipService: ChampionshipService,
       private currentStateService: CurrentStateService,
       private notificationsService: NotificationsService,
@@ -45,16 +45,13 @@ export class ChampionshipPredictionsComponent implements OnInit {
    public onSubmit(): void {
       this.spinnerButton = true;
       const championshipPredictionsToUpdate = this.championshipService.createChampionshipPredictionsArray(this.championshipPredictionsForm);
-      this.championshipPredictionService.updateChampionshipPredictions(championshipPredictionsToUpdate).subscribe(
+      this.championshipPredictionNewService.upsertPredictions(championshipPredictionsToUpdate).subscribe(
          () => {
             this.spinnerButton = false;
             this.notificationsService.success('Успішно', 'Прогнози прийнято');
             this.getChampionshipMatchesData();
          },
-         error => {
-            this.spinnerButton = false;
-            this.notificationsService.error('Помилка', error);
-         }
+         () => (this.spinnerButton = false)
       );
    }
 

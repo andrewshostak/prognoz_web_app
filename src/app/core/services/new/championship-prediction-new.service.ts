@@ -71,4 +71,8 @@ export class ChampionshipPredictionNewService {
          .get<{ championship_predicts: Partial<ChampionshipPredictionNew[]> }>(`${this.championshipPredictionsUrl}/last`)
          .pipe(map(response => response.championship_predicts));
    }
+
+   public upsertPredictions(predictions: Partial<ChampionshipPredictionNew>[]): Observable<ChampionshipPredictionNew[]> {
+      return this.httpClient.put<ChampionshipPredictionNew[]>(this.championshipPredictionsUrl, predictions);
+   }
 }
