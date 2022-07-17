@@ -1,5 +1,5 @@
 /* tslint:disable:variable-name */
-import { Club } from '@models/club.model';
+import { ClubNew } from '@models/new/club-new.model';
 import { User } from '@models/user.model';
 
 export class TeamNew {
@@ -15,5 +15,5 @@ export class TeamNew {
    public updated_at: string;
 
    public captain?: User;
-   public club: Club;
+   public club: ClubNew;
 }

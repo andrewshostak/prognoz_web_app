@@ -21,6 +21,11 @@ export class TeamMatchService {
    /**
     * @deprecated
     * filter values: team-team-match
+    * where: team/team-matches when card opens
+    * params: team_stage_id, home_team_id, away_team_id
+    * relations: predictions, predictions.user, match, club-first, club-second
+    * note: public, some predictions should be hidden
+    * why do we need: to show matches & predictions
     */
    public getTeamMatches(requestParams?: RequestParams[]): Observable<any> {
       let params: HttpParams = new HttpParams();
@@ -35,6 +40,23 @@ export class TeamMatchService {
    /**
     * @deprecated
     * filter values: my, opponents
+    *
+    * my
+    * where: /team/my on init and stage change
+    * params: team_stage_id,
+    * relations: predictions, predictions.user, match, club-first, club-second
+    * note: protected, loaded by current user
+    * why do we need: to show matches & predictions (team strategy)
+    *
+    * opponents
+    * where /team/predictions on init and stage change
+    * params: team_stage_id
+    * relations: predictions (only some values), match, club-first, club-second
+    * note: protected, loaded by current user
+    * why do we need:
+    *    - to show matches in a goalkeeper dropdown and show which are blocked (from prediction relation)
+    *    - to understand if the stage was started
+    *    - to get team_match_id, team_id, prediction id (if it is present) for updating blocked_by
     */
    public getTeamMatchesAuthUser(requestParams: RequestParams[]): Observable<any> {
       let params: HttpParams = new HttpParams();

@@ -1,5 +1,5 @@
 /* tslint:disable:variable-name */
-import { Club } from '@models/club.model';
+import { ClubNew } from '@models/new/club-new.model';
 import { MatchState } from '@enums/match-state.enum';
 
 export class Match {
@@ -13,6 +13,6 @@ export class Match {
    public state: MatchState;
    public updated_at: string;
 
-   public club_home?: Club;
-   public club_away?: Club;
+   public club_home?: ClubNew;
+   public club_away?: ClubNew;
 }
