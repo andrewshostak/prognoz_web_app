@@ -263,6 +263,12 @@
                   <i class="fa fa-pencil-square-o fa-lg" aria-hidden="true"></i>
                </a>
             </td>
+            <td>
+               <button type="button" class="btn btn-sm btn-danger" (click)="openDeleteConfirm(confirmModal, cupStage, deleteCupStage)">
+                  <i class="fa fa-exclamation fa-lg" aria-hidden="true"></i>
+                  <i class="fa fa-trash-o fa-lg" aria-hidden="true"></i>
+               </button>
+            </td>
          </tr>
       </table>
       <span *ngSwitchCase="cupStageStates.Ended" class="text-muted">{{ cupStage.updated_at | time: 'fromNow' }}</span>
