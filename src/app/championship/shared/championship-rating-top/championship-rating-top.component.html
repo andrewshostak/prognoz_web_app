@@ -1,7 +1,7 @@
 <!-- error -->
 <app-error *ngIf="errorRating" [message]="errorRating"></app-error>
 <!-- rating leader -->
-<div *ngIf="championshipRatingItems" class="card mt-2 mb-2 shadow">
+<div *ngIf="championshipRatingItems && championshipRatingItems.length" class="card mt-2 mb-2 shadow">
    <h4 class="card-header text-xs-center">Лідер рейтингу</h4>
    <div class="card-body text-center cursor-pointer" routerLink="/championship/users/{{ championshipRatingItems[0].user_id }}">
       <img
