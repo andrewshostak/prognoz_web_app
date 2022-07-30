@@ -66,9 +66,11 @@ export class CupApplicationsComponent implements OnInit {
 
       forkJoin([cupApplications, competitions]).subscribe(
          response => {
-            this.cupApplications = response[0].sort((a, b) => {
-               return a.points > b.points ? -1 : 1;
-            });
+            this.cupApplications = response[0]
+               ? response[0].sort((a, b) => {
+                    return a.points > b.points ? -1 : 1;
+                 })
+               : [];
             this.competitions = response[1] ? response[1].data : [];
             this.attachApplicationsToCompetitions();
          },
