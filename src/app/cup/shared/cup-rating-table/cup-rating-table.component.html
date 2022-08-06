@@ -37,16 +37,37 @@
                   <strong>{{ cupRatingItem.user.name }}</strong>
                   {{ cupRatingItem.user.hometown ? '(' + cupRatingItem.user.hometown + ')' : '' }}
                </td>
-               <td class="text-center text-muted" [ngClass]="{ 'table-danger': !cupRatingItem.before_previous_season_points }">
+               <td
+                  class="text-center text-muted"
+                  [ngClass]="{
+                     'table-secondary': !cupRatingItem.before_previous_season_points,
+                     'table-danger': cupRatingItem.before_previous_season_points < 0
+                  }"
+               >
                   <small>{{ cupRatingItem.before_previous_season_points }}</small>
                </td>
-               <td class="text-center text-muted" [ngClass]="{ 'table-danger': !cupRatingItem.previous_season_points }">
+               <td
+                  class="text-center text-muted"
+                  [ngClass]="{
+                     'table-secondary': !cupRatingItem.previous_season_points,
+                     'table-danger': cupRatingItem.previous_season_points < 0
+                  }"
+               >
                   <small>{{ cupRatingItem.previous_season_points }}</small>
                </td>
-               <td class="text-center text-muted" [ngClass]="{ 'table-danger': !cupRatingItem.active_season_points }">
+               <td
+                  class="text-center text-muted"
+                  [ngClass]="{
+                     'table-secondary': !cupRatingItem.active_season_points,
+                     'table-danger': cupRatingItem.active_season_points < 0
+                  }"
+               >
                   <small>{{ cupRatingItem.active_season_points }}</small>
                </td>
-               <td class="text-center">
+               <td
+                  class="text-center"
+                  [ngClass]="{ 'table-secondary': !cupRatingItem.points_summary, 'table-danger': cupRatingItem.points_summary < 0 }"
+               >
                   <strong>{{ cupRatingItem.points_summary }}</strong>
                </td>
             </tr>
