@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 
 import { environment } from '@env';
 import { RequestParams } from '@models/request-params.model';
+import { TeamMatch } from '@models/team/team-match.model';
 import { ErrorHandlerService } from '@services/error-handler.service';
 import { HeadersWithToken } from '@services/headers-with-token.service';
 import { Observable } from 'rxjs';
@@ -27,14 +28,16 @@ export class TeamMatchService {
     * note: public, some predictions should be hidden
     * why do we need: to show matches & predictions
     */
-   public getTeamMatches(requestParams?: RequestParams[]): Observable<any> {
+   public getTeamMatches(requestParams?: RequestParams[]): Observable<{ team_matches: TeamMatch[] }> {
       let params: HttpParams = new HttpParams();
       if (requestParams) {
          for (const requestParam of requestParams) {
             params = params.append(requestParam.parameter, requestParam.value);
          }
       }
-      return this.httpClient.get(this.teamMatchUrl, { params }).pipe(catchError(this.errorHandlerService.handle));
+      return this.httpClient
+         .get<{ team_matches: TeamMatch[] }>(this.teamMatchUrl, { params })
+         .pipe(catchError(this.errorHandlerService.handle));
    }
 
    /**

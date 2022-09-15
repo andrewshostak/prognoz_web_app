@@ -7,6 +7,7 @@ import { TeamTeamMatchNew } from '@models/new/team-team-match-new.model';
 import { TimePipe } from '@app/shared/pipes/time.pipe';
 import { UtilsService } from '@services/utils.service';
 import { TeamTeamMatch } from '@models/team/team-team-match.model';
+import { sortBy } from 'lodash';
 
 @Component({
    selector: 'app-team-team-match-card',
@@ -38,7 +39,7 @@ export class TeamTeamMatchCardComponent {
       this.teamMatchService.getTeamMatches(param).subscribe(
          response => {
             if (response) {
-               this.teamMatches = response.team_matches;
+               this.teamMatches = sortBy(response.team_matches, ['starts_at', 'id']);
             }
             this.spinnerTeamMatches = false;
          },
