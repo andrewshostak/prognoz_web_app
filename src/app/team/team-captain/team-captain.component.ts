@@ -24,7 +24,7 @@ import { UtilsService } from '@services/utils.service';
 import { NotificationsService } from 'angular2-notifications';
 import { filter, map, mergeMap, tap } from 'rxjs/operators';
 import { forkJoin, of } from 'rxjs';
-import { isEqual } from 'lodash';
+import { isEqual, sortBy } from 'lodash';
 
 @Component({
    selector: 'app-team-captain',
@@ -242,7 +242,7 @@ export class TeamCaptainComponent implements OnInit {
                   return;
                }
 
-               this.teamMatches = responses.teamMatches.team_matches;
+               this.teamMatches = sortBy(responses.teamMatches.team_matches, ['starts_at', 'id']);
                this.availableTeamParticipants = this.getAvailableTeamParticipants(responses.teamMatches.team_matches, responses.teamStage);
                this.getCurrentTeamTeamMatch();
             },
