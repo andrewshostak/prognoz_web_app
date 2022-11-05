@@ -9,6 +9,7 @@ import { TeamStageNewService } from '@services/new/team-stage-new.service';
 import { CompetitionNewService } from '@services/new/competition-new.service';
 import { TeamTeamMatchNewService } from '@services/new/team-team-match-new.service';
 import { SettingsService } from '@services/settings.service';
+import { groupBy } from 'lodash';
 import { Observable } from 'rxjs';
 import { filter, switchMap, tap } from 'rxjs/operators';
 
@@ -19,6 +20,7 @@ import { filter, switchMap, tap } from 'rxjs/operators';
 })
 export class TeamTeamMatchesNewComponent implements OnInit {
    public teamTeamMatches: TeamTeamMatchNew[] = [];
+   public groupedTeamTeamMatches: { [groupNumber: string]: TeamTeamMatchNew[] };
 
    constructor(
       private activatedRoute: ActivatedRoute,
@@ -52,8 +54,18 @@ export class TeamTeamMatchesNewComponent implements OnInit {
          .pipe(
             filter(params => params.team_stage_id),
             switchMap(params => this.getTeamTeamMatchesObservable(params.team_stage_id, true)),
-            tap((response: PaginatedResponse<TeamTeamMatchNew>) => (this.teamTeamMatches = response.data)) as any
+            tap((response: PaginatedResponse<TeamTeamMatchNew>) => this.setTeamTeamMatches(response)) as any
          )
          .subscribe();
+   }
+
+   private setTeamTeamMatches(response: PaginatedResponse<TeamTeamMatchNew>): void {
+      if (response.data.length && response.data[0].group_number) {
+         this.groupedTeamTeamMatches = groupBy(response.data, teamTeamMatch => teamTeamMatch.group_number);
+         this.teamTeamMatches = [];
+      } else {
+         this.teamTeamMatches = response.data;
+         this.groupedTeamTeamMatches = null;
+      }
    }
 }

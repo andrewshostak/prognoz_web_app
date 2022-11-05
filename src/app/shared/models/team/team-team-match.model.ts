@@ -20,4 +20,5 @@ export class TeamTeamMatch {
    away_team: any;
    home_team_goalkeeper: any;
    away_team_goalkeeper: any;
+   group_number: number;
 }

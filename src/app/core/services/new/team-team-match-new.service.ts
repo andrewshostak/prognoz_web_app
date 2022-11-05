@@ -2,6 +2,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
 import { environment } from '@env';
+import { GenerateTeamTeamMatchesNew } from '@models/new/generate-team-team-matches-new.model';
 import { TeamTeamMatchNew } from '@models/new/team-team-match-new.model';
 import { PaginatedResponse } from '@models/paginated-response.model';
 import { TeamTeamMatchSearch } from '@models/search/team-team-match-search.model';
@@ -22,6 +23,10 @@ export class TeamTeamMatchNewService {
 
    public deleteTeamTeamMatch(teamTeamMatchId: number): Observable<void> {
       return this.httpClient.delete<void>(`${this.teamTeamMatchesUrl}/${teamTeamMatchId}`);
+   }
+
+   public generateTeamTeamMatches(generationOptions: GenerateTeamTeamMatchesNew): Observable<number> {
+      return this.httpClient.post<number>(`${this.teamTeamMatchesUrl}/generate`, generationOptions);
    }
 
    public getTeamTeamMatch(teamTeamMatchId: number, relations: string[] = []): Observable<TeamTeamMatchNew> {

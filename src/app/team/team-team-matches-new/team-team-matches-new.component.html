@@ -1,4 +1,12 @@
 <app-team-stage-select (teamStageSelected)="clickOnTeamStageSelectButton($event)"></app-team-stage-select>
+<div *ngIf="groupedTeamTeamMatches" class="row no-gutters mb-1">
+   <div class="col-12 shadow">
+      <div *ngFor="let item of groupedTeamTeamMatches | keyvalue">
+         <div class="table-secondary font-italic pl-2 pr-2">Група {{ item.key }}</div>
+         <app-team-team-match-card *ngFor="let teamTeamMatch of item.value" [teamTeamMatch]="teamTeamMatch"> </app-team-team-match-card>
+      </div>
+   </div>
+</div>
 <div *ngIf="teamTeamMatches" class="row no-gutters mb-1">
    <div class="col-12 shadow">
       <app-team-team-match-card *ngFor="let teamTeamMatch of teamTeamMatches" [teamTeamMatch]="teamTeamMatch"> </app-team-team-match-card>
