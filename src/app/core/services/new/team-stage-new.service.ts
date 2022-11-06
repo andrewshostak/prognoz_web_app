@@ -70,6 +70,12 @@ export class TeamStageNewService {
          });
       }
 
+      if (search.rounds) {
+         search.rounds.forEach(round => {
+            params = params.append('rounds[]', round.toString());
+         });
+      }
+
       return this.httpClient.get<PaginatedResponse<TeamStageNew>>(this.teamStagesUrl, { params });
    }
 

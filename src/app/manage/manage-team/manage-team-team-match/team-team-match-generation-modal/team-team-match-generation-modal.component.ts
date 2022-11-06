@@ -130,14 +130,15 @@ export class TeamTeamMatchGenerationModalComponent implements OnInit {
       const search: TeamStageSearch = {
          page: 1,
          limit: SettingsService.maxLimitValues.teamStages,
-         states: [TeamStageState.NotStarted],
-         relations: ['teamStageType', 'competition']
+         states: [TeamStageState.NotStarted, TeamStageState.Active],
+         relations: ['teamStageType', 'competition'],
+         rounds: [1]
       };
       this.teamStageService.getTeamStages(search).subscribe(response => {
          this.teamStages = response.data;
       });
    }
-   z;
+
    private mapPots(): number[][] {
       const potsTeamIds: number[][] = [];
       this.pots.controls.forEach((control, i) => {

@@ -10,4 +10,5 @@ export class TeamStageSearch {
    public sequence?: Sequence;
    public state?: TeamStageState;
    public states?: TeamStageState[];
+   public rounds?: number[];
 }

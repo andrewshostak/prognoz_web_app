@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 
 import { Sequence } from '@enums/sequence.enum';
 import { TeamStageState } from '@enums/team-stage-state.enum';
+import { TeamStageType } from '@enums/team-stage-type.enum';
 import { TeamTeamMatchState } from '@enums/team-team-match-state.enum';
 import { TeamStageNew } from '@models/new/team-stage-new.model';
 import { TeamStageSearch } from '@models/search/team-stage-search.model';
@@ -41,6 +42,7 @@ export class TeamTeamMatchEditComponent implements OnInit {
          home_team_id: new FormControl(null, [Validators.required]),
          away_team_id: new FormControl(null, [Validators.required])
       });
+      this.subscribeToTeamStageChanges();
    }
 
    public onSubmit(): void {
@@ -60,17 +62,19 @@ export class TeamTeamMatchEditComponent implements OnInit {
    }
 
    private getTeamTeamMatchData(id: number): void {
-      this.teamTeamMatchService.getTeamTeamMatch(id, ['teamStage.competition', 'homeTeam', 'awayTeam']).subscribe(response => {
-         this.teamTeamMatch = response;
-         this.handleTeamTeamMatchResponse(this.teamTeamMatch);
-      });
+      this.teamTeamMatchService
+         .getTeamTeamMatch(id, ['teamStage.competition', 'teamStage.teamStageType', 'homeTeam', 'awayTeam'])
+         .subscribe(response => {
+            this.teamTeamMatch = response;
+            this.handleTeamTeamMatchResponse(this.teamTeamMatch);
+         });
    }
 
    private getTeamStagesData(): void {
       const search: TeamStageSearch = {
          page: 1,
-         orderBy: 'id',
-         sequence: Sequence.Ascending,
+         orderBy: 'title',
+         sequence: Sequence.Descending,
          limit: SettingsService.maxLimitValues.teamStages,
          relations: ['competition', 'teamStageType'],
          states: [TeamStageState.NotStarted, TeamStageState.Active]
@@ -81,10 +85,11 @@ export class TeamTeamMatchEditComponent implements OnInit {
    }
 
    private handleTeamTeamMatchResponse(teamTeamMatch: TeamTeamMatchNew): void {
-      this.teamTeamMatchForm.patchValue(teamTeamMatch);
       if (teamTeamMatch.team_stage) {
          this.teamStages = uniqBy(this.teamStages.concat([teamTeamMatch.team_stage]), 'id');
       }
+
+      this.teamTeamMatchForm.patchValue(teamTeamMatch);
 
       if (teamTeamMatch.state !== TeamTeamMatchState.NotStarted) {
          this.teamTeamMatchForm.disable();
@@ -95,6 +100,25 @@ export class TeamTeamMatchEditComponent implements OnInit {
       this.teamTeamMatchService.updateTeamTeamMatch(this.teamTeamMatch.id, teamTeamMatch).subscribe(() => {
          this.notificationsService.success('Успішно', 'Матч між командами змінено');
          this.router.navigate(['/manage', 'team', 'team-matches']);
+      });
+   }
+
+   public isTeamCupGroupStage(teamStageId: number): boolean {
+      const stage = this.teamStages.find(teamStage => teamStage.id === teamStageId);
+      if (!stage) {
+         return false;
+      }
+
+      return stage.team_stage_type.id === TeamStageType.CupGroupRound;
+   }
+
+   private subscribeToTeamStageChanges(): void {
+      this.teamTeamMatchForm.get('team_stage_id').valueChanges.subscribe(id => {
+         if (this.isTeamCupGroupStage(id)) {
+            this.teamTeamMatchForm.addControl('group_number', new FormControl(null, [Validators.required]));
+         } else {
+            this.teamTeamMatchForm.removeControl('group_number');
+         }
       });
    }
 }
