@@ -130,7 +130,7 @@ export class TeamTeamMatchGenerationModalComponent implements OnInit {
       const search: TeamStageSearch = {
          page: 1,
          limit: SettingsService.maxLimitValues.teamStages,
-         states: [TeamStageState.NotStarted, TeamStageState.NotStarted],
+         states: [TeamStageState.NotStarted],
          relations: ['teamStageType', 'competition']
       };
       this.teamStageService.getTeamStages(search).subscribe(response => {
