@@ -16,6 +16,7 @@ export class TeamRatingNew {
    public dc: number;
    public position: number;
    public moving: number;
+   public group_number: number;
 
    public team?: TeamNew;
 }

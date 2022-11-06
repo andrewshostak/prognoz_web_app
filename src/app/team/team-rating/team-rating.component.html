@@ -1,3 +1,10 @@
 <app-competition-select-new (competitionSelected)="competitionSelected($event)"></app-competition-select-new>
-<app-team-rating-table [teamRating]="teamRating" [competition]="competition"> </app-team-rating-table>
+<div *ngIf="groupedRating; else defaultRating">
+   <div *ngFor="let item of groupedRating | keyvalue" class="mb-2">
+      <app-team-rating-table [teamRating]="item.value" [competition]="competition"> </app-team-rating-table>
+   </div>
+</div>
+<ng-template #defaultRating>
+   <app-team-rating-table [teamRating]="teamRating" [competition]="competition"> </app-team-rating-table>
+</ng-template>
 <app-team-rating-user-table [authenticatedUser]="authenticatedUser" [teamRatingUser]="teamRatingUser"></app-team-rating-user-table>
