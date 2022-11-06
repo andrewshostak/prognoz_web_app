@@ -1,21 +1,23 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, TemplateRef } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 
+import { TeamStageState } from '@enums/team-stage-state.enum';
 import { Tournament } from '@enums/tournament.enum';
 import { CompetitionState } from '@enums/competition-state.enum';
 import { TeamStageNew } from '@models/new/team-stage-new.model';
 import { CompetitionSearch } from '@models/search/competition-search.model';
 import { CompetitionNew } from '@models/new/competition-new.model';
 import { TeamStageTypeNew } from '@models/new/team-stage-type-new.model';
+import { OpenedModal } from '@models/opened-modal.model';
 import { TeamStageNewService } from '@services/new/team-stage-new.service';
 import { SettingsService } from '@services/settings.service';
 import { CompetitionNewService } from '@services/new/competition-new.service';
 import { TeamStageTypeNewService } from '@services/new/team-stage-type-new.service';
 import { NotificationsService } from 'angular2-notifications';
 import { UtilsService } from '@services/utils.service';
+import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { pick, uniqBy } from 'lodash';
-import { TeamStageState } from '@enums/team-stage-state.enum';
 
 @Component({
    selector: 'app-team-stage-edit',
@@ -27,15 +29,31 @@ export class TeamStageEditComponent implements OnInit {
       private activatedRoute: ActivatedRoute,
       private competitionService: CompetitionNewService,
       private notificationsService: NotificationsService,
+      private ngbModalService: NgbModal,
       private teamStageService: TeamStageNewService,
       private teamStageTypeService: TeamStageTypeNewService,
       private router: Router
    ) {}
 
    public competitions: CompetitionNew[] = [];
+   public openedModal: OpenedModal<TeamStageNew>;
    public teamStageForm: FormGroup;
    public teamStage: TeamStageNew;
+   public teamStageStateTypes = TeamStageState;
    public teamStageTypes: TeamStageTypeNew[] = [];
+
+   public deleteTeamStage(): void {
+      this.teamStageService.deleteTeamStage(this.openedModal.data.id).subscribe(
+         () => {
+            this.notificationsService.success('Успішно', `Командну стадію ${this.openedModal.data.title} видалено`);
+            this.openedModal.reference.close();
+            this.router.navigate(['/manage', 'team', 'stages']);
+         },
+         () => {
+            this.openedModal.reference.close();
+         }
+      );
+   }
 
    public ngOnInit(): void {
       this.getCompetitionsData();
@@ -56,6 +74,11 @@ export class TeamStageEditComponent implements OnInit {
 
       const teamStage = pick(this.teamStage, ['team_stage_type_id', 'competition_id', 'title', 'round', 'state']);
       this.updateTeamStage({ ...teamStage, ...this.teamStageForm.value });
+   }
+
+   public openDeleteConfirm(content: NgbModalRef | TemplateRef<any>, data: TeamStageNew, submitted: (event) => void): void {
+      const message = `Ви впевнені що хочете видалити ${data.title}?`;
+      this.openConfirmModal(content, data, submitted, message);
    }
 
    public showFormErrorMessage(abstractControl: AbstractControl, errorKey: string): boolean {
@@ -106,6 +129,16 @@ export class TeamStageEditComponent implements OnInit {
             this.teamStageForm.get('round').disable();
             break;
       }
+   }
+
+   private openConfirmModal(
+      content: NgbModalRef | TemplateRef<any>,
+      data: TeamStageNew,
+      submitted: (event) => void,
+      message: string
+   ): void {
+      const reference = this.ngbModalService.open(content, { centered: true });
+      this.openedModal = { reference, data, submitted: () => submitted.call(this), message };
    }
 
    private updateTeamStage(teamStage: Partial<TeamStageNew>): void {

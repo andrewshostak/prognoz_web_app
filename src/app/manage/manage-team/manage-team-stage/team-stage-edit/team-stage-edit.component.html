@@ -1,4 +1,21 @@
-<h3 class="h3 m-2">Редагувати командну стадію:</h3>
+<h3 class="h3 m-2">
+   Редагувати командну стадію:
+   <ng-container *ngIf="teamStage">
+      <button
+         *ngIf="teamStage.state === teamStageStateTypes.NotStarted || teamStage.state === teamStageStateTypes.Active"
+         type="button"
+         class="btn btn-sm"
+         [ngClass]="{
+            'btn-outline-danger': teamStage.state === teamStageStateTypes.NotStarted,
+            'btn-danger': teamStage.state === teamStageStateTypes.Active
+         }"
+         (click)="openDeleteConfirm(confirmModal, teamStage, deleteTeamStage)"
+      >
+         <i *ngIf="teamStage.state === teamStageStateTypes.Active" class="fa fa-exclamation-triangle fa-lg" aria-hidden="true"></i>
+         <i class="fa fa-trash-o fa-lg" aria-hidden="true"></i>
+      </button>
+   </ng-container>
+</h3>
 <div class="card p-2 pl-lg-5 pr-lg-5">
    <form novalidate [formGroup]="teamStageForm" (ngSubmit)="onSubmit()">
       <div class="form-row">
@@ -72,3 +89,7 @@
       </div>
    </form>
 </div>
+<ng-template #confirmModal let-c="close">
+   <app-confirmation-modal [close]="c" [message]="openedModal.message" (confirmed)="openedModal.submitted($event)">
+   </app-confirmation-modal>
+</ng-template>
