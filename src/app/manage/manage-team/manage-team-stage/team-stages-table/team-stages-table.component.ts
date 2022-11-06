@@ -13,7 +13,7 @@ import { Subscription } from 'rxjs';
 import { TeamStageState } from '@enums/team-stage-state.enum';
 import { OpenedModal } from '@models/opened-modal.model';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
-import { findIndex, remove } from 'lodash';
+import { findIndex } from 'lodash';
 import { NotificationsService } from 'angular2-notifications';
 
 @Component({
@@ -34,20 +34,6 @@ export class TeamStagesTableComponent implements OnDestroy, OnInit {
       private notificationsService: NotificationsService,
       private teamStageService: TeamStageNewService
    ) {}
-
-   public deleteTeamStage(): void {
-      this.teamStageService.deleteTeamStage(this.openedModal.data.id).subscribe(
-         () => {
-            remove(this.teamStages, this.openedModal.data);
-            this.paginationData.total--;
-            this.notificationsService.success('Успішно', `Командну стадію ${this.openedModal.data.title} видалено`);
-            this.openedModal.reference.close();
-         },
-         () => {
-            this.openedModal.reference.close();
-         }
-      );
-   }
 
    public makeTeamStageActive(notStarted: TeamStageNew): void {
       const teamStage = { ...notStarted, state: TeamStageState.Active };
@@ -103,11 +89,6 @@ export class TeamStagesTableComponent implements OnDestroy, OnInit {
       this.activatedRouteSubscription = this.activatedRoute.params.subscribe((params: Params) => {
          this.getTeamStagesData(params.pageNumber);
       });
-   }
-
-   public openDeleteConfirm(content: NgbModalRef | TemplateRef<any>, data: TeamStageNew, submitted: (event) => void): void {
-      const message = `Ви впевнені що хочете видалити ${data.title}?`;
-      this.openConfirmModal(content, data, submitted, message);
    }
 
    public openActivateConfirm(content: NgbModalRef | TemplateRef<any>, data: TeamStageNew, submitted: (event) => void): void {
