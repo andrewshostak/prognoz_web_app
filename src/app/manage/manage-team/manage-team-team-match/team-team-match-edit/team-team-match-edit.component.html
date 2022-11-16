@@ -2,11 +2,11 @@
 <div class="card p-2 pl-lg-5 pr-lg-5">
    <form novalidate [formGroup]="teamTeamMatchForm" (ngSubmit)="onSubmit()">
       <div class="form-row">
-         <div class="col-12 col-md-6 col-lg-4">
+         <div class="col-12 col-md-6" [ngClass]="teamTeamMatchForm.get('group_number') ? 'col-lg-3' : 'col-lg-4'">
             <div class="form-group" [class.form-group-invalid]="showFormInvalidClass(teamTeamMatchForm.get('team_stage_id'))">
                <label for="team_stage_id" class="font-weight-bold">Стадія:</label>
                <select id="team_stage_id" class="form-control" formControlName="team_stage_id">
-                  <option *ngFor="let teamStage of teamStages" [value]="teamStage.id">
+                  <option *ngFor="let teamStage of teamStages" [ngValue]="teamStage.id">
                      {{ teamStage.title }} ({{ teamStage.competition.title }})
                   </option>
                </select>
@@ -15,8 +15,16 @@
                </div>
             </div>
          </div>
-         <div class="col-md-6 d-sm-none d-md-block d-lg-none"></div>
-         <div class="col-12 col-md-6 col-lg-4">
+         <div *ngIf="teamTeamMatchForm.get('group_number')" class="col-12 col-md-6 col-lg-3">
+            <div class="form-group" [class.form-group-invalid]="showFormInvalidClass(teamTeamMatchForm.get('group_number'))">
+               <label for="group_number" class="font-weight-bold">Номер групи:</label>
+               <input type="number" id="group_number" min="1" formControlName="group_number" class="form-control" />
+               <div [hidden]="!showFormErrorMessage(teamTeamMatchForm.get('group_number'), 'required')" class="error-message">
+                  <small>Номер групи обов'язковий</small>
+               </div>
+            </div>
+         </div>
+         <div class="col-12 col-md-6" [ngClass]="teamTeamMatchForm.get('group_number') ? 'col-lg-3' : 'col-lg-4'">
             <div class="form-group" [class.form-group-invalid]="showFormInvalidClass(teamTeamMatchForm.get('home_team_id'))">
                <label [attr.for]="'home_team_id'" class="font-weight-bold">Команда 1:</label>
                <app-team-select
@@ -29,7 +37,7 @@
                </div>
             </div>
          </div>
-         <div class="col-12 col-md-6 col-lg-4">
+         <div class="col-12 col-md-6" [ngClass]="teamTeamMatchForm.get('group_number') ? 'col-lg-3' : 'col-lg-4'">
             <div class="form-group" [class.form-group-invalid]="showFormInvalidClass(teamTeamMatchForm.get('away_team_id'))">
                <label [attr.for]="'away_team_id'" class="font-weight-bold">Команда 2:</label>
                <app-team-select

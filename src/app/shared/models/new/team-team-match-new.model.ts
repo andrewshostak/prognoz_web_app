@@ -19,6 +19,7 @@ export class TeamTeamMatchNew {
    state: TeamTeamMatchState;
    created_at: string;
    updated_at: string;
+   group_number: number;
 
    home_team?: TeamNew;
    away_team?: TeamNew;

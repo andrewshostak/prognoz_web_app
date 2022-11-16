@@ -2,11 +2,19 @@
    <h2 class="h2">Керування матчами між командами:</h2>
    <button routerLink="/manage/team/team-matches" type="button" class="btn btn-dark">
       <i class="fa fa-table" aria-hidden="true"></i>
-      <span class="d-none d-sm-inline">Таблиця матчів між командами</span>
+      <span class="d-none d-sm-inline">Таблиця</span>
    </button>
    <button routerLink="/manage/team/team-matches/create" type="button" class="btn btn-success">
       <i class="fa fa-plus-circle" aria-hidden="true"></i>
-      <span class="d-none d-sm-inline">Створити матч між командами</span>
+      <span class="d-none d-sm-inline">Створити</span>
+   </button>
+   <button class="btn btn-success" (click)="openGenerationModal(teamTeamMatchGenerationModal)">
+      <i class="fa fa-list-ol" aria-hidden="true"></i>
+      <span class="d-none d-sm-inline">Згенерувати</span>
    </button>
 </div>
 <router-outlet></router-outlet>
+<ng-template #teamTeamMatchGenerationModal let-c="close">
+   <app-team-team-match-generation-modal [close]="c" (successfullySubmitted)="teamTeamMatchGenerationModalSubmitted()">
+   </app-team-team-match-generation-modal>
+</ng-template>

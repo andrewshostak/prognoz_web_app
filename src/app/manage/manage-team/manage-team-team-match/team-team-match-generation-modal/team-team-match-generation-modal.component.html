@@ -1,0 +1,70 @@
+<form novalidate [formGroup]="generationForm" (ngSubmit)="submit()">
+   <div class="modal-content">
+      <div class="modal-header">
+         <h5 class="modal-title">Автоматично згенерувати матчі між командами</h5>
+         <button type="button" class="close" aria-label="Close" (click)="close()">
+            <span aria-hidden="true">&times;</span>
+         </button>
+      </div>
+      <div class="modal-body">
+         <div class="form-row">
+            <div class="col-12 col-md-6">
+               <div class="form-group" [class.form-group-invalid]="showFormInvalidClass(generationForm.get('team_stage_id'))">
+                  <label [attr.for]="'team_stage_id'" class="font-weight-bold">Стадія:</label>
+                  <select formControlName="team_stage_id" id="team_stage_id" class="form-control">
+                     <option *ngFor="let teamStage of teamStages" [ngValue]="teamStage.id">
+                        {{ teamStage.title }} - {{ teamStage.team_stage_type.title }} - {{ teamStage.competition.title }}
+                     </option>
+                  </select>
+                  <div [hidden]="!showFormErrorMessage(generationForm.get('team_stage_id'), 'required')" class="error-message">
+                     <small>Стадія обов'язкова</small>
+                  </div>
+               </div>
+            </div>
+         </div>
+         <div formArrayName="pots_team_ids" class="form-group mt-2" *ngIf="generationForm.get('pots_team_ids')">
+            <div class="mb-2">
+               <div class="btn-group" role="group">
+                  <button type="button" class="btn btn-sm btn-outline-success" (click)="addPot()">
+                     <i class="fa fa-plus-circle"></i> <span class="font-weight-bold text-dark">Кошики</span>
+                  </button>
+                  <button *ngIf="pots.controls.length" type="button" class="btn btn-sm btn-outline-danger" (click)="removePot()">
+                     <i class="fa fa-minus"></i>
+                  </button>
+               </div>
+               <div *ngIf="pots.controls.length" class="btn-group" role="group">
+                  <button type="button" class="btn btn-sm btn-outline-success" (click)="addTeam()">
+                     <i class="fa fa-plus-circle"></i> <span class="font-weight-bold text-dark">Команди</span>
+                  </button>
+                  <button *ngIf="numberOfTeamsInPot > 0" type="button" class="btn btn-sm btn-outline-danger" (click)="removeTeam()">
+                     <i class="fa fa-minus"></i>
+                  </button>
+               </div>
+            </div>
+            <div class="form-row">
+               <div *ngFor="let pot of pots.controls; let i = index" [formGroup]="pot" class="col">
+                  <label class="font-weight-bold">Кошик № {{ i + 1 }}</label>
+                  <div *ngFor="let team of getTeamIds(i).controls">
+                     <div class="form-group" [class.form-group-invalid]="showFormInvalidClass(team.get('team_id'))">
+                        <app-team-select [formGroup]="team"></app-team-select>
+                        <div [hidden]="!showFormErrorMessage(team.get('team_id'), 'required')" class="error-message">
+                           <small>Команда обов'язкова</small>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+            <div>
+               <i class="fa fa-info-circle"></i>
+               <span class="text-muted">Загальна кількість команд в кошиках:</span>
+               <strong>{{ numberOfTeamsInPot * pots.controls.length }}</strong>
+            </div>
+         </div>
+      </div>
+      <div class="modal-footer d-flex justify-content-between">
+         <button type="button" class="btn btn-secondary" (click)="close()">Скасувати</button>
+         <button [hidden]="spinnerButton" type="submit" class="btn btn-primary">Згенерувати</button>
+         <app-spinner-button [hidden]="!spinnerButton"></app-spinner-button>
+      </div>
+   </div>
+</form>

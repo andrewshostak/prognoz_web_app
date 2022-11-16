@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
 
 import { TeamStageState } from '@enums/team-stage-state.enum';
+import { TeamStageType } from '@enums/team-stage-type.enum';
 import { Sequence } from '@enums/sequence.enum';
 import { TeamStageNew } from '@models/new/team-stage-new.model';
 import { TeamStageSearch } from '@models/search/team-stage-search.model';
@@ -34,6 +35,7 @@ export class TeamTeamMatchCreateComponent implements OnInit {
          home_team_id: new FormControl(null, [Validators.required]),
          away_team_id: new FormControl(null, [Validators.required])
       });
+      this.subscribeToTeamStageChanges();
    }
 
    public onSubmit(): void {
@@ -63,14 +65,33 @@ export class TeamTeamMatchCreateComponent implements OnInit {
    private getTeamStagesData(): void {
       const search: TeamStageSearch = {
          page: 1,
-         orderBy: 'id',
-         sequence: Sequence.Ascending,
+         orderBy: 'title',
+         sequence: Sequence.Descending,
          limit: SettingsService.maxLimitValues.teamStages,
          relations: ['competition', 'teamStageType'],
          states: [TeamStageState.NotStarted, TeamStageState.Active]
       };
       this.teamStageService.getTeamStages(search).subscribe(response => {
          this.teamStages = response.data;
+      });
+   }
+
+   public isTeamCupGroupStage(teamStageId: number): boolean {
+      const stage = this.teamStages.find(teamStage => teamStage.id === teamStageId);
+      if (!stage) {
+         return false;
+      }
+
+      return stage.team_stage_type.id === TeamStageType.CupGroupRound;
+   }
+
+   private subscribeToTeamStageChanges(): void {
+      this.teamTeamMatchForm.get('team_stage_id').valueChanges.subscribe(id => {
+         if (this.isTeamCupGroupStage(id)) {
+            this.teamTeamMatchForm.addControl('group_number', new FormControl(null, [Validators.required]));
+         } else {
+            this.teamTeamMatchForm.removeControl('group_number');
+         }
       });
    }
 }
