@@ -54,6 +54,10 @@ export class TeamMatchNewService {
          params = params.set('team_stage_id', search.teamStageId.toString());
       }
 
+      if (search.showPredictionsViewability) {
+         params = params.set('show_predictions_viewability', Number(search.showPredictionsViewability).toString());
+      }
+
       if (search.relations) {
          search.relations.forEach(relation => {
             params = params.append('relations[]', relation);

@@ -9,7 +9,8 @@
             </div>
          </div>
          <div class="col-4 col-sm-2 text-center">
-            <strong>{{ showScoresOrString(teamTeamMatch.home, teamTeamMatch.away, 'vs') }}</strong>
+            <strong *ngIf="teamTeamMatch.home !== null">{{ teamTeamMatch.home }} : {{ teamTeamMatch.away }}</strong>
+            <span *ngIf="teamTeamMatch.home === null">vs</span>
             <br class="d-sm-none" />
             <i [hidden]="detailsExpanded || spinnerTeamMatches" class="fa fa-chevron-down fa-lg text-primary d-sm-none"></i>
             <i [hidden]="!detailsExpanded || spinnerTeamMatches" class="fa fa-chevron-up fa-lg text-primary d-sm-none"></i>
@@ -35,13 +36,11 @@
       </div>
    </div>
 </div>
-<div [hidden]="!detailsExpanded" [ngClass]="{ 'mt-1': teamMatches }">
-   <!-- error -->
-   <app-error *ngIf="errorTeamMatches" [message]="errorTeamMatches"></app-error>
+<div [hidden]="!detailsExpanded" [ngClass]="{ 'mt-1': teamMatchesForTemplate.length }">
    <!-- no team matches -->
-   <app-info *ngIf="!spinnerTeamMatches && !errorTeamMatches && !teamMatches" [message]="noTeamMatches"></app-info>
+   <app-info *ngIf="!spinnerTeamMatches && !teamMatchesForTemplate.length" [message]="noTeamMatches"></app-info>
    <div class="row">
-      <div *ngIf="teamMatches" class="col-12">
+      <div *ngIf="teamMatchesForTemplate.length" class="col-12">
          <!-- team-team match details -->
          <table class="table table-sm table-bordered mb-1">
             <tr>
@@ -60,6 +59,7 @@
             <tr>
                <td class="text-center" [ngClass]="{ 'font-weight-bold': teamTeamMatch.home_team_goalkeeper_id }">
                   <div *ngIf="teamTeamMatch.home_team_goalkeeper_id" class="d-none d-lg-inline">
+                     <!-- check if goalkeeper info is present  -->
                      <app-user-logo [user]="teamTeamMatch.home_team_goalkeeper"></app-user-logo>
                   </div>
                   {{ teamTeamMatch.home_team_goalkeeper_id ? teamTeamMatch.home_team_goalkeeper.name : '-' }}
@@ -108,41 +108,40 @@
                </tr>
             </thead>
             <tbody>
-               <tr *ngFor="let teamMatch of teamMatches">
+               <tr *ngFor="let teamMatch of teamMatchesForTemplate">
                   <td
                      colspan="2"
                      class="p-0 align-middle"
                      [ngClass]="{
-                        'bg-success':
-                           isTeamMatchGuessed(teamMatch, teamTeamMatch.home_team_id) &&
-                           !isTeamMatchBlocked(teamMatch, teamTeamMatch.home_team_id),
-                        'bg-danger': isTeamMatchBlocked(teamMatch, teamTeamMatch.home_team_id)
+                        'bg-success': teamMatch.homePrediction.guessed && !teamMatch.homePrediction.blocked,
+                        'bg-danger': teamMatch.homePrediction.blocked
                      }"
                   >
-                     <app-custom-content-with-tooltip [tooltipText]="getTitle(teamMatch, teamTeamMatch.home_team_id)" [placement]="'right'">
+                     <app-custom-content-with-tooltip [tooltipText]="teamMatch.homePredictionTitle" [placement]="'right'">
                         <table class="w-100">
-                           <tr *ngIf="!isTeamMatchPredictable(teamMatch)" class="text-center bg-transparent">
+                           <tr *ngIf="teamMatch.teamMatch.are_predictions_viewable" class="text-center bg-transparent">
                               <td class="w-50 border-left-0 border-top-0 border-bottom-0 text-nowrap align-middle">
                                  <span class="d-none d-sm-inline">{{
-                                    getPredictionDetails(teamMatch, teamTeamMatch.home_team_id).prediction?.long || '-'
+                                    teamMatch.homePrediction.prediction?.predicted_at
+                                       ? teamMatch.homePrediction.prediction.home + ' : ' + teamMatch.homePrediction.prediction.away
+                                       : '-'
                                  }}</span>
                                  <small class="d-sm-none">{{
-                                    getPredictionDetails(teamMatch, teamTeamMatch.home_team_id).prediction?.short || '-'
+                                    teamMatch.homePrediction.prediction?.predicted_at
+                                       ? teamMatch.homePrediction.prediction.home + ':' + teamMatch.homePrediction.prediction.away
+                                       : '-'
                                  }}</small>
                               </td>
                               <td class="w-50 border-right-0 border-top-0 border-bottom-0 align-middle">
                                  <span class="d-none d-sm-inline">{{
-                                    getPredictionDetails(teamMatch, teamTeamMatch.home_team_id).user?.name || '-'
+                                    teamMatch.homePrediction.prediction?.user_id ? teamMatch.homePrediction.prediction.user.name : '-'
                                  }}</span>
-                                 <div
-                                    *ngIf="getPredictionDetails(teamMatch, teamTeamMatch.home_team_id).user as homePredictionUser"
-                                    class="d-sm-none"
-                                 >
-                                    <app-user-logo [user]="homePredictionUser"></app-user-logo>
+                                 <div *ngIf="teamMatch.homePrediction.prediction?.user_id" class="d-sm-none">
+                                    <app-user-logo [user]="teamMatch.homePrediction.prediction.user"></app-user-logo>
                                  </div>
                               </td>
                            </tr>
-                           <tr *ngIf="isTeamMatchPredictable(teamMatch)" class="text-center bg-transparent">
+                           <tr *ngIf="!teamMatch.teamMatch.are_predictions_viewable" class="text-center bg-transparent">
                               <td colspan="2" class="text-muted border-0">
                                  <i class="fa fa-question-circle" aria-hidden="true"></i>
                                  <span class="d-none d-sm-inline">Приховано</span>
@@ -153,29 +152,20 @@
                   </td>
                   <td class="align-middle text-right">
                      <span
-                        *ngIf="
-                           isTeamMatchGuessed(teamMatch, teamTeamMatch.home_team_id) &&
-                           !isTeamMatchBlocked(teamMatch, teamTeamMatch.home_team_id)
-                        "
+                        *ngIf="teamMatch.homePrediction.guessed && !teamMatch.homePrediction.blocked"
                         class="pull-left text-success d-none d-lg-inline"
                      >
                         <i class="fa fa-lg fa-check-circle-o" aria-hidden="true"></i>
                      </span>
                      <span
-                        *ngIf="
-                           !isTeamMatchGuessed(teamMatch, teamTeamMatch.home_team_id) &&
-                           isTeamMatchBlocked(teamMatch, teamTeamMatch.home_team_id)
-                        "
+                        *ngIf="!teamMatch.homePrediction.guessed && teamMatch.homePrediction.blocked"
                         class="pull-left text-danger d-none d-lg-inline"
                         title=""
                      >
                         <i class="fa fa-lg fa-lock" aria-hidden="true"></i>
                      </span>
                      <span
-                        *ngIf="
-                           isTeamMatchGuessed(teamMatch, teamTeamMatch.home_team_id) &&
-                           isTeamMatchBlocked(teamMatch, teamTeamMatch.home_team_id)
-                        "
+                        *ngIf="teamMatch.homePrediction.guessed && teamMatch.homePrediction.blocked"
                         class="pull-left d-none d-lg-inline"
                      >
                         <span class="fa-stack">
@@ -183,47 +173,42 @@
                            <i class="fa fa-ban fa-stack-2x text-danger"></i>
                         </span>
                      </span>
-                     <small class="d-none d-lg-inline d-xl-none">{{ teamMatch.club_first.title }}</small>
-                     <span class="d-none d-xl-inline">{{ teamMatch.club_first.title }}</span>
-                     <app-club-logo [club]="teamMatch.club_first"></app-club-logo>
+                     <small class="d-none d-lg-inline d-xl-none">{{ teamMatch.teamMatch.match.club_home.title }}</small>
+                     <span class="d-none d-xl-inline">{{ teamMatch.teamMatch.match.club_home.title }}</span>
+                     <app-club-logo [club]="teamMatch.teamMatch.match.club_home"></app-club-logo>
                   </td>
                   <td class="align-middle text-center">
                      <strong>
                         <app-prediction-with-tooltip
-                           [componentText]="showScoresOrString(teamMatch.home, teamMatch.away, 'vs')"
-                           [tooltipText]="teamMatch.starts_at"
+                           [componentText]="
+                              teamMatch.teamMatch.match.home !== null
+                                 ? teamMatch.teamMatch.match.home + ' : ' + teamMatch.teamMatch.match.away
+                                 : 'vs'
+                           "
+                           [tooltipText]="teamMatch.teamMatch.match.started_at"
                            [placement]="'top'"
                         >
                         </app-prediction-with-tooltip>
                      </strong>
                   </td>
                   <td class="align-middle text-left">
-                     <app-club-logo [club]="teamMatch.club_second"></app-club-logo>
-                     <small class="d-none d-lg-inline d-xl-none">{{ teamMatch.club_second.title }}</small>
-                     <span class="d-none d-xl-inline">{{ teamMatch.club_second.title }}</span>
+                     <app-club-logo [club]="teamMatch.teamMatch.match.club_away"></app-club-logo>
+                     <small class="d-none d-lg-inline d-xl-none">{{ teamMatch.teamMatch.match.club_away.title }}</small>
+                     <span class="d-none d-xl-inline">{{ teamMatch.teamMatch.match.club_away.title }}</span>
                      <span
-                        *ngIf="
-                           isTeamMatchGuessed(teamMatch, teamTeamMatch.away_team_id) &&
-                           !isTeamMatchBlocked(teamMatch, teamTeamMatch.away_team_id)
-                        "
+                        *ngIf="teamMatch.awayPrediction.guessed && !teamMatch.awayPrediction.blocked"
                         class="pull-right text-success d-none d-lg-inline"
                      >
                         <i class="fa fa-lg fa-check-circle-o" aria-hidden="true"></i>
                      </span>
                      <span
-                        *ngIf="
-                           !isTeamMatchGuessed(teamMatch, teamTeamMatch.away_team_id) &&
-                           isTeamMatchBlocked(teamMatch, teamTeamMatch.away_team_id)
-                        "
+                        *ngIf="!teamMatch.awayPrediction.guessed && teamMatch.awayPrediction.blocked"
                         class="pull-right text-danger d-none d-lg-inline"
                      >
                         <i class="fa fa-lg fa-lock" aria-hidden="true"></i>
                      </span>
                      <span
-                        *ngIf="
-                           isTeamMatchGuessed(teamMatch, teamTeamMatch.away_team_id) &&
-                           isTeamMatchBlocked(teamMatch, teamTeamMatch.away_team_id)
-                        "
+                        *ngIf="teamMatch.awayPrediction.guessed && teamMatch.awayPrediction.blocked"
                         class="pull-right d-none d-lg-inline"
                      >
                         <span class="fa-stack">
@@ -236,36 +221,35 @@
                      colspan="2"
                      class="p-0 align-middle"
                      [ngClass]="{
-                        'bg-success':
-                           isTeamMatchGuessed(teamMatch, teamTeamMatch.away_team_id) &&
-                           !isTeamMatchBlocked(teamMatch, teamTeamMatch.away_team_id),
-                        'bg-danger': isTeamMatchBlocked(teamMatch, teamTeamMatch.away_team_id)
+                        'bg-success': teamMatch.awayPrediction.guessed && !teamMatch.awayPrediction.blocked,
+                        'bg-danger': teamMatch.awayPrediction.blocked
                      }"
                   >
-                     <app-custom-content-with-tooltip [tooltipText]="getTitle(teamMatch, teamTeamMatch.away_team_id)" [placement]="'left'">
+                     <app-custom-content-with-tooltip [tooltipText]="teamMatch.awayPredictionTitle" [placement]="'left'">
                         <table class="w-100">
-                           <tr *ngIf="!isTeamMatchPredictable(teamMatch)" class="text-center bg-transparent">
+                           <tr *ngIf="teamMatch.teamMatch.are_predictions_viewable" class="text-center bg-transparent">
                               <td class="w-50 border-left-0 border-top-0 border-bottom-0 align-middle">
                                  <span class="d-none d-sm-inline">{{
-                                    getPredictionDetails(teamMatch, teamTeamMatch.away_team_id).user?.name || '-'
+                                    teamMatch.awayPrediction.prediction?.user_id ? teamMatch.awayPrediction.prediction.user.name : '-'
                                  }}</span>
-                                 <div
-                                    *ngIf="getPredictionDetails(teamMatch, teamTeamMatch.away_team_id).user as awayPredictionUser"
-                                    class="d-sm-none"
-                                 >
-                                    <app-user-logo [user]="awayPredictionUser"></app-user-logo>
+                                 <div *ngIf="teamMatch.awayPrediction.prediction?.user_id" class="d-sm-none">
+                                    <app-user-logo [user]="teamMatch.awayPrediction.prediction.user"></app-user-logo>
                                  </div>
                               </td>
                               <td class="w-50 border-right-0 border-top-0 border-bottom-0 text-nowrap align-middle">
                                  <span class="d-none d-sm-inline">{{
-                                    getPredictionDetails(teamMatch, teamTeamMatch.away_team_id).prediction?.long || '-'
+                                    teamMatch.awayPrediction.prediction?.predicted_at
+                                       ? teamMatch.awayPrediction.prediction.away + ' : ' + teamMatch.awayPrediction.prediction.away
+                                       : '-'
                                  }}</span>
                                  <small class="d-sm-none">{{
-                                    getPredictionDetails(teamMatch, teamTeamMatch.away_team_id).prediction?.short || '-'
+                                    teamMatch.awayPrediction.prediction?.predicted_at
+                                       ? teamMatch.awayPrediction.prediction.away + ':' + teamMatch.awayPrediction.prediction.away
+                                       : '-'
                                  }}</small>
                               </td>
                            </tr>
-                           <tr *ngIf="isTeamMatchPredictable(teamMatch)" class="text-center bg-transparent">
+                           <tr *ngIf="!teamMatch.teamMatch.are_predictions_viewable" class="text-center bg-transparent">
                               <td colspan="2" class="text-muted border-0">
                                  <span class="d-none d-sm-inline">Приховано</span>
                                  <i class="fa fa-question-circle" aria-hidden="true"></i>

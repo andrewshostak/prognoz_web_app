@@ -40,6 +40,7 @@ export class SettingsService {
       'v2/team/participants',
       'v2/team/teams',
       'v2/team/team-matches',
+      'v2/team/predictions',
       'v2/team/stages',
       'v2/team/stage-types',
       'v2/users',
@@ -72,7 +73,7 @@ export class SettingsService {
 
       teamMatches: 20,
       teamParticipants: 10,
-      teamPredictions: 10,
+      teamPredictions: 24,
       teamStages: 40,
       teamTeamMatches: 16,
       teamTeams: 50,

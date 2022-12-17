@@ -1,7 +1,10 @@
 import { Injectable } from '@angular/core';
 
+import { MatchState } from '@enums/match-state.enum';
+import { TeamMatchNew } from '@models/new/team-match-new.model';
 import { TeamNew } from '@models/new/team-new.model';
 import { TeamParticipantNew } from '@models/new/team-participant-new.model';
+import { TeamPredictionNew } from '@models/new/team-prediction-new.model';
 import { DeviceService } from '@services/device.service';
 import { TeamNewService } from '@services/new/team-new.service';
 import { TeamParticipantNewService } from '@services/new/team-participant-new.service';
@@ -26,7 +29,34 @@ export class TeamCompetitionNewService {
             mergeMap(() => this.createTeamCaptainRequest(team, competitionId)),
             mergeMap((teamParticipant: TeamParticipantNew) => this.makeTeamParticipantConfirmedRequest(teamParticipant))
          )
-         .subscribe(() => callbacks.successful(), () => callbacks.error());
+         .subscribe(
+            () => callbacks.successful(),
+            () => callbacks.error()
+         );
+   }
+
+   public static isTeamMatchGuessed(teamMatch: TeamMatchNew, prediction: TeamPredictionNew): boolean {
+      if (teamMatch.match.state !== MatchState.Ended) {
+         return false;
+      }
+
+      if (!prediction) {
+         return false;
+      }
+
+      return teamMatch.match.home === prediction.home && teamMatch.match.away === prediction.away;
+   }
+
+   public static isTeamMatchBlocked(teamMatch: TeamMatchNew, prediction: TeamPredictionNew): boolean {
+      if (teamMatch.match.state !== MatchState.Ended) {
+         return false;
+      }
+
+      if (!prediction) {
+         return false;
+      }
+
+      return !!prediction.blocked_by;
    }
 
    private createTeamCaptainRequest(team: TeamNew, competitionId: number): Observable<TeamParticipantNew> {

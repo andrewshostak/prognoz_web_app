@@ -9,4 +9,5 @@ export class TeamMatchSearch {
    public sequence?: Sequence;
    public states?: MatchState[];
    public teamStageId?: number;
+   public showPredictionsViewability?: boolean;
 }
