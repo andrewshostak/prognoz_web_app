@@ -49,6 +49,7 @@ import { PaginationService } from '@services/pagination.service';
 import { PusherService } from '@services/pusher.service';
 import { SettingsService } from '@services/settings.service';
 import { TeamMatchService } from '@services/team/team-match.service';
+import { TeamPredictionNewService } from '@services/new/team-prediction-new.service';
 import { TeamPredictionService } from '@services/team/team-prediction.service';
 import { TeamRatingUserNewService } from '@services/new/team-rating-user-new.service';
 import { TeamRatingNewService } from '@services/new/team-rating-new.service';
@@ -102,6 +103,7 @@ import { UtilsService } from '@services/utils.service';
       TeamMatchService,
       TeamNewService,
       TeamParticipantNewService,
+      TeamPredictionNewService,
       TeamPredictionService,
       TeamRatingNewService,
       TeamRatingUserNewService,

@@ -13,6 +13,7 @@ export class TeamMatchNew {
    public predictions: number;
    public updated_at: string;
 
+   public are_predictions_viewable?: boolean;
    public match?: Match;
    public team_stages?: TeamStageNew[];
 }

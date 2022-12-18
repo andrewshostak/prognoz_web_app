@@ -1,7 +1,8 @@
 /* tslint:disable:variable-name */
+import { TeamTeamMatchState } from '@enums/team-team-match-state.enum';
 import { TeamNew } from '@models/new/team-new.model';
 import { TeamStageNew } from '@models/new/team-stage-new.model';
-import { TeamTeamMatchState } from '@enums/team-team-match-state.enum';
+import { UserNew } from '@models/new/user-new.model';
 
 export class TeamTeamMatchNew {
    id: number;
@@ -24,4 +25,6 @@ export class TeamTeamMatchNew {
    home_team?: TeamNew;
    away_team?: TeamNew;
    team_stage?: TeamStageNew;
+   away_team_goalkeeper?: UserNew;
+   home_team_goalkeeper?: UserNew;
 }
