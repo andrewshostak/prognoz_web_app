@@ -14,6 +14,10 @@ export class CupStageNewService {
 
    constructor(private httpClient: HttpClient) {}
 
+   public deleteCupStage(cupStageId: number): Observable<void> {
+      return this.httpClient.delete<void>(`${this.cupStagesUrl}/${cupStageId}`);
+   }
+
    public getCupStage(cupStageId: number, relations: string[] = []): Observable<CupStageNew> {
       const params = new HttpParams({ fromObject: { 'relations[]': relations } });
       return this.httpClient

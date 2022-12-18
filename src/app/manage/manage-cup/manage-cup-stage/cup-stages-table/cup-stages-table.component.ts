@@ -39,20 +39,14 @@ export class CupStagesTableComponent implements OnInit, OnDestroy {
    ) {}
 
    public deleteCupStage(): void {
-      this.cupStageService.deleteCupStage(this.openedModal.data.id).subscribe(
+      this.cupStageNewService.deleteCupStage(this.openedModal.data.id).subscribe(
          () => {
             remove(this.cupStages, this.openedModal.data);
             this.paginationData.total--;
             this.notificationsService.success('Успішно', `Кубкову стадію ${this.openedModal.data.title} видалено`);
             this.openedModal.reference.close();
          },
-         errors => {
-            this.openedModal.reference.close();
-            // todo: remove after migrating to v2 endpoint
-            for (const error of errors) {
-               this.notificationsService.error('Помилка', error);
-            }
-         }
+         () => this.openedModal.reference.close()
       );
    }
 

@@ -25,8 +25,4 @@ export class CupStageService {
          catchError(this.errorHandlerService.handle)
       );
    }
-
-   public deleteCupStage(cupStageId: number): Observable<void> {
-      return this.headersWithToken.delete(`${this.cupStageUrl}/${cupStageId}`).pipe(catchError(this.errorHandlerService.handle));
-   }
 }
