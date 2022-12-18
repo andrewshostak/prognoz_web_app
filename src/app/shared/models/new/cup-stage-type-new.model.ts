@@ -1,3 +1,7 @@
+/* tslint:disable:variable-name */
 export class CupStageTypeNew {
-   public title: string;
+   title: string;
+   home_minutes: number;
+   away_minutes: number;
+   coefficient: number;
 }

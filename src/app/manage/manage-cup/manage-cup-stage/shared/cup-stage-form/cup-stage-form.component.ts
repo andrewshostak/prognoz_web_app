@@ -12,8 +12,8 @@ import { CompetitionNewService } from '@services/new/competition-new.service';
 import { CompetitionSearch } from '@models/search/competition-search.model';
 import { CupStage } from '@models/cup/cup-stage.model';
 import { CupStageService } from '@services/cup/cup-stage.service';
-import { CupStageType } from '@models/cup/cup-stage-type.model';
-import { CupStageTypeService } from '@services/cup/cup-stage-type.service';
+import { CupStageTypeNew } from '@models/new/cup-stage-type-new.model';
+import { CupStageTypeNewService } from '@services/new/cup-stage-type-new.service';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { NotificationsService } from 'angular2-notifications';
 import { UtilsService } from '@services/utils.service';
@@ -31,7 +31,7 @@ export class CupStageFormComponent implements OnChanges, OnInit {
       private competitionService: CompetitionNewService,
       private cupMatchService: CupMatchNewService,
       private cupStageService: CupStageService,
-      private cupStageTypeService: CupStageTypeService,
+      private cupStageTypeService: CupStageTypeNewService,
       private location: Location,
       private ngbModalService: NgbModal,
       private notificationsService: NotificationsService
@@ -42,10 +42,9 @@ export class CupStageFormComponent implements OnChanges, OnInit {
    competitions: CompetitionNew[];
    cupMatches: CupMatchNew[];
    cupStageForm: FormGroup;
-   cupStageTypes: CupStageType[];
+   cupStageTypes: CupStageTypeNew[];
    confirmModalMessage: string;
    confirmModalSubmit: (event) => void;
-   errorCupStageTypes: string;
    openedModalReference: NgbModalRef;
 
    get cupMatchesFormArray(): FormArray {
@@ -188,14 +187,7 @@ export class CupStageFormComponent implements OnChanges, OnInit {
    }
 
    private getCupStageTypesData(): void {
-      this.cupStageTypeService.getCupStageTypes().subscribe(
-         response => {
-            this.cupStageTypes = response;
-         },
-         error => {
-            this.errorCupStageTypes = error;
-         }
-      );
+      this.cupStageTypeService.getCupStageTypes().subscribe(response => (this.cupStageTypes = response.data));
    }
 
    private updateCupStage(cupStage: any): void {

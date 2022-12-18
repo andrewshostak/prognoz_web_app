@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { TitleService } from '@services/title.service';
 
-import { CupStageType } from '@models/cup/cup-stage-type.model';
-import { CupStageTypeService } from '@services/cup/cup-stage-type.service';
+import { CupStageTypeNew } from '@models/new/cup-stage-type-new.model';
+import { CupStageTypeNewService } from '@services/new/cup-stage-type-new.service';
 import { sortBy } from 'lodash';
 
 @Component({
@@ -11,20 +11,14 @@ import { sortBy } from 'lodash';
    styleUrls: ['./cup-rules.component.scss']
 })
 export class CupRulesComponent implements OnInit {
-   constructor(private cupStageTypeService: CupStageTypeService, private titleService: TitleService) {}
+   constructor(private cupStageTypeService: CupStageTypeNewService, private titleService: TitleService) {}
 
-   cupStageTypes: CupStageType[];
-   errorCupStageTypes: string;
+   cupStageTypes: CupStageTypeNew[];
 
    ngOnInit() {
       this.titleService.setTitle('Правила конкурсу - Кубок');
-      this.cupStageTypeService.getCupStageTypes().subscribe(
-         response => {
-            this.cupStageTypes = sortBy(response, ['coefficient', 'title']);
-         },
-         error => {
-            this.errorCupStageTypes = error;
-         }
-      );
+      this.cupStageTypeService
+         .getCupStageTypes()
+         .subscribe(response => (this.cupStageTypes = sortBy(response.data, ['coefficient', 'title'])));
    }
 }
