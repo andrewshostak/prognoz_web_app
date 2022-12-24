@@ -29,6 +29,10 @@ export class ChampionshipRatingNewService {
          params = params.set('page', search.page.toString());
       }
 
+      if (search.userId) {
+         params = params.set('user_id', search.userId.toString());
+      }
+
       if (search.orderBy && search.sequence) {
          params = params.set('order_by', search.orderBy);
          params = params.set('sequence', search.sequence);
