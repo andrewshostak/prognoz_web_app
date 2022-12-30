@@ -86,7 +86,7 @@ export class TeamTeamMatchCardComponent {
          mergeMap(teamMatchesResponse => {
             const teamMatchIds = this.getIdsWithViewablePredictions(teamMatchesResponse.data);
             if (!teamMatchIds.length) {
-               return of({ teamTeamMatch, teamMatches: [], teamPredictions: [] });
+               return of({ teamTeamMatch, teamMatches: teamMatchesResponse.data, teamPredictions: [] });
             }
             const teamIds = [teamTeamMatch.home_team_id, teamTeamMatch.away_team_id];
             return this.getTeamPredictions(teamIds, teamMatchIds).pipe(
