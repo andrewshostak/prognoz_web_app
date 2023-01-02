@@ -13,6 +13,7 @@ export class UserNew {
 
    public roles?: Role[];
    public clubs?: ClubNew[];
+   public main_club?: ClubNew[];
    // todo: temporary, until new model created
    public winners?: Win[];
 }

@@ -10,47 +10,39 @@ import { environment } from '@env';
 
 @Injectable()
 export class CupRatingService {
-    constructor(private errorHandlerService: ErrorHandlerService, private httpClient: HttpClient) {}
+   constructor(private errorHandlerService: ErrorHandlerService, private httpClient: HttpClient) {}
 
-    private cupRatingUrl = environment.apiUrl + 'cup/rating';
+   private cupRatingUrl = environment.apiUrl + 'cup/rating';
 
-    /**
-     * Get summary cup rating
-     * @returns {Observable<CupRating[]>}
-     */
-    getCupRating(): Observable<CupRating[]> {
-        return this.httpClient.get<CupRating[]>(this.cupRatingUrl).pipe(catchError(this.errorHandlerService.handle));
-    }
+   /**
+    * Get user cup rating
+    * @param {number} userId
+    * @returns {Observable<CupRating>}
+    */
+   getCupRatingUser(userId: number): Observable<CupRating> {
+      return this.httpClient.get<CupRating>(`${this.cupRatingUrl}/${userId}`).pipe(catchError(this.errorHandlerService.handle));
+   }
 
-    /**
-     * Get user cup rating
-     * @param {number} userId
-     * @returns {Observable<CupRating>}
-     */
-    getCupRatingUser(userId: number): Observable<CupRating> {
-        return this.httpClient.get<CupRating>(`${this.cupRatingUrl}/${userId}`).pipe(catchError(this.errorHandlerService.handle));
-    }
+   /**
+    * Get group rating
+    * @param {number} competitionId
+    * @param {number} groupNumber
+    * @returns {Observable<CupRatingGroup[]>}
+    */
+   getCupRatingGroup(competitionId: number, groupNumber: number): Observable<CupRatingGroup[]> {
+      return this.httpClient
+         .get<CupRatingGroup[]>(`${environment.apiUrl}cup/${competitionId}/rating-group/${groupNumber}`)
+         .pipe(catchError(this.errorHandlerService.handle));
+   }
 
-    /**
-     * Get group rating
-     * @param {number} competitionId
-     * @param {number} groupNumber
-     * @returns {Observable<CupRatingGroup[]>}
-     */
-    getCupRatingGroup(competitionId: number, groupNumber: number): Observable<CupRatingGroup[]> {
-        return this.httpClient
-            .get<CupRatingGroup[]>(`${environment.apiUrl}cup/${competitionId}/rating-group/${groupNumber}`)
-            .pipe(catchError(this.errorHandlerService.handle));
-    }
-
-    /**
-     * Get list of groups
-     * @param {number} competitionId
-     * @returns {Observable<string[]>}
-     */
-    getCupRatingGroups(competitionId: number): Observable<number[]> {
-        return this.httpClient
-            .get<number[]>(`${environment.apiUrl}cup/${competitionId}/rating-group`)
-            .pipe(catchError(this.errorHandlerService.handle));
-    }
+   /**
+    * Get list of groups
+    * @param {number} competitionId
+    * @returns {Observable<string[]>}
+    */
+   getCupRatingGroups(competitionId: number): Observable<number[]> {
+      return this.httpClient
+         .get<number[]>(`${environment.apiUrl}cup/${competitionId}/rating-group`)
+         .pipe(catchError(this.errorHandlerService.handle));
+   }
 }

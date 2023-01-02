@@ -1,4 +1,3 @@
-<app-error *ngIf="errorCupRating" [message]="errorCupRating"></app-error>
 <div *ngIf="cupRating" class="card">
    <div class="table-responsive shadow">
       <table class="table table-striped table-bordered table-hover table-sm m-0">
@@ -7,27 +6,19 @@
                <th class="text-center align-middle">№</th>
                <th class="text-center align-middle" title="Улюблена команда"><i class="fa fa-shield" aria-hidden="true"></i><br /></th>
                <th title="Ім'я гравця" class="align-middle">Ім'я</th>
-               <th class="text-center">
-                  {{ beforePreviousSeason ? beforePreviousSeason.title : '' }}
-                  <small class="text-muted text-nowrap">(Рейтинг * {{ cupRating[0].before_previous_coefficient }})</small>
-               </th>
-               <th class="text-center">
-                  {{ previousSeason ? previousSeason.title : '' }}
-                  <small class="text-muted text-nowrap">(Рейтинг * {{ cupRating[0].previous_coefficient }})</small>
-               </th>
-               <th class="text-center">
-                  {{ activeSeason ? activeSeason.title : '' }}
-                  <small class="text-muted text-nowrap">(Рейтинг * {{ cupRating[0].active_coefficient }})</small>
+               <th *ngFor="let season of seasons | keyvalue" class="text-center">
+                  {{ season.value.title }}
+                  <small class="text-muted text-nowrap">(Рейтинг * {{ season.value.coefficient }})</small>
                </th>
                <th title="Сума очок за три сезони" class="text-center align-middle">Сума</th>
             </tr>
          </thead>
          <tbody>
             <tr
-               *ngFor="let cupRatingItem of cupRating; let i = index"
+               *ngFor="let cupRatingItem of cupRatingForTemplate; let i = index"
                class="cursor-pointer"
                [ngClass]="{ 'table-active': authenticatedUser && cupRatingItem.user_id === authenticatedUser.id }"
-               [routerLink]="cupRatingItem.user_id"
+               [routerLink]="[cupRatingItem.user_id]"
             >
                <th scope="row" class="text-center">{{ i + 1 }}.</th>
                <td class="text-center p-1">
@@ -38,37 +29,20 @@
                   {{ cupRatingItem.user.hometown ? '(' + cupRatingItem.user.hometown + ')' : '' }}
                </td>
                <td
+                  *ngFor="let season of seasons | keyvalue"
                   class="text-center text-muted"
                   [ngClass]="{
-                     'table-secondary': !cupRatingItem.before_previous_season_points,
-                     'table-danger': cupRatingItem.before_previous_season_points < 0
+                     'table-secondary': !cupRatingItem.season_points[season.key],
+                     'table-danger': cupRatingItem.season_points[season.key] < 0
                   }"
                >
-                  <small>{{ cupRatingItem.before_previous_season_points }}</small>
-               </td>
-               <td
-                  class="text-center text-muted"
-                  [ngClass]="{
-                     'table-secondary': !cupRatingItem.previous_season_points,
-                     'table-danger': cupRatingItem.previous_season_points < 0
-                  }"
-               >
-                  <small>{{ cupRatingItem.previous_season_points }}</small>
-               </td>
-               <td
-                  class="text-center text-muted"
-                  [ngClass]="{
-                     'table-secondary': !cupRatingItem.active_season_points,
-                     'table-danger': cupRatingItem.active_season_points < 0
-                  }"
-               >
-                  <small>{{ cupRatingItem.active_season_points }}</small>
+                  <small>{{ cupRatingItem.season_points[season.key] || 0 }}</small>
                </td>
                <td
                   class="text-center"
-                  [ngClass]="{ 'table-secondary': !cupRatingItem.points_summary, 'table-danger': cupRatingItem.points_summary < 0 }"
+                  [ngClass]="{ 'table-secondary': !cupRatingItem.points_calculated, 'table-danger': cupRatingItem.points_calculated < 0 }"
                >
-                  <strong>{{ cupRatingItem.points_summary }}</strong>
+                  <strong>{{ cupRatingItem.points_calculated }}</strong>
                </td>
             </tr>
          </tbody>

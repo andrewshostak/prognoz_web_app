@@ -1,8 +1,7 @@
 import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 
-import { SeasonState } from '@enums/season-state.enum';
-import { CupRating } from '@models/cup/cup-rating.model';
-import { SeasonNew } from '@models/new/season-new.model';
+import { CupRatingCalculatedNew } from '@models/new/cup-rating-calculated-new.model';
+import { UserNew } from '@models/new/user-new.model';
 import { User } from '@models/user.model';
 
 @Component({
@@ -11,32 +10,43 @@ import { User } from '@models/user.model';
    styleUrls: ['./cup-rating-table.component.scss']
 })
 export class CupRatingTableComponent implements OnChanges {
-   @Input() public cupRating: CupRating[];
-   @Input() public errorCupRating: string;
+   @Input() public cupRating: CupRatingCalculatedNew[];
    @Input() public authenticatedUser: User;
-   @Input() public seasons: SeasonNew[];
 
-   public activeSeason: SeasonNew;
-   public beforePreviousSeason: SeasonNew;
-   public previousSeason: SeasonNew;
+   seasons: { [id: number]: { title: string; coefficient: number } } = {};
+   cupRatingForTemplate: {
+      season_points: { [seasonId: number]: number };
+      points_calculated: number;
+      user: UserNew;
+      user_id: number;
+   }[] = [];
 
-   public ngOnChanges(changes: SimpleChanges) {
-      for (const propName of Object.keys(changes)) {
-         if (!changes[propName].firstChange && propName === 'seasons') {
-            const seasonIds: number[] = [];
-            changes[propName].currentValue.forEach((season: SeasonNew) => {
-               if (season.state === SeasonState.Active) {
-                  this.activeSeason = season;
-                  seasonIds.push(season.id);
-               } else if (this.activeSeason && !this.previousSeason) {
-                  this.previousSeason = season;
-                  seasonIds.push(season.id);
-               } else if (this.previousSeason && !this.beforePreviousSeason) {
-                  this.beforePreviousSeason = season;
-                  seasonIds.push(season.id);
-               }
+   ngOnChanges(changes: SimpleChanges) {
+      if (changes.cupRating && changes.cupRating.currentValue) {
+         this.prepareViewData(changes.cupRating.currentValue as CupRatingCalculatedNew[]);
+      }
+   }
+
+   private prepareViewData(cupRatingCalculated: CupRatingCalculatedNew[]): void {
+      let maxSeasonsLength = 0;
+      cupRatingCalculated.forEach(cupRatingCalculatedItem => {
+         if (cupRatingCalculatedItem.rating_items.length > maxSeasonsLength) {
+            maxSeasonsLength = cupRatingCalculatedItem.rating_items.length;
+
+            cupRatingCalculatedItem.rating_items.forEach(cupRatingItem => {
+               this.seasons[cupRatingItem.season.id] = { title: cupRatingItem.season.title, coefficient: cupRatingItem.season.coefficient };
             });
          }
-      }
+
+         this.cupRatingForTemplate.push({
+            points_calculated: parseFloat(cupRatingCalculatedItem.points_calculated.toFixed(3)),
+            user: cupRatingCalculatedItem.user,
+            user_id: cupRatingCalculatedItem.user_id,
+            season_points: cupRatingCalculatedItem.rating_items.reduce((acc, obj) => {
+               acc[obj.season_id] = obj.points;
+               return acc;
+            }, {})
+         });
+      });
    }
 }
