@@ -43,7 +43,7 @@ export class CupRatingTableComponent implements OnChanges {
             user: cupRatingCalculatedItem.user,
             user_id: cupRatingCalculatedItem.user_id,
             season_points: cupRatingCalculatedItem.rating_items.reduce((acc, obj) => {
-               acc[obj.season_id] = obj.points;
+               acc[obj.season_id] = parseFloat((obj.points * this.seasons[obj.season_id].coefficient).toFixed(3));
                return acc;
             }, {})
          });
