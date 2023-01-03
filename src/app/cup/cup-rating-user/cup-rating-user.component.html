@@ -1,7 +1,7 @@
 <div *ngIf="cupRating">
    <app-cup-rating-seasons-summary [cupRating]="cupRating"> </app-cup-rating-seasons-summary>
-   <app-cup-rating-season-details [cupRating]="cupRating.active_season"> </app-cup-rating-season-details>
-   <app-cup-rating-season-details [cupRating]="cupRating.previous_season"> </app-cup-rating-season-details>
-   <app-cup-rating-season-details [cupRating]="cupRating.before_previous_season"> </app-cup-rating-season-details>
+   <ng-container *ngIf="cupRating">
+      <app-cup-rating-season-details *ngFor="let ratingItem of cupRating.rating_items" [cupRating]="ratingItem">
+      </app-cup-rating-season-details>
+   </ng-container>
 </div>
-<app-error *ngIf="errorCupRating" [message]="errorCupRating"></app-error>

@@ -7,7 +7,7 @@
                <th class="text-center align-middle" title="Улюблена команда"><i class="fa fa-shield" aria-hidden="true"></i><br /></th>
                <th title="Ім'я гравця" class="align-middle">Ім'я</th>
                <th *ngFor="let season of seasons | keyvalue" class="text-center">
-                  {{ season.value.title }}
+                  <div>{{ season.value.title }}</div>
                   <small class="text-muted text-nowrap">(Рейтинг * {{ season.value.coefficient }})</small>
                </th>
                <th title="Сума очок за три сезони" class="text-center align-middle">Сума</th>

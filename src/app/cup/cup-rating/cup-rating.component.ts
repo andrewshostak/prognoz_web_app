@@ -28,6 +28,6 @@ export class CupRatingComponent implements OnInit {
    }
 
    private getCupRatingData(): void {
-      this.cupRatingService.getCupRating({}).subscribe(response => (this.cupRating = response.data));
+      this.cupRatingService.getCupRating({ relations: ['user.mainClub'] }).subscribe(response => (this.cupRating = response.data));
    }
 }

@@ -20,6 +20,12 @@ export class CupRatingNewService {
          params = params.set('user_id', search.userId.toString());
       }
 
+      if (search.relations) {
+         search.relations.forEach(relation => {
+            params = params.append('relations[]', relation);
+         });
+      }
+
       return this.httpClient.get<PaginatedResponse<CupRatingCalculatedNew>>(this.cupRatingUrl, { params });
    }
 }

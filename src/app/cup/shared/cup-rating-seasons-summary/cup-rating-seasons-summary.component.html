@@ -16,7 +16,7 @@
          <table class="table table-bordered">
             <tr>
                <td>Підсумкова кількість очок</td>
-               <td class="text-center">{{ cupRating.points_summary }}</td>
+               <td class="text-center">{{ cupRating.points_calculated }}</td>
             </tr>
             <tr>
                <td>Забиті : Пропущені</td>
@@ -42,8 +42,8 @@
             [labels]="winDrawLossChartLabels"
             [options]="winDrawLossChartOptions"
             [colors]="winDrawLossChartColors"
-            [legend]="winDrawLossChartLegend"
-            [chartType]="winDrawLossChartType"
+            [legend]="true"
+            [chartType]="'bar'"
          >
          </canvas>
       </div>

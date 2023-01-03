@@ -1,6 +1,11 @@
 import { Component, Input, OnInit, OnChanges, SimpleChanges } from '@angular/core';
 
-import { CupRating } from '@models/cup/cup-rating.model';
+import { CupRatingCalculatedNew } from '@models/new/cup-rating-calculated-new.model';
+import { CupRatingNew } from '@models/new/cup-rating-new.model';
+import { ChartDataSets, ChartOptions } from 'chart.js';
+import { cloneDeep } from 'lodash';
+import { Color } from 'ng2-charts/lib/color';
+import { Label } from 'ng2-charts/lib/base-chart.directive';
 
 @Component({
    selector: 'app-cup-rating-seasons-summary',
@@ -8,63 +13,42 @@ import { CupRating } from '@models/cup/cup-rating.model';
    styleUrls: ['./cup-rating-seasons-summary.component.scss']
 })
 export class CupRatingSeasonsSummaryComponent implements OnInit, OnChanges {
-   @Input() cupRating: CupRating;
+   @Input() cupRating: CupRatingCalculatedNew;
 
-   winDrawLossChartColors: any[];
-   winDrawLossChartData: any[];
-   winDrawLossChartLabels: string[];
-   winDrawLossChartLegend: boolean;
-   winDrawLossChartOptions: any;
-   winDrawLossChartType: string;
+   winDrawLossChartColors: Color[];
+   winDrawLossChartData: ChartDataSets[];
+   winDrawLossChartLabels: Label[];
+   winDrawLossChartOptions: ChartOptions;
 
    ngOnChanges(simpleChanges: SimpleChanges) {
       for (const propName in simpleChanges) {
          if (propName === 'cupRating' && simpleChanges[propName].currentValue) {
-            const cupRating = simpleChanges[propName].currentValue;
+            const cupRating = cloneDeep(simpleChanges[propName].currentValue) as CupRatingCalculatedNew;
             this.winDrawLossChartLabels = [];
             this.winDrawLossChartData = [
                { data: [], label: 'Виграші' },
                { data: [], label: 'Нічиї' },
                { data: [], label: 'Програші' }
             ];
-            if (cupRating.before_previous_season) {
-               this.winDrawLossChartLabels.push(cupRating.before_previous_season.season.title);
-               this.winDrawLossChartData[0].data.push(cupRating.before_previous_season.win);
-               this.winDrawLossChartData[1].data.push(cupRating.before_previous_season.draw);
-               this.winDrawLossChartData[2].data.push(cupRating.before_previous_season.loss);
-            }
-            if (cupRating.previous_season) {
-               this.winDrawLossChartLabels.push(cupRating.previous_season.season.title);
-               this.winDrawLossChartData[0].data.push(cupRating.previous_season.win);
-               this.winDrawLossChartData[1].data.push(cupRating.previous_season.draw);
-               this.winDrawLossChartData[2].data.push(cupRating.previous_season.loss);
-            }
-            if (cupRating.active_season) {
-               this.winDrawLossChartLabels.push(cupRating.active_season.season.title);
-               this.winDrawLossChartData[0].data.push(cupRating.active_season.win);
-               this.winDrawLossChartData[1].data.push(cupRating.active_season.draw);
-               this.winDrawLossChartData[2].data.push(cupRating.active_season.loss);
-            }
+            cupRating.rating_items.sort(this.sortBySeasonFunc).forEach(ratingItem => {
+               this.winDrawLossChartLabels.push(ratingItem.season.title);
+               this.winDrawLossChartData[0].data.push(ratingItem.win);
+               this.winDrawLossChartData[1].data.push(ratingItem.draw);
+               this.winDrawLossChartData[2].data.push(ratingItem.loss);
+            });
          }
       }
    }
 
    ngOnInit() {
-      this.winDrawLossChartType = 'bar';
       this.winDrawLossChartColors = [{ backgroundColor: '#28a745' }, { backgroundColor: '#ffc107' }, { backgroundColor: '#dc3545' }];
-      this.winDrawLossChartLegend = true;
       this.winDrawLossChartOptions = {
          responsive: true,
-         scales: {
-            yAxes: [
-               {
-                  ticks: {
-                     beginAtZero: true,
-                     stepSize: 1
-                  }
-               }
-            ]
-         }
+         scales: { yAxes: [{ ticks: { beginAtZero: true, stepSize: 1 } }] }
       };
+   }
+
+   private sortBySeasonFunc(a: CupRatingNew, b: CupRatingNew): number {
+      return a.season.title < b.season.title ? -1 : 1;
    }
 }

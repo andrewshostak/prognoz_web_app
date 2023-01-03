@@ -6,7 +6,7 @@
             <tr>
                <td>Кількість очок</td>
                <td class="text-center">
-                  {{ cupRating.points }} <span class="text-muted">* {{ cupRating.coefficient }}</span>
+                  {{ cupRating.points }} <span class="text-muted">* {{ cupRating.season.coefficient }}</span>
                </td>
             </tr>
             <tr>
@@ -29,7 +29,7 @@
                   [labels]="winDrawLossChartLabels"
                   [options]="winDrawLossChartOptions"
                   [colors]="winDrawLossChartColors"
-                  [chartType]="winDrawLossChartType"
+                  [chartType]="'bar'"
                >
                </canvas>
             </div>
@@ -42,7 +42,7 @@
                   [data]="scoredMissedChartData"
                   [labels]="scoredMissedChartLabels"
                   [colors]="scoredMissedChartColors"
-                  [chartType]="scoredMissedChartType"
+                  [chartType]="'doughnut'"
                >
                </canvas>
             </div>

@@ -3,7 +3,6 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 import { catchError } from 'rxjs/operators';
-import { CupRating } from '@models/cup/cup-rating.model';
 import { CupRatingGroup } from '@models/cup/cup-rating-group.model';
 import { ErrorHandlerService } from '@services/error-handler.service';
 import { environment } from '@env';
@@ -11,17 +10,6 @@ import { environment } from '@env';
 @Injectable()
 export class CupRatingService {
    constructor(private errorHandlerService: ErrorHandlerService, private httpClient: HttpClient) {}
-
-   private cupRatingUrl = environment.apiUrl + 'cup/rating';
-
-   /**
-    * Get user cup rating
-    * @param {number} userId
-    * @returns {Observable<CupRating>}
-    */
-   getCupRatingUser(userId: number): Observable<CupRating> {
-      return this.httpClient.get<CupRating>(`${this.cupRatingUrl}/${userId}`).pipe(catchError(this.errorHandlerService.handle));
-   }
 
    /**
     * Get group rating
