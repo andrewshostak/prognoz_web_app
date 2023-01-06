@@ -5,6 +5,7 @@ import { CupRatingGroupTab } from '@enums/cup-rating-group-tab.enum';
 import { CupRatingGroup } from '@models/cup/cup-rating-group.model';
 import { CompetitionNew } from '@models/new/competition-new.model';
 import { CupRatingService } from '@services/cup/cup-rating.service';
+import { CupGroupNumberNewService } from '@services/new/cup-group-number-new.service';
 import { CompetitionNewService } from '@services/new/competition-new.service';
 import { TitleService } from '@services/title.service';
 import { UtilsService } from '@services/utils.service';
@@ -28,6 +29,7 @@ export class CupRatingGroupComponent implements OnInit {
    constructor(
       private activatedRoute: ActivatedRoute,
       private competitionService: CompetitionNewService,
+      private cupGroupNumberService: CupGroupNumberNewService,
       private cupRatingService: CupRatingService,
       private router: Router,
       private titleService: TitleService
@@ -105,6 +107,6 @@ export class CupRatingGroupComponent implements OnInit {
    }
 
    private getCupRatingGroupsData(competitionId: number): void {
-      this.cupRatingService.getCupRatingGroups(competitionId).subscribe(response => (this.groupNumbers = response));
+      this.cupGroupNumberService.getCupGroupMatches({ competitionId }).subscribe(response => (this.groupNumbers = response.data));
    }
 }

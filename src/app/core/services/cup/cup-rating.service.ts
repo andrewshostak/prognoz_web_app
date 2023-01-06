@@ -22,15 +22,4 @@ export class CupRatingService {
          .get<CupRatingGroup[]>(`${environment.apiUrl}cup/${competitionId}/rating-group/${groupNumber}`)
          .pipe(catchError(this.errorHandlerService.handle));
    }
-
-   /**
-    * Get list of groups
-    * @param {number} competitionId
-    * @returns {Observable<string[]>}
-    */
-   getCupRatingGroups(competitionId: number): Observable<number[]> {
-      return this.httpClient
-         .get<number[]>(`${environment.apiUrl}cup/${competitionId}/rating-group`)
-         .pipe(catchError(this.errorHandlerService.handle));
-   }
 }
