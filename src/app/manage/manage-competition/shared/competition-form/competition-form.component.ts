@@ -124,7 +124,7 @@ export class CompetitionFormComponent implements OnChanges, OnInit {
       const search: SeasonSearch = {
          limit: SettingsService.maxLimitValues.seasons,
          page: 1,
-         state: SeasonState.Active
+         states: [SeasonState.Active]
       };
       this.seasonService.getSeasons(search).subscribe(response => (this.seasons = response.data));
    }

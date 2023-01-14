@@ -6,5 +6,5 @@ export class SeasonSearch {
    public orderBy?: string;
    public page: number;
    public sequence?: Sequence;
-   public state?: SeasonState;
+   public states?: SeasonState[];
 }

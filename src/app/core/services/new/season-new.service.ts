@@ -33,24 +33,28 @@ export class SeasonNewService {
          params = params.set('sequence', search.sequence);
       }
 
-      if (search.state) {
-         params = params.append('state', search.state);
+      if (search.states) {
+         search.states.forEach(relation => {
+            params = params.append('states[]', relation);
+         });
       }
 
       const noSeasonsFilterParams = this.noSeasonsFilterParams(search);
       return this.seasons && noSeasonsFilterParams
          ? of({ data: this.seasons } as PaginatedResponse<SeasonNew>)
-         : this.httpClient.get<PaginatedResponse<SeasonNew>>(this.seasonsUrl, { params }).pipe(
-              tap(response => {
-                 if (noSeasonsFilterParams) {
-                    this.seasons = response.data;
-                 }
-              })
-           );
+         : this.httpClient
+              .get<PaginatedResponse<SeasonNew>>(this.seasonsUrl, { params })
+              .pipe(
+                 tap(response => {
+                    if (noSeasonsFilterParams) {
+                       this.seasons = response.data;
+                    }
+                 })
+              );
    }
 
    private noSeasonsFilterParams(search: SeasonSearch): boolean {
-      if (search.state) {
+      if (search.states && search.states.length) {
          return false;
       }
 
