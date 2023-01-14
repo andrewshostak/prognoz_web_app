@@ -2,11 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 
 import { CupRatingGroupTab } from '@enums/cup-rating-group-tab.enum';
-import { CupRatingGroup } from '@models/cup/cup-rating-group.model';
 import { CompetitionNew } from '@models/new/competition-new.model';
-import { CupRatingService } from '@services/cup/cup-rating.service';
-import { CupGroupNumberNewService } from '@services/new/cup-group-number-new.service';
+import { CupRatingGroupNew } from '@models/new/cup-rating-group-new.model';
+import { CupRatingGroupSearch } from '@models/search/cup-rating-group-search.model';
 import { CompetitionNewService } from '@services/new/competition-new.service';
+import { CupGroupNumberNewService } from '@services/new/cup-group-number-new.service';
+import { CupRatingNewService } from '@services/new/cup-rating-new.service';
 import { TitleService } from '@services/title.service';
 import { UtilsService } from '@services/utils.service';
 import { first, get, last } from 'lodash';
@@ -18,7 +19,7 @@ import { first, get, last } from 'lodash';
 })
 export class CupRatingGroupComponent implements OnInit {
    public competitionId: number;
-   public cupRatingGroup: CupRatingGroup[];
+   public cupRatingGroup: CupRatingGroupNew[];
    public getHomeCityInBrackets = UtilsService.getHomeCityInBrackets;
    public groupNumber: number;
    public groupNumbers: number[];
@@ -30,7 +31,7 @@ export class CupRatingGroupComponent implements OnInit {
       private activatedRoute: ActivatedRoute,
       private competitionService: CompetitionNewService,
       private cupGroupNumberService: CupGroupNumberNewService,
-      private cupRatingService: CupRatingService,
+      private cupRatingService: CupRatingNewService,
       private router: Router,
       private titleService: TitleService
    ) {}
@@ -103,7 +104,8 @@ export class CupRatingGroupComponent implements OnInit {
    }
 
    private getCupRatingGroupData(competitionId: number, groupNumber: number): void {
-      this.cupRatingService.getCupRatingGroup(competitionId, groupNumber).subscribe(response => (this.cupRatingGroup = response));
+      const search: CupRatingGroupSearch = { competitionId, groupNumber };
+      this.cupRatingService.getCupRatingGroup(search).subscribe(response => (this.cupRatingGroup = response.data));
    }
 
    private getCupRatingGroupsData(competitionId: number): void {
