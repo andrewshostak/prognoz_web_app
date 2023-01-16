@@ -15,7 +15,6 @@ export class NewsNewService {
 
    constructor(private httpClient: HttpClient) {}
 
-   // todo: add to postman collection
    public createNews(news: Partial<NewsNew>): Observable<NewsNew> {
       const body = news.image ? serialize(news, { booleansAsIntegers: true, nullsAsUndefineds: true }) : news;
       return this.httpClient.post<{ news: NewsNew }>(this.newsUrl, body).pipe(map(response => response.news));
@@ -65,7 +64,6 @@ export class NewsNewService {
          .pipe(map(response => response.news));
    }
 
-   // todo: add to postman collection
    public updateNews(newsId: number, news: Partial<NewsNew>): Observable<NewsNew> {
       const body = news.image ? serialize(news, { booleansAsIntegers: true, nullsAsUndefineds: true }) : news;
       return this.httpClient.post<{ news: NewsNew }>(`${this.newsUrl}/${newsId}`, body).pipe(map(response => response.news));
