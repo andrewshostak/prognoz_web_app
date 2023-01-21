@@ -1,136 +1,37 @@
 <div *ngIf="competitions">
-   <button (click)="getApplicationsAndCompetitions()" title="Оновити" class="btn btn-outline-secondary">
-      <i class="fa fa-refresh fa-fw" aria-hidden="true"></i>
-   </button>
-   <button *ngFor="let competition of competitions" class="btn btn-outline-primary m-1" type="button" (click)="onClick(competition)">
-      {{ competition.title }}
-   </button>
-   <div *ngFor="let competition of competitions">
-      <h4 [attr.id]="'competition-' + competition.id">
-         {{ competition.title }}
-         <button
-            *ngIf="hasAddApplicationAbility(competition)"
-            type="button"
-            class="btn btn-primary ml-2"
-            (click)="openApplicationModal(applicationModal, competition)"
-         >
-            Подати заявку
-         </button>
-      </h4>
-      <div class="card mb-2">
-         <div class="table-responsive shadow">
-            <table class="table table-bordered table-hover mb-0">
-               <thead class="thead-dark">
-                  <tr>
-                     <th>№</th>
-                     <th>Заявник</th>
-                     <th *ngIf="isFriendlyCompetition(competition)">Отримувач</th>
-                     <th *ngIf="isFriendlyCompetition(competition)">Місце</th>
-                     <th class="text-center">Статус</th>
-                     <th *ngIf="showPointsColumn(competition)" class="text-center" title="Рейтингові очки станом на початок змагання">
-                        <i class="fa fa-lock"></i> Очки
-                     </th>
-                     <th class="text-center">Змінити</th>
-                  </tr>
-               </thead>
-               <tbody>
-                  <tr *ngFor="let cupApplication of competition.cup_applications; let i = index">
-                     <th scope="row">{{ i + 1 }}.</th>
-                     <td class="text-nowrap">
-                        <app-user-logo [user]="cupApplication.applicant"></app-user-logo>
-                        {{ cupApplication.applicant.name }}
-                     </td>
-                     <td *ngIf="isFriendlyCompetition(competition)" class="text-nowrap">
-                        <app-user-logo *ngIf="cupApplication.receiver" [user]="cupApplication.receiver"></app-user-logo>
-                        {{ cupApplication.receiver?.name || 'Будь-хто' }}
-                     </td>
-                     <td *ngIf="isFriendlyCompetition(competition)" class="text-nowrap">
-                        {{ getPlaceTitle(cupApplication.place) }}
-                     </td>
-                     <td class="text-center">
-                        <div *ngIf="showActionButtons(competition, cupApplication); else statusBlock" class="text-nowrap">
-                           <button
-                              type="button"
-                              class="btn btn-sm btn-success"
-                              (click)="openAcceptApplicationConfirmModal(confirmModal, cupApplication)"
-                           >
-                              <i aria-hidden="true" class="fa fa-lg fa-check-circle-o"></i>
-                              Прийняти
-                           </button>
-                           <button
-                              *ngIf="showRefuseButton(cupApplication)"
-                              type="button"
-                              class="btn btn-sm btn-danger"
-                              (click)="openRefuseApplicationConfirmModal(confirmModal, cupApplication)"
-                           >
-                              <i aria-hidden="true" class="fa fa-lg fa-times-circle-o"></i>
-                              Відхилити
-                           </button>
-                        </div>
-                        <ng-template #statusBlock>
-                           <div *ngIf="!cupApplication.confirmed_at && !cupApplication.refused_at" title="Очікується">
-                              <strong class="text-info"
-                                 ><i aria-hidden="true" class="fa fa-lg fa-question-circle-o"></i>
-                                 <span class="d-none d-sm-inline">Очікується</span></strong
-                              >
-                           </div>
-                           <div *ngIf="cupApplication.confirmed_at && !cupApplication.refused_at" title="Підтверджено">
-                              <strong class="text-success"
-                                 ><i aria-hidden="true" class="fa fa-lg fa-check-circle-o"></i>
-                                 <span class="d-none d-sm-inline">Підтверджено</span></strong
-                              >
-                           </div>
-                           <div *ngIf="!cupApplication.confirmed_at && cupApplication.refused_at" title="Відхилено">
-                              <strong class="text-danger"
-                                 ><i aria-hidden="true" class="fa fa-lg fa-times-circle-o"></i>
-                                 <span class="d-none d-sm-inline">Відхилено</span></strong
-                              >
-                           </div>
-                        </ng-template>
-                     </td>
-                     <td *ngIf="showPointsColumn(competition)" class="text-center">
-                        {{ cupApplication.points }}
-                     </td>
-                     <td class="text-center">
-                        <div *ngIf="showEditAndDeleteButtons(competition, cupApplication); else noActionsblock" class="text-nowrap">
-                           <button
-                              *ngIf="isFriendlyCompetition(competition)"
-                              type="button"
-                              class="btn btn-sm btn-outline-primary"
-                              (click)="openApplicationModal(applicationModal, competition, cupApplication)"
-                           >
-                              <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
-                           </button>
-                           <button
-                              type="button"
-                              class="btn btn-sm btn-outline-danger"
-                              (click)="openDeleteApplicationConfirmModal(confirmModal, cupApplication, competition)"
-                           >
-                              <i class="fa fa-trash" aria-hidden="true"></i>
-                           </button>
-                        </div>
-                        <ng-template #noActionsblock>
-                           <button type="button" class="btn btn-sm btn-outline-secondary" disabled>
-                              <i class="fa fa-ban" aria-hidden="true"></i>
-                           </button>
-                        </ng-template>
-                     </td>
-                  </tr>
-               </tbody>
-            </table>
+   <ng-container>
+      <div class="d-block d-md-none">
+         <div class="btn-group btn-group-sm">
+            <ng-container [ngTemplateOutlet]="competitionsNavigation"></ng-container>
          </div>
       </div>
-   </div>
-</div>
-<ng-template #applicationModal let-c="close">
-   <app-cup-application-modal
-      [close]="c"
-      [competition]="selectedCompetitionForNewApplication"
-      [cupApplication]="selectedCupApplication"
-      (successfullySubmitted)="applicationModalSubmitted()"
+      <div class="d-none d-md-block">
+         <div class="btn-group">
+            <ng-container [ngTemplateOutlet]="competitionsNavigation"></ng-container>
+         </div>
+      </div>
+   </ng-container>
+   <app-cup-applications-friendly
+      *ngIf="isFriendlyCupCompetition(selectedCompetition); else defaultCompetition"
+      [cupApplications]="cupApplications"
+      [competition]="selectedCompetition"
    >
-   </app-cup-application-modal>
-</ng-template>
-<ng-template #confirmModal let-c="close">
-   <app-confirmation-modal [close]="c" [message]="confirmModalMessage" (confirmed)="confirmModalSubmit($event)"> </app-confirmation-modal>
+   </app-cup-applications-friendly>
+   <ng-template #defaultCompetition>
+      <app-cup-applications-default [cupApplications]="cupApplications" [competition]="selectedCompetition"> </app-cup-applications-default>
+   </ng-template>
+</div>
+<ng-template #competitionsNavigation>
+   <button
+      *ngFor="let competition of competitions"
+      (click)="onClick(competition)"
+      class="btn mb-2"
+      [ngClass]="competition.id === selectedCompetition.id ? 'btn-primary' : 'btn-outline-primary'"
+      type="button"
+   >
+      {{ competition.title }}
+   </button>
+   <button (click)="getApplicationsAndCompetitions()" title="Оновити" type="button" class="btn btn-outline-secondary mb-2">
+      <i class="fa fa-refresh fa-fw" aria-hidden="true"></i>
+   </button>
 </ng-template>

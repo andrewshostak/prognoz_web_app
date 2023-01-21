@@ -32,6 +32,11 @@ export class CompetitionNewService {
          params = params.set('page', search.page.toString());
       }
 
+      if (search.orderBy && search.sequence) {
+         params = params.set('order_by', search.orderBy);
+         params = params.set('sequence', search.sequence);
+      }
+
       if (search.tournamentId) {
          params = params.set('tournament_id', (search.tournamentId as unknown) as string);
       }

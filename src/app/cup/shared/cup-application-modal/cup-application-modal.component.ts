@@ -1,8 +1,8 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
 
-import { Competition } from '@models/competition.model';
-import { CupApplication } from '@models/cup/cup-application.model';
+import { CompetitionNew } from '@models/new/competition-new.model';
+import { CupApplicationNew } from '@models/new/cup-application-new.model';
 import { UserNew } from '@models/new/user-new.model';
 import { CupApplicationService } from '@services/cup/cup-application.service';
 import { DeviceService } from '@services/device.service';
@@ -21,9 +21,9 @@ import { catchError, mergeMap } from 'rxjs/operators';
 })
 export class CupApplicationModalComponent implements OnInit {
    @Input() public close: () => void;
-   @Input() public competition: Competition;
-   @Input() public cupApplication: Partial<CupApplication>;
-   @Output() public successfullySubmitted = new EventEmitter<void>();
+   @Input() public competition: CompetitionNew;
+   @Input() public cupApplication: Partial<CupApplicationNew>;
+   @Output() public successfullySubmitted = new EventEmitter<CupApplicationNew>();
 
    public anyUser = { id: null, name: 'Будь-хто' } as UserNew;
    public applicant: UserNew;
@@ -95,9 +95,9 @@ export class CupApplicationModalComponent implements OnInit {
             )
          )
          .subscribe(
-            () => {
+            response => {
                this.notificationsService.success('Успішно', 'Заявку створено');
-               this.successfullySubmitted.emit();
+               this.successfullySubmitted.emit((response.cup_application as any) as CupApplicationNew);
                this.spinnerButton = false;
             },
             errors => {
@@ -125,9 +125,9 @@ export class CupApplicationModalComponent implements OnInit {
 
    private updateCupApplication(): void {
       this.cupApplicationService.updateCupApplication(this.cupApplicationForm.getRawValue(), this.cupApplication.id).subscribe(
-         () => {
+         response => {
             this.notificationsService.success('Успішно', 'Заявку змінено');
-            this.successfullySubmitted.emit();
+            this.successfullySubmitted.emit((response.cup_application as any) as CupApplicationNew);
             this.spinnerButton = false;
          },
          errors => {

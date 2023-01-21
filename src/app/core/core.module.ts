@@ -16,6 +16,7 @@ import { ChampionshipRatingNewService } from '@services/new/championship-rating-
 import { ChampionshipService } from '@services/championship/championship.service';
 import { CompetitionService } from '@services/competition.service';
 import { CupApplicationService } from '@services/cup/cup-application.service';
+import { CupApplicationNewService } from '@services/new/cup-application-new.service';
 import { CupCupMatchService } from '@services/cup/cup-cup-match.service';
 import { CupGroupNumberNewService } from '@services/new/cup-group-number-new.service';
 import { CupMatchService } from '@services/cup/cup-match.service';
@@ -77,6 +78,7 @@ import { UtilsService } from '@services/utils.service';
       CompetitionService,
       CompetitionNewService,
       CupApplicationService,
+      CupApplicationNewService,
       CupCupMatchNewService,
       CupCupMatchService,
       CupGroupNumberNewService,

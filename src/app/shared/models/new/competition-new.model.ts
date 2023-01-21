@@ -11,6 +11,9 @@ export class CompetitionNew {
          relegation?: number;
          promotion?: number;
       };
+      cup?: {
+         is_friendly: boolean;
+      };
    };
    public first_playoff_stage: number;
    public id: number;

@@ -71,6 +71,7 @@ export class SettingsService {
       cupCupMatches: 48,
       cupMatches: 50,
       cupStages: 40,
+      cupApplications: 300,
 
       teamMatches: 20,
       teamParticipants: 10,

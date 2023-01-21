@@ -6,6 +6,8 @@ import { NgbModalModule, NgbTooltipModule } from '@ng-bootstrap/ng-bootstrap';
 import { ChartsModule } from 'ng2-charts';
 import { SharedModule } from '../shared/shared.module';
 import { CupApplicationsComponent } from './cup-applications/cup-applications.component';
+import { CupApplicationsDefaultComponent } from '@app/cup/shared/cup-applications-default/cup-applications-default.component';
+import { CupApplicationsFriendlyComponent } from '@app/cup/shared/cup-applications-friendly/cup-applications-friendly.component';
 import { CupCupMatchComponent } from './cup-cup-match/cup-cup-match.component';
 import { CupCupMatchesComponent } from './cup-cup-matches/cup-cup-matches.component';
 import { CupPredictionsComponent } from './cup-predictions/cup-predictions.component';
@@ -42,6 +44,8 @@ import { CupCupMatchesGroupRatingComponent } from './shared/cup-cup-matches-grou
       CupComponent,
       CupApplicationModalComponent,
       CupApplicationsComponent,
+      CupApplicationsDefaultComponent,
+      CupApplicationsFriendlyComponent,
       CupCupMatchesDefaultComponent,
       CupCupMatchesGroupComponent,
       CupCupMatchesTwoRoundsComponent,

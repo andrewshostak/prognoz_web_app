@@ -1,0 +1,174 @@
+<div *ngIf="isCreateButtonVisible" class="mb-2">
+   <button type="button" class="btn btn-primary" (click)="openApplicationModal(applicationModal)">
+      <i class="fa fa-plus"></i>
+      Подати заявку
+   </button>
+</div>
+<div class="card mb-2">
+   <table class="d-none d-sm-table table table-striped table-bordered table-hover mb-0">
+      <thead class="thead-dark">
+         <tr>
+            <th>№</th>
+            <th>Заявник</th>
+            <th>Статус</th>
+            <th *ngIf="isActiveOrEndedCompetition" class="text-right" title="Рейтингові очки станом на початок змагання">
+               <i class="fa fa-lock"></i> Очки
+            </th>
+            <th *ngIf="isActionColumnVisible" class="text-center">Дія</th>
+         </tr>
+      </thead>
+      <tbody>
+         <tr
+            *ngFor="let cupApplication of cupApplicationsView; let i = index"
+            [ngClass]="{
+               'table-secondary text-muted': cupApplication.state === cupApplicationState.Terminated,
+               'font-weight-bold': cupApplication.state === cupApplicationState.Active
+            }"
+         >
+            <th class="align-middle" scope="row">{{ i + 1 }}.</th>
+            <td class="align-middle text-nowrap">
+               <app-user-logo [user]="cupApplication.application.applicant"></app-user-logo>
+               {{ cupApplication.application.applicant.name }}
+            </td>
+            <td class="align-middle">
+               <div *ngIf="cupApplication.state === cupApplicationState.Opened" title="Створено">
+                  <div class="d-none d-lg-block">
+                     <strong class="text-info"
+                        ><i class="fa fa-lg fa-question-circle-o"></i>
+                        <span>Створено {{ cupApplication.application.created_at | time: 'DD MMMM HH:mm' }}</span></strong
+                     >
+                  </div>
+                  <div class="d-none d-sm-block d-lg-none text-info">
+                     <div>
+                        <strong><i class="fa fa-lg fa-question-circle-o"></i> Створено</strong>
+                     </div>
+                     <div>
+                        <strong>{{ cupApplication.application.created_at | time: 'DD MMMM HH:mm' }}</strong>
+                     </div>
+                  </div>
+               </div>
+               <div *ngIf="cupApplication.state === cupApplicationState.Active" title="Активний">
+                  <strong class="text-success"
+                     ><i class="fa fa-lg fa-check-circle-o"></i> <span class="d-none d-sm-inline">Активний</span></strong
+                  >
+               </div>
+               <div *ngIf="cupApplication.state === cupApplicationState.Terminated" title="Вибув">
+                  <div class="d-none d-lg-block">
+                     <i class="fa fa-lg fa-times-circle-o"></i>
+                     <span>Вибув {{ cupApplication.application.updated_at | time: 'DD MMMM HH:mm' }}</span>
+                  </div>
+                  <div class="d-none d-sm-block d-lg-none">
+                     <div><i class="fa fa-lg fa-times-circle-o"></i> Вибув</div>
+                     <div>
+                        {{ cupApplication.application.updated_at | time: 'DD MMMM HH:mm' }}
+                     </div>
+                  </div>
+               </div>
+            </td>
+            <td *ngIf="isActiveOrEndedCompetition" class="align-middle text-right">
+               {{ cupApplication.application.points }}
+            </td>
+            <td *ngIf="isActionColumnVisible" class="align-middle text-center">
+               <button
+                  *ngIf="cupApplication.showConfirmButton"
+                  type="button"
+                  class="btn btn-sm btn-success"
+                  (click)="openAcceptApplicationConfirmModal(confirmModal, cupApplication.application)"
+               >
+                  <i class="fa fa-lg fa-check-circle-o"></i>
+                  <span class="d-none d-lg-inline">Прийняти</span>
+               </button>
+               <button
+                  *ngIf="cupApplication.showDeleteButton"
+                  type="button"
+                  class="btn btn-sm btn-outline-danger"
+                  (click)="openDeleteApplicationConfirmModal(confirmModal, cupApplication.application)"
+               >
+                  <i class="fa fa-trash"></i>
+               </button>
+            </td>
+         </tr>
+      </tbody>
+   </table>
+   <table class="d-table d-sm-none table table-sm table-striped table-bordered table-hover mb-0">
+      <thead class="thead-dark">
+         <tr>
+            <th>№</th>
+            <th>Заявник і Статус</th>
+            <th *ngIf="isActiveOrEndedCompetition" class="text-right" title="Рейтингові очки станом на початок змагання">
+               <i class="fa fa-lock"></i> Очки
+            </th>
+            <th *ngIf="isActionColumnVisible" class="text-center">Дія</th>
+         </tr>
+      </thead>
+      <tbody>
+         <tr
+            *ngFor="let cupApplication of cupApplicationsView; let i = index"
+            [ngClass]="{
+               'table-secondary text-muted': cupApplication.state === cupApplicationState.Terminated,
+               'font-weight-bold': cupApplication.state === cupApplicationState.Active
+            }"
+         >
+            <th class="align-middle" scope="row">{{ i + 1 }}.</th>
+            <td class="align-middle text-nowrap pt-3 pb-3 pl-3">
+               <div class="pb-2">
+                  <app-user-logo [user]="cupApplication.application.applicant"></app-user-logo>
+                  {{ cupApplication.application.applicant.name }}
+               </div>
+               <div *ngIf="cupApplication.state === cupApplicationState.Opened" title="Створено" class="text-info">
+                  <div>
+                     <strong><i class="fa fa-lg fa-question-circle-o"></i> Створено</strong>
+                  </div>
+                  <div>
+                     <strong>{{ cupApplication.application.created_at | time: 'DD MMMM HH:mm' }}</strong>
+                  </div>
+               </div>
+               <div *ngIf="cupApplication.state === cupApplicationState.Active" title="Активний">
+                  <strong class="text-success"><i class="fa fa-lg fa-check-circle-o"></i> <span>Активний</span></strong>
+               </div>
+               <div *ngIf="cupApplication.state === cupApplicationState.Terminated" title="Вибув">
+                  <div><i class="fa fa-lg fa-times-circle-o"></i> Вибув</div>
+                  <div>
+                     {{ cupApplication.application.updated_at | time: 'DD MMMM HH:mm' }}
+                  </div>
+               </div>
+            </td>
+            <td *ngIf="isActiveOrEndedCompetition" class="align-middle text-right">
+               {{ cupApplication.application.points }}
+            </td>
+            <td *ngIf="isActionColumnVisible" class="align-middle text-center">
+               <button
+                  *ngIf="cupApplication.showConfirmButton"
+                  type="button"
+                  class="btn btn-sm btn-success"
+                  (click)="openAcceptApplicationConfirmModal(confirmModal, cupApplication.application)"
+               >
+                  <i class="fa fa-lg fa-check-circle-o"></i>
+                  <span class="d-none d-lg-inline">Прийняти</span>
+               </button>
+               <button
+                  *ngIf="cupApplication.showDeleteButton"
+                  type="button"
+                  class="btn btn-sm btn-outline-danger"
+                  (click)="openDeleteApplicationConfirmModal(confirmModal, cupApplication.application)"
+               >
+                  <i class="fa fa-trash"></i>
+               </button>
+            </td>
+         </tr>
+      </tbody>
+   </table>
+</div>
+<ng-template #confirmModal let-c="close">
+   <app-confirmation-modal [close]="c" [message]="openedModal.message" (confirmed)="openedModal.submitted($event)">
+   </app-confirmation-modal>
+</ng-template>
+<ng-template #applicationModal let-c="close">
+   <app-cup-application-modal
+      [close]="c"
+      [competition]="competition"
+      [cupApplication]="openedModal.data"
+      (successfullySubmitted)="applicationModalSubmitted($event)"
+   >
+   </app-cup-application-modal>
+</ng-template>
