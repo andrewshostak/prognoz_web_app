@@ -7,6 +7,7 @@ import { CupApplicationNew } from '@models/new/cup-application-new.model';
 import { CompetitionNew } from '@models/new/competition-new.model';
 import { UserNew } from '@models/new/user-new.model';
 import { CupApplicationService } from '@services/cup/cup-application.service';
+import { CupApplicationNewService } from '@services/new/cup-application-new.service';
 import { AuthNewService } from '@services/new/auth-new.service';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { NotificationsService } from 'angular2-notifications';
@@ -36,7 +37,8 @@ export class CupApplicationsDefaultComponent implements OnChanges, OnInit {
 
    constructor(
       private authService: AuthNewService,
-      private cupApplicationService: CupApplicationService,
+      private cupApplicationOldService: CupApplicationService,
+      private cupApplicationService: CupApplicationNewService,
       private ngbModalService: NgbModal,
       private notificationsService: NotificationsService
    ) {}
@@ -97,7 +99,7 @@ export class CupApplicationsDefaultComponent implements OnChanges, OnInit {
 
    private confirmApplication(cupApplication: CupApplicationNew): void {
       const updateRequestData = { confirmed: true, competition_id: cupApplication.competition_id };
-      this.cupApplicationService.updateCupApplication(updateRequestData, cupApplication.id).subscribe(
+      this.cupApplicationOldService.updateCupApplication(updateRequestData, cupApplication.id).subscribe(
          response => {
             this.openedModal.reference.close();
             this.notificationsService.success('Успішно', 'Заявку підтверджено');
@@ -138,10 +140,7 @@ export class CupApplicationsDefaultComponent implements OnChanges, OnInit {
             this.cupApplications = this.cupApplications.filter(application => application.id !== cupApplication.id);
             this.updateView();
          },
-         error => {
-            this.openedModal.reference.close();
-            this.notificationsService.error('Помилка', error);
-         }
+         () => this.openedModal.reference.close()
       );
    }
 

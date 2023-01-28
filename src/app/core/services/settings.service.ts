@@ -36,6 +36,7 @@ export class SettingsService {
       'v2/clubs',
       'v2/comments',
       'v2/competitions',
+      'v2/cup/applications',
       'v2/cup/matches',
       'v2/cup/predictions/my',
       'v2/cup/stages',

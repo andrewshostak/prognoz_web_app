@@ -13,6 +13,10 @@ export class CupApplicationNewService {
 
    constructor(private httpClient: HttpClient) {}
 
+   deleteCupApplication(cupApplicationId: number): Observable<void> {
+      return this.httpClient.delete<void>(`${this.cupApplicationsUrl}/${cupApplicationId}`);
+   }
+
    getCupApplications(search: CupApplicationSearch): Observable<PaginatedResponse<CupApplicationNew>> {
       let params: HttpParams = new HttpParams();
 

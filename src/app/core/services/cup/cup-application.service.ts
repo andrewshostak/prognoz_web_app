@@ -30,10 +30,4 @@ export class CupApplicationService {
       }
       return this.headersWithToken.post(this.cupApplicationUrl, cupApplication).pipe(catchError(this.errorHandlerService.handle));
    }
-
-   public deleteCupApplication(cupApplicationId: number): Observable<void> {
-      return this.headersWithToken
-         .delete(`${this.cupApplicationUrl}/${cupApplicationId}`)
-         .pipe(catchError(this.errorHandlerService.handle));
-   }
 }

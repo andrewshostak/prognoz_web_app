@@ -1,6 +1,6 @@
 import { CompetitionState } from '@enums/competition-state.enum';
 import { WinNew } from '@models/new/win-new.model';
-import { CupApplication } from '@models/cup/cup-application.model';
+import { CupApplicationNew } from '@models/new/cup-application-new.model';
 import { SeasonNew } from '@models/new/season-new.model';
 import { TournamentNew } from '@models/new/tournament-new.model';
 
@@ -35,7 +35,7 @@ export class CompetitionNew {
    };
 
    public winners?: WinNew[];
-   public cup_applications?: CupApplication[];
+   public cup_applications?: CupApplicationNew[];
    public season?: SeasonNew;
    public tournament?: TournamentNew;
 }
