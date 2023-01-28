@@ -3,7 +3,6 @@ import { ActivatedRoute, Params } from '@angular/router';
 
 import { CupCupMatchState } from '@enums/cup-cup-match-state.enum';
 import { CupCupMatch } from '@models/cup/cup-cup-match.model';
-import { CupCupMatchService } from '@services/cup/cup-cup-match.service';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { NotificationsService } from 'angular2-notifications';
 import { Subscription } from 'rxjs';
@@ -22,7 +21,6 @@ import { CupCupMatchNew } from '@models/new/cup-cup-match-new.model';
 export class CupCupMatchesTableComponent implements OnDestroy, OnInit {
    constructor(
       private activatedRoute: ActivatedRoute,
-      private cupCupMatchService: CupCupMatchService,
       private cupCupMatchNewService: CupCupMatchNewService,
       private ngbModalService: NgbModal,
       private notificationsService: NotificationsService
@@ -43,7 +41,7 @@ export class CupCupMatchesTableComponent implements OnDestroy, OnInit {
    isScore = UtilsService.isScore;
 
    deleteCupCupMatch(cupCupMatch: CupCupMatch): void {
-      this.cupCupMatchService.deleteCupCupMatch(cupCupMatch.id).subscribe(
+      this.cupCupMatchNewService.deleteCupCupMatch(cupCupMatch.id).subscribe(
          () => {
             this.openedModalReference.close();
             this.total--;
@@ -53,10 +51,7 @@ export class CupCupMatchesTableComponent implements OnDestroy, OnInit {
                `Кубок-матч ${cupCupMatch.home_user.name} - ${cupCupMatch.away_user.name} видалено`
             );
          },
-         errors => {
-            this.openedModalReference.close();
-            errors.forEach(error => this.notificationsService.error('Помилка', error));
-         }
+         () => this.openedModalReference.close()
       );
    }
 

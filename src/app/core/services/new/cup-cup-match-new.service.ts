@@ -17,6 +17,10 @@ export class CupCupMatchNewService {
 
    constructor(private authService: AuthNewService, private httpClient: HttpClient) {}
 
+   deleteCupCupMatch(cupCupMatchId: number): Observable<void> {
+      return this.httpClient.delete<void>(`${this.cupCupMatchesUrl}/${cupCupMatchId}`);
+   }
+
    public groupCupCupMatches(cupCupMatches: CupCupMatchNew[]): CupCupMatchNew[][] {
       const groupedCupCupMatches = Object.values(
          groupBy<CupCupMatchNew>(cupCupMatches, 'group_number') as {
