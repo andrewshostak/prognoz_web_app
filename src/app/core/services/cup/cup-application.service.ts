@@ -17,17 +17,4 @@ export class CupApplicationService {
          .put(`${this.cupApplicationUrl}/${cupApplicationId}`, cupApplication)
          .pipe(catchError(this.errorHandlerService.handle));
    }
-
-   public createCupApplication(
-      cupApplication: CupApplication,
-      deviceId?: string,
-      deviceInfo?: { [key: string]: any }
-   ): Observable<{ cup_application: CupApplication }> {
-      if (deviceId && deviceInfo) {
-         return this.headersWithToken
-            .post(this.cupApplicationUrl, { ...cupApplication, deviceInfo }, { 'x-device-id': deviceId })
-            .pipe(catchError(this.errorHandlerService.handle));
-      }
-      return this.headersWithToken.post(this.cupApplicationUrl, cupApplication).pipe(catchError(this.errorHandlerService.handle));
-   }
 }

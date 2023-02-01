@@ -4,6 +4,7 @@ import { ModelStatus } from '@enums/model-status.enum';
 import { CompetitionNew } from '@models/new/competition-new.model';
 import { UserNew } from '@models/new/user-new.model';
 
+// todo: remove receiver_id, place, refused_at, ended, receiver. add state.
 export class CupApplicationNew {
    id: number;
    competition_id: number;

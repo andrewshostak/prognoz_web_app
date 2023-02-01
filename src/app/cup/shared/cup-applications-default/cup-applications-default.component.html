@@ -164,11 +164,11 @@
    </app-confirmation-modal>
 </ng-template>
 <ng-template #applicationModal let-c="close">
-   <app-cup-application-modal
+   <app-cup-application-create-modal
       [close]="c"
       [competition]="competition"
       [cupApplication]="openedModal.data"
       (successfullySubmitted)="applicationModalSubmitted($event)"
    >
-   </app-cup-application-modal>
+   </app-cup-application-create-modal>
 </ng-template>

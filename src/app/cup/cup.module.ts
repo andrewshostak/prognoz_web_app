@@ -17,7 +17,7 @@ import { CupRatingComponent } from './cup-rating/cup-rating.component';
 import { CupRoutingModule } from './cup-routing.module';
 import { CupRulesComponent } from './cup-rules/cup-rules.component';
 import { CupComponent } from './cup.component';
-import { CupApplicationModalComponent } from './shared/cup-application-modal/cup-application-modal.component';
+import { CupApplicationCreateModalComponent } from './shared/cup-application-modal/cup-application-create-modal.component';
 import { CupCupMatchUserNameComponent } from './shared/cup-cup-match-user-name/cup-cup-match-user-name.component';
 import { CupCupMatchesDefaultComponent } from './shared/cup-cup-matches-default/cup-cup-matches-default.component';
 import { CupCupMatchesGroupComponent } from './shared/cup-cup-matches-group/cup-cup-matches-group.component';
@@ -42,7 +42,7 @@ import { CupCupMatchesGroupRatingComponent } from './shared/cup-cup-matches-grou
    ],
    declarations: [
       CupComponent,
-      CupApplicationModalComponent,
+      CupApplicationCreateModalComponent,
       CupApplicationsComponent,
       CupApplicationsDefaultComponent,
       CupApplicationsFriendlyComponent,

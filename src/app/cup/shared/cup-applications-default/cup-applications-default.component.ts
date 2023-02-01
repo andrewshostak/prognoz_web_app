@@ -71,8 +71,7 @@ export class CupApplicationsDefaultComponent implements OnChanges, OnInit {
       this.openedModal = {
          data: {
             competition_id: this.competition.id,
-            applicant_id: this.authenticatedUser.id,
-            place: null
+            applicant_id: this.authenticatedUser.id
          },
          submitted: () => {},
          reference: this.ngbModalService.open(content, { centered: true })

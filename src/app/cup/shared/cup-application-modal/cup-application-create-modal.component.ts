@@ -4,48 +4,37 @@ import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/fo
 import { CompetitionNew } from '@models/new/competition-new.model';
 import { CupApplicationNew } from '@models/new/cup-application-new.model';
 import { UserNew } from '@models/new/user-new.model';
-import { CupApplicationService } from '@services/cup/cup-application.service';
+import { CupApplicationNewService } from '@services/new/cup-application-new.service';
 import { DeviceService } from '@services/device.service';
 import { AuthNewService } from '@services/new/auth-new.service';
 import { UserNewService } from '@services/new/user-new.service';
-import { SettingsService } from '@services/settings.service';
 import { UtilsService } from '@services/utils.service';
 import { NotificationsService } from 'angular2-notifications';
 import { from, of } from 'rxjs';
 import { catchError, mergeMap } from 'rxjs/operators';
 
 @Component({
-   selector: 'app-cup-application-modal',
-   templateUrl: './cup-application-modal.component.html',
-   styleUrls: ['./cup-application-modal.component.scss']
+   selector: 'app-cup-application-create-modal',
+   templateUrl: './cup-application-create-modal.component.html',
+   styleUrls: ['./cup-application-create-modal.component.scss']
 })
-export class CupApplicationModalComponent implements OnInit {
+export class CupApplicationCreateModalComponent implements OnInit {
    @Input() public close: () => void;
    @Input() public competition: CompetitionNew;
    @Input() public cupApplication: Partial<CupApplicationNew>;
    @Output() public successfullySubmitted = new EventEmitter<CupApplicationNew>();
 
-   public anyUser = { id: null, name: 'Будь-хто' } as UserNew;
    public applicant: UserNew;
    public cupApplicationForm: FormGroup;
-   public places = SettingsService.cupApplicationPlaces;
-   public receiver: UserNew;
    public spinnerButton = false;
 
    constructor(
       private authNewService: AuthNewService,
-      private cupApplicationService: CupApplicationService,
+      private cupApplicationService: CupApplicationNewService,
       private deviceService: DeviceService,
       private notificationsService: NotificationsService,
       private userNewService: UserNewService
    ) {}
-
-   public isFriendlyCompetition(): boolean {
-      if (this.competition) {
-         return !this.competition.participants;
-      }
-      return false;
-   }
 
    public ngOnInit(): void {
       this.cupApplicationForm = new FormGroup({
@@ -56,17 +45,11 @@ export class CupApplicationModalComponent implements OnInit {
                disabled: !this.hasModeratorRights()
             },
             [Validators.required]
-         ),
-         receiver_id: new FormControl(this.cupApplication.receiver_id || null),
-         place: new FormControl(this.cupApplication.place)
+         )
       });
 
       if (this.cupApplication.applicant_id) {
          this.getApplicant(this.cupApplication.applicant_id);
-      }
-
-      if (this.cupApplication.receiver_id) {
-         this.getReceiver(this.cupApplication.receiver_id);
       }
    }
 
@@ -82,11 +65,11 @@ export class CupApplicationModalComponent implements OnInit {
       if (this.cupApplicationForm.invalid) {
          return;
       }
-      this.spinnerButton = true;
-      this.cupApplication.id ? this.updateCupApplication() : this.createCupApplication();
+      this.createCupApplication();
    }
 
    private createCupApplication(): void {
+      this.spinnerButton = true;
       from(this.deviceService.getDevice())
          .pipe(
             catchError(() => of(DeviceService.emptyDevice)),
@@ -96,13 +79,13 @@ export class CupApplicationModalComponent implements OnInit {
          )
          .subscribe(
             response => {
+               this.spinnerButton = false;
                this.notificationsService.success('Успішно', 'Заявку створено');
-               this.successfullySubmitted.emit((response.cup_application as any) as CupApplicationNew);
-               this.spinnerButton = false;
+               this.successfullySubmitted.emit(response);
             },
-            errors => {
+            () => {
+               this.close();
                this.spinnerButton = false;
-               errors.forEach(error => this.notificationsService.error('Помилка', error));
             }
          );
    }
@@ -111,29 +94,7 @@ export class CupApplicationModalComponent implements OnInit {
       this.userNewService.getUser(id).subscribe(response => (this.applicant = response));
    }
 
-   private getReceiver(id: number): void {
-      this.userNewService.getUser(id).subscribe(response => (this.receiver = response));
-   }
-
    private hasModeratorRights(): boolean {
-      if (this.cupApplication.id) {
-         return this.authNewService.hasPermissions(['update_cup_application_wo_validation']);
-      } else {
-         return this.authNewService.hasPermissions(['create_cup_application_wo_validation']);
-      }
-   }
-
-   private updateCupApplication(): void {
-      this.cupApplicationService.updateCupApplication(this.cupApplicationForm.getRawValue(), this.cupApplication.id).subscribe(
-         response => {
-            this.notificationsService.success('Успішно', 'Заявку змінено');
-            this.successfullySubmitted.emit((response.cup_application as any) as CupApplicationNew);
-            this.spinnerButton = false;
-         },
-         errors => {
-            this.spinnerButton = false;
-            errors.forEach(error => this.notificationsService.error('Помилка', error));
-         }
-      );
+      return this.authNewService.hasPermissions(['create_cup_application_wo_validation']);
    }
 }
