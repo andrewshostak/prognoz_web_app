@@ -1,6 +1,7 @@
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
+import { CupApplicationDefaultState } from '@enums/cup-application-default-state.enum';
 import { environment } from '@env';
 import { CupApplicationNew } from '@models/new/cup-application-new.model';
 import { CupApplicationSearch } from '@models/search/cup-application-search.model';
@@ -62,5 +63,11 @@ export class CupApplicationNewService {
       }
 
       return this.httpClient.get<PaginatedResponse<CupApplicationNew>>(this.cupApplicationsUrl, { params });
+   }
+
+   updateCupApplication(id: number, state: CupApplicationDefaultState): Observable<CupApplicationNew> {
+      return this.httpClient
+         .patch<{ cup_application: CupApplicationNew }>(`${this.cupApplicationsUrl}/${id}`, { state })
+         .pipe(map(response => response.cup_application));
    }
 }

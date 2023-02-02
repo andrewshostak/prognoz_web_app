@@ -6,7 +6,6 @@ import { OpenedModal } from '@models/opened-modal.model';
 import { CupApplicationNew } from '@models/new/cup-application-new.model';
 import { CompetitionNew } from '@models/new/competition-new.model';
 import { UserNew } from '@models/new/user-new.model';
-import { CupApplicationService } from '@services/cup/cup-application.service';
 import { CupApplicationNewService } from '@services/new/cup-application-new.service';
 import { AuthNewService } from '@services/new/auth-new.service';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
@@ -37,7 +36,6 @@ export class CupApplicationsDefaultComponent implements OnChanges, OnInit {
 
    constructor(
       private authService: AuthNewService,
-      private cupApplicationOldService: CupApplicationService,
       private cupApplicationService: CupApplicationNewService,
       private ngbModalService: NgbModal,
       private notificationsService: NotificationsService
@@ -97,13 +95,12 @@ export class CupApplicationsDefaultComponent implements OnChanges, OnInit {
    }
 
    private confirmApplication(cupApplication: CupApplicationNew): void {
-      const updateRequestData = { confirmed: true, competition_id: cupApplication.competition_id };
-      this.cupApplicationOldService.updateCupApplication(updateRequestData, cupApplication.id).subscribe(
+      this.cupApplicationService.updateCupApplication(cupApplication.id, CupApplicationDefaultState.Active).subscribe(
          response => {
             this.openedModal.reference.close();
             this.notificationsService.success('Успішно', 'Заявку підтверджено');
             const index = this.cupApplications.findIndex(application => application.id === cupApplication.id);
-            this.cupApplications[index] = { ...this.cupApplications[index], ...(response.cup_application as any) };
+            this.cupApplications[index] = { ...this.cupApplications[index], ...response };
             this.updateView();
          },
          error => {
