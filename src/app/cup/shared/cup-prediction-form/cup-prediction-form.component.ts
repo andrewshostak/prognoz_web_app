@@ -2,9 +2,9 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 import { CupMatch } from '@models/cup/cup-match.model';
-import { CupPrediction } from '@models/cup/cup-prediction.model';
+import { CupPredictionNew } from '@models/new/cup-prediction-new.model';
 import { User } from '@models/user.model';
-import { CupPredictionService } from '@services/cup/cup-prediction.service';
+import { CupPredictionNewService } from '@services/new/cup-prediction-new.service';
 import { UtilsService } from '@services/utils.service';
 import { NotificationsService } from 'angular2-notifications';
 import { SettingsService } from '@services/settings.service';
@@ -18,14 +18,14 @@ export class CupPredictionFormComponent implements OnInit {
    public clubsLogosPath: string = SettingsService.clubsLogosPath + '/';
    public cupPredictionForm: FormGroup;
    public spinnerButton: boolean;
-   public cupPrediction: CupPrediction;
+   public cupPrediction: CupPredictionNew;
    public isScore = UtilsService.isScore;
 
    @Input() public authenticatedUser: User;
    @Input() public cupMatch: CupMatch;
-   @Output() public cupPredictionUpdated = new EventEmitter<{ cupMatchId: number; cupPrediction?: CupPrediction; errors?: string[] }>();
+   @Output() public cupPredictionUpdated = new EventEmitter<{ cupMatchId: number; cupPrediction?: CupPredictionNew; errors?: string[] }>();
 
-   constructor(private cupPredictionService: CupPredictionService, private notificationsService: NotificationsService) {}
+   constructor(private cupPredictionService: CupPredictionNewService, private notificationsService: NotificationsService) {}
 
    public ngOnInit() {
       this.cupPrediction = this.cupMatch.cup_predictions[0] || {
@@ -61,7 +61,7 @@ export class CupPredictionFormComponent implements OnInit {
       cupPredictionToUpdate.home = this.cupPredictionForm.get('home').value;
       cupPredictionToUpdate.away = this.cupPredictionForm.get('away').value;
 
-      this.cupPredictionService.updateCupPrediction(cupPredictionToUpdate).subscribe(
+      this.cupPredictionService.upsertPrediction(cupPredictionToUpdate).subscribe(
          response => {
             this.spinnerButton = false;
             this.cupPredictionUpdated.emit({

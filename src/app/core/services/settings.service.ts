@@ -39,6 +39,7 @@ export class SettingsService {
       'v2/cup/applications',
       'v2/cup/matches',
       'v2/cup/predictions/my',
+      'v2/cup/predictions',
       'v2/cup/stages',
       'v2/cup/cup-matches',
       'v2/guestbook-messages',

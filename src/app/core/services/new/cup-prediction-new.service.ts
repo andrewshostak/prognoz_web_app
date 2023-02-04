@@ -6,6 +6,7 @@ import { CupPredictionNew } from '@models/new/cup-prediction-new.model';
 import { PaginatedResponse } from '@models/paginated-response.model';
 import { CupPredictionSearch } from '@models/search/cup-prediction-search.model';
 import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 @Injectable()
 export class CupPredictionNewService {
@@ -13,7 +14,7 @@ export class CupPredictionNewService {
 
    constructor(private httpClient: HttpClient) {}
 
-   public getCupPredictions(search: CupPredictionSearch): Observable<PaginatedResponse<CupPredictionNew>> {
+   getCupPredictions(search: CupPredictionSearch): Observable<PaginatedResponse<CupPredictionNew>> {
       const params: HttpParams = new HttpParams({
          fromObject: {
             user_id: search.userId.toString(),
@@ -24,8 +25,14 @@ export class CupPredictionNewService {
       return this.httpClient.get<PaginatedResponse<CupPredictionNew>>(this.cupPredictionsUrl, { params });
    }
 
-   public getMyCupPredictions(cupCupMatchId: number): Observable<PaginatedResponse<CupPredictionNew>> {
+   getMyCupPredictions(cupCupMatchId: number): Observable<PaginatedResponse<CupPredictionNew>> {
       const params: HttpParams = new HttpParams({ fromObject: { cup_cup_match_id: cupCupMatchId.toString() } });
       return this.httpClient.get<PaginatedResponse<CupPredictionNew>>(`${this.cupPredictionsUrl}/my`, { params });
+   }
+
+   upsertPrediction(prediction: Partial<CupPredictionNew>): Observable<CupPredictionNew> {
+      return this.httpClient
+         .put<{ cup_prediction: CupPredictionNew }>(this.cupPredictionsUrl, prediction)
+         .pipe(map(response => response.cup_prediction));
    }
 }
