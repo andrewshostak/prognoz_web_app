@@ -32,8 +32,4 @@ export class CupCupMatchService {
          catchError(this.errorHandlerService.handle)
       );
    }
-
-   public deleteCupCupMatch(cupCupMatchId: number): Observable<void> {
-      return this.headersWithToken.delete(`${this.cupCupMatchUrl}/${cupCupMatchId}`).pipe(catchError(this.errorHandlerService.handle));
-   }
 }
