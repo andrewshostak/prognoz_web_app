@@ -51,7 +51,7 @@ export class CupPredictionsComponent implements OnInit {
    getCupMatchesPredictableData(): void {
       this.cupMatchService.getCupMatchesPredictable().subscribe(
          response => {
-            this.cupMatches = response;
+            this.cupMatches = response.sort((a, b) => (a.starts_at < b.starts_at ? -1 : 1));
          },
          error => {
             this.errorCupMatches = error;
