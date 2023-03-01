@@ -19,7 +19,7 @@ export class CupMatchService {
     */
    public getCupMatchesPredictable(): Observable<CupMatch[]> {
       return this.headersWithToken.get(`${this.cupMatchUrl}-predictable`).pipe(
-         map(response => response.cup_matches),
+         map(response => response.cup_matches || []),
          catchError(this.errorHandlerService.handle)
       );
    }

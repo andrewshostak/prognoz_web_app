@@ -18,7 +18,7 @@ export class CupPredictionNewService {
       const params: HttpParams = new HttpParams({
          fromObject: {
             user_id: search.userId.toString(),
-            cup_cup_match_id: search.cupCupMatchId.toString()
+            'cup_cup_match_ids[]': search.cupCupMatchIds.map(id => id.toString())
          }
       });
 
