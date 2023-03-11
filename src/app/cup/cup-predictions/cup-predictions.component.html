@@ -1,11 +1,14 @@
-<div *ngIf="authenticatedUser && cupMatches" class="container-fluid">
+<div *ngIf="authenticatedUser" class="container-fluid">
    <app-cup-prediction-form
-      *ngFor="let cupMatch of cupMatches"
+      *ngFor="let cupPrediction of cupPredictions"
       [authenticatedUser]="authenticatedUser"
-      [cupMatch]="cupMatch"
+      [cupPrediction]="cupPrediction"
       (cupPredictionUpdated)="cupPredictionUpdated($event)"
    >
    </app-cup-prediction-form>
 </div>
-<app-error *ngIf="errorCupMatches" [message]="errorCupMatches" [additionalInfo]="false"></app-error>
-<app-error *ngIf="!authenticatedUser" [message]="noAccess" [additionalInfo]="false"></app-error>
+<app-error
+   *ngIf="!authenticatedUser"
+   [message]="'Доступ заборонено. Увійдіть на сайт для перегляду цієї сторінки.'"
+   [additionalInfo]="false"
+></app-error>

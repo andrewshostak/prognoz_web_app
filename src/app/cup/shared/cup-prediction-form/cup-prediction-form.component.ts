@@ -1,13 +1,12 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 
-import { CupMatch } from '@models/cup/cup-match.model';
 import { CupPredictionNew } from '@models/new/cup-prediction-new.model';
-import { User } from '@models/user.model';
+import { UserNew } from '@models/new/user-new.model';
 import { CupPredictionNewService } from '@services/new/cup-prediction-new.service';
+import { SettingsService } from '@services/settings.service';
 import { UtilsService } from '@services/utils.service';
 import { NotificationsService } from 'angular2-notifications';
-import { SettingsService } from '@services/settings.service';
 
 @Component({
    selector: 'app-cup-prediction-form',
@@ -15,26 +14,23 @@ import { SettingsService } from '@services/settings.service';
    styleUrls: ['./cup-prediction-form.component.scss']
 })
 export class CupPredictionFormComponent implements OnInit {
-   public clubsLogosPath: string = SettingsService.clubsLogosPath + '/';
-   public cupPredictionForm: FormGroup;
-   public spinnerButton: boolean;
-   public cupPrediction: CupPredictionNew;
-   public isScore = UtilsService.isScore;
-
-   @Input() public authenticatedUser: User;
-   @Input() public cupMatch: CupMatch;
-   @Output() public cupPredictionUpdated = new EventEmitter<{ cupMatchId: number; cupPrediction?: CupPredictionNew; errors?: string[] }>();
-
    constructor(private cupPredictionService: CupPredictionNewService, private notificationsService: NotificationsService) {}
 
-   public ngOnInit() {
-      this.cupPrediction = this.cupMatch.cup_predictions[0] || {
-         user_id: this.authenticatedUser.id,
-         home: null,
-         away: null,
-         cup_match_id: this.cupMatch.id,
-         cup_cup_match_id: this.cupMatch.cup_stages[0].cup_cup_matches[0].id
-      };
+   clubsLogosPath: string = SettingsService.clubsLogosPath + '/';
+   cupPredictionForm: FormGroup;
+   spinnerButton: boolean;
+   isScore: boolean;
+
+   @Input() authenticatedUser: UserNew;
+   @Input() cupPrediction: CupPredictionNew;
+   @Output() cupPredictionUpdated = new EventEmitter<{
+      cupMatchId: number;
+      cupPrediction?: CupPredictionNew;
+      error?: { message: string; status_code: number };
+   }>();
+
+   ngOnInit() {
+      this.isScore = UtilsService.isScore(this.cupPrediction.home, this.cupPrediction.away);
       this.cupPredictionForm = new FormGroup({
          home: new FormControl(this.cupPrediction.home, [
             Validators.required,
@@ -51,36 +47,33 @@ export class CupPredictionFormComponent implements OnInit {
       });
    }
 
-   public onSubmit() {
+   onSubmit() {
       if (this.cupPredictionForm.invalid) {
          return;
       }
 
       this.spinnerButton = true;
-      const cupPredictionToUpdate = Object.assign({}, this.cupPrediction);
+      const cupPredictionToUpdate = {
+         user_id: this.authenticatedUser.id,
+         cup_match_id: this.cupPrediction.cup_match_id,
+         cup_cup_match_id: this.cupPrediction.cup_cup_match_id
+      } as Partial<CupPredictionNew>;
       cupPredictionToUpdate.home = this.cupPredictionForm.get('home').value;
       cupPredictionToUpdate.away = this.cupPredictionForm.get('away').value;
 
       this.cupPredictionService.upsertPrediction(cupPredictionToUpdate).subscribe(
          response => {
             this.spinnerButton = false;
-            this.cupPredictionUpdated.emit({
-               cupMatchId: this.cupMatch.id,
-               cupPrediction: response
-            });
+            this.cupPredictionUpdated.emit({ cupMatchId: cupPredictionToUpdate.cup_match_id, cupPrediction: response });
             const message = `прогноз
                ${cupPredictionToUpdate.home}:${cupPredictionToUpdate.away} на матч<br>
-               ${this.cupMatch.club_first.title} - ${this.cupMatch.club_second.title}`;
+               ${this.cupPrediction.cup_match.match.club_home.title} - ${this.cupPrediction.cup_match.match.club_away.title}`;
             this.notificationsService.success('Збережено', message);
+            this.isScore = UtilsService.isScore(response.home, response.away);
          },
-         errors => {
+         error => {
             this.spinnerButton = false;
-            this.cupPredictionUpdated.emit({
-               cupMatchId: this.cupMatch.id,
-               cupPrediction: null,
-               errors
-            });
-            errors.forEach(error => this.notificationsService.error('Помилка', error));
+            this.cupPredictionUpdated.emit({ cupMatchId: cupPredictionToUpdate.cup_match_id, error: error.error });
          }
       );
    }

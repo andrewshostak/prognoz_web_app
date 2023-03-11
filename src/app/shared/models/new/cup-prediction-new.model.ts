@@ -1,4 +1,6 @@
 /* tslint:disable:variable-name */
+import { CupMatchNew } from '@models/new/cup-match-new.model';
+
 export class CupPredictionNew {
    public id: number;
    public user_id: number;
@@ -8,4 +10,6 @@ export class CupPredictionNew {
    public away: number;
    public created_at: string;
    public updated_at: string;
+
+   cup_match?: CupMatchNew;
 }

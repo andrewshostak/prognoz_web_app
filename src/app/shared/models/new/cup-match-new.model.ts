@@ -1,17 +1,18 @@
 /* tslint:disable:variable-name */
-import { CupStage } from '@models/cup/cup-stage.model';
+import { CupStageNew } from '@models/new/cup-stage-new.model';
 import { Match } from '@models/match.model';
 
 export class CupMatchNew {
-   public created_at: string;
-   public dc_sum: number;
-   public guessed: number;
-   public id: number;
-   public match_id: number;
-   public points: number;
-   public predictions: number;
-   public updated_at: string;
+   created_at: string;
+   dc_sum: number;
+   guessed: number;
+   id: number;
+   match_id: number;
+   points: number;
+   predictions: number;
+   updated_at: string;
 
-   public match?: Match;
-   public cup_stages: CupStage[];
+   match?: Match;
+   is_predictable?: boolean;
+   cup_stages: CupStageNew[];
 }

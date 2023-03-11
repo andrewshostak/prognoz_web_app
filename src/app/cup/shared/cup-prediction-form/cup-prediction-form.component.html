@@ -4,34 +4,34 @@
          <div
             class="row align-items-center p-md-1 rounded border border-dark h-100"
             [ngClass]="{
-               'green-inset-and-black-shadow': isScore(cupPrediction.home, cupPrediction.away),
-               'red-inset-and-black-shadow': !isScore(cupPrediction.home, cupPrediction.away)
+               'green-inset-and-black-shadow': isScore,
+               'red-inset-and-black-shadow': !isScore
             }"
          >
             <div class="d-none d-lg-block col-md-2">
                <img
                   class="img-fluid"
-                  src="{{ clubsLogosPath }}{{ cupMatch.club_first.image }}"
-                  alt="{{ cupMatch.club_first.title }}"
-                  title="{{ cupMatch.club_first.title }}"
+                  src="{{ clubsLogosPath }}{{ cupPrediction.cup_match.match.club_home.image }}"
+                  alt="{{ cupPrediction.cup_match.match.club_home.title }}"
+                  title="{{ cupPrediction.cup_match.match.club_home.title }}"
                />
             </div>
             <div
                class="col-12 col-md-12 col-lg-8 bg-dark rounded"
                [ngClass]="{
-                  'green-shadow': isScore(cupPrediction.home, cupPrediction.away),
-                  'red-shadow': !isScore(cupPrediction.home, cupPrediction.away)
+                  'green-shadow': isScore,
+                  'red-shadow': !isScore
                }"
             >
                <div class="row">
                   <div class="col-12 text-center text-light">
-                     {{ cupMatch.starts_at | time: 'DD MMMM HH:mm' }}
+                     {{ cupPrediction.cup_match.match.started_at | time: 'DD MMMM HH:mm' }}
                   </div>
                </div>
                <div class="row align-items-center">
                   <div class="col-6 col-sm-4 col-md-3 col-lg-4 order-1 order-sm-1 text-right text-light text-sm-center">
                      <strong
-                        ><label for="home">{{ cupMatch.club_first.title }}</label></strong
+                        ><label for="home">{{ cupPrediction.cup_match.match.club_home.title }}</label></strong
                      >
                   </div>
                   <div class="col-12 col-sm-4 col-md-6 col-lg-4 order-3 order-sm-2 text-center text-light mb-2">
@@ -43,7 +43,7 @@
                   </div>
                   <div class="col-6 col-sm-4 col-md-3 col-lg-4 order-2 order-sm-3 text-left text-light text-sm-center">
                      <strong
-                        ><label for="away">{{ cupMatch.club_second.title }}</label></strong
+                        ><label for="away">{{ cupPrediction.cup_match.match.club_away.title }}</label></strong
                      >
                   </div>
                </div>
@@ -51,9 +51,9 @@
             <div class="d-none d-lg-block col-md-2">
                <img
                   class="img-fluid"
-                  src="{{ clubsLogosPath }}{{ cupMatch.club_second.image }}"
-                  alt="{{ cupMatch.club_second.title }}"
-                  title="{{ cupMatch.club_second.title }}"
+                  src="{{ clubsLogosPath }}{{ cupPrediction.cup_match.match.club_away.image }}"
+                  alt="{{ cupPrediction.cup_match.match.club_away.title }}"
+                  title="{{ cupPrediction.cup_match.match.club_away.title }}"
                />
             </div>
          </div>
@@ -63,33 +63,21 @@
             *ngIf="!spinnerButton"
             class="btn btn-block full-height shadow"
             [ngClass]="{
-               'btn-outline-primary': isScore(cupPrediction.home, cupPrediction.away),
-               'btn-primary': !isScore(cupPrediction.home, cupPrediction.away)
+               'btn-outline-primary': isScore,
+               'btn-primary': !isScore
             }"
             type="submit"
          >
-            <i
-               [hidden]="isScore(cupPrediction.home, cupPrediction.away)"
-               class="fa fa-check-circle-o fa-2x d-none d-md-block"
-               aria-hidden="true"
-            ></i>
-            <i
-               [hidden]="!isScore(cupPrediction.home, cupPrediction.away)"
-               class="fa fa-refresh fa-2x d-none d-md-block"
-               aria-hidden="true"
-            ></i>
-            <i
-               [hidden]="isScore(cupPrediction.home, cupPrediction.away)"
-               class="fa fa-check-circle-o fa-lg d-md-none"
-               aria-hidden="true"
-            ></i>
-            <i [hidden]="!isScore(cupPrediction.home, cupPrediction.away)" class="fa fa-refresh fa-lg d-md-none" aria-hidden="true"></i>
+            <i [hidden]="isScore" class="fa fa-check-circle-o fa-2x d-none d-md-block" aria-hidden="true"></i>
+            <i [hidden]="!isScore" class="fa fa-refresh fa-2x d-none d-md-block" aria-hidden="true"></i>
+            <i [hidden]="isScore" class="fa fa-check-circle-o fa-lg d-md-none" aria-hidden="true"></i>
+            <i [hidden]="!isScore" class="fa fa-refresh fa-lg d-md-none" aria-hidden="true"></i>
             <br class="d-none d-lg-block" />
             <small class="d-none d-lg-block">
-               {{ isScore(cupPrediction.home, cupPrediction.away) ? 'Змінити' : 'Зберегти' }}
+               {{ isScore ? 'Змінити' : 'Зберегти' }}
             </small>
             <span class="d-md-none">
-               {{ isScore(cupPrediction.home, cupPrediction.away) ? 'Змінити прогноз' : 'Зберегти прогноз' }}
+               {{ isScore ? 'Змінити прогноз' : 'Зберегти прогноз' }}
             </span>
          </button>
          <button *ngIf="spinnerButton" class="btn btn-primary btn-block shadow full-height mt-0" type="button">

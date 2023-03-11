@@ -97,11 +97,11 @@ export class CupCupMatchComponent implements OnInit {
    ): Observable<{ homePredictions: PaginatedResponse<CupPredictionNew>; awayPredictions: PaginatedResponse<CupPredictionNew> }> {
       const homeRequest =
          this.user && this.user.id === homeUserId
-            ? this.cupPredictionService.getMyCupPredictions(cupCupMatchId)
+            ? this.cupPredictionService.getMyCupPredictions([cupCupMatchId])
             : this.cupPredictionService.getCupPredictions({ cupCupMatchIds: [cupCupMatchId], userId: homeUserId });
       const awayRequest =
          this.user && this.user.id === awayUserId
-            ? this.cupPredictionService.getMyCupPredictions(cupCupMatchId)
+            ? this.cupPredictionService.getMyCupPredictions([cupCupMatchId])
             : this.cupPredictionService.getCupPredictions({ cupCupMatchIds: [cupCupMatchId], userId: awayUserId });
 
       const requests: [Observable<PaginatedResponse<CupPredictionNew>>, Observable<PaginatedResponse<CupPredictionNew>>] = [

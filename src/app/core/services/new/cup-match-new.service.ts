@@ -41,6 +41,14 @@ export class CupMatchNewService {
          params = params.set('cup_cup_match_id', search.cupCupMatchId.toString());
       }
 
+      if (search.userId) {
+         params = params.set('user_id', search.userId.toString());
+      }
+
+      if (search.showPredictability) {
+         params = params.append('show_predictability', (search.showPredictability as unknown) as string);
+      }
+
       if (search.limit) {
          params = params.set('limit', search.limit.toString());
       }

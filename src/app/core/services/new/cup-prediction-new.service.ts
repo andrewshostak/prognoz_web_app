@@ -25,8 +25,8 @@ export class CupPredictionNewService {
       return this.httpClient.get<PaginatedResponse<CupPredictionNew>>(this.cupPredictionsUrl, { params });
    }
 
-   getMyCupPredictions(cupCupMatchId: number): Observable<PaginatedResponse<CupPredictionNew>> {
-      const params: HttpParams = new HttpParams({ fromObject: { cup_cup_match_id: cupCupMatchId.toString() } });
+   getMyCupPredictions(cupCupMatchIds: number[]): Observable<PaginatedResponse<CupPredictionNew>> {
+      const params: HttpParams = new HttpParams({ fromObject: { 'cup_cup_match_ids[]': cupCupMatchIds.map(id => id.toString()) } });
       return this.httpClient.get<PaginatedResponse<CupPredictionNew>>(`${this.cupPredictionsUrl}/my`, { params });
    }
 
