@@ -12,13 +12,6 @@ export class CupStageService {
    private cupStageUrl = `${environment.apiUrl}cup/stages`;
    constructor(private errorHandlerService: ErrorHandlerService, private headersWithToken: HeadersWithToken) {}
 
-   public createCupStage(cupStage: CupStage): Observable<CupStage> {
-      return this.headersWithToken.post(this.cupStageUrl, cupStage).pipe(
-         map(response => response.cup_stage),
-         catchError(this.errorHandlerService.handle)
-      );
-   }
-
    public updateCupStage(cupStage: CupStage, cupStageId: number): Observable<CupStage> {
       return this.headersWithToken.put(`${this.cupStageUrl}/${cupStageId}`, cupStage).pipe(
          map(response => response.cup_stage),

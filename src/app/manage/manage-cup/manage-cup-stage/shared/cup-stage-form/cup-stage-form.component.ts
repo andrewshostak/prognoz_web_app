@@ -11,9 +11,11 @@ import { CupMatchNewService } from '@services/new/cup-match-new.service';
 import { CompetitionNewService } from '@services/new/competition-new.service';
 import { CompetitionSearch } from '@models/search/competition-search.model';
 import { CupStage } from '@models/cup/cup-stage.model';
+import { CupStageNew } from '@models/new/cup-stage-new.model';
 import { CupStageService } from '@services/cup/cup-stage.service';
 import { CupStageTypeNew } from '@models/new/cup-stage-type-new.model';
 import { CupStageTypeNewService } from '@services/new/cup-stage-type-new.service';
+import { CupStageNewService } from '@services/new/cup-stage-new.service';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { NotificationsService } from 'angular2-notifications';
 import { UtilsService } from '@services/utils.service';
@@ -30,7 +32,8 @@ export class CupStageFormComponent implements OnChanges, OnInit {
    constructor(
       private competitionService: CompetitionNewService,
       private cupMatchService: CupMatchNewService,
-      private cupStageService: CupStageService,
+      private cupStageServiceOld: CupStageService,
+      private cupStageService: CupStageNewService,
       private cupStageTypeService: CupStageTypeNewService,
       private location: Location,
       private ngbModalService: NgbModal,
@@ -145,15 +148,16 @@ export class CupStageFormComponent implements OnChanges, OnInit {
    }
 
    private createCupStage(cupStage: CupStage): void {
-      this.cupStageService.createCupStage(cupStage).subscribe(
-         response => {
-            this.notificationsService.success('Успішно', 'Кубкову стадію створено');
-            this.location.back();
-         },
-         errors => {
-            errors.forEach(error => this.notificationsService.error('Помилка', error));
-         }
-      );
+      const cupStageNew: Partial<CupStageNew> = {
+         competition_id: cupStage.competition_id,
+         cup_stage_type_id: cupStage.cup_stage_type_id,
+         round: cupStage.round,
+         title: cupStage.title
+      };
+      this.cupStageService.createCupStage(cupStageNew, cupStage.cup_matches).subscribe(response => {
+         this.notificationsService.success('Успішно', `Кубкову стадію ${response.title} створено`);
+         this.location.back();
+      });
    }
 
    private getCupMatchesData(): void {
@@ -198,7 +202,7 @@ export class CupStageFormComponent implements OnChanges, OnInit {
       } else if (cupStage.Ended) {
          cupStage.state = CupStageState.Ended;
       }
-      this.cupStageService.updateCupStage(cupStage, this.cupStage.id).subscribe(
+      this.cupStageServiceOld.updateCupStage(cupStage, this.cupStage.id).subscribe(
          response => {
             this.notificationsService.success('Успішно', 'Кубкову стадію змінено');
             this.location.back();

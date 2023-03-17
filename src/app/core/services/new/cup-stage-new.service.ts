@@ -14,6 +14,12 @@ export class CupStageNewService {
 
    constructor(private httpClient: HttpClient) {}
 
+   createCupStage(cupStage: Partial<CupStageNew>, cupMatches?: { id: number }[]): Observable<CupStageNew> {
+      return this.httpClient
+         .post<{ cup_stage: CupStageNew }>(this.cupStagesUrl, { ...cupStage, cup_matches: cupMatches })
+         .pipe(map(response => response.cup_stage));
+   }
+
    public deleteCupStage(cupStageId: number): Observable<void> {
       return this.httpClient.delete<void>(`${this.cupStagesUrl}/${cupStageId}`);
    }
