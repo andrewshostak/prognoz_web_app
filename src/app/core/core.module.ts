@@ -19,7 +19,6 @@ import { CupApplicationNewService } from '@services/new/cup-application-new.serv
 import { CupCupMatchService } from '@services/cup/cup-cup-match.service';
 import { CupGroupNumberNewService } from '@services/new/cup-group-number-new.service';
 import { CupRatingNewService } from '@services/new/cup-rating-new.service';
-import { CupStageService } from '@services/cup/cup-stage.service';
 import { CurrentStateService } from '@services/current-state.service';
 import { DeviceService } from '@services/device.service';
 import { ErrorHandlerService } from '@services/error-handler.service';
@@ -82,7 +81,6 @@ import { UtilsService } from '@services/utils.service';
       CupPredictionNewService,
       CupRatingNewService,
       CupStageNewService,
-      CupStageService,
       CupStageTypeNewService,
       CurrentStateService,
       DeviceService,

@@ -115,6 +115,10 @@ export class CupCupMatchNewService {
          params = params.set('competition_id', search.competitionId.toString());
       }
 
+      if (search.userId) {
+         params = params.set('user_id', search.userId.toString());
+      }
+
       if (search.states) {
          search.states.forEach(state => {
             params = params.append('states[]', state);

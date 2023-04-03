@@ -12,4 +12,5 @@ export class CupCupMatchSearch {
    public relations?: string[];
    public sequence?: Sequence;
    public states?: CupCupMatchState[];
+   userId?: number;
 }

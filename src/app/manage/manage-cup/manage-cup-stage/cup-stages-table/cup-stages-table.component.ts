@@ -3,8 +3,6 @@ import { ActivatedRoute, Params } from '@angular/router';
 
 import { CupStageState } from '@enums/cup-stage-state.enum';
 import { Sequence } from '@enums/sequence.enum';
-import { CupStage } from '@models/cup/cup-stage.model';
-import { CupStageService } from '@services/cup/cup-stage.service';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { NotificationsService } from 'angular2-notifications';
 import { Subscription } from 'rxjs';
@@ -32,7 +30,6 @@ export class CupStagesTableComponent implements OnInit, OnDestroy {
 
    constructor(
       private activatedRoute: ActivatedRoute,
-      private cupStageService: CupStageService,
       private cupStageNewService: CupStageNewService,
       private ngbModalService: NgbModal,
       private notificationsService: NotificationsService
@@ -52,12 +49,11 @@ export class CupStagesTableComponent implements OnInit, OnDestroy {
 
    public makeCupStageActive(notStarted: CupStageNew): void {
       const cupStage = { ...notStarted, state: CupStageState.Active };
-      this.cupStageService.updateCupStage((cupStage as any) as CupStage, cupStage.id).subscribe(
+      this.cupStageNewService.updateCupStage(cupStage.id, cupStage).subscribe(
          response => {
             const index = findIndex(this.cupStages, { id: cupStage.id });
             if (index > -1) {
-               // todo: replace the whole object after migration to v2
-               this.cupStages[index].state = response.state;
+               this.cupStages[index] = response;
                this.notificationsService.success('Успішно', `Кубкова стадія ${this.openedModal.data.title} активна`);
             }
             this.openedModal.reference.close();
@@ -68,12 +64,11 @@ export class CupStagesTableComponent implements OnInit, OnDestroy {
 
    public makeCupStageEnded(active: CupStageNew): void {
       const cupStage = { ...active, state: CupStageState.Ended };
-      this.cupStageService.updateCupStage((cupStage as any) as CupStage, cupStage.id).subscribe(
+      this.cupStageNewService.updateCupStage(cupStage.id, cupStage).subscribe(
          response => {
             const index = findIndex(this.cupStages, { id: cupStage.id });
             if (index > -1) {
-               // todo: replace the whole object after migration to v2
-               this.cupStages[index].state = response.state;
+               this.cupStages[index] = response;
                this.notificationsService.success('Успішно', `Кубкова стадія ${this.openedModal.data.title} завершена`);
             }
             this.openedModal.reference.close();

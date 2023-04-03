@@ -1,6 +1,6 @@
-import { Location } from '@angular/common';
+import { Router } from '@angular/router';
 import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
-import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 
 import { CupStageState } from '@enums/cup-stage-state.enum';
 import { Tournament } from '@enums/tournament.enum';
@@ -10,9 +10,7 @@ import { CupMatchNew } from '@models/new/cup-match-new.model';
 import { CupMatchNewService } from '@services/new/cup-match-new.service';
 import { CompetitionNewService } from '@services/new/competition-new.service';
 import { CompetitionSearch } from '@models/search/competition-search.model';
-import { CupStage } from '@models/cup/cup-stage.model';
 import { CupStageNew } from '@models/new/cup-stage-new.model';
-import { CupStageService } from '@services/cup/cup-stage.service';
 import { CupStageTypeNew } from '@models/new/cup-stage-type-new.model';
 import { CupStageTypeNewService } from '@services/new/cup-stage-type-new.service';
 import { CupStageNewService } from '@services/new/cup-stage-new.service';
@@ -22,6 +20,8 @@ import { UtilsService } from '@services/utils.service';
 import { CupMatchSearch } from '@models/search/cup-match-search.model';
 import { MatchState } from '@enums/match-state.enum';
 import { SettingsService } from '@services/settings.service';
+import { OpenedModal } from '@models/opened-modal.model';
+import { uniqBy } from 'lodash';
 
 @Component({
    selector: 'app-cup-stage-form',
@@ -32,23 +32,21 @@ export class CupStageFormComponent implements OnChanges, OnInit {
    constructor(
       private competitionService: CompetitionNewService,
       private cupMatchService: CupMatchNewService,
-      private cupStageServiceOld: CupStageService,
       private cupStageService: CupStageNewService,
       private cupStageTypeService: CupStageTypeNewService,
-      private location: Location,
       private ngbModalService: NgbModal,
-      private notificationsService: NotificationsService
+      private notificationsService: NotificationsService,
+      private router: Router
    ) {}
 
-   @Input() cupStage: CupStage;
+   @Input() cupStage: CupStageNew;
 
-   competitions: CompetitionNew[];
-   cupMatches: CupMatchNew[];
+   competitions: CompetitionNew[] = [];
+   cupMatches: CupMatchNew[] = [];
    cupStageForm: FormGroup;
-   cupStageTypes: CupStageTypeNew[];
-   confirmModalMessage: string;
-   confirmModalSubmit: (event) => void;
-   openedModalReference: NgbModalRef;
+   cupStageTypes: CupStageTypeNew[] = [];
+   cupStageStates = CupStageState;
+   openedModal: OpenedModal<null>;
 
    get cupMatchesFormArray(): FormArray {
       return this.cupStageForm.get('cup_matches') as FormArray;
@@ -64,20 +62,7 @@ export class CupStageFormComponent implements OnChanges, OnInit {
 
    ngOnChanges(simpleChanges: SimpleChanges) {
       UtilsService.patchSimpleChangeValuesInForm(simpleChanges, this.cupStageForm, 'cupStage', (formGroup, field, value) => {
-         if (['active', 'ended'].includes(field)) {
-            return;
-         }
-
-         if (field === 'state') {
-            switch (value) {
-               case CupStageState.Active:
-                  formGroup.get('active').setValue(true);
-                  break;
-               case CupStageState.Ended:
-                  formGroup.get('ended').setValue(true);
-                  break;
-            }
-         } else if (field === 'cup_matches') {
+         if (field === 'cup_matches') {
             this.clearCupMatchesFormArray();
             if (value.length) {
                value.forEach(cupMatch => {
@@ -96,6 +81,16 @@ export class CupStageFormComponent implements OnChanges, OnInit {
             }
          }
       });
+      if (!simpleChanges.cupStage.firstChange && simpleChanges.cupStage.currentValue.state === CupStageState.Ended) {
+         this.cupMatches = simpleChanges.cupStage.currentValue.cup_matches;
+         this.cupStageForm.disable();
+      }
+      if (!simpleChanges.cupStage.firstChange && simpleChanges.cupStage.currentValue.competition) {
+         this.competitions = uniqBy(this.competitions.concat([simpleChanges.cupStage.currentValue.competition]), 'id');
+      }
+      if (!simpleChanges.cupStage.firstChange && simpleChanges.cupStage) {
+         this.cupStageForm.get('state').enable();
+      }
    }
 
    ngOnInit() {
@@ -105,24 +100,24 @@ export class CupStageFormComponent implements OnChanges, OnInit {
       this.cupStageForm = new FormGroup({
          competition_id: new FormControl('', [Validators.required]),
          cup_stage_type_id: new FormControl('', [Validators.required]),
-         round: new FormControl('', [Validators.required]),
+         round: new FormControl(1, [Validators.required]),
          title: new FormControl('', [Validators.required]),
-         active: new FormControl(false),
-         ended: new FormControl(false),
+         state: new FormControl({ value: CupStageState.NotStarted, disabled: true }, [Validators.required]),
          cup_matches: new FormArray([])
       });
    }
 
    onSubmit(): void {
-      if (this.cupStageForm.valid) {
-         this.cupStage ? this.updateCupStage(this.cupStageForm.value) : this.createCupStage(this.cupStageForm.value);
+      if (this.cupStageForm.invalid) {
+         return;
       }
+
+      this.cupStage ? this.updateCupStage(this.cupStageForm.value) : this.createCupStage(this.cupStageForm.value);
    }
 
-   openConfirmModal(content: NgbModalRef): void {
-      this.confirmModalMessage = 'Очистити форму від змін?';
-      this.confirmModalSubmit = () => this.resetCupStageForm();
-      this.openedModalReference = this.ngbModalService.open(content);
+   openConfirmModal(content: NgbModalRef | HTMLElement, data: null, submitted: (event) => void): void {
+      const reference = this.ngbModalService.open(content, { centered: true });
+      this.openedModal = { reference, data, submitted: () => submitted.call(this) };
    }
 
    removeCupMatch(index: number): void {
@@ -140,14 +135,22 @@ export class CupStageFormComponent implements OnChanges, OnInit {
             ([field, value]) => this.cupStageForm.get(field) && this.cupStageForm.patchValue({ [field]: value })
          );
       }
-      this.openedModalReference.close();
+      this.openedModal.reference.close();
+   }
+
+   showFormErrorMessage(abstractControl: AbstractControl, errorKey: string): boolean {
+      return UtilsService.showFormErrorMessage(abstractControl, errorKey);
+   }
+
+   showFormInvalidClass(abstractControl: AbstractControl): boolean {
+      return UtilsService.showFormInvalidClass(abstractControl);
    }
 
    private clearCupMatchesFormArray(): void {
       UtilsService.clearFormArray(this.cupMatchesFormArray);
    }
 
-   private createCupStage(cupStage: CupStage): void {
+   private createCupStage(cupStage: CupStageNew): void {
       const cupStageNew: Partial<CupStageNew> = {
          competition_id: cupStage.competition_id,
          cup_stage_type_id: cupStage.cup_stage_type_id,
@@ -156,7 +159,8 @@ export class CupStageFormComponent implements OnChanges, OnInit {
       };
       this.cupStageService.createCupStage(cupStageNew, cupStage.cup_matches).subscribe(response => {
          this.notificationsService.success('Успішно', `Кубкову стадію ${response.title} створено`);
-         this.location.back();
+         this.cupStageForm.get('round').reset();
+         this.cupStageForm.get('title').reset();
       });
    }
 
@@ -187,29 +191,30 @@ export class CupStageFormComponent implements OnChanges, OnInit {
          tournamentId: Tournament.Cup,
          states: [CompetitionState.NotStarted, CompetitionState.Applications, CompetitionState.Active]
       };
-      this.competitionService.getCompetitions(search).subscribe(response => (this.competitions = response.data));
+      this.competitionService.getCompetitions(search).subscribe(response => {
+         this.competitions = uniqBy(this.competitions.concat(response.data), 'id');
+      });
    }
 
    private getCupStageTypesData(): void {
       this.cupStageTypeService.getCupStageTypes().subscribe(response => (this.cupStageTypes = response.data));
    }
 
-   private updateCupStage(cupStage: any): void {
-      if (!cupStage.active && !cupStage.ended) {
-         cupStage.state = CupStageState.NotStarted;
-      } else if (cupStage.active) {
-         cupStage.state = CupStageState.Active;
-      } else if (cupStage.Ended) {
-         cupStage.state = CupStageState.Ended;
+   private updateCupStage(cupStage: CupStageNew): void {
+      const cupStageNew: Partial<CupStageNew> = {
+         competition_id: cupStage.competition_id,
+         cup_stage_type_id: cupStage.cup_stage_type_id,
+         round: cupStage.round,
+         title: cupStage.title,
+         state: cupStage.state
+      };
+      let cupMatches = [];
+      if (cupStage.cup_matches) {
+         cupMatches = cupStage.cup_matches;
       }
-      this.cupStageServiceOld.updateCupStage(cupStage, this.cupStage.id).subscribe(
-         response => {
-            this.notificationsService.success('Успішно', 'Кубкову стадію змінено');
-            this.location.back();
-         },
-         errors => {
-            errors.forEach(error => this.notificationsService.error('Помилка', error));
-         }
-      );
+      this.cupStageService.updateCupStage(this.cupStage.id, cupStageNew, cupMatches).subscribe(() => {
+         this.notificationsService.success('Успішно', 'Кубкову стадію змінено');
+         this.router.navigate(['/', 'manage', 'cup', 'stages']);
+      });
    }
 }

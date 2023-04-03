@@ -65,4 +65,13 @@ export class CupStageNewService {
 
       return this.httpClient.get<PaginatedResponse<CupStageNew>>(this.cupStagesUrl, { params });
    }
+
+   updateCupStage(cupStageId: number, cupStage: Partial<CupStageNew>, cupMatches?: { id: number }[]): Observable<CupStageNew> {
+      return this.httpClient
+         .put<{ cup_stage: CupStageNew }>(
+            `${this.cupStagesUrl}/${cupStageId}`,
+            cupMatches ? { ...cupStage, cup_matches: cupMatches } : cupStage
+         )
+         .pipe(map(response => response.cup_stage));
+   }
 }
