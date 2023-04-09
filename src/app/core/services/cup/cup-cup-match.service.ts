@@ -18,18 +18,4 @@ export class CupCupMatchService {
          catchError(this.errorHandlerService.handle)
       );
    }
-
-   public createCupCupMatch(cupCupMatch: CupCupMatch): Observable<CupCupMatch> {
-      return this.headersWithToken.post(this.cupCupMatchUrl, cupCupMatch).pipe(
-         map(response => response.cup_cup_match),
-         catchError(this.errorHandlerService.handle)
-      );
-   }
-
-   public updateCupCupMatch(cupCupMatch: CupCupMatch, cupCupMatchId: number): Observable<CupCupMatch> {
-      return this.headersWithToken.put(`${this.cupCupMatchUrl}/${cupCupMatchId}`, cupCupMatch).pipe(
-         map(response => response.cup_cup_match),
-         catchError(this.errorHandlerService.handle)
-      );
-   }
 }

@@ -1,63 +1,94 @@
-<form novalidate [formGroup]="cupCupMatchForm" (ngSubmit)="onSubmit()">
-   <div
-      *ngIf="cupStages"
-      class="form-group"
-      [class.form-group-invalid-custom]="cupCupMatchForm.get('cup_stage_id').invalid && cupCupMatchForm.get('cup_stage_id').touched"
-   >
-      <label for="cup_stage_id" class="font-weight-bold">
-         <ng-container *ngIf="!cupCupMatch" formGroupName="preserve">
-            <input type="checkbox" (click)="$event.stopPropagation()" formControlName="cup_stage_id" title="Зберегти значення" />
-         </ng-container>
-         Стадія
-      </label>
-      <select id="cup_stage_id" class="form-control" formControlName="cup_stage_id">
-         <option *ngFor="let cupStage of cupStages" [value]="cupStage.id">{{ cupStage.title }} ({{ cupStage.competition.title }})</option>
-      </select>
-      <div *ngIf="cupCupMatchForm.get('cup_stage_id').hasError('required') && cupCupMatchForm.get('cup_stage_id').touched">
-         <small>Кубкова стадія обов'язкова</small>
+<div class="card p-2 pl-lg-5 pr-lg-5">
+   <form novalidate [formGroup]="cupCupMatchForm" (ngSubmit)="onSubmit()">
+      <div class="form-row">
+         <div class="col-12 col-md-6 col-lg-4 offset-0 offset-md-3 offset-lg-4">
+            <div
+               *ngIf="cupStages"
+               class="form-group"
+               [class.form-group-invalid]="showFormInvalidClass(cupCupMatchForm.get('cup_stage_id'))"
+            >
+               <label for="cup_stage_id" class="font-weight-bold">
+                  <ng-container *ngIf="!cupCupMatch" formGroupName="preserve">
+                     <input type="checkbox" (click)="$event.stopPropagation()" formControlName="cup_stage_id" title="Зберегти значення" />
+                  </ng-container>
+                  Стадія
+               </label>
+               <select id="cup_stage_id" class="form-control" formControlName="cup_stage_id">
+                  <option *ngFor="let cupStage of cupStages" [value]="cupStage.id">
+                     {{ cupStage.title }} ({{ cupStage.competition.title }})
+                  </option>
+               </select>
+               <div [hidden]="!showFormErrorMessage(cupCupMatchForm.get('cup_stage_id'), 'required')" class="error-message">
+                  <small>Кубкова стадія обов'язкова</small>
+               </div>
+            </div>
+         </div>
       </div>
-   </div>
-   <div class="form-group" [class.form-group-invalid]="showFormInvalidClass(cupCupMatchForm.get('home_user_id'))">
-      <label [attr.for]="'home_user_id'" class="font-weight-bold">
-         <ng-container *ngIf="!cupCupMatch" formGroupName="preserve">
-            <input type="checkbox" (click)="$event.stopPropagation()" formControlName="user_ids" title="Зберегти значення" />
-         </ng-container>
-         Гравець 1
-      </label>
-      <app-user-select formControlName="home_user_id" [usersList]="homeUser ? [homeUser] : []"></app-user-select>
-      <div [hidden]="!showFormErrorMessage(cupCupMatchForm.get('home_user_id'), 'required')" class="error-message">
-         <small>Гравець 1 обов'язковий</small>
+      <div class="form-row">
+         <div class="col-12 col-md-6 col-lg-4 offset-0 offset-md-3 offset-lg-4">
+            <div class="form-group" [class.form-group-invalid]="showFormInvalidClass(cupCupMatchForm.get('home_user_id'))">
+               <label [attr.for]="'home_user_id'" class="font-weight-bold">
+                  <ng-container *ngIf="!cupCupMatch" formGroupName="preserve">
+                     <input type="checkbox" (click)="$event.stopPropagation()" formControlName="user_ids" title="Зберегти значення" />
+                  </ng-container>
+                  Гравець 1
+               </label>
+               <app-user-select formControlName="home_user_id" [usersList]="homeUser ? [homeUser] : []"></app-user-select>
+               <div [hidden]="!showFormErrorMessage(cupCupMatchForm.get('home_user_id'), 'required')" class="error-message">
+                  <small>Гравець 1 обов'язковий</small>
+               </div>
+            </div>
+         </div>
       </div>
-   </div>
-   <div class="form-group">
-      <button type="button" class="btn btn-block btn-info" (click)="swapUsers()">
-         <i class="fa fa-arrows-v" aria-hidden="true"></i> Поміняти місцями
-      </button>
-   </div>
-   <div class="form-group" [class.form-group-invalid]="showFormInvalidClass(cupCupMatchForm.get('away_user_id'))">
-      <label [attr.for]="'away_user_id'" class="font-weight-bold">Гравець 2</label>
-      <app-user-select formControlName="away_user_id" [usersList]="awayUser ? [awayUser] : []"></app-user-select>
-      <div [hidden]="!showFormErrorMessage(cupCupMatchForm.get('away_user_id'), 'required')" class="error-message">
-         <small>Гравець 2 обов'язковий</small>
+      <div class="form-row">
+         <div class="col-12 col-md-6 col-lg-4 offset-0 offset-md-3 offset-lg-4">
+            <div class="form-group">
+               <button type="button" class="btn btn-block btn-info" (click)="swapUsers()">
+                  <i class="fa fa-arrows-v" aria-hidden="true"></i> Поміняти місцями
+               </button>
+            </div>
+         </div>
       </div>
-   </div>
-   <div
-      class="form-group"
-      [class.form-group-invalid-custom]="cupCupMatchForm.get('group_number').invalid && cupCupMatchForm.get('group_number').touched"
-   >
-      <label for="group_number" class="font-weight-bold">
-         <ng-container *ngIf="!cupCupMatch" formGroupName="preserve">
-            <input type="checkbox" (click)="$event.stopPropagation()" formControlName="group_number" title="Зберегти значення" />
-         </ng-container>
-         Номер групи
-      </label>
-      <input type="number" id="group_number" class="form-control" formControlName="group_number" />
-      <div *ngIf="cupCupMatchForm.get('group_number').hasError('min') && cupCupMatchForm.get('group_number').touched">
-         <small>Мінімальний номер групи - 1</small>
+      <div class="form-row">
+         <div class="col-12 col-md-6 col-lg-4 offset-0 offset-md-3 offset-lg-4">
+            <div class="form-group" [class.form-group-invalid]="showFormInvalidClass(cupCupMatchForm.get('away_user_id'))">
+               <label [attr.for]="'away_user_id'" class="font-weight-bold">Гравець 2</label>
+               <app-user-select formControlName="away_user_id" [usersList]="awayUser ? [awayUser] : []"></app-user-select>
+               <div [hidden]="!showFormErrorMessage(cupCupMatchForm.get('away_user_id'), 'required')" class="error-message">
+                  <small>Гравець 2 обов'язковий</small>
+               </div>
+            </div>
+         </div>
       </div>
-   </div>
-   <div class="d-flex justify-content-between">
-      <button type="button" class="btn btn-outline-danger" (click)="resetCupCupMatchForm()">Відмінити зміни</button>
-      <button type="submit" class="btn btn-primary">{{ cupCupMatch ? 'Змінити' : 'Зберегти' }}</button>
-   </div>
-</form>
+      <div class="form-row">
+         <div class="col-12 col-md-6 col-lg-4 offset-0 offset-md-3 offset-lg-4">
+            <div class="form-group" [class.form-group-invalid]="showFormInvalidClass(cupCupMatchForm.get('group_number'))">
+               <label for="group_number" class="font-weight-bold">
+                  <ng-container *ngIf="!cupCupMatch" formGroupName="preserve">
+                     <input type="checkbox" (click)="$event.stopPropagation()" formControlName="group_number" title="Зберегти значення" />
+                  </ng-container>
+                  Номер групи
+               </label>
+               <input type="number" id="group_number" class="form-control" formControlName="group_number" />
+               <div [hidden]="!showFormErrorMessage(cupCupMatchForm.get('group_number'), 'min')" class="error-message">
+                  <small>Мінімальний номер групи - 1</small>
+               </div>
+            </div>
+         </div>
+      </div>
+      <div [hidden]="cupCupMatchForm.disabled" class="form-row">
+         <div class="col-6 col-md-3 col-lg-2 offset-0 offset-md-3 offset-lg-4">
+            <button type="button" class="btn btn-outline-danger" (click)="resetCupCupMatchForm()">
+               <i class="fa fa-refresh"></i>
+               Відмінити зміни
+            </button>
+         </div>
+         <div class="col-6 col-md-3 col-lg-2 d-flex justify-content-end">
+            <button type="submit" class="btn btn-primary">
+               <i class="fa fa-check-circle-o"></i>
+               {{ cupCupMatch ? 'Змінити' : 'Зберегти' }}
+            </button>
+         </div>
+      </div>
+   </form>
+</div>

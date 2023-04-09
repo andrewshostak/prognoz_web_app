@@ -17,6 +17,19 @@ export class CupCupMatchNewService {
 
    constructor(private authService: AuthNewService, private httpClient: HttpClient) {}
 
+   createCupCupMatch(cupCupMatch: Partial<CupCupMatchNew>): Observable<CupCupMatchNew> {
+      return this.httpClient
+         .post<{ cup_cup_match: CupCupMatchNew }>(this.cupCupMatchesUrl, cupCupMatch)
+         .pipe(map(response => response.cup_cup_match));
+   }
+
+   createCupCupMatches(cupStageId: number, numberOfMatchesInFirstStage: number | null): Observable<number> {
+      const body = { cup_stage_id: cupStageId, number_of_matches_in_first_stage: numberOfMatchesInFirstStage };
+      return this.httpClient
+         .post<{ total_number_of_matches: number }>(`${this.cupCupMatchesUrl}/bulk`, body)
+         .pipe(map(response => response.total_number_of_matches));
+   }
+
    deleteCupCupMatch(cupCupMatchId: number): Observable<void> {
       return this.httpClient.delete<void>(`${this.cupCupMatchesUrl}/${cupCupMatchId}`);
    }
@@ -126,6 +139,12 @@ export class CupCupMatchNewService {
       }
 
       return this.httpClient.get<PaginatedResponse<CupCupMatchNew>>(this.cupCupMatchesUrl, { params });
+   }
+
+   updateCupCupMatch(id: number, cupCupMatch: Partial<CupCupMatchNew>): Observable<CupCupMatchNew> {
+      return this.httpClient
+         .put<{ cup_cup_match: CupCupMatchNew }>(`${this.cupCupMatchesUrl}/${id}`, cupCupMatch)
+         .pipe(map(response => response.cup_cup_match));
    }
 
    private sortByIdFunc(a: CupCupMatchNew, b: CupCupMatchNew): number {

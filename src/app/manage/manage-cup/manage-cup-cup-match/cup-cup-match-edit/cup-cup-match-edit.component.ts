@@ -13,7 +13,6 @@ export class CupCupMatchEditComponent implements OnInit {
    constructor(private activatedRoute: ActivatedRoute, private cupCupMatchService: CupCupMatchNewService) {}
 
    cupCupMatch: CupCupMatchNew;
-   errorCupCupMatch: string;
 
    ngOnInit() {
       this.activatedRoute.params.forEach((params: Params) => {
@@ -22,13 +21,8 @@ export class CupCupMatchEditComponent implements OnInit {
    }
 
    private getCupCupMatchData(cupCupMatchId: number): void {
-      this.cupCupMatchService.getCupCupMatch(cupCupMatchId, ['homeUser', 'awayUser', 'cupStage.competition']).subscribe(
-         response => {
-            this.cupCupMatch = response;
-         },
-         error => {
-            this.errorCupCupMatch = error;
-         }
-      );
+      this.cupCupMatchService
+         .getCupCupMatch(cupCupMatchId, ['homeUser', 'awayUser', 'cupStage.competition'])
+         .subscribe(response => (this.cupCupMatch = response));
    }
 }
