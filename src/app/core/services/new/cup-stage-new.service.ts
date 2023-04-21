@@ -51,6 +51,10 @@ export class CupStageNewService {
          params = params.set('competition_id', search.competitionId.toString());
       }
 
+      if (search.round) {
+         params = params.set('round', search.round.toString());
+      }
+
       if (search.relations) {
          search.relations.forEach(relation => {
             params = params.append('relations[]', relation);

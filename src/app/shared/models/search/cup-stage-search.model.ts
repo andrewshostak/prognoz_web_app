@@ -7,6 +7,7 @@ export class CupStageSearch {
    public limit: number;
    public orderBy?: string;
    public page: number;
+   round?: number;
    public sequence?: Sequence;
    public states?: CupStageState[];
 }

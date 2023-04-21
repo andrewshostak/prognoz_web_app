@@ -23,11 +23,9 @@ export class CupCupMatchNewService {
          .pipe(map(response => response.cup_cup_match));
    }
 
-   createCupCupMatches(cupStageId: number, numberOfMatchesInFirstStage: number | null): Observable<number> {
+   createCupCupMatches(cupStageId: number, numberOfMatchesInFirstStage: number | null): Observable<void> {
       const body = { cup_stage_id: cupStageId, number_of_matches_in_first_stage: numberOfMatchesInFirstStage };
-      return this.httpClient
-         .post<{ total_number_of_matches: number }>(`${this.cupCupMatchesUrl}/bulk`, body)
-         .pipe(map(response => response.total_number_of_matches));
+      return this.httpClient.post<void>(`${this.cupCupMatchesUrl}/generate`, body);
    }
 
    deleteCupCupMatch(cupCupMatchId: number): Observable<void> {

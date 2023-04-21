@@ -10,78 +10,55 @@
             <div class="card-body">
                <form novalidate [formGroup]="cupCupMatchAutoForm" (ngSubmit)="onSubmit()">
                   <div
-                     class="form-group"
-                     [class.form-group-invalid-custom]="cupCupMatchAutoForm.get('type').invalid && cupCupMatchAutoForm.get('type').touched"
-                  >
-                     <label for="type" class="font-weight-bold">Тип</label>
-                     <input type="text" id="type" class="form-control" formControlName="type" />
-                  </div>
-                  <div
                      *ngIf="cupStages"
                      class="form-group"
-                     [class.form-group-invalid-custom]="cupCupMatchAutoForm.get('to').invalid && cupCupMatchAutoForm.get('to').touched"
+                     [class.form-group-invalid-custom]="
+                        cupCupMatchAutoForm.get('cup_stage_id').invalid && cupCupMatchAutoForm.get('cup_stage_id').touched
+                     "
                   >
-                     <label for="to" class="font-weight-bold">Для якої стадії формувати кубок матчі</label>
-                     <select id="to" class="form-control" formControlName="to">
+                     <label for="cup_stage_id" class="font-weight-bold">Для якої стадії формувати кубок матчі</label>
+                     <select id="cup_stage_id" class="form-control" formControlName="cup_stage_id">
                         <option *ngFor="let cupStage of cupStages" [value]="cupStage.id">
                            {{ cupStage.title }} - {{ cupStage.competition.title }}
                         </option>
                      </select>
-                     <div *ngIf="cupCupMatchAutoForm.get('to').hasError('required') && cupCupMatchAutoForm.get('to').touched">
+                     <div
+                        *ngIf="
+                           cupCupMatchAutoForm.get('cup_stage_id').hasError('required') && cupCupMatchAutoForm.get('cup_stage_id').touched
+                        "
+                     >
                         <small>Кубкова стадія обов'язкова</small>
                      </div>
                   </div>
                   <div
                      class="form-group"
                      [class.form-group-invalid-custom]="
-                        cupCupMatchAutoForm.get('number_of_matches').invalid && cupCupMatchAutoForm.get('number_of_matches').touched
+                        cupCupMatchAutoForm.get('number_of_matches_in_first_stage').invalid &&
+                        cupCupMatchAutoForm.get('number_of_matches_in_first_stage').touched
                      "
                   >
-                     <label for="number_of_matches" class="font-weight-bold">Клькість</label>
-                     <input type="number" id="number_of_matches" class="form-control" formControlName="number_of_matches" />
+                     <label for="number_of_matches_in_first_stage" class="font-weight-bold">Клькість матчів в першій стадії</label>
+                     <input
+                        type="number"
+                        id="number_of_matches_in_first_stage"
+                        class="form-control"
+                        formControlName="number_of_matches_in_first_stage"
+                     />
                      <div
                         *ngIf="
-                           cupCupMatchAutoForm.get('number_of_matches').hasError('min') &&
-                           cupCupMatchAutoForm.get('number_of_matches').touched
+                           cupCupMatchAutoForm.get('number_of_matches_in_first_stage').hasError('min') &&
+                           cupCupMatchAutoForm.get('number_of_matches_in_first_stage').touched
                         "
                      >
                         <small>Мінімальна кількість матчів - 1</small>
                      </div>
                   </div>
                   <div class="d-flex justify-content-between">
-                     <button type="button" class="btn btn-outline-danger" (click)="resetCupCupMatchAutoForm()">Відмінити зміни</button>
+                     <button type="button" class="btn btn-outline-danger" (click)="cupCupMatchAutoForm.reset()">Відмінити зміни</button>
                      <button type="submit" class="btn btn-primary">Зберегти</button>
                   </div>
                </form>
             </div>
-         </div>
-      </div>
-   </div>
-   <div class="row">
-      <div *ngIf="cupCupMatches" class="col-12">
-         <div class="table-responsive">
-            <table class="table">
-               <thead>
-                  <tr>
-                     <th scope="col">№</th>
-                     <th scope="col">Id</th>
-                     <th scope="col">Кубкова стадія</th>
-                     <th scope="col">Гравець 1</th>
-                     <th scope="col">Гравець 2</th>
-                     <th scope="col">Номер групи</th>
-                  </tr>
-               </thead>
-               <tbody>
-                  <tr *ngFor="let cupCupMatch of cupCupMatches; let i = index">
-                     <th scope="row">{{ i + 1 }}.</th>
-                     <td>{{ cupCupMatch.id }}</td>
-                     <td>{{ cupCupMatch.cup_stage.title }}</td>
-                     <td>{{ cupCupMatch.home_user.name }}</td>
-                     <td>{{ cupCupMatch.away_user.name }}</td>
-                     <td>{{ cupCupMatch.group_number }}</td>
-                  </tr>
-               </tbody>
-            </table>
          </div>
       </div>
    </div>
