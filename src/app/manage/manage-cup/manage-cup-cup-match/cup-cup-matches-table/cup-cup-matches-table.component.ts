@@ -2,7 +2,6 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 
 import { CupCupMatchState } from '@enums/cup-cup-match-state.enum';
-import { CupCupMatch } from '@models/cup/cup-cup-match.model';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { NotificationsService } from 'angular2-notifications';
 import { Subscription } from 'rxjs';
@@ -40,7 +39,7 @@ export class CupCupMatchesTableComponent implements OnDestroy, OnInit {
    total: number;
    isScore = UtilsService.isScore;
 
-   deleteCupCupMatch(cupCupMatch: CupCupMatch): void {
+   deleteCupCupMatch(cupCupMatch: CupCupMatchNew): void {
       this.cupCupMatchNewService.deleteCupCupMatch(cupCupMatch.id).subscribe(
          () => {
             this.openedModalReference.close();
@@ -86,7 +85,7 @@ export class CupCupMatchesTableComponent implements OnDestroy, OnInit {
       });
    }
 
-   openConfirmModal(content: NgbModalRef, cupCupMatch: CupCupMatch): void {
+   openConfirmModal(content: NgbModalRef, cupCupMatch: CupCupMatchNew): void {
       this.confirmModalMessage = `Видалити ${cupCupMatch.home_user.name} - ${cupCupMatch.away_user.name}?`;
       this.confirmModalSubmit = () => this.deleteCupCupMatch(cupCupMatch);
       this.openedModalReference = this.ngbModalService.open(content);
