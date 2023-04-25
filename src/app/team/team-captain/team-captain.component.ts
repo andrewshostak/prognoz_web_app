@@ -18,7 +18,6 @@ import { TeamStageNewService } from '@services/new/team-stage-new.service';
 import { TeamTeamMatchNewService } from '@services/new/team-team-match-new.service';
 import { TeamMatchService } from '@services/team/team-match.service';
 import { TeamPredictionService } from '@services/team/team-prediction.service';
-import { TeamTeamMatchService } from '@services/team/team-team-match.service';
 import { SettingsService } from '@services/settings.service';
 import { UtilsService } from '@services/utils.service';
 import { NotificationsService } from 'angular2-notifications';
@@ -41,7 +40,6 @@ export class TeamCaptainComponent implements OnInit {
       private teamParticipantService: TeamParticipantNewService,
       private teamPredictionService: TeamPredictionService,
       private teamStageService: TeamStageNewService,
-      private teamTeamMatchService: TeamTeamMatchService,
       private teamTeamMatchNewService: TeamTeamMatchNewService
    ) {}
 
@@ -110,28 +108,13 @@ export class TeamCaptainComponent implements OnInit {
    setTeamTeamMatchGoalkeeper(teamGoalkeeperForm: NgForm) {
       if (teamGoalkeeperForm.valid) {
          this.spinnerButtonGoalkeeper = true;
-         const teamId = this.teamParticipants[0].team_id;
-         const teamTeamMatchToUpdate = Object.assign({}, this.teamTeamMatch);
-
-         if (teamTeamMatchToUpdate.home_team_id === teamId) {
-            teamTeamMatchToUpdate.home_team_goalkeeper_id = teamGoalkeeperForm.value.goalkeeper_id;
-         } else if (teamTeamMatchToUpdate.away_team_id === teamId) {
-            teamTeamMatchToUpdate.away_team_goalkeeper_id = teamGoalkeeperForm.value.goalkeeper_id;
-         }
-
-         this.teamTeamMatchService.updateTeamTeamMatch(teamTeamMatchToUpdate as any).subscribe(
-            response => {
+         this.teamTeamMatchNewService.updateGoalkeeper(this.teamTeamMatch.id, teamGoalkeeperForm.value.goalkeeper_id).subscribe(
+            () => {
                this.spinnerButtonGoalkeeper = false;
-               if (!response) {
-                  return;
-               }
-
-               this.teamTeamMatch = response as any;
                this.goalkeeperId = teamGoalkeeperForm.value.goalkeeper_id;
                this.notificationsService.success('Успішно', 'Воротаря змінено');
             },
-            errors => {
-               errors.forEach(error => this.notificationsService.error('Помилка', error));
+            () => {
                this.spinnerButtonGoalkeeper = false;
             }
          );

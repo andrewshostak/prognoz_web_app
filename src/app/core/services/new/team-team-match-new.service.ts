@@ -65,6 +65,10 @@ export class TeamTeamMatchNewService {
       return this.httpClient.get<PaginatedResponse<TeamTeamMatchNew>>(this.teamTeamMatchesUrl, { params });
    }
 
+   updateGoalkeeper(teamTeamMatchId: number, goalkeeperId: number): Observable<void> {
+      return this.httpClient.put<void>(`${this.teamTeamMatchesUrl}/${teamTeamMatchId}/goalkeeper`, { goalkeeper_id: goalkeeperId });
+   }
+
    public updateTeamTeamMatch(teamTeamMatchId: number, teamTeamMatch: Partial<TeamTeamMatchNew>): Observable<TeamTeamMatchNew> {
       return this.httpClient
          .put<{ team_team_match: TeamTeamMatchNew }>(`${this.teamTeamMatchesUrl}/${teamTeamMatchId}`, teamTeamMatch)

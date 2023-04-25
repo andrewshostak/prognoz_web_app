@@ -53,7 +53,6 @@ import { TeamRatingNewService } from '@services/new/team-rating-new.service';
 import { TeamStageNewService } from '@services/new/team-stage-new.service';
 import { TeamStageTypeNewService } from '@services/new/team-stage-type-new.service';
 import { TeamTeamMatchNewService } from '@services/new/team-team-match-new.service';
-import { TeamTeamMatchService } from '@services/team/team-team-match.service';
 import { TitleService } from '@services/title.service';
 import { TournamentNewService } from '@services/new/tournament-new.service';
 import { UtilsService } from '@services/utils.service';
@@ -104,7 +103,6 @@ import { UtilsService } from '@services/utils.service';
       TeamStageNewService,
       TeamStageTypeNewService,
       TeamTeamMatchNewService,
-      TeamTeamMatchService,
       TitleService,
       TournamentNewService,
       UserNewService,
