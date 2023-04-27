@@ -52,4 +52,24 @@ export class FormValidatorService {
          return null;
       };
    }
+
+   public json(): ValidatorFn {
+      return (formControl: FormControl) => {
+         if (!this.isJson(formControl.value)) {
+            return { invalidJson: true };
+         }
+         return null;
+      };
+   }
+
+   private isJson(value: string): boolean {
+      let isJson = false;
+      try {
+         JSON.parse(value);
+         isJson = true;
+         // tslint:disable:no-empty
+      } catch (e) {}
+
+      return isJson;
+   }
 }

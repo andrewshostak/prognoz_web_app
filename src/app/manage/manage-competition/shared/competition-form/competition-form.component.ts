@@ -8,6 +8,7 @@ import { CompetitionNew } from '@models/new/competition-new.model';
 import { SeasonNew } from '@models/new/season-new.model';
 import { SeasonSearch } from '@models/search/season-search.model';
 import { TournamentNew } from '@models/new/tournament-new.model';
+import { FormValidatorService } from '@services/form-validator.service';
 import { CompetitionNewService } from '@services/new/competition-new.service';
 import { SeasonNewService } from '@services/new/season-new.service';
 import { SettingsService } from '@services/settings.service';
@@ -33,7 +34,8 @@ export class CompetitionFormComponent implements OnChanges, OnInit {
       private location: Location,
       private notificationsService: NotificationsService,
       private seasonService: SeasonNewService,
-      private tournamentService: TournamentNewService
+      private tournamentService: TournamentNewService,
+      private formValidatorService: FormValidatorService
    ) {}
 
    public createCompetition(competition: Partial<CompetitionNew>): void {
@@ -45,6 +47,11 @@ export class CompetitionFormComponent implements OnChanges, OnInit {
 
    public ngOnChanges(simpleChanges: SimpleChanges) {
       UtilsService.patchSimpleChangeValuesInForm(simpleChanges, this.competitionForm, 'competition', (formGroup, field, value) => {
+         if (field === 'config') {
+            formGroup.get('config').setValue(JSON.stringify(value));
+            return;
+         }
+
          if (formGroup.get(field)) {
             formGroup.patchValue({ [field]: value });
          }
@@ -64,13 +71,15 @@ export class CompetitionFormComponent implements OnChanges, OnInit {
          tournament_id: new FormControl(null, [Validators.required]),
          number_in_season: new FormControl(null, [Validators.required]),
          state: new FormControl(CompetitionState.NotStarted, [Validators.required]),
-         config: new FormControl(null, [Validators.required])
+         config: new FormControl(null, [Validators.required, this.formValidatorService.json()])
       });
    }
 
    public onSubmit(): void {
       if (this.competitionForm.valid) {
-         this.competition ? this.updateCompetition(this.competitionForm.value) : this.createCompetition(this.competitionForm.value);
+         const competition: Partial<CompetitionNew> = { ...this.competitionForm.value };
+         competition.config = JSON.parse(this.competitionForm.get('config').value);
+         this.competition ? this.updateCompetition(competition) : this.createCompetition(competition);
       }
    }
 

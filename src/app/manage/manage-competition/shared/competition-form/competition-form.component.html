@@ -115,6 +115,9 @@
             <div [hidden]="!showFormErrorMessage(competitionForm.get('config'), 'required')" class="error-message">
                <small>Конфігурація обовʼязкова</small>
             </div>
+            <div [hidden]="!showFormErrorMessage(competitionForm.get('config'), 'invalidJson')" class="error-message">
+               <small>Конфігурація повинна бути JSON-формату</small>
+            </div>
          </div>
       </div>
    </div>
