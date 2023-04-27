@@ -14,7 +14,6 @@ import { AuthGuard } from '@app/core/guards/auth.guard.service';
 import { AwardNewService } from '@services/new/award-new.service';
 import { ChampionshipRatingNewService } from '@services/new/championship-rating-new.service';
 import { ChampionshipService } from '@services/championship/championship.service';
-import { CompetitionService } from '@services/competition.service';
 import { CupApplicationNewService } from '@services/new/cup-application-new.service';
 import { CupGroupNumberNewService } from '@services/new/cup-group-number-new.service';
 import { CupRatingNewService } from '@services/new/cup-rating-new.service';
@@ -69,7 +68,6 @@ import { UtilsService } from '@services/utils.service';
       ChampionshipPredictionNewService,
       ChampionshipRatingNewService,
       ClubNewService,
-      CompetitionService,
       CompetitionNewService,
       CupApplicationNewService,
       CupCupMatchNewService,

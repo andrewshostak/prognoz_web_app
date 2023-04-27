@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
-import { CompetitionService } from '@services/competition.service';
 import { TitleService } from '@services/title.service';
 import { TeamMatchNewService } from '@services/new/team-match-new.service';
 import { TeamMatchSearch } from '@models/search/team-match-search.model';
@@ -20,7 +19,6 @@ import { Sequence } from '@enums/sequence.enum';
 export class TeamResultsComponent implements OnInit {
    constructor(
       private activatedRoute: ActivatedRoute,
-      private competitionService: CompetitionService,
       private router: Router,
       private teamMatchService: TeamMatchNewService,
       private titleService: TitleService

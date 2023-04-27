@@ -14,6 +14,12 @@ export class CompetitionNewService {
 
    constructor(private httpClient: HttpClient) {}
 
+   createCompetition(competition: Partial<CompetitionNew>): Observable<CompetitionNew> {
+      return this.httpClient
+         .post<{ competition: CompetitionNew }>(this.competitionsUrl, competition)
+         .pipe(map(response => response.competition));
+   }
+
    public getCompetition(id: number, relations: string[] = []): Observable<CompetitionNew> {
       const params = new HttpParams({ fromObject: { 'relations[]': relations } });
       return this.httpClient
@@ -58,5 +64,11 @@ export class CompetitionNewService {
       }
 
       return this.httpClient.get<PaginatedResponse<CompetitionNew>>(this.competitionsUrl, { params });
+   }
+
+   updateCompetition(id: number, competition: Partial<CompetitionNew>): Observable<CompetitionNew> {
+      return this.httpClient
+         .put<{ competition: CompetitionNew }>(`${this.competitionsUrl}/${id}`, competition)
+         .pipe(map(response => response.competition));
    }
 }

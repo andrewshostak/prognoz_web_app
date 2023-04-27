@@ -88,9 +88,6 @@ export class CupStageFormComponent implements OnChanges, OnInit {
       if (!simpleChanges.cupStage.firstChange && simpleChanges.cupStage.currentValue.competition) {
          this.competitions = uniqBy(this.competitions.concat([simpleChanges.cupStage.currentValue.competition]), 'id');
       }
-      if (!simpleChanges.cupStage.firstChange && simpleChanges.cupStage) {
-         this.cupStageForm.get('state').enable();
-      }
    }
 
    ngOnInit() {
@@ -102,7 +99,7 @@ export class CupStageFormComponent implements OnChanges, OnInit {
          cup_stage_type_id: new FormControl('', [Validators.required]),
          round: new FormControl(1, [Validators.required]),
          title: new FormControl('', [Validators.required]),
-         state: new FormControl({ value: CupStageState.NotStarted, disabled: true }, [Validators.required]),
+         state: new FormControl(CupStageState.NotStarted, [Validators.required]),
          cup_matches: new FormArray([])
       });
    }

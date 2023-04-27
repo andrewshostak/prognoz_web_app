@@ -1,16 +1,14 @@
 import { Location } from '@angular/common';
 import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
 
 import { CompetitionState } from '@enums/competition-state.enum';
 import { SeasonState } from '@enums/season-state.enum';
-import { Competition } from '@models/competition.model';
 import { CompetitionNew } from '@models/new/competition-new.model';
 import { SeasonNew } from '@models/new/season-new.model';
 import { SeasonSearch } from '@models/search/season-search.model';
 import { TournamentNew } from '@models/new/tournament-new.model';
-import { CompetitionService } from '@services/competition.service';
-import { FormValidatorService } from '@services/form-validator.service';
+import { CompetitionNewService } from '@services/new/competition-new.service';
 import { SeasonNewService } from '@services/new/season-new.service';
 import { SettingsService } from '@services/settings.service';
 import { TournamentNewService } from '@services/new/tournament-new.service';
@@ -23,73 +21,50 @@ import { NotificationsService } from 'angular2-notifications';
    styleUrls: ['./competition-form.component.scss']
 })
 export class CompetitionFormComponent implements OnChanges, OnInit {
-   @Input() public competition: Competition | CompetitionNew;
+   @Input() public competition: CompetitionNew;
 
    public competitionForm: FormGroup;
    public seasons: SeasonNew[];
    public tournaments: TournamentNew[];
+   competitionStates = CompetitionState;
 
    constructor(
-      private competitionService: CompetitionService,
+      private competitionService: CompetitionNewService,
       private location: Location,
       private notificationsService: NotificationsService,
       private seasonService: SeasonNewService,
-      private tournamentService: TournamentNewService,
-      private formValidatorService: FormValidatorService
+      private tournamentService: TournamentNewService
    ) {}
 
-   public createCompetition(competition: Competition): void {
-      this.competitionService.createCompetition(competition).subscribe(
-         response => {
-            this.notificationsService.success('Успішно', 'Змагання створено');
-            this.location.back();
-         },
-         errors => {
-            errors.forEach(error => this.notificationsService.error('Помилка', error));
-         }
-      );
+   public createCompetition(competition: Partial<CompetitionNew>): void {
+      this.competitionService.createCompetition(competition).subscribe(response => {
+         this.notificationsService.success('Успішно', `Змагання ${response.title} створено`);
+         this.location.back();
+      });
    }
 
    public ngOnChanges(simpleChanges: SimpleChanges) {
       UtilsService.patchSimpleChangeValuesInForm(simpleChanges, this.competitionForm, 'competition', (formGroup, field, value) => {
-         if (['stated', 'active', 'ended'].includes(field)) {
-            return;
-         }
-
-         if (field === 'state') {
-            switch (value) {
-               case CompetitionState.Applications:
-                  formGroup.get('stated').setValue(true);
-                  break;
-               case CompetitionState.Active:
-                  formGroup.get('active').setValue(true);
-                  break;
-               case CompetitionState.Ended:
-                  formGroup.get('ended').setValue(true);
-                  break;
-            }
-         } else {
-            if (formGroup.get(field)) {
-               formGroup.patchValue({ [field]: value });
-            }
+         if (formGroup.get(field)) {
+            formGroup.patchValue({ [field]: value });
          }
       });
+
+      if (!simpleChanges.competition.firstChange && simpleChanges.competition.currentValue.state === CompetitionState.Ended) {
+         this.competitionForm.disable();
+      }
    }
 
    public ngOnInit() {
       this.getSeasonsData();
       this.getTournamentsData();
       this.competitionForm = new FormGroup({
-         title: new FormControl('', [Validators.required, Validators.minLength(10), Validators.maxLength(50)]),
-         season_id: new FormControl('', [Validators.required]),
-         tournament_id: new FormControl('', [Validators.required]),
-         stated: new FormControl(false),
-         active: new FormControl(false),
-         ended: new FormControl(false),
-         participants: new FormControl(null, [this.formValidatorService.parity()]),
-         players_in_group: new FormControl(null, [this.formValidatorService.parity()]),
-         first_playoff_stage: new FormControl(null, [this.formValidatorService.parity()]),
-         number_of_teams: new FormControl(null, [this.formValidatorService.parity()])
+         title: new FormControl(null, [Validators.required, Validators.minLength(10), Validators.maxLength(50)]),
+         season_id: new FormControl(null, [Validators.required]),
+         tournament_id: new FormControl(null, [Validators.required]),
+         number_in_season: new FormControl(null, [Validators.required]),
+         state: new FormControl(CompetitionState.NotStarted, [Validators.required]),
+         config: new FormControl(null, [Validators.required])
       });
    }
 
@@ -99,25 +74,19 @@ export class CompetitionFormComponent implements OnChanges, OnInit {
       }
    }
 
-   public updateCompetition(competition: any): void {
-      if (!competition.stated && !competition.active && !competition.ended) {
-         competition.state = CompetitionState.NotStarted;
-      } else if (competition.stated) {
-         competition.state = CompetitionState.Applications;
-      } else if (competition.active) {
-         competition.state = CompetitionState.Active;
-      } else if (competition.ended) {
-         competition.state = CompetitionState.Ended;
-      }
-      this.competitionService.updateCompetition(competition, this.competition.id).subscribe(
-         response => {
-            this.notificationsService.success('Успішно', 'Змагання змінено');
-            this.location.back();
-         },
-         errors => {
-            errors.forEach(error => this.notificationsService.error('Помилка', error));
-         }
-      );
+   public updateCompetition(competition: Partial<CompetitionNew>): void {
+      this.competitionService.updateCompetition(this.competition.id, competition).subscribe(response => {
+         this.notificationsService.success('Успішно', `Змагання ${response.title} змінено`);
+         this.location.back();
+      });
+   }
+
+   showFormErrorMessage(abstractControl: AbstractControl, errorKey: string): boolean {
+      return UtilsService.showFormErrorMessage(abstractControl, errorKey);
+   }
+
+   showFormInvalidClass(abstractControl: AbstractControl): boolean {
+      return UtilsService.showFormInvalidClass(abstractControl);
    }
 
    private getSeasonsData() {
