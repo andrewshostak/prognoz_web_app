@@ -6,6 +6,7 @@ import { SharedModule } from '@app/shared/shared.module';
 import { NgbCollapseModule } from '@ng-bootstrap/ng-bootstrap';
 import { TeamAndParticipantsComponent } from '@team/shared/team-and-participants/team-and-participants.component';
 import { TeamGoalkeeperFormComponent } from '@team/shared/team-goalkeeper-form/team-goalkeeper-form.component';
+import { TeamGoalkeepersRatingComponent } from '@team/shared/team-goalkeepers-rating/team-goalkeepers-rating.component';
 import { TeamPredictionFormComponent } from '@team/shared/team-prediction-form/team-prediction-form.component';
 import { TeamRatingTableComponent } from '@team/shared/team-rating-table/team-rating-table.component';
 import { TeamRatingUserTableComponent } from '@team/shared/team-rating-user-table/team-rating-user-table.component';
@@ -24,6 +25,7 @@ import { TeamRatingComponent } from '@team/team-rating/team-rating.component';
 import { TeamResultsComponent } from '@team/team-results/team-results.component';
 import { TeamRoutingModule } from '@team/team-routing.module';
 import { TeamRulesComponent } from '@team/team-rules/team-rules.component';
+import { TeamScorersRatingComponent } from '@team/shared/team-scorers-rating/team-scorers-rating.component';
 import { TeamComponent } from '@team/team.component';
 import { SimpleNotificationsModule } from 'angular2-notifications';
 
@@ -36,6 +38,7 @@ import { SimpleNotificationsModule } from 'angular2-notifications';
       TeamCreateComponent,
       TeamEditComponent,
       TeamGoalkeeperFormComponent,
+      TeamGoalkeepersRatingComponent,
       TeamTeamMatchesNewComponent,
       TeamMyComponent,
       TeamParticipantsComponent,
@@ -47,6 +50,7 @@ import { SimpleNotificationsModule } from 'angular2-notifications';
       TeamResultsComponent,
       TeamResultsTableComponent,
       TeamRulesComponent,
+      TeamScorersRatingComponent,
       TeamSelectModalComponent,
       TeamTeamMatchCardComponent,
       TeamStageSelectComponent

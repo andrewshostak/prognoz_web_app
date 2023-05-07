@@ -10,6 +10,7 @@ import { ChampionshipUserRatingDetailsComponent } from '@app/shared/components/c
 import { CheckboxComponent } from '@app/shared/components/checkbox/checkbox.component';
 import { ClubSelectComponent } from '@app/shared/components/club-select/club-select.component';
 import { ConfirmationModalComponent } from '@app/shared/components/confirmation-modal/confirmation-modal.component';
+import { DeclensionPipe } from '@app/shared/pipes/declension.pipe';
 import { DropdownNavigationComponent } from '@app/shared/components/dropdown-navigation/dropdown-navigation.component';
 import { ErrorComponent } from '@app/shared/components/error/error.component';
 import { FileUploadComponent } from '@app/shared/components/file-upload/file-upload.component';
@@ -25,6 +26,7 @@ import { OnlineUsersListComponent } from '@app/shared/components/online-users-li
 import { PaginationComponent } from '@app/shared/components/pagination/pagination.component';
 import { SocialMedialLinksComponent } from '@app/shared/components/social-medial-links/social-medial-links.component';
 import { SpinnerButtonComponent } from '@app/shared/components/spinner-button/spinner-button.component';
+import { SortKeyValuePipe } from '@app/shared/pipes/sort-key-value.pipe';
 import { SpinnerComponent } from '@app/shared/components/spinner/spinner.component';
 import { TeamFormComponent } from '@app/shared/components/team/team-form/team-form.component';
 import { TeamSelectComponent } from '@app/shared/components/team/team-select/team-select.component';
@@ -56,6 +58,7 @@ import { UserWinsAwardsComponent } from '@app/shared/components/user-wins-awards
       CompetitionSelectNewComponent,
       ConfirmationModalComponent,
       CustomContentWithTooltipComponent,
+      DeclensionPipe,
       DropdownNavigationComponent,
       ErrorComponent,
       FileUploadComponent,
@@ -71,6 +74,7 @@ import { UserWinsAwardsComponent } from '@app/shared/components/user-wins-awards
       PaginationComponent,
       PredictionWithTooltipComponent,
       SocialMedialLinksComponent,
+      SortKeyValuePipe,
       SpinnerComponent,
       SpinnerButtonComponent,
       TeamLogoComponent,
@@ -95,6 +99,7 @@ import { UserWinsAwardsComponent } from '@app/shared/components/user-wins-awards
       CompetitionSelectNewComponent,
       ConfirmationModalComponent,
       CustomContentWithTooltipComponent,
+      DeclensionPipe,
       DropdownNavigationComponent,
       ErrorComponent,
       FileUploadComponent,
@@ -110,6 +115,7 @@ import { UserWinsAwardsComponent } from '@app/shared/components/user-wins-awards
       PaginationComponent,
       PredictionWithTooltipComponent,
       SocialMedialLinksComponent,
+      SortKeyValuePipe,
       SpinnerComponent,
       SpinnerButtonComponent,
       TeamLogoComponent,
