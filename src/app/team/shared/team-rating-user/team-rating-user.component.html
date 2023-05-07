@@ -1,11 +1,11 @@
 <div class="row">
-   <div class="col-12 col-md-6 col-lg-4">
+   <div class="col-12 col-md-6 col-lg-4 mb-2">
       <ng-select
          [items]="teams"
          [(ngModel)]="selectedTeamId"
          bindLabel="name"
          bindValue="id"
-         placeholder="Команда"
+         placeholder="Всі команди"
          (ngModelChange)="selectedTeamChanged()"
       >
          <ng-template ng-label-tmp ng-option-tmp let-item="item">
@@ -13,29 +13,40 @@
          </ng-template>
       </ng-select>
    </div>
+   <div class="col-12 col-md-6 col-lg-4">
+      <ng-select
+         [items]="tablesToShowItems"
+         [(ngModel)]="tablesToShow"
+         bindLabel="title"
+         bindValue="value"
+         placeholder="Всі рейтинги"
+         (ngModelChange)="selectedTableChanged($event)"
+      >
+      </ng-select>
+   </div>
 </div>
-<ng-container *ngIf="topScorersRating.length">
-   <div class="row mt-2">
+<ng-container *ngIf="tablesToShow.includes('scorers') && topScorersRating.length">
+   <div class="row mt-4">
       <div class="col-12">
          <h4>Рейтинг бомбардирів</h4>
       </div>
    </div>
+   <app-team-scorers-rating [scorers]="topScorersRating"></app-team-scorers-rating>
 </ng-container>
-<app-team-scorers-rating [scorers]="topScorersRating"></app-team-scorers-rating>
-<ng-container *ngIf="goalkeepersRating.length">
-   <div class="row mt-2">
+<ng-container *ngIf="tablesToShow.includes('goalkeepers') && goalkeepersRating.length">
+   <div class="row" [ngClass]="tablesToShow.length === 1 ? 'mt-4' : 'mt-5'">
       <div class="col-12">
          <h4>Рейтинг воротарів</h4>
       </div>
    </div>
+   <app-team-goalkeepers-rating [goalkeepers]="goalkeepersRating"></app-team-goalkeepers-rating>
 </ng-container>
-<app-team-goalkeepers-rating [goalkeepers]="goalkeepersRating"></app-team-goalkeepers-rating>
-<ng-container *ngIf="blockedScorersRating.length">
-   <div class="row mt-2">
+<ng-container *ngIf="tablesToShow.includes('blocked-scorers') && blockedScorersRating.length">
+   <div class="row" [ngClass]="tablesToShow.length === 1 ? 'mt-4' : 'mt-5'">
       <div class="col-12">
          <h4>Рейтинг гравців голи яких заблокували</h4>
       </div>
    </div>
+   <app-team-blocked-scorers-rating [blockedScorers]="blockedScorersRating"></app-team-blocked-scorers-rating>
 </ng-container>
-<app-team-blocked-scorers-rating [blockedScorers]="blockedScorersRating"></app-team-blocked-scorers-rating>
 <app-info *ngIf="!teamRatingUser.length" [message]="'Рейтинг гравців не знайдено'"></app-info>

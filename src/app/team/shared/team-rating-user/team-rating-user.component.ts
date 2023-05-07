@@ -17,6 +17,12 @@ export class TeamRatingUserComponent implements OnChanges {
    teams: TeamNew[] = [];
    topScorersRating: TeamRatingUserNew[] = [];
    selectedTeamId: number = null;
+   tablesToShow: string[] = ['scorers', 'goalkeepers', 'blocked-scorers'];
+   tablesToShowItems: { title: string; value: string[] }[] = [
+      { title: 'Бомбардири', value: ['scorers'] },
+      { title: 'Воротарі', value: ['goalkeepers'] },
+      { title: 'Гравці голи яких заблокували', value: ['blocked-scorers'] }
+   ];
 
    selectedTeamChanged(): void {
       this.topScorersRating = this.filterTeamUserRating(this.teamRatingUser, 'scored').filter(user =>
@@ -28,6 +34,12 @@ export class TeamRatingUserComponent implements OnChanges {
       this.blockedScorersRating = this.filterTeamUserRating(this.teamRatingUser, 'scores_blocked').filter(user =>
          this.selectedTeamId === null ? true : user.team_id === this.selectedTeamId
       );
+   }
+
+   selectedTableChanged(tablesToShow: string[] | null): void {
+      if (tablesToShow === null) {
+         this.tablesToShow = ['scorers', 'goalkeepers', 'blocked-scorers'];
+      }
    }
 
    ngOnChanges(changes: SimpleChanges) {
