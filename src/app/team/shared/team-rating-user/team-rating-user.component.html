@@ -30,4 +30,12 @@
    </div>
 </ng-container>
 <app-team-goalkeepers-rating [goalkeepers]="goalkeepersRating"></app-team-goalkeepers-rating>
+<ng-container *ngIf="blockedScorersRating.length">
+   <div class="row mt-2">
+      <div class="col-12">
+         <h4>Рейтинг гравців голи яких заблокували</h4>
+      </div>
+   </div>
+</ng-container>
+<app-team-blocked-scorers-rating [blockedScorers]="blockedScorersRating"></app-team-blocked-scorers-rating>
 <app-info *ngIf="!teamRatingUser.length" [message]="'Рейтинг гравців не знайдено'"></app-info>

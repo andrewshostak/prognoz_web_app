@@ -12,6 +12,7 @@ export class TeamRatingUserComponent implements OnChanges {
    @Input() teamRatingUser: TeamRatingUserNew[];
    @Input() authenticatedUser: User;
 
+   blockedScorersRating: TeamRatingUserNew[] = [];
    goalkeepersRating: TeamRatingUserNew[] = [];
    teams: TeamNew[] = [];
    topScorersRating: TeamRatingUserNew[] = [];
@@ -24,12 +25,16 @@ export class TeamRatingUserComponent implements OnChanges {
       this.goalkeepersRating = this.filterTeamUserRating(this.teamRatingUser, 'blocked').filter(user =>
          this.selectedTeamId === null ? true : user.team_id === this.selectedTeamId
       );
+      this.blockedScorersRating = this.filterTeamUserRating(this.teamRatingUser, 'scores_blocked').filter(user =>
+         this.selectedTeamId === null ? true : user.team_id === this.selectedTeamId
+      );
    }
 
    ngOnChanges(changes: SimpleChanges) {
       if (changes.teamRatingUser && changes.teamRatingUser.currentValue) {
          this.topScorersRating = this.filterTeamUserRating(changes.teamRatingUser.currentValue, 'scored');
          this.goalkeepersRating = this.filterTeamUserRating(changes.teamRatingUser.currentValue, 'blocked');
+         this.blockedScorersRating = this.filterTeamUserRating(changes.teamRatingUser.currentValue, 'scores_blocked');
          this.selectedTeamId = null;
          this.teams = this.getTeams(changes.teamRatingUser.currentValue);
       }

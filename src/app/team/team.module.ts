@@ -5,6 +5,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from '@app/shared/shared.module';
 import { NgbCollapseModule, NgbNavModule } from '@ng-bootstrap/ng-bootstrap';
 import { TeamAndParticipantsComponent } from '@team/shared/team-and-participants/team-and-participants.component';
+import { TeamBlockedScorersRatingComponent } from '@team/shared/team-blocked-scorers-rating/team-blocked-scorers-rating.component';
 import { TeamGoalkeeperFormComponent } from '@team/shared/team-goalkeeper-form/team-goalkeeper-form.component';
 import { TeamGoalkeepersRatingComponent } from '@team/shared/team-goalkeepers-rating/team-goalkeepers-rating.component';
 import { TeamPredictionFormComponent } from '@team/shared/team-prediction-form/team-prediction-form.component';
@@ -44,6 +45,7 @@ import { NgSelectModule } from '@ng-select/ng-select';
    ],
    declarations: [
       TeamAndParticipantsComponent,
+      TeamBlockedScorersRatingComponent,
       TeamCaptainComponent,
       TeamComponent,
       TeamCreateComponent,

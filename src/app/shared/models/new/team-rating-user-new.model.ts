@@ -9,6 +9,7 @@ export class TeamRatingUserNew {
    public user_id: number;
    public scored: number;
    public blocked: number;
+   scores_blocked: number;
 
    public team?: TeamNew;
    public user?: UserNew;
