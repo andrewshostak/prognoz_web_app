@@ -24,6 +24,7 @@ import { filter } from 'rxjs/operators';
    templateUrl: './team-rating.component.html'
 })
 export class TeamRatingComponent implements OnDestroy, OnInit {
+   activeTab = 'teams';
    public activatedRouteSubscription: Subscription;
    public authenticatedUser: User;
    public competitionId: number;

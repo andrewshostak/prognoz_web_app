@@ -1,10 +1,23 @@
 <app-competition-select-new (competitionSelected)="competitionSelected($event)"></app-competition-select-new>
-<div *ngIf="groupedRating; else defaultRating">
-   <div *ngFor="let item of groupedRating | keyvalue" class="mb-2">
-      <app-team-rating-table [teamRating]="item.value" [competition]="competition"> </app-team-rating-table>
-   </div>
-</div>
-<ng-template #defaultRating>
-   <app-team-rating-table [teamRating]="teamRating" [competition]="competition"> </app-team-rating-table>
-</ng-template>
-<app-team-rating-user-table [authenticatedUser]="authenticatedUser" [teamRatingUser]="teamRatingUser"></app-team-rating-user-table>
+<ul ngbNav #nav="ngbNav" [(activeId)]="activeTab" class="nav-tabs">
+   <li [ngbNavItem]="'teams'">
+      <a ngbNavLink>Команди</a>
+      <ng-template ngbNavContent>
+         <div *ngIf="groupedRating; else defaultRating">
+            <div *ngFor="let item of groupedRating | keyvalue" class="mb-2">
+               <app-team-rating-table [teamRating]="item.value" [competition]="competition"> </app-team-rating-table>
+            </div>
+         </div>
+         <ng-template #defaultRating>
+            <app-team-rating-table [teamRating]="teamRating" [competition]="competition"> </app-team-rating-table>
+         </ng-template>
+      </ng-template>
+   </li>
+   <li [ngbNavItem]="'players'">
+      <a ngbNavLink>Гравці</a>
+      <ng-template ngbNavContent>
+         <app-team-rating-user [authenticatedUser]="authenticatedUser" [teamRatingUser]="teamRatingUser"></app-team-rating-user>
+      </ng-template>
+   </li>
+</ul>
+<div [ngbNavOutlet]="nav" class="mt-2"></div>

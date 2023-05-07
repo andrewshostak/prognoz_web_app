@@ -1,0 +1,33 @@
+<div class="row">
+   <div class="col-12 col-md-6 col-lg-4">
+      <ng-select
+         [items]="teams"
+         [(ngModel)]="selectedTeamId"
+         bindLabel="name"
+         bindValue="id"
+         placeholder="Команда"
+         (ngModelChange)="selectedTeamChanged()"
+      >
+         <ng-template ng-label-tmp ng-option-tmp let-item="item">
+            <app-team-logo [team]="item" [showTooltip]="false"></app-team-logo> {{ item.name }}
+         </ng-template>
+      </ng-select>
+   </div>
+</div>
+<ng-container *ngIf="topScorersRating.length">
+   <div class="row mt-2">
+      <div class="col-12">
+         <h4>Рейтинг бомбардирів</h4>
+      </div>
+   </div>
+</ng-container>
+<app-team-scorers-rating [scorers]="topScorersRating"></app-team-scorers-rating>
+<ng-container *ngIf="goalkeepersRating.length">
+   <div class="row mt-2">
+      <div class="col-12">
+         <h4>Рейтинг воротарів</h4>
+      </div>
+   </div>
+</ng-container>
+<app-team-goalkeepers-rating [goalkeepers]="goalkeepersRating"></app-team-goalkeepers-rating>
+<app-info *ngIf="!teamRatingUser.length" [message]="'Рейтинг гравців не знайдено'"></app-info>

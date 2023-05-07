@@ -3,13 +3,13 @@ import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { SharedModule } from '@app/shared/shared.module';
-import { NgbCollapseModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbCollapseModule, NgbNavModule } from '@ng-bootstrap/ng-bootstrap';
 import { TeamAndParticipantsComponent } from '@team/shared/team-and-participants/team-and-participants.component';
 import { TeamGoalkeeperFormComponent } from '@team/shared/team-goalkeeper-form/team-goalkeeper-form.component';
 import { TeamGoalkeepersRatingComponent } from '@team/shared/team-goalkeepers-rating/team-goalkeepers-rating.component';
 import { TeamPredictionFormComponent } from '@team/shared/team-prediction-form/team-prediction-form.component';
 import { TeamRatingTableComponent } from '@team/shared/team-rating-table/team-rating-table.component';
-import { TeamRatingUserTableComponent } from '@team/shared/team-rating-user-table/team-rating-user-table.component';
+import { TeamRatingUserComponent } from '@team/shared/team-rating-user/team-rating-user.component';
 import { TeamResultsTableComponent } from '@team/shared/team-results-table/team-results-table.component';
 import { TeamSelectModalComponent } from '@team/shared/team-select-modal/team-select-modal.component';
 import { TeamStageSelectComponent } from '@team/shared/team-stage-select/team-stage-select.component';
@@ -28,9 +28,20 @@ import { TeamRulesComponent } from '@team/team-rules/team-rules.component';
 import { TeamScorersRatingComponent } from '@team/shared/team-scorers-rating/team-scorers-rating.component';
 import { TeamComponent } from '@team/team.component';
 import { SimpleNotificationsModule } from 'angular2-notifications';
+import { NgSelectModule } from '@ng-select/ng-select';
 
 @NgModule({
-   imports: [CommonModule, FormsModule, ReactiveFormsModule, SharedModule, SimpleNotificationsModule, TeamRoutingModule, NgbCollapseModule],
+   imports: [
+      CommonModule,
+      FormsModule,
+      ReactiveFormsModule,
+      SharedModule,
+      SimpleNotificationsModule,
+      TeamRoutingModule,
+      NgbCollapseModule,
+      NgbNavModule,
+      NgSelectModule
+   ],
    declarations: [
       TeamAndParticipantsComponent,
       TeamCaptainComponent,
@@ -46,7 +57,7 @@ import { SimpleNotificationsModule } from 'angular2-notifications';
       TeamPredictionsComponent,
       TeamRatingComponent,
       TeamRatingTableComponent,
-      TeamRatingUserTableComponent,
+      TeamRatingUserComponent,
       TeamResultsComponent,
       TeamResultsTableComponent,
       TeamRulesComponent,
