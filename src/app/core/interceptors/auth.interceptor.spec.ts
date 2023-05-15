@@ -88,11 +88,11 @@ describe('AuthInterceptor', () => {
       });
 
       it('should return false when url includes one of allowed paths but does not environment apiUrl', () => {
-         expect(authInterceptor.isAllowedPath(`${fakeUrl}/${SettingsService.newInterceptorPaths[0]}`)).toBeFalsy();
+         expect(authInterceptor.isAllowedPath(`${fakeUrl}/v2/auth/logout`)).toBeFalsy();
       });
 
       it('should return true when url includes one of allowed paths and environment apiUrl', () => {
-         expect(authInterceptor.isAllowedPath(`${environment.apiUrl}/${SettingsService.newInterceptorPaths[0]}`)).toBeTruthy();
+         expect(authInterceptor.isAllowedPath(`${environment.apiUrl}/v2/auth/logout`)).toBeTruthy();
       });
    });
 });

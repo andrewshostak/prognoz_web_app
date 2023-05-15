@@ -49,7 +49,10 @@ describe('ErrorInterceptor', () => {
       it('should not invoke notificationsService `error` when `isAllowedPath` returns false', () => {
          spyOn(notificationsService, 'error');
 
-         httpClient.delete(environment.apiUrl + 'kovbaska').subscribe(() => {}, () => {});
+         httpClient.delete(environment.apiUrl + 'kovbaska').subscribe(
+            () => {},
+            () => {}
+         );
          httpTestingController.expectOne(environment.apiUrl + 'kovbaska').flush({}, error);
 
          expect(notificationsService.error).not.toHaveBeenCalled();
@@ -58,7 +61,10 @@ describe('ErrorInterceptor', () => {
       it('should not invoke notificationsService `error` when `isAllowedMethod` returns false', () => {
          spyOn(notificationsService, 'error');
 
-         httpClient.get(exampleService.matchesUrl).subscribe(() => {}, () => {});
+         httpClient.get(exampleService.matchesUrl).subscribe(
+            () => {},
+            () => {}
+         );
          httpTestingController.expectOne(exampleService.matchesUrl).flush({}, error);
 
          expect(notificationsService.error).not.toHaveBeenCalled();
@@ -67,7 +73,10 @@ describe('ErrorInterceptor', () => {
       it('should invoke notificationsService `error` when `isAllowedPath` and `isAllowedMethod` are true', () => {
          spyOn(notificationsService, 'error');
 
-         httpClient.delete(exampleService.matchesUrl).subscribe(() => {}, () => {});
+         httpClient.delete(exampleService.matchesUrl).subscribe(
+            () => {},
+            () => {}
+         );
          httpTestingController.expectOne(exampleService.matchesUrl).flush({}, error);
 
          expect(notificationsService.error).toHaveBeenCalledWith('Помилка 400', '{}', { timeOut: 0 });
@@ -100,11 +109,11 @@ describe('ErrorInterceptor', () => {
       });
 
       it('should return false when url includes one of allowed paths but does not environment apiUrl', () => {
-         expect(errorInterceptor.isAllowedPath(`${fakeUrl}/${SettingsService.newInterceptorPaths[0]}`)).toBeFalsy();
+         expect(errorInterceptor.isAllowedPath(`${fakeUrl}/v2/auth/logout`)).toBeFalsy();
       });
 
       it('should return true when url includes one of allowed paths and environment apiUrl', () => {
-         expect(errorInterceptor.isAllowedPath(`${environment.apiUrl}/${SettingsService.newInterceptorPaths[0]}`)).toBeTruthy();
+         expect(errorInterceptor.isAllowedPath(`${environment.apiUrl}/v2/auth/logout`)).toBeTruthy();
       });
    });
 });

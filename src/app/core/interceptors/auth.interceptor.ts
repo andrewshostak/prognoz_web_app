@@ -22,6 +22,6 @@ export class AuthInterceptor implements HttpInterceptor {
    }
 
    public isAllowedPath(url: string): boolean {
-      return url.includes(environment.apiUrl) && SettingsService.newInterceptorPaths.some(path => url.includes(path));
+      return url.includes(`${environment.apiUrl}`) && url.includes('v2');
    }
 }

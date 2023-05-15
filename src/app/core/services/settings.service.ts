@@ -26,37 +26,6 @@ export class SettingsService {
 
    public static readonly defaultDebounceTime: number = 750;
 
-   // endpoints show notifications after error response
-   public static readonly newInterceptorPaths: string[] = [
-      'v2/auth/logout',
-      'v2/auth/user',
-      'v2/championship/matches',
-      'v2/championship/predictions',
-      'v2/championship/rating',
-      'v2/clubs',
-      'v2/comments',
-      'v2/competitions',
-      'v2/cup/applications',
-      'v2/cup/matches',
-      'v2/cup/predictions/my',
-      'v2/cup/predictions',
-      'v2/cup/stages',
-      'v2/cup/cup-matches',
-      'v2/guestbook-messages',
-      'v2/matches',
-      'v2/news',
-      'v2/team/matches',
-      'v2/team/participants',
-      'v2/team/predictions',
-      'v2/team/rating',
-      'v2/team/rating-user',
-      'v2/team/stages',
-      'v2/team/stage-types',
-      'v2/team/teams',
-      'v2/team/team-matches',
-      'v2/users'
-   ];
-
    // new image logos paths
    public static readonly awardsLogosPath: string = environment.imageURL + '/awards';
    public static readonly clubsLogosPath: string = environment.imageURL + '/clubs';
