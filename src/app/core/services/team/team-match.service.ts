@@ -16,24 +16,26 @@ export class TeamMatchService {
 
    /**
     * @deprecated
-    * filter values: my, opponents
+    * TODO: create and use v2 endpoint instead of this
     *
-    * my
+    * possible "filter" values: "my", "opponents"
+    *
+    * - "my"
     * where: /team/my on init and stage change
-    * params: team_stage_id,
+    * params: team_stage_id
     * relations: predictions, predictions.user, match, club-first, club-second
+    * why: to show matches & predictions (team strategy)
     * note: protected, loaded by current user
-    * why do we need: to show matches & predictions (team strategy)
     *
-    * opponents
+    * - "opponents"
     * where /team/predictions on init and stage change
     * params: team_stage_id
     * relations: predictions (only some values), match, club-first, club-second
-    * note: protected, loaded by current user
-    * why do we need:
+    * why:
     *    - to show matches in a goalkeeper dropdown and show which are blocked (from prediction relation)
     *    - to understand if the stage was started
     *    - to get team_match_id, team_id, prediction id (if it is present) for updating blocked_by
+    * note: protected, loaded by current user
     */
    public getTeamMatchesAuthUser(requestParams: RequestParams[]): Observable<any> {
       let params: HttpParams = new HttpParams();

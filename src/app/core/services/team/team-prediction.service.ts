@@ -11,32 +11,30 @@ import { Observable } from 'rxjs';
 
 @Injectable()
 export class TeamPredictionService {
-    constructor(private errorHandlerService: ErrorHandlerService, private headersWithToken: HeadersWithToken) {}
+   constructor(private errorHandlerService: ErrorHandlerService, private headersWithToken: HeadersWithToken) {}
 
-    private teamPredictionUrl = environment.apiUrl + 'team/predictions';
+   private teamPredictionUrl = environment.apiUrl + 'team/predictions';
 
-    /**
-     * Update or create team prediction
-     * @param teamPrediction
-     * @returns {Observable<TeamPrediction>}
-     */
-    updateTeamPrediction(teamPrediction: TeamPrediction): Observable<TeamPrediction> {
-        const url = teamPrediction.id ? `${this.teamPredictionUrl}/${teamPrediction.id}` : this.teamPredictionUrl;
-        return this.headersWithToken.put(url, teamPrediction).pipe(catchError(this.errorHandlerService.handle));
-    }
+   /**
+    * @deprecated
+    * TODO: create and use v2 endpoint instead of this
+    */
+   updateTeamPrediction(teamPrediction: TeamPrediction): Observable<TeamPrediction> {
+      const url = teamPrediction.id ? `${this.teamPredictionUrl}/${teamPrediction.id}` : this.teamPredictionUrl;
+      return this.headersWithToken.put(url, teamPrediction).pipe(catchError(this.errorHandlerService.handle));
+   }
 
-    /**
-     * Get team predictions
-     * @param requestParams
-     * @returns {Observable<any>}
-     */
-    getTeamPredictions(requestParams?: RequestParams[]): Observable<any> {
-        let params: HttpParams = new HttpParams();
-        if (requestParams) {
-            for (const requestParam of requestParams) {
-                params = params.append(requestParam.parameter, requestParam.value);
-            }
-        }
-        return this.headersWithToken.get(this.teamPredictionUrl, params).pipe(catchError(this.errorHandlerService.handle));
-    }
+   /**
+    * @deprecated
+    * TODO: create and use v2 endpoint instead of this
+    */
+   getTeamPredictions(requestParams?: RequestParams[]): Observable<any> {
+      let params: HttpParams = new HttpParams();
+      if (requestParams) {
+         for (const requestParam of requestParams) {
+            params = params.append(requestParam.parameter, requestParam.value);
+         }
+      }
+      return this.headersWithToken.get(this.teamPredictionUrl, params).pipe(catchError(this.errorHandlerService.handle));
+   }
 }
