@@ -1,9 +1,8 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
-import { environment } from '@env';
 import { TeamPrediction } from '@models/team/team-prediction.model';
-import { TeamPredictionService } from '@services/team/team-prediction.service';
+import { TeamPredictionNewService } from '@services/new/team-prediction-new.service';
 import { UtilsService } from '@services/utils.service';
 import { NotificationsService } from 'angular2-notifications';
 import { SettingsService } from '@services/settings.service';
@@ -26,7 +25,7 @@ export class TeamPredictionFormComponent implements OnInit {
    constructor(
       private formBuilder: FormBuilder,
       private notificationsService: NotificationsService,
-      private teamPredictionService: TeamPredictionService
+      private teamPredictionService: TeamPredictionNewService
    ) {}
 
    public ngOnInit() {
@@ -48,14 +47,11 @@ export class TeamPredictionFormComponent implements OnInit {
 
       this.spinnerButton = true;
       const teamPredictionToUpdate = {
-         id: this.teamPrediction.id,
-         team_match_id: this.teamPrediction.team_match_id,
-         team_id: this.teamPrediction.team_id,
          home: this.teamPredictionUpdateForm.value.home,
          away: this.teamPredictionUpdateForm.value.away
       };
 
-      this.teamPredictionService.updateTeamPrediction(teamPredictionToUpdate).subscribe(
+      this.teamPredictionService.updatePrediction(this.teamPrediction.id, teamPredictionToUpdate).subscribe(
          () => {
             this.spinnerButton = false;
             this.teamPredictionUpdated.emit();
@@ -64,9 +60,8 @@ export class TeamPredictionFormComponent implements OnInit {
                      ${this.teamPrediction.team_match.club_first.title} - ${this.teamPrediction.team_match.club_second.title}`;
             this.notificationsService.success('Збережено', message);
          },
-         errors => {
+         () => {
             this.spinnerButton = false;
-            errors.forEach(error => this.notificationsService.error('Помилка', error));
          }
       );
    }

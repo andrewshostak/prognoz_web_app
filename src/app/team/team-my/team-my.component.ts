@@ -80,7 +80,7 @@ export class TeamMyComponent implements OnInit {
             filter(params => params.team_stage_id),
             tap((params: Params) => {
                const teamStageId = parseInt(params.team_stage_id, 10);
-               this.getTeamTeamMatchesData(teamStageId);
+               this.getTeamTeamMatchesData(teamStageId); // todo: we are not using team-team-matches in this component
                // possible navigation to other competition
                if (this.lastTeamStageId - 1 !== teamStageId && this.lastTeamStageId + 1 !== teamStageId) {
                   this.getTeamData(teamStageId);

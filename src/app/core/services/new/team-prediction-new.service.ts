@@ -6,12 +6,25 @@ import { TeamPredictionNew } from '@models/new/team-prediction-new.model';
 import { PaginatedResponse } from '@models/paginated-response.model';
 import { TeamPredictionSearch } from '@models/search/team-prediction-search.model';
 import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 @Injectable()
 export class TeamPredictionNewService {
    public readonly teamPredictionsUrl: string = `${environment.apiUrl}v2/team/predictions`;
 
    constructor(private httpClient: HttpClient) {}
+
+   updatePrediction(id: number, data: { home: number; away: number }): Observable<TeamPredictionNew> {
+      return this.httpClient
+         .put<{ team_prediction: TeamPredictionNew }>(`${this.teamPredictionsUrl}/${id}`, data)
+         .pipe(map(response => response.team_prediction));
+   }
+
+   updateUser(data: { user_id?: number; team_id: number; team_match_id: number }): Observable<TeamPredictionNew> {
+      return this.httpClient
+         .put<{ team_prediction: TeamPredictionNew }>(`${this.teamPredictionsUrl}/user`, data)
+         .pipe(map(response => response.team_prediction));
+   }
 
    public getTeamPredictions(search: TeamPredictionSearch): Observable<PaginatedResponse<TeamPredictionNew>> {
       let params: HttpParams = new HttpParams();

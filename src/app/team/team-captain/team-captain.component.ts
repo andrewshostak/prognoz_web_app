@@ -17,7 +17,7 @@ import { TeamParticipantNewService } from '@services/new/team-participant-new.se
 import { TeamStageNewService } from '@services/new/team-stage-new.service';
 import { TeamTeamMatchNewService } from '@services/new/team-team-match-new.service';
 import { TeamMatchService } from '@services/team/team-match.service';
-import { TeamPredictionService } from '@services/team/team-prediction.service';
+import { TeamPredictionNewService } from '@services/new/team-prediction-new.service';
 import { SettingsService } from '@services/settings.service';
 import { UtilsService } from '@services/utils.service';
 import { NotificationsService } from 'angular2-notifications';
@@ -38,7 +38,7 @@ export class TeamCaptainComponent implements OnInit {
       private router: Router,
       private teamMatchService: TeamMatchService,
       private teamParticipantService: TeamParticipantNewService,
-      private teamPredictionService: TeamPredictionService,
+      private teamPredictionService: TeamPredictionNewService,
       private teamStageService: TeamStageNewService,
       private teamTeamMatchNewService: TeamTeamMatchNewService
    ) {}
@@ -124,20 +124,20 @@ export class TeamCaptainComponent implements OnInit {
    updateOrCreateTeamPredictor(teamPredictorForm: NgForm, teamMatch: TeamMatch) {
       if (this.authenticatedUser && this.isCaptain) {
          this.spinnerButton['team_match_' + teamMatch.id] = true;
-         const teamPrediction = {
-            id: this.matchHasPrediction(teamMatch) ? teamMatch.team_predictions[0].id : null,
+         const teamPrediction: { team_id: number; team_match_id: number; user_id?: number } = {
             team_id: this.currentTeamId,
-            team_match_id: teamMatch.id,
-            user_id: teamPredictorForm.value.user_id ? teamPredictorForm.value.user_id : null
+            team_match_id: teamMatch.id
          };
-         this.teamPredictionService.updateTeamPrediction(teamPrediction).subscribe(
-            response => {
+         if (teamPredictorForm.value.user_id) {
+            teamPrediction.user_id = parseInt(teamPredictorForm.value.user_id, 10);
+         }
+         this.teamPredictionService.updateUser(teamPrediction).subscribe(
+            () => {
                this.notificationsService.success('Успішно', 'Прогнозиста вибрано');
                this.getMyTeamMatchesData(this.teamStageId);
                this.spinnerButton['team_match_' + teamMatch.id] = false;
             },
-            errors => {
-               errors.forEach(error => this.notificationsService.error('Помилка', error));
+            () => {
                this.spinnerButton['team_match_' + teamMatch.id] = false;
             }
          );
