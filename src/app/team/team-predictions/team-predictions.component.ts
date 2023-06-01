@@ -15,7 +15,6 @@ import { TeamPredictionService } from '@services/team/team-prediction.service';
 import { TitleService } from '@services/title.service';
 import { filter, tap } from 'rxjs/operators';
 import { TeamStageNewService } from '@services/new/team-stage-new.service';
-import { fill } from 'lodash';
 
 @Component({
    selector: 'app-team-predictions',
@@ -35,11 +34,12 @@ export class TeamPredictionsComponent implements OnInit {
    ) {}
 
    public authenticatedUser: UserNew;
-   public blockedTeamMatches: TeamMatch[] = [];
-   public maxBlocks: number = 0;
+   blockedTeamMatches: { teamMatch: TeamMatch; isBlocked: boolean }[] = [];
+   blocksCount: number = 0;
    isGoalkeeper: boolean;
    noAccess = 'Доступ заборонено. Увійдіть на сайт для перегляду цієї сторінки.';
-   oppositeTeamId: number;
+   currentTeamId: number;
+   teamTeamMatchId: number;
    public teamStageId: number;
    teamMatches: TeamMatch[];
    public teamTeamMatches: TeamTeamMatchNew[];
@@ -76,10 +76,12 @@ export class TeamPredictionsComponent implements OnInit {
          this.getMyTeamMatchesData(teamStageId);
          for (const teamTeamMatch of this.teamTeamMatches) {
             if (this.authenticatedUser.id === teamTeamMatch.home_team_goalkeeper_id) {
-               this.oppositeTeamId = teamTeamMatch.away_team_id;
+               this.teamTeamMatchId = teamTeamMatch.id;
+               this.currentTeamId = teamTeamMatch.home_team_id;
                this.isGoalkeeper = true;
             } else if (this.authenticatedUser.id === teamTeamMatch.away_team_goalkeeper_id) {
-               this.oppositeTeamId = teamTeamMatch.home_team_id;
+               this.teamTeamMatchId = teamTeamMatch.id;
+               this.currentTeamId = teamTeamMatch.away_team_id;
                this.isGoalkeeper = true;
             }
          }
@@ -92,24 +94,19 @@ export class TeamPredictionsComponent implements OnInit {
       this.subscribeToTeamStageIdUrlParamChange();
    }
 
-   reloadTeamGoalkeeperData(): void {
-      this.resetTeamGoalkeeperData();
-      this.getTeamTeamMatchesData(this.teamStageId);
-   }
-
    reloadTeamPredictionsData() {
       this.getTeamPredictionsData(this.teamStageId);
    }
 
    setBlockedMatches(teamMatches: TeamMatch[]) {
-      this.blockedTeamMatches = fill(Array(this.maxBlocks), null);
-      let index = 0;
-      for (const teamMatch of teamMatches) {
-         if (teamMatch.team_predictions && teamMatch.team_predictions[0] && teamMatch.team_predictions[0].blocked_by) {
-            this.blockedTeamMatches[index] = teamMatch;
-            index++;
-         }
-      }
+      teamMatches.forEach(teamMatch => {
+         this.blockedTeamMatches.push({
+            teamMatch,
+            isBlocked: teamMatch.team_predictions && teamMatch.team_predictions[0] && !!teamMatch.team_predictions[0].blocked_at
+         });
+      });
+      // for template updating
+      this.blockedTeamMatches = [...this.blockedTeamMatches.sort(this.sortByStartDateFunc)];
    }
 
    private getTeamTeamMatchesData(teamStageId: number) {
@@ -142,7 +139,7 @@ export class TeamPredictionsComponent implements OnInit {
    private getTeamStageData(id: number): void {
       this.teamStageService.getTeamStage(id, ['teamStageType']).subscribe(response => {
          if (response.team_stage_type) {
-            this.maxBlocks = response.team_stage_type.blocks_count;
+            this.blocksCount = response.team_stage_type.blocks_count;
          }
       });
    }
@@ -150,7 +147,11 @@ export class TeamPredictionsComponent implements OnInit {
    private resetTeamGoalkeeperData(): void {
       this.blockedTeamMatches = [];
       this.isGoalkeeper = false;
-      this.oppositeTeamId = null;
+      this.currentTeamId = null;
+   }
+
+   private sortByStartDateFunc(a: { teamMatch: TeamMatch; isBlocked: boolean }, b: { teamMatch: TeamMatch; isBlocked: boolean }): number {
+      return a.teamMatch.starts_at < b.teamMatch.starts_at ? -1 : 1;
    }
 
    private subscribeToTeamStageIdUrlParamChange(): void {

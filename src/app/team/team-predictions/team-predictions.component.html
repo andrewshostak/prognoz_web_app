@@ -11,15 +11,16 @@
       </app-team-prediction-form>
    </div>
    <div [hidden]="!teamMatches">
-      <h4>{{ isGoalkeeper ? 'Заблокувати' : 'Заблоковані' }} матчі суперника</h4>
+      <h4 class="mt-3">{{ isGoalkeeper ? 'Заблокувати' : 'Заблоковані' }} матчі суперника</h4>
       <app-team-goalkeeper-form
-         *ngFor="let blockedTeamMatch of blockedTeamMatches"
-         [teamMatches]="teamMatches"
-         [blockedTeamMatch]="blockedTeamMatch"
+         [teamMatches]="blockedTeamMatches"
+         [properties]="{
+            blocksCount: blocksCount,
+            currentTeamId: currentTeamId,
+            isGoalkeeper: isGoalkeeper,
+            teamTeamMatchId: teamTeamMatchId
+         }"
          [authenticatedUser]="authenticatedUser"
-         [oppositeTeamId]="oppositeTeamId"
-         [isGoalkeeper]="isGoalkeeper"
-         (reloadData)="reloadTeamGoalkeeperData()"
       >
       </app-team-goalkeeper-form>
    </div>

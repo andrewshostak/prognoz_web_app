@@ -1,48 +1,79 @@
 <div *ngIf="teamMatches" class="card shadow mb-2">
    <form novalidate [formGroup]="teamGoalkeeperForm" (ngSubmit)="onSubmit()" class="p-2">
-      <div class="row align-items-center">
-         <div class="col-12 col-sm-7 col-lg-8">
-            <div
-               class="form-group mb-0"
-               *ngIf="!isStageStarted && isGoalkeeper"
-               [class.form-group-invalid-custom]="
-                  teamGoalkeeperForm.get('team_match_id').hasError('required') && teamGoalkeeperForm.get('team_match_id').touched
-               "
-            >
-               <select id="team_match_id" class="form-control" formControlName="team_match_id">
-                  <option [value]="''">Не вибрано</option>
-                  <option *ngFor="let teamMatch of teamMatches" [value]="teamMatch.id">
-                     {{ teamMatch.club_first.title + ' - ' + teamMatch.club_second.title }}
-                  </option>
-               </select>
-               <div *ngIf="teamGoalkeeperForm.get('team_match_id').hasError('required') && teamGoalkeeperForm.get('team_match_id').touched">
-                  <small>Вибір матчу для блокування обов'язковий.</small>
+      <div
+         *ngFor="let teamMatch of predictionsFormArray.controls; let i = index"
+         class="form-check"
+         [ngClass]="{ 'table-danger': teamMatch.value }"
+      >
+         <label
+            formArrayName="predictions"
+            class="form-check-label w-100"
+            [ngClass]="teamMatch.enabled ? 'cursor-pointer' : 'cursor-not-allowed'"
+         >
+            <input class="form-check-input" type="checkbox" [formControlName]="i" (ngModelChange)="updateDisabledStatus()" />
+            <!-- xs screens -->
+            <div class="d-block d-sm-none mb-1">
+               <input class="form-check-input" type="checkbox" [formControlName]="i" (ngModelChange)="updateDisabledStatus()" />
+               <div>{{ teamMatches[i].teamMatch.starts_at | time: 'D MMMM HH:mm' }}</div>
+               <div class="font-weight-bold">
+                  {{ teamMatches[i].teamMatch.club_first.title }} - {{ teamMatches[i].teamMatch.club_second.title }}
                </div>
             </div>
-            <div *ngIf="isStageStarted || !isGoalkeeper" class="text-center font-weight-bold">
-               {{ blockedTeamMatch ? blockedTeamMatch.club_first.title + ' - ' + blockedTeamMatch.club_second.title : 'Не заблоковано' }}
+            <!-- sm-md screens -->
+            <div class="d-none d-sm-block d-lg-none mb-1">
+               <div class="d-flex">
+                  <div class="col-4">{{ teamMatches[i].teamMatch.starts_at | time: 'D MMMM HH:mm' }}</div>
+                  <div class="col-3 text-right font-weight-bold align-items-center">
+                     {{ teamMatches[i].teamMatch.club_first.title }}
+                  </div>
+                  <div class="col-2 text-nowrap">
+                     <app-club-logo [club]="teamMatches[i].teamMatch.club_first"></app-club-logo>
+                     <app-club-logo [club]="teamMatches[i].teamMatch.club_second"></app-club-logo>
+                  </div>
+                  <div class="col-3 font-weight-bold align-items-center">
+                     {{ teamMatches[i].teamMatch.club_second.title }}
+                  </div>
+               </div>
             </div>
-         </div>
-         <div class="col-12 col-sm-5 col-lg-4 text-center mt-2 mt-sm-0">
-            <!-- submit button -->
-            <button
-               *ngIf="!spinnerButton && !isStageStarted && isGoalkeeper"
-               class="btn btn-block"
-               [ngClass]="{ 'btn-outline-primary': blockedTeamMatch, 'btn-primary': !blockedTeamMatch }"
-               [disabled]="teamGoalkeeperForm.invalid || isStageStarted || !isGoalkeeper"
-               type="submit"
-            >
-               <i [hidden]="blockedTeamMatch" class="fa fa-check-circle-o" aria-hidden="true"></i>
-               <i [hidden]="!blockedTeamMatch" class="fa fa-pencil-square-o" aria-hidden="true"></i>
-               {{ blockedTeamMatch ? 'Змінити' : 'Заблокувати' }}
-            </button>
-            <!-- disabled button -->
-            <button *ngIf="isStageStarted || !isGoalkeeper" class="btn btn-block btn-outline-secondary" type="button" disabled>
-               <i class="fa fa-ban fa-lg" aria-hidden="true"></i>
-               <span>Заборонено</span>
-            </button>
-            <app-spinner-button [hidden]="!spinnerButton"></app-spinner-button>
-         </div>
+            <!-- lg xl screens -->
+            <div class="d-none d-lg-block mb-1 mt-1">
+               <div class="d-flex">
+                  <div class="col-3">{{ teamMatches[i].teamMatch.starts_at | time: 'D MMMM HH:mm' }}</div>
+                  <div class="col-4 font-weight-bold text-right">
+                     {{ teamMatches[i].teamMatch.club_first.title }}
+                     <app-club-logo [club]="teamMatches[i].teamMatch.club_first"></app-club-logo>
+                  </div>
+                  <div class="col-1 text-center">
+                     <i *ngIf="teamMatch.value" class="fa fa-lock text-danger"></i>
+                     <span *ngIf="!teamMatch.value">-</span>
+                  </div>
+                  <div class="col-4 font-weight-bold">
+                     <app-club-logo [club]="teamMatches[i].teamMatch.club_second"></app-club-logo>
+                     {{ teamMatches[i].teamMatch.club_second.title }}
+                  </div>
+               </div>
+            </div>
+         </label>
+      </div>
+      <div>
+         <span
+            *ngIf="predictionsFormArray.controls.length && teamGoalkeeperForm.enabled && numberOfCurrentlyBlocked < properties.blocksCount"
+            class="text-info font-weight-bold mt-3 ml-3"
+         >
+            <i class="fa fa-info-circle"></i>
+            Зробіть ще {{ properties.blocksCount - numberOfCurrentlyBlocked | declension: 'блок' }}
+         </span>
+         <button
+            [hidden]="!properties || !properties.isGoalkeeper || spinnerButton || numberOfCurrentlyBlocked < properties.blocksCount"
+            [disabled]="teamGoalkeeperForm.disabled"
+            class="btn btn-block btn-primary mt-2"
+            type="submit"
+         >
+            <i class="fa fa-check-circle-o"></i> Змінити
+         </button>
+         <button [hidden]="!spinnerButton" class="btn btn-block btn-primary" type="button">
+            <i class="fa fa-spinner fa-spin fa-fw"></i> Зачекайте
+         </button>
       </div>
    </form>
 </div>

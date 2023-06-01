@@ -26,6 +26,10 @@ export class TeamPredictionNewService {
          .pipe(map(response => response.team_prediction));
    }
 
+   updateBlock(data: { team_team_match_id: number; team_id: number; predictions: { team_match_id: number }[] }): Observable<void> {
+      return this.httpClient.put<void>(`${this.teamPredictionsUrl}/block`, data);
+   }
+
    public getTeamPredictions(search: TeamPredictionSearch): Observable<PaginatedResponse<TeamPredictionNew>> {
       let params: HttpParams = new HttpParams();
 

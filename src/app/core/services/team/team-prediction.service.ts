@@ -6,7 +6,6 @@ import { environment } from '@env';
 import { ErrorHandlerService } from '@services/error-handler.service';
 import { HeadersWithToken } from '@services/headers-with-token.service';
 import { RequestParams } from '@models/request-params.model';
-import { TeamPrediction } from '@models/team/team-prediction.model';
 import { Observable } from 'rxjs';
 
 @Injectable()
@@ -14,15 +13,6 @@ export class TeamPredictionService {
    constructor(private errorHandlerService: ErrorHandlerService, private headersWithToken: HeadersWithToken) {}
 
    private teamPredictionUrl = environment.apiUrl + 'team/predictions';
-
-   /**
-    * @deprecated
-    * TODO: create and use v2 endpoint instead of this
-    */
-   updateTeamPrediction(teamPrediction: TeamPrediction): Observable<TeamPrediction> {
-      const url = teamPrediction.id ? `${this.teamPredictionUrl}/${teamPrediction.id}` : this.teamPredictionUrl;
-      return this.headersWithToken.put(url, teamPrediction).pipe(catchError(this.errorHandlerService.handle));
-   }
 
    /**
     * @deprecated

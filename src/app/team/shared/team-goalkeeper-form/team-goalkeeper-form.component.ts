@@ -1,10 +1,10 @@
-import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { FormArray, FormControl, FormGroup } from '@angular/forms';
 
 import { NotificationsService } from 'angular2-notifications';
 import { TeamMatch } from '@models/team/team-match.model';
-import { TeamPredictionService } from '@services/team/team-prediction.service';
-import { User } from '@models/user.model';
+import { TeamPredictionNewService } from '@services/new/team-prediction-new.service';
+import { UserNew } from '@models/new/user-new.model';
 
 @Component({
    selector: 'app-team-goalkeeper-form',
@@ -12,72 +12,83 @@ import { User } from '@models/user.model';
    styleUrls: ['./team-goalkeeper-form.component.scss']
 })
 export class TeamGoalkeeperFormComponent implements OnChanges {
-   @Input() blockedTeamMatch: TeamMatch;
-   @Input() teamMatches: TeamMatch[];
-   @Input() oppositeTeamId: number;
-   @Input() authenticatedUser: User;
-   @Input() isGoalkeeper: boolean;
-   @Output() reloadData = new EventEmitter<any>();
+   @Input() teamMatches: { teamMatch: TeamMatch; isBlocked: boolean }[];
+   @Input() properties: { blocksCount: number; currentTeamId: number; isGoalkeeper: boolean; teamTeamMatchId: number };
+   @Input() authenticatedUser: UserNew;
 
-   public isStageStarted: boolean = false;
-   public teamGoalkeeperForm: FormGroup = this.formBuilder.group({
-      team_match_id: ['', [Validators.required]]
+   isStageNotStarted: boolean = false;
+   spinnerButton: boolean;
+   teamGoalkeeperForm = new FormGroup({
+      predictions: new FormArray([])
    });
-   public spinnerButton: boolean;
 
-   constructor(
-      private formBuilder: FormBuilder,
-      private notificationsService: NotificationsService,
-      private teamPredictionService: TeamPredictionService
-   ) {}
+   constructor(private notificationsService: NotificationsService, private teamPredictionService: TeamPredictionNewService) {}
 
-   matchHasPrediction(teamMatch: TeamMatch): boolean {
-      return teamMatch.team_predictions && teamMatch.team_predictions[0];
+   get numberOfCurrentlyBlocked(): number {
+      return this.predictionsFormArray.controls.filter(control => control.value).length;
+   }
+
+   get predictionsFormArray(): FormArray {
+      return this.teamGoalkeeperForm.controls.predictions as FormArray;
    }
 
    ngOnChanges(changes: SimpleChanges) {
-      for (const propName of Object.keys(changes)) {
-         if (propName === 'blockedTeamMatch') {
-            if (changes[propName].currentValue) {
-               this.teamGoalkeeperForm.patchValue({ team_match_id: changes[propName].currentValue.id });
-            }
-         }
-         if (propName === 'teamMatches') {
-            if (changes[propName].currentValue) {
-               this.isStageStarted = changes[propName].currentValue.some(teamMatch => !teamMatch.is_predictable);
-            }
-         }
+      if (changes.teamMatches && changes.teamMatches.currentValue) {
+         this.predictionsFormArray.clear();
+         this.addCheckboxes(this.teamMatches);
+         this.teamGoalkeeperForm.disable();
+         this.isStageNotStarted = this.teamMatches.every(teamMatch => teamMatch.teamMatch.is_predictable);
+      }
+
+      if (this.properties && this.properties.isGoalkeeper && this.isStageNotStarted) {
+         this.teamGoalkeeperForm.enable();
+         this.updateDisabledStatus();
       }
    }
 
    onSubmit() {
-      if (this.teamGoalkeeperForm.valid) {
-         this.spinnerButton = true;
-         const selectedTeamMatch = this.teamMatches.find(teamMatch => {
-            return teamMatch.id === parseInt(this.teamGoalkeeperForm.value.team_match_id, 10);
-         });
-         const teamPrediction = {
-            id: this.matchHasPrediction(selectedTeamMatch) ? selectedTeamMatch.team_predictions[0].id : null,
-            team_id: this.oppositeTeamId,
-            team_match_id: selectedTeamMatch.id,
-            blocked_by: this.authenticatedUser.id,
-            unblock_id: this.blockedTeamMatch ? this.blockedTeamMatch.id : null
-         };
-         this.teamPredictionService.updateTeamPrediction(teamPrediction).subscribe(
-            () => {
-               this.notificationsService.success(
-                  'Успішно',
-                  `Матч ${selectedTeamMatch.club_first.title} - ${selectedTeamMatch.club_second.title} заблоковано`
-               );
-               this.reloadData.emit();
-               this.spinnerButton = false;
-            },
-            errors => {
-               errors.forEach(error => this.notificationsService.error('Помилка', error));
-               this.reloadData.emit();
-               this.spinnerButton = false;
-            }
-         );
+      if (this.teamGoalkeeperForm.invalid) {
+         return;
       }
+
+      const predictions: { team_match_id: number }[] = this.predictionsFormArray.controls
+         .map((control, i) => {
+            return { team_match_id: control.value ? this.teamMatches[i].teamMatch.id : null };
+         })
+         .filter(value => !!value.team_match_id);
+      const data = {
+         predictions,
+         team_id: this.properties.currentTeamId,
+         team_team_match_id: this.properties.teamTeamMatchId
+      };
+
+      this.spinnerButton = true;
+      this.teamPredictionService.updateBlock(data).subscribe(
+         () => {
+            this.spinnerButton = false;
+            this.notificationsService.success('Успішно', 'Заблоковані матчі змінено');
+         },
+         () => (this.spinnerButton = false)
+      );
+   }
+
+   updateDisabledStatus() {
+      const currentlyBlocked = this.numberOfCurrentlyBlocked;
+      // disable all checkboxes except checked
+      if (currentlyBlocked === this.properties.blocksCount) {
+         this.predictionsFormArray.controls.forEach((control, i) => {
+            if (!control.value) {
+               control.disable();
+            }
+         });
+      }
+
+      if (currentlyBlocked < this.properties.blocksCount) {
+         this.predictionsFormArray.enable();
+      }
+   }
+
+   private addCheckboxes(teamMatches: { teamMatch: TeamMatch; isBlocked: boolean }[]) {
+      teamMatches.forEach(teamMatch => this.predictionsFormArray.push(new FormControl(teamMatch.isBlocked)));
    }
 }
