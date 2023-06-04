@@ -3,16 +3,16 @@ import { UserNew } from '@models/new/user-new.model';
 import { CompetitionNew } from '@models/new/competition-new.model';
 
 export class ChampionshipRatingNew {
-   public id: number;
-   public competition_id: number;
-   public user_id: number;
-   public points: number;
-   public x3: number;
-   public x2: number;
-   public dc: number;
-   public position: number;
-   public moving: number;
+   id: number;
+   competition_id: number;
+   user_id: number;
+   points: number;
+   x3: number;
+   x2: number;
+   dc: number;
+   position: number;
+   moving: number;
 
-   public user?: UserNew;
-   public competition?: CompetitionNew;
+   user?: UserNew;
+   competition?: CompetitionNew;
 }

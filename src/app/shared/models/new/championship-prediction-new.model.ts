@@ -3,15 +3,15 @@ import { User } from '@models/user.model';
 
 /* tslint:disable:variable-name */
 export class ChampionshipPredictionNew {
-   public away: number;
-   public created_at: string;
-   public competition_id: number;
-   public home: number;
-   public id: number;
-   public championship_match_id: number;
-   public updated_at: string;
-   public user_id?: number;
+   away: number;
+   created_at: string;
+   competition_id: number;
+   home: number;
+   id: number;
+   championship_match_id: number;
+   updated_at: string;
+   user_id?: number;
 
-   public user?: User;
-   public championship_match?: ChampionshipMatchNew;
+   user?: User;
+   championship_match?: ChampionshipMatchNew;
 }

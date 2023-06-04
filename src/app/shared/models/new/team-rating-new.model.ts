@@ -2,21 +2,21 @@
 import { TeamNew } from '@models/new/team-new.model';
 
 export class TeamRatingNew {
-   public id: number;
-   public competition_id: number;
-   public team_id: number;
-   public points: number;
-   public scored: number;
-   public missed: number;
-   public blocked: number;
-   public win: number;
-   public draw: number;
-   public loss: number;
-   public points_championship: number;
-   public dc: number;
-   public position: number;
-   public moving: number;
-   public group_number: number;
+   id: number;
+   competition_id: number;
+   team_id: number;
+   points: number;
+   scored: number;
+   missed: number;
+   blocked: number;
+   win: number;
+   draw: number;
+   loss: number;
+   points_championship: number;
+   dc: number;
+   position: number;
+   moving: number;
+   group_number: number;
 
-   public team?: TeamNew;
+   team?: TeamNew;
 }

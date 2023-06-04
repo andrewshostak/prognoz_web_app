@@ -3,15 +3,15 @@ import { Sequence } from '@enums/sequence.enum';
 
 /* tslint:disable:variable-name */
 export class TeamSearch {
-   public captainId?: number;
-   public competitionId?: number;
-   public confirmed?: ModelStatus;
-   public limit: number;
-   public name?: string;
-   public orderBy?: string;
-   public page: number;
-   public sequence?: Sequence;
-   public stated?: ModelStatus;
-   public teamParticipantId?: number;
-   public teamStageId?: number;
+   captainId?: number;
+   competitionId?: number;
+   confirmed?: ModelStatus;
+   limit: number;
+   name?: string;
+   orderBy?: string;
+   page: number;
+   sequence?: Sequence;
+   stated?: ModelStatus;
+   teamParticipantId?: number;
+   teamStageId?: number;
 }

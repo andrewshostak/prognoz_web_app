@@ -1,4 +1,4 @@
 export class Device {
-   public fingerprint: string;
-   public info: { [key: string]: any };
+   fingerprint: string;
+   info: { [key: string]: any };
 }

@@ -2,11 +2,11 @@
 import { ChampionshipMatchNew } from '@models/new/championship-match-new.model';
 
 export class ChampionshipMatchStatistic {
-   public championship_match: ChampionshipMatchNew;
-   public results: {
+   championship_match: ChampionshipMatchNew;
+   results: {
       away: number;
       draw: number;
       home: number;
    };
-   public scores: { [key: string]: number }[];
+   scores: { [key: string]: number }[];
 }

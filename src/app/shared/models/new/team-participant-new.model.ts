@@ -4,18 +4,18 @@ import { User } from '@models/user.model';
 
 /* tslint:disable:variable-name */
 export class TeamParticipantNew {
-   public id: number;
-   public team_id: number;
-   public user_id: number;
-   public competition_id: number;
-   public captain: boolean;
-   public confirmed: boolean;
-   public refused: boolean;
-   public ended: boolean;
-   public created_at: string;
-   public updated_at: string;
+   id: number;
+   team_id: number;
+   user_id: number;
+   competition_id: number;
+   captain: boolean;
+   confirmed: boolean;
+   refused: boolean;
+   ended: boolean;
+   created_at: string;
+   updated_at: string;
 
-   public team?: TeamNew;
-   public user?: User;
-   public competition?: CompetitionNew;
+   team?: TeamNew;
+   user?: User;
+   competition?: CompetitionNew;
 }

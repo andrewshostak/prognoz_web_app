@@ -3,14 +3,14 @@ import { UserNew } from '@models/new/user-new.model';
 import { TeamNew } from '@models/new/team-new.model';
 
 export class TeamRatingUserNew {
-   public id: number;
-   public competition_id: number;
-   public team_id: number;
-   public user_id: number;
-   public scored: number;
-   public blocked: number;
+   id: number;
+   competition_id: number;
+   team_id: number;
+   user_id: number;
+   scored: number;
+   blocked: number;
    scores_blocked: number;
 
-   public team?: TeamNew;
-   public user?: UserNew;
+   team?: TeamNew;
+   user?: UserNew;
 }

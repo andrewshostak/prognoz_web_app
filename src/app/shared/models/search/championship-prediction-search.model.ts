@@ -1,11 +1,11 @@
 import { Sequence } from '@enums/sequence.enum';
 
 export class ChampionshipPredictionSearch {
-   public championshipMatchId?: number;
-   public competitionId?: number;
-   public userId?: number;
-   public limit: number;
-   public orderBy?: string;
-   public page: number;
-   public sequence?: Sequence;
+   championshipMatchId?: number;
+   competitionId?: number;
+   userId?: number;
+   limit: number;
+   orderBy?: string;
+   page: number;
+   sequence?: Sequence;
 }

@@ -4,15 +4,15 @@ import { CompetitionNew } from '@models/new/competition-new.model';
 import { TeamStageTypeNew } from '@models/new/team-stage-type-new.model';
 
 export class TeamStageNew {
-   public id: number;
-   public team_stage_type_id: number;
-   public competition_id: number;
-   public title: string;
-   public round: string;
-   public state: TeamStageState;
-   public created_at: string;
-   public updated_at: string;
+   id: number;
+   team_stage_type_id: number;
+   competition_id: number;
+   title: string;
+   round: string;
+   state: TeamStageState;
+   created_at: string;
+   updated_at: string;
 
-   public competition?: CompetitionNew;
-   public team_stage_type?: TeamStageTypeNew;
+   competition?: CompetitionNew;
+   team_stage_type?: TeamStageTypeNew;
 }

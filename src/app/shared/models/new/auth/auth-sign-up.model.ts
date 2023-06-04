@@ -1,7 +1,7 @@
 /* tslint:disable:variable-name */
 export class AuthSignUp {
-   public email: string;
-   public name: string;
-   public password: string;
-   public password_confirmation: string;
+   email: string;
+   name: string;
+   password: string;
+   password_confirmation: string;
 }

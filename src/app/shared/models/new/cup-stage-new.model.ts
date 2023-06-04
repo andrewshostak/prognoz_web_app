@@ -6,17 +6,17 @@ import { CupCupMatchNew } from '@models/new/cup-cup-match-new.model';
 import { CupMatchNew } from '@models/new/cup-match-new.model';
 
 export class CupStageNew {
-   public competition_id: number;
-   public cup_stage_type_id: number;
-   public created_at: string;
-   public id: number;
-   public round: number;
-   public state: CupStageState;
-   public title: string;
-   public updated_at: string;
+   competition_id: number;
+   cup_stage_type_id: number;
+   created_at: string;
+   id: number;
+   round: number;
+   state: CupStageState;
+   title: string;
+   updated_at: string;
 
-   public competition: CompetitionNew;
-   public cup_stage_type?: CupStageTypeNew;
+   competition: CompetitionNew;
+   cup_stage_type?: CupStageTypeNew;
    cup_cup_matches?: CupCupMatchNew[];
    cup_matches?: CupMatchNew[];
 }

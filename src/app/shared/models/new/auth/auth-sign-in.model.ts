@@ -1,6 +1,6 @@
 export class AuthSignIn {
-   public name: string;
-   public password: string;
-   public deviceId?: string;
-   public deviceInfo?: { [key: string]: any };
+   name: string;
+   password: string;
+   deviceId?: string;
+   deviceInfo?: { [key: string]: any };
 }

@@ -3,16 +3,16 @@ import { ClubNew } from '@models/new/club-new.model';
 import { MatchState } from '@enums/match-state.enum';
 
 export class Match {
-   public away: number;
-   public away_club_id: number;
-   public created_at: string;
-   public id: number;
-   public home: number;
-   public home_club_id: number;
-   public started_at: string;
-   public state: MatchState;
-   public updated_at: string;
+   away: number;
+   away_club_id: number;
+   created_at: string;
+   id: number;
+   home: number;
+   home_club_id: number;
+   started_at: string;
+   state: MatchState;
+   updated_at: string;
 
-   public club_home?: ClubNew;
-   public club_away?: ClubNew;
+   club_home?: ClubNew;
+   club_away?: ClubNew;
 }

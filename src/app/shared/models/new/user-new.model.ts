@@ -4,15 +4,15 @@ import { Role } from '@models/new/rbac/role.model';
 import { WinNew } from '@models/new/win-new.model';
 
 export class UserNew {
-   public created_at: string;
-   public first_name: string;
-   public hometown: string;
-   public id: number;
-   public image: string;
-   public name: string;
+   created_at: string;
+   first_name: string;
+   hometown: string;
+   id: number;
+   image: string;
+   name: string;
 
-   public roles?: Role[];
-   public clubs?: ClubNew[];
-   public main_club?: ClubNew[];
-   public winners?: WinNew[];
+   roles?: Role[];
+   clubs?: ClubNew[];
+   main_club?: ClubNew[];
+   winners?: WinNew[];
 }

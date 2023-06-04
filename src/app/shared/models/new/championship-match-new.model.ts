@@ -3,16 +3,16 @@ import { ChampionshipPredictionNew } from '@models/new/championship-prediction-n
 import { Match } from '@models/match.model';
 
 export class ChampionshipMatchNew {
-   public competition_id: number;
-   public created_at: string;
-   public dc: number;
-   public id: number;
-   public match_id: number;
-   public number_in_competition: number;
-   public points: number;
-   public predicts: number;
-   public updated_at: string;
+   competition_id: number;
+   created_at: string;
+   dc: number;
+   id: number;
+   match_id: number;
+   number_in_competition: number;
+   points: number;
+   predicts: number;
+   updated_at: string;
 
-   public match?: Match;
-   public championship_predicts?: ChampionshipPredictionNew[];
+   match?: Match;
+   championship_predicts?: ChampionshipPredictionNew[];
 }

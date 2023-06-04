@@ -6,7 +6,7 @@ import { TournamentNew } from '@models/new/tournament-new.model';
 
 /* tslint:disable:variable-name */
 export class CompetitionNew {
-   public config: {
+   config: {
       team?: {
          relegation?: number;
          promotion?: number;
@@ -15,27 +15,23 @@ export class CompetitionNew {
          is_friendly: boolean;
       };
    };
-   public first_playoff_stage: number;
-   public id: number;
-   public number_in_season: number;
-   public number_of_teams: number;
-   public participants: number;
-   public players_in_group: number;
-   public title: string;
-   public season_id: number;
-   public state: CompetitionState;
-   public tournament_id: number;
-   public updated_at: string;
+   id: number;
+   number_in_season: number;
+   title: string;
+   season_id: number;
+   state: CompetitionState;
+   tournament_id: number;
+   updated_at: string;
 
-   public pivot?: {
+   pivot?: {
       competition_id: number;
       number_in_competition: number;
       number_in_round: number;
       round: number;
    };
 
-   public winners?: WinNew[];
-   public cup_applications?: CupApplicationNew[];
-   public season?: SeasonNew;
-   public tournament?: TournamentNew;
+   winners?: WinNew[];
+   cup_applications?: CupApplicationNew[];
+   season?: SeasonNew;
+   tournament?: TournamentNew;
 }

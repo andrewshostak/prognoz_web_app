@@ -3,18 +3,18 @@ import { TeamMatchNew } from '@models/new/team-match-new.model';
 import { UserNew } from '@models/new/user-new.model';
 
 export class TeamPredictionNew {
-   public id: number;
-   public team_id: number;
-   public team_match_id: number;
-   public user_id: number;
-   public home: number;
-   public away: number;
-   public predicted_at: string;
-   public blocked_by: number;
-   public blocked_at: string;
-   public created_at: string;
-   public updated_at: string;
+   id: number;
+   team_id: number;
+   team_match_id: number;
+   user_id: number;
+   home: number;
+   away: number;
+   predicted_at: string;
+   blocked_by: number;
+   blocked_at: string;
+   created_at: string;
+   updated_at: string;
 
-   public team_match?: TeamMatchNew;
-   public user?: UserNew;
+   team_match?: TeamMatchNew;
+   user?: UserNew;
 }

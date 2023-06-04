@@ -2,19 +2,19 @@
 import { UserNew } from '@models/new/user-new.model';
 
 export class CommentNew {
-   public id: number;
-   public user_id: number;
-   public news_id: number;
-   public body: string;
-   public created_at: string;
-   public updated_at: string;
-   public updated_by: number;
-   public deleted_at: string;
-   public deleted_by: number;
+   id: number;
+   user_id: number;
+   news_id: number;
+   body: string;
+   created_at: string;
+   updated_at: string;
+   updated_by: number;
+   deleted_at: string;
+   deleted_by: number;
 
-   public is_changeable?: boolean;
+   is_changeable?: boolean;
 
-   public user?: UserNew;
-   public updater?: Partial<UserNew>;
-   public deleter?: Partial<UserNew>;
+   user?: UserNew;
+   updater?: Partial<UserNew>;
+   deleter?: Partial<UserNew>;
 }

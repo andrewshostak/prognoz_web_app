@@ -4,26 +4,26 @@ import { CupStageNew } from '@models/new/cup-stage-new.model';
 import { UserNew } from '@models/new/user-new.model';
 
 export class CupCupMatchNew {
-   public away: number;
-   public away_dc_sum: number;
-   public away_points: number;
-   public away_rating_points: number;
-   public away_user_id: number;
-   public created_at: string;
-   public cup_stage_id: number;
-   public group_number: number;
-   public home: number;
-   public home_dc_sum: number;
-   public home_points: number;
-   public home_rating_points: number;
-   public home_user_id: number;
-   public id: number;
-   public state: CupCupMatchState;
-   public updated_at: string;
+   away: number;
+   away_dc_sum: number;
+   away_points: number;
+   away_rating_points: number;
+   away_user_id: number;
+   created_at: string;
+   cup_stage_id: number;
+   group_number: number;
+   home: number;
+   home_dc_sum: number;
+   home_points: number;
+   home_rating_points: number;
+   home_user_id: number;
+   id: number;
+   state: CupCupMatchState;
+   updated_at: string;
 
-   public home_user?: UserNew;
-   public away_user?: UserNew;
-   public cup_stage: CupStageNew;
-   public cup_predictions_away_count?: number;
-   public cup_predictions_home_count?: number;
+   home_user?: UserNew;
+   away_user?: UserNew;
+   cup_stage: CupStageNew;
+   cup_predictions_away_count?: number;
+   cup_predictions_home_count?: number;
 }

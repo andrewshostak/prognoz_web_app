@@ -1,8 +1,8 @@
 import { Permission } from '@models/new/rbac/permission.model';
 
 export class Role {
-   public id: number;
-   public slug: string;
+   id: number;
+   slug: string;
 
-   public permissions?: Permission[];
+   permissions?: Permission[];
 }

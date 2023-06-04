@@ -1,15 +1,15 @@
 /* tslint:disable:variable-name */
 export class ClubNew {
-   public id: number;
-   public parent_id: number;
-   public title: string;
-   public link: string;
-   public image: string;
-   public created_at: string;
-   public updated_at: string;
+   id: number;
+   parent_id: number;
+   title: string;
+   link: string;
+   image: string;
+   created_at: string;
+   updated_at: string;
 
-   public parent?: ClubNew;
-   public pivot?: {
+   parent?: ClubNew;
+   pivot?: {
       main: boolean;
    };
 }
