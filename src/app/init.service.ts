@@ -31,7 +31,7 @@ export class InitService {
    }
 
    private getUser(): Observable<UserNew> {
-      return this.httpClient.get<{ user: UserNew }>(`${environment.apiUrl}v2/auth/user`).pipe(map(response => response.user));
+      return this.httpClient.get<{ user: UserNew }>(`${environment.apiBaseUrl}/v2/auth/user`).pipe(map(response => response.user));
    }
 
    private isToken(): boolean {

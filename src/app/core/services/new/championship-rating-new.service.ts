@@ -10,7 +10,7 @@ import { ChampionshipSeasonRatingItem } from '@models/new/cmapionship-rating-sea
 
 @Injectable()
 export class ChampionshipRatingNewService {
-   public readonly championshipRatingUrl: string = `${environment.apiUrl}v2/championship/rating`;
+   public readonly championshipRatingUrl: string = `${environment.apiBaseUrl}/v2/championship/rating`;
 
    constructor(private httpClient: HttpClient) {}
 

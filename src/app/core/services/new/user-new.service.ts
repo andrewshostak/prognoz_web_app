@@ -11,13 +11,15 @@ import { map } from 'rxjs/operators';
 
 @Injectable()
 export class UserNewService {
-   public readonly usersUrl: string = `${environment.apiUrl}v2/users`;
+   public readonly usersUrl: string = `${environment.apiBaseUrl}/v2/users`;
 
    constructor(private httpClient: HttpClient) {}
 
    public getUser(id: number, relations: string[] = []): Observable<UserNew> {
       const params = new HttpParams({ fromObject: { 'relations[]': relations } });
-      return this.httpClient.get<{ user: UserNew }>(`${this.usersUrl}/${id}`, { params }).pipe(map(response => response.user));
+      return this.httpClient
+         .get<{ user: UserNew }>(`${this.usersUrl}/${id}`, { params })
+         .pipe(map(response => response.user));
    }
 
    public getUsers(search: UserSearch): Observable<PaginatedResponse<UserNew>> {

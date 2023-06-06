@@ -11,7 +11,7 @@ import { Observable } from 'rxjs';
 
 @Injectable()
 export class CupRatingNewService {
-   public readonly cupRatingUrl: string = `${environment.apiUrl}v2/cup/rating`;
+   public readonly cupRatingUrl: string = `${environment.apiBaseUrl}/v2/cup/rating`;
 
    constructor(private httpClient: HttpClient) {}
 

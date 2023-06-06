@@ -8,7 +8,7 @@ import { map } from 'rxjs/operators';
 
 @Injectable()
 export class TournamentNewService {
-   private tournamentsUrl = environment.apiUrl + 'v2/tournaments';
+   private tournamentsUrl = environment.apiBaseUrl + '/v2/tournaments';
 
    constructor(private httpClient: HttpClient) {}
 

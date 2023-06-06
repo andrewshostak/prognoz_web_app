@@ -7,6 +7,6 @@ describe('SettingsService', () => {
    });
 
    it('should have `clubsLogosPath` value', () => {
-      expect(SettingsService.clubsLogosPath).toEqual(environment.imageURL + '/clubs');
+      expect(SettingsService.clubsLogosPath).toEqual(environment.imageBaseUrl + '/clubs');
    });
 });

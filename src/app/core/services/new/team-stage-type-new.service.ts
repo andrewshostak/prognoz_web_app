@@ -8,7 +8,7 @@ import { Observable } from 'rxjs';
 
 @Injectable()
 export class TeamStageTypeNewService {
-   public readonly teamStageTypesUrl: string = `${environment.apiUrl}v2/team/stage-types`;
+   public readonly teamStageTypesUrl: string = `${environment.apiBaseUrl}/v2/team/stage-types`;
 
    constructor(private httpClient: HttpClient) {}
 

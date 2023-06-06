@@ -12,7 +12,7 @@ import { tap } from 'rxjs/operators';
 
 @Injectable()
 export class SeasonNewService {
-   public readonly seasonsUrl: string = `${environment.apiUrl}v2/seasons`;
+   public readonly seasonsUrl: string = `${environment.apiBaseUrl}/v2/seasons`;
    private seasons: SeasonNew[];
 
    constructor(private httpClient: HttpClient) {}

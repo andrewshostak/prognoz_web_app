@@ -12,7 +12,7 @@ import { Observable } from 'rxjs';
 @Injectable()
 export class AuthNewService {
    private user: UserNew = null;
-   private authURL = environment.apiUrl + 'v2/auth';
+   private authURL = environment.apiBaseUrl + '/v2/auth';
 
    constructor(private httpClient: HttpClient) {}
 

@@ -27,11 +27,11 @@ export class SettingsService {
    public static readonly defaultDebounceTime: number = 750;
 
    // new image logos paths
-   public static readonly awardsLogosPath: string = environment.imageURL + '/awards';
-   public static readonly clubsLogosPath: string = environment.imageURL + '/clubs';
-   public static readonly newsLogosPath: string = environment.imageURL + '/news';
-   public static readonly teamsLogosPath: string = environment.imageURL + '/teams';
-   public static readonly usersLogosPath: string = environment.imageURL + '/users';
+   public static readonly awardsLogosPath: string = environment.imageBaseUrl + '/awards';
+   public static readonly clubsLogosPath: string = environment.imageBaseUrl + '/clubs';
+   public static readonly newsLogosPath: string = environment.imageBaseUrl + '/news';
+   public static readonly teamsLogosPath: string = environment.imageBaseUrl + '/teams';
+   public static readonly usersLogosPath: string = environment.imageBaseUrl + '/users';
    public static readonly userDefaultImage: string = 'default.png';
 
    // max limit values (same limitations present on the back-end side)

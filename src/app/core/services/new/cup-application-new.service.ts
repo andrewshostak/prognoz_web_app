@@ -11,7 +11,7 @@ import { map } from 'rxjs/operators';
 
 @Injectable()
 export class CupApplicationNewService {
-   readonly cupApplicationsUrl: string = `${environment.apiUrl}v2/cup/applications`;
+   readonly cupApplicationsUrl: string = `${environment.apiBaseUrl}/v2/cup/applications`;
 
    constructor(private httpClient: HttpClient) {}
 

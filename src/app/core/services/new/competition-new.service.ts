@@ -10,7 +10,7 @@ import { map } from 'rxjs/operators';
 
 @Injectable()
 export class CompetitionNewService {
-   public readonly competitionsUrl: string = `${environment.apiUrl}v2/competitions`;
+   public readonly competitionsUrl: string = `${environment.apiBaseUrl}/v2/competitions`;
 
    constructor(private httpClient: HttpClient) {}
 

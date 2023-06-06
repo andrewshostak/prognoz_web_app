@@ -9,7 +9,7 @@ import { Observable } from 'rxjs';
 
 @Injectable()
 export class TeamRatingNewService {
-   public readonly teamRatingUrl: string = `${environment.apiUrl}v2/team/rating`;
+   public readonly teamRatingUrl: string = `${environment.apiBaseUrl}/v2/team/rating`;
 
    constructor(private httpClient: HttpClient) {}
 

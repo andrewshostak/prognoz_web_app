@@ -12,7 +12,7 @@ import { Observable } from 'rxjs';
 export class TeamPredictionService {
    constructor(private errorHandlerService: ErrorHandlerService, private headersWithToken: HeadersWithToken) {}
 
-   private teamPredictionUrl = environment.apiUrl + 'team/predictions';
+   private teamPredictionUrl = environment.apiBaseUrl + '/team/predictions';
 
    /**
     * @deprecated

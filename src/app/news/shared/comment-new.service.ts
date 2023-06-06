@@ -11,7 +11,7 @@ import { map } from 'rxjs/operators';
 
 @Injectable()
 export class CommentNewService {
-   public readonly commentsUrl: string = `${environment.apiUrl}v2/comments`;
+   public readonly commentsUrl: string = `${environment.apiBaseUrl}/v2/comments`;
 
    constructor(private httpClient: HttpClient) {}
 

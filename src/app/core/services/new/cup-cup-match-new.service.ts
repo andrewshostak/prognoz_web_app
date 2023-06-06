@@ -13,7 +13,7 @@ import { map } from 'rxjs/operators';
 
 @Injectable()
 export class CupCupMatchNewService {
-   public readonly cupCupMatchesUrl: string = `${environment.apiUrl}v2/cup/cup-matches`;
+   public readonly cupCupMatchesUrl: string = `${environment.apiBaseUrl}/v2/cup/cup-matches`;
 
    constructor(private authService: AuthNewService, private httpClient: HttpClient) {}
 

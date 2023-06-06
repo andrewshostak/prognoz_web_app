@@ -11,7 +11,7 @@ import { map } from 'rxjs/operators';
 
 @Injectable()
 export class TeamParticipantNewService {
-   public readonly teamParticipantsUrl: string = `${environment.apiUrl}v2/team/participants`;
+   public readonly teamParticipantsUrl: string = `${environment.apiBaseUrl}/v2/team/participants`;
 
    constructor(private httpClient: HttpClient) {}
 

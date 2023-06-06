@@ -12,7 +12,7 @@ import { map } from 'rxjs/operators';
 
 @Injectable()
 export class TeamNewService {
-   public readonly teamsUrl: string = `${environment.apiUrl}v2/team/teams`;
+   public readonly teamsUrl: string = `${environment.apiBaseUrl}/v2/team/teams`;
 
    constructor(private httpClient: HttpClient) {}
 

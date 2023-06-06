@@ -10,7 +10,7 @@ import { catchError } from 'rxjs/operators';
 
 @Injectable()
 export class TeamMatchService {
-   private teamMatchUrl = environment.apiUrl + 'team/matches';
+   private teamMatchUrl = environment.apiBaseUrl + '/team/matches';
 
    constructor(private errorHandlerService: ErrorHandlerService, private headersWithToken: HeadersWithToken) {}
 

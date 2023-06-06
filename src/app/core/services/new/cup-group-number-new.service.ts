@@ -8,7 +8,7 @@ import { Observable } from 'rxjs';
 
 @Injectable()
 export class CupGroupNumberNewService {
-   public readonly cupGroupNumbersUrl: string = `${environment.apiUrl}v2/cup/group-numbers`;
+   public readonly cupGroupNumbersUrl: string = `${environment.apiBaseUrl}/v2/cup/group-numbers`;
 
    constructor(private httpClient: HttpClient) {}
 

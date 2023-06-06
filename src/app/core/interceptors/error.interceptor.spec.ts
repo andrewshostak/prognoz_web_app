@@ -49,11 +49,11 @@ describe('ErrorInterceptor', () => {
       it('should not invoke notificationsService `error` when `isAllowedPath` returns false', () => {
          spyOn(notificationsService, 'error');
 
-         httpClient.delete(environment.apiUrl + 'kovbaska').subscribe(
+         httpClient.delete(environment.apiBaseUrl + '/kovbaska').subscribe(
             () => {},
             () => {}
          );
-         httpTestingController.expectOne(environment.apiUrl + 'kovbaska').flush({}, error);
+         httpTestingController.expectOne(environment.apiBaseUrl + '/kovbaska').flush({}, error);
 
          expect(notificationsService.error).not.toHaveBeenCalled();
       });
@@ -105,7 +105,7 @@ describe('ErrorInterceptor', () => {
       });
 
       it('should return false when url includes environment apiUrl but not one of allowed paths', () => {
-         expect(errorInterceptor.isAllowedPath(`${environment.apiUrl}/sausage`)).toBeFalsy();
+         expect(errorInterceptor.isAllowedPath(`${environment.apiBaseUrl}/sausage`)).toBeFalsy();
       });
 
       it('should return false when url includes one of allowed paths but does not environment apiUrl', () => {
@@ -113,7 +113,7 @@ describe('ErrorInterceptor', () => {
       });
 
       it('should return true when url includes one of allowed paths and environment apiUrl', () => {
-         expect(errorInterceptor.isAllowedPath(`${environment.apiUrl}/v2/auth/logout`)).toBeTruthy();
+         expect(errorInterceptor.isAllowedPath(`${environment.apiBaseUrl}/v2/auth/logout`)).toBeTruthy();
       });
    });
 });

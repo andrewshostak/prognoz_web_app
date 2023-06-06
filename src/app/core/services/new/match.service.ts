@@ -10,7 +10,7 @@ import { map } from 'rxjs/operators';
 
 @Injectable()
 export class MatchService {
-   public readonly matchesUrl: string = `${environment.apiUrl}v2/matches`;
+   public readonly matchesUrl: string = `${environment.apiBaseUrl}/v2/matches`;
 
    constructor(private httpClient: HttpClient) {}
 

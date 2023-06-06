@@ -3,7 +3,7 @@ declare const process: any;
 
 export const environment = {
    production: true,
-   imageURL: 'https://api.prognoz.org.ua/img',
-   apiUrl: 'https://api.prognoz.org.ua/api/',
+   imageBaseUrl: process.env.IMAGE_BASE_URL,
+   apiBaseUrl: process.env.API_BASE_URL,
    pusherApiKey: process.env.PUSHER_API_KEY
 };

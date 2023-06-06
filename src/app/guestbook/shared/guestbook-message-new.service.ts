@@ -11,7 +11,7 @@ import { map } from 'rxjs/operators';
 
 @Injectable()
 export class GuestbookMessageNewService {
-   public readonly guestbookMessagesUrl: string = `${environment.apiUrl}v2/guestbook-messages`;
+   public readonly guestbookMessagesUrl: string = `${environment.apiBaseUrl}/v2/guestbook-messages`;
 
    constructor(private httpClient: HttpClient) {}
 

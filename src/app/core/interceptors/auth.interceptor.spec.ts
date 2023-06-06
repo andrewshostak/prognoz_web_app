@@ -58,9 +58,9 @@ describe('AuthInterceptor', () => {
          spyOn(localStorage, 'getItem').and.returnValue('i_am_awesome_auth_token');
          spyOn(authInterceptor, 'isAllowedPath').and.returnValue(false);
 
-         httpClient.get(environment.apiUrl + 'seasons/89').subscribe(() => {});
+         httpClient.get(environment.apiBaseUrl + '/seasons/89').subscribe(() => {});
 
-         const httpRequest = httpTestingController.expectOne(environment.apiUrl + 'seasons/89');
+         const httpRequest = httpTestingController.expectOne(environment.apiBaseUrl + '/seasons/89');
          expect(httpRequest.request.headers.has('Authorization')).toBeFalsy();
       });
 
@@ -84,7 +84,7 @@ describe('AuthInterceptor', () => {
       });
 
       it('should return false when url includes environment apiUrl but not one of allowed paths', () => {
-         expect(authInterceptor.isAllowedPath(`${environment.apiUrl}/sausage`)).toBeFalsy();
+         expect(authInterceptor.isAllowedPath(`${environment.apiBaseUrl}/sausage`)).toBeFalsy();
       });
 
       it('should return false when url includes one of allowed paths but does not environment apiUrl', () => {
@@ -92,7 +92,7 @@ describe('AuthInterceptor', () => {
       });
 
       it('should return true when url includes one of allowed paths and environment apiUrl', () => {
-         expect(authInterceptor.isAllowedPath(`${environment.apiUrl}/v2/auth/logout`)).toBeTruthy();
+         expect(authInterceptor.isAllowedPath(`${environment.apiBaseUrl}/v2/auth/logout`)).toBeTruthy();
       });
    });
 });
