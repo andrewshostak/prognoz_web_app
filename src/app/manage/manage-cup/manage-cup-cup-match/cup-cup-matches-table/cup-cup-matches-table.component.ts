@@ -7,7 +7,7 @@ import { NotificationsService } from 'angular2-notifications';
 import { Subscription } from 'rxjs';
 import { UtilsService } from '@services/utils.service';
 import { CupCupMatchNewService } from '@services/new/cup-cup-match-new.service';
-import { CupCupMatchSearch } from '@models/search/cup-cup-match-search.model';
+import { CupCupMatchSearch } from '@models/search/cup/cup-cup-match-search.model';
 import { SettingsService } from '@services/settings.service';
 import { Sequence } from '@enums/sequence.enum';
 import { CupCupMatch } from '@models/v2/cup/cup-cup-match.model';

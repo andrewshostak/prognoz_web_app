@@ -4,7 +4,7 @@ import { Injectable } from '@angular/core';
 import { environment } from '@env';
 import { TeamMatch } from '@models/v2/team/team-match.model';
 import { PaginatedResponse } from '@models/paginated-response.model';
-import { TeamMatchSearch } from '@models/search/team-match-search.model';
+import { TeamMatchSearch } from '@models/search/team/team-match-search.model';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 

@@ -5,7 +5,7 @@ import { ActivatedRoute, Params } from '@angular/router';
 import { Sequence } from '@enums/sequence.enum';
 import { ChampionshipMatch } from '@models/v2/championship/championship-match.model';
 import { ChampionshipPrediction } from '@models/v2/championship/championship-prediction.model';
-import { ChampionshipPredictionSearch } from '@models/search/championship-prediction-search.model';
+import { ChampionshipPredictionSearch } from '@models/search/championship/championship-prediction-search.model';
 import { User } from '@models/v1/user.model';
 import { CurrentStateService } from '@services/current-state.service';
 import { ChampionshipMatchNewService } from '@services/new/championship-match-new.service';

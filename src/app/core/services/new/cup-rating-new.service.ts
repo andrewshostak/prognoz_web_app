@@ -5,8 +5,8 @@ import { environment } from '@env';
 import { CupRatingCalculated } from '@models/v2/cup/cup-rating-calculated.model';
 import { CupRatingGroup } from '@models/v2/cup/cup-rating-group.model';
 import { PaginatedResponse } from '@models/paginated-response.model';
-import { CupRatingGroupSearch } from '@models/search/cup-rating-group-search.model';
-import { CupRatingSearch } from '@models/search/cup-rating-search.model';
+import { CupRatingGroupSearch } from '@models/search/cup/cup-rating-group-search.model';
+import { CupRatingSearch } from '@models/search/cup/cup-rating-search.model';
 import { Observable } from 'rxjs';
 
 @Injectable()

@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 
 import { environment } from '@env';
 import { TeamRating } from '@models/v2/team/team-rating.model';
-import { TeamRatingSearch } from '@models/search/team-rating-search.model';
+import { TeamRatingSearch } from '@models/search/team/team-rating-search.model';
 import { PaginatedResponse } from '@models/paginated-response.model';
 import { Observable } from 'rxjs';
 

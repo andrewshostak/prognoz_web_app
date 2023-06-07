@@ -5,7 +5,7 @@ import { TeamStageState } from '@enums/team-stage-state.enum';
 import { TeamStageType } from '@enums/team-stage-type.enum';
 import { GenerateTeamTeamMatches } from '@models/v2/team/generate-team-team-matches.model';
 import { TeamStage } from '@models/v2/team/team-stage.model';
-import { TeamStageSearch } from '@models/search/team-stage-search.model';
+import { TeamStageSearch } from '@models/search/team/team-stage-search.model';
 import { TeamStageNewService } from '@services/new/team-stage-new.service';
 import { TeamTeamMatchNewService } from '@services/new/team-team-match-new.service';
 import { SettingsService } from '@services/settings.service';

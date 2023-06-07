@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 
 import { MatchState } from '@enums/match-state.enum';
 import { Sequence } from '@enums/sequence.enum';
-import { ChampionshipMatchSearch } from '@models/search/championship-match-search.model';
+import { ChampionshipMatchSearch } from '@models/search/championship/championship-match-search.model';
 import { User } from '@models/v1/user.model';
 import { CurrentStateService } from '@services/current-state.service';
 import { ChampionshipMatchNewService } from '@services/new/championship-match-new.service';
@@ -16,7 +16,7 @@ import { CompetitionState } from '@enums/competition-state.enum';
 import { Tournament } from '@enums/tournament.enum';
 import { CompetitionNewService } from '@services/new/competition-new.service';
 import { ChampionshipRating } from '@models/v2/championship/championship-rating.model';
-import { ChampionshipRatingSearch } from '@models/search/championship-rating-search.model';
+import { ChampionshipRatingSearch } from '@models/search/championship/championship-rating-search.model';
 import { SettingsService } from '@services/settings.service';
 import { ChampionshipRatingNewService } from '@services/new/championship-rating-new.service';
 import { mergeMap } from 'rxjs/operators';

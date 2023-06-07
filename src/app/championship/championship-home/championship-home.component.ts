@@ -6,7 +6,7 @@ import { ModelStatus } from '@enums/model-status.enum';
 import { Sequence } from '@enums/sequence.enum';
 import { ChampionshipPrediction } from '@models/v2/championship/championship-prediction.model';
 import { ChampionshipMatch } from '@models/v2/championship/championship-match.model';
-import { ChampionshipMatchSearch } from '@models/search/championship-match-search.model';
+import { ChampionshipMatchSearch } from '@models/search/championship/championship-match-search.model';
 import { User } from '@models/v1/user.model';
 import { ChampionshipPredictionNewService } from '@services/new/championship-prediction-new.service';
 import { ChampionshipService } from '@services/championship/championship.service';
@@ -26,7 +26,7 @@ import { CompetitionState } from '@enums/competition-state.enum';
 import { Tournament } from '@enums/tournament.enum';
 import { CompetitionNewService } from '@services/new/competition-new.service';
 import { ChampionshipRating } from '@models/v2/championship/championship-rating.model';
-import { ChampionshipRatingSearch } from '@models/search/championship-rating-search.model';
+import { ChampionshipRatingSearch } from '@models/search/championship/championship-rating-search.model';
 import { ChampionshipRatingNewService } from '@services/new/championship-rating-new.service';
 
 @Component({

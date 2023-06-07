@@ -4,7 +4,7 @@ import { Injectable } from '@angular/core';
 import { environment } from '@env';
 import { TeamParticipant } from '@models/v2/team/team-participant.model';
 import { PaginatedResponse } from '@models/paginated-response.model';
-import { TeamParticipantSearch } from '@models/search/team-participant-search.model';
+import { TeamParticipantSearch } from '@models/search/team/team-participant-search.model';
 import { isNil } from 'lodash';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';

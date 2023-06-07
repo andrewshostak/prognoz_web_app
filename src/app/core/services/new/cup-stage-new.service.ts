@@ -4,7 +4,7 @@ import { Injectable } from '@angular/core';
 import { environment } from '@env';
 import { CupStage } from '@models/v2/cup/cup-stage.model';
 import { PaginatedResponse } from '@models/paginated-response.model';
-import { CupStageSearch } from '@models/search/cup-stage-search.model';
+import { CupStageSearch } from '@models/search/cup/cup-stage-search.model';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 

@@ -3,7 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 
 import { TeamTeamMatch } from '@models/v2/team/team-team-match.model';
 import { PaginatedResponse } from '@models/paginated-response.model';
-import { TeamTeamMatchSearch } from '@models/search/team-team-match-search.model';
+import { TeamTeamMatchSearch } from '@models/search/team/team-team-match-search.model';
 import { CurrentStateService } from '@services/current-state.service';
 import { TeamStageNewService } from '@services/new/team-stage-new.service';
 import { CompetitionNewService } from '@services/new/competition-new.service';

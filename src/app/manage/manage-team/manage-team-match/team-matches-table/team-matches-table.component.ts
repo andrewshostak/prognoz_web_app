@@ -6,7 +6,7 @@ import { MatchState } from '@enums/match-state.enum';
 import { TeamMatch } from '@models/v2/team/team-match.model';
 import { OpenedModal } from '@models/opened-modal.model';
 import { Pagination } from '@models/pagination.model';
-import { TeamMatchSearch } from '@models/search/team-match-search.model';
+import { TeamMatchSearch } from '@models/search/team/team-match-search.model';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { TeamMatchNewService } from '@services/new/team-match-new.service';
 import { PaginationService } from '@services/pagination.service';

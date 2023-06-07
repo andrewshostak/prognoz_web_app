@@ -4,7 +4,7 @@ import { Injectable } from '@angular/core';
 import { environment } from '@env';
 import { Team } from '@models/v2/team/team.model';
 import { PaginatedResponse } from '@models/paginated-response.model';
-import { TeamSearch } from '@models/search/team-search.model';
+import { TeamSearch } from '@models/search/team/team-search.model';
 import { isNil } from 'lodash';
 import { serialize } from 'object-to-formdata';
 import { Observable } from 'rxjs';

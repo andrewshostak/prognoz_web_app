@@ -3,7 +3,7 @@ import { ActivatedRoute, Params } from '@angular/router';
 
 import { Sequence } from '@enums/sequence.enum';
 import { TeamTeamMatchState } from '@enums/team-team-match-state.enum';
-import { TeamTeamMatchSearch } from '@models/search/team-team-match-search.model';
+import { TeamTeamMatchSearch } from '@models/search/team/team-team-match-search.model';
 import { TeamTeamMatch } from '@models/v2/team/team-team-match.model';
 import { Pagination } from '@models/pagination.model';
 import { OpenedModal } from '@models/opened-modal.model';

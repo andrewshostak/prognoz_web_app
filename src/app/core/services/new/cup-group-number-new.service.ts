@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 
 import { environment } from '@env';
 import { PaginatedResponse } from '@models/paginated-response.model';
-import { CupGroupNumberSearch } from '@models/search/cup-group-number-search.model';
+import { CupGroupNumberSearch } from '@models/search/cup/cup-group-number-search.model';
 import { Observable } from 'rxjs';
 
 @Injectable()

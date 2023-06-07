@@ -10,7 +10,7 @@ import { CupMatch } from '@models/v2/cup/cup-match.model';
 import { CupPrediction } from '@models/v2/cup/cup-prediction.model';
 import { User } from '@models/v2/user.model';
 import { PaginatedResponse } from '@models/paginated-response.model';
-import { CupMatchSearch } from '@models/search/cup-match-search.model';
+import { CupMatchSearch } from '@models/search/cup/cup-match-search.model';
 import { AuthNewService } from '@services/new/auth-new.service';
 import { CupCupMatchNewService } from '@services/new/cup-cup-match-new.service';
 import { CupMatchNewService } from '@services/new/cup-match-new.service';

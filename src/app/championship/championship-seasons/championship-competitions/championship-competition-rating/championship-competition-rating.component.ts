@@ -6,7 +6,7 @@ import { CurrentStateService } from '@services/current-state.service';
 import { TitleService } from '@services/title.service';
 import { User } from '@models/v1/user.model';
 import { ChampionshipRating } from '@models/v2/championship/championship-rating.model';
-import { ChampionshipRatingSearch } from '@models/search/championship-rating-search.model';
+import { ChampionshipRatingSearch } from '@models/search/championship/championship-rating-search.model';
 import { SettingsService } from '@services/settings.service';
 import { Sequence } from '@enums/sequence.enum';
 

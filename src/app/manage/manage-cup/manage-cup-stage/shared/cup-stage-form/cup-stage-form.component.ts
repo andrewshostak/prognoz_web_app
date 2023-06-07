@@ -17,7 +17,7 @@ import { CupStageNewService } from '@services/new/cup-stage-new.service';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { NotificationsService } from 'angular2-notifications';
 import { UtilsService } from '@services/utils.service';
-import { CupMatchSearch } from '@models/search/cup-match-search.model';
+import { CupMatchSearch } from '@models/search/cup/cup-match-search.model';
 import { MatchState } from '@enums/match-state.enum';
 import { SettingsService } from '@services/settings.service';
 import { OpenedModal } from '@models/opened-modal.model';

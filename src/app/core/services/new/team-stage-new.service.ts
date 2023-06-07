@@ -4,7 +4,7 @@ import { Injectable } from '@angular/core';
 import { environment } from '@env';
 import { TeamStage } from '@models/v2/team/team-stage.model';
 import { PaginatedResponse } from '@models/paginated-response.model';
-import { TeamStageSearch } from '@models/search/team-stage-search.model';
+import { TeamStageSearch } from '@models/search/team/team-stage-search.model';
 import { GenerateTeamStages } from '@models/v2/team/generate-team-stages.model';
 import { map } from 'rxjs/operators';
 import { Observable } from 'rxjs';

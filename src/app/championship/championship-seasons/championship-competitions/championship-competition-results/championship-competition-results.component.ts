@@ -4,7 +4,7 @@ import { ActivatedRoute, Params } from '@angular/router';
 import { MatchState } from '@enums/match-state.enum';
 import { Sequence } from '@enums/sequence.enum';
 import { ChampionshipMatch } from '@models/v2/championship/championship-match.model';
-import { ChampionshipMatchSearch } from '@models/search/championship-match-search.model';
+import { ChampionshipMatchSearch } from '@models/search/championship/championship-match-search.model';
 import { ChampionshipMatchNewService } from '@services/new/championship-match-new.service';
 import { SettingsService } from '@services/settings.service';
 import { TitleService } from '@services/title.service';

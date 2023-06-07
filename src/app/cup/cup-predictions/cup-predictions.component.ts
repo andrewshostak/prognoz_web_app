@@ -4,7 +4,7 @@ import { Sequence } from '@enums/sequence.enum';
 import { CupMatch } from '@models/v2/cup/cup-match.model';
 import { CupPrediction } from '@models/v2/cup/cup-prediction.model';
 import { User } from '@models/v2/user.model';
-import { CupMatchSearch } from '@models/search/cup-match-search.model';
+import { CupMatchSearch } from '@models/search/cup/cup-match-search.model';
 import { CurrentStateService } from '@services/current-state.service';
 import { AuthNewService } from '@services/new/auth-new.service';
 import { CupMatchNewService } from '@services/new/cup-match-new.service';

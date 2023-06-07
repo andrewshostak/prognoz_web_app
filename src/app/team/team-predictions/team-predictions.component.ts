@@ -4,7 +4,7 @@ import { ActivatedRoute, Params, Router } from '@angular/router';
 import { TeamTeamMatch } from '@models/v2/team/team-team-match.model';
 import { User } from '@models/v2/user.model';
 import { RequestParams } from '@models/request-params.model';
-import { TeamTeamMatchSearch } from '@models/search/team-team-match-search.model';
+import { TeamTeamMatchSearch } from '@models/search/team/team-team-match-search.model';
 import { TeamMatch } from '@models/v1/team-match.model';
 import { TeamPrediction } from '@models/v1/team-prediction.model';
 import { AuthNewService } from '@services/new/auth-new.service';

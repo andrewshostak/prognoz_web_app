@@ -4,7 +4,7 @@ import { Injectable } from '@angular/core';
 import { environment } from '@env';
 import { CupPrediction } from '@models/v2/cup/cup-prediction.model';
 import { PaginatedResponse } from '@models/paginated-response.model';
-import { CupPredictionSearch } from '@models/search/cup-prediction-search.model';
+import { CupPredictionSearch } from '@models/search/cup/cup-prediction-search.model';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 

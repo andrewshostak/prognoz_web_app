@@ -6,7 +6,7 @@ import { MatchState } from '@enums/match-state.enum';
 import { CupMatch } from '@models/v2/cup/cup-match.model';
 import { OpenedModal } from '@models/opened-modal.model';
 import { Pagination } from '@models/pagination.model';
-import { CupMatchSearch } from '@models/search/cup-match-search.model';
+import { CupMatchSearch } from '@models/search/cup/cup-match-search.model';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { CupMatchNewService } from '@services/new/cup-match-new.service';
 import { PaginationService } from '@services/pagination.service';

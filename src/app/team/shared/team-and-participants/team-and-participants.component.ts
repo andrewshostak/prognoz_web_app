@@ -7,7 +7,7 @@ import { Team } from '@models/v2/team/team.model';
 import { TeamParticipant } from '@models/v2/team/team-participant.model';
 import { User } from '@models/v2/user.model';
 import { OpenedModal } from '@models/opened-modal.model';
-import { TeamParticipantSearch } from '@models/search/team-participant-search.model';
+import { TeamParticipantSearch } from '@models/search/team/team-participant-search.model';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { DeviceService } from '@services/device.service';
 import { AuthNewService } from '@services/new/auth-new.service';

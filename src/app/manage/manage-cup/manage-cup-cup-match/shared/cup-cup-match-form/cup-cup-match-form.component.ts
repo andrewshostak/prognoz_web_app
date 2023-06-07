@@ -10,7 +10,7 @@ import { CupStageNewService } from '@services/new/cup-stage-new.service';
 import { UserNewService } from '@services/new/user-new.service';
 import { UtilsService } from '@services/utils.service';
 import { NotificationsService } from 'angular2-notifications';
-import { CupStageSearch } from '@models/search/cup-stage-search.model';
+import { CupStageSearch } from '@models/search/cup/cup-stage-search.model';
 import { SettingsService } from '@services/settings.service';
 import { Sequence } from '@enums/sequence.enum';
 import { CupStageState } from '@enums/cup-stage-state.enum';

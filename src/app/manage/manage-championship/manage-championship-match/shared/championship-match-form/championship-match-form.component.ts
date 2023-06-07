@@ -7,7 +7,7 @@ import { Tournament } from '@enums/tournament.enum';
 import { ChampionshipMatch } from '@models/v2/championship/championship-match.model';
 import { Competition } from '@models/v2/competition.model';
 import { PaginatedResponse } from '@models/paginated-response.model';
-import { ChampionshipMatchSearch } from '@models/search/championship-match-search.model';
+import { ChampionshipMatchSearch } from '@models/search/championship/championship-match-search.model';
 import { CompetitionSearch } from '@models/search/competition-search.model';
 import { ChampionshipMatchNewService } from '@services/new/championship-match-new.service';
 import { CompetitionNewService } from '@services/new/competition-new.service';

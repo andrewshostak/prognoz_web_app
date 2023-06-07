@@ -12,7 +12,7 @@ import { TeamStage } from '@models/v2/team/team-stage.model';
 import { PaginatedResponse } from '@models/paginated-response.model';
 import { CompetitionSearch } from '@models/search/competition-search.model';
 import { SeasonSearch } from '@models/search/season-search.model';
-import { TeamStageSearch } from '@models/search/team-stage-search.model';
+import { TeamStageSearch } from '@models/search/team/team-stage-search.model';
 import { CurrentStateService } from '@services/current-state.service';
 import { CompetitionNewService } from '@services/new/competition-new.service';
 import { SeasonNewService } from '@services/new/season-new.service';

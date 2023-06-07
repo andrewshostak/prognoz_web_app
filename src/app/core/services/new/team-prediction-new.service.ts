@@ -4,7 +4,7 @@ import { Injectable } from '@angular/core';
 import { environment } from '@env';
 import { TeamPrediction } from '@models/v2/team/team-prediction.model';
 import { PaginatedResponse } from '@models/paginated-response.model';
-import { TeamPredictionSearch } from '@models/search/team-prediction-search.model';
+import { TeamPredictionSearch } from '@models/search/team/team-prediction-search.model';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 

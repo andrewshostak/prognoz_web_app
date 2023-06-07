@@ -3,7 +3,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 
 import { environment } from '@env';
 import { PaginatedResponse } from '@models/paginated-response.model';
-import { ChampionshipRatingSearch } from '@models/search/championship-rating-search.model';
+import { ChampionshipRatingSearch } from '@models/search/championship/championship-rating-search.model';
 import { ChampionshipRating } from '@models/v2/championship/championship-rating.model';
 import { Observable } from 'rxjs';
 import { ChampionshipSeasonRatingItem } from '@models/v2/championship/championship-rating-season.model';

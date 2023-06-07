@@ -4,7 +4,7 @@ import { FormGroup } from '@angular/forms';
 import { Sequence } from '@enums/sequence.enum';
 import { Team } from '@models/v2/team/team.model';
 import { PaginatedResponse } from '@models/paginated-response.model';
-import { TeamSearch } from '@models/search/team-search.model';
+import { TeamSearch } from '@models/search/team/team-search.model';
 import { TeamNewService } from '@services/new/team-new.service';
 import { SettingsService } from '@services/settings.service';
 import { trim } from 'lodash';

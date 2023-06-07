@@ -2,7 +2,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
 
 import { Team } from '@models/v2/team/team.model';
-import { TeamSearch } from '@models/search/team-search.model';
+import { TeamSearch } from '@models/search/team/team-search.model';
 import { AuthNewService } from '@services/new/auth-new.service';
 import { TeamNewService } from '@services/new/team-new.service';
 import { SettingsService } from '@services/settings.service';

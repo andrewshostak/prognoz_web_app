@@ -7,10 +7,10 @@ import { ChampionshipRatingNewService } from '@services/new/championship-rating-
 import { UserNewService } from '@services/new/user-new.service';
 import { TitleService } from '@services/title.service';
 import { UtilsService } from '@services/utils.service';
-import { ChampionshipRatingSearch } from '@models/search/championship-rating-search.model';
+import { ChampionshipRatingSearch } from '@models/search/championship/championship-rating-search.model';
 import { ChampionshipPredictionNewService } from '@services/new/championship-prediction-new.service';
 import { ChampionshipPrediction } from '@models/v2/championship/championship-prediction.model';
-import { ChampionshipPredictionSearch } from '@models/search/championship-prediction-search.model';
+import { ChampionshipPredictionSearch } from '@models/search/championship/championship-prediction-search.model';
 import { SettingsService } from '@services/settings.service';
 import { Sequence } from '@enums/sequence.enum';
 

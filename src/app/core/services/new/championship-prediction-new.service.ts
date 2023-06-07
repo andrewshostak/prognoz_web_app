@@ -4,7 +4,7 @@ import { Injectable } from '@angular/core';
 import { environment } from '@env';
 import { ChampionshipPrediction } from '@models/v2/championship/championship-prediction.model';
 import { PaginatedResponse } from '@models/paginated-response.model';
-import { ChampionshipPredictionSearch } from '@models/search/championship-prediction-search.model';
+import { ChampionshipPredictionSearch } from '@models/search/championship/championship-prediction-search.model';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 

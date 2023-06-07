@@ -5,7 +5,7 @@ import { environment } from '@env';
 import { ChampionshipMatch } from '@models/v2/championship/championship-match.model';
 import { ChampionshipMatchStatistic } from '@models/v2/championship/championship-match-statistic.model';
 import { PaginatedResponse } from '@models/paginated-response.model';
-import { ChampionshipMatchSearch } from '@models/search/championship-match-search.model';
+import { ChampionshipMatchSearch } from '@models/search/championship/championship-match-search.model';
 import { isNil } from 'lodash';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';

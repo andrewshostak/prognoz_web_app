@@ -6,7 +6,7 @@ import { CupStage } from '@models/v2/cup/cup-stage.model';
 import { CupMatch } from '@models/v2/cup/cup-match.model';
 import { OpenedModal } from '@models/opened-modal.model';
 import { PaginatedResponse } from '@models/paginated-response.model';
-import { CupMatchSearch } from '@models/search/cup-match-search.model';
+import { CupMatchSearch } from '@models/search/cup/cup-match-search.model';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { CupStageNewService } from '@services/new/cup-stage-new.service';
 import { CupMatchNewService } from '@services/new/cup-match-new.service';
@@ -15,7 +15,7 @@ import { UtilsService } from '@services/utils.service';
 import { NotificationsService } from 'angular2-notifications';
 import { Observable } from 'rxjs';
 import { Sequence } from '@enums/sequence.enum';
-import { CupStageSearch } from '@models/search/cup-stage-search.model';
+import { CupStageSearch } from '@models/search/cup/cup-stage-search.model';
 import { CupStageState } from '@enums/cup-stage-state.enum';
 
 @Component({

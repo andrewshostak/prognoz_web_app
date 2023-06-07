@@ -8,7 +8,7 @@ import { NotificationsService } from 'angular2-notifications';
 import { Subscription } from 'rxjs';
 import { CupStageNewService } from '@services/new/cup-stage-new.service';
 import { CupStage } from '@models/v2/cup/cup-stage.model';
-import { CupStageSearch } from '@models/search/cup-stage-search.model';
+import { CupStageSearch } from '@models/search/cup/cup-stage-search.model';
 import { SettingsService } from '@services/settings.service';
 import { OpenedModal } from '@models/opened-modal.model';
 import { findIndex, remove } from 'lodash';

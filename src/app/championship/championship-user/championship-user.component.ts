@@ -9,7 +9,7 @@ import { ChampionshipPrediction } from '@models/v2/championship/championship-pre
 import { Competition } from '@models/v2/competition.model';
 import { User } from '@models/v2/user.model';
 import { PaginatedResponse } from '@models/paginated-response.model';
-import { ChampionshipPredictionSearch } from '@models/search/championship-prediction-search.model';
+import { ChampionshipPredictionSearch } from '@models/search/championship/championship-prediction-search.model';
 import { CompetitionSearch } from '@models/search/competition-search.model';
 import { ChampionshipRatingNewService } from '@services/new/championship-rating-new.service';
 import { ChampionshipPredictionNewService } from '@services/new/championship-prediction-new.service';
@@ -20,7 +20,7 @@ import { TitleService } from '@services/title.service';
 import { UtilsService } from '@services/utils.service';
 import { forkJoin, iif, Observable, of } from 'rxjs';
 import { map, mergeMap } from 'rxjs/operators';
-import { ChampionshipRatingSearch } from '@models/search/championship-rating-search.model';
+import { ChampionshipRatingSearch } from '@models/search/championship/championship-rating-search.model';
 
 @Component({
    selector: 'app-championship-user',

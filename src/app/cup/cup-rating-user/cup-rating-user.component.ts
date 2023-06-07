@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { CupRatingCalculated } from '@models/v2/cup/cup-rating-calculated.model';
-import { CupRatingSearch } from '@models/search/cup-rating-search.model';
+import { CupRatingSearch } from '@models/search/cup/cup-rating-search.model';
 import { CupRatingNewService } from '@services/new/cup-rating-new.service';
 import { TitleService } from '@services/title.service';
 

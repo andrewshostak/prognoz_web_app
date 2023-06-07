@@ -6,7 +6,7 @@ import { MatchState } from '@enums/match-state.enum';
 import { ChampionshipMatch } from '@models/v2/championship/championship-match.model';
 import { OpenedModal } from '@models/opened-modal.model';
 import { Pagination } from '@models/pagination.model';
-import { ChampionshipMatchSearch } from '@models/search/championship-match-search.model';
+import { ChampionshipMatchSearch } from '@models/search/championship/championship-match-search.model';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { ChampionshipMatchNewService } from '@services/new/championship-match-new.service';
 import { PaginationService } from '@services/pagination.service';

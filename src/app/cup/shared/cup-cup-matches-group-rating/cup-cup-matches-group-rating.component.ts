@@ -5,7 +5,7 @@ import { CupRatingGroupTab } from '@enums/cup-rating-group-tab.enum';
 import { CupCupMatchState } from '@enums/cup-cup-match-state.enum';
 import { Sequence } from '@enums/sequence.enum';
 import { CupCupMatch } from '@models/v2/cup/cup-cup-match.model';
-import { CupCupMatchSearch } from '@models/search/cup-cup-match-search.model';
+import { CupCupMatchSearch } from '@models/search/cup/cup-cup-match-search.model';
 import { CupCupMatchNewService } from '@services/new/cup-cup-match-new.service';
 import { SettingsService } from '@services/settings.service';
 import { isNil } from 'lodash';

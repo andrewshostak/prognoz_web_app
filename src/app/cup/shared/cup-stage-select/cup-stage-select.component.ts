@@ -7,7 +7,7 @@ import { Competition } from '@models/v2/competition.model';
 import { CupStage } from '@models/v2/cup/cup-stage.model';
 import { Season } from '@models/v2/season.model';
 import { CompetitionSearch } from '@models/search/competition-search.model';
-import { CupStageSearch } from '@models/search/cup-stage-search.model';
+import { CupStageSearch } from '@models/search/cup/cup-stage-search.model';
 import { SeasonSearch } from '@models/search/season-search.model';
 import { CompetitionNewService } from '@services/new/competition-new.service';
 import { CupStageNewService } from '@services/new/cup-stage-new.service';

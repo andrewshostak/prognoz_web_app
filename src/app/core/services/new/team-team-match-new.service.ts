@@ -5,7 +5,7 @@ import { environment } from '@env';
 import { GenerateTeamTeamMatches } from '@models/v2/team/generate-team-team-matches.model';
 import { TeamTeamMatch } from '@models/v2/team/team-team-match.model';
 import { PaginatedResponse } from '@models/paginated-response.model';
-import { TeamTeamMatchSearch } from '@models/search/team-team-match-search.model';
+import { TeamTeamMatchSearch } from '@models/search/team/team-team-match-search.model';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 

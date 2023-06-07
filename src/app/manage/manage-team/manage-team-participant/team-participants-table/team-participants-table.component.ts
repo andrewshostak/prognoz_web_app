@@ -4,7 +4,7 @@ import { ActivatedRoute, Params } from '@angular/router';
 import { TeamParticipant } from '@models/v2/team/team-participant.model';
 import { OpenedModal } from '@models/opened-modal.model';
 import { Pagination } from '@models/pagination.model';
-import { TeamParticipantSearch } from '@models/search/team-participant-search.model';
+import { TeamParticipantSearch } from '@models/search/team/team-participant-search.model';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { TeamParticipantNewService } from '@services/new/team-participant-new.service';
 import { PaginationService } from '@services/pagination.service';

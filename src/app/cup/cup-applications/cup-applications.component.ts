@@ -6,7 +6,7 @@ import { Tournament } from '@enums/tournament.enum';
 import { Competition } from '@models/v2/competition.model';
 import { CupApplication } from '@models/v2/cup/cup-application.model';
 import { CompetitionSearch } from '@models/search/competition-search.model';
-import { CupApplicationSearch } from '@models/search/cup-application-search.model';
+import { CupApplicationSearch } from '@models/search/cup/cup-application-search.model';
 import { CompetitionNewService } from '@services/new/competition-new.service';
 import { CupApplicationNewService } from '@services/new/cup-application-new.service';
 import { SettingsService } from '@services/settings.service';

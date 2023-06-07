@@ -5,7 +5,7 @@ import { SettingsService } from '@services/settings.service';
 import { iif, Observable, of } from 'rxjs';
 import { PaginatedResponse } from '@models/paginated-response.model';
 import { ChampionshipRating } from '@models/v2/championship/championship-rating.model';
-import { ChampionshipRatingSearch } from '@models/search/championship-rating-search.model';
+import { ChampionshipRatingSearch } from '@models/search/championship/championship-rating-search.model';
 import { Sequence } from '@enums/sequence.enum';
 import { ChampionshipRatingNewService } from '@services/new/championship-rating-new.service';
 import { Competition } from '@models/v2/competition.model';
