@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 
 import { environment } from '@env';
 import { PaginatedResponse } from '@models/paginated-response.model';
-import { TeamStageTypeNew } from '@models/v2/team-stage-type-new.model';
+import { TeamStageType } from '@models/v2/team/team-stage-type.model';
 import { Observable } from 'rxjs';
 
 @Injectable()
@@ -13,7 +13,7 @@ export class TeamStageTypeNewService {
    constructor(private httpClient: HttpClient) {}
 
    // TODO: improvement: save first call result and return it
-   public getTeamStageTypes(): Observable<PaginatedResponse<TeamStageTypeNew>> {
-      return this.httpClient.get<PaginatedResponse<TeamStageTypeNew>>(this.teamStageTypesUrl);
+   public getTeamStageTypes(): Observable<PaginatedResponse<TeamStageType>> {
+      return this.httpClient.get<PaginatedResponse<TeamStageType>>(this.teamStageTypesUrl);
    }
 }

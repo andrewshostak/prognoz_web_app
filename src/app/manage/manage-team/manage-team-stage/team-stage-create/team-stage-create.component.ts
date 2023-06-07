@@ -4,10 +4,10 @@ import { Router } from '@angular/router';
 
 import { CompetitionState } from '@enums/competition-state.enum';
 import { Tournament } from '@enums/tournament.enum';
-import { TeamStageTypeNew } from '@models/v2/team-stage-type-new.model';
-import { CompetitionNew } from '@models/v2/competition-new.model';
+import { TeamStageType } from '@models/v2/team/team-stage-type.model';
+import { Competition } from '@models/v2/competition.model';
 import { CompetitionSearch } from '@models/search/competition-search.model';
-import { TeamStageNew } from '@models/v2/team-stage-new.model';
+import { TeamStage } from '@models/v2/team/team-stage.model';
 import { TeamStageTypeNewService } from '@services/new/team-stage-type-new.service';
 import { CompetitionNewService } from '@services/new/competition-new.service';
 import { SettingsService } from '@services/settings.service';
@@ -30,8 +30,8 @@ export class TeamStageCreateComponent implements OnInit {
    ) {}
 
    public teamStageForm: FormGroup;
-   public competitions: CompetitionNew[] = [];
-   public teamStageTypes: TeamStageTypeNew[] = [];
+   public competitions: Competition[] = [];
+   public teamStageTypes: TeamStageType[] = [];
 
    public ngOnInit(): void {
       this.getCompetitionsData();
@@ -60,7 +60,7 @@ export class TeamStageCreateComponent implements OnInit {
       return UtilsService.showFormInvalidClass(abstractControl);
    }
 
-   private createTeamStage(teamStage: Partial<TeamStageNew>): void {
+   private createTeamStage(teamStage: Partial<TeamStage>): void {
       this.teamStageService.createTeamStage(teamStage).subscribe(response => {
          this.notificationsService.success('Успішно', `Командну стадію ${response.title} створено`);
          this.router.navigate(['/manage', 'team', 'stages']);

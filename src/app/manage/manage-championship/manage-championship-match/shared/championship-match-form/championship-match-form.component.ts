@@ -4,8 +4,8 @@ import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/fo
 import { MatchState } from '@enums/match-state.enum';
 import { CompetitionState } from '@enums/competition-state.enum';
 import { Tournament } from '@enums/tournament.enum';
-import { ChampionshipMatchNew } from '@models/v2/championship-match-new.model';
-import { CompetitionNew } from '@models/v2/competition-new.model';
+import { ChampionshipMatch } from '@models/v2/championship/championship-match.model';
+import { Competition } from '@models/v2/competition.model';
 import { PaginatedResponse } from '@models/paginated-response.model';
 import { ChampionshipMatchSearch } from '@models/search/championship-match-search.model';
 import { CompetitionSearch } from '@models/search/competition-search.model';
@@ -22,11 +22,11 @@ import { Observable } from 'rxjs';
    templateUrl: './championship-match-form.component.html'
 })
 export class ChampionshipMatchFormComponent implements OnChanges, OnInit {
-   @Input() public championshipMatch: ChampionshipMatchNew;
+   @Input() public championshipMatch: ChampionshipMatch;
 
    public championshipMatchForm: FormGroup;
-   public championshipMatchesObservable: Observable<PaginatedResponse<ChampionshipMatchNew>>;
-   public competitions: CompetitionNew[];
+   public championshipMatchesObservable: Observable<PaginatedResponse<ChampionshipMatch>>;
+   public competitions: Competition[];
    public lastCreatedMatchId: number;
 
    constructor(
@@ -42,7 +42,7 @@ export class ChampionshipMatchFormComponent implements OnChanges, OnInit {
       );
    }
 
-   public createChampionshipMatch(championshipMatch: Partial<ChampionshipMatchNew>): void {
+   public createChampionshipMatch(championshipMatch: Partial<ChampionshipMatch>): void {
       this.championshipMatchService.createChampionshipMatch(championshipMatch).subscribe(response => {
          this.notificationsService.success(
             'Успішно',
@@ -112,7 +112,7 @@ export class ChampionshipMatchFormComponent implements OnChanges, OnInit {
          : this.createChampionshipMatch(this.championshipMatchForm.value);
    }
 
-   public updateChampionshipMatch(championshipMatch: Partial<ChampionshipMatchNew>): void {
+   public updateChampionshipMatch(championshipMatch: Partial<ChampionshipMatch>): void {
       this.championshipMatchService.updateChampionshipMatch(this.championshipMatch.id, championshipMatch).subscribe(response => {
          this.notificationsService.success(
             'Успішно',

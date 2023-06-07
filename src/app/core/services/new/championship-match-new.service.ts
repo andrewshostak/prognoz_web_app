@@ -2,8 +2,8 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
 import { environment } from '@env';
-import { ChampionshipMatchNew } from '@models/v2/championship-match-new.model';
-import { ChampionshipMatchStatistic } from '@models/v2/championship-match-statistic.model';
+import { ChampionshipMatch } from '@models/v2/championship/championship-match.model';
+import { ChampionshipMatchStatistic } from '@models/v2/championship/championship-match-statistic.model';
 import { PaginatedResponse } from '@models/paginated-response.model';
 import { ChampionshipMatchSearch } from '@models/search/championship-match-search.model';
 import { isNil } from 'lodash';
@@ -16,9 +16,9 @@ export class ChampionshipMatchNewService {
 
    constructor(private httpClient: HttpClient) {}
 
-   public createChampionshipMatch(championshipMatch: Partial<ChampionshipMatchNew>): Observable<ChampionshipMatchNew> {
+   public createChampionshipMatch(championshipMatch: Partial<ChampionshipMatch>): Observable<ChampionshipMatch> {
       return this.httpClient
-         .post<{ championship_match: ChampionshipMatchNew }>(this.championshipMatchesUrl, championshipMatch)
+         .post<{ championship_match: ChampionshipMatch }>(this.championshipMatchesUrl, championshipMatch)
          .pipe(map(response => response.championship_match));
    }
 
@@ -26,9 +26,9 @@ export class ChampionshipMatchNewService {
       return this.httpClient.delete<void>(`${this.championshipMatchesUrl}/${championshipMatchId}`);
    }
 
-   public getChampionshipMatch(championshipMatchId: number): Observable<ChampionshipMatchNew> {
+   public getChampionshipMatch(championshipMatchId: number): Observable<ChampionshipMatch> {
       return this.httpClient
-         .get<{ championship_match: ChampionshipMatchNew }>(`${this.championshipMatchesUrl}/${championshipMatchId}`)
+         .get<{ championship_match: ChampionshipMatch }>(`${this.championshipMatchesUrl}/${championshipMatchId}`)
          .pipe(map(response => response.championship_match));
    }
 
@@ -36,7 +36,7 @@ export class ChampionshipMatchNewService {
       return this.httpClient.get<ChampionshipMatchStatistic>(`${this.championshipMatchesUrl}/${championshipMatchId}/statistic`);
    }
 
-   public getChampionshipMatches(search: ChampionshipMatchSearch): Observable<PaginatedResponse<ChampionshipMatchNew>> {
+   public getChampionshipMatches(search: ChampionshipMatchSearch): Observable<PaginatedResponse<ChampionshipMatch>> {
       let params: HttpParams = new HttpParams();
 
       if (search.states) {
@@ -72,15 +72,15 @@ export class ChampionshipMatchNewService {
 
       const url: string = search.userId ? `${this.championshipMatchesUrl}/predictions` : this.championshipMatchesUrl;
 
-      return this.httpClient.get<PaginatedResponse<ChampionshipMatchNew>>(url, { params });
+      return this.httpClient.get<PaginatedResponse<ChampionshipMatch>>(url, { params });
    }
 
    public updateChampionshipMatch(
       championshipMatchId: number,
-      championshipMatch: Partial<ChampionshipMatchNew>
-   ): Observable<ChampionshipMatchNew> {
+      championshipMatch: Partial<ChampionshipMatch>
+   ): Observable<ChampionshipMatch> {
       return this.httpClient
-         .put<{ championship_match: ChampionshipMatchNew }>(`${this.championshipMatchesUrl}/${championshipMatchId}`, championshipMatch)
+         .put<{ championship_match: ChampionshipMatch }>(`${this.championshipMatchesUrl}/${championshipMatchId}`, championshipMatch)
          .pipe(map(response => response.championship_match));
    }
 }

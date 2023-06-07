@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 
 import { Sequence } from '@enums/sequence.enum';
 import { environment } from '@env';
-import { SeasonNew } from '@models/v2/season-new.model';
+import { Season } from '@models/v2/season.model';
 import { PaginatedResponse } from '@models/paginated-response.model';
 import { SeasonSearch } from '@models/search/season-search.model';
 import { SettingsService } from '@services/settings.service';
@@ -13,11 +13,11 @@ import { tap } from 'rxjs/operators';
 @Injectable()
 export class SeasonNewService {
    public readonly seasonsUrl: string = `${environment.apiBaseUrl}/v2/seasons`;
-   private seasons: SeasonNew[];
+   private seasons: Season[];
 
    constructor(private httpClient: HttpClient) {}
 
-   public getSeasons(search: SeasonSearch): Observable<PaginatedResponse<SeasonNew>> {
+   public getSeasons(search: SeasonSearch): Observable<PaginatedResponse<Season>> {
       let params: HttpParams = new HttpParams();
 
       if (search.limit) {
@@ -41,9 +41,9 @@ export class SeasonNewService {
 
       const noSeasonsFilterParams = this.noSeasonsFilterParams(search);
       return this.seasons && noSeasonsFilterParams
-         ? of({ data: this.seasons } as PaginatedResponse<SeasonNew>)
+         ? of({ data: this.seasons } as PaginatedResponse<Season>)
          : this.httpClient
-              .get<PaginatedResponse<SeasonNew>>(this.seasonsUrl, { params })
+              .get<PaginatedResponse<Season>>(this.seasonsUrl, { params })
               .pipe(
                  tap(response => {
                     if (noSeasonsFilterParams) {

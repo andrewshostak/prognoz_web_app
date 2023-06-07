@@ -1,7 +1,7 @@
 import { Component, Input, OnInit, OnChanges, SimpleChanges } from '@angular/core';
 
-import { CupRatingCalculatedNew } from '@models/v2/cup-rating-calculated-new.model';
-import { CupRatingNew } from '@models/v2/cup-rating-new.model';
+import { CupRatingCalculated } from '@models/v2/cup/cup-rating-calculated.model';
+import { CupRating } from '@models/v2/cup/cup-rating.model';
 import { ChartDataSets, ChartOptions } from 'chart.js';
 import { cloneDeep } from 'lodash';
 import { Color } from 'ng2-charts/lib/color';
@@ -13,7 +13,7 @@ import { Label } from 'ng2-charts/lib/base-chart.directive';
    styleUrls: ['./cup-rating-seasons-summary.component.scss']
 })
 export class CupRatingSeasonsSummaryComponent implements OnInit, OnChanges {
-   @Input() cupRating: CupRatingCalculatedNew;
+   @Input() cupRating: CupRatingCalculated;
 
    winDrawLossChartColors: Color[];
    winDrawLossChartData: ChartDataSets[];
@@ -23,7 +23,7 @@ export class CupRatingSeasonsSummaryComponent implements OnInit, OnChanges {
    ngOnChanges(simpleChanges: SimpleChanges) {
       for (const propName in simpleChanges) {
          if (propName === 'cupRating' && simpleChanges[propName].currentValue) {
-            const cupRating = cloneDeep(simpleChanges[propName].currentValue) as CupRatingCalculatedNew;
+            const cupRating = cloneDeep(simpleChanges[propName].currentValue) as CupRatingCalculated;
             this.winDrawLossChartLabels = [];
             this.winDrawLossChartData = [
                { data: [], label: 'Виграші' },
@@ -48,7 +48,7 @@ export class CupRatingSeasonsSummaryComponent implements OnInit, OnChanges {
       };
    }
 
-   private sortBySeasonFunc(a: CupRatingNew, b: CupRatingNew): number {
+   private sortBySeasonFunc(a: CupRating, b: CupRating): number {
       return a.season.title < b.season.title ? -1 : 1;
    }
 }

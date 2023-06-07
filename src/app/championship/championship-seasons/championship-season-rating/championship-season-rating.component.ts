@@ -2,9 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 
 import { ChampionshipRatingNewService } from '@services/new/championship-rating-new.service';
-import { ChampionshipRatingNew } from '@models/v2/championship-rating-new.model';
+import { ChampionshipRating } from '@models/v2/championship/championship-rating.model';
 import { CurrentStateService } from '@services/current-state.service';
-import { User } from '@models/user.model';
+import { User } from '@models/v1/user.model';
 import { TitleService } from '@services/title.service';
 
 @Component({
@@ -21,7 +21,7 @@ export class ChampionshipSeasonRatingComponent implements OnInit {
    ) {}
 
    authenticatedUser: User;
-   championshipRatingItems: Partial<ChampionshipRatingNew>[];
+   championshipRatingItems: Partial<ChampionshipRating>[];
 
    ngOnInit() {
       this.authenticatedUser = this.currentStateService.getUser();
@@ -29,7 +29,7 @@ export class ChampionshipSeasonRatingComponent implements OnInit {
          this.titleService.setTitle(`Рейтинг гравців в сезоні ${params.id} - Чемпіонат`);
          this.championshipRatingService.getChampionshipRatingSeason(params.id as number).subscribe(response => {
             this.championshipRatingItems = response.map(item => {
-               return { user: item.user, points: item.points } as Partial<ChampionshipRatingNew>;
+               return { user: item.user, points: item.points } as Partial<ChampionshipRating>;
             });
          });
       });

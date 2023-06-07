@@ -2,7 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 
 import { CommentNewService } from '@app/news/shared/comment-new.service';
 import { Sequence } from '@enums/sequence.enum';
-import { CommentNew } from '@models/v2/comment-new.model';
+import { Comment } from '@models/v2/comment.model';
 import { CommentSearch } from '@models/search/comment-search.model';
 
 @Component({
@@ -15,7 +15,7 @@ export class LastCommentsComponent implements OnInit {
 
    @Input() limitTo = 100;
 
-   comments: CommentNew[];
+   comments: Comment[];
 
    shortenText(text: string): string {
       if (this.limitTo === 0) {

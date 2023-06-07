@@ -3,9 +3,9 @@ import { FormControl, FormGroup } from '@angular/forms';
 
 import { Sequence } from '@enums/sequence.enum';
 import { Tournament } from '@enums/tournament.enum';
-import { CompetitionNew } from '@models/v2/competition-new.model';
-import { CupStageNew } from '@models/v2/cup-stage-new.model';
-import { SeasonNew } from '@models/v2/season-new.model';
+import { Competition } from '@models/v2/competition.model';
+import { CupStage } from '@models/v2/cup/cup-stage.model';
+import { Season } from '@models/v2/season.model';
 import { CompetitionSearch } from '@models/search/competition-search.model';
 import { CupStageSearch } from '@models/search/cup-stage-search.model';
 import { SeasonSearch } from '@models/search/season-search.model';
@@ -20,13 +20,13 @@ import { map } from 'rxjs/operators';
    templateUrl: './cup-stage-select.component.html'
 })
 export class CupStageSelectComponent implements OnInit {
-   @Output() public cupStageSelected = new EventEmitter<{ cupStages: CupStageNew[]; selected: CupStageNew }>();
+   @Output() public cupStageSelected = new EventEmitter<{ cupStages: CupStage[]; selected: CupStage }>();
 
    public cupStageSelectForm: FormGroup;
 
-   public competitionsBySeasonId: { [id: number]: CompetitionNew[] } = {};
-   public cupStagesByCompetitionId: { [id: number]: CupStageNew[] } = {};
-   public seasons: SeasonNew[] = [];
+   public competitionsBySeasonId: { [id: number]: Competition[] } = {};
+   public cupStagesByCompetitionId: { [id: number]: CupStage[] } = {};
+   public seasons: Season[] = [];
 
    constructor(
       private competitionService: CompetitionNewService,

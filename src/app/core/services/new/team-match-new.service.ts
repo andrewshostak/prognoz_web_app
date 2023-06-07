@@ -2,7 +2,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
 import { environment } from '@env';
-import { TeamMatchNew } from '@models/v2/team-match-new.model';
+import { TeamMatch } from '@models/v2/team/team-match.model';
 import { PaginatedResponse } from '@models/paginated-response.model';
 import { TeamMatchSearch } from '@models/search/team-match-search.model';
 import { Observable } from 'rxjs';
@@ -14,21 +14,21 @@ export class TeamMatchNewService {
 
    constructor(private httpClient: HttpClient) {}
 
-   public createTeamMatch(teamMatch: Partial<TeamMatchNew>): Observable<TeamMatchNew> {
-      return this.httpClient.post<{ team_match: TeamMatchNew }>(this.teamMatchesUrl, teamMatch).pipe(map(response => response.team_match));
+   public createTeamMatch(teamMatch: Partial<TeamMatch>): Observable<TeamMatch> {
+      return this.httpClient.post<{ team_match: TeamMatch }>(this.teamMatchesUrl, teamMatch).pipe(map(response => response.team_match));
    }
 
    public deleteTeamMatch(teamMatchId: number): Observable<void> {
       return this.httpClient.delete<void>(`${this.teamMatchesUrl}/${teamMatchId}`);
    }
 
-   public getTeamMatch(teamMatchId: number): Observable<TeamMatchNew> {
+   public getTeamMatch(teamMatchId: number): Observable<TeamMatch> {
       return this.httpClient
-         .get<{ team_match: TeamMatchNew }>(`${this.teamMatchesUrl}/${teamMatchId}`)
+         .get<{ team_match: TeamMatch }>(`${this.teamMatchesUrl}/${teamMatchId}`)
          .pipe(map(response => response.team_match));
    }
 
-   public getTeamMatches(search: TeamMatchSearch): Observable<PaginatedResponse<TeamMatchNew>> {
+   public getTeamMatches(search: TeamMatchSearch): Observable<PaginatedResponse<TeamMatch>> {
       let params: HttpParams = new HttpParams();
 
       if (search.states) {
@@ -64,12 +64,12 @@ export class TeamMatchNewService {
          });
       }
 
-      return this.httpClient.get<PaginatedResponse<TeamMatchNew>>(this.teamMatchesUrl, { params });
+      return this.httpClient.get<PaginatedResponse<TeamMatch>>(this.teamMatchesUrl, { params });
    }
 
-   public updateTeamMatch(teamMatchId: number, teamMatch: Partial<TeamMatchNew>): Observable<TeamMatchNew> {
+   public updateTeamMatch(teamMatchId: number, teamMatch: Partial<TeamMatch>): Observable<TeamMatch> {
       return this.httpClient
-         .put<{ team_match: TeamMatchNew }>(`${this.teamMatchesUrl}/${teamMatchId}`, teamMatch)
+         .put<{ team_match: TeamMatch }>(`${this.teamMatchesUrl}/${teamMatchId}`, teamMatch)
          .pipe(map(response => response.team_match));
    }
 }

@@ -2,7 +2,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
 import { environment } from '@env';
-import { ClubNew } from '@models/v2/club-new.model';
+import { Club } from '@models/v2/club.model';
 import { PaginatedResponse } from '@models/paginated-response.model';
 import { ClubSearch } from '@models/search/club-search.model';
 import { Observable } from 'rxjs';
@@ -15,23 +15,23 @@ export class ClubNewService {
 
    constructor(private httpClient: HttpClient) {}
 
-   public createClub(club: Partial<ClubNew>): Observable<ClubNew> {
+   public createClub(club: Partial<Club>): Observable<Club> {
       const body = serialize(club, { indices: true, nullsAsUndefineds: true });
-      return this.httpClient.post<{ club: ClubNew }>(this.clubsUrl, body).pipe(map(response => response.club));
+      return this.httpClient.post<{ club: Club }>(this.clubsUrl, body).pipe(map(response => response.club));
    }
 
    public deleteClub(clubId: number): Observable<void> {
       return this.httpClient.delete<void>(`${this.clubsUrl}/${clubId}`);
    }
 
-   public getClub(clubId: number, relations: string[] = []): Observable<ClubNew> {
+   public getClub(clubId: number, relations: string[] = []): Observable<Club> {
       const params = new HttpParams({ fromObject: { 'relations[]': relations } });
       return this.httpClient
-         .get<{ club: ClubNew }>(`${this.clubsUrl}/${clubId}`, { params })
+         .get<{ club: Club }>(`${this.clubsUrl}/${clubId}`, { params })
          .pipe(map(response => response.club));
    }
 
-   public getClubs(search: ClubSearch): Observable<PaginatedResponse<ClubNew>> {
+   public getClubs(search: ClubSearch): Observable<PaginatedResponse<Club>> {
       let params: HttpParams = new HttpParams();
 
       if (search.limit) {
@@ -65,11 +65,11 @@ export class ClubNewService {
          });
       }
 
-      return this.httpClient.get<PaginatedResponse<ClubNew>>(this.clubsUrl, { params });
+      return this.httpClient.get<PaginatedResponse<Club>>(this.clubsUrl, { params });
    }
 
-   public updateClub(clubId: number, club: Partial<ClubNew>): Observable<ClubNew> {
+   public updateClub(clubId: number, club: Partial<Club>): Observable<Club> {
       const body = club.image ? serialize(club, { indices: true, nullsAsUndefineds: true }) : club;
-      return this.httpClient.post<{ club: ClubNew }>(`${this.clubsUrl}/${clubId}`, body).pipe(map(response => response.club));
+      return this.httpClient.post<{ club: Club }>(`${this.clubsUrl}/${clubId}`, body).pipe(map(response => response.club));
    }
 }

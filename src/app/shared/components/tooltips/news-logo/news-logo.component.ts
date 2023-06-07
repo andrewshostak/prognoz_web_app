@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
 
 import { SettingsService } from '@services/settings.service';
-import { NewsNew } from '@models/v2/news-new.model';
+import { News } from '@models/v2/news.model';
 
 @Component({
    selector: 'app-news-logo',
@@ -9,7 +9,7 @@ import { NewsNew } from '@models/v2/news-new.model';
    templateUrl: './news-logo.component.html'
 })
 export class NewsLogoComponent {
-   @Input() public news: NewsNew;
+   @Input() public news: News;
 
    private newsLogosPath: string = SettingsService.newsLogosPath + '/';
 

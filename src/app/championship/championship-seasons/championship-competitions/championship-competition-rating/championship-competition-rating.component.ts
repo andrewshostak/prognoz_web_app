@@ -4,8 +4,8 @@ import { ActivatedRoute, Params } from '@angular/router';
 import { ChampionshipRatingNewService } from '@services/new/championship-rating-new.service';
 import { CurrentStateService } from '@services/current-state.service';
 import { TitleService } from '@services/title.service';
-import { User } from '@models/user.model';
-import { ChampionshipRatingNew } from '@models/v2/championship-rating-new.model';
+import { User } from '@models/v1/user.model';
+import { ChampionshipRating } from '@models/v2/championship/championship-rating.model';
 import { ChampionshipRatingSearch } from '@models/search/championship-rating-search.model';
 import { SettingsService } from '@services/settings.service';
 import { Sequence } from '@enums/sequence.enum';
@@ -24,7 +24,7 @@ export class ChampionshipCompetitionRatingComponent implements OnInit {
    ) {}
 
    authenticatedUser: User;
-   championshipRatingItems: ChampionshipRatingNew[];
+   championshipRatingItems: ChampionshipRating[];
 
    ngOnInit() {
       this.authenticatedUser = this.currentStateService.getUser();

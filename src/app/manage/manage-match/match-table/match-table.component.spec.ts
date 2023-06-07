@@ -7,7 +7,7 @@ import { ActivatedRouteMock } from '@mocks/activated-route.mock';
 import { NgbModalMock } from '@mocks/ngb-modal.mock';
 import { MatchServiceMock } from '@mocks/services/match.service.mock';
 import { NotificationsServiceMock } from '@mocks/services/notifications.service.mock';
-import { Match } from '@models/match.model';
+import { Match } from '@models/v2/match.model';
 import { OpenedModal } from '@models/opened-modal.model';
 import { PaginatedResponse } from '@models/paginated-response.model';
 import { Pagination } from '@models/pagination.model';

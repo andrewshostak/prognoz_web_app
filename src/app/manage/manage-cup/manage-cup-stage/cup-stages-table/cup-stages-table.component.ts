@@ -7,7 +7,7 @@ import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { NotificationsService } from 'angular2-notifications';
 import { Subscription } from 'rxjs';
 import { CupStageNewService } from '@services/new/cup-stage-new.service';
-import { CupStageNew } from '@models/v2/cup-stage-new.model';
+import { CupStage } from '@models/v2/cup/cup-stage.model';
 import { CupStageSearch } from '@models/search/cup-stage-search.model';
 import { SettingsService } from '@services/settings.service';
 import { OpenedModal } from '@models/opened-modal.model';
@@ -22,9 +22,9 @@ import { PaginationService } from '@services/pagination.service';
 })
 export class CupStagesTableComponent implements OnInit, OnDestroy {
    public activatedRouteSubscription: Subscription;
-   public cupStages: CupStageNew[];
+   public cupStages: CupStage[];
    public cupStageStates = CupStageState;
-   public openedModal: OpenedModal<CupStageNew>;
+   public openedModal: OpenedModal<CupStage>;
    public paginationData: Pagination;
    public path = '/manage/cup/stages/page/';
 
@@ -47,7 +47,7 @@ export class CupStagesTableComponent implements OnInit, OnDestroy {
       );
    }
 
-   public makeCupStageActive(notStarted: CupStageNew): void {
+   public makeCupStageActive(notStarted: CupStage): void {
       const cupStage = { ...notStarted, state: CupStageState.Active };
       this.cupStageNewService.updateCupStage(cupStage.id, cupStage).subscribe(
          response => {
@@ -62,7 +62,7 @@ export class CupStagesTableComponent implements OnInit, OnDestroy {
       );
    }
 
-   public makeCupStageEnded(active: CupStageNew): void {
+   public makeCupStageEnded(active: CupStage): void {
       const cupStage = { ...active, state: CupStageState.Ended };
       this.cupStageNewService.updateCupStage(cupStage.id, cupStage).subscribe(
          response => {
@@ -99,22 +99,22 @@ export class CupStagesTableComponent implements OnInit, OnDestroy {
       });
    }
 
-   public openActivateConfirm(content: NgbModalRef | TemplateRef<any>, data: CupStageNew, submitted: (event) => void): void {
+   public openActivateConfirm(content: NgbModalRef | TemplateRef<any>, data: CupStage, submitted: (event) => void): void {
       const message = `Активувати стадію ${data.title}?`;
       this.openConfirmModal(content, data, submitted, message);
    }
 
-   public openDeleteConfirm(content: NgbModalRef | TemplateRef<any>, data: CupStageNew, submitted: (event) => void): void {
+   public openDeleteConfirm(content: NgbModalRef | TemplateRef<any>, data: CupStage, submitted: (event) => void): void {
       const message = `Ви впевнені що хочете видалити ${data.title}?`;
       this.openConfirmModal(content, data, submitted, message);
    }
 
-   public openEndConfirm(content: NgbModalRef | TemplateRef<any>, data: CupStageNew, submitted: (event) => void): void {
+   public openEndConfirm(content: NgbModalRef | TemplateRef<any>, data: CupStage, submitted: (event) => void): void {
       const message = `Завершити стадію ${data.title}?`;
       this.openConfirmModal(content, data, submitted, message);
    }
 
-   private openConfirmModal(content: NgbModalRef | TemplateRef<any>, data: CupStageNew, submitted: (event) => void, message: string): void {
+   private openConfirmModal(content: NgbModalRef | TemplateRef<any>, data: CupStage, submitted: (event) => void, message: string): void {
       const reference = this.ngbModalService.open(content, { centered: true });
       this.openedModal = { reference, data, submitted: () => submitted.call(this), message };
    }

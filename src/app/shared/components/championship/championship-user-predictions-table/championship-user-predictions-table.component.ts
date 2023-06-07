@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 
-import { ChampionshipPredictionNew } from '@models/v2/championship-prediction-new.model';
+import { ChampionshipPrediction } from '@models/v2/championship/championship-prediction.model';
 import { ChampionshipService } from '@services/championship/championship.service';
 import { UtilsService } from '@services/utils.service';
 
@@ -10,7 +10,7 @@ import { UtilsService } from '@services/utils.service';
    templateUrl: './championship-user-predictions-table.component.html'
 })
 export class ChampionshipUserPredictionsTableComponent {
-   @Input() public predictions: ChampionshipPredictionNew[];
+   @Input() public predictions: ChampionshipPrediction[];
 
    public getUserPointsOnMatch = ChampionshipService.getUserPointsOnMatch;
    public isChampionshipMatchGuessed = ChampionshipService.isChampionshipMatchGuessed;

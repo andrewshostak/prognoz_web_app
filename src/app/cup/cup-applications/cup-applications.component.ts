@@ -3,8 +3,8 @@ import { Component, OnInit } from '@angular/core';
 import { CompetitionState } from '@enums/competition-state.enum';
 import { Sequence } from '@enums/sequence.enum';
 import { Tournament } from '@enums/tournament.enum';
-import { CompetitionNew } from '@models/v2/competition-new.model';
-import { CupApplicationNew } from '@models/v2/cup-application-new.model';
+import { Competition } from '@models/v2/competition.model';
+import { CupApplication } from '@models/v2/cup/cup-application.model';
 import { CompetitionSearch } from '@models/search/competition-search.model';
 import { CupApplicationSearch } from '@models/search/cup-application-search.model';
 import { CompetitionNewService } from '@services/new/competition-new.service';
@@ -21,9 +21,9 @@ import { mergeMap, tap } from 'rxjs/operators';
    styleUrls: ['./cup-applications.component.scss']
 })
 export class CupApplicationsComponent implements OnInit {
-   competitions: CompetitionNew[];
-   cupApplications: CupApplicationNew[] = [];
-   selectedCompetition: CompetitionNew;
+   competitions: Competition[];
+   cupApplications: CupApplication[] = [];
+   selectedCompetition: Competition;
 
    constructor(
       private competitionService: CompetitionNewService,
@@ -73,7 +73,7 @@ export class CupApplicationsComponent implements OnInit {
          .subscribe();
    }
 
-   isFriendlyCupCompetition(competition: CompetitionNew): boolean {
+   isFriendlyCupCompetition(competition: Competition): boolean {
       return get(competition, 'config.cup.is_friendly', false);
    }
 
@@ -82,7 +82,7 @@ export class CupApplicationsComponent implements OnInit {
       this.getApplicationsAndCompetitions();
    }
 
-   onClick(competition: CompetitionNew): void {
+   onClick(competition: Competition): void {
       if (this.selectedCompetition.id === competition.id) {
          return;
       }

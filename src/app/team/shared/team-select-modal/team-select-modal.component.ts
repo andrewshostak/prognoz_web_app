@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
 
-import { TeamNew } from '@models/v2/team-new.model';
+import { Team } from '@models/v2/team/team.model';
 import { TeamSearch } from '@models/search/team-search.model';
 import { AuthNewService } from '@services/new/auth-new.service';
 import { TeamNewService } from '@services/new/team-new.service';
@@ -15,9 +15,9 @@ import { UtilsService } from '@services/utils.service';
 })
 export class TeamSelectModalComponent implements OnInit {
    @Input() public close: () => void;
-   @Output() public submitted = new EventEmitter<TeamNew>();
+   @Output() public submitted = new EventEmitter<Team>();
 
-   public teams: TeamNew[];
+   public teams: Team[];
    public teamForm: FormGroup;
    public showNotFoundMessage: boolean;
 
@@ -58,11 +58,11 @@ export class TeamSelectModalComponent implements OnInit {
       });
    }
 
-   private setShowNotFoundMessage(teams: TeamNew[]): void {
+   private setShowNotFoundMessage(teams: Team[]): void {
       this.showNotFoundMessage = teams.length === 0;
    }
 
-   private setTeamIdValue(teams: TeamNew[]): void {
+   private setTeamIdValue(teams: Team[]): void {
       if (teams.length === 1 && !(teams[0].stated || teams[0].confirmed)) {
          this.teamForm.get('id').setValue(teams[0].id);
       }

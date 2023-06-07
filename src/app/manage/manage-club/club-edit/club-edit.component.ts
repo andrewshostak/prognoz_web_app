@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ClubNew } from '@models/v2/club-new.model';
+import { Club } from '@models/v2/club.model';
 import { ActivatedRoute, Params } from '@angular/router';
 import { ClubNewService } from '@services/new/club-new.service';
 
@@ -9,7 +9,7 @@ import { ClubNewService } from '@services/new/club-new.service';
    styleUrls: ['./club-edit.component.scss']
 })
 export class ClubEditComponent implements OnInit {
-   public club: ClubNew;
+   public club: Club;
 
    constructor(private activatedRoute: ActivatedRoute, private clubService: ClubNewService) {}
 
@@ -19,7 +19,7 @@ export class ClubEditComponent implements OnInit {
       });
    }
 
-   public successfullySubmitted(club: ClubNew): void {
+   public successfullySubmitted(club: Club): void {
       this.club = club;
    }
 

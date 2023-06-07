@@ -1,21 +1,21 @@
 import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 
-import { TeamNew } from '@models/v2/team-new.model';
-import { TeamRatingUserNew } from '@models/v2/team-rating-user-new.model';
-import { User } from '@models/user.model';
+import { Team } from '@models/v2/team/team.model';
+import { TeamRatingUser } from '@models/v2/team/team-rating-user.model';
+import { User } from '@models/v1/user.model';
 
 @Component({
    selector: 'app-team-rating-user',
    templateUrl: './team-rating-user.component.html'
 })
 export class TeamRatingUserComponent implements OnChanges {
-   @Input() teamRatingUser: TeamRatingUserNew[];
+   @Input() teamRatingUser: TeamRatingUser[];
    @Input() authenticatedUser: User;
 
-   blockedScorersRating: TeamRatingUserNew[] = [];
-   goalkeepersRating: TeamRatingUserNew[] = [];
-   teams: TeamNew[] = [];
-   topScorersRating: TeamRatingUserNew[] = [];
+   blockedScorersRating: TeamRatingUser[] = [];
+   goalkeepersRating: TeamRatingUser[] = [];
+   teams: Team[] = [];
+   topScorersRating: TeamRatingUser[] = [];
    selectedTeamId: number = null;
    tablesToShow: string[] = ['scorers', 'goalkeepers', 'blocked-scorers'];
    tablesToShowItems: { title: string; value: string[] }[] = [
@@ -52,12 +52,12 @@ export class TeamRatingUserComponent implements OnChanges {
       }
    }
 
-   private filterTeamUserRating(teamRatingUser: TeamRatingUserNew[], column: string): TeamRatingUserNew[] {
+   private filterTeamUserRating(teamRatingUser: TeamRatingUser[], column: string): TeamRatingUser[] {
       return teamRatingUser.filter(ratingItem => ratingItem[column]);
    }
 
-   private getTeams(userRating: TeamRatingUserNew[]): TeamNew[] {
-      return userRating.reduce((acc: TeamNew[], ratingItem) => {
+   private getTeams(userRating: TeamRatingUser[]): Team[] {
+      return userRating.reduce((acc: Team[], ratingItem) => {
          if (acc.findIndex(team => ratingItem.team.id === team.id) === -1) {
             acc.push(ratingItem.team);
          }

@@ -2,7 +2,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
 import { environment } from '@env';
-import { CupPredictionNew } from '@models/v2/cup-prediction-new.model';
+import { CupPrediction } from '@models/v2/cup/cup-prediction.model';
 import { PaginatedResponse } from '@models/paginated-response.model';
 import { CupPredictionSearch } from '@models/search/cup-prediction-search.model';
 import { Observable } from 'rxjs';
@@ -14,7 +14,7 @@ export class CupPredictionNewService {
 
    constructor(private httpClient: HttpClient) {}
 
-   getCupPredictions(search: CupPredictionSearch): Observable<PaginatedResponse<CupPredictionNew>> {
+   getCupPredictions(search: CupPredictionSearch): Observable<PaginatedResponse<CupPrediction>> {
       const params: HttpParams = new HttpParams({
          fromObject: {
             user_id: search.userId.toString(),
@@ -22,17 +22,17 @@ export class CupPredictionNewService {
          }
       });
 
-      return this.httpClient.get<PaginatedResponse<CupPredictionNew>>(this.cupPredictionsUrl, { params });
+      return this.httpClient.get<PaginatedResponse<CupPrediction>>(this.cupPredictionsUrl, { params });
    }
 
-   getMyCupPredictions(cupCupMatchIds: number[]): Observable<PaginatedResponse<CupPredictionNew>> {
+   getMyCupPredictions(cupCupMatchIds: number[]): Observable<PaginatedResponse<CupPrediction>> {
       const params: HttpParams = new HttpParams({ fromObject: { 'cup_cup_match_ids[]': cupCupMatchIds.map(id => id.toString()) } });
-      return this.httpClient.get<PaginatedResponse<CupPredictionNew>>(`${this.cupPredictionsUrl}/my`, { params });
+      return this.httpClient.get<PaginatedResponse<CupPrediction>>(`${this.cupPredictionsUrl}/my`, { params });
    }
 
-   upsertPrediction(prediction: Partial<CupPredictionNew>): Observable<CupPredictionNew> {
+   upsertPrediction(prediction: Partial<CupPrediction>): Observable<CupPrediction> {
       return this.httpClient
-         .put<{ cup_prediction: CupPredictionNew }>(this.cupPredictionsUrl, prediction)
+         .put<{ cup_prediction: CupPrediction }>(this.cupPredictionsUrl, prediction)
          .pipe(map(response => response.cup_prediction));
    }
 }

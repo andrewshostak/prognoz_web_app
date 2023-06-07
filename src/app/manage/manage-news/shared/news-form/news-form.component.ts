@@ -6,7 +6,7 @@ import { UtilsService } from '@services/utils.service';
 import { NotificationsService } from 'angular2-notifications';
 import { QuillEditorComponent } from 'ngx-quill';
 import { NewsNewService } from '@services/new/news-new.service';
-import { NewsNew } from '@models/v2/news-new.model';
+import { News } from '@models/v2/news.model';
 import { FormValidatorService } from '@services/form-validator.service';
 
 @Component({
@@ -15,7 +15,7 @@ import { FormValidatorService } from '@services/form-validator.service';
    styleUrls: ['./news-form.component.scss']
 })
 export class NewsFormComponent implements OnChanges, OnInit {
-   @Input() public news: NewsNew;
+   @Input() public news: News;
    @ViewChild('editor') public editor: QuillEditorComponent;
 
    public editorModules = {};
@@ -88,7 +88,7 @@ export class NewsFormComponent implements OnChanges, OnInit {
       return UtilsService.showFormInvalidClass(abstractControl);
    }
 
-   private updateNews(news: Partial<NewsNew>): void {
+   private updateNews(news: Partial<News>): void {
       this.spinnerButton = true;
       this.newsNewService.updateNews(this.news.id, news).subscribe(
          response => {
@@ -100,7 +100,7 @@ export class NewsFormComponent implements OnChanges, OnInit {
       );
    }
 
-   private createNews(news: Partial<NewsNew>): void {
+   private createNews(news: Partial<News>): void {
       this.spinnerButton = true;
       this.newsNewService.createNews(news).subscribe(
          response => {

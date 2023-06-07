@@ -3,9 +3,9 @@ import { Component, Input, OnChanges, OnInit, SimpleChanges, TemplateRef } from 
 import { CompetitionState } from '@enums/competition-state.enum';
 import { CupApplicationDefaultState } from '@enums/cup-application-default-state.enum';
 import { OpenedModal } from '@models/opened-modal.model';
-import { CupApplicationNew } from '@models/v2/cup-application-new.model';
-import { CompetitionNew } from '@models/v2/competition-new.model';
-import { UserNew } from '@models/v2/user-new.model';
+import { CupApplication } from '@models/v2/cup/cup-application.model';
+import { Competition } from '@models/v2/competition.model';
+import { User } from '@models/v2/user.model';
 import { CupApplicationNewService } from '@services/new/cup-application-new.service';
 import { AuthNewService } from '@services/new/auth-new.service';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
@@ -16,12 +16,12 @@ import { NotificationsService } from 'angular2-notifications';
    templateUrl: './cup-applications-default.component.html'
 })
 export class CupApplicationsDefaultComponent implements OnChanges, OnInit {
-   @Input() cupApplications: CupApplicationNew[];
-   @Input() competition: CompetitionNew;
+   @Input() cupApplications: CupApplication[];
+   @Input() competition: Competition;
 
    cupApplicationState = CupApplicationDefaultState;
    cupApplicationsView: {
-      application: CupApplicationNew;
+      application: CupApplication;
       state: CupApplicationDefaultState;
       showDeleteButton: boolean;
       showConfirmButton: boolean;
@@ -29,7 +29,7 @@ export class CupApplicationsDefaultComponent implements OnChanges, OnInit {
    isActiveOrEndedCompetition: boolean = false;
    isCreateButtonVisible: boolean = false;
    isActionColumnVisible: boolean = false;
-   openedModal: OpenedModal<Partial<CupApplicationNew>>;
+   openedModal: OpenedModal<Partial<CupApplication>>;
 
    private authenticatedUser;
    private hasModeratorRights: boolean = false;
@@ -41,7 +41,7 @@ export class CupApplicationsDefaultComponent implements OnChanges, OnInit {
       private notificationsService: NotificationsService
    ) {}
 
-   applicationModalSubmitted(cupApplication: CupApplicationNew): void {
+   applicationModalSubmitted(cupApplication: CupApplication): void {
       this.openedModal.reference.close();
       this.openedModal = null;
       this.cupApplications.push(cupApplication);
@@ -76,7 +76,7 @@ export class CupApplicationsDefaultComponent implements OnChanges, OnInit {
       };
    }
 
-   openAcceptApplicationConfirmModal(content: NgbModalRef | TemplateRef<any>, cupApplication: CupApplicationNew): void {
+   openAcceptApplicationConfirmModal(content: NgbModalRef | TemplateRef<any>, cupApplication: CupApplication): void {
       this.openedModal = {
          data: cupApplication,
          message: `Підтвердити заявку ${cupApplication.applicant.name}?`,
@@ -85,7 +85,7 @@ export class CupApplicationsDefaultComponent implements OnChanges, OnInit {
       };
    }
 
-   openDeleteApplicationConfirmModal(content: NgbModalRef | TemplateRef<any>, cupApplication: CupApplicationNew): void {
+   openDeleteApplicationConfirmModal(content: NgbModalRef | TemplateRef<any>, cupApplication: CupApplication): void {
       this.openedModal = {
          data: cupApplication,
          message: `Видалити заявку ${cupApplication.applicant.name}?`,
@@ -94,7 +94,7 @@ export class CupApplicationsDefaultComponent implements OnChanges, OnInit {
       };
    }
 
-   private confirmApplication(cupApplication: CupApplicationNew): void {
+   private confirmApplication(cupApplication: CupApplication): void {
       this.cupApplicationService.updateCupApplication(cupApplication.id, CupApplicationDefaultState.Active).subscribe(
          response => {
             this.openedModal.reference.close();
@@ -110,7 +110,7 @@ export class CupApplicationsDefaultComponent implements OnChanges, OnInit {
       );
    }
 
-   private getCupApplicationState(cupApplication: CupApplicationNew): CupApplicationDefaultState {
+   private getCupApplicationState(cupApplication: CupApplication): CupApplicationDefaultState {
       if (cupApplication.ended) {
          return CupApplicationDefaultState.Terminated;
       }
@@ -128,7 +128,7 @@ export class CupApplicationsDefaultComponent implements OnChanges, OnInit {
       }
    }
 
-   private deleteCupApplication(cupApplication: CupApplicationNew): void {
+   private deleteCupApplication(cupApplication: CupApplication): void {
       this.cupApplicationService.deleteCupApplication(cupApplication.id).subscribe(
          () => {
             this.openedModal.reference.close();
@@ -141,9 +141,9 @@ export class CupApplicationsDefaultComponent implements OnChanges, OnInit {
    }
 
    private showActionColumn(
-      cupApplications: CupApplicationNew[],
-      competition: CompetitionNew,
-      authenticatedUser: UserNew,
+      cupApplications: CupApplication[],
+      competition: Competition,
+      authenticatedUser: User,
       hasModeratorRights: boolean
    ): boolean {
       if (!authenticatedUser) {
@@ -166,9 +166,9 @@ export class CupApplicationsDefaultComponent implements OnChanges, OnInit {
    }
 
    private showCreateButton(
-      cupApplications: CupApplicationNew[],
-      competition: CompetitionNew,
-      authenticatedUser: UserNew,
+      cupApplications: CupApplication[],
+      competition: Competition,
+      authenticatedUser: User,
       hasModeratorRights: boolean
    ): boolean {
       if (!authenticatedUser) {
@@ -191,9 +191,9 @@ export class CupApplicationsDefaultComponent implements OnChanges, OnInit {
    }
 
    private showConfirmButton(
-      cupApplication: CupApplicationNew,
-      competition: CompetitionNew,
-      authenticatedUser: UserNew,
+      cupApplication: CupApplication,
+      competition: Competition,
+      authenticatedUser: User,
       hasModeratorRights: boolean
    ): boolean {
       if (!authenticatedUser) {
@@ -212,9 +212,9 @@ export class CupApplicationsDefaultComponent implements OnChanges, OnInit {
    }
 
    private showDeleteButton(
-      cupApplication: CupApplicationNew,
-      competition: CompetitionNew,
-      authenticatedUser: UserNew,
+      cupApplication: CupApplication,
+      competition: Competition,
+      authenticatedUser: User,
       hasModeratorRights: boolean
    ): boolean {
       if (!authenticatedUser) {
@@ -232,11 +232,7 @@ export class CupApplicationsDefaultComponent implements OnChanges, OnInit {
       return cupApplication.applicant_id === authenticatedUser.id;
    }
 
-   private sortCupApplications(
-      cupApplications: CupApplicationNew[],
-      competition: CompetitionNew,
-      authenticatedUser: UserNew
-   ): CupApplicationNew[] {
+   private sortCupApplications(cupApplications: CupApplication[], competition: Competition, authenticatedUser: User): CupApplication[] {
       switch (competition.state) {
          case CompetitionState.Applications:
             return cupApplications.sort((a, b) => {

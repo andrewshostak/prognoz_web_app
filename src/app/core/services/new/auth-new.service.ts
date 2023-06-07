@@ -5,13 +5,13 @@ import { environment } from '@env';
 import { AuthReset } from '@models/v2/auth/auth-reset.model';
 import { AuthSignIn } from '@models/v2/auth/auth-sign-in.model';
 import { AuthSignUp } from '@models/v2/auth/auth-sign-up.model';
-import { UserNew } from '@models/v2/user-new.model';
+import { User } from '@models/v2/user.model';
 import { get, omit, uniq } from 'lodash';
 import { Observable } from 'rxjs';
 
 @Injectable()
 export class AuthNewService {
-   private user: UserNew = null;
+   private user: User = null;
    private authURL = environment.apiBaseUrl + '/v2/auth';
 
    constructor(private httpClient: HttpClient) {}
@@ -67,20 +67,20 @@ export class AuthNewService {
       return this.httpClient.post<void>(`${this.authURL}/reset`, authReset);
    }
 
-   public signIn(authSignIn: AuthSignIn): Observable<{ token: string; user: UserNew }> {
+   public signIn(authSignIn: AuthSignIn): Observable<{ token: string; user: User }> {
       const httpOptions = { headers: new HttpHeaders({ 'x-device-id': authSignIn.deviceId }) };
-      return this.httpClient.post<{ token: string; user: UserNew }>(`${this.authURL}/sign-in`, omit(authSignIn, 'deviceId'), httpOptions);
+      return this.httpClient.post<{ token: string; user: User }>(`${this.authURL}/sign-in`, omit(authSignIn, 'deviceId'), httpOptions);
    }
 
-   public signUp(authSignUp: AuthSignUp): Observable<{ token: string; user: UserNew }> {
-      return this.httpClient.post<{ token: string; user: UserNew }>(`${this.authURL}/sign-up`, authSignUp);
+   public signUp(authSignUp: AuthSignUp): Observable<{ token: string; user: User }> {
+      return this.httpClient.post<{ token: string; user: User }>(`${this.authURL}/sign-up`, authSignUp);
    }
 
-   public getUser(): UserNew {
+   public getUser(): User {
       return this.user;
    }
 
-   public setUser(user: UserNew): void {
+   public setUser(user: User): void {
       this.user = user;
    }
 

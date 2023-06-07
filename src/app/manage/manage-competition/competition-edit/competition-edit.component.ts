@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
-import { CompetitionNew } from '@models/v2/competition-new.model';
+import { Competition } from '@models/v2/competition.model';
 import { CompetitionNewService } from '@services/new/competition-new.service';
 
 @Component({
@@ -12,7 +12,7 @@ import { CompetitionNewService } from '@services/new/competition-new.service';
 export class CompetitionEditComponent implements OnInit {
    constructor(private activatedRoute: ActivatedRoute, private competitionService: CompetitionNewService) {}
 
-   competition: CompetitionNew;
+   competition: Competition;
 
    ngOnInit() {
       this.getCompetitionData(this.activatedRoute.snapshot.params.id);

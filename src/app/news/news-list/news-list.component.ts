@@ -3,7 +3,7 @@ import { ActivatedRoute, Params } from '@angular/router';
 
 import { TitleService } from '@services/title.service';
 import { NewsNewService } from '@services/new/news-new.service';
-import { NewsNew } from '@models/v2/news-new.model';
+import { News } from '@models/v2/news.model';
 import { Pagination } from '@models/pagination.model';
 import { PaginationService } from '@services/pagination.service';
 import { NewsSearch } from '@models/search/news-search.model';
@@ -18,7 +18,7 @@ import { Sequence } from '@enums/sequence.enum';
 export class NewsListComponent implements OnInit {
    constructor(private activatedRoute: ActivatedRoute, private newsService: NewsNewService, private titleService: TitleService) {}
 
-   news: NewsNew[];
+   news: News[];
    paginationData: Pagination;
    newsImagesUrl = SettingsService.newsLogosPath;
    path = '/news/page/';

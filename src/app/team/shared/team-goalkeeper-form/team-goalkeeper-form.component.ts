@@ -4,7 +4,7 @@ import { FormArray, FormControl, FormGroup } from '@angular/forms';
 import { NotificationsService } from 'angular2-notifications';
 import { TeamMatch } from '@models/v1/team-match.model';
 import { TeamPredictionNewService } from '@services/new/team-prediction-new.service';
-import { UserNew } from '@models/v2/user-new.model';
+import { User } from '@models/v2/user.model';
 
 @Component({
    selector: 'app-team-goalkeeper-form',
@@ -14,7 +14,7 @@ import { UserNew } from '@models/v2/user-new.model';
 export class TeamGoalkeeperFormComponent implements OnChanges {
    @Input() teamMatches: { teamMatch: TeamMatch; isBlocked: boolean }[];
    @Input() properties: { blocksCount: number; currentTeamId: number; isGoalkeeper: boolean; teamTeamMatchId: number };
-   @Input() authenticatedUser: UserNew;
+   @Input() authenticatedUser: User;
 
    isStageNotStarted: boolean = false;
    spinnerButton: boolean;

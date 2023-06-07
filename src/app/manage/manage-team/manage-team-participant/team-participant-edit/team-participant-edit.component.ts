@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
-import { TeamParticipantNew } from '@models/v2/team-participant-new.model';
+import { TeamParticipant } from '@models/v2/team/team-participant.model';
 import { TeamParticipantNewService } from '@services/new/team-participant-new.service';
 
 @Component({
@@ -10,7 +10,7 @@ import { TeamParticipantNewService } from '@services/new/team-participant-new.se
    styleUrls: ['./team-participant-edit.component.scss']
 })
 export class TeamParticipantEditComponent implements OnInit {
-   public teamParticipant: TeamParticipantNew;
+   public teamParticipant: TeamParticipant;
 
    constructor(private activatedRoute: ActivatedRoute, private teamParticipantService: TeamParticipantNewService) {}
 

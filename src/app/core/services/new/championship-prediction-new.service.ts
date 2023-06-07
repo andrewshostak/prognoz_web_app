@@ -2,7 +2,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
 import { environment } from '@env';
-import { ChampionshipPredictionNew } from '@models/v2/championship-prediction-new.model';
+import { ChampionshipPrediction } from '@models/v2/championship/championship-prediction.model';
 import { PaginatedResponse } from '@models/paginated-response.model';
 import { ChampionshipPredictionSearch } from '@models/search/championship-prediction-search.model';
 import { Observable } from 'rxjs';
@@ -14,9 +14,7 @@ export class ChampionshipPredictionNewService {
 
    constructor(private httpClient: HttpClient) {}
 
-   public getPredictionsByChampionshipMatchId(
-      search: ChampionshipPredictionSearch
-   ): Observable<PaginatedResponse<ChampionshipPredictionNew>> {
+   public getPredictionsByChampionshipMatchId(search: ChampionshipPredictionSearch): Observable<PaginatedResponse<ChampionshipPrediction>> {
       let params: HttpParams = new HttpParams();
 
       if (search.limit) {
@@ -36,10 +34,10 @@ export class ChampionshipPredictionNewService {
          params = params.set('sequence', search.sequence);
       }
 
-      return this.httpClient.get<PaginatedResponse<ChampionshipPredictionNew>>(`${this.championshipPredictionsUrl}/by/match`, { params });
+      return this.httpClient.get<PaginatedResponse<ChampionshipPrediction>>(`${this.championshipPredictionsUrl}/by/match`, { params });
    }
 
-   public getPredictionsByUserId(search: ChampionshipPredictionSearch): Observable<PaginatedResponse<ChampionshipPredictionNew>> {
+   public getPredictionsByUserId(search: ChampionshipPredictionSearch): Observable<PaginatedResponse<ChampionshipPrediction>> {
       let params: HttpParams = new HttpParams();
 
       if (search.limit) {
@@ -63,16 +61,16 @@ export class ChampionshipPredictionNewService {
          params = params.set('sequence', search.sequence);
       }
 
-      return this.httpClient.get<PaginatedResponse<ChampionshipPredictionNew>>(`${this.championshipPredictionsUrl}/by/user`, { params });
+      return this.httpClient.get<PaginatedResponse<ChampionshipPrediction>>(`${this.championshipPredictionsUrl}/by/user`, { params });
    }
 
-   public getLastDistinctPredictions(): Observable<Partial<ChampionshipPredictionNew[]>> {
+   public getLastDistinctPredictions(): Observable<Partial<ChampionshipPrediction[]>> {
       return this.httpClient
-         .get<{ championship_predicts: Partial<ChampionshipPredictionNew[]> }>(`${this.championshipPredictionsUrl}/last`)
+         .get<{ championship_predicts: Partial<ChampionshipPrediction[]> }>(`${this.championshipPredictionsUrl}/last`)
          .pipe(map(response => response.championship_predicts));
    }
 
-   public upsertPredictions(predictions: Partial<ChampionshipPredictionNew>[]): Observable<ChampionshipPredictionNew[]> {
-      return this.httpClient.put<ChampionshipPredictionNew[]>(this.championshipPredictionsUrl, predictions);
+   public upsertPredictions(predictions: Partial<ChampionshipPrediction>[]): Observable<ChampionshipPrediction[]> {
+      return this.httpClient.put<ChampionshipPrediction[]>(this.championshipPredictionsUrl, predictions);
    }
 }

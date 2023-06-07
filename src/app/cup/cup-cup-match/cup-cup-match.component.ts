@@ -5,10 +5,10 @@ import { TimePipe } from '@app/shared/pipes/time.pipe';
 import { CupCupMatchState } from '@enums/cup-cup-match-state.enum';
 import { MatchState } from '@enums/match-state.enum';
 import { Sequence } from '@enums/sequence.enum';
-import { CupCupMatchNew } from '@models/v2/cup-cup-match-new.model';
-import { CupMatchNew } from '@models/v2/cup-match-new.model';
-import { CupPredictionNew } from '@models/v2/cup-prediction-new.model';
-import { UserNew } from '@models/v2/user-new.model';
+import { CupCupMatch } from '@models/v2/cup/cup-cup-match.model';
+import { CupMatch } from '@models/v2/cup/cup-match.model';
+import { CupPrediction } from '@models/v2/cup/cup-prediction.model';
+import { User } from '@models/v2/user.model';
 import { PaginatedResponse } from '@models/paginated-response.model';
 import { CupMatchSearch } from '@models/search/cup-match-search.model';
 import { AuthNewService } from '@services/new/auth-new.service';
@@ -28,19 +28,19 @@ import { map, mergeMap, tap } from 'rxjs/operators';
    styleUrls: ['./cup-cup-match.component.scss']
 })
 export class CupCupMatchComponent implements OnInit {
-   public cupCupMatch: CupCupMatchNew;
+   public cupCupMatch: CupCupMatch;
    public cupCupMatchReadableResult: string;
    public cupCupMatchStates = CupCupMatchState;
    public matchesWithPredictions: {
-      matchInfo: { match: CupMatchNew; readable: string };
-      homePredictionInfo: { prediction: CupPredictionNew; readable: string; scored: boolean };
-      awayPredictionInfo: { prediction: CupPredictionNew; readable: string; scored: boolean };
+      matchInfo: { match: CupMatch; readable: string };
+      homePredictionInfo: { prediction: CupPrediction; readable: string; scored: boolean };
+      awayPredictionInfo: { prediction: CupPrediction; readable: string; scored: boolean };
    }[] = [];
    public numberOfMatchesInStage = 8;
    public predictionsNumber = { home: 0, away: 0 };
-   public user: UserNew;
+   public user: User;
 
-   private cupMatches: CupMatchNew[] = [];
+   private cupMatches: CupMatch[] = [];
 
    constructor(
       private activatedRoute: ActivatedRoute,
@@ -52,7 +52,7 @@ export class CupCupMatchComponent implements OnInit {
       private titleService: TitleService
    ) {}
 
-   public isCupMatchGuessed(cupMatch: CupMatchNew, cupPrediction: CupPredictionNew): boolean {
+   public isCupMatchGuessed(cupMatch: CupMatch, cupPrediction: CupPrediction): boolean {
       if (!cupPrediction) {
          return false;
       }
@@ -73,12 +73,12 @@ export class CupCupMatchComponent implements OnInit {
       this.getPageData(this.activatedRoute.snapshot.params.cupCupMatchId);
    }
 
-   private getCupCupMatchObservable(cupCupMatchId: number): Observable<CupCupMatchNew> {
+   private getCupCupMatchObservable(cupCupMatchId: number): Observable<CupCupMatch> {
       const relations = ['homeUser', 'awayUser', 'cupStage.competition', 'cupStage.CupStageType'];
       return this.cupCupMatchService.getCupCupMatch(cupCupMatchId, relations);
    }
 
-   private getCupMatchesObservable(cupCupMatchId: number): Observable<PaginatedResponse<CupMatchNew>> {
+   private getCupMatchesObservable(cupCupMatchId: number): Observable<PaginatedResponse<CupMatch>> {
       const search: CupMatchSearch = {
          cupCupMatchId,
          relations: ['match.clubHome', 'match.clubAway'],
@@ -94,7 +94,7 @@ export class CupCupMatchComponent implements OnInit {
       cupCupMatchId: number,
       homeUserId: number,
       awayUserId: number
-   ): Observable<{ homePredictions: PaginatedResponse<CupPredictionNew>; awayPredictions: PaginatedResponse<CupPredictionNew> }> {
+   ): Observable<{ homePredictions: PaginatedResponse<CupPrediction>; awayPredictions: PaginatedResponse<CupPrediction> }> {
       const homeRequest =
          this.user && this.user.id === homeUserId
             ? this.cupPredictionService.getMyCupPredictions([cupCupMatchId])
@@ -104,7 +104,7 @@ export class CupCupMatchComponent implements OnInit {
             ? this.cupPredictionService.getMyCupPredictions([cupCupMatchId])
             : this.cupPredictionService.getCupPredictions({ cupCupMatchIds: [cupCupMatchId], userId: awayUserId });
 
-      const requests: [Observable<PaginatedResponse<CupPredictionNew>>, Observable<PaginatedResponse<CupPredictionNew>>] = [
+      const requests: [Observable<PaginatedResponse<CupPrediction>>, Observable<PaginatedResponse<CupPrediction>>] = [
          homeRequest,
          awayRequest
       ];
@@ -116,7 +116,7 @@ export class CupCupMatchComponent implements OnInit {
    }
 
    private getPageData(cupCupMatchId: number): void {
-      const requests: [Observable<CupCupMatchNew>, Observable<PaginatedResponse<CupMatchNew>>] = [
+      const requests: [Observable<CupCupMatch>, Observable<PaginatedResponse<CupMatch>>] = [
          this.getCupCupMatchObservable(cupCupMatchId),
          this.getCupMatchesObservable(cupCupMatchId)
       ];
@@ -133,10 +133,7 @@ export class CupCupMatchComponent implements OnInit {
          .subscribe(response => this.handlePredictionsObservableResult(response));
    }
 
-   private handleParentObservablesResult(response: {
-      cupCupMatch: CupCupMatchNew;
-      cupMatchesResponse: PaginatedResponse<CupMatchNew>;
-   }): void {
+   private handleParentObservablesResult(response: { cupCupMatch: CupCupMatch; cupMatchesResponse: PaginatedResponse<CupMatch> }): void {
       this.cupCupMatch = response.cupCupMatch;
       this.cupMatches = response.cupMatchesResponse.data;
       this.titleService.setTitle(`${this.cupCupMatch.home_user.name} vs ${this.cupCupMatch.away_user.name} - Кубок`);
@@ -144,8 +141,8 @@ export class CupCupMatchComponent implements OnInit {
    }
 
    private handlePredictionsObservableResult(response: {
-      homePredictions: PaginatedResponse<CupPredictionNew>;
-      awayPredictions: PaginatedResponse<CupPredictionNew>;
+      homePredictions: PaginatedResponse<CupPrediction>;
+      awayPredictions: PaginatedResponse<CupPrediction>;
    }): void {
       this.cupMatches.forEach(cupMatch => {
          this.predictionsNumber = { home: response.homePredictions.total, away: response.awayPredictions.total };

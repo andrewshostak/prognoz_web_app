@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 
 import { Sequence } from '@enums/sequence.enum';
-import { CupMatchNew } from '@models/v2/cup-match-new.model';
-import { CupPredictionNew } from '@models/v2/cup-prediction-new.model';
-import { UserNew } from '@models/v2/user-new.model';
+import { CupMatch } from '@models/v2/cup/cup-match.model';
+import { CupPrediction } from '@models/v2/cup/cup-prediction.model';
+import { User } from '@models/v2/user.model';
 import { CupMatchSearch } from '@models/search/cup-match-search.model';
 import { CurrentStateService } from '@services/current-state.service';
 import { AuthNewService } from '@services/new/auth-new.service';
@@ -30,13 +30,13 @@ export class CupPredictionsComponent implements OnInit {
       private titleService: TitleService
    ) {}
 
-   authenticatedUser: UserNew;
-   cupPredictions: CupPredictionNew[] = [];
-   private cupMatches: CupMatchNew[];
+   authenticatedUser: User;
+   cupPredictions: CupPrediction[] = [];
+   private cupMatches: CupMatch[];
 
    cupPredictionUpdated(event: {
       cupMatchId: number;
-      cupPrediction?: CupPredictionNew;
+      cupPrediction?: CupPrediction;
       error?: { message: string; status_code: number };
    }): void {
       if (event.error && event.error.message.includes('Час для прогнозування вийшов')) {
@@ -88,7 +88,7 @@ export class CupPredictionsComponent implements OnInit {
          .subscribe();
    }
 
-   private getCupMatches(userId: number): Observable<CupMatchNew[]> {
+   private getCupMatches(userId: number): Observable<CupMatch[]> {
       const search: CupMatchSearch = {
          userId,
          showPredictability: true,
@@ -102,11 +102,11 @@ export class CupPredictionsComponent implements OnInit {
       return this.cupMatchService.getCupMatches(search).pipe(map(response => response.data));
    }
 
-   private getCupPredictions(cupCupMatchIds: number[]): Observable<CupPredictionNew[]> {
+   private getCupPredictions(cupCupMatchIds: number[]): Observable<CupPrediction[]> {
       return this.cupPredictionService.getMyCupPredictions(cupCupMatchIds).pipe(map(response => response.data));
    }
 
-   private linkCupMatchesAndPredictions(cupMatches: CupMatchNew[], cupPredictions: CupPredictionNew[]): CupPredictionNew[] {
+   private linkCupMatchesAndPredictions(cupMatches: CupMatch[], cupPredictions: CupPrediction[]): CupPrediction[] {
       return cupMatches
          .filter(cupMatch => get(cupMatch, 'cup_stages[0].cup_cup_matches[0]'))
          .map(cupMatch => {
@@ -118,7 +118,7 @@ export class CupPredictionsComponent implements OnInit {
                   user_id: this.authenticatedUser.id,
                   cup_match_id: cupMatch.id,
                   cup_cup_match_id: cupMatch.cup_stages[0].cup_cup_matches[0].id
-               } as CupPredictionNew;
+               } as CupPrediction;
             }
             cupPrediction.cup_match = cupMatch;
             return cupPrediction;

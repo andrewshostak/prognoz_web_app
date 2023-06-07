@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 
-import { TeamNew } from '@models/v2/team-new.model';
-import { UserNew } from '@models/v2/user-new.model';
+import { Team } from '@models/v2/team/team.model';
+import { User } from '@models/v2/user.model';
 import { AuthNewService } from '@services/new/auth-new.service';
 import { TeamNewService } from '@services/new/team-new.service';
 
@@ -12,15 +12,15 @@ import { TeamNewService } from '@services/new/team-new.service';
    styleUrls: ['./team-edit.component.scss']
 })
 export class TeamEditComponent implements OnInit {
-   public team: TeamNew;
-   public user: UserNew;
+   public team: Team;
+   public user: User;
    public notCaptainsTeamMessage: string;
 
    constructor(private activatedRoute: ActivatedRoute, private authService: AuthNewService, private teamService: TeamNewService) {}
 
    public ngOnInit() {
       this.user = this.authService.getUser();
-      this.team = { captain_id: this.user.id } as TeamNew;
+      this.team = { captain_id: this.user.id } as Team;
       this.activatedRoute.params.forEach((params: Params) => {
          this.getTeamData(params.id);
       });

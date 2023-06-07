@@ -2,7 +2,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
 import { environment } from '@env';
-import { CompetitionNew } from '@models/v2/competition-new.model';
+import { Competition } from '@models/v2/competition.model';
 import { PaginatedResponse } from '@models/paginated-response.model';
 import { CompetitionSearch } from '@models/search/competition-search.model';
 import { Observable } from 'rxjs';
@@ -14,20 +14,20 @@ export class CompetitionNewService {
 
    constructor(private httpClient: HttpClient) {}
 
-   createCompetition(competition: Partial<CompetitionNew>): Observable<CompetitionNew> {
+   createCompetition(competition: Partial<Competition>): Observable<Competition> {
       return this.httpClient
-         .post<{ competition: CompetitionNew }>(this.competitionsUrl, competition)
+         .post<{ competition: Competition }>(this.competitionsUrl, competition)
          .pipe(map(response => response.competition));
    }
 
-   public getCompetition(id: number, relations: string[] = []): Observable<CompetitionNew> {
+   public getCompetition(id: number, relations: string[] = []): Observable<Competition> {
       const params = new HttpParams({ fromObject: { 'relations[]': relations } });
       return this.httpClient
-         .get<{ competition: CompetitionNew }>(`${this.competitionsUrl}/${id}`, { params })
+         .get<{ competition: Competition }>(`${this.competitionsUrl}/${id}`, { params })
          .pipe(map(response => response.competition));
    }
 
-   public getCompetitions(search: CompetitionSearch): Observable<PaginatedResponse<CompetitionNew>> {
+   public getCompetitions(search: CompetitionSearch): Observable<PaginatedResponse<Competition>> {
       let params: HttpParams = new HttpParams();
 
       if (search.limit) {
@@ -63,12 +63,12 @@ export class CompetitionNewService {
          });
       }
 
-      return this.httpClient.get<PaginatedResponse<CompetitionNew>>(this.competitionsUrl, { params });
+      return this.httpClient.get<PaginatedResponse<Competition>>(this.competitionsUrl, { params });
    }
 
-   updateCompetition(id: number, competition: Partial<CompetitionNew>): Observable<CompetitionNew> {
+   updateCompetition(id: number, competition: Partial<Competition>): Observable<Competition> {
       return this.httpClient
-         .put<{ competition: CompetitionNew }>(`${this.competitionsUrl}/${id}`, competition)
+         .put<{ competition: Competition }>(`${this.competitionsUrl}/${id}`, competition)
          .pipe(map(response => response.competition));
    }
 }

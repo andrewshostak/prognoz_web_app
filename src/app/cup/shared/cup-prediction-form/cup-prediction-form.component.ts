@@ -1,8 +1,8 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 
-import { CupPredictionNew } from '@models/v2/cup-prediction-new.model';
-import { UserNew } from '@models/v2/user-new.model';
+import { CupPrediction } from '@models/v2/cup/cup-prediction.model';
+import { User } from '@models/v2/user.model';
 import { CupPredictionNewService } from '@services/new/cup-prediction-new.service';
 import { SettingsService } from '@services/settings.service';
 import { UtilsService } from '@services/utils.service';
@@ -21,11 +21,11 @@ export class CupPredictionFormComponent implements OnInit {
    spinnerButton: boolean;
    isScore: boolean;
 
-   @Input() authenticatedUser: UserNew;
-   @Input() cupPrediction: CupPredictionNew;
+   @Input() authenticatedUser: User;
+   @Input() cupPrediction: CupPrediction;
    @Output() cupPredictionUpdated = new EventEmitter<{
       cupMatchId: number;
-      cupPrediction?: CupPredictionNew;
+      cupPrediction?: CupPrediction;
       error?: { message: string; status_code: number };
    }>();
 
@@ -57,7 +57,7 @@ export class CupPredictionFormComponent implements OnInit {
          user_id: this.authenticatedUser.id,
          cup_match_id: this.cupPrediction.cup_match_id,
          cup_cup_match_id: this.cupPrediction.cup_cup_match_id
-      } as Partial<CupPredictionNew>;
+      } as Partial<CupPrediction>;
       cupPredictionToUpdate.home = this.cupPredictionForm.get('home').value;
       cupPredictionToUpdate.away = this.cupPredictionForm.get('away').value;
 

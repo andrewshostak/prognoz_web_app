@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 
-import { TeamNew } from '@models/v2/team-new.model';
-import { UserNew } from '@models/v2/user-new.model';
-import { TeamTeamMatchNew } from '@models/v2/team-team-match-new.model';
+import { Team } from '@models/v2/team/team.model';
+import { User } from '@models/v2/user.model';
+import { TeamTeamMatch } from '@models/v2/team/team-team-match.model';
 import { TeamSearch } from '@models/search/team-search.model';
 import { TeamTeamMatchSearch } from '@models/search/team-team-match-search.model';
 import { AuthNewService } from '@services/new/auth-new.service';
@@ -20,12 +20,12 @@ import { filter, tap } from 'rxjs/operators';
    styleUrls: ['./team-my.component.scss']
 })
 export class TeamMyComponent implements OnInit {
-   public authenticatedUser: UserNew;
+   public authenticatedUser: User;
    public competitionId: number;
    public isCaptain = false;
    public noAccess = 'Доступ заборонено. Увійдіть на сайт для перегляду цієї сторінки.';
-   public team: TeamNew;
-   public teamTeamMatches: TeamTeamMatchNew[];
+   public team: Team;
+   public teamTeamMatches: TeamTeamMatch[];
    public lastTeamStageId: number = 0;
 
    constructor(

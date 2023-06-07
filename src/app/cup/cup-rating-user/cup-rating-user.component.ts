@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
-import { CupRatingCalculatedNew } from '@models/v2/cup-rating-calculated-new.model';
+import { CupRatingCalculated } from '@models/v2/cup/cup-rating-calculated.model';
 import { CupRatingSearch } from '@models/search/cup-rating-search.model';
 import { CupRatingNewService } from '@services/new/cup-rating-new.service';
 import { TitleService } from '@services/title.service';
@@ -19,7 +19,7 @@ export class CupRatingUserComponent implements OnInit {
       private titleService: TitleService
    ) {}
 
-   cupRating: CupRatingCalculatedNew;
+   cupRating: CupRatingCalculated;
 
    ngOnInit() {
       const search: CupRatingSearch = { userId: this.activatedRoute.snapshot.params.userId, relations: ['user.clubs'] };

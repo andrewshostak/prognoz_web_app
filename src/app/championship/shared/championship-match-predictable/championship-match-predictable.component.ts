@@ -1,8 +1,8 @@
 import { ChangeDetectorRef, Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 
-import { ChampionshipMatchNew } from '@models/v2/championship-match-new.model';
-import { User } from '@models/user.model';
+import { ChampionshipMatch } from '@models/v2/championship/championship-match.model';
+import { User } from '@models/v1/user.model';
 import { ChampionshipMatchNewService } from '@services/new/championship-match-new.service';
 import { SettingsService } from '@services/settings.service';
 
@@ -12,7 +12,7 @@ import { SettingsService } from '@services/settings.service';
    templateUrl: './championship-match-predictable.component.html'
 })
 export class ChampionshipMatchPredictableComponent implements OnChanges, OnInit {
-   @Input() public championshipMatch: ChampionshipMatchNew;
+   @Input() public championshipMatch: ChampionshipMatch;
    @Input() public authenticatedUser: User;
    @Input() public championshipPredictsForm: FormGroup;
 
@@ -27,7 +27,7 @@ export class ChampionshipMatchPredictableComponent implements OnChanges, OnInit 
 
    constructor(private championshipMatchService: ChampionshipMatchNewService, private changeDetectorRef: ChangeDetectorRef) {}
 
-   public getChampionshipMatchStatisticData(championshipMatch: ChampionshipMatchNew, forceUpdate: boolean = false): void {
+   public getChampionshipMatchStatisticData(championshipMatch: ChampionshipMatch, forceUpdate: boolean = false): void {
       if (this.isCollapsed || forceUpdate) {
          this.spinnerStatistic = true;
          this.championshipMatchService.getChampionshipMatchStatistic(championshipMatch.id).subscribe(

@@ -11,7 +11,7 @@ import {
 } from '@angular/forms';
 
 import { Sequence } from '@enums/sequence.enum';
-import { UserNew } from '@models/v2/user-new.model';
+import { User } from '@models/v2/user.model';
 import { PaginatedResponse } from '@models/paginated-response.model';
 import { UserSearch } from '@models/search/user-search.model';
 import { UserNewService } from '@services/new/user-new.service';
@@ -38,13 +38,13 @@ import { catchError, debounceTime, distinctUntilChanged, map, switchMap, tap } f
    ]
 })
 export class UserSelectComponent implements OnChanges, OnInit, ControlValueAccessor, Validator {
-   @Input() public usersList: UserNew[] = [];
+   @Input() public usersList: User[] = [];
 
    public ngSelectTexts: { [key: string]: string };
    public onChange: (value: any) => void;
    public onTouched: () => void;
-   public users$: Observable<UserNew[]>;
-   public usersList$: Subject<UserNew[]>;
+   public users$: Observable<User[]>;
+   public usersList$: Subject<User[]>;
    public usersLoading: boolean;
    public usersInput$: Subject<string>;
    public userSelectFormGroup: FormGroup;
@@ -66,7 +66,7 @@ export class UserSelectComponent implements OnChanges, OnInit, ControlValueAcces
       this.ngSelectTexts = SettingsService.textMessages.ngSelect;
       this.userSelectFormGroup = new FormGroup({ user_id: new FormControl(null) });
       this.usersInput$ = new Subject<string>();
-      this.usersList$ = new Subject<UserNew[]>();
+      this.usersList$ = new Subject<User[]>();
       this.usersLoading = false;
       this.usersTypeAhead = new EventEmitter<string>();
       this.enableTypeAheadSearch();
@@ -121,7 +121,7 @@ export class UserSelectComponent implements OnChanges, OnInit, ControlValueAcces
                return this.userService.getUsers(search).pipe(
                   catchError(() => of([])),
                   tap(() => (this.usersLoading = false)),
-                  map((response: PaginatedResponse<UserNew>) => response.data)
+                  map((response: PaginatedResponse<User>) => response.data)
                );
             })
          )

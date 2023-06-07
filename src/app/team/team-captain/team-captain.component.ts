@@ -4,9 +4,9 @@ import { ActivatedRoute, Params, Router } from '@angular/router';
 
 import { ModelStatus } from '@enums/model-status.enum';
 import { TeamTeamMatchState } from '@enums/team-team-match-state.enum';
-import { UserNew } from '@models/v2/user-new.model';
-import { TeamStageNew } from '@models/v2/team-stage-new.model';
-import { TeamTeamMatchNew } from '@models/v2/team-team-match-new.model';
+import { User } from '@models/v2/user.model';
+import { TeamStage } from '@models/v2/team/team-stage.model';
+import { TeamTeamMatch } from '@models/v2/team/team-team-match.model';
 import { TeamMatch } from '@models/v1/team-match.model';
 import { TeamParticipant } from '@models/v1/team-participant.model';
 import { TeamParticipantSearch } from '@models/search/team-participant-search.model';
@@ -43,7 +43,7 @@ export class TeamCaptainComponent implements OnInit {
       private teamTeamMatchNewService: TeamTeamMatchNewService
    ) {}
 
-   authenticatedUser: UserNew;
+   authenticatedUser: User;
    public availableTeamParticipants: { [userId: number]: { predictionsLeft: number; participantAvailable: boolean } };
    currentTeamId: number;
    errorTeamMatches: string;
@@ -59,9 +59,9 @@ export class TeamCaptainComponent implements OnInit {
    spinnerButtonGoalkeeper = false;
    teamMatches: TeamMatch[];
    teamParticipants: TeamParticipant[];
-   teamTeamMatch: TeamTeamMatchNew;
+   teamTeamMatch: TeamTeamMatch;
    teamTeamMatchStates = TeamTeamMatchState;
-   teamTeamMatches: TeamTeamMatchNew[];
+   teamTeamMatches: TeamTeamMatch[];
 
    getCurrentTeamTeamMatch() {
       if (this.teamTeamMatches && this.currentTeamId) {
@@ -218,7 +218,7 @@ export class TeamCaptainComponent implements OnInit {
             }) as any
          )
          .subscribe(
-            (responses: { teamMatches: any; teamStage: TeamStageNew }) => {
+            (responses: { teamMatches: any; teamStage: TeamStage }) => {
                this.errorTeamMatches = null;
                if (!responses.teamMatches) {
                   this.teamMatches = null;
@@ -258,7 +258,7 @@ export class TeamCaptainComponent implements OnInit {
 
    private getAvailableTeamParticipants(
       teamMatches: TeamMatch[],
-      teamStage: TeamStageNew
+      teamStage: TeamStage
    ): { [userId: number]: { predictionsLeft: number; participantAvailable: boolean } } {
       const teamParticipants: any = {};
       const maxParticipantNumberOfPredictions = Math.ceil(teamStage.team_stage_type.matches_count / SettingsService.participantsInTeam);

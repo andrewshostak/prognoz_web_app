@@ -4,10 +4,10 @@ import { ActivatedRoute, Params, Router } from '@angular/router';
 import { CompetitionState } from '@enums/competition-state.enum';
 import { ModelStatus } from '@enums/model-status.enum';
 import { Sequence } from '@enums/sequence.enum';
-import { CompetitionNew } from '@models/v2/competition-new.model';
-import { TeamNew } from '@models/v2/team-new.model';
-import { TeamParticipantNew } from '@models/v2/team-participant-new.model';
-import { UserNew } from '@models/v2/user-new.model';
+import { Competition } from '@models/v2/competition.model';
+import { Team } from '@models/v2/team/team.model';
+import { TeamParticipant } from '@models/v2/team/team-participant.model';
+import { User } from '@models/v2/user.model';
 import { OpenedModal } from '@models/opened-modal.model';
 import { PaginatedResponse } from '@models/paginated-response.model';
 import { TeamParticipantSearch } from '@models/search/team-participant-search.model';
@@ -30,13 +30,13 @@ import { filter, map, mergeMap, takeUntil } from 'rxjs/operators';
    styleUrls: ['./team-participants.component.scss']
 })
 export class TeamParticipantsComponent implements OnDestroy, OnInit {
-   public allUserApplications: TeamParticipantNew[];
-   public competition: CompetitionNew;
+   public allUserApplications: TeamParticipant[];
+   public competition: Competition;
    public competitionStates = CompetitionState;
    public openedModal: OpenedModal<null>;
    public showCreateTeamButton: boolean;
-   public teams: TeamNew[];
-   public user: UserNew;
+   public teams: Team[];
+   public user: User;
    public currentUserTeamId: number;
 
    private destroyed$ = new Subject();
@@ -58,7 +58,7 @@ export class TeamParticipantsComponent implements OnDestroy, OnInit {
       return this.teams.filter(team => team.confirmed).length;
    }
 
-   public competitionSelected(event: { selected: CompetitionNew | Partial<CompetitionNew> }): void {
+   public competitionSelected(event: { selected: Competition | Partial<Competition> }): void {
       this.router.navigate(['/team', 'participants', { competition_id: event.selected.id }]);
    }
 
@@ -89,7 +89,7 @@ export class TeamParticipantsComponent implements OnDestroy, OnInit {
       this.openedModal = { reference, data: null, submitted: () => {} };
    }
 
-   public teamSelected(team: TeamNew): void {
+   public teamSelected(team: Team): void {
       const callbacks = {
          successful: () => {
             this.getPageData(this.competition.id);
@@ -101,7 +101,7 @@ export class TeamParticipantsComponent implements OnDestroy, OnInit {
       this.teamCompetitionService.updateTeamCreateAndUpdateCaptain(team, this.competition.id, callbacks);
    }
 
-   private getAllUserApplicationsObservable(competitionId: number, userId): Observable<PaginatedResponse<TeamParticipantNew>> {
+   private getAllUserApplicationsObservable(competitionId: number, userId): Observable<PaginatedResponse<TeamParticipant>> {
       const search: TeamParticipantSearch = {
          page: 1,
          limit: SettingsService.maxLimitValues.teamParticipants,
@@ -111,11 +111,11 @@ export class TeamParticipantsComponent implements OnDestroy, OnInit {
       return this.teamParticipantService.getTeamParticipants(search);
    }
 
-   private getCompetitionObservable(id: number): Observable<CompetitionNew> {
+   private getCompetitionObservable(id: number): Observable<Competition> {
       return this.competitionService.getCompetition(id);
    }
 
-   private getCurrentUserTeamId(teamParticipants: TeamParticipantNew[]): number {
+   private getCurrentUserTeamId(teamParticipants: TeamParticipant[]): number {
       const teamParticipant = teamParticipants.find(participant => {
          return participant.confirmed && participant.user_id === this.user.id;
       });
@@ -123,7 +123,7 @@ export class TeamParticipantsComponent implements OnDestroy, OnInit {
       return teamParticipant ? teamParticipant.team_id : null;
    }
 
-   private getOpenedUserApplicationsObservable(userId: number): Observable<PaginatedResponse<TeamParticipantNew>> {
+   private getOpenedUserApplicationsObservable(userId: number): Observable<PaginatedResponse<TeamParticipant>> {
       const search: TeamParticipantSearch = {
          ended: ModelStatus.Falsy,
          limit: 1,
@@ -136,7 +136,7 @@ export class TeamParticipantsComponent implements OnDestroy, OnInit {
 
    private getPageData(competitionId: number): void {
       this.showCreateTeamButton = false;
-      const requests: [ObservableInput<CompetitionNew>, ObservableInput<PaginatedResponse<TeamNew>>] = [
+      const requests: [ObservableInput<Competition>, ObservableInput<PaginatedResponse<Team>>] = [
          this.getCompetitionObservable(competitionId),
          this.getTeamsObservable(competitionId)
       ];
@@ -150,8 +150,8 @@ export class TeamParticipantsComponent implements OnDestroy, OnInit {
                this.teams = response.teamsResponse.data;
 
                let applicationRequests: [
-                  ObservableInput<PaginatedResponse<TeamParticipantNew>>,
-                  ObservableInput<PaginatedResponse<TeamParticipantNew>>
+                  ObservableInput<PaginatedResponse<TeamParticipant>>,
+                  ObservableInput<PaginatedResponse<TeamParticipant>>
                ] = [of(null), of(null)];
                if (this.user) {
                   applicationRequests = [
@@ -177,7 +177,7 @@ export class TeamParticipantsComponent implements OnDestroy, OnInit {
          });
    }
 
-   private getTeamsObservable(competitionId: number): Observable<PaginatedResponse<TeamNew>> {
+   private getTeamsObservable(competitionId: number): Observable<PaginatedResponse<Team>> {
       const search: TeamSearch = {
          competitionId,
          orderBy: 'confirmed',

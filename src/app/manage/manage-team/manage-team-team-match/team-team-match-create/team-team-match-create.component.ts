@@ -4,9 +4,9 @@ import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/fo
 import { TeamStageState } from '@enums/team-stage-state.enum';
 import { TeamStageType } from '@enums/team-stage-type.enum';
 import { Sequence } from '@enums/sequence.enum';
-import { TeamStageNew } from '@models/v2/team-stage-new.model';
+import { TeamStage } from '@models/v2/team/team-stage.model';
 import { TeamStageSearch } from '@models/search/team-stage-search.model';
-import { TeamTeamMatchNew } from '@models/v2/team-team-match-new.model';
+import { TeamTeamMatch } from '@models/v2/team/team-team-match.model';
 import { UtilsService } from '@services/utils.service';
 import { SettingsService } from '@services/settings.service';
 import { TeamStageNewService } from '@services/new/team-stage-new.service';
@@ -25,7 +25,7 @@ export class TeamTeamMatchCreateComponent implements OnInit {
       private teamTeamMatchService: TeamTeamMatchNewService
    ) {}
 
-   public teamStages: TeamStageNew[] = [];
+   public teamStages: TeamStage[] = [];
    public teamTeamMatchForm: FormGroup;
 
    public ngOnInit(): void {
@@ -54,7 +54,7 @@ export class TeamTeamMatchCreateComponent implements OnInit {
       return UtilsService.showFormInvalidClass(abstractControl);
    }
 
-   private createTeamTeamMatch(teamTeamMatch: Partial<TeamTeamMatchNew>): void {
+   private createTeamTeamMatch(teamTeamMatch: Partial<TeamTeamMatch>): void {
       this.teamTeamMatchService.createTeamTeamMatch(teamTeamMatch).subscribe(() => {
          this.notificationsService.success('Успішно', `Матч між командами створено`);
          this.teamTeamMatchForm.get('home_team_id').reset();

@@ -4,7 +4,7 @@ import { ActivatedRoute, Params } from '@angular/router';
 import { Sequence } from '@enums/sequence.enum';
 import { TeamTeamMatchState } from '@enums/team-team-match-state.enum';
 import { TeamTeamMatchSearch } from '@models/search/team-team-match-search.model';
-import { TeamTeamMatchNew } from '@models/v2/team-team-match-new.model';
+import { TeamTeamMatch } from '@models/v2/team/team-team-match.model';
 import { Pagination } from '@models/pagination.model';
 import { OpenedModal } from '@models/opened-modal.model';
 import { SettingsService } from '@services/settings.service';
@@ -22,9 +22,9 @@ import { remove } from 'lodash';
 })
 export class TeamTeamMatchesTableComponent implements OnDestroy, OnInit {
    public activatedRouteSubscription: Subscription;
-   public openedModal: OpenedModal<TeamTeamMatchNew>;
+   public openedModal: OpenedModal<TeamTeamMatch>;
    public paginationData: Pagination;
-   public teamTeamMatches: TeamTeamMatchNew[] = [];
+   public teamTeamMatches: TeamTeamMatch[] = [];
    public teamTeamMatchStates = TeamTeamMatchState;
 
    constructor(
@@ -63,7 +63,7 @@ export class TeamTeamMatchesTableComponent implements OnDestroy, OnInit {
       });
    }
 
-   public openDeleteConfirm(content: NgbModalRef | TemplateRef<any>, data: TeamTeamMatchNew, submitted: (event) => void): void {
+   public openDeleteConfirm(content: NgbModalRef | TemplateRef<any>, data: TeamTeamMatch, submitted: (event) => void): void {
       const message = `Ви впевнені що хочете видалити ${data.home_team.name} - ${data.away_team.name} ?`;
       const reference = this.ngbModalService.open(content, { centered: true });
       this.openedModal = { reference, data, submitted: () => submitted.call(this), message };

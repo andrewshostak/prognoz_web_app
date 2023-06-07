@@ -2,7 +2,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
 import { environment } from '@env';
-import { CupStageNew } from '@models/v2/cup-stage-new.model';
+import { CupStage } from '@models/v2/cup/cup-stage.model';
 import { PaginatedResponse } from '@models/paginated-response.model';
 import { CupStageSearch } from '@models/search/cup-stage-search.model';
 import { Observable } from 'rxjs';
@@ -14,9 +14,9 @@ export class CupStageNewService {
 
    constructor(private httpClient: HttpClient) {}
 
-   createCupStage(cupStage: Partial<CupStageNew>, cupMatches?: { id: number }[]): Observable<CupStageNew> {
+   createCupStage(cupStage: Partial<CupStage>, cupMatches?: { id: number }[]): Observable<CupStage> {
       return this.httpClient
-         .post<{ cup_stage: CupStageNew }>(this.cupStagesUrl, { ...cupStage, cup_matches: cupMatches })
+         .post<{ cup_stage: CupStage }>(this.cupStagesUrl, { ...cupStage, cup_matches: cupMatches })
          .pipe(map(response => response.cup_stage));
    }
 
@@ -24,14 +24,14 @@ export class CupStageNewService {
       return this.httpClient.delete<void>(`${this.cupStagesUrl}/${cupStageId}`);
    }
 
-   public getCupStage(cupStageId: number, relations: string[] = []): Observable<CupStageNew> {
+   public getCupStage(cupStageId: number, relations: string[] = []): Observable<CupStage> {
       const params = new HttpParams({ fromObject: { 'relations[]': relations } });
       return this.httpClient
-         .get<{ cup_stage: CupStageNew }>(`${this.cupStagesUrl}/${cupStageId}`, { params })
+         .get<{ cup_stage: CupStage }>(`${this.cupStagesUrl}/${cupStageId}`, { params })
          .pipe(map(response => response.cup_stage));
    }
 
-   public getCupStages(search: CupStageSearch): Observable<PaginatedResponse<CupStageNew>> {
+   public getCupStages(search: CupStageSearch): Observable<PaginatedResponse<CupStage>> {
       let params: HttpParams = new HttpParams();
 
       if (search.limit) {
@@ -67,12 +67,12 @@ export class CupStageNewService {
          });
       }
 
-      return this.httpClient.get<PaginatedResponse<CupStageNew>>(this.cupStagesUrl, { params });
+      return this.httpClient.get<PaginatedResponse<CupStage>>(this.cupStagesUrl, { params });
    }
 
-   updateCupStage(cupStageId: number, cupStage: Partial<CupStageNew>, cupMatches?: { id: number }[]): Observable<CupStageNew> {
+   updateCupStage(cupStageId: number, cupStage: Partial<CupStage>, cupMatches?: { id: number }[]): Observable<CupStage> {
       return this.httpClient
-         .put<{ cup_stage: CupStageNew }>(
+         .put<{ cup_stage: CupStage }>(
             `${this.cupStagesUrl}/${cupStageId}`,
             cupMatches ? { ...cupStage, cup_matches: cupMatches } : cupStage
          )

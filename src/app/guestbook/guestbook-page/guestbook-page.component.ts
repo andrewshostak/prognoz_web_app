@@ -4,8 +4,8 @@ import { ActivatedRoute, Params } from '@angular/router';
 import { GuestbookMessageNewService } from '@app/guestbook/shared/guestbook-message-new.service';
 import { ModelStatus } from '@enums/model-status.enum';
 import { Sequence } from '@enums/sequence.enum';
-import { GuestbookMessageNew } from '@models/v2/guestbook-message-new.model';
-import { UserNew } from '@models/v2/user-new.model';
+import { GuestbookMessage } from '@models/v2/guestbook-message.model';
+import { User } from '@models/v2/user.model';
 import { OpenedModal } from '@models/opened-modal.model';
 import { Pagination } from '@models/pagination.model';
 import { GuestbookMessageSearch } from '@models/search/guestbook-message-search.model';
@@ -25,8 +25,8 @@ import { Subscription } from 'rxjs';
 })
 export class GuestbookPageComponent implements OnDestroy, OnInit {
    public activatedRouteSubscription: Subscription;
-   public authenticatedUser: UserNew;
-   public guestbookMessages: GuestbookMessageNew[] = [];
+   public authenticatedUser: User;
+   public guestbookMessages: GuestbookMessage[] = [];
    public openedModal: OpenedModal<number>;
    public paginationData: Pagination;
 
@@ -71,7 +71,7 @@ export class GuestbookPageComponent implements OnDestroy, OnInit {
       });
    }
 
-   public messageCreated(message: GuestbookMessageNew): void {
+   public messageCreated(message: GuestbookMessage): void {
       message.is_changeable = true;
       this.guestbookMessages = [message, ...this.guestbookMessages];
    }
@@ -95,7 +95,7 @@ export class GuestbookPageComponent implements OnDestroy, OnInit {
       this.openedModal = { reference, data, submitted: () => submitted.call(this) };
    }
 
-   public updateGuestbookMessage(message: GuestbookMessageNew): void {
+   public updateGuestbookMessage(message: GuestbookMessage): void {
       this.guestbookMessageService.updateGuestbookMessage(message.id, message).subscribe(response => {
          this.notificationsService.success('Успішно', 'Повідомлення змінено');
          const index = this.guestbookMessages.findIndex(m => m.id === message.id);

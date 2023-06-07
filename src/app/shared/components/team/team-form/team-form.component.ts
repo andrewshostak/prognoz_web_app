@@ -2,8 +2,8 @@ import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChange
 import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
-import { TeamNew } from '@models/v2/team-new.model';
-import { UserNew } from '@models/v2/user-new.model';
+import { Team } from '@models/v2/team/team.model';
+import { User } from '@models/v2/user.model';
 import { FormValidatorService } from '@services/form-validator.service';
 import { TeamNewService } from '@services/new/team-new.service';
 import { UtilsService } from '@services/utils.service';
@@ -15,10 +15,10 @@ import { NotificationsService } from 'angular2-notifications';
    styleUrls: ['./team-form.component.scss']
 })
 export class TeamFormComponent implements OnChanges, OnInit {
-   @Input() public team: TeamNew;
-   @Input() public captainsList: UserNew[];
+   @Input() public team: Team;
+   @Input() public captainsList: User[];
    @Input() public includeAdvancedFormControls: boolean[];
-   @Output() public successfullySubmitted = new EventEmitter<TeamNew>();
+   @Output() public successfullySubmitted = new EventEmitter<Team>();
 
    public teamImageExtensions: string[];
    public teamImageSize: number;
@@ -77,7 +77,7 @@ export class TeamFormComponent implements OnChanges, OnInit {
       this.teamForm.addControl('confirmed', new FormControl({ value: false, disabled }));
    }
 
-   private createTeam(team: Partial<TeamNew>): void {
+   private createTeam(team: Partial<Team>): void {
       this.teamService.createTeam(team).subscribe(response => {
          this.notificationsService.success('Успішно', `Команду ${response.name} створено`);
          if (this.successfullySubmitted.observers.length) {
@@ -111,7 +111,7 @@ export class TeamFormComponent implements OnChanges, OnInit {
       });
    }
 
-   private updateTeam(team: Partial<TeamNew>): void {
+   private updateTeam(team: Partial<Team>): void {
       this.teamService.updateTeam(this.team.id, team).subscribe(response => {
          this.notificationsService.success('Успішно', `Команду ${response.name} змінено`);
          this.captainsList = [response.captain];

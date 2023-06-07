@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
 
-import { ClubNew } from '@models/v2/club-new.model';
+import { Club } from '@models/v2/club.model';
 import { ClubNewService } from '@services/new/club-new.service';
 import { FormValidatorService } from '@services/form-validator.service';
 import { UtilsService } from '@services/utils.service';
@@ -13,8 +13,8 @@ import { NotificationsService } from 'angular2-notifications';
    styleUrls: ['./club-form.component.scss']
 })
 export class ClubFormComponent implements OnChanges, OnInit {
-   @Input() public club: ClubNew;
-   @Output() public successfullySubmitted = new EventEmitter<ClubNew>();
+   @Input() public club: Club;
+   @Output() public successfullySubmitted = new EventEmitter<Club>();
 
    public clubForm: FormGroup;
    public clubImageExtensions: string[];
@@ -66,7 +66,7 @@ export class ClubFormComponent implements OnChanges, OnInit {
       this.isUpdatePage ? this.updateClub(this.clubForm.getRawValue()) : this.createClub(this.clubForm.getRawValue());
    }
 
-   private createClub(club: Partial<ClubNew>): void {
+   private createClub(club: Partial<Club>): void {
       this.clubService.createClub(club).subscribe(response => {
          this.notificationsService.success('Успішно', `Команду ${response.title} створено`);
          this.successfullySubmitted.emit(response);
@@ -95,7 +95,7 @@ export class ClubFormComponent implements OnChanges, OnInit {
       });
    }
 
-   private updateClub(club: Partial<ClubNew>): void {
+   private updateClub(club: Partial<Club>): void {
       this.clubService.updateClub(this.club.id, club).subscribe(response => {
          this.notificationsService.success('Успішно', `Команду ${response.title} змінено`);
          this.successfullySubmitted.emit(response);

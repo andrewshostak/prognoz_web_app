@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 
 import { CupStageNewService } from '@services/new/cup-stage-new.service';
-import { CupStageNew } from '@models/v2/cup-stage-new.model';
+import { CupStage } from '@models/v2/cup/cup-stage.model';
 
 @Component({
    selector: 'app-cup-stage-edit',
@@ -12,7 +12,7 @@ import { CupStageNew } from '@models/v2/cup-stage-new.model';
 export class CupStageEditComponent implements OnInit {
    constructor(private activatedRoute: ActivatedRoute, private cupStageService: CupStageNewService) {}
 
-   cupStage: CupStageNew;
+   cupStage: CupStage;
 
    ngOnInit() {
       this.activatedRoute.params.forEach((params: Params) => {

@@ -1,7 +1,7 @@
 import { AfterViewInit, Component, ElementRef, OnInit, Renderer2, ViewChild } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 
-import { UserNew } from '@models/v2/user-new.model';
+import { User } from '@models/v2/user.model';
 import { CurrentStateService } from '@services/current-state.service';
 import { AuthNewService } from '@services/new/auth-new.service';
 import { HeaderImageService } from '@services/new/header-image.service';
@@ -14,7 +14,7 @@ import { filter } from 'rxjs/operators';
    styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent implements AfterViewInit, OnInit {
-   public user: UserNew;
+   public user: User;
    public navigationItems: { label: string; link: string }[] = [
       { label: 'Чемпіонат', link: '/championship' },
       { label: 'Командний', link: '/team' },

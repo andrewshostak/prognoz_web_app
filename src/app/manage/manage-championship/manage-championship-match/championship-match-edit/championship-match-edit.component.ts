@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 
-import { ChampionshipMatchNew } from '@models/v2/championship-match-new.model';
+import { ChampionshipMatch } from '@models/v2/championship/championship-match.model';
 import { ChampionshipMatchNewService } from '@services/new/championship-match-new.service';
 
 @Component({
@@ -10,7 +10,7 @@ import { ChampionshipMatchNewService } from '@services/new/championship-match-ne
    templateUrl: './championship-match-edit.component.html'
 })
 export class ChampionshipMatchEditComponent implements OnInit {
-   public championshipMatch: ChampionshipMatchNew;
+   public championshipMatch: ChampionshipMatch;
 
    constructor(private activatedRoute: ActivatedRoute, private championshipMatchService: ChampionshipMatchNewService) {}
 

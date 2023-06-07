@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 
 import { NewsNewService } from '@services/new/news-new.service';
-import { NewsNew } from '@models/v2/news-new.model';
+import { News } from '@models/v2/news.model';
 
 @Component({
    selector: 'app-news-edit',
@@ -12,7 +12,7 @@ import { NewsNew } from '@models/v2/news-new.model';
 export class NewsEditComponent implements OnInit {
    constructor(private activatedRoute: ActivatedRoute, private newsService: NewsNewService) {}
 
-   news: NewsNew;
+   news: News;
 
    ngOnInit() {
       this.activatedRoute.params.forEach((params: Params) => {

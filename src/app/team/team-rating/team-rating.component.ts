@@ -1,13 +1,13 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 
-import { CompetitionNew } from '@models/v2/competition-new.model';
-import { TeamRatingNew } from '@models/v2/team-rating-new.model';
-import { TeamRatingUserNew } from '@models/v2/team-rating-user-new.model';
+import { Competition } from '@models/v2/competition.model';
+import { TeamRating } from '@models/v2/team/team-rating.model';
+import { TeamRatingUser } from '@models/v2/team/team-rating-user.model';
 import { PaginatedResponse } from '@models/paginated-response.model';
 import { TeamRatingSearch } from '@models/search/team-rating-search.model';
 import { TeamRatingUserSearch } from '@models/search/team-rating-user-search.model';
-import { User } from '@models/user.model';
+import { User } from '@models/v1/user.model';
 import { CurrentStateService } from '@services/current-state.service';
 import { CompetitionNewService } from '@services/new/competition-new.service';
 import { TeamRatingUserNewService } from '@services/new/team-rating-user-new.service';
@@ -28,10 +28,10 @@ export class TeamRatingComponent implements OnDestroy, OnInit {
    public activatedRouteSubscription: Subscription;
    public authenticatedUser: User;
    public competitionId: number;
-   public teamRating: TeamRatingNew[] = [];
-   public groupedRating: { [groupNumber: string]: TeamRatingNew[] };
-   public teamRatingUser: TeamRatingUserNew[] = [];
-   public competition: CompetitionNew;
+   public teamRating: TeamRating[] = [];
+   public groupedRating: { [groupNumber: string]: TeamRating[] };
+   public teamRatingUser: TeamRatingUser[] = [];
+   public competition: Competition;
 
    constructor(
       private activatedRoute: ActivatedRoute,
@@ -43,7 +43,7 @@ export class TeamRatingComponent implements OnDestroy, OnInit {
       private titleService: TitleService
    ) {}
 
-   public competitionSelected(event: { selected: CompetitionNew | Partial<CompetitionNew> }): void {
+   public competitionSelected(event: { selected: Competition | Partial<Competition> }): void {
       this.router.navigate(['/team', 'rating', { competition_id: event.selected.id }]);
    }
 
@@ -93,7 +93,7 @@ export class TeamRatingComponent implements OnDestroy, OnInit {
       this.teamRatingUserService.getTeamRatingUser(search).subscribe(response => (this.teamRatingUser = response.data));
    }
 
-   private setTeamRating(response: PaginatedResponse<TeamRatingNew>): void {
+   private setTeamRating(response: PaginatedResponse<TeamRating>): void {
       if (response.data.length && response.data[0].group_number) {
          this.groupedRating = groupBy(response.data, teamRating => teamRating.group_number);
          this.teamRating = [];

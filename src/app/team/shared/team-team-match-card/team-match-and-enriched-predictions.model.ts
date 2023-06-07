@@ -1,18 +1,18 @@
-import { TeamMatchNew } from '@models/v2/team-match-new.model';
-import { TeamPredictionNew } from '@models/v2/team-prediction-new.model';
+import { TeamMatch } from '@models/v2/team/team-match.model';
+import { TeamPrediction } from '@models/v2/team/team-prediction.model';
 
 export class TeamMatchAndEnrichedPredictions {
-   teamMatch: TeamMatchNew;
+   teamMatch: TeamMatch;
    homePrediction: {
       guessed?: boolean;
       blocked?: boolean;
-      prediction?: TeamPredictionNew;
+      prediction?: TeamPrediction;
    };
    homePredictionTitle?: string;
    awayPrediction: {
       guessed?: boolean;
       blocked?: boolean;
-      prediction?: TeamPredictionNew;
+      prediction?: TeamPrediction;
    };
    awayPredictionTitle?: string;
 }

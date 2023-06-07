@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 
-import { ChampionshipRatingNew } from '@models/v2/championship-rating-new.model';
+import { ChampionshipRating } from '@models/v2/championship/championship-rating.model';
 import { UtilsService } from '@services/utils.service';
 
 @Component({
@@ -9,7 +9,7 @@ import { UtilsService } from '@services/utils.service';
    styleUrls: ['./championship-rating-table.component.scss']
 })
 export class ChampionshipRatingTableComponent {
-   @Input() rating: Partial<ChampionshipRatingNew>[];
+   @Input() rating: Partial<ChampionshipRating>[];
    @Input() authenticatedUser: any;
 
    getHomeCityInBrackets = UtilsService.getHomeCityInBrackets;

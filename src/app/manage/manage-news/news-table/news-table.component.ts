@@ -4,7 +4,7 @@ import { ActivatedRoute, Params } from '@angular/router';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { NotificationsService } from 'angular2-notifications';
 import { NewsNewService } from '@services/new/news-new.service';
-import { NewsNew } from '@models/v2/news-new.model';
+import { News } from '@models/v2/news.model';
 import { NewsSearch } from '@models/search/news-search.model';
 import { SettingsService } from '@services/settings.service';
 import { Sequence } from '@enums/sequence.enum';
@@ -26,12 +26,12 @@ export class NewsTableComponent implements OnInit {
 
    confirmModalMessage: string;
    confirmModalReference: NgbModalRef;
-   news: NewsNew[];
+   news: News[];
    path = '/manage/news/page/';
-   selectedNews: NewsNew;
+   selectedNews: News;
    paginationData: Pagination;
 
-   deleteNewsItem(news: NewsNew) {
+   deleteNewsItem(news: News) {
       this.newsNewService.deleteNews(news.id).subscribe(
          () => {
             this.confirmModalReference.close();
@@ -58,7 +58,7 @@ export class NewsTableComponent implements OnInit {
       });
    }
 
-   openConfirmModal(content: NgbModalRef, news: NewsNew): void {
+   openConfirmModal(content: NgbModalRef, news: News): void {
       this.confirmModalMessage = `Видалити ${news.title}?`;
       this.selectedNews = news;
       this.confirmModalReference = this.ngbModalService.open(content);

@@ -4,7 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { CupRatingGroupTab } from '@enums/cup-rating-group-tab.enum';
 import { CupCupMatchState } from '@enums/cup-cup-match-state.enum';
 import { Sequence } from '@enums/sequence.enum';
-import { CupCupMatchNew } from '@models/v2/cup-cup-match-new.model';
+import { CupCupMatch } from '@models/v2/cup/cup-cup-match.model';
 import { CupCupMatchSearch } from '@models/search/cup-cup-match-search.model';
 import { CupCupMatchNewService } from '@services/new/cup-cup-match-new.service';
 import { SettingsService } from '@services/settings.service';
@@ -21,7 +21,7 @@ export class CupCupMatchesGroupRatingComponent implements OnChanges {
    @Input() public tab: CupRatingGroupTab;
 
    public cupRatingGroupTab = CupRatingGroupTab;
-   public groupedCupCupMatches: CupCupMatchNew[][] = [];
+   public groupedCupCupMatches: CupCupMatch[][] = [];
    public isNil = isNil;
    public isLoading: boolean = false;
 

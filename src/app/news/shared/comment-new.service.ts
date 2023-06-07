@@ -2,7 +2,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
 import { environment } from '@env';
-import { CommentNew } from '@models/v2/comment-new.model';
+import { Comment } from '@models/v2/comment.model';
 import { PaginatedResponse } from '@models/paginated-response.model';
 import { CommentSearch } from '@models/search/comment-search.model';
 import { isNil } from 'lodash';
@@ -15,15 +15,15 @@ export class CommentNewService {
 
    constructor(private httpClient: HttpClient) {}
 
-   public createComment(comment: Partial<CommentNew>): Observable<CommentNew> {
-      return this.httpClient.post<{ comment: CommentNew }>(this.commentsUrl, comment).pipe(map(response => response.comment));
+   public createComment(comment: Partial<Comment>): Observable<Comment> {
+      return this.httpClient.post<{ comment: Comment }>(this.commentsUrl, comment).pipe(map(response => response.comment));
    }
 
    public deleteComment(id: number): Observable<void> {
       return this.httpClient.delete<void>(`${this.commentsUrl}/${id}`);
    }
 
-   public getComments(search: CommentSearch): Observable<PaginatedResponse<CommentNew>> {
+   public getComments(search: CommentSearch): Observable<PaginatedResponse<Comment>> {
       let params: HttpParams = new HttpParams();
 
       if (!isNil(search.trashed)) {
@@ -53,10 +53,10 @@ export class CommentNewService {
          });
       }
 
-      return this.httpClient.get<PaginatedResponse<CommentNew>>(this.commentsUrl, { params });
+      return this.httpClient.get<PaginatedResponse<Comment>>(this.commentsUrl, { params });
    }
 
-   public updateComment(id: number, comment: Partial<CommentNew>): Observable<CommentNew> {
-      return this.httpClient.put<{ comment: CommentNew }>(`${this.commentsUrl}/${id}`, comment).pipe(map(response => response.comment));
+   public updateComment(id: number, comment: Partial<Comment>): Observable<Comment> {
+      return this.httpClient.put<{ comment: Comment }>(`${this.commentsUrl}/${id}`, comment).pipe(map(response => response.comment));
    }
 }

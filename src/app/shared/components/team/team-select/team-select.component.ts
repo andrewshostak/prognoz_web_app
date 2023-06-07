@@ -2,7 +2,7 @@ import { Component, EventEmitter, Input, OnChanges, OnInit, SimpleChanges } from
 import { FormGroup } from '@angular/forms';
 
 import { Sequence } from '@enums/sequence.enum';
-import { TeamNew } from '@models/v2/team-new.model';
+import { Team } from '@models/v2/team/team.model';
 import { PaginatedResponse } from '@models/paginated-response.model';
 import { TeamSearch } from '@models/search/team-search.model';
 import { TeamNewService } from '@services/new/team-new.service';
@@ -17,15 +17,15 @@ import { catchError, debounceTime, distinctUntilChanged, filter, map, switchMap,
    styleUrls: ['./team-select.component.scss']
 })
 export class TeamSelectComponent implements OnChanges, OnInit {
-   @Input() public teamsList: TeamNew[] = [];
+   @Input() public teamsList: Team[] = [];
    @Input() public formGroup: FormGroup;
    @Input() public fControlName: string = 'team_id';
 
    public ngSelectTexts: { [key: string]: string };
-   public teams$: Observable<TeamNew[]>;
+   public teams$: Observable<Team[]>;
    public teamsLoading: boolean;
    public teamsInput$: Subject<string>;
-   public teamsList$: Subject<TeamNew[]>;
+   public teamsList$: Subject<Team[]>;
    public teamsTypeAhead: EventEmitter<string>;
 
    constructor(private teamService: TeamNewService) {}
@@ -39,7 +39,7 @@ export class TeamSelectComponent implements OnChanges, OnInit {
    public ngOnInit(): void {
       this.ngSelectTexts = SettingsService.textMessages.ngSelect;
       this.teamsInput$ = new Subject<string>();
-      this.teamsList$ = new Subject<TeamNew[]>();
+      this.teamsList$ = new Subject<Team[]>();
       this.teamsLoading = false;
       this.teamsTypeAhead = new EventEmitter<string>();
       this.enableTypeAheadSearch();
@@ -66,7 +66,7 @@ export class TeamSelectComponent implements OnChanges, OnInit {
                return this.teamService.getTeams(search).pipe(
                   catchError(() => of([])),
                   tap(() => (this.teamsLoading = false)),
-                  map((response: PaginatedResponse<TeamNew>) => response.data)
+                  map((response: PaginatedResponse<Team>) => response.data)
                );
             })
          )

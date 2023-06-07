@@ -3,7 +3,7 @@ import { ActivatedRoute, Params } from '@angular/router';
 
 import { Sequence } from '@enums/sequence.enum';
 import { MatchState } from '@enums/match-state.enum';
-import { TeamMatchNew } from '@models/v2/team-match-new.model';
+import { TeamMatch } from '@models/v2/team/team-match.model';
 import { OpenedModal } from '@models/opened-modal.model';
 import { Pagination } from '@models/pagination.model';
 import { TeamMatchSearch } from '@models/search/team-match-search.model';
@@ -24,8 +24,8 @@ export class TeamMatchesTableComponent implements OnDestroy, OnInit {
    public activatedRouteSubscription: Subscription;
    public clubsLogosPath: string;
    public matchStates = MatchState;
-   public openedModal: OpenedModal<TeamMatchNew>;
-   public teamMatches: TeamMatchNew[];
+   public openedModal: OpenedModal<TeamMatch>;
+   public teamMatches: TeamMatch[];
    public paginationData: Pagination;
 
    constructor(
@@ -79,7 +79,7 @@ export class TeamMatchesTableComponent implements OnDestroy, OnInit {
       });
    }
 
-   public openConfirmModal(content: NgbModalRef | HTMLElement, data: TeamMatchNew, submitted: (event) => void): void {
+   public openConfirmModal(content: NgbModalRef | HTMLElement, data: TeamMatch, submitted: (event) => void): void {
       const reference = this.ngbModalService.open(content, { centered: true });
       this.openedModal = { reference, data, submitted: () => submitted.call(this) };
    }

@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 
-import { ChampionshipMatchNew } from '@models/v2/championship-match-new.model';
+import { ChampionshipMatch } from '@models/v2/championship/championship-match.model';
 
 @Component({
    selector: 'app-championship-results-table',
@@ -8,6 +8,6 @@ import { ChampionshipMatchNew } from '@models/v2/championship-match-new.model';
    templateUrl: './championship-results-table.component.html'
 })
 export class ChampionshipResultsTableComponent {
-   @Input() public results: ChampionshipMatchNew[];
+   @Input() public results: ChampionshipMatch[];
    @Input() public error: string;
 }

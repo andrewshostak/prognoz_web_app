@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit, TemplateRef } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 
-import { TeamNew } from '@models/v2/team-new.model';
+import { Team } from '@models/v2/team/team.model';
 import { OpenedModal } from '@models/opened-modal.model';
 import { Pagination } from '@models/pagination.model';
 import { TeamSearch } from '@models/search/team-search.model';
@@ -20,9 +20,9 @@ import { Subscription } from 'rxjs';
 })
 export class TeamTeamsTableComponent implements OnDestroy, OnInit {
    public activatedRouteSubscription: Subscription;
-   public openedModal: OpenedModal<TeamNew>;
+   public openedModal: OpenedModal<Team>;
    public paginationData: Pagination;
-   public teams: TeamNew[];
+   public teams: Team[];
 
    constructor(
       private activatedRoute: ActivatedRoute,
@@ -68,7 +68,7 @@ export class TeamTeamsTableComponent implements OnDestroy, OnInit {
       });
    }
 
-   public openConfirmModal(content: NgbModalRef | TemplateRef<any>, data: TeamNew, submitted: (event) => void): void {
+   public openConfirmModal(content: NgbModalRef | TemplateRef<any>, data: Team, submitted: (event) => void): void {
       const reference = this.ngbModalService.open(content, { centered: true });
       this.openedModal = { reference, data, submitted: () => submitted.call(this) };
    }

@@ -6,9 +6,9 @@ import { CupStageType } from '@enums/cup-stage-type.enum';
 import { CompetitionState } from '@enums/competition-state.enum';
 import { Sequence } from '@enums/sequence.enum';
 import { Tournament } from '@enums/tournament.enum';
-import { CompetitionNew } from '@models/v2/competition-new.model';
-import { CupCupMatchNew } from '@models/v2/cup-cup-match-new.model';
-import { CupStageNew } from '@models/v2/cup-stage-new.model';
+import { Competition } from '@models/v2/competition.model';
+import { CupCupMatch } from '@models/v2/cup/cup-cup-match.model';
+import { CupStage } from '@models/v2/cup/cup-stage.model';
 import { PaginatedResponse } from '@models/paginated-response.model';
 import { CompetitionSearch } from '@models/search/competition-search.model';
 import { CupCupMatchSearch } from '@models/search/cup-cup-match-search.model';
@@ -29,12 +29,12 @@ import { filter, first, mergeMap, tap } from 'rxjs/operators';
    styleUrls: ['./cup-cup-matches.component.scss']
 })
 export class CupCupMatchesComponent implements OnInit {
-   public competitions: CompetitionNew[] = [];
-   public cupCupMatches: CupCupMatchNew[] = [];
-   public cupCupMatchesOfFirstStage: CupCupMatchNew[] = [];
-   public cupStages: CupStageNew[] = [];
+   public competitions: Competition[] = [];
+   public cupCupMatches: CupCupMatch[] = [];
+   public cupCupMatchesOfFirstStage: CupCupMatch[] = [];
+   public cupStages: CupStage[] = [];
    public selectedCompetitionId: number = null;
-   public selectedCupStage: CupStageNew = null;
+   public selectedCupStage: CupStage = null;
    public showCupStageSelect: boolean = false;
    public cupStageTypes = CupStageType;
 
@@ -48,20 +48,20 @@ export class CupCupMatchesComponent implements OnInit {
       private titleService: TitleService
    ) {}
 
-   public clickOnCupStageSelectButton(event: { cupStages: CupStageNew[]; selected: CupStageNew }): void {
+   public clickOnCupStageSelectButton(event: { cupStages: CupStage[]; selected: CupStage }): void {
       this.cupStages = event.cupStages;
       this.selectedCompetitionId = event.selected.competition_id;
       this.router.navigate(['/cup', 'cup-matches', { cup_stage_id: event.selected.id }]);
    }
 
-   public clickOnCompetitionButton(competition: CompetitionNew): void {
+   public clickOnCompetitionButton(competition: Competition): void {
       if (this.selectedCompetitionId === competition.id) {
          return;
       }
 
       this.getCupStagesObservable(competition.id)
          .pipe(first())
-         .subscribe((response: PaginatedResponse<CupStageNew>) => {
+         .subscribe((response: PaginatedResponse<CupStage>) => {
             this.cupStages = response.data;
             this.navigateToCupStage(this.cupStages);
          });
@@ -78,15 +78,15 @@ export class CupCupMatchesComponent implements OnInit {
       this.showCupStageSelect = !this.showCupStageSelect;
    }
 
-   private findPreviousCupStage(cupStages: CupStageNew[], selectedCupStage: CupStageNew): CupStageNew {
-      return findLast(cupStages, (cupStage: CupStageNew) => {
+   private findPreviousCupStage(cupStages: CupStage[], selectedCupStage: CupStage): CupStage {
+      return findLast(cupStages, (cupStage: CupStage) => {
          return (
             cupStage.round === 1 && cupStage.cup_stage_type_id === selectedCupStage.cup_stage_type_id && cupStage.id < selectedCupStage.id
          );
       });
    }
 
-   private getCompetitionIdForDownloadingStages(competitions: CompetitionNew[], selectedCompetitionId: number): number {
+   private getCompetitionIdForDownloadingStages(competitions: Competition[], selectedCompetitionId: number): number {
       if (!competitions.length && !selectedCompetitionId) {
          return null;
       }
@@ -99,7 +99,7 @@ export class CupCupMatchesComponent implements OnInit {
       return ids.includes(selectedCompetitionId) ? selectedCompetitionId : competitions[0].id;
    }
 
-   private getActiveCompetitions(): Observable<PaginatedResponse<CompetitionNew>> {
+   private getActiveCompetitions(): Observable<PaginatedResponse<Competition>> {
       const search: CompetitionSearch = {
          limit: SettingsService.maxLimitValues.competitions,
          page: 1,
@@ -109,13 +109,13 @@ export class CupCupMatchesComponent implements OnInit {
       return this.competitionService.getCompetitions(search);
    }
 
-   private getCompetitionsObservable(): Observable<PaginatedResponse<CompetitionNew>> {
+   private getCompetitionsObservable(): Observable<PaginatedResponse<Competition>> {
       return this.getActiveCompetitions().pipe(
          mergeMap(response => iif(() => !!response.total, of(response), this.getEndedCompetitions()))
       );
    }
 
-   private getCupCupMatchesObservable(cupStageId: number, includeRelations: boolean): Observable<PaginatedResponse<CupCupMatchNew>> {
+   private getCupCupMatchesObservable(cupStageId: number, includeRelations: boolean): Observable<PaginatedResponse<CupCupMatch>> {
       const search: CupCupMatchSearch = {
          page: 1,
          cupStageId,
@@ -126,7 +126,7 @@ export class CupCupMatchesComponent implements OnInit {
       return this.cupCupMatchService.getCupCupMatches(search);
    }
 
-   private getCupStagesObservable(competitionId: number): Observable<PaginatedResponse<CupStageNew>> {
+   private getCupStagesObservable(competitionId: number): Observable<PaginatedResponse<CupStage>> {
       const search: CupStageSearch = {
          orderBy: 'id',
          sequence: Sequence.Ascending,
@@ -137,7 +137,7 @@ export class CupCupMatchesComponent implements OnInit {
       return this.cupStageService.getCupStages(search);
    }
 
-   private getEndedCompetitions(): Observable<PaginatedResponse<CompetitionNew>> {
+   private getEndedCompetitions(): Observable<PaginatedResponse<Competition>> {
       const search: CompetitionSearch = {
          limit: 3,
          orderBy: 'id',
@@ -149,11 +149,11 @@ export class CupCupMatchesComponent implements OnInit {
       return this.competitionService.getCompetitions(search);
    }
 
-   private getSiblingCupStagesObservable(cupStageId: number): Observable<PaginatedResponse<CupStageNew>> {
+   private getSiblingCupStagesObservable(cupStageId: number): Observable<PaginatedResponse<CupStage>> {
       return this.cupStageService.getCupStage(cupStageId).pipe(mergeMap(response => this.getCupStagesObservable(response.competition_id)));
    }
 
-   private hasPreviousCupStage(cupStage: CupStageNew): boolean {
+   private hasPreviousCupStage(cupStage: CupStage): boolean {
       const twoMatchCupStages = [CupStageType.Qualification, CupStageType.PlayOff, CupStageType.PlayOff2];
       return twoMatchCupStages.includes(cupStage.cup_stage_type_id) && cupStage.round === 2;
    }
@@ -186,7 +186,7 @@ export class CupCupMatchesComponent implements OnInit {
          .subscribe();
    }
 
-   private navigateToCupStage(cupStages: CupStageNew[]): void {
+   private navigateToCupStage(cupStages: CupStage[]): void {
       if (!cupStages.length) {
          return;
       }
@@ -203,7 +203,7 @@ export class CupCupMatchesComponent implements OnInit {
          return;
       }
 
-      const ended = findLast(cupStages, cupStage => cupStage.state === CupStageState.Ended) as CupStageNew;
+      const ended = findLast(cupStages, cupStage => cupStage.state === CupStageState.Ended) as CupStage;
       if (ended) {
          this.router.navigate(['/cup', 'cup-matches', { cup_stage_id: ended.id }]);
          return;
@@ -212,7 +212,7 @@ export class CupCupMatchesComponent implements OnInit {
       this.router.navigate(['/cup', 'cup-matches', { cup_Stage_id: cupStages[0].id }]);
    }
 
-   private setSelectedCompetitionId(response: PaginatedResponse<CupStageNew>): void {
+   private setSelectedCompetitionId(response: PaginatedResponse<CupStage>): void {
       const competitionId = get(response, 'data[0].competition_id');
       if (!competitionId) {
          return;
@@ -230,14 +230,14 @@ export class CupCupMatchesComponent implements OnInit {
          if (!found) {
             this.getSiblingCupStagesObservable(params.cup_stage_id)
                .pipe(first())
-               .subscribe((response: PaginatedResponse<CupStageNew>) => {
+               .subscribe((response: PaginatedResponse<CupStage>) => {
                   this.cupStages = response.data;
                   this.setSelectedCompetitionId(response);
                   this.selectedCupStage = find(this.cupStages, { id: parseInt(params.cup_stage_id, 10) });
                   this.updateFirstStageCupCupMatches();
                });
          } else {
-            this.selectedCupStage = found as CupStageNew;
+            this.selectedCupStage = found as CupStage;
             this.updateFirstStageCupCupMatches();
          }
 

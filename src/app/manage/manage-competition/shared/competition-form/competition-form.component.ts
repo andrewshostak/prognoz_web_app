@@ -4,10 +4,10 @@ import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/fo
 
 import { CompetitionState } from '@enums/competition-state.enum';
 import { SeasonState } from '@enums/season-state.enum';
-import { CompetitionNew } from '@models/v2/competition-new.model';
-import { SeasonNew } from '@models/v2/season-new.model';
+import { Competition } from '@models/v2/competition.model';
+import { Season } from '@models/v2/season.model';
 import { SeasonSearch } from '@models/search/season-search.model';
-import { TournamentNew } from '@models/v2/tournament-new.model';
+import { Tournament } from '@models/v2/tournament.model';
 import { FormValidatorService } from '@services/form-validator.service';
 import { CompetitionNewService } from '@services/new/competition-new.service';
 import { SeasonNewService } from '@services/new/season-new.service';
@@ -22,11 +22,11 @@ import { NotificationsService } from 'angular2-notifications';
    styleUrls: ['./competition-form.component.scss']
 })
 export class CompetitionFormComponent implements OnChanges, OnInit {
-   @Input() public competition: CompetitionNew;
+   @Input() public competition: Competition;
 
    public competitionForm: FormGroup;
-   public seasons: SeasonNew[];
-   public tournaments: TournamentNew[];
+   public seasons: Season[];
+   public tournaments: Tournament[];
    competitionStates = CompetitionState;
 
    constructor(
@@ -38,7 +38,7 @@ export class CompetitionFormComponent implements OnChanges, OnInit {
       private formValidatorService: FormValidatorService
    ) {}
 
-   public createCompetition(competition: Partial<CompetitionNew>): void {
+   public createCompetition(competition: Partial<Competition>): void {
       this.competitionService.createCompetition(competition).subscribe(response => {
          this.notificationsService.success('Успішно', `Змагання ${response.title} створено`);
          this.location.back();
@@ -77,13 +77,13 @@ export class CompetitionFormComponent implements OnChanges, OnInit {
 
    public onSubmit(): void {
       if (this.competitionForm.valid) {
-         const competition: Partial<CompetitionNew> = { ...this.competitionForm.value };
+         const competition: Partial<Competition> = { ...this.competitionForm.value };
          competition.config = JSON.parse(this.competitionForm.get('config').value);
          this.competition ? this.updateCompetition(competition) : this.createCompetition(competition);
       }
    }
 
-   public updateCompetition(competition: Partial<CompetitionNew>): void {
+   public updateCompetition(competition: Partial<Competition>): void {
       this.competitionService.updateCompetition(this.competition.id, competition).subscribe(response => {
          this.notificationsService.success('Успішно', `Змагання ${response.title} змінено`);
          this.location.back();

@@ -5,13 +5,13 @@ import { AbstractControl, FormArray, FormControl, FormGroup, Validators } from '
 import { CupStageState } from '@enums/cup-stage-state.enum';
 import { Tournament } from '@enums/tournament.enum';
 import { CompetitionState } from '@enums/competition-state.enum';
-import { CompetitionNew } from '@models/v2/competition-new.model';
-import { CupMatchNew } from '@models/v2/cup-match-new.model';
+import { Competition } from '@models/v2/competition.model';
+import { CupMatch } from '@models/v2/cup/cup-match.model';
 import { CupMatchNewService } from '@services/new/cup-match-new.service';
 import { CompetitionNewService } from '@services/new/competition-new.service';
 import { CompetitionSearch } from '@models/search/competition-search.model';
-import { CupStageNew } from '@models/v2/cup-stage-new.model';
-import { CupStageTypeNew } from '@models/v2/cup-stage-type-new.model';
+import { CupStage } from '@models/v2/cup/cup-stage.model';
+import { CupStageType } from '@models/v2/cup/cup-stage-type.model';
 import { CupStageTypeNewService } from '@services/new/cup-stage-type-new.service';
 import { CupStageNewService } from '@services/new/cup-stage-new.service';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
@@ -39,12 +39,12 @@ export class CupStageFormComponent implements OnChanges, OnInit {
       private router: Router
    ) {}
 
-   @Input() cupStage: CupStageNew;
+   @Input() cupStage: CupStage;
 
-   competitions: CompetitionNew[] = [];
-   cupMatches: CupMatchNew[] = [];
+   competitions: Competition[] = [];
+   cupMatches: CupMatch[] = [];
    cupStageForm: FormGroup;
-   cupStageTypes: CupStageTypeNew[] = [];
+   cupStageTypes: CupStageType[] = [];
    cupStageStates = CupStageState;
    openedModal: OpenedModal<null>;
 
@@ -147,8 +147,8 @@ export class CupStageFormComponent implements OnChanges, OnInit {
       UtilsService.clearFormArray(this.cupMatchesFormArray);
    }
 
-   private createCupStage(cupStage: CupStageNew): void {
-      const cupStageNew: Partial<CupStageNew> = {
+   private createCupStage(cupStage: CupStage): void {
+      const cupStageNew: Partial<CupStage> = {
          competition_id: cupStage.competition_id,
          cup_stage_type_id: cupStage.cup_stage_type_id,
          round: cupStage.round,
@@ -197,8 +197,8 @@ export class CupStageFormComponent implements OnChanges, OnInit {
       this.cupStageTypeService.getCupStageTypes().subscribe(response => (this.cupStageTypes = response.data));
    }
 
-   private updateCupStage(cupStage: CupStageNew): void {
-      const cupStageNew: Partial<CupStageNew> = {
+   private updateCupStage(cupStage: CupStage): void {
+      const cupStageNew: Partial<CupStage> = {
          competition_id: cupStage.competition_id,
          cup_stage_type_id: cupStage.cup_stage_type_id,
          round: cupStage.round,

@@ -2,9 +2,9 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 
-import { CommentNew } from '@models/v2/comment-new.model';
-import { GuestbookMessageNew } from '@models/v2/guestbook-message-new.model';
-import { UserNew } from '@models/v2/user-new.model';
+import { Comment } from '@models/v2/comment.model';
+import { GuestbookMessage } from '@models/v2/guestbook-message.model';
+import { User } from '@models/v2/user.model';
 
 @Component({
    selector: 'app-user-message',
@@ -12,11 +12,11 @@ import { UserNew } from '@models/v2/user-new.model';
    styleUrls: ['./user-message.component.scss']
 })
 export class UserMessageComponent {
-   @Input() message: GuestbookMessageNew | CommentNew;
-   @Input() authenticatedUser: UserNew;
+   @Input() message: GuestbookMessage | Comment;
+   @Input() authenticatedUser: User;
    @Input() permissionForDeleting: string;
    @Output() onDeleteButtonClick = new EventEmitter<number>();
-   @Output() onUpdateButtonClick = new EventEmitter<GuestbookMessageNew | CommentNew>();
+   @Output() onUpdateButtonClick = new EventEmitter<GuestbookMessage | Comment>();
 
    public messageEditForm: FormGroup = new FormGroup({
       body: new FormControl(null, [Validators.required, Validators.minLength(10), Validators.maxLength(1000)])

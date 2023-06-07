@@ -2,10 +2,10 @@ import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChange
 
 import { CompetitionState } from '@enums/competition-state.enum';
 import { Device } from '@models/device.model';
-import { CompetitionNew } from '@models/v2/competition-new.model';
-import { TeamNew } from '@models/v2/team-new.model';
-import { TeamParticipantNew } from '@models/v2/team-participant-new.model';
-import { UserNew } from '@models/v2/user-new.model';
+import { Competition } from '@models/v2/competition.model';
+import { Team } from '@models/v2/team/team.model';
+import { TeamParticipant } from '@models/v2/team/team-participant.model';
+import { User } from '@models/v2/user.model';
 import { OpenedModal } from '@models/opened-modal.model';
 import { TeamParticipantSearch } from '@models/search/team-participant-search.model';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
@@ -24,19 +24,19 @@ import { catchError, mergeMap } from 'rxjs/operators';
    styleUrls: ['./team-and-participants.component.scss']
 })
 export class TeamAndParticipantsComponent implements OnInit, OnChanges {
-   @Input() public team: TeamNew;
-   @Input() public competition: CompetitionNew;
-   @Input() public allUserApplications: TeamParticipantNew[];
+   @Input() public team: Team;
+   @Input() public competition: Competition;
+   @Input() public allUserApplications: TeamParticipant[];
 
    @Output() public teamParticipantCreated = new EventEmitter();
 
    public competitionStates = CompetitionState;
    public isExpanded: boolean;
-   public openedModal: OpenedModal<{ message: string; teamParticipant: TeamParticipantNew }>;
+   public openedModal: OpenedModal<{ message: string; teamParticipant: TeamParticipant }>;
    public showCaptainButtons: boolean;
    public showJoinButton: boolean;
-   public teamParticipants: TeamParticipantNew[];
-   public user: UserNew;
+   public teamParticipants: TeamParticipant[];
+   public user: User;
 
    constructor(
       private authService: AuthNewService,
@@ -47,7 +47,7 @@ export class TeamAndParticipantsComponent implements OnInit, OnChanges {
    ) {}
 
    public confirmTeamParticipant(): void {
-      const teamParticipant: TeamParticipantNew = { ...this.openedModal.data.teamParticipant, confirmed: true };
+      const teamParticipant: TeamParticipant = { ...this.openedModal.data.teamParticipant, confirmed: true };
       const notificationMessage = `Заявку ${this.openedModal.data.teamParticipant.user.name} в команду ${this.team.name} прийнято`;
       this.updateTeamParticipant(teamParticipant, notificationMessage);
    }
@@ -58,7 +58,7 @@ export class TeamAndParticipantsComponent implements OnInit, OnChanges {
          competition_id: this.competition.id,
          captain: false,
          team_id: this.team.id
-      } as TeamParticipantNew;
+      } as TeamParticipant;
       from(this.deviceService.getDevice())
          .pipe(
             catchError(() => of(DeviceService.emptyDevice)),
@@ -104,7 +104,7 @@ export class TeamAndParticipantsComponent implements OnInit, OnChanges {
 
    public openConfirmModal(
       content: NgbModalRef | TemplateRef<any>,
-      data: { message: string; teamParticipant: TeamParticipantNew },
+      data: { message: string; teamParticipant: TeamParticipant },
       submitted: (event) => void
    ): void {
       const reference = this.ngbModalService.open(content, { centered: true });
@@ -112,7 +112,7 @@ export class TeamAndParticipantsComponent implements OnInit, OnChanges {
    }
 
    public refuseTeamParticipant(): void {
-      const teamParticipant: TeamParticipantNew = { ...this.openedModal.data.teamParticipant, refused: true };
+      const teamParticipant: TeamParticipant = { ...this.openedModal.data.teamParticipant, refused: true };
       const notificationMessage = `Заявку ${this.openedModal.data.teamParticipant.user.name} в команду ${this.team.name} відхилено`;
       this.updateTeamParticipant(teamParticipant, notificationMessage);
    }
@@ -124,7 +124,7 @@ export class TeamAndParticipantsComponent implements OnInit, OnChanges {
       }
    }
 
-   private getShowCaptainButtons(team: TeamNew, competition: CompetitionNew): boolean {
+   private getShowCaptainButtons(team: Team, competition: Competition): boolean {
       if (!this.showAnyButton(team, competition)) {
          return false;
       }
@@ -132,7 +132,7 @@ export class TeamAndParticipantsComponent implements OnInit, OnChanges {
       return this.user.id === team.captain_id;
    }
 
-   private getShowJoinButton(team: TeamNew, competition: CompetitionNew, allUserApplications: TeamParticipantNew[]): boolean {
+   private getShowJoinButton(team: Team, competition: Competition, allUserApplications: TeamParticipant[]): boolean {
       if (!this.showAnyButton(team, competition)) {
          return false;
       }
@@ -155,7 +155,7 @@ export class TeamAndParticipantsComponent implements OnInit, OnChanges {
       });
    }
 
-   private showAnyButton(team: TeamNew, competition: CompetitionNew): boolean {
+   private showAnyButton(team: Team, competition: Competition): boolean {
       if (!this.user) {
          return false;
       }
@@ -171,7 +171,7 @@ export class TeamAndParticipantsComponent implements OnInit, OnChanges {
       return true;
    }
 
-   private updateTeamParticipant(teamParticipant: TeamParticipantNew, notificationMessage: string): void {
+   private updateTeamParticipant(teamParticipant: TeamParticipant, notificationMessage: string): void {
       const participant = pick(teamParticipant, ['team_id', 'user_id', 'competition_id', 'captain', 'confirmed', 'refused', 'ended']);
       this.teamParticipantService.updateTeamParticipant(teamParticipant.id, participant).subscribe(
          response => {

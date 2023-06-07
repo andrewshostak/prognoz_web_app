@@ -2,7 +2,7 @@ import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
 import { environment } from '@env';
-import { TeamParticipantNew } from '@models/v2/team-participant-new.model';
+import { TeamParticipant } from '@models/v2/team/team-participant.model';
 import { PaginatedResponse } from '@models/paginated-response.model';
 import { TeamParticipantSearch } from '@models/search/team-participant-search.model';
 import { isNil } from 'lodash';
@@ -16,19 +16,19 @@ export class TeamParticipantNewService {
    constructor(private httpClient: HttpClient) {}
 
    public createTeamParticipant(
-      teamParticipant: Partial<TeamParticipantNew>,
+      teamParticipant: Partial<TeamParticipant>,
       deviceId?: string,
       deviceInfo?: { [key: string]: any }
-   ): Observable<TeamParticipantNew> {
+   ): Observable<TeamParticipant> {
       if (deviceId && deviceInfo) {
          const httpOptions = { headers: new HttpHeaders({ 'x-device-id': deviceId }) };
          return this.httpClient
-            .post<{ team_participant: TeamParticipantNew }>(this.teamParticipantsUrl, { ...teamParticipant, deviceInfo }, httpOptions)
+            .post<{ team_participant: TeamParticipant }>(this.teamParticipantsUrl, { ...teamParticipant, deviceInfo }, httpOptions)
             .pipe(map(response => response.team_participant));
       }
 
       return this.httpClient
-         .post<{ team_participant: TeamParticipantNew }>(this.teamParticipantsUrl, teamParticipant)
+         .post<{ team_participant: TeamParticipant }>(this.teamParticipantsUrl, teamParticipant)
          .pipe(map(response => response.team_participant));
    }
 
@@ -36,13 +36,13 @@ export class TeamParticipantNewService {
       return this.httpClient.delete<void>(`${this.teamParticipantsUrl}/${teamParticipantId}`);
    }
 
-   public getTeamParticipant(teamParticipantId: number): Observable<TeamParticipantNew> {
+   public getTeamParticipant(teamParticipantId: number): Observable<TeamParticipant> {
       return this.httpClient
-         .get<{ team_participant: TeamParticipantNew }>(`${this.teamParticipantsUrl}/${teamParticipantId}`)
+         .get<{ team_participant: TeamParticipant }>(`${this.teamParticipantsUrl}/${teamParticipantId}`)
          .pipe(map(response => response.team_participant));
    }
 
-   public getTeamParticipants(search: TeamParticipantSearch): Observable<PaginatedResponse<TeamParticipantNew>> {
+   public getTeamParticipants(search: TeamParticipantSearch): Observable<PaginatedResponse<TeamParticipant>> {
       let params: HttpParams = new HttpParams();
 
       if (search.captain) {
@@ -93,12 +93,12 @@ export class TeamParticipantNewService {
          params = params.set('order_by', search.orderBy);
          params = params.set('sequence', search.sequence);
       }
-      return this.httpClient.get<PaginatedResponse<TeamParticipantNew>>(this.teamParticipantsUrl, { params });
+      return this.httpClient.get<PaginatedResponse<TeamParticipant>>(this.teamParticipantsUrl, { params });
    }
 
-   public updateTeamParticipant(teamParticipantId: number, teamParticipant: Partial<TeamParticipantNew>): Observable<TeamParticipantNew> {
+   public updateTeamParticipant(teamParticipantId: number, teamParticipant: Partial<TeamParticipant>): Observable<TeamParticipant> {
       return this.httpClient
-         .put<{ team_participant: TeamParticipantNew }>(`${this.teamParticipantsUrl}/${teamParticipantId}`, teamParticipant)
+         .put<{ team_participant: TeamParticipant }>(`${this.teamParticipantsUrl}/${teamParticipantId}`, teamParticipant)
          .pipe(map(response => response.team_participant));
    }
 }

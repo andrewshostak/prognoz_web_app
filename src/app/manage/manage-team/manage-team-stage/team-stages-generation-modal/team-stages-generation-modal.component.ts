@@ -4,7 +4,7 @@ import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/fo
 import { CompetitionState } from '@enums/competition-state.enum';
 import { Sequence } from '@enums/sequence.enum';
 import { Tournament } from '@enums/tournament.enum';
-import { CompetitionNew } from '@models/v2/competition-new.model';
+import { Competition } from '@models/v2/competition.model';
 import { CompetitionSearch } from '@models/search/competition-search.model';
 import { CompetitionNewService } from '@services/new/competition-new.service';
 import { TeamStageNewService } from '@services/new/team-stage-new.service';
@@ -22,7 +22,7 @@ export class TeamStagesGenerationModalComponent implements OnInit {
    @Output() public successfullySubmitted = new EventEmitter<void>();
 
    public generationForm: FormGroup;
-   public competitions: CompetitionNew[] = [];
+   public competitions: Competition[] = [];
    public spinnerButton = false;
 
    constructor(

@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
 
 import { MatchState } from '@enums/match-state.enum';
-import { TeamMatchNew } from '@models/v2/team-match-new.model';
-import { TeamNew } from '@models/v2/team-new.model';
-import { TeamParticipantNew } from '@models/v2/team-participant-new.model';
-import { TeamPredictionNew } from '@models/v2/team-prediction-new.model';
+import { TeamMatch } from '@models/v2/team/team-match.model';
+import { Team } from '@models/v2/team/team.model';
+import { TeamParticipant } from '@models/v2/team/team-participant.model';
+import { TeamPrediction } from '@models/v2/team/team-prediction.model';
 import { DeviceService } from '@services/device.service';
 import { TeamNewService } from '@services/new/team-new.service';
 import { TeamParticipantNewService } from '@services/new/team-participant-new.service';
@@ -20,14 +20,14 @@ export class TeamCompetitionNewService {
    ) {}
 
    public updateTeamCreateAndUpdateCaptain(
-      team: TeamNew,
+      team: Team,
       competitionId: number,
       callbacks: { successful: () => any; error: () => any }
    ): void {
       this.makeTeamStatedRequest(team)
          .pipe(
             mergeMap(() => this.createTeamCaptainRequest(team, competitionId)),
-            mergeMap((teamParticipant: TeamParticipantNew) => this.makeTeamParticipantConfirmedRequest(teamParticipant))
+            mergeMap((teamParticipant: TeamParticipant) => this.makeTeamParticipantConfirmedRequest(teamParticipant))
          )
          .subscribe(
             () => callbacks.successful(),
@@ -35,7 +35,7 @@ export class TeamCompetitionNewService {
          );
    }
 
-   public static isTeamMatchGuessed(teamMatch: TeamMatchNew, prediction: TeamPredictionNew): boolean {
+   public static isTeamMatchGuessed(teamMatch: TeamMatch, prediction: TeamPrediction): boolean {
       if (teamMatch.match.state !== MatchState.Ended) {
          return false;
       }
@@ -47,7 +47,7 @@ export class TeamCompetitionNewService {
       return teamMatch.match.home === prediction.home && teamMatch.match.away === prediction.away;
    }
 
-   public static isTeamMatchBlocked(teamMatch: TeamMatchNew, prediction: TeamPredictionNew): boolean {
+   public static isTeamMatchBlocked(teamMatch: TeamMatch, prediction: TeamPrediction): boolean {
       if (teamMatch.match.state !== MatchState.Ended) {
          return false;
       }
@@ -59,13 +59,13 @@ export class TeamCompetitionNewService {
       return !!prediction.blocked_by;
    }
 
-   private createTeamCaptainRequest(team: TeamNew, competitionId: number): Observable<TeamParticipantNew> {
+   private createTeamCaptainRequest(team: Team, competitionId: number): Observable<TeamParticipant> {
       const teamParticipant = {
          captain: true,
          competition_id: competitionId,
          team_id: team.id,
          user_id: team.captain_id
-      } as TeamParticipantNew;
+      } as TeamParticipant;
       return from(this.deviceService.getDevice()).pipe(
          catchError(() => of(DeviceService.emptyDevice)),
          mergeMap((device: { fingerprint: string; info: { [key: string]: any } }) => {
@@ -74,12 +74,12 @@ export class TeamCompetitionNewService {
       );
    }
 
-   private makeTeamParticipantConfirmedRequest(teamParticipant: TeamParticipantNew): Observable<TeamParticipantNew> {
+   private makeTeamParticipantConfirmedRequest(teamParticipant: TeamParticipant): Observable<TeamParticipant> {
       teamParticipant.confirmed = true;
       return this.teamParticipantService.updateTeamParticipant(teamParticipant.id, teamParticipant);
    }
 
-   private makeTeamStatedRequest(team: TeamNew): Observable<TeamNew> {
+   private makeTeamStatedRequest(team: Team): Observable<Team> {
       return this.teamService.updateTeam(team.id, { ...team, stated: true, image: null });
    }
 }

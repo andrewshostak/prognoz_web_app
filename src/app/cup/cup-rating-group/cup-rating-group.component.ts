@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 
 import { CupRatingGroupTab } from '@enums/cup-rating-group-tab.enum';
-import { CompetitionNew } from '@models/v2/competition-new.model';
-import { CupRatingGroupNew } from '@models/v2/cup-rating-group-new.model';
+import { Competition } from '@models/v2/competition.model';
+import { CupRatingGroup } from '@models/v2/cup/cup-rating-group.model';
 import { CupRatingGroupSearch } from '@models/search/cup-rating-group-search.model';
 import { CompetitionNewService } from '@services/new/competition-new.service';
 import { CupGroupNumberNewService } from '@services/new/cup-group-number-new.service';
@@ -19,13 +19,13 @@ import { first, get, last } from 'lodash';
 })
 export class CupRatingGroupComponent implements OnInit {
    public competitionId: number;
-   public cupRatingGroup: CupRatingGroupNew[];
+   public cupRatingGroup: CupRatingGroup[];
    public getHomeCityInBrackets = UtilsService.getHomeCityInBrackets;
    public groupNumber: number;
    public groupNumbers: number[];
    public tab: CupRatingGroupTab = CupRatingGroupTab.Active;
 
-   private competition: CompetitionNew;
+   private competition: Competition;
 
    constructor(
       private activatedRoute: ActivatedRoute,

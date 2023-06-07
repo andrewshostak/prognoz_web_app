@@ -6,9 +6,9 @@ import { CompetitionState } from '@enums/competition-state.enum';
 import { Sequence } from '@enums/sequence.enum';
 import { TeamStageState } from '@enums/team-stage-state.enum';
 import { Tournament } from '@enums/tournament.enum';
-import { CompetitionNew } from '@models/v2/competition-new.model';
-import { SeasonNew } from '@models/v2/season-new.model';
-import { TeamStageNew } from '@models/v2/team-stage-new.model';
+import { Competition } from '@models/v2/competition.model';
+import { Season } from '@models/v2/season.model';
+import { TeamStage } from '@models/v2/team/team-stage.model';
 import { PaginatedResponse } from '@models/paginated-response.model';
 import { CompetitionSearch } from '@models/search/competition-search.model';
 import { SeasonSearch } from '@models/search/season-search.model';
@@ -30,15 +30,15 @@ import { filter, first, map, mergeMap, tap } from 'rxjs/operators';
 export class TeamStageSelectComponent implements OnInit {
    @Output() public teamStageSelected = new EventEmitter<{ teamStageId: number }>();
 
-   public competitions: CompetitionNew[] = [];
+   public competitions: Competition[] = [];
    public selectedCompetitionId: number = null;
-   public selectedTeamStage: TeamStageNew = null;
+   public selectedTeamStage: TeamStage = null;
    public showTeamStageSelect = false;
-   public teamStages: TeamStageNew[] = [];
+   public teamStages: TeamStage[] = [];
 
-   public competitionsBySeasonId: { [id: number]: CompetitionNew[] } = {};
-   public seasons: SeasonNew[] = [];
-   public teamStagesByCompetitionId: { [id: number]: TeamStageNew[] } = {};
+   public competitionsBySeasonId: { [id: number]: Competition[] } = {};
+   public seasons: Season[] = [];
+   public teamStagesByCompetitionId: { [id: number]: TeamStage[] } = {};
    public teamStageSelectForm: FormGroup;
 
    constructor(
@@ -64,14 +64,14 @@ export class TeamStageSelectComponent implements OnInit {
       return value ? parseInt(value, 10) : null;
    }
 
-   public clickOnCompetitionButton(competition: CompetitionNew): void {
+   public clickOnCompetitionButton(competition: Competition): void {
       if (this.selectedCompetitionId === competition.id) {
          return;
       }
 
       this.getTeamStagesObservable(competition.id)
          .pipe(first())
-         .subscribe((response: PaginatedResponse<TeamStageNew>) => {
+         .subscribe((response: PaginatedResponse<TeamStage>) => {
             this.teamStages = response.data;
             this.emitTeamStageSelect(this.teamStages);
          });
@@ -93,7 +93,7 @@ export class TeamStageSelectComponent implements OnInit {
       }
    }
 
-   private getActiveCompetitions(): Observable<PaginatedResponse<CompetitionNew>> {
+   private getActiveCompetitions(): Observable<PaginatedResponse<Competition>> {
       const search: CompetitionSearch = {
          limit: SettingsService.maxLimitValues.competitions,
          page: 1,
@@ -104,7 +104,7 @@ export class TeamStageSelectComponent implements OnInit {
    }
 
    // TODO: same as in cup-cup-matches
-   private getCompetitionIdForDownloadingStages(competitions: CompetitionNew[], selectedCompetitionId: number): number {
+   private getCompetitionIdForDownloadingStages(competitions: Competition[], selectedCompetitionId: number): number {
       if (!competitions.length && !selectedCompetitionId) {
          return null;
       }
@@ -129,13 +129,13 @@ export class TeamStageSelectComponent implements OnInit {
       });
    }
 
-   private getCompetitionsObservable(): Observable<PaginatedResponse<CompetitionNew>> {
+   private getCompetitionsObservable(): Observable<PaginatedResponse<Competition>> {
       return this.getActiveCompetitions().pipe(
          mergeMap(response => iif(() => !!response.total, of(response), this.getEndedCompetitions()))
       );
    }
 
-   private getEndedCompetitions(): Observable<PaginatedResponse<CompetitionNew>> {
+   private getEndedCompetitions(): Observable<PaginatedResponse<Competition>> {
       const search: CompetitionSearch = {
          limit: 3,
          orderBy: 'id',
@@ -147,7 +147,7 @@ export class TeamStageSelectComponent implements OnInit {
       return this.competitionService.getCompetitions(search);
    }
 
-   private getSiblingTeamStagesObservable(teamStageId: number): Observable<PaginatedResponse<TeamStageNew>> {
+   private getSiblingTeamStagesObservable(teamStageId: number): Observable<PaginatedResponse<TeamStage>> {
       return this.teamStageService
          .getTeamStage(teamStageId, [])
          .pipe(mergeMap(response => this.getTeamStagesObservable(response.competition_id)));
@@ -166,7 +166,7 @@ export class TeamStageSelectComponent implements OnInit {
       });
    }
 
-   private getTeamStagesObservable(competitionId: number): Observable<PaginatedResponse<TeamStageNew>> {
+   private getTeamStagesObservable(competitionId: number): Observable<PaginatedResponse<TeamStage>> {
       const search: TeamStageSearch = {
          orderBy: 'id',
          sequence: Sequence.Ascending,
@@ -185,7 +185,7 @@ export class TeamStageSelectComponent implements OnInit {
       });
    }
 
-   private getSeasonsObservable(): Observable<PaginatedResponse<SeasonNew>> {
+   private getSeasonsObservable(): Observable<PaginatedResponse<Season>> {
       const search: SeasonSearch = {
          limit: SettingsService.maxLimitValues.seasons,
          orderBy: 'id',
@@ -241,7 +241,7 @@ export class TeamStageSelectComponent implements OnInit {
          .subscribe();
    }
 
-   private emitTeamStageSelect(teamStages: TeamStageNew[]): void {
+   private emitTeamStageSelect(teamStages: TeamStage[]): void {
       if (!teamStages.length) {
          return;
       }
@@ -267,7 +267,7 @@ export class TeamStageSelectComponent implements OnInit {
       this.teamStageSelected.emit({ teamStageId: teamStages[0].id });
    }
 
-   private setSelectedCompetitionId(response: PaginatedResponse<TeamStageNew>): void {
+   private setSelectedCompetitionId(response: PaginatedResponse<TeamStage>): void {
       const competitionId = get(response, 'data[0].competition_id');
       if (!competitionId) {
          return;
@@ -301,13 +301,13 @@ export class TeamStageSelectComponent implements OnInit {
          if (!found) {
             this.getSiblingTeamStagesObservable(params.team_stage_id)
                .pipe(first())
-               .subscribe((response: PaginatedResponse<TeamStageNew>) => {
+               .subscribe((response: PaginatedResponse<TeamStage>) => {
                   this.teamStages = response.data;
                   this.setSelectedCompetitionId(response);
                   this.selectedTeamStage = find(this.teamStages, { id: parseInt(params.team_stage_id, 10) });
                });
          } else {
-            this.selectedTeamStage = found as TeamStageNew;
+            this.selectedTeamStage = found as TeamStage;
          }
       });
    }

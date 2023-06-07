@@ -1,7 +1,7 @@
 import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 
-import { TeamRatingUserNew } from '@models/v2/team-rating-user-new.model';
-import { UserNew } from '@models/v2/user-new.model';
+import { TeamRatingUser } from '@models/v2/team/team-rating-user.model';
+import { User } from '@models/v2/user.model';
 import { Dictionary, groupBy } from 'lodash';
 
 @Component({
@@ -9,10 +9,10 @@ import { Dictionary, groupBy } from 'lodash';
    templateUrl: './team-blocked-scorers-rating.component.html'
 })
 export class TeamBlockedScorersRatingComponent implements OnChanges {
-   @Input() blockedScorers: TeamRatingUserNew[];
-   @Input() authenticatedUser: UserNew;
+   @Input() blockedScorers: TeamRatingUser[];
+   @Input() authenticatedUser: User;
 
-   public groupedByBlockedScores: Dictionary<TeamRatingUserNew[]> = {};
+   public groupedByBlockedScores: Dictionary<TeamRatingUser[]> = {};
 
    ngOnChanges(changes: SimpleChanges) {
       if (changes.blockedScorers && changes.blockedScorers.currentValue) {

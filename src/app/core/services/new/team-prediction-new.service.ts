@@ -2,7 +2,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
 import { environment } from '@env';
-import { TeamPredictionNew } from '@models/v2/team-prediction-new.model';
+import { TeamPrediction } from '@models/v2/team/team-prediction.model';
 import { PaginatedResponse } from '@models/paginated-response.model';
 import { TeamPredictionSearch } from '@models/search/team-prediction-search.model';
 import { Observable } from 'rxjs';
@@ -14,15 +14,15 @@ export class TeamPredictionNewService {
 
    constructor(private httpClient: HttpClient) {}
 
-   updatePrediction(id: number, data: { home: number; away: number }): Observable<TeamPredictionNew> {
+   updatePrediction(id: number, data: { home: number; away: number }): Observable<TeamPrediction> {
       return this.httpClient
-         .put<{ team_prediction: TeamPredictionNew }>(`${this.teamPredictionsUrl}/${id}`, data)
+         .put<{ team_prediction: TeamPrediction }>(`${this.teamPredictionsUrl}/${id}`, data)
          .pipe(map(response => response.team_prediction));
    }
 
-   updateUser(data: { user_id?: number; team_id: number; team_match_id: number }): Observable<TeamPredictionNew> {
+   updateUser(data: { user_id?: number; team_id: number; team_match_id: number }): Observable<TeamPrediction> {
       return this.httpClient
-         .put<{ team_prediction: TeamPredictionNew }>(`${this.teamPredictionsUrl}/user`, data)
+         .put<{ team_prediction: TeamPrediction }>(`${this.teamPredictionsUrl}/user`, data)
          .pipe(map(response => response.team_prediction));
    }
 
@@ -30,7 +30,7 @@ export class TeamPredictionNewService {
       return this.httpClient.put<void>(`${this.teamPredictionsUrl}/block`, data);
    }
 
-   public getTeamPredictions(search: TeamPredictionSearch): Observable<PaginatedResponse<TeamPredictionNew>> {
+   public getTeamPredictions(search: TeamPredictionSearch): Observable<PaginatedResponse<TeamPrediction>> {
       let params: HttpParams = new HttpParams();
 
       if (search.limit) {
@@ -64,6 +64,6 @@ export class TeamPredictionNewService {
          });
       }
 
-      return this.httpClient.get<PaginatedResponse<TeamPredictionNew>>(this.teamPredictionsUrl, { params });
+      return this.httpClient.get<PaginatedResponse<TeamPrediction>>(this.teamPredictionsUrl, { params });
    }
 }

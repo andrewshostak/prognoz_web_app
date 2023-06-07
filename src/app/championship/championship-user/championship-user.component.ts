@@ -4,10 +4,10 @@ import { ActivatedRoute, Params } from '@angular/router';
 import { CompetitionState } from '@enums/competition-state.enum';
 import { Sequence } from '@enums/sequence.enum';
 import { Tournament } from '@enums/tournament.enum';
-import { ChampionshipRatingNew } from '@models/v2/championship-rating-new.model';
-import { ChampionshipPredictionNew } from '@models/v2/championship-prediction-new.model';
-import { CompetitionNew } from '@models/v2/competition-new.model';
-import { UserNew } from '@models/v2/user-new.model';
+import { ChampionshipRating } from '@models/v2/championship/championship-rating.model';
+import { ChampionshipPrediction } from '@models/v2/championship/championship-prediction.model';
+import { Competition } from '@models/v2/competition.model';
+import { User } from '@models/v2/user.model';
 import { PaginatedResponse } from '@models/paginated-response.model';
 import { ChampionshipPredictionSearch } from '@models/search/championship-prediction-search.model';
 import { CompetitionSearch } from '@models/search/competition-search.model';
@@ -28,9 +28,9 @@ import { ChampionshipRatingSearch } from '@models/search/championship-rating-sea
    templateUrl: './championship-user.component.html'
 })
 export class ChampionshipUserComponent implements OnInit {
-   public championshipPredictions: ChampionshipPredictionNew[];
-   public championshipRatingItem: ChampionshipRatingNew;
-   public user: UserNew;
+   public championshipPredictions: ChampionshipPrediction[];
+   public championshipRatingItem: ChampionshipRating;
+   public user: User;
 
    constructor(
       private activatedRoute: ActivatedRoute,
@@ -72,7 +72,7 @@ export class ChampionshipUserComponent implements OnInit {
          });
    }
 
-   private getActiveChampionshipCompetitionObservable(): Observable<PaginatedResponse<CompetitionNew>> {
+   private getActiveChampionshipCompetitionObservable(): Observable<PaginatedResponse<Competition>> {
       const search: CompetitionSearch = {
          limit: 1,
          page: 1,
@@ -83,7 +83,7 @@ export class ChampionshipUserComponent implements OnInit {
       return this.competitionService.getCompetitions(search);
    }
 
-   private getChampionshipPredictionsObservable(competitionId, userId: number): Observable<PaginatedResponse<ChampionshipPredictionNew>> {
+   private getChampionshipPredictionsObservable(competitionId, userId: number): Observable<PaginatedResponse<ChampionshipPrediction>> {
       const search: ChampionshipPredictionSearch = {
          competitionId,
          limit: SettingsService.maxLimitValues.championshipPredictions,
@@ -95,10 +95,7 @@ export class ChampionshipUserComponent implements OnInit {
       return this.championshipPredictionService.getPredictionsByUserId(search);
    }
 
-   private getChampionshipRatingItemObservable(
-      competitionId: number,
-      userId: number
-   ): Observable<PaginatedResponse<ChampionshipRatingNew>> {
+   private getChampionshipRatingItemObservable(competitionId: number, userId: number): Observable<PaginatedResponse<ChampionshipRating>> {
       const search: ChampionshipRatingSearch = { limit: 1, competitionId, page: 1, userId };
       return this.championshipRatingService.getChampionshipRating(search);
    }

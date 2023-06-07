@@ -5,8 +5,8 @@ import { ActivatedRoute } from '@angular/router';
 import { Sequence } from '@enums/sequence.enum';
 import { Tournament } from '@enums/tournament.enum';
 import { CompetitionState } from '@enums/competition-state.enum';
-import { CompetitionNew } from '@models/v2/competition-new.model';
-import { SeasonNew } from '@models/v2/season-new.model';
+import { Competition } from '@models/v2/competition.model';
+import { Season } from '@models/v2/season.model';
 import { PaginatedResponse } from '@models/paginated-response.model';
 import { CompetitionSearch } from '@models/search/competition-search.model';
 import { SeasonSearch } from '@models/search/season-search.model';
@@ -24,14 +24,14 @@ import { map, mergeMap, tap } from 'rxjs/operators';
 })
 export class CompetitionSelectNewComponent implements OnInit {
    // made for team competition. modify this component to use with cup/championship by adding @Input()
-   @Output() public competitionSelected = new EventEmitter<{ selected: CompetitionNew | Partial<CompetitionNew> }>();
+   @Output() public competitionSelected = new EventEmitter<{ selected: Competition | Partial<Competition> }>();
 
-   public competitions: CompetitionNew[] = [];
+   public competitions: Competition[] = [];
    public selectedCompetitionId: number = null;
 
-   public seasons: SeasonNew[] = [];
+   public seasons: Season[] = [];
    public showCompetitionSelect: boolean = false;
-   public competitionsBySeasonId: { [id: number]: CompetitionNew[] } = {};
+   public competitionsBySeasonId: { [id: number]: Competition[] } = {};
    public competitionSelectForm: FormGroup;
 
    constructor(
@@ -51,7 +51,7 @@ export class CompetitionSelectNewComponent implements OnInit {
       return value ? parseInt(value, 10) : null;
    }
 
-   public clickOnCompetitionButton(competition: CompetitionNew): void {
+   public clickOnCompetitionButton(competition: Competition): void {
       if (this.selectedCompetitionId === competition.id) {
          return;
       }
@@ -75,7 +75,7 @@ export class CompetitionSelectNewComponent implements OnInit {
       }
    }
 
-   private getActiveCompetitions(): Observable<PaginatedResponse<CompetitionNew>> {
+   private getActiveCompetitions(): Observable<PaginatedResponse<Competition>> {
       const search: CompetitionSearch = {
          limit: SettingsService.maxLimitValues.competitions,
          page: 1,
@@ -97,7 +97,7 @@ export class CompetitionSelectNewComponent implements OnInit {
       });
    }
 
-   private getCompetitionId(competitions: CompetitionNew[], selectedCompetitionId: number): number {
+   private getCompetitionId(competitions: Competition[], selectedCompetitionId: number): number {
       if (!competitions.length && !selectedCompetitionId) {
          return null;
       }
@@ -117,13 +117,13 @@ export class CompetitionSelectNewComponent implements OnInit {
       });
    }
 
-   private getCompetitionsObservable(): Observable<PaginatedResponse<CompetitionNew>> {
+   private getCompetitionsObservable(): Observable<PaginatedResponse<Competition>> {
       return this.getActiveCompetitions().pipe(
          mergeMap(response => iif(() => !!response.total, of(response), this.getEndedCompetitions()))
       );
    }
 
-   private getEndedCompetitions(): Observable<PaginatedResponse<CompetitionNew>> {
+   private getEndedCompetitions(): Observable<PaginatedResponse<Competition>> {
       const search: CompetitionSearch = {
          limit: 3,
          orderBy: 'id',
@@ -135,7 +135,7 @@ export class CompetitionSelectNewComponent implements OnInit {
       return this.competitionService.getCompetitions(search);
    }
 
-   private getSeasonsObservable(): Observable<PaginatedResponse<SeasonNew>> {
+   private getSeasonsObservable(): Observable<PaginatedResponse<Season>> {
       const search: SeasonSearch = {
          limit: SettingsService.maxLimitValues.seasons,
          orderBy: 'id',

@@ -2,8 +2,8 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
 import { environment } from '@env';
-import { CupRatingCalculatedNew } from '@models/v2/cup-rating-calculated-new.model';
-import { CupRatingGroupNew } from '@models/v2/cup-rating-group-new.model';
+import { CupRatingCalculated } from '@models/v2/cup/cup-rating-calculated.model';
+import { CupRatingGroup } from '@models/v2/cup/cup-rating-group.model';
 import { PaginatedResponse } from '@models/paginated-response.model';
 import { CupRatingGroupSearch } from '@models/search/cup-rating-group-search.model';
 import { CupRatingSearch } from '@models/search/cup-rating-search.model';
@@ -15,7 +15,7 @@ export class CupRatingNewService {
 
    constructor(private httpClient: HttpClient) {}
 
-   getCupRating(search: CupRatingSearch): Observable<PaginatedResponse<CupRatingCalculatedNew>> {
+   getCupRating(search: CupRatingSearch): Observable<PaginatedResponse<CupRatingCalculated>> {
       let params: HttpParams = new HttpParams();
 
       if (search.userId) {
@@ -28,13 +28,13 @@ export class CupRatingNewService {
          });
       }
 
-      return this.httpClient.get<PaginatedResponse<CupRatingCalculatedNew>>(this.cupRatingUrl, { params });
+      return this.httpClient.get<PaginatedResponse<CupRatingCalculated>>(this.cupRatingUrl, { params });
    }
 
-   getCupRatingGroup(search: CupRatingGroupSearch): Observable<PaginatedResponse<CupRatingGroupNew>> {
+   getCupRatingGroup(search: CupRatingGroupSearch): Observable<PaginatedResponse<CupRatingGroup>> {
       const params: HttpParams = new HttpParams({
          fromObject: { competition_id: search.competitionId.toString(), group_number: search.groupNumber.toString() }
       });
-      return this.httpClient.get<PaginatedResponse<CupRatingGroupNew>>(`${this.cupRatingUrl}-groups`, { params });
+      return this.httpClient.get<PaginatedResponse<CupRatingGroup>>(`${this.cupRatingUrl}-groups`, { params });
    }
 }

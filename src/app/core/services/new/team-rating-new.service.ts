@@ -2,7 +2,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
 import { environment } from '@env';
-import { TeamRatingNew } from '@models/v2/team-rating-new.model';
+import { TeamRating } from '@models/v2/team/team-rating.model';
 import { TeamRatingSearch } from '@models/search/team-rating-search.model';
 import { PaginatedResponse } from '@models/paginated-response.model';
 import { Observable } from 'rxjs';
@@ -13,7 +13,7 @@ export class TeamRatingNewService {
 
    constructor(private httpClient: HttpClient) {}
 
-   public getTeamRating(search: TeamRatingSearch): Observable<PaginatedResponse<TeamRatingNew>> {
+   public getTeamRating(search: TeamRatingSearch): Observable<PaginatedResponse<TeamRating>> {
       let params: HttpParams = new HttpParams();
 
       if (search.competitionId) {
@@ -39,6 +39,6 @@ export class TeamRatingNewService {
          });
       }
 
-      return this.httpClient.get<PaginatedResponse<TeamRatingNew>>(this.teamRatingUrl, { params });
+      return this.httpClient.get<PaginatedResponse<TeamRating>>(this.teamRatingUrl, { params });
    }
 }

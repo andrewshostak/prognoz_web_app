@@ -3,19 +3,19 @@ import { Component, OnInit } from '@angular/core';
 import { MatchState } from '@enums/match-state.enum';
 import { Sequence } from '@enums/sequence.enum';
 import { ChampionshipMatchSearch } from '@models/search/championship-match-search.model';
-import { User } from '@models/user.model';
+import { User } from '@models/v1/user.model';
 import { CurrentStateService } from '@services/current-state.service';
 import { ChampionshipMatchNewService } from '@services/new/championship-match-new.service';
 import { TitleService } from '@services/title.service';
 import { get } from 'lodash';
 import { iif, Observable, of } from 'rxjs';
 import { PaginatedResponse } from '@models/paginated-response.model';
-import { CompetitionNew } from '@models/v2/competition-new.model';
+import { Competition } from '@models/v2/competition.model';
 import { CompetitionSearch } from '@models/search/competition-search.model';
 import { CompetitionState } from '@enums/competition-state.enum';
 import { Tournament } from '@enums/tournament.enum';
 import { CompetitionNewService } from '@services/new/competition-new.service';
-import { ChampionshipRatingNew } from '@models/v2/championship-rating-new.model';
+import { ChampionshipRating } from '@models/v2/championship/championship-rating.model';
 import { ChampionshipRatingSearch } from '@models/search/championship-rating-search.model';
 import { SettingsService } from '@services/settings.service';
 import { ChampionshipRatingNewService } from '@services/new/championship-rating-new.service';
@@ -28,7 +28,7 @@ import { mergeMap } from 'rxjs/operators';
 })
 export class ChampionshipRatingComponent implements OnInit {
    public authenticatedUser: User;
-   public championshipRatingItems: ChampionshipRatingNew[];
+   public championshipRatingItems: ChampionshipRating[];
    public ratingUpdatedAt: string;
 
    constructor(
@@ -56,7 +56,7 @@ export class ChampionshipRatingComponent implements OnInit {
          .subscribe(response => (this.championshipRatingItems = response.data));
    }
 
-   private getActiveCompetitionObservable(): Observable<PaginatedResponse<CompetitionNew>> {
+   private getActiveCompetitionObservable(): Observable<PaginatedResponse<Competition>> {
       const search: CompetitionSearch = {
          limit: 1,
          states: [CompetitionState.Active],
@@ -66,7 +66,7 @@ export class ChampionshipRatingComponent implements OnInit {
       return this.competitionService.getCompetitions(search);
    }
 
-   private getChampionshipRatingObservable(competitionId: number): Observable<PaginatedResponse<ChampionshipRatingNew>> {
+   private getChampionshipRatingObservable(competitionId: number): Observable<PaginatedResponse<ChampionshipRating>> {
       const search: ChampionshipRatingSearch = {
          limit: SettingsService.maxLimitValues.championshipRating,
          relations: ['user.mainClub'],

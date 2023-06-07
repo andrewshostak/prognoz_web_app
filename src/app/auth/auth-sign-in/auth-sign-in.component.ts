@@ -3,7 +3,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
 import { Device } from '@models/device.model';
-import { UserNew } from '@models/v2/user-new.model';
+import { User } from '@models/v2/user.model';
 import { CurrentStateService } from '@services/current-state.service';
 import { DeviceService } from '@services/device.service';
 import { AuthNewService } from '@services/new/auth-new.service';
@@ -20,7 +20,7 @@ import { catchError, mergeMap } from 'rxjs/operators';
 export class AuthSignInComponent implements OnInit {
    public signInForm: FormGroup;
    public spinnerButton: boolean;
-   public user: UserNew;
+   public user: User;
 
    constructor(
       private authService: AuthNewService,
@@ -70,7 +70,7 @@ export class AuthSignInComponent implements OnInit {
          );
    }
 
-   private setAuthData(response: { token: string; user: UserNew }): void {
+   private setAuthData(response: { token: string; user: User }): void {
       this.authService.setUser(response.user);
       this.authService.setToken(response.token);
    }

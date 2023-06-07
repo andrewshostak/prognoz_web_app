@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 
 import { CupApplicationDefaultState } from '@enums/cup-application-default-state.enum';
 import { environment } from '@env';
-import { CupApplicationNew } from '@models/v2/cup-application-new.model';
+import { CupApplication } from '@models/v2/cup/cup-application.model';
 import { CupApplicationSearch } from '@models/search/cup-application-search.model';
 import { PaginatedResponse } from '@models/paginated-response.model';
 import { Observable } from 'rxjs';
@@ -16,19 +16,19 @@ export class CupApplicationNewService {
    constructor(private httpClient: HttpClient) {}
 
    createCupApplication(
-      cupApplication: Partial<CupApplicationNew>,
+      cupApplication: Partial<CupApplication>,
       deviceId?: string,
       deviceInfo?: { [key: string]: any }
-   ): Observable<CupApplicationNew> {
+   ): Observable<CupApplication> {
       if (deviceId && deviceInfo) {
          const httpOptions = { headers: new HttpHeaders({ 'x-device-id': deviceId }) };
          return this.httpClient
-            .post<{ cup_application: CupApplicationNew }>(this.cupApplicationsUrl, { ...cupApplication, deviceInfo }, httpOptions)
+            .post<{ cup_application: CupApplication }>(this.cupApplicationsUrl, { ...cupApplication, deviceInfo }, httpOptions)
             .pipe(map(response => response.cup_application));
       }
 
       return this.httpClient
-         .post<{ cup_application: CupApplicationNew }>(this.cupApplicationsUrl, cupApplication)
+         .post<{ cup_application: CupApplication }>(this.cupApplicationsUrl, cupApplication)
          .pipe(map(response => response.cup_application));
    }
 
@@ -36,7 +36,7 @@ export class CupApplicationNewService {
       return this.httpClient.delete<void>(`${this.cupApplicationsUrl}/${cupApplicationId}`);
    }
 
-   getCupApplications(search: CupApplicationSearch): Observable<PaginatedResponse<CupApplicationNew>> {
+   getCupApplications(search: CupApplicationSearch): Observable<PaginatedResponse<CupApplication>> {
       let params: HttpParams = new HttpParams();
 
       if (search.competitionId) {
@@ -62,12 +62,12 @@ export class CupApplicationNewService {
          });
       }
 
-      return this.httpClient.get<PaginatedResponse<CupApplicationNew>>(this.cupApplicationsUrl, { params });
+      return this.httpClient.get<PaginatedResponse<CupApplication>>(this.cupApplicationsUrl, { params });
    }
 
-   updateCupApplication(id: number, state: CupApplicationDefaultState): Observable<CupApplicationNew> {
+   updateCupApplication(id: number, state: CupApplicationDefaultState): Observable<CupApplication> {
       return this.httpClient
-         .patch<{ cup_application: CupApplicationNew }>(`${this.cupApplicationsUrl}/${id}`, { state })
+         .patch<{ cup_application: CupApplication }>(`${this.cupApplicationsUrl}/${id}`, { state })
          .pipe(map(response => response.cup_application));
    }
 }

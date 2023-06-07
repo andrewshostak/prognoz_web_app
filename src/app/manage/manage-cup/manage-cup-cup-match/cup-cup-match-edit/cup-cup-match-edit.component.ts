@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 
 import { CupCupMatchNewService } from '@services/new/cup-cup-match-new.service';
-import { CupCupMatchNew } from '@models/v2/cup-cup-match-new.model';
+import { CupCupMatch } from '@models/v2/cup/cup-cup-match.model';
 
 @Component({
    selector: 'app-cup-cup-match-edit',
@@ -12,7 +12,7 @@ import { CupCupMatchNew } from '@models/v2/cup-cup-match-new.model';
 export class CupCupMatchEditComponent implements OnInit {
    constructor(private activatedRoute: ActivatedRoute, private cupCupMatchService: CupCupMatchNewService) {}
 
-   cupCupMatch: CupCupMatchNew;
+   cupCupMatch: CupCupMatch;
 
    ngOnInit() {
       this.activatedRoute.params.forEach((params: Params) => {

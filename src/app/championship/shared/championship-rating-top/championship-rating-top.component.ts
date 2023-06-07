@@ -4,11 +4,11 @@ import { UtilsService } from '@services/utils.service';
 import { SettingsService } from '@services/settings.service';
 import { iif, Observable, of } from 'rxjs';
 import { PaginatedResponse } from '@models/paginated-response.model';
-import { ChampionshipRatingNew } from '@models/v2/championship-rating-new.model';
+import { ChampionshipRating } from '@models/v2/championship/championship-rating.model';
 import { ChampionshipRatingSearch } from '@models/search/championship-rating-search.model';
 import { Sequence } from '@enums/sequence.enum';
 import { ChampionshipRatingNewService } from '@services/new/championship-rating-new.service';
-import { CompetitionNew } from '@models/v2/competition-new.model';
+import { Competition } from '@models/v2/competition.model';
 import { CompetitionSearch } from '@models/search/competition-search.model';
 import { CompetitionState } from '@enums/competition-state.enum';
 import { Tournament } from '@enums/tournament.enum';
@@ -23,7 +23,7 @@ import { mergeMap } from 'rxjs/operators';
 export class ChampionshipRatingTopComponent implements OnInit {
    constructor(private championshipRatingService: ChampionshipRatingNewService, private competitionService: CompetitionNewService) {}
 
-   championshipRatingItems: ChampionshipRatingNew[];
+   championshipRatingItems: ChampionshipRating[];
    errorRating: string;
    userDefaultImage: string = SettingsService.userDefaultImage;
    usersLogosPath: string = SettingsService.usersLogosPath + '/';
@@ -47,7 +47,7 @@ export class ChampionshipRatingTopComponent implements OnInit {
          .subscribe(response => (this.championshipRatingItems = response.data));
    }
 
-   private getActiveCompetitionObservable(): Observable<PaginatedResponse<CompetitionNew>> {
+   private getActiveCompetitionObservable(): Observable<PaginatedResponse<Competition>> {
       const search: CompetitionSearch = {
          limit: 1,
          states: [CompetitionState.Active],
@@ -57,7 +57,7 @@ export class ChampionshipRatingTopComponent implements OnInit {
       return this.competitionService.getCompetitions(search);
    }
 
-   private getChampionshipRatingObservable(competitionId: number): Observable<PaginatedResponse<ChampionshipRatingNew>> {
+   private getChampionshipRatingObservable(competitionId: number): Observable<PaginatedResponse<ChampionshipRating>> {
       const search: ChampionshipRatingSearch = {
          limit: 5,
          relations: ['user.mainClub'],

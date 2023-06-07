@@ -5,7 +5,7 @@ import { ActivatedRoute, Params, Router } from '@angular/router';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { NotificationsService } from 'angular2-notifications';
 import { ClubNewService } from '@services/new/club-new.service';
-import { ClubNew } from '@models/v2/club-new.model';
+import { Club } from '@models/v2/club.model';
 import { Subscription } from 'rxjs';
 import { ClubSearch } from '@models/search/club-search.model';
 import { SettingsService } from '@services/settings.service';
@@ -31,8 +31,8 @@ export class ClubTableComponent implements OnDestroy, OnInit {
    ) {}
 
    public activatedRouteSubscription: Subscription;
-   public clubs: ClubNew[] = [];
-   public openedModal: OpenedModal<ClubNew>;
+   public clubs: Club[] = [];
+   public openedModal: OpenedModal<Club>;
    public paginationData: Pagination;
    public searchForm: FormGroup;
 
@@ -59,7 +59,7 @@ export class ClubTableComponent implements OnDestroy, OnInit {
       });
    }
 
-   public openConfirmModal(content: NgbModalRef | HTMLElement | TemplateRef<any>, data: ClubNew, submitted: (event) => void): void {
+   public openConfirmModal(content: NgbModalRef | HTMLElement | TemplateRef<any>, data: Club, submitted: (event) => void): void {
       const reference = this.ngbModalService.open(content, { centered: true });
       this.openedModal = { reference, data, submitted: () => submitted.call(this) };
    }

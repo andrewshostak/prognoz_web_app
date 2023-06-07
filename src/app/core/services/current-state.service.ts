@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 
-import { UserNew } from '@models/v2/user-new.model';
-import { User } from '@models/user.model';
+import { User } from '@models/v2/user.model';
+import { User as UserV1 } from '@models/v1/user.model';
 import { AuthNewService } from '@services/new/auth-new.service';
 import { PusherService } from '@services/pusher.service';
 import { Subject } from 'rxjs';
@@ -39,8 +39,8 @@ export class CurrentStateService {
    /**
     * @deprecated all components should use this.authService.getUser()
     */
-   public getUser(): User {
-      return this.authService.getUser() as User;
+   public getUser(): UserV1 {
+      return this.authService.getUser() as UserV1;
    }
 
    public initialize(): void {
@@ -53,7 +53,7 @@ export class CurrentStateService {
     * Method updates users list
     * @param {User} user
     */
-   public getOnlineUsers(user: UserNew): void {
+   public getOnlineUsers(user: User): void {
       if (user) {
          this.pusherInstance = this.pusherService.createInstance();
          const subscription = this.pusherService.subscribeToChannel(this.pusherInstance, 'presence-users');
@@ -87,7 +87,7 @@ export class CurrentStateService {
     * @param userId
     * @param userInfo
     */
-   private addOnlineUser(userId: string, userInfo: User): void {
+   private addOnlineUser(userId: string, userInfo: UserV1): void {
       this.onlineUsers.push({ id: parseInt(userId, 10), name: userInfo.name });
    }
 

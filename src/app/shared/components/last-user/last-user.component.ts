@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 import { Sequence } from '@enums/sequence.enum';
-import { UserNew } from '@models/v2/user-new.model';
+import { User } from '@models/v2/user.model';
 import { UserSearch } from '@models/search/user-search.model';
 import { UserNewService } from '@services/new/user-new.service';
 import { SettingsService } from '@services/settings.service';
@@ -13,7 +13,7 @@ import { UtilsService } from '@services/utils.service';
    styleUrls: ['./last-user.component.scss']
 })
 export class LastUserComponent implements OnInit {
-   public lastUser: UserNew;
+   public lastUser: User;
    public userDefaultImage = SettingsService.userDefaultImage;
    public usersLogosPath = SettingsService.usersLogosPath + '/';
    public homeCityInBrackets: string;

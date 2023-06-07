@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 
 import { Sequence } from '@enums/sequence.enum';
 import { environment } from '@env';
-import { CupCupMatchNew } from '@models/v2/cup-cup-match-new.model';
+import { CupCupMatch } from '@models/v2/cup/cup-cup-match.model';
 import { PaginatedResponse } from '@models/paginated-response.model';
 import { CupCupMatchSearch } from '@models/search/cup-cup-match-search.model';
 import { AuthNewService } from '@services/new/auth-new.service';
@@ -17,9 +17,9 @@ export class CupCupMatchNewService {
 
    constructor(private authService: AuthNewService, private httpClient: HttpClient) {}
 
-   createCupCupMatch(cupCupMatch: Partial<CupCupMatchNew>): Observable<CupCupMatchNew> {
+   createCupCupMatch(cupCupMatch: Partial<CupCupMatch>): Observable<CupCupMatch> {
       return this.httpClient
-         .post<{ cup_cup_match: CupCupMatchNew }>(this.cupCupMatchesUrl, cupCupMatch)
+         .post<{ cup_cup_match: CupCupMatch }>(this.cupCupMatchesUrl, cupCupMatch)
          .pipe(map(response => response.cup_cup_match));
    }
 
@@ -32,10 +32,10 @@ export class CupCupMatchNewService {
       return this.httpClient.delete<void>(`${this.cupCupMatchesUrl}/${cupCupMatchId}`);
    }
 
-   public groupCupCupMatches(cupCupMatches: CupCupMatchNew[]): CupCupMatchNew[][] {
+   public groupCupCupMatches(cupCupMatches: CupCupMatch[]): CupCupMatch[][] {
       const groupedCupCupMatches = Object.values(
-         groupBy<CupCupMatchNew>(cupCupMatches, 'group_number') as {
-            [groupNumber: number]: CupCupMatchNew[];
+         groupBy<CupCupMatch>(cupCupMatches, 'group_number') as {
+            [groupNumber: number]: CupCupMatch[];
          }
       );
 
@@ -44,7 +44,7 @@ export class CupCupMatchNewService {
          return groupedCupCupMatches;
       }
 
-      const userGroupIndex = groupedCupCupMatches.findIndex((ccMatches: CupCupMatchNew[]) =>
+      const userGroupIndex = groupedCupCupMatches.findIndex((ccMatches: CupCupMatch[]) =>
          ccMatches
             .map(cupCupMatch => [cupCupMatch.home_user_id, cupCupMatch.away_user_id])
             .flat()
@@ -62,10 +62,10 @@ export class CupCupMatchNewService {
       return groupedCupCupMatches;
    }
 
-   public groupCupCupMatchesByStage(cupCupMatches: CupCupMatchNew[], sequence: Sequence): CupCupMatchNew[][] {
+   public groupCupCupMatchesByStage(cupCupMatches: CupCupMatch[], sequence: Sequence): CupCupMatch[][] {
       return Object.values(
-         groupBy<CupCupMatchNew>(cupCupMatches, 'cup_stage_id') as {
-            [cupStageId: number]: CupCupMatchNew[];
+         groupBy<CupCupMatch>(cupCupMatches, 'cup_stage_id') as {
+            [cupStageId: number]: CupCupMatch[];
          }
       ).sort((a, b) => {
          return sequence === Sequence.Ascending
@@ -78,7 +78,7 @@ export class CupCupMatchNewService {
       });
    }
 
-   public sortCupCupMatches(cupCupMatches: CupCupMatchNew[]): CupCupMatchNew[] {
+   public sortCupCupMatches(cupCupMatches: CupCupMatch[]): CupCupMatch[] {
       const user = this.authService.getUser();
       if (!user) {
          return cupCupMatches.sort(this.sortByIdFunc);
@@ -87,14 +87,14 @@ export class CupCupMatchNewService {
       return this.sortCupCupMatchesByUserId(cupCupMatches, user.id);
    }
 
-   public getCupCupMatch(cupCupMatchId: number, relations: string[] = []): Observable<CupCupMatchNew> {
+   public getCupCupMatch(cupCupMatchId: number, relations: string[] = []): Observable<CupCupMatch> {
       const params = new HttpParams({ fromObject: { 'relations[]': relations } });
       return this.httpClient
-         .get<{ cup_cup_match: CupCupMatchNew }>(`${this.cupCupMatchesUrl}/${cupCupMatchId}`, { params })
+         .get<{ cup_cup_match: CupCupMatch }>(`${this.cupCupMatchesUrl}/${cupCupMatchId}`, { params })
          .pipe(map(response => response.cup_cup_match));
    }
 
-   public getCupCupMatches(search: CupCupMatchSearch): Observable<PaginatedResponse<CupCupMatchNew>> {
+   public getCupCupMatches(search: CupCupMatchSearch): Observable<PaginatedResponse<CupCupMatch>> {
       let params: HttpParams = new HttpParams({ fromObject: { 'relations[]': search.relations || [] } });
 
       if (search.limit) {
@@ -136,20 +136,20 @@ export class CupCupMatchNewService {
          });
       }
 
-      return this.httpClient.get<PaginatedResponse<CupCupMatchNew>>(this.cupCupMatchesUrl, { params });
+      return this.httpClient.get<PaginatedResponse<CupCupMatch>>(this.cupCupMatchesUrl, { params });
    }
 
-   updateCupCupMatch(id: number, cupCupMatch: Partial<CupCupMatchNew>): Observable<CupCupMatchNew> {
+   updateCupCupMatch(id: number, cupCupMatch: Partial<CupCupMatch>): Observable<CupCupMatch> {
       return this.httpClient
-         .put<{ cup_cup_match: CupCupMatchNew }>(`${this.cupCupMatchesUrl}/${id}`, cupCupMatch)
+         .put<{ cup_cup_match: CupCupMatch }>(`${this.cupCupMatchesUrl}/${id}`, cupCupMatch)
          .pipe(map(response => response.cup_cup_match));
    }
 
-   private sortByIdFunc(a: CupCupMatchNew, b: CupCupMatchNew): number {
+   private sortByIdFunc(a: CupCupMatch, b: CupCupMatch): number {
       return a.id < b.id ? -1 : 1;
    }
 
-   private sortCupCupMatchesByUserId(cupCupMatches: CupCupMatchNew[], userId: number): CupCupMatchNew[] {
+   private sortCupCupMatchesByUserId(cupCupMatches: CupCupMatch[], userId: number): CupCupMatch[] {
       return cupCupMatches.sort((a, b) => {
          if ([a.home_user_id, a.away_user_id].includes(userId)) {
             return -1;

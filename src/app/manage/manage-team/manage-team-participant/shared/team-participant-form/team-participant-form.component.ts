@@ -4,10 +4,10 @@ import { Router } from '@angular/router';
 
 import { CompetitionState } from '@enums/competition-state.enum';
 import { Tournament } from '@enums/tournament.enum';
-import { CompetitionNew } from '@models/v2/competition-new.model';
-import { TeamNew } from '@models/v2/team-new.model';
-import { TeamParticipantNew } from '@models/v2/team-participant-new.model';
-import { UserNew } from '@models/v2/user-new.model';
+import { Competition } from '@models/v2/competition.model';
+import { Team } from '@models/v2/team/team.model';
+import { TeamParticipant } from '@models/v2/team/team-participant.model';
+import { User } from '@models/v2/user.model';
 import { CompetitionSearch } from '@models/search/competition-search.model';
 import { CompetitionNewService } from '@services/new/competition-new.service';
 import { TeamNewService } from '@services/new/team-new.service';
@@ -24,12 +24,12 @@ import { uniqBy } from 'lodash';
    styleUrls: ['./team-participant-form.component.scss']
 })
 export class TeamParticipantFormComponent implements OnChanges, OnInit {
-   @Input() public teamParticipant: TeamParticipantNew;
+   @Input() public teamParticipant: TeamParticipant;
 
-   public competitions: CompetitionNew[];
-   public team: TeamNew;
+   public competitions: Competition[];
+   public team: Team;
    public teamParticipantForm: FormGroup;
-   public user: UserNew;
+   public user: User;
 
    constructor(
       private competitionService: CompetitionNewService,
@@ -81,7 +81,7 @@ export class TeamParticipantFormComponent implements OnChanges, OnInit {
       return UtilsService.showFormInvalidClass(abstractControl);
    }
 
-   private getCurrentCompetitionData(teamParticipant: TeamParticipantNew): void {
+   private getCurrentCompetitionData(teamParticipant: TeamParticipant): void {
       this.competitionService.getCompetition(teamParticipant.competition_id).subscribe(response => {
          const competitions = [...this.competitions, ...[response]];
          this.competitions = uniqBy(competitions, 'id');
@@ -110,14 +110,14 @@ export class TeamParticipantFormComponent implements OnChanges, OnInit {
       this.userService.getUser(userId).subscribe(response => (this.user = response));
    }
 
-   private createTeamParticipant(teamParticipant: Partial<TeamParticipantNew>): void {
+   private createTeamParticipant(teamParticipant: Partial<TeamParticipant>): void {
       this.teamParticipantService.createTeamParticipant(teamParticipant).subscribe(response => {
          this.notificationsService.success('Успішно', 'Заявку / Учасника створено');
          this.router.navigate(['/manage', 'team', 'participants', response.id, 'edit']);
       });
    }
 
-   private updateTeamParticipant(teamParticipant: Partial<TeamParticipantNew>): void {
+   private updateTeamParticipant(teamParticipant: Partial<TeamParticipant>): void {
       this.teamParticipantService.updateTeamParticipant(this.teamParticipant.id, teamParticipant).subscribe(() => {
          this.notificationsService.success('Успішно', 'Заявку / Учасника змінено');
       });

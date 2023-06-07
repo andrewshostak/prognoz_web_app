@@ -3,9 +3,9 @@ import { FormControl, FormGroup } from '@angular/forms';
 
 import { MatchState } from '@enums/match-state.enum';
 import { Sequence } from '@enums/sequence.enum';
-import { ChampionshipMatchNew } from '@models/v2/championship-match-new.model';
+import { ChampionshipMatch } from '@models/v2/championship/championship-match.model';
 import { ChampionshipMatchSearch } from '@models/search/championship-match-search.model';
-import { User } from '@models/user.model';
+import { User } from '@models/v1/user.model';
 import { ChampionshipPredictionNewService } from '@services/new/championship-prediction-new.service';
 import { ChampionshipService } from '@services/championship/championship.service';
 import { CurrentStateService } from '@services/current-state.service';
@@ -21,7 +21,7 @@ import { NotificationsService } from 'angular2-notifications';
 })
 export class ChampionshipPredictionsComponent implements OnInit {
    public authenticatedUser: User;
-   public championshipMatches: ChampionshipMatchNew[];
+   public championshipMatches: ChampionshipMatch[];
    public championshipPredictionsForm: FormGroup;
    public errorChampionshipMatches: string;
    public spinnerButton = false;
@@ -78,7 +78,7 @@ export class ChampionshipPredictionsComponent implements OnInit {
       );
    }
 
-   private updateForm(championshipMatches: ChampionshipMatchNew[], isAuthenticatedUser: boolean): void {
+   private updateForm(championshipMatches: ChampionshipMatch[], isAuthenticatedUser: boolean): void {
       this.championshipMatches = championshipMatches;
       if (isAuthenticatedUser) {
          this.championshipPredictionsForm = new FormGroup({});

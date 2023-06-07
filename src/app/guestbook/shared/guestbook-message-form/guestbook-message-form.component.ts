@@ -1,8 +1,8 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 
-import { GuestbookMessageNew } from '@models/v2/guestbook-message-new.model';
-import { UserNew } from '@models/v2/user-new.model';
+import { GuestbookMessage } from '@models/v2/guestbook-message.model';
+import { User } from '@models/v2/user.model';
 import { AuthNewService } from '@services/new/auth-new.service';
 import { NotificationsService } from 'angular2-notifications';
 import { GuestbookMessageNewService } from '@app/guestbook/shared/guestbook-message-new.service';
@@ -13,11 +13,11 @@ import { trim } from 'lodash';
    templateUrl: './guestbook-message-form.component.html'
 })
 export class GuestbookMessageFormComponent implements OnInit {
-   @Output() public guestbookMessageCreated = new EventEmitter<GuestbookMessageNew>();
+   @Output() public guestbookMessageCreated = new EventEmitter<GuestbookMessage>();
 
    public guestbookMessageForm: FormGroup;
    public spinnerButton = false;
-   public user: UserNew;
+   public user: User;
 
    constructor(
       private authService: AuthNewService,

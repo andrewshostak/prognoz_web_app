@@ -1,8 +1,8 @@
 import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 
-import { CupRatingCalculatedNew } from '@models/v2/cup-rating-calculated-new.model';
-import { UserNew } from '@models/v2/user-new.model';
-import { User } from '@models/user.model';
+import { CupRatingCalculated } from '@models/v2/cup/cup-rating-calculated.model';
+import { User } from '@models/v2/user.model';
+import { User as UserV1 } from '@models/v1/user.model';
 
 @Component({
    selector: 'app-cup-rating-table',
@@ -10,24 +10,24 @@ import { User } from '@models/user.model';
    styleUrls: ['./cup-rating-table.component.scss']
 })
 export class CupRatingTableComponent implements OnChanges {
-   @Input() public cupRating: CupRatingCalculatedNew[];
-   @Input() public authenticatedUser: User;
+   @Input() public cupRating: CupRatingCalculated[];
+   @Input() public authenticatedUser: UserV1;
 
    seasons: { [id: number]: { title: string; coefficient: number } } = {};
    cupRatingForTemplate: {
       season_points: { [seasonId: number]: number };
       points_calculated: number;
-      user: UserNew;
+      user: User;
       user_id: number;
    }[] = [];
 
    ngOnChanges(changes: SimpleChanges) {
       if (changes.cupRating && changes.cupRating.currentValue) {
-         this.prepareViewData(changes.cupRating.currentValue as CupRatingCalculatedNew[]);
+         this.prepareViewData(changes.cupRating.currentValue as CupRatingCalculated[]);
       }
    }
 
-   private prepareViewData(cupRatingCalculated: CupRatingCalculatedNew[]): void {
+   private prepareViewData(cupRatingCalculated: CupRatingCalculated[]): void {
       let maxSeasonsLength = 0;
       cupRatingCalculated.forEach(cupRatingCalculatedItem => {
          if (cupRatingCalculatedItem.rating_items.length > maxSeasonsLength) {

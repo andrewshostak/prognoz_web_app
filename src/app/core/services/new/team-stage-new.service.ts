@@ -2,10 +2,10 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
 import { environment } from '@env';
-import { TeamStageNew } from '@models/v2/team-stage-new.model';
+import { TeamStage } from '@models/v2/team/team-stage.model';
 import { PaginatedResponse } from '@models/paginated-response.model';
 import { TeamStageSearch } from '@models/search/team-stage-search.model';
-import { GenerateTeamStagesNew } from '@models/v2/generate-team-stages-new.model';
+import { GenerateTeamStages } from '@models/v2/team/generate-team-stages.model';
 import { map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 
@@ -15,26 +15,26 @@ export class TeamStageNewService {
 
    constructor(private httpClient: HttpClient) {}
 
-   public createTeamStage(teamStage: Partial<TeamStageNew>): Observable<TeamStageNew> {
-      return this.httpClient.post<{ team_stage: TeamStageNew }>(this.teamStagesUrl, teamStage).pipe(map(response => response.team_stage));
+   public createTeamStage(teamStage: Partial<TeamStage>): Observable<TeamStage> {
+      return this.httpClient.post<{ team_stage: TeamStage }>(this.teamStagesUrl, teamStage).pipe(map(response => response.team_stage));
    }
 
    public deleteTeamStage(teamStageId: number): Observable<void> {
       return this.httpClient.delete<void>(`${this.teamStagesUrl}/${teamStageId}`);
    }
 
-   public generateTeamStages(generationOptions: GenerateTeamStagesNew): Observable<number> {
+   public generateTeamStages(generationOptions: GenerateTeamStages): Observable<number> {
       return this.httpClient.post<number>(`${this.teamStagesUrl}/generate`, generationOptions);
    }
 
-   public getTeamStage(teamStageId: number, relations: string[] = []): Observable<TeamStageNew> {
+   public getTeamStage(teamStageId: number, relations: string[] = []): Observable<TeamStage> {
       const params = new HttpParams({ fromObject: { 'relations[]': relations } });
       return this.httpClient
-         .get<{ team_stage: TeamStageNew }>(`${this.teamStagesUrl}/${teamStageId}`, { params })
+         .get<{ team_stage: TeamStage }>(`${this.teamStagesUrl}/${teamStageId}`, { params })
          .pipe(map(response => response.team_stage));
    }
 
-   public getTeamStages(search: TeamStageSearch): Observable<PaginatedResponse<TeamStageNew>> {
+   public getTeamStages(search: TeamStageSearch): Observable<PaginatedResponse<TeamStage>> {
       let params: HttpParams = new HttpParams();
 
       if (search.limit) {
@@ -76,12 +76,12 @@ export class TeamStageNewService {
          });
       }
 
-      return this.httpClient.get<PaginatedResponse<TeamStageNew>>(this.teamStagesUrl, { params });
+      return this.httpClient.get<PaginatedResponse<TeamStage>>(this.teamStagesUrl, { params });
    }
 
-   public updateTeamStage(teamStageId: number, teamStage: Partial<TeamStageNew>): Observable<TeamStageNew> {
+   public updateTeamStage(teamStageId: number, teamStage: Partial<TeamStage>): Observable<TeamStage> {
       return this.httpClient
-         .put<{ team_stage: TeamStageNew }>(`${this.teamStagesUrl}/${teamStageId}`, teamStage)
+         .put<{ team_stage: TeamStage }>(`${this.teamStagesUrl}/${teamStageId}`, teamStage)
          .pipe(map(response => response.team_stage));
    }
 }

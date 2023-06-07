@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 
-import { TeamParticipantNew } from '@models/v2/team-participant-new.model';
+import { TeamParticipant } from '@models/v2/team/team-participant.model';
 import { OpenedModal } from '@models/opened-modal.model';
 import { Pagination } from '@models/pagination.model';
 import { TeamParticipantSearch } from '@models/search/team-participant-search.model';
@@ -22,9 +22,9 @@ export class TeamParticipantsTableComponent implements OnDestroy, OnInit {
    public activatedRouteSubscription: Subscription;
    public confirmModalMessage: string;
    public confirmModalSubmit: (event) => void;
-   public openedModal: OpenedModal<TeamParticipantNew>;
+   public openedModal: OpenedModal<TeamParticipant>;
    public paginationData: Pagination;
-   public teamParticipants: TeamParticipantNew[];
+   public teamParticipants: TeamParticipant[];
 
    constructor(
       private activatedRoute: ActivatedRoute,
@@ -70,7 +70,7 @@ export class TeamParticipantsTableComponent implements OnDestroy, OnInit {
       });
    }
 
-   public openConfirmModal(content: NgbModalRef | HTMLElement, data: TeamParticipantNew, submitted: (event) => void): void {
+   public openConfirmModal(content: NgbModalRef | HTMLElement, data: TeamParticipant, submitted: (event) => void): void {
       const reference = this.ngbModalService.open(content, { centered: true });
       this.openedModal = { reference, data, submitted: () => submitted.call(this) };
    }

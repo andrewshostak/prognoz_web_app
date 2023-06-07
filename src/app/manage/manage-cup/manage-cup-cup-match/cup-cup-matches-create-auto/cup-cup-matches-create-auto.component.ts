@@ -4,7 +4,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { CupCupMatchNewService } from '@services/new/cup-cup-match-new.service';
 import { CupStageNewService } from '@services/new/cup-stage-new.service';
 import { NotificationsService } from 'angular2-notifications';
-import { CupStageNew } from '@models/v2/cup-stage-new.model';
+import { CupStage } from '@models/v2/cup/cup-stage.model';
 import { CupStageSearch } from '@models/search/cup-stage-search.model';
 import { CupStageState } from '@enums/cup-stage-state.enum';
 import { Sequence } from '@enums/sequence.enum';
@@ -22,7 +22,7 @@ export class CupCupMatchesCreateAutoComponent implements OnInit {
       private notificationsService: NotificationsService
    ) {}
 
-   public cupStages: CupStageNew[];
+   public cupStages: CupStage[];
    cupCupMatchAutoForm: FormGroup;
 
    ngOnInit() {

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 
-import { UserNew } from '@models/v2/user-new.model';
+import { User } from '@models/v2/user.model';
 import { AuthNewService } from '@services/new/auth-new.service';
 import { TitleService } from '@services/title.service';
 import { NotificationsService } from 'angular2-notifications';
@@ -15,7 +15,7 @@ export class AuthRecoveryComponent implements OnInit {
    public captchaValidity: boolean;
    public recoveryForm: FormGroup;
    public spinnerButton: boolean;
-   public user: UserNew;
+   public user: User;
 
    constructor(
       private authService: AuthNewService,

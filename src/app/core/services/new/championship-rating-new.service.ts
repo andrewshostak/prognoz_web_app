@@ -4,9 +4,9 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { environment } from '@env';
 import { PaginatedResponse } from '@models/paginated-response.model';
 import { ChampionshipRatingSearch } from '@models/search/championship-rating-search.model';
-import { ChampionshipRatingNew } from '@models/v2/championship-rating-new.model';
+import { ChampionshipRating } from '@models/v2/championship/championship-rating.model';
 import { Observable } from 'rxjs';
-import { ChampionshipSeasonRatingItem } from '@models/v2/cmapionship-rating-season-new.model';
+import { ChampionshipSeasonRatingItem } from '@models/v2/championship/championship-rating-season.model';
 
 @Injectable()
 export class ChampionshipRatingNewService {
@@ -14,7 +14,7 @@ export class ChampionshipRatingNewService {
 
    constructor(private httpClient: HttpClient) {}
 
-   public getChampionshipRating(search: ChampionshipRatingSearch): Observable<PaginatedResponse<ChampionshipRatingNew>> {
+   public getChampionshipRating(search: ChampionshipRatingSearch): Observable<PaginatedResponse<ChampionshipRating>> {
       let params: HttpParams = new HttpParams();
 
       if (search.competitionId) {
@@ -44,7 +44,7 @@ export class ChampionshipRatingNewService {
          });
       }
 
-      return this.httpClient.get<PaginatedResponse<ChampionshipRatingNew>>(this.championshipRatingUrl, { params });
+      return this.httpClient.get<PaginatedResponse<ChampionshipRating>>(this.championshipRatingUrl, { params });
    }
 
    public getChampionshipRatingSeason(seasonId: number): Observable<ChampionshipSeasonRatingItem[]> {

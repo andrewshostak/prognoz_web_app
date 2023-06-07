@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 
-import { ClubNew } from '@models/v2/club-new.model';
+import { Club } from '@models/v2/club.model';
 import { SettingsService } from '@services/settings.service';
 
 @Component({
@@ -9,7 +9,7 @@ import { SettingsService } from '@services/settings.service';
    styleUrls: ['./club-logo.component.scss']
 })
 export class ClubLogoComponent {
-   @Input() club: ClubNew;
+   @Input() club: Club;
 
    private clubsLogosPath: string = SettingsService.clubsLogosPath + '/';
 

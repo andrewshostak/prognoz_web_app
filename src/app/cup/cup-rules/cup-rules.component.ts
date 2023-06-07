@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { TitleService } from '@services/title.service';
 
-import { CupStageTypeNew } from '@models/v2/cup-stage-type-new.model';
+import { CupStageType } from '@models/v2/cup/cup-stage-type.model';
 import { CupStageTypeNewService } from '@services/new/cup-stage-type-new.service';
 import { sortBy } from 'lodash';
 
@@ -13,7 +13,7 @@ import { sortBy } from 'lodash';
 export class CupRulesComponent implements OnInit {
    constructor(private cupStageTypeService: CupStageTypeNewService, private titleService: TitleService) {}
 
-   cupStageTypes: CupStageTypeNew[];
+   cupStageTypes: CupStageType[];
 
    ngOnInit() {
       this.titleService.setTitle('Правила конкурсу - Кубок');

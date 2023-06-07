@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 import { Sequence } from '@enums/sequence.enum';
-import { SeasonNew } from '@models/v2/season-new.model';
+import { Season } from '@models/v2/season.model';
 import { SeasonSearch } from '@models/search/season-search.model';
 import { SeasonNewService } from '@services/new/season-new.service';
 import { SettingsService } from '@services/settings.service';
@@ -13,7 +13,7 @@ import { TitleService } from '@services/title.service';
    styleUrls: ['./championship-seasons.component.scss']
 })
 export class ChampionshipSeasonsComponent implements OnInit {
-   public seasons: SeasonNew[];
+   public seasons: Season[];
 
    constructor(private seasonService: SeasonNewService, private titleService: TitleService) {}
 

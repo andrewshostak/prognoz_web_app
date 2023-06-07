@@ -2,7 +2,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
 import { environment } from '@env';
-import { TeamNew } from '@models/v2/team-new.model';
+import { Team } from '@models/v2/team/team.model';
 import { PaginatedResponse } from '@models/paginated-response.model';
 import { TeamSearch } from '@models/search/team-search.model';
 import { isNil } from 'lodash';
@@ -16,20 +16,20 @@ export class TeamNewService {
 
    constructor(private httpClient: HttpClient) {}
 
-   public createTeam(team: Partial<TeamNew>): Observable<TeamNew> {
+   public createTeam(team: Partial<Team>): Observable<Team> {
       const body = team.image ? serialize(team, { booleansAsIntegers: true }) : team;
-      return this.httpClient.post<{ team: TeamNew }>(this.teamsUrl, body).pipe(map(response => response.team));
+      return this.httpClient.post<{ team: Team }>(this.teamsUrl, body).pipe(map(response => response.team));
    }
 
    public deleteTeam(teamId: number): Observable<void> {
       return this.httpClient.delete<void>(`${this.teamsUrl}/${teamId}`);
    }
 
-   public getTeam(teamId: number): Observable<TeamNew> {
-      return this.httpClient.get<{ team: TeamNew }>(`${this.teamsUrl}/${teamId}`).pipe(map(response => response.team));
+   public getTeam(teamId: number): Observable<Team> {
+      return this.httpClient.get<{ team: Team }>(`${this.teamsUrl}/${teamId}`).pipe(map(response => response.team));
    }
 
-   public getTeams(search: TeamSearch): Observable<PaginatedResponse<TeamNew>> {
+   public getTeams(search: TeamSearch): Observable<PaginatedResponse<Team>> {
       let params: HttpParams = new HttpParams();
 
       if (search.captainId) {
@@ -73,11 +73,11 @@ export class TeamNewService {
          params = params.set('team_stage_id', search.teamStageId.toString());
       }
 
-      return this.httpClient.get<PaginatedResponse<TeamNew>>(this.teamsUrl, { params });
+      return this.httpClient.get<PaginatedResponse<Team>>(this.teamsUrl, { params });
    }
 
-   public updateTeam(teamId: number, team: Partial<TeamNew>): Observable<TeamNew> {
+   public updateTeam(teamId: number, team: Partial<Team>): Observable<Team> {
       const body = team.image ? serialize(team, { booleansAsIntegers: true }) : team;
-      return this.httpClient.post<{ team: TeamNew }>(`${this.teamsUrl}/${teamId}`, body).pipe(map(response => response.team));
+      return this.httpClient.post<{ team: Team }>(`${this.teamsUrl}/${teamId}`, body).pipe(map(response => response.team));
    }
 }

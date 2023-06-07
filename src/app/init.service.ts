@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
 import { environment } from '@env';
-import { UserNew } from '@models/v2/user-new.model';
+import { User } from '@models/v2/user.model';
 import { AuthNewService } from '@services/new/auth-new.service';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -11,8 +11,8 @@ import { map } from 'rxjs/operators';
 export class InitService {
    constructor(private httpClient: HttpClient, private authService: AuthNewService) {}
 
-   public initializeUser(): Promise<UserNew> {
-      return new Promise((resolve: (u: UserNew) => void) => {
+   public initializeUser(): Promise<User> {
+      return new Promise((resolve: (u: User) => void) => {
          if (!this.isToken()) {
             resolve(null);
             return;
@@ -30,8 +30,8 @@ export class InitService {
       });
    }
 
-   private getUser(): Observable<UserNew> {
-      return this.httpClient.get<{ user: UserNew }>(`${environment.apiBaseUrl}/v2/auth/user`).pipe(map(response => response.user));
+   private getUser(): Observable<User> {
+      return this.httpClient.get<{ user: User }>(`${environment.apiBaseUrl}/v2/auth/user`).pipe(map(response => response.user));
    }
 
    private isToken(): boolean {

@@ -4,7 +4,7 @@ import { ActivatedRoute, Params } from '@angular/router';
 import { Tournament } from '@enums/tournament.enum';
 import { TitleService } from '@services/title.service';
 import { CompetitionNewService } from '@services/new/competition-new.service';
-import { CompetitionNew } from '@models/v2/competition-new.model';
+import { Competition } from '@models/v2/competition.model';
 import { CompetitionSearch } from '@models/search/competition-search.model';
 import { SettingsService } from '@services/settings.service';
 
@@ -20,7 +20,7 @@ export class ChampionshipCompetitionsComponent implements OnInit {
       private titleService: TitleService
    ) {}
 
-   competitions: CompetitionNew[] = [];
+   competitions: Competition[] = [];
 
    ngOnInit() {
       this.activatedRoute.params.forEach((params: Params) => {

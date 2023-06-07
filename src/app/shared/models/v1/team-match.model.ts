@@ -1,5 +1,5 @@
 // tslint:disable:variable-name
-import { Match } from '@models/match.model';
+import { Match } from '@models/v2/match.model';
 
 export class TeamMatch {
    id: number;

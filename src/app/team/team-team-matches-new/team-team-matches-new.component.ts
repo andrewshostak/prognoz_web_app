@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
-import { TeamTeamMatchNew } from '@models/v2/team-team-match-new.model';
+import { TeamTeamMatch } from '@models/v2/team/team-team-match.model';
 import { PaginatedResponse } from '@models/paginated-response.model';
 import { TeamTeamMatchSearch } from '@models/search/team-team-match-search.model';
 import { CurrentStateService } from '@services/current-state.service';
@@ -19,8 +19,8 @@ import { filter, switchMap, tap } from 'rxjs/operators';
    styleUrls: ['./team-team-matches-new.component.scss']
 })
 export class TeamTeamMatchesNewComponent implements OnInit {
-   public teamTeamMatches: TeamTeamMatchNew[] = [];
-   public groupedTeamTeamMatches: { [groupNumber: string]: TeamTeamMatchNew[] };
+   public teamTeamMatches: TeamTeamMatch[] = [];
+   public groupedTeamTeamMatches: { [groupNumber: string]: TeamTeamMatch[] };
 
    constructor(
       private activatedRoute: ActivatedRoute,
@@ -39,7 +39,7 @@ export class TeamTeamMatchesNewComponent implements OnInit {
       this.subscribeToTeamStageIdUrlParamChange();
    }
 
-   private getTeamTeamMatchesObservable(teamStageId: number, includeRelations: boolean): Observable<PaginatedResponse<TeamTeamMatchNew>> {
+   private getTeamTeamMatchesObservable(teamStageId: number, includeRelations: boolean): Observable<PaginatedResponse<TeamTeamMatch>> {
       const search: TeamTeamMatchSearch = {
          page: 1,
          teamStageId,
@@ -54,12 +54,12 @@ export class TeamTeamMatchesNewComponent implements OnInit {
          .pipe(
             filter(params => params.team_stage_id),
             switchMap(params => this.getTeamTeamMatchesObservable(params.team_stage_id, true)),
-            tap((response: PaginatedResponse<TeamTeamMatchNew>) => this.setTeamTeamMatches(response)) as any
+            tap((response: PaginatedResponse<TeamTeamMatch>) => this.setTeamTeamMatches(response)) as any
          )
          .subscribe();
    }
 
-   private setTeamTeamMatches(response: PaginatedResponse<TeamTeamMatchNew>): void {
+   private setTeamTeamMatches(response: PaginatedResponse<TeamTeamMatch>): void {
       if (response.data.length && response.data[0].group_number) {
          this.groupedTeamTeamMatches = groupBy(response.data, teamTeamMatch => teamTeamMatch.group_number);
          this.teamTeamMatches = [];

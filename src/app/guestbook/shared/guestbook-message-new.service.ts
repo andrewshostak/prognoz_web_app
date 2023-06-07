@@ -2,7 +2,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
 import { environment } from '@env';
-import { GuestbookMessageNew } from '@models/v2/guestbook-message-new.model';
+import { GuestbookMessage } from '@models/v2/guestbook-message.model';
 import { PaginatedResponse } from '@models/paginated-response.model';
 import { GuestbookMessageSearch } from '@models/search/guestbook-message-search.model';
 import { isNil } from 'lodash';
@@ -15,9 +15,9 @@ export class GuestbookMessageNewService {
 
    constructor(private httpClient: HttpClient) {}
 
-   public createGuestbookMessage(message: Partial<GuestbookMessageNew>): Observable<GuestbookMessageNew> {
+   public createGuestbookMessage(message: Partial<GuestbookMessage>): Observable<GuestbookMessage> {
       return this.httpClient
-         .post<{ guestbook_message: GuestbookMessageNew }>(this.guestbookMessagesUrl, message)
+         .post<{ guestbook_message: GuestbookMessage }>(this.guestbookMessagesUrl, message)
          .pipe(map(response => response.guestbook_message));
    }
 
@@ -25,7 +25,7 @@ export class GuestbookMessageNewService {
       return this.httpClient.delete<void>(`${this.guestbookMessagesUrl}/${id}`);
    }
 
-   public getGuestbookMessages(search: GuestbookMessageSearch): Observable<PaginatedResponse<GuestbookMessageNew>> {
+   public getGuestbookMessages(search: GuestbookMessageSearch): Observable<PaginatedResponse<GuestbookMessage>> {
       let params: HttpParams = new HttpParams();
 
       if (!isNil(search.trashed)) {
@@ -55,12 +55,12 @@ export class GuestbookMessageNewService {
          });
       }
 
-      return this.httpClient.get<PaginatedResponse<GuestbookMessageNew>>(this.guestbookMessagesUrl, { params });
+      return this.httpClient.get<PaginatedResponse<GuestbookMessage>>(this.guestbookMessagesUrl, { params });
    }
 
-   public updateGuestbookMessage(id: number, message: Partial<GuestbookMessageNew>): Observable<GuestbookMessageNew> {
+   public updateGuestbookMessage(id: number, message: Partial<GuestbookMessage>): Observable<GuestbookMessage> {
       return this.httpClient
-         .put<{ guestbook_message: GuestbookMessageNew }>(`${this.guestbookMessagesUrl}/${id}`, message)
+         .put<{ guestbook_message: GuestbookMessage }>(`${this.guestbookMessagesUrl}/${id}`, message)
          .pipe(map(response => response.guestbook_message));
    }
 }

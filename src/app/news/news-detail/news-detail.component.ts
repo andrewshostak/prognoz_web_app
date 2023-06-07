@@ -6,11 +6,11 @@ import { ActivatedRoute } from '@angular/router';
 import { CurrentStateService } from '@services/current-state.service';
 import { NotificationsService } from 'angular2-notifications';
 import { TitleService } from '@services/title.service';
-import { CommentNew } from '@models/v2/comment-new.model';
+import { Comment } from '@models/v2/comment.model';
 import { CommentNewService } from '@app/news/shared/comment-new.service';
 import { CommentSearch } from '@models/search/comment-search.model';
 import { SettingsService } from '@services/settings.service';
-import { UserNew } from '@models/v2/user-new.model';
+import { User } from '@models/v2/user.model';
 import { OpenedModal } from '@models/opened-modal.model';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { Sequence } from '@enums/sequence.enum';
@@ -18,7 +18,7 @@ import { ModelStatus } from '@enums/model-status.enum';
 import { AuthNewService } from '@services/new/auth-new.service';
 import * as moment from 'moment';
 import { NewsNewService } from '@services/new/news-new.service';
-import { NewsNew } from '@models/v2/news-new.model';
+import { News } from '@models/v2/news.model';
 
 @Component({
    selector: 'app-news-detail',
@@ -38,9 +38,9 @@ export class NewsDetailComponent implements OnInit {
       private titleService: TitleService
    ) {}
 
-   public authenticatedUser: UserNew;
-   public comments: CommentNew[];
-   public news: NewsNew;
+   public authenticatedUser: User;
+   public comments: Comment[];
+   public news: News;
    public newsId: number;
    public newsImagesUrl = SettingsService.newsLogosPath;
    public openedModal: OpenedModal<number>;
@@ -99,12 +99,12 @@ export class NewsDetailComponent implements OnInit {
       });
    }
 
-   public commentCreated(comment: CommentNew): void {
+   public commentCreated(comment: Comment): void {
       comment.is_changeable = true;
       this.comments = [...this.comments, comment];
    }
 
-   public updateComment(comment: CommentNew): void {
+   public updateComment(comment: Comment): void {
       this.commentService.updateComment(comment.id, comment).subscribe(response => {
          this.notificationsService.success('Успішно', 'Коментар змінено');
          const index = this.comments.findIndex(c => c.id === comment.id);

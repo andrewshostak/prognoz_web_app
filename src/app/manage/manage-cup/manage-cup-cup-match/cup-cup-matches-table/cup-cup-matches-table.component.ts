@@ -10,7 +10,7 @@ import { CupCupMatchNewService } from '@services/new/cup-cup-match-new.service';
 import { CupCupMatchSearch } from '@models/search/cup-cup-match-search.model';
 import { SettingsService } from '@services/settings.service';
 import { Sequence } from '@enums/sequence.enum';
-import { CupCupMatchNew } from '@models/v2/cup-cup-match-new.model';
+import { CupCupMatch } from '@models/v2/cup/cup-cup-match.model';
 
 @Component({
    selector: 'app-cup-cup-matches-table',
@@ -28,7 +28,7 @@ export class CupCupMatchesTableComponent implements OnDestroy, OnInit {
    activatedRouteSubscription: Subscription;
    confirmModalMessage: string;
    confirmModalSubmit: (event) => void;
-   cupCupMatches: CupCupMatchNew[];
+   cupCupMatches: CupCupMatch[];
    cupCupMatchStates = CupCupMatchState;
    errorCupCupMatches: string;
    currentPage: number;
@@ -39,7 +39,7 @@ export class CupCupMatchesTableComponent implements OnDestroy, OnInit {
    total: number;
    isScore = UtilsService.isScore;
 
-   deleteCupCupMatch(cupCupMatch: CupCupMatchNew): void {
+   deleteCupCupMatch(cupCupMatch: CupCupMatch): void {
       this.cupCupMatchNewService.deleteCupCupMatch(cupCupMatch.id).subscribe(
          () => {
             this.openedModalReference.close();
@@ -85,7 +85,7 @@ export class CupCupMatchesTableComponent implements OnDestroy, OnInit {
       });
    }
 
-   openConfirmModal(content: NgbModalRef, cupCupMatch: CupCupMatchNew): void {
+   openConfirmModal(content: NgbModalRef, cupCupMatch: CupCupMatch): void {
       this.confirmModalMessage = `Видалити ${cupCupMatch.home_user.name} - ${cupCupMatch.away_user.name}?`;
       this.confirmModalSubmit = () => this.deleteCupCupMatch(cupCupMatch);
       this.openedModalReference = this.ngbModalService.open(content);

@@ -2,7 +2,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
 import { environment } from '@env';
-import { CupMatchNew } from '@models/v2/cup-match-new.model';
+import { CupMatch } from '@models/v2/cup/cup-match.model';
 import { PaginatedResponse } from '@models/paginated-response.model';
 import { CupMatchSearch } from '@models/search/cup-match-search.model';
 import { Observable } from 'rxjs';
@@ -14,21 +14,19 @@ export class CupMatchNewService {
 
    constructor(private httpClient: HttpClient) {}
 
-   public createCupMatch(cupMatch: Partial<CupMatchNew>): Observable<CupMatchNew> {
-      return this.httpClient.post<{ cup_match: CupMatchNew }>(this.cupMatchesUrl, cupMatch).pipe(map(response => response.cup_match));
+   public createCupMatch(cupMatch: Partial<CupMatch>): Observable<CupMatch> {
+      return this.httpClient.post<{ cup_match: CupMatch }>(this.cupMatchesUrl, cupMatch).pipe(map(response => response.cup_match));
    }
 
    public deleteCupMatch(cupMatchId: number): Observable<void> {
       return this.httpClient.delete<void>(`${this.cupMatchesUrl}/${cupMatchId}`);
    }
 
-   public getCupMatch(cupMatchId: number): Observable<CupMatchNew> {
-      return this.httpClient
-         .get<{ cup_match: CupMatchNew }>(`${this.cupMatchesUrl}/${cupMatchId}`)
-         .pipe(map(response => response.cup_match));
+   public getCupMatch(cupMatchId: number): Observable<CupMatch> {
+      return this.httpClient.get<{ cup_match: CupMatch }>(`${this.cupMatchesUrl}/${cupMatchId}`).pipe(map(response => response.cup_match));
    }
 
-   public getCupMatches(search: CupMatchSearch): Observable<PaginatedResponse<CupMatchNew>> {
+   public getCupMatches(search: CupMatchSearch): Observable<PaginatedResponse<CupMatch>> {
       let params: HttpParams = new HttpParams({ fromObject: { 'relations[]': search.relations || [] } });
 
       if (search.states) {
@@ -62,12 +60,12 @@ export class CupMatchNewService {
          params = params.set('sequence', search.sequence);
       }
 
-      return this.httpClient.get<PaginatedResponse<CupMatchNew>>(this.cupMatchesUrl, { params });
+      return this.httpClient.get<PaginatedResponse<CupMatch>>(this.cupMatchesUrl, { params });
    }
 
-   public updateCupMatch(cupMatchId: number, cupMatch: Partial<CupMatchNew>): Observable<CupMatchNew> {
+   public updateCupMatch(cupMatchId: number, cupMatch: Partial<CupMatch>): Observable<CupMatch> {
       return this.httpClient
-         .put<{ cup_match: CupMatchNew }>(`${this.cupMatchesUrl}/${cupMatchId}`, cupMatch)
+         .put<{ cup_match: CupMatch }>(`${this.cupMatchesUrl}/${cupMatchId}`, cupMatch)
          .pipe(map(response => response.cup_match));
    }
 }

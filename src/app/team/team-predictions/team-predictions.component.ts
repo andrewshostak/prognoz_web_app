@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 
-import { TeamTeamMatchNew } from '@models/v2/team-team-match-new.model';
-import { UserNew } from '@models/v2/user-new.model';
+import { TeamTeamMatch } from '@models/v2/team/team-team-match.model';
+import { User } from '@models/v2/user.model';
 import { RequestParams } from '@models/request-params.model';
 import { TeamTeamMatchSearch } from '@models/search/team-team-match-search.model';
 import { TeamMatch } from '@models/v1/team-match.model';
@@ -33,7 +33,7 @@ export class TeamPredictionsComponent implements OnInit {
       private titleService: TitleService
    ) {}
 
-   public authenticatedUser: UserNew;
+   public authenticatedUser: User;
    blockedTeamMatches: { teamMatch: TeamMatch; isBlocked: boolean }[] = [];
    blocksCount: number = 0;
    isGoalkeeper: boolean;
@@ -42,7 +42,7 @@ export class TeamPredictionsComponent implements OnInit {
    teamTeamMatchId: number;
    public teamStageId: number;
    teamMatches: TeamMatch[];
-   public teamTeamMatches: TeamTeamMatchNew[];
+   public teamTeamMatches: TeamTeamMatch[];
    teamPredictions: TeamPrediction[];
 
    public clickOnTeamStageSelectButton(event: { teamStageId: number }): void {

@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
-import { TeamNew } from '@models/v2/team-new.model';
-import { UserNew } from '@models/v2/user-new.model';
+import { Team } from '@models/v2/team/team.model';
+import { User } from '@models/v2/user.model';
 import { AuthNewService } from '@services/new/auth-new.service';
 import { TeamCompetitionNewService } from '@services/new/team-competition-new.service';
 import { NotificationsService } from 'angular2-notifications';
@@ -14,7 +14,7 @@ import { get } from 'lodash';
    styleUrls: ['./team-create.component.scss']
 })
 export class TeamCreateComponent implements OnInit {
-   public user: UserNew;
+   public user: User;
 
    constructor(
       private activatedRoute: ActivatedRoute,
@@ -28,7 +28,7 @@ export class TeamCreateComponent implements OnInit {
       this.user = this.authService.getUser();
    }
 
-   public successfullySubmitted(team: TeamNew): void {
+   public successfullySubmitted(team: Team): void {
       const competitionId = get(this.activatedRoute, 'snapshot.params.createParticipantForCompetition');
       if (competitionId) {
          this.afterCreateActions(team, competitionId);
@@ -38,7 +38,7 @@ export class TeamCreateComponent implements OnInit {
       this.router.navigate(['/', 'team', team.id, 'edit']);
    }
 
-   private afterCreateActions(team: TeamNew, competitionId: number): void {
+   private afterCreateActions(team: Team, competitionId: number): void {
       const callbacks = {
          successful: () => {
             this.notificationsService.success('Успішно', `Заявку в команду ${team.name} подано`);

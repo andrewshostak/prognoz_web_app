@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 
 import { environment } from '@env';
-import { NewsNew } from '@models/v2/news-new.model';
+import { News } from '@models/v2/news.model';
 import { PaginatedResponse } from '@models/paginated-response.model';
 import { NewsSearch } from '@models/search/news-search.model';
 import { serialize } from 'object-to-formdata';
@@ -15,16 +15,16 @@ export class NewsNewService {
 
    constructor(private httpClient: HttpClient) {}
 
-   public createNews(news: Partial<NewsNew>): Observable<NewsNew> {
+   public createNews(news: Partial<News>): Observable<News> {
       const body = news.image ? serialize(news, { booleansAsIntegers: true, nullsAsUndefineds: true }) : news;
-      return this.httpClient.post<{ news: NewsNew }>(this.newsUrl, body).pipe(map(response => response.news));
+      return this.httpClient.post<{ news: News }>(this.newsUrl, body).pipe(map(response => response.news));
    }
 
    public deleteNews(newsId: number): Observable<void> {
       return this.httpClient.delete<void>(`${this.newsUrl}/${newsId}`);
    }
 
-   public getNews(search: NewsSearch): Observable<PaginatedResponse<NewsNew>> {
+   public getNews(search: NewsSearch): Observable<PaginatedResponse<News>> {
       let params: HttpParams = new HttpParams();
 
       if (search.authorId) {
@@ -54,18 +54,18 @@ export class NewsNewService {
          });
       }
 
-      return this.httpClient.get<PaginatedResponse<NewsNew>>(this.newsUrl, { params });
+      return this.httpClient.get<PaginatedResponse<News>>(this.newsUrl, { params });
    }
 
-   public getNewsItem(newsId: number, relations: string[] = []): Observable<NewsNew> {
+   public getNewsItem(newsId: number, relations: string[] = []): Observable<News> {
       const params = new HttpParams({ fromObject: { 'relations[]': relations } });
       return this.httpClient
-         .get<{ news: NewsNew }>(`${this.newsUrl}/${newsId}`, { params })
+         .get<{ news: News }>(`${this.newsUrl}/${newsId}`, { params })
          .pipe(map(response => response.news));
    }
 
-   public updateNews(newsId: number, news: Partial<NewsNew>): Observable<NewsNew> {
+   public updateNews(newsId: number, news: Partial<News>): Observable<News> {
       const body = news.image ? serialize(news, { booleansAsIntegers: true, nullsAsUndefineds: true }) : news;
-      return this.httpClient.post<{ news: NewsNew }>(`${this.newsUrl}/${newsId}`, body).pipe(map(response => response.news));
+      return this.httpClient.post<{ news: News }>(`${this.newsUrl}/${newsId}`, body).pipe(map(response => response.news));
    }
 }

@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
-import { UserNew } from '@models/v2/user-new.model';
+import { User } from '@models/v2/user.model';
 import { CurrentStateService } from '@services/current-state.service';
 import { AuthNewService } from '@services/new/auth-new.service';
 import { TitleService } from '@services/title.service';
@@ -17,7 +17,7 @@ export class AuthSignUpComponent implements OnInit {
    public captchaValidity: boolean;
    public signUpForm: FormGroup;
    public spinnerButton: boolean;
-   public user: UserNew;
+   public user: User;
 
    constructor(
       private authService: AuthNewService,
@@ -61,7 +61,7 @@ export class AuthSignUpComponent implements OnInit {
       this.captchaValidity = !!captchaResponse;
    }
 
-   private setAuthData(response: { token: string; user: UserNew }): void {
+   private setAuthData(response: { token: string; user: User }): void {
       this.authService.setUser(response.user);
       this.authService.setToken(response.token);
    }

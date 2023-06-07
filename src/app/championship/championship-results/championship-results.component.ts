@@ -4,8 +4,8 @@ import { CompetitionState } from '@enums/competition-state.enum';
 import { MatchState } from '@enums/match-state.enum';
 import { Sequence } from '@enums/sequence.enum';
 import { Tournament } from '@enums/tournament.enum';
-import { ChampionshipMatchNew } from '@models/v2/championship-match-new.model';
-import { CompetitionNew } from '@models/v2/competition-new.model';
+import { ChampionshipMatch } from '@models/v2/championship/championship-match.model';
+import { Competition } from '@models/v2/competition.model';
 import { PaginatedResponse } from '@models/paginated-response.model';
 import { ChampionshipMatchSearch } from '@models/search/championship-match-search.model';
 import { CompetitionSearch } from '@models/search/competition-search.model';
@@ -22,7 +22,7 @@ import { mergeMap } from 'rxjs/operators';
    templateUrl: './championship-results.component.html'
 })
 export class ChampionshipResultsComponent implements OnInit {
-   public championshipMatches: ChampionshipMatchNew[];
+   public championshipMatches: ChampionshipMatch[];
    public error: string;
 
    constructor(
@@ -31,7 +31,7 @@ export class ChampionshipResultsComponent implements OnInit {
       private titleService: TitleService
    ) {}
 
-   public getActiveChampionshipCompetition(): Observable<PaginatedResponse<CompetitionNew>> {
+   public getActiveChampionshipCompetition(): Observable<PaginatedResponse<Competition>> {
       const search: CompetitionSearch = {
          limit: 1,
          page: 1,
@@ -42,7 +42,7 @@ export class ChampionshipResultsComponent implements OnInit {
       return this.competitionService.getCompetitions(search);
    }
 
-   public getEndedChampionshipMatches(competitionId: number): Observable<PaginatedResponse<ChampionshipMatchNew>> {
+   public getEndedChampionshipMatches(competitionId: number): Observable<PaginatedResponse<ChampionshipMatch>> {
       const search: ChampionshipMatchSearch = {
          competitionId,
          limit: SettingsService.maxLimitValues.championshipMatches,

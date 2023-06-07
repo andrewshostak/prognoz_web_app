@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 
-import { UserNew } from '@models/v2/user-new.model';
+import { User } from '@models/v2/user.model';
 import { AuthNewService } from '@services/new/auth-new.service';
 import { TitleService } from '@services/title.service';
 import { NotificationsService } from 'angular2-notifications';
@@ -15,7 +15,7 @@ import { NotificationsService } from 'angular2-notifications';
 export class AuthResetComponent implements OnInit {
    public resetForm: FormGroup;
    public spinnerButton: boolean;
-   public user: UserNew;
+   public user: User;
 
    constructor(
       private activatedRoute: ActivatedRoute,

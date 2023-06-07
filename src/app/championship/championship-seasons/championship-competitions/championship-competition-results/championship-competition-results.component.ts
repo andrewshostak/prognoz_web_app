@@ -3,7 +3,7 @@ import { ActivatedRoute, Params } from '@angular/router';
 
 import { MatchState } from '@enums/match-state.enum';
 import { Sequence } from '@enums/sequence.enum';
-import { ChampionshipMatchNew } from '@models/v2/championship-match-new.model';
+import { ChampionshipMatch } from '@models/v2/championship/championship-match.model';
 import { ChampionshipMatchSearch } from '@models/search/championship-match-search.model';
 import { ChampionshipMatchNewService } from '@services/new/championship-match-new.service';
 import { SettingsService } from '@services/settings.service';
@@ -15,7 +15,7 @@ import { TitleService } from '@services/title.service';
    templateUrl: './championship-competition-results.component.html'
 })
 export class ChampionshipCompetitionResultsComponent implements OnInit {
-   public championshipMatches: ChampionshipMatchNew[];
+   public championshipMatches: ChampionshipMatch[];
    public errorChampionshipMatches: string;
 
    constructor(

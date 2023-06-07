@@ -2,9 +2,9 @@ import { ChangeDetectorRef, Component, Input } from '@angular/core';
 
 import { TimePipe } from '@app/shared/pipes/time.pipe';
 import { Sequence } from '@enums/sequence.enum';
-import { TeamPredictionNew } from '@models/v2/team-prediction-new.model';
-import { TeamTeamMatchNew } from '@models/v2/team-team-match-new.model';
-import { TeamMatchNew } from '@models/v2/team-match-new.model';
+import { TeamPrediction } from '@models/v2/team/team-prediction.model';
+import { TeamTeamMatch } from '@models/v2/team/team-team-match.model';
+import { TeamMatch } from '@models/v2/team/team-match.model';
 import { TeamMatchSearch } from '@models/search/team-match-search.model';
 import { TeamPredictionSearch } from '@models/search/team-prediction-search.model';
 import { PaginatedResponse } from '@models/paginated-response.model';
@@ -29,7 +29,7 @@ export class TeamTeamMatchCardComponent {
       private timePipe: TimePipe
    ) {}
 
-   @Input() teamTeamMatch: TeamTeamMatchNew;
+   @Input() teamTeamMatch: TeamTeamMatch;
 
    detailsExpanded: boolean;
    noTeamMatches = 'Цей раунд ще не почався / матчів не знайдено';
@@ -38,17 +38,17 @@ export class TeamTeamMatchCardComponent {
 
    toggleDetailsVisibility(): void {
       if (!this.detailsExpanded) {
-         this.getData(this.teamTeamMatch as TeamTeamMatchNew);
+         this.getData(this.teamTeamMatch as TeamTeamMatch);
       }
 
       this.detailsExpanded = !this.detailsExpanded;
    }
 
-   private getIdsWithViewablePredictions(teamMatches: TeamMatchNew[]): number[] {
+   private getIdsWithViewablePredictions(teamMatches: TeamMatch[]): number[] {
       return teamMatches.filter(teamMatch => teamMatch.are_predictions_viewable).map(teamMatch => teamMatch.id);
    }
 
-   private getData(teamTeamMatch: TeamTeamMatchNew) {
+   private getData(teamTeamMatch: TeamTeamMatch) {
       this.spinnerTeamMatches = true;
       this.getTeamMatchesAndPredictions(teamTeamMatch).subscribe(
          response => {
@@ -64,7 +64,7 @@ export class TeamTeamMatchCardComponent {
       );
    }
 
-   private getTeamMatches(teamStageId: number): Observable<PaginatedResponse<TeamMatchNew>> {
+   private getTeamMatches(teamStageId: number): Observable<PaginatedResponse<TeamMatch>> {
       const search: TeamMatchSearch = {
          page: 1,
          limit: SettingsService.maxLimitValues.teamMatches,
@@ -78,8 +78,8 @@ export class TeamTeamMatchCardComponent {
    }
 
    private getTeamMatchesAndPredictions(
-      teamTeamMatch: TeamTeamMatchNew
-   ): Observable<{ teamTeamMatch: TeamTeamMatchNew; teamMatches: TeamMatchNew[]; teamPredictions: TeamPredictionNew[] }> {
+      teamTeamMatch: TeamTeamMatch
+   ): Observable<{ teamTeamMatch: TeamTeamMatch; teamMatches: TeamMatch[]; teamPredictions: TeamPrediction[] }> {
       const noDataResponse = { data: [], total: 0 } as PaginatedResponse<any>;
       return this.getTeamMatches(teamTeamMatch.team_stage_id).pipe(
          catchError(() => of(noDataResponse)),
@@ -96,10 +96,10 @@ export class TeamTeamMatchCardComponent {
                })
             );
          })
-      ) as Observable<{ teamTeamMatch: TeamTeamMatchNew; teamMatches: TeamMatchNew[]; teamPredictions: TeamPredictionNew[] }>;
+      ) as Observable<{ teamTeamMatch: TeamTeamMatch; teamMatches: TeamMatch[]; teamPredictions: TeamPrediction[] }>;
    }
 
-   private getTeamPredictions(teamIds: number[], teamMatchIds: number[]): Observable<PaginatedResponse<TeamPredictionNew>> {
+   private getTeamPredictions(teamIds: number[], teamMatchIds: number[]): Observable<PaginatedResponse<TeamPrediction>> {
       const search: TeamPredictionSearch = {
          page: 1,
          limit: SettingsService.maxLimitValues.teamPredictions,
@@ -112,7 +112,7 @@ export class TeamTeamMatchCardComponent {
       return this.teamPredictionService.getTeamPredictions(search);
    }
 
-   private getPredictionTitle(teamMatch: TeamMatchNew, prediction: TeamPredictionNew): string {
+   private getPredictionTitle(teamMatch: TeamMatch, prediction: TeamPrediction): string {
       if (!teamMatch.are_predictions_viewable) {
          return 'Прогнози гравців відображаються після початку другого тайму матчу';
       }
@@ -130,9 +130,9 @@ export class TeamTeamMatchCardComponent {
    }
 
    private joinMatchesAndPredictions(
-      teamTeamMatch: TeamTeamMatchNew,
-      teamMatches: TeamMatchNew[],
-      teamPredictions: TeamPredictionNew[]
+      teamTeamMatch: TeamTeamMatch,
+      teamMatches: TeamMatch[],
+      teamPredictions: TeamPrediction[]
    ): TeamMatchAndEnrichedPredictions[] {
       return teamMatches.map(teamMatch => {
          const predictions = teamPredictions.filter(teamPrediction => teamPrediction.team_match_id === teamMatch.id);

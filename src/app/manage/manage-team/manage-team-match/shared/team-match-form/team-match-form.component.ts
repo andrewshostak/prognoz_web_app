@@ -4,8 +4,8 @@ import { AbstractControl, FormArray, FormControl, FormGroup, Validators } from '
 import { MatchState } from '@enums/match-state.enum';
 import { Sequence } from '@enums/sequence.enum';
 import { TeamStageState } from '@enums/team-stage-state.enum';
-import { TeamMatchNew } from '@models/v2/team-match-new.model';
-import { TeamStageNew } from '@models/v2/team-stage-new.model';
+import { TeamMatch } from '@models/v2/team/team-match.model';
+import { TeamStage } from '@models/v2/team/team-stage.model';
 import { OpenedModal } from '@models/opened-modal.model';
 import { PaginatedResponse } from '@models/paginated-response.model';
 import { TeamMatchSearch } from '@models/search/team-match-search.model';
@@ -24,12 +24,12 @@ import { Observable } from 'rxjs';
    templateUrl: './team-match-form.component.html'
 })
 export class TeamMatchFormComponent implements OnChanges, OnInit {
-   @Input() public teamMatch: TeamMatchNew;
+   @Input() public teamMatch: TeamMatch;
 
-   public teamStages: TeamStageNew[];
+   public teamStages: TeamStage[];
    public lastCreatedMatchId: number;
    public openedModal: OpenedModal<null>;
-   public teamMatchesObservable: Observable<PaginatedResponse<TeamMatchNew>>;
+   public teamMatchesObservable: Observable<PaginatedResponse<TeamMatch>>;
    public teamMatchForm: FormGroup;
 
    constructor(
@@ -138,7 +138,7 @@ export class TeamMatchFormComponent implements OnChanges, OnInit {
       UtilsService.clearFormArray(this.teamStagesFormArray);
    }
 
-   private createTeamMatch(teamMatch: TeamMatchNew): void {
+   private createTeamMatch(teamMatch: TeamMatch): void {
       this.teamMatchService.createTeamMatch(teamMatch).subscribe(response => {
          this.notificationsService.success(
             'Успішно',
@@ -163,7 +163,7 @@ export class TeamMatchFormComponent implements OnChanges, OnInit {
       });
    }
 
-   private updateTeamMatch(teamMatch: TeamMatchNew): void {
+   private updateTeamMatch(teamMatch: TeamMatch): void {
       this.teamMatchService.updateTeamMatch(this.teamMatch.id, teamMatch).subscribe(response => {
          this.notificationsService.success(
             'Успішно',

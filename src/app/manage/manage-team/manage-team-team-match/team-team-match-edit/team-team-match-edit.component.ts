@@ -6,9 +6,9 @@ import { Sequence } from '@enums/sequence.enum';
 import { TeamStageState } from '@enums/team-stage-state.enum';
 import { TeamStageType } from '@enums/team-stage-type.enum';
 import { TeamTeamMatchState } from '@enums/team-team-match-state.enum';
-import { TeamStageNew } from '@models/v2/team-stage-new.model';
+import { TeamStage } from '@models/v2/team/team-stage.model';
 import { TeamStageSearch } from '@models/search/team-stage-search.model';
-import { TeamTeamMatchNew } from '@models/v2/team-team-match-new.model';
+import { TeamTeamMatch } from '@models/v2/team/team-team-match.model';
 import { TeamStageNewService } from '@services/new/team-stage-new.service';
 import { TeamTeamMatchNewService } from '@services/new/team-team-match-new.service';
 import { SettingsService } from '@services/settings.service';
@@ -30,8 +30,8 @@ export class TeamTeamMatchEditComponent implements OnInit {
       private teamTeamMatchService: TeamTeamMatchNewService
    ) {}
 
-   public teamTeamMatch: TeamTeamMatchNew;
-   public teamStages: TeamStageNew[] = [];
+   public teamTeamMatch: TeamTeamMatch;
+   public teamStages: TeamStage[] = [];
    public teamTeamMatchForm: FormGroup;
 
    public ngOnInit(): void {
@@ -84,7 +84,7 @@ export class TeamTeamMatchEditComponent implements OnInit {
       });
    }
 
-   private handleTeamTeamMatchResponse(teamTeamMatch: TeamTeamMatchNew): void {
+   private handleTeamTeamMatchResponse(teamTeamMatch: TeamTeamMatch): void {
       if (teamTeamMatch.team_stage) {
          this.teamStages = uniqBy(this.teamStages.concat([teamTeamMatch.team_stage]), 'id');
       }
@@ -96,7 +96,7 @@ export class TeamTeamMatchEditComponent implements OnInit {
       }
    }
 
-   private updateTeamTeamMatch(teamTeamMatch: Partial<TeamTeamMatchNew>): void {
+   private updateTeamTeamMatch(teamTeamMatch: Partial<TeamTeamMatch>): void {
       this.teamTeamMatchService.updateTeamTeamMatch(this.teamTeamMatch.id, teamTeamMatch).subscribe(() => {
          this.notificationsService.success('Успішно', 'Матч між командами змінено');
          this.router.navigate(['/manage', 'team', 'team-matches']);

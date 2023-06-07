@@ -2,8 +2,8 @@ import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/cor
 import { AbstractControl, FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 
 import { MatchState } from '@enums/match-state.enum';
-import { CupStageNew } from '@models/v2/cup-stage-new.model';
-import { CupMatchNew } from '@models/v2/cup-match-new.model';
+import { CupStage } from '@models/v2/cup/cup-stage.model';
+import { CupMatch } from '@models/v2/cup/cup-match.model';
 import { OpenedModal } from '@models/opened-modal.model';
 import { PaginatedResponse } from '@models/paginated-response.model';
 import { CupMatchSearch } from '@models/search/cup-match-search.model';
@@ -24,11 +24,11 @@ import { CupStageState } from '@enums/cup-stage-state.enum';
    templateUrl: './cup-match-form.component.html'
 })
 export class CupMatchFormComponent implements OnChanges, OnInit {
-   @Input() public cupMatch: CupMatchNew;
+   @Input() public cupMatch: CupMatch;
 
-   public cupStages: CupStageNew[];
+   public cupStages: CupStage[];
    public cupMatchForm: FormGroup;
-   public cupMatchesObservable: Observable<PaginatedResponse<CupMatchNew>>;
+   public cupMatchesObservable: Observable<PaginatedResponse<CupMatch>>;
    public lastCreatedMatchId: number;
    public openedModal: OpenedModal<null>;
 
@@ -138,7 +138,7 @@ export class CupMatchFormComponent implements OnChanges, OnInit {
       UtilsService.clearFormArray(this.cupStagesFormArray);
    }
 
-   private createCupMatch(cupMatch: CupMatchNew): void {
+   private createCupMatch(cupMatch: CupMatch): void {
       this.cupMatchService.createCupMatch(cupMatch).subscribe(response => {
          this.notificationsService.success(
             'Успішно',
@@ -163,7 +163,7 @@ export class CupMatchFormComponent implements OnChanges, OnInit {
       });
    }
 
-   private updateCupMatch(cupMatch: CupMatchNew): void {
+   private updateCupMatch(cupMatch: CupMatch): void {
       this.cupMatchService.updateCupMatch(this.cupMatch.id, cupMatch).subscribe(response => {
          this.notificationsService.success(
             'Успішно',

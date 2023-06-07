@@ -2,8 +2,8 @@ import { Injectable } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 
 import { MatchState } from '@enums/match-state.enum';
-import { ChampionshipMatchNew } from '@models/v2/championship-match-new.model';
-import { ChampionshipPredictionNew } from '@models/v2/championship-prediction-new.model';
+import { ChampionshipMatch } from '@models/v2/championship/championship-match.model';
+import { ChampionshipPrediction } from '@models/v2/championship/championship-prediction.model';
 import { UtilsService } from '@services/utils.service';
 
 @Injectable()
@@ -72,10 +72,7 @@ export class ChampionshipService {
       return ChampionshipService.noPoints;
    }
 
-   public static isChampionshipMatchGuessed(
-      championshipMatch: ChampionshipMatchNew,
-      championshipPrediction: ChampionshipPredictionNew
-   ): boolean {
+   public static isChampionshipMatchGuessed(championshipMatch: ChampionshipMatch, championshipPrediction: ChampionshipPrediction): boolean {
       if (championshipMatch.match.state !== MatchState.Ended) {
          return false;
       }
@@ -99,10 +96,10 @@ export class ChampionshipService {
     * Receives form of championship predictions, validates it,
     * and returns ready to send array
     * @param championshipPredictionsForm
-    * @returns {Partial<ChampionshipPredictionNew>[]}
+    * @returns {Partial<ChampionshipPrediction>[]}
     */
-   public createChampionshipPredictionsArray(championshipPredictionsForm: FormGroup): Partial<ChampionshipPredictionNew>[] {
-      const championshipPredictionsToUpdate: Partial<ChampionshipPredictionNew>[] = [];
+   public createChampionshipPredictionsArray(championshipPredictionsForm: FormGroup): Partial<ChampionshipPrediction>[] {
+      const championshipPredictionsToUpdate: Partial<ChampionshipPrediction>[] = [];
       for (const championshipPrediction of Object.keys(championshipPredictionsForm.value)) {
          const championshipMatchId = parseInt(championshipPrediction.split('_')[0], 10);
          // If there is no predictions on match

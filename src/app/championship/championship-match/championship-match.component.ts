@@ -3,10 +3,10 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 
 import { Sequence } from '@enums/sequence.enum';
-import { ChampionshipMatchNew } from '@models/v2/championship-match-new.model';
-import { ChampionshipPredictionNew } from '@models/v2/championship-prediction-new.model';
+import { ChampionshipMatch } from '@models/v2/championship/championship-match.model';
+import { ChampionshipPrediction } from '@models/v2/championship/championship-prediction.model';
 import { ChampionshipPredictionSearch } from '@models/search/championship-prediction-search.model';
-import { User } from '@models/user.model';
+import { User } from '@models/v1/user.model';
 import { CurrentStateService } from '@services/current-state.service';
 import { ChampionshipMatchNewService } from '@services/new/championship-match-new.service';
 import { ChampionshipPredictionNewService } from '@services/new/championship-prediction-new.service';
@@ -20,8 +20,8 @@ import { TitleService } from '@services/title.service';
 })
 export class ChampionshipMatchComponent implements OnInit {
    public authenticatedUser: User;
-   public championshipMatch: ChampionshipMatchNew;
-   public championshipPredictions: ChampionshipPredictionNew[];
+   public championshipMatch: ChampionshipMatch;
+   public championshipPredictions: ChampionshipPrediction[];
    public clubsLogosPath: string;
 
    constructor(

@@ -1,9 +1,9 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
 
-import { CompetitionNew } from '@models/v2/competition-new.model';
-import { CupApplicationNew } from '@models/v2/cup-application-new.model';
-import { UserNew } from '@models/v2/user-new.model';
+import { Competition } from '@models/v2/competition.model';
+import { CupApplication } from '@models/v2/cup/cup-application.model';
+import { User } from '@models/v2/user.model';
 import { CupApplicationNewService } from '@services/new/cup-application-new.service';
 import { DeviceService } from '@services/device.service';
 import { AuthNewService } from '@services/new/auth-new.service';
@@ -20,11 +20,11 @@ import { catchError, mergeMap } from 'rxjs/operators';
 })
 export class CupApplicationCreateModalComponent implements OnInit {
    @Input() public close: () => void;
-   @Input() public competition: CompetitionNew;
-   @Input() public cupApplication: Partial<CupApplicationNew>;
-   @Output() public successfullySubmitted = new EventEmitter<CupApplicationNew>();
+   @Input() public competition: Competition;
+   @Input() public cupApplication: Partial<CupApplication>;
+   @Output() public successfullySubmitted = new EventEmitter<CupApplication>();
 
-   public applicant: UserNew;
+   public applicant: User;
    public cupApplicationForm: FormGroup;
    public spinnerButton = false;
 

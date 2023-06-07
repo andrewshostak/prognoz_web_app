@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 
-import { TeamNew } from '@models/v2/team-new.model';
+import { Team } from '@models/v2/team/team.model';
 import { SettingsService } from '@services/settings.service';
 
 @Component({
@@ -9,7 +9,7 @@ import { SettingsService } from '@services/settings.service';
    templateUrl: './team-logo.component.html'
 })
 export class TeamLogoComponent {
-   @Input() public team: TeamNew;
+   @Input() public team: Team;
    @Input() public showTooltip: boolean = true;
 
    private teamLogosPath: string = SettingsService.teamsLogosPath + '/';

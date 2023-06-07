@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 
-import { Match } from '@models/match.model';
+import { Match } from '@models/v2/match.model';
 import { MatchService } from '@services/new/match.service';
 
 @Component({

@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
 
-import { ChampionshipRatingNew } from '@models/v2/championship-rating-new.model';
-import { User } from '@models/user.model';
+import { ChampionshipRating } from '@models/v2/championship/championship-rating.model';
+import { User } from '@models/v1/user.model';
 
 @Component({
    selector: 'app-championship-user-rating-details',
@@ -9,6 +9,6 @@ import { User } from '@models/user.model';
    styleUrls: ['./championship-user-rating-details.component.scss']
 })
 export class ChampionshipUserRatingDetailsComponent {
-   @Input() championshipRatingItem: ChampionshipRatingNew;
+   @Input() championshipRatingItem: ChampionshipRating;
    @Input() user: User;
 }

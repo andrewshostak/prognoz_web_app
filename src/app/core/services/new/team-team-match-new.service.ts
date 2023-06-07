@@ -2,8 +2,8 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
 import { environment } from '@env';
-import { GenerateTeamTeamMatchesNew } from '@models/v2/generate-team-team-matches-new.model';
-import { TeamTeamMatchNew } from '@models/v2/team-team-match-new.model';
+import { GenerateTeamTeamMatches } from '@models/v2/team/generate-team-team-matches.model';
+import { TeamTeamMatch } from '@models/v2/team/team-team-match.model';
 import { PaginatedResponse } from '@models/paginated-response.model';
 import { TeamTeamMatchSearch } from '@models/search/team-team-match-search.model';
 import { Observable } from 'rxjs';
@@ -15,9 +15,9 @@ export class TeamTeamMatchNewService {
 
    constructor(private httpClient: HttpClient) {}
 
-   public createTeamTeamMatch(teamTeamMatch: Partial<TeamTeamMatchNew>): Observable<TeamTeamMatchNew> {
+   public createTeamTeamMatch(teamTeamMatch: Partial<TeamTeamMatch>): Observable<TeamTeamMatch> {
       return this.httpClient
-         .post<{ team_team_match: TeamTeamMatchNew }>(this.teamTeamMatchesUrl, teamTeamMatch)
+         .post<{ team_team_match: TeamTeamMatch }>(this.teamTeamMatchesUrl, teamTeamMatch)
          .pipe(map(response => response.team_team_match));
    }
 
@@ -25,18 +25,18 @@ export class TeamTeamMatchNewService {
       return this.httpClient.delete<void>(`${this.teamTeamMatchesUrl}/${teamTeamMatchId}`);
    }
 
-   public generateTeamTeamMatches(generationOptions: GenerateTeamTeamMatchesNew): Observable<number> {
+   public generateTeamTeamMatches(generationOptions: GenerateTeamTeamMatches): Observable<number> {
       return this.httpClient.post<number>(`${this.teamTeamMatchesUrl}/generate`, generationOptions);
    }
 
-   public getTeamTeamMatch(teamTeamMatchId: number, relations: string[] = []): Observable<TeamTeamMatchNew> {
+   public getTeamTeamMatch(teamTeamMatchId: number, relations: string[] = []): Observable<TeamTeamMatch> {
       const params = new HttpParams({ fromObject: { 'relations[]': relations } });
       return this.httpClient
-         .get<{ team_team_match: TeamTeamMatchNew }>(`${this.teamTeamMatchesUrl}/${teamTeamMatchId}`, { params })
+         .get<{ team_team_match: TeamTeamMatch }>(`${this.teamTeamMatchesUrl}/${teamTeamMatchId}`, { params })
          .pipe(map(response => response.team_team_match));
    }
 
-   public getTeamTeamMatches(search: TeamTeamMatchSearch): Observable<PaginatedResponse<TeamTeamMatchNew>> {
+   public getTeamTeamMatches(search: TeamTeamMatchSearch): Observable<PaginatedResponse<TeamTeamMatch>> {
       let params: HttpParams = new HttpParams({ fromObject: { 'relations[]': search.relations || [] } });
 
       if (search.limit) {
@@ -62,16 +62,16 @@ export class TeamTeamMatchNewService {
          });
       }
 
-      return this.httpClient.get<PaginatedResponse<TeamTeamMatchNew>>(this.teamTeamMatchesUrl, { params });
+      return this.httpClient.get<PaginatedResponse<TeamTeamMatch>>(this.teamTeamMatchesUrl, { params });
    }
 
    updateGoalkeeper(teamTeamMatchId: number, goalkeeperId: number): Observable<void> {
       return this.httpClient.put<void>(`${this.teamTeamMatchesUrl}/${teamTeamMatchId}/goalkeeper`, { goalkeeper_id: goalkeeperId });
    }
 
-   public updateTeamTeamMatch(teamTeamMatchId: number, teamTeamMatch: Partial<TeamTeamMatchNew>): Observable<TeamTeamMatchNew> {
+   public updateTeamTeamMatch(teamTeamMatchId: number, teamTeamMatch: Partial<TeamTeamMatch>): Observable<TeamTeamMatch> {
       return this.httpClient
-         .put<{ team_team_match: TeamTeamMatchNew }>(`${this.teamTeamMatchesUrl}/${teamTeamMatchId}`, teamTeamMatch)
+         .put<{ team_team_match: TeamTeamMatch }>(`${this.teamTeamMatchesUrl}/${teamTeamMatchId}`, teamTeamMatch)
          .pipe(map(response => response.team_team_match));
    }
 }

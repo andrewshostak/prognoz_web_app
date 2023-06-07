@@ -4,7 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { TitleService } from '@services/title.service';
 import { TeamMatchNewService } from '@services/new/team-match-new.service';
 import { TeamMatchSearch } from '@models/search/team-match-search.model';
-import { TeamMatchNew } from '@models/v2/team-match-new.model';
+import { TeamMatch } from '@models/v2/team/team-match.model';
 import { PaginatedResponse } from '@models/paginated-response.model';
 import { SettingsService } from '@services/settings.service';
 import { filter, switchMap, tap } from 'rxjs/operators';
@@ -24,7 +24,7 @@ export class TeamResultsComponent implements OnInit {
       private titleService: TitleService
    ) {}
 
-   public teamMatches: TeamMatchNew[] = [];
+   public teamMatches: TeamMatch[] = [];
 
    public teamStageSelected(event: { teamStageId: number }): void {
       this.router.navigate(['/team', 'results', { team_stage_id: event.teamStageId }]);
@@ -34,7 +34,7 @@ export class TeamResultsComponent implements OnInit {
       this.subscribeToTeamStageIdUrlParamChange();
    }
 
-   private getTeamMatchesObservable(teamStageId: number): Observable<PaginatedResponse<TeamMatchNew>> {
+   private getTeamMatchesObservable(teamStageId: number): Observable<PaginatedResponse<TeamMatch>> {
       this.titleService.setTitle('Результати - Командний');
       const search: TeamMatchSearch = {
          teamStageId,
@@ -52,7 +52,7 @@ export class TeamResultsComponent implements OnInit {
          .pipe(
             filter(params => params.team_stage_id),
             switchMap(params => this.getTeamMatchesObservable(params.team_stage_id)),
-            tap((response: PaginatedResponse<TeamMatchNew>) => (this.teamMatches = response.data)) as any
+            tap((response: PaginatedResponse<TeamMatch>) => (this.teamMatches = response.data)) as any
          )
          .subscribe();
    }

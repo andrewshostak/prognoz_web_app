@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { ClubNew } from '@models/v2/club-new.model';
+import { Club } from '@models/v2/club.model';
 
 @Component({
    selector: 'app-club-create',
@@ -11,7 +11,7 @@ import { ClubNew } from '@models/v2/club-new.model';
 export class ClubCreateComponent {
    constructor(private router: Router) {}
 
-   public successfullySubmitted(club: ClubNew): void {
+   public successfullySubmitted(club: Club): void {
       this.router.navigate(['/', 'manage', 'clubs', club.id, 'edit']);
    }
 }

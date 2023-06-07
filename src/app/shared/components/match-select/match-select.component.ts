@@ -3,7 +3,7 @@ import { AbstractControl, FormGroup } from '@angular/forms';
 
 import { MatchState } from '@enums/match-state.enum';
 import { Sequence } from '@enums/sequence.enum';
-import { Match } from '@models/match.model';
+import { Match } from '@models/v2/match.model';
 import { PaginatedResponse } from '@models/paginated-response.model';
 import { MatchSearch } from '@models/search/match-search.model';
 import { MatchService } from '@services/new/match.service';

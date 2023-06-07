@@ -1,8 +1,8 @@
 import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 
 import { CupStageType } from '@enums/cup-stage-type.enum';
-import { CupCupMatchNew } from '@models/v2/cup-cup-match-new.model';
-import { CupStageNew } from '@models/v2/cup-stage-new.model';
+import { CupCupMatch } from '@models/v2/cup/cup-cup-match.model';
+import { CupStage } from '@models/v2/cup/cup-stage.model';
 import { CupCupMatchNewService } from '@services/new/cup-cup-match-new.service';
 import { isNil } from 'lodash';
 
@@ -12,13 +12,13 @@ import { isNil } from 'lodash';
    styleUrls: ['./cup-cup-matches-two-rounds.component.scss']
 })
 export class CupCupMatchesTwoRoundsComponent implements OnChanges {
-   @Input() public cupCupMatches: CupCupMatchNew[] = [];
-   @Input() public cupStage: CupStageNew;
-   @Input() public cupCupMatchesOfFirstStage: CupCupMatchNew[] = [];
+   @Input() public cupCupMatches: CupCupMatch[] = [];
+   @Input() public cupStage: CupStage;
+   @Input() public cupCupMatchesOfFirstStage: CupCupMatch[] = [];
 
    public cupStageTypes = CupStageType;
    public isNil = isNil;
-   public wrappedCupCupMatches: { current: CupCupMatchNew; first: CupCupMatchNew }[] = [];
+   public wrappedCupCupMatches: { current: CupCupMatch; first: CupCupMatch }[] = [];
 
    constructor(private cupCupMatchService: CupCupMatchNewService) {}
 
@@ -35,10 +35,7 @@ export class CupCupMatchesTwoRoundsComponent implements OnChanges {
       }
    }
 
-   public wrapCupCupMatches(
-      current: CupCupMatchNew[] = [],
-      first: CupCupMatchNew[] = []
-   ): { current: CupCupMatchNew; first: CupCupMatchNew }[] {
+   public wrapCupCupMatches(current: CupCupMatch[] = [], first: CupCupMatch[] = []): { current: CupCupMatch; first: CupCupMatch }[] {
       return current.reduce((acc, cupCupMatch) => {
          acc.push({
             current: cupCupMatch,

@@ -1,6 +1,6 @@
 import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 
-import { CupRatingNew } from '@models/v2/cup-rating-new.model';
+import { CupRating } from '@models/v2/cup/cup-rating.model';
 import { Label, SingleOrMultiDataSet } from 'ng2-charts/lib/base-chart.directive';
 import { ChartOptions } from 'chart.js';
 import { Color } from 'ng2-charts/lib/color';
@@ -11,7 +11,7 @@ import { Color } from 'ng2-charts/lib/color';
    styleUrls: ['./cup-rating-season-details.component.scss']
 })
 export class CupRatingSeasonDetailsComponent implements OnInit, OnChanges {
-   @Input() cupRating: CupRatingNew;
+   @Input() cupRating: CupRating;
 
    winDrawLossChartColors: Color[];
    winDrawLossChartLabels: Label[];
@@ -25,7 +25,7 @@ export class CupRatingSeasonDetailsComponent implements OnInit, OnChanges {
    ngOnChanges(simpleChanges: SimpleChanges) {
       for (const propName in simpleChanges) {
          if (propName === 'cupRating' && simpleChanges[propName].currentValue) {
-            const cupRating = simpleChanges[propName].currentValue as CupRatingNew;
+            const cupRating = simpleChanges[propName].currentValue as CupRating;
             this.winDrawLossChartLabels = ['Виграші', 'Нічиї', 'Програші'];
             this.winDrawLossChartColors = [{ backgroundColor: ['#28a745', '#ffc107', '#dc3545'] }];
             this.winDrawLossChartData = [cupRating.win, cupRating.draw, cupRating.loss];

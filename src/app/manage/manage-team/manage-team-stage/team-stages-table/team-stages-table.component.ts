@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit, TemplateRef } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 
 import { Sequence } from '@enums/sequence.enum';
-import { TeamStageNew } from '@models/v2/team-stage-new.model';
+import { TeamStage } from '@models/v2/team/team-stage.model';
 import { Pagination } from '@models/pagination.model';
 import { TeamStageSearch } from '@models/search/team-stage-search.model';
 import { TeamStageNewService } from '@services/new/team-stage-new.service';
@@ -23,9 +23,9 @@ import { NotificationsService } from 'angular2-notifications';
 })
 export class TeamStagesTableComponent implements OnDestroy, OnInit {
    public activatedRouteSubscription: Subscription;
-   public openedModal: OpenedModal<TeamStageNew>;
+   public openedModal: OpenedModal<TeamStage>;
    public paginationData: Pagination;
-   public teamStages: TeamStageNew[] = [];
+   public teamStages: TeamStage[] = [];
    public teamStageTypes = TeamStageState;
 
    constructor(
@@ -35,7 +35,7 @@ export class TeamStagesTableComponent implements OnDestroy, OnInit {
       private teamStageService: TeamStageNewService
    ) {}
 
-   public makeTeamStageActive(notStarted: TeamStageNew): void {
+   public makeTeamStageActive(notStarted: TeamStage): void {
       const teamStage = { ...notStarted, state: TeamStageState.Active };
       this.teamStageService.updateTeamStage(teamStage.id, teamStage).subscribe(
          response => {
@@ -50,7 +50,7 @@ export class TeamStagesTableComponent implements OnDestroy, OnInit {
       );
    }
 
-   public makeTeamStageEnded(active: TeamStageNew): void {
+   public makeTeamStageEnded(active: TeamStage): void {
       const teamStage = { ...active, state: TeamStageState.Ended };
       this.teamStageService.updateTeamStage(teamStage.id, teamStage).subscribe(
          response => {
@@ -91,22 +91,17 @@ export class TeamStagesTableComponent implements OnDestroy, OnInit {
       });
    }
 
-   public openActivateConfirm(content: NgbModalRef | TemplateRef<any>, data: TeamStageNew, submitted: (event) => void): void {
+   public openActivateConfirm(content: NgbModalRef | TemplateRef<any>, data: TeamStage, submitted: (event) => void): void {
       const message = `Активувати стадію ${data.title}?`;
       this.openConfirmModal(content, data, submitted, message);
    }
 
-   public openEndConfirm(content: NgbModalRef | TemplateRef<any>, data: TeamStageNew, submitted: (event) => void): void {
+   public openEndConfirm(content: NgbModalRef | TemplateRef<any>, data: TeamStage, submitted: (event) => void): void {
       const message = `Завершити стадію ${data.title}?`;
       this.openConfirmModal(content, data, submitted, message);
    }
 
-   private openConfirmModal(
-      content: NgbModalRef | TemplateRef<any>,
-      data: TeamStageNew,
-      submitted: (event) => void,
-      message: string
-   ): void {
+   private openConfirmModal(content: NgbModalRef | TemplateRef<any>, data: TeamStage, submitted: (event) => void, message: string): void {
       const reference = this.ngbModalService.open(content, { centered: true });
       this.openedModal = { reference, data, submitted: () => submitted.call(this), message };
    }

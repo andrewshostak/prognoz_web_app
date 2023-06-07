@@ -3,8 +3,8 @@ import { AbstractControl, FormArray, FormControl, FormGroup, Validators } from '
 
 import { TeamStageState } from '@enums/team-stage-state.enum';
 import { TeamStageType } from '@enums/team-stage-type.enum';
-import { GenerateTeamTeamMatchesNew } from '@models/v2/generate-team-team-matches-new.model';
-import { TeamStageNew } from '@models/v2/team-stage-new.model';
+import { GenerateTeamTeamMatches } from '@models/v2/team/generate-team-team-matches.model';
+import { TeamStage } from '@models/v2/team/team-stage.model';
 import { TeamStageSearch } from '@models/search/team-stage-search.model';
 import { TeamStageNewService } from '@services/new/team-stage-new.service';
 import { TeamTeamMatchNewService } from '@services/new/team-team-match-new.service';
@@ -22,7 +22,7 @@ export class TeamTeamMatchGenerationModalComponent implements OnInit {
    @Output() public successfullySubmitted = new EventEmitter<void>();
 
    public generationForm: FormGroup;
-   public teamStages: TeamStageNew[] = [];
+   public teamStages: TeamStage[] = [];
    public spinnerButton = false;
    public numberOfTeamsInPot: number = 0;
 
@@ -102,7 +102,7 @@ export class TeamTeamMatchGenerationModalComponent implements OnInit {
       }
 
       this.spinnerButton = true;
-      const toGenerate: GenerateTeamTeamMatchesNew = {
+      const toGenerate: GenerateTeamTeamMatches = {
          team_stage_id: this.generationForm.get('team_stage_id').value
       };
       if (this.isTeamCupGroupStage(this.generationForm.get('team_stage_id').value)) {

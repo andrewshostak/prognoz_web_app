@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { TeamNew } from '@models/v2/team-new.model';
+import { Team } from '@models/v2/team/team.model';
 
 @Component({
    selector: 'app-team-create',
@@ -11,7 +11,7 @@ import { TeamNew } from '@models/v2/team-new.model';
 export class TeamCreateComponent {
    constructor(private router: Router) {}
 
-   public successfullySubmitted(team: TeamNew): void {
+   public successfullySubmitted(team: Team): void {
       this.router.navigate(['/', 'manage', 'team', 'teams', team.id, 'edit']);
    }
 }

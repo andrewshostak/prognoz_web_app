@@ -4,10 +4,10 @@ import { FormControl, FormGroup } from '@angular/forms';
 import { MatchState } from '@enums/match-state.enum';
 import { ModelStatus } from '@enums/model-status.enum';
 import { Sequence } from '@enums/sequence.enum';
-import { ChampionshipPredictionNew } from '@models/v2/championship-prediction-new.model';
-import { ChampionshipMatchNew } from '@models/v2/championship-match-new.model';
+import { ChampionshipPrediction } from '@models/v2/championship/championship-prediction.model';
+import { ChampionshipMatch } from '@models/v2/championship/championship-match.model';
 import { ChampionshipMatchSearch } from '@models/search/championship-match-search.model';
-import { User } from '@models/user.model';
+import { User } from '@models/v1/user.model';
 import { ChampionshipPredictionNewService } from '@services/new/championship-prediction-new.service';
 import { ChampionshipService } from '@services/championship/championship.service';
 import { CurrentStateService } from '@services/current-state.service';
@@ -20,12 +20,12 @@ import { get } from 'lodash';
 import { iif, Observable, of } from 'rxjs';
 import { mergeMap } from 'rxjs/operators';
 import { PaginatedResponse } from '@models/paginated-response.model';
-import { CompetitionNew } from '@models/v2/competition-new.model';
+import { Competition } from '@models/v2/competition.model';
 import { CompetitionSearch } from '@models/search/competition-search.model';
 import { CompetitionState } from '@enums/competition-state.enum';
 import { Tournament } from '@enums/tournament.enum';
 import { CompetitionNewService } from '@services/new/competition-new.service';
-import { ChampionshipRatingNew } from '@models/v2/championship-rating-new.model';
+import { ChampionshipRating } from '@models/v2/championship/championship-rating.model';
 import { ChampionshipRatingSearch } from '@models/search/championship-rating-search.model';
 import { ChampionshipRatingNewService } from '@services/new/championship-rating-new.service';
 
@@ -36,10 +36,10 @@ import { ChampionshipRatingNewService } from '@services/new/championship-rating-
 })
 export class ChampionshipHomeComponent implements OnInit {
    public authenticatedUser: User;
-   public championshipMatches: ChampionshipMatchNew[];
-   public championshipPredictions: Partial<ChampionshipPredictionNew>[];
+   public championshipMatches: ChampionshipMatch[];
+   public championshipPredictions: Partial<ChampionshipPrediction>[];
    public championshipPredictionsForm: FormGroup;
-   public championshipRatingItems: ChampionshipRatingNew[];
+   public championshipRatingItems: ChampionshipRating[];
    public errorChampionshipMatches: string;
    public getHomeCityInBrackets = UtilsService.getHomeCityInBrackets;
    public ratingUpdatedAt: string;
@@ -146,7 +146,7 @@ export class ChampionshipHomeComponent implements OnInit {
       );
    }
 
-   private getActiveCompetitionObservable(): Observable<PaginatedResponse<CompetitionNew>> {
+   private getActiveCompetitionObservable(): Observable<PaginatedResponse<Competition>> {
       const search: CompetitionSearch = {
          limit: 1,
          states: [CompetitionState.Active],
@@ -156,7 +156,7 @@ export class ChampionshipHomeComponent implements OnInit {
       return this.competitionService.getCompetitions(search);
    }
 
-   private getChampionshipRatingObservable(competitionId: number): Observable<PaginatedResponse<ChampionshipRatingNew>> {
+   private getChampionshipRatingObservable(competitionId: number): Observable<PaginatedResponse<ChampionshipRating>> {
       const search: ChampionshipRatingSearch = {
          limit: 5,
          relations: ['user.mainClub'],
@@ -168,7 +168,7 @@ export class ChampionshipHomeComponent implements OnInit {
       return this.championshipRatingService.getChampionshipRating(search);
    }
 
-   private updateForm(championshipMatches: ChampionshipMatchNew[], isAuthenticatedUser: boolean): void {
+   private updateForm(championshipMatches: ChampionshipMatch[], isAuthenticatedUser: boolean): void {
       this.championshipMatches = championshipMatches;
       if (isAuthenticatedUser) {
          this.championshipPredictionsForm = new FormGroup({});

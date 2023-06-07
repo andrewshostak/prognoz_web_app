@@ -2,8 +2,8 @@ import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 import { CommentNewService } from '@app/news/shared/comment-new.service';
-import { CommentNew } from '@models/v2/comment-new.model';
-import { UserNew } from '@models/v2/user-new.model';
+import { Comment } from '@models/v2/comment.model';
+import { User } from '@models/v2/user.model';
 import { AuthNewService } from '@services/new/auth-new.service';
 import { NotificationsService } from 'angular2-notifications';
 import { trim } from 'lodash';
@@ -14,11 +14,11 @@ import { trim } from 'lodash';
 })
 export class CommentFormComponent implements OnInit {
    @Input() public newsId: number;
-   @Output() public commentCreated = new EventEmitter<CommentNew>();
+   @Output() public commentCreated = new EventEmitter<Comment>();
 
    public commentForm: FormGroup;
    public spinnerButton = false;
-   public user: UserNew;
+   public user: User;
 
    constructor(
       private authService: AuthNewService,

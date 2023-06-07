@@ -3,7 +3,7 @@ import { TestBed } from '@angular/core/testing';
 
 import { Sequence } from '@enums/sequence.enum';
 import { environment } from '@env';
-import { Match } from '@models/match.model';
+import { Match } from '@models/v2/match.model';
 import { PaginatedResponse } from '@models/paginated-response.model';
 import { MatchSearch } from '@models/search/match-search.model';
 import { MatchService } from '@services/new/match.service';

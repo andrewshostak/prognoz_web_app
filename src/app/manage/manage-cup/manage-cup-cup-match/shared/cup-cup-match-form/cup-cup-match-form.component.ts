@@ -2,9 +2,9 @@ import { Location } from '@angular/common';
 import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
 
-import { CupCupMatchNew } from '@models/v2/cup-cup-match-new.model';
-import { CupStageNew } from '@models/v2/cup-stage-new.model';
-import { UserNew } from '@models/v2/user-new.model';
+import { CupCupMatch } from '@models/v2/cup/cup-cup-match.model';
+import { CupStage } from '@models/v2/cup/cup-stage.model';
+import { User } from '@models/v2/user.model';
 import { CupCupMatchNewService } from '@services/new/cup-cup-match-new.service';
 import { CupStageNewService } from '@services/new/cup-stage-new.service';
 import { UserNewService } from '@services/new/user-new.service';
@@ -22,12 +22,12 @@ import { omit, uniqBy } from 'lodash';
    styleUrls: ['./cup-cup-match-form.component.scss']
 })
 export class CupCupMatchFormComponent implements OnChanges, OnInit {
-   @Input() public cupCupMatch: CupCupMatchNew;
+   @Input() public cupCupMatch: CupCupMatch;
 
    public cupCupMatchForm: FormGroup;
-   public cupStages: CupStageNew[] = [];
-   public homeUser: UserNew;
-   public awayUser: UserNew;
+   public cupStages: CupStage[] = [];
+   public homeUser: User;
+   public awayUser: User;
 
    constructor(
       private cupCupMatchService: CupCupMatchNewService,
@@ -66,7 +66,7 @@ export class CupCupMatchFormComponent implements OnChanges, OnInit {
          return;
       }
 
-      const cupCupMatch = omit(this.cupCupMatchForm.value, ['preserve']) as CupCupMatchNew;
+      const cupCupMatch = omit(this.cupCupMatchForm.value, ['preserve']) as CupCupMatch;
       this.cupCupMatch ? this.updateCupCupMatch(cupCupMatch) : this.createCupCupMatch(cupCupMatch);
    }
 
@@ -120,7 +120,7 @@ export class CupCupMatchFormComponent implements OnChanges, OnInit {
          .subscribe(response => (this.cupStages = uniqBy(this.cupStages.concat(response.data), 'id')));
    }
 
-   private createCupCupMatch(cupCupMatch: CupCupMatchNew): void {
+   private createCupCupMatch(cupCupMatch: CupCupMatch): void {
       this.cupCupMatchService.createCupCupMatch(cupCupMatch).subscribe(() => {
          this.notificationsService.success('Успішно', 'Кубок-матч створено');
          const preserve = this.cupCupMatchForm.get('preserve').value;
@@ -139,7 +139,7 @@ export class CupCupMatchFormComponent implements OnChanges, OnInit {
       });
    }
 
-   private updateCupCupMatch(cupCupMatch: CupCupMatchNew): void {
+   private updateCupCupMatch(cupCupMatch: CupCupMatch): void {
       this.cupCupMatchService.updateCupCupMatch(this.cupCupMatch.id, cupCupMatch).subscribe(() => {
          this.notificationsService.success('Успішно', 'Кубок-матч змінено');
          this.location.back();

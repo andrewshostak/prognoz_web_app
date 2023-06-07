@@ -3,13 +3,13 @@ import { Component, OnInit } from '@angular/core';
 import { ModelStatus } from '@enums/model-status.enum';
 import { MatchState } from '@enums/match-state.enum';
 import { Sequence } from '@enums/sequence.enum';
-import { ChampionshipMatchNew } from '@models/v2/championship-match-new.model';
+import { ChampionshipMatch } from '@models/v2/championship/championship-match.model';
 import { ChampionshipMatchSearch } from '@models/search/championship-match-search.model';
 import { ChampionshipMatchNewService } from '@services/new/championship-match-new.service';
 import { SettingsService } from '@services/settings.service';
 import { TitleService } from '@services/title.service';
 import { NewsNewService } from '@services/new/news-new.service';
-import { NewsNew } from '@models/v2/news-new.model';
+import { News } from '@models/v2/news.model';
 import { NewsSearch } from '@models/search/news-search.model';
 
 @Component({
@@ -18,10 +18,10 @@ import { NewsSearch } from '@models/search/news-search.model';
    templateUrl: './home.component.html'
 })
 export class HomeComponent implements OnInit {
-   public championshipMatches: ChampionshipMatchNew[];
+   public championshipMatches: ChampionshipMatch[];
    public clubsLogosPath: string;
    public errorChampionshipMatches: string;
-   public news: NewsNew[];
+   public news: News[];
    public newsImagesUrl = SettingsService.newsLogosPath;
 
    constructor(
