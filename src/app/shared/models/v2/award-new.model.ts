@@ -1,5 +1,4 @@
 /* tslint:disable:variable-name */
-// TODO: rename folder to v2
 export class AwardNew {
    id: number;
    title: string;

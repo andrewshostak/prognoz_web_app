@@ -2,7 +2,7 @@ import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { FormArray, FormControl, FormGroup } from '@angular/forms';
 
 import { NotificationsService } from 'angular2-notifications';
-import { TeamMatch } from '@models/team/team-match.model';
+import { TeamMatch } from '@models/v1/team-match.model';
 import { TeamPredictionNewService } from '@services/new/team-prediction-new.service';
 import { UserNew } from '@models/v2/user-new.model';
 

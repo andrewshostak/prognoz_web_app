@@ -1,7 +1,6 @@
 // tslint:disable:variable-name
 import { Match } from '@models/match.model';
 
-// TODO: rename folder to v1
 export class TeamMatch {
    id: number;
    competition_id: number;

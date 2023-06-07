@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 
 import { MatchState } from '@enums/match-state.enum';
-import { TeamMatch } from '@models/team/team-match.model';
+import { TeamMatch } from '@models/v1/team-match.model';
 import { ChampionshipService } from '@services/championship/championship.service';
 
 @Injectable()
