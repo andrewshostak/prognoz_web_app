@@ -2,9 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 
 import { ChampionshipRatingNewService } from '@services/new/championship-rating-new.service';
-import { CurrentStateService } from '@services/current-state.service';
+import { AuthNewService } from '@services/new/auth-new.service';
 import { TitleService } from '@services/title.service';
-import { User } from '@models/v1/user.model';
+import { User } from '@models/v2/user.model';
 import { ChampionshipRating } from '@models/v2/championship/championship-rating.model';
 import { ChampionshipRatingSearch } from '@models/search/championship/championship-rating-search.model';
 import { SettingsService } from '@services/settings.service';
@@ -17,9 +17,9 @@ import { Sequence } from '@enums/sequence.enum';
 })
 export class ChampionshipCompetitionRatingComponent implements OnInit {
    constructor(
+      private authService: AuthNewService,
       private activatedRoute: ActivatedRoute,
       private championshipRatingService: ChampionshipRatingNewService,
-      private currentStateService: CurrentStateService,
       private titleService: TitleService
    ) {}
 
@@ -27,7 +27,7 @@ export class ChampionshipCompetitionRatingComponent implements OnInit {
    championshipRatingItems: ChampionshipRating[];
 
    ngOnInit() {
-      this.authenticatedUser = this.currentStateService.getUser();
+      this.authenticatedUser = this.authService.getUser();
       this.activatedRoute.params.forEach((params: Params) => {
          this.titleService.setTitle(`Рейтинг гравців в конкурсі ${params.competitionId} - Чемпіонат`);
          const search: ChampionshipRatingSearch = {

@@ -5,10 +5,10 @@ import { MatchState } from '@enums/match-state.enum';
 import { Sequence } from '@enums/sequence.enum';
 import { ChampionshipMatch } from '@models/v2/championship/championship-match.model';
 import { ChampionshipMatchSearch } from '@models/search/championship/championship-match-search.model';
-import { User } from '@models/v1/user.model';
+import { User } from '@models/v2/user.model';
+import { AuthNewService } from '@services/new/auth-new.service';
 import { ChampionshipPredictionNewService } from '@services/new/championship-prediction-new.service';
 import { ChampionshipService } from '@services/championship/championship.service';
-import { CurrentStateService } from '@services/current-state.service';
 import { ChampionshipMatchNewService } from '@services/new/championship-match-new.service';
 import { SettingsService } from '@services/settings.service';
 import { TitleService } from '@services/title.service';
@@ -27,17 +27,17 @@ export class ChampionshipPredictionsComponent implements OnInit {
    public spinnerButton = false;
 
    constructor(
+      private authService: AuthNewService,
       private championshipMatchService: ChampionshipMatchNewService,
       private championshipPredictionNewService: ChampionshipPredictionNewService,
       private championshipService: ChampionshipService,
-      private currentStateService: CurrentStateService,
       private notificationsService: NotificationsService,
       private titleService: TitleService
    ) {}
 
    public ngOnInit(): void {
       this.titleService.setTitle('Зробити прогнози - Чемпіонат');
-      this.authenticatedUser = this.currentStateService.getUser();
+      this.authenticatedUser = this.authService.getUser();
       this.championshipPredictionsForm = new FormGroup({});
       this.getChampionshipMatchesData();
    }

@@ -7,10 +7,10 @@ import { Sequence } from '@enums/sequence.enum';
 import { ChampionshipPrediction } from '@models/v2/championship/championship-prediction.model';
 import { ChampionshipMatch } from '@models/v2/championship/championship-match.model';
 import { ChampionshipMatchSearch } from '@models/search/championship/championship-match-search.model';
-import { User } from '@models/v1/user.model';
+import { User } from '@models/v2/user.model';
 import { ChampionshipPredictionNewService } from '@services/new/championship-prediction-new.service';
 import { ChampionshipService } from '@services/championship/championship.service';
-import { CurrentStateService } from '@services/current-state.service';
+import { AuthNewService } from '@services/new/auth-new.service';
 import { ChampionshipMatchNewService } from '@services/new/championship-match-new.service';
 import { SettingsService } from '@services/settings.service';
 import { TitleService } from '@services/title.service';
@@ -46,12 +46,12 @@ export class ChampionshipHomeComponent implements OnInit {
    public spinnerButton = false;
 
    constructor(
+      private authService: AuthNewService,
       private championshipMatchService: ChampionshipMatchNewService,
       private championshipPredictionNewService: ChampionshipPredictionNewService,
       private championshipService: ChampionshipService,
       private championshipRatingService: ChampionshipRatingNewService,
       private competitionService: CompetitionNewService,
-      private currentStateService: CurrentStateService,
       private notificationsService: NotificationsService,
       private titleService: TitleService
    ) {}
@@ -124,7 +124,7 @@ export class ChampionshipHomeComponent implements OnInit {
 
    public ngOnInit(): void {
       this.titleService.setTitle('Найближчі матчі, останні прогнози і топ-рейтингу - Чемпіонат');
-      this.authenticatedUser = this.currentStateService.getUser();
+      this.authenticatedUser = this.authService.getUser();
       this.championshipPredictionsForm = new FormGroup({});
       this.getChampionshipMatchesData();
       this.getChampionshipRatingData();

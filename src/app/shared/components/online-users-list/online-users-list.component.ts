@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 
-import { User } from '@models/v1/user.model';
+import { User } from '@models/v2/user.model';
 import { CurrentStateService } from '@services/current-state.service';
 import { Subscription } from 'rxjs';
 

@@ -1,6 +1,6 @@
 import { Competition } from '@models/v2/competition.model';
 import { Team } from '@models/v2/team/team.model';
-import { User } from '@models/v1/user.model';
+import { User } from '@models/v2/user.model';
 
 /* tslint:disable:variable-name */
 export class TeamParticipant {

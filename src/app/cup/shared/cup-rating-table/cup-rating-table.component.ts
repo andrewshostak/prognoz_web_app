@@ -2,7 +2,6 @@ import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 
 import { CupRatingCalculated } from '@models/v2/cup/cup-rating-calculated.model';
 import { User } from '@models/v2/user.model';
-import { User as UserV1 } from '@models/v1/user.model';
 
 @Component({
    selector: 'app-cup-rating-table',
@@ -11,7 +10,7 @@ import { User as UserV1 } from '@models/v1/user.model';
 })
 export class CupRatingTableComponent implements OnChanges {
    @Input() public cupRating: CupRatingCalculated[];
-   @Input() public authenticatedUser: UserV1;
+   @Input() public authenticatedUser: User;
 
    seasons: { [id: number]: { title: string; coefficient: number } } = {};
    cupRatingForTemplate: {

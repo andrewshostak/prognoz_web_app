@@ -2,7 +2,7 @@ import { ChangeDetectorRef, Component, Input, OnChanges, OnInit, SimpleChanges }
 import { FormGroup } from '@angular/forms';
 
 import { ChampionshipMatch } from '@models/v2/championship/championship-match.model';
-import { User } from '@models/v1/user.model';
+import { User } from '@models/v2/user.model';
 import { ChampionshipMatchNewService } from '@services/new/championship-match-new.service';
 import { SettingsService } from '@services/settings.service';
 

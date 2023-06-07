@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 
 import { User } from '@models/v2/user.model';
-import { User as UserV1 } from '@models/v1/user.model';
 import { AuthNewService } from '@services/new/auth-new.service';
 import { PusherService } from '@services/pusher.service';
 import { Subject } from 'rxjs';
@@ -34,13 +33,6 @@ export class CurrentStateService {
 
    get teamCompetitionId(): number {
       return this.selectedTeamCompetitionId;
-   }
-
-   /**
-    * @deprecated all components should use this.authService.getUser()
-    */
-   public getUser(): UserV1 {
-      return this.authService.getUser() as UserV1;
    }
 
    public initialize(): void {
@@ -87,7 +79,7 @@ export class CurrentStateService {
     * @param userId
     * @param userInfo
     */
-   private addOnlineUser(userId: string, userInfo: UserV1): void {
+   private addOnlineUser(userId: string, userInfo: User): void {
       this.onlineUsers.push({ id: parseInt(userId, 10), name: userInfo.name });
    }
 

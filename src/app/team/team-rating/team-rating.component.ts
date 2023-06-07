@@ -7,8 +7,8 @@ import { TeamRatingUser } from '@models/v2/team/team-rating-user.model';
 import { PaginatedResponse } from '@models/paginated-response.model';
 import { TeamRatingSearch } from '@models/search/team/team-rating-search.model';
 import { TeamRatingUserSearch } from '@models/search/team/team-rating-user-search.model';
-import { User } from '@models/v1/user.model';
-import { CurrentStateService } from '@services/current-state.service';
+import { User } from '@models/v2/user.model';
+import { AuthNewService } from '@services/new/auth-new.service';
 import { CompetitionNewService } from '@services/new/competition-new.service';
 import { TeamRatingUserNewService } from '@services/new/team-rating-user-new.service';
 import { TeamRatingNewService } from '@services/new/team-rating-new.service';
@@ -34,9 +34,9 @@ export class TeamRatingComponent implements OnDestroy, OnInit {
    public competition: Competition;
 
    constructor(
+      private authService: AuthNewService,
       private activatedRoute: ActivatedRoute,
       private competitionNewService: CompetitionNewService,
-      private currentStateService: CurrentStateService,
       private router: Router,
       private teamRatingService: TeamRatingNewService,
       private teamRatingUserService: TeamRatingUserNewService,
@@ -55,7 +55,7 @@ export class TeamRatingComponent implements OnDestroy, OnInit {
 
    public ngOnInit() {
       this.titleService.setTitle('Рейтинг команд, бомбардирів і воротарів - Командний');
-      this.authenticatedUser = this.currentStateService.getUser();
+      this.authenticatedUser = this.authService.getUser();
       this.activatedRouteSubscription = this.activatedRoute.params
          .pipe(filter(params => params.competition_id))
          .subscribe((params: Params) => {

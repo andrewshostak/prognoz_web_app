@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 
 import { CupRatingCalculated } from '@models/v2/cup/cup-rating-calculated.model';
-import { User } from '@models/v1/user.model';
-import { CurrentStateService } from '@services/current-state.service';
+import { User } from '@models/v2/user.model';
+import { AuthNewService } from '@services/new/auth-new.service';
 import { CupRatingNewService } from '@services/new/cup-rating-new.service';
 import { TitleService } from '@services/title.service';
 
@@ -15,15 +15,11 @@ export class CupRatingComponent implements OnInit {
    public authenticatedUser: User;
    public cupRating: CupRatingCalculated[];
 
-   constructor(
-      private cupRatingService: CupRatingNewService,
-      private currentStateService: CurrentStateService,
-      private titleService: TitleService
-   ) {}
+   constructor(private authService: AuthNewService, private cupRatingService: CupRatingNewService, private titleService: TitleService) {}
 
    public ngOnInit() {
       this.titleService.setTitle('Рейтинг гравців - Кубок');
-      this.authenticatedUser = this.currentStateService.getUser();
+      this.authenticatedUser = this.authService.getUser();
       this.getCupRatingData();
    }
 

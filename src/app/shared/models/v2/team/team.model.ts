@@ -1,6 +1,6 @@
 /* tslint:disable:variable-name */
 import { Club } from '@models/v2/club.model';
-import { User } from '@models/v1/user.model';
+import { User } from '@models/v2/user.model';
 
 export class Team {
    id: number;

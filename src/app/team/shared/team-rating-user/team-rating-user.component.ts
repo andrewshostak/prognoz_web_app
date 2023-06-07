@@ -2,7 +2,7 @@ import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 
 import { Team } from '@models/v2/team/team.model';
 import { TeamRatingUser } from '@models/v2/team/team-rating-user.model';
-import { User } from '@models/v1/user.model';
+import { User } from '@models/v2/user.model';
 
 @Component({
    selector: 'app-team-rating-user',

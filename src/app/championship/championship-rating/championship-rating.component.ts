@@ -3,8 +3,8 @@ import { Component, OnInit } from '@angular/core';
 import { MatchState } from '@enums/match-state.enum';
 import { Sequence } from '@enums/sequence.enum';
 import { ChampionshipMatchSearch } from '@models/search/championship/championship-match-search.model';
-import { User } from '@models/v1/user.model';
-import { CurrentStateService } from '@services/current-state.service';
+import { User } from '@models/v2/user.model';
+import { AuthNewService } from '@services/new/auth-new.service';
 import { ChampionshipMatchNewService } from '@services/new/championship-match-new.service';
 import { TitleService } from '@services/title.service';
 import { get } from 'lodash';
@@ -32,16 +32,16 @@ export class ChampionshipRatingComponent implements OnInit {
    public ratingUpdatedAt: string;
 
    constructor(
+      private authService: AuthNewService,
       private championshipRatingService: ChampionshipRatingNewService,
       private championshipMatchService: ChampionshipMatchNewService,
       private competitionService: CompetitionNewService,
-      private currentStateService: CurrentStateService,
       private titleService: TitleService
    ) {}
 
    public ngOnInit(): void {
       this.titleService.setTitle('Рейтинг гравців - Чемпіонат');
-      this.authenticatedUser = this.currentStateService.getUser();
+      this.authenticatedUser = this.authService.getUser();
       this.getLastMatchData();
       this.getActiveCompetitionObservable()
          .pipe(
