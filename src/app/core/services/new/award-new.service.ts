@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { AwardNew } from '@models/new/award-new.model';
+import { AwardNew } from '@models/v2/award-new.model';
 
 @Injectable()
 export class AwardNewService {

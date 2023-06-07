@@ -4,9 +4,9 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { environment } from '@env';
 import { PaginatedResponse } from '@models/paginated-response.model';
 import { ChampionshipRatingSearch } from '@models/search/championship-rating-search.model';
-import { ChampionshipRatingNew } from '@models/new/championship-rating-new.model';
+import { ChampionshipRatingNew } from '@models/v2/championship-rating-new.model';
 import { Observable } from 'rxjs';
-import { ChampionshipSeasonRatingItem } from '@models/new/cmapionship-rating-season-new.model';
+import { ChampionshipSeasonRatingItem } from '@models/v2/cmapionship-rating-season-new.model';
 
 @Injectable()
 export class ChampionshipRatingNewService {

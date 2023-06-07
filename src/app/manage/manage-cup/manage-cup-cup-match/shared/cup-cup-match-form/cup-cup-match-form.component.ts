@@ -2,9 +2,9 @@ import { Location } from '@angular/common';
 import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
 
-import { CupCupMatchNew } from '@models/new/cup-cup-match-new.model';
-import { CupStageNew } from '@models/new/cup-stage-new.model';
-import { UserNew } from '@models/new/user-new.model';
+import { CupCupMatchNew } from '@models/v2/cup-cup-match-new.model';
+import { CupStageNew } from '@models/v2/cup-stage-new.model';
+import { UserNew } from '@models/v2/user-new.model';
 import { CupCupMatchNewService } from '@services/new/cup-cup-match-new.service';
 import { CupStageNewService } from '@services/new/cup-stage-new.service';
 import { UserNewService } from '@services/new/user-new.service';

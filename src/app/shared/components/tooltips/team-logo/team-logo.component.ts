@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 
-import { TeamNew } from '@models/new/team-new.model';
+import { TeamNew } from '@models/v2/team-new.model';
 import { SettingsService } from '@services/settings.service';
 
 @Component({

@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
-import { UserNew } from '@models/new/user-new.model';
+import { UserNew } from '@models/v2/user-new.model';
 import { CurrentStateService } from '@services/current-state.service';
 import { AuthNewService } from '@services/new/auth-new.service';
 import { TitleService } from '@services/title.service';
@@ -66,5 +66,5 @@ export class AuthSignUpComponent implements OnInit {
       this.authService.setToken(response.token);
    }
 
-   // todo: move re-captcha siteKey to env vars
+   // TODO: move re-captcha siteKey to env vars
 }

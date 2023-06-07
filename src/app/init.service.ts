@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
 import { environment } from '@env';
-import { UserNew } from '@models/new/user-new.model';
+import { UserNew } from '@models/v2/user-new.model';
 import { AuthNewService } from '@services/new/auth-new.service';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';

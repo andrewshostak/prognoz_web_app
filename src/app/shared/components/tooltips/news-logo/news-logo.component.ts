@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
 
 import { SettingsService } from '@services/settings.service';
-import { NewsNew } from '@models/new/news-new.model';
+import { NewsNew } from '@models/v2/news-new.model';
 
 @Component({
    selector: 'app-news-logo',

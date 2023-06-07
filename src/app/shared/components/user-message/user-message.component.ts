@@ -2,9 +2,9 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 
-import { CommentNew } from '@models/new/comment-new.model';
-import { GuestbookMessageNew } from '@models/new/guestbook-message-new.model';
-import { UserNew } from '@models/new/user-new.model';
+import { CommentNew } from '@models/v2/comment-new.model';
+import { GuestbookMessageNew } from '@models/v2/guestbook-message-new.model';
+import { UserNew } from '@models/v2/user-new.model';
 
 @Component({
    selector: 'app-user-message',

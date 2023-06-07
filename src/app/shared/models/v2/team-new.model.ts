@@ -1,5 +1,5 @@
 /* tslint:disable:variable-name */
-import { ClubNew } from '@models/new/club-new.model';
+import { ClubNew } from '@models/v2/club-new.model';
 import { User } from '@models/user.model';
 
 export class TeamNew {

@@ -4,7 +4,7 @@ import { ActivatedRoute, Params } from '@angular/router';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { NotificationsService } from 'angular2-notifications';
 import { NewsNewService } from '@services/new/news-new.service';
-import { NewsNew } from '@models/new/news-new.model';
+import { NewsNew } from '@models/v2/news-new.model';
 import { NewsSearch } from '@models/search/news-search.model';
 import { SettingsService } from '@services/settings.service';
 import { Sequence } from '@enums/sequence.enum';

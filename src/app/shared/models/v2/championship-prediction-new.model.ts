@@ -1,4 +1,4 @@
-import { ChampionshipMatchNew } from '@models/new/championship-match-new.model';
+import { ChampionshipMatchNew } from '@models/v2/championship-match-new.model';
 import { User } from '@models/user.model';
 
 /* tslint:disable:variable-name */

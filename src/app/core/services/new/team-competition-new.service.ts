@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
 
 import { MatchState } from '@enums/match-state.enum';
-import { TeamMatchNew } from '@models/new/team-match-new.model';
-import { TeamNew } from '@models/new/team-new.model';
-import { TeamParticipantNew } from '@models/new/team-participant-new.model';
-import { TeamPredictionNew } from '@models/new/team-prediction-new.model';
+import { TeamMatchNew } from '@models/v2/team-match-new.model';
+import { TeamNew } from '@models/v2/team-new.model';
+import { TeamParticipantNew } from '@models/v2/team-participant-new.model';
+import { TeamPredictionNew } from '@models/v2/team-prediction-new.model';
 import { DeviceService } from '@services/device.service';
 import { TeamNewService } from '@services/new/team-new.service';
 import { TeamParticipantNewService } from '@services/new/team-participant-new.service';

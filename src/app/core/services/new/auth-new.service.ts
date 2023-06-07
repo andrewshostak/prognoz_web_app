@@ -2,10 +2,10 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
 import { environment } from '@env';
-import { AuthReset } from '@models/new/auth/auth-reset.model';
-import { AuthSignIn } from '@models/new/auth/auth-sign-in.model';
-import { AuthSignUp } from '@models/new/auth/auth-sign-up.model';
-import { UserNew } from '@models/new/user-new.model';
+import { AuthReset } from '@models/v2/auth/auth-reset.model';
+import { AuthSignIn } from '@models/v2/auth/auth-sign-in.model';
+import { AuthSignUp } from '@models/v2/auth/auth-sign-up.model';
+import { UserNew } from '@models/v2/user-new.model';
 import { get, omit, uniq } from 'lodash';
 import { Observable } from 'rxjs';
 

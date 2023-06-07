@@ -1,6 +1,6 @@
 /* tslint:disable:variable-name */
-import { CupRatingNew } from '@models/new/cup-rating-new.model';
-import { UserNew } from '@models/new/user-new.model';
+import { CupRatingNew } from '@models/v2/cup-rating-new.model';
+import { UserNew } from '@models/v2/user-new.model';
 
 export class CupRatingCalculatedNew {
    user_id: number;

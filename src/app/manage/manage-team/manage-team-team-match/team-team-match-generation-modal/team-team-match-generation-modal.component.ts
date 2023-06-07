@@ -3,8 +3,8 @@ import { AbstractControl, FormArray, FormControl, FormGroup, Validators } from '
 
 import { TeamStageState } from '@enums/team-stage-state.enum';
 import { TeamStageType } from '@enums/team-stage-type.enum';
-import { GenerateTeamTeamMatchesNew } from '@models/new/generate-team-team-matches-new.model';
-import { TeamStageNew } from '@models/new/team-stage-new.model';
+import { GenerateTeamTeamMatchesNew } from '@models/v2/generate-team-team-matches-new.model';
+import { TeamStageNew } from '@models/v2/team-stage-new.model';
 import { TeamStageSearch } from '@models/search/team-stage-search.model';
 import { TeamStageNewService } from '@services/new/team-stage-new.service';
 import { TeamTeamMatchNewService } from '@services/new/team-team-match-new.service';

@@ -2,7 +2,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
 import { environment } from '@env';
-import { CupMatchNew } from '@models/new/cup-match-new.model';
+import { CupMatchNew } from '@models/v2/cup-match-new.model';
 import { PaginatedResponse } from '@models/paginated-response.model';
 import { CupMatchSearch } from '@models/search/cup-match-search.model';
 import { Observable } from 'rxjs';

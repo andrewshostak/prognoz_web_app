@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 
 import { environment } from '@env';
 import { PaginatedResponse } from '@models/paginated-response.model';
-import { CupStageTypeNew } from '@models/new/cup-stage-type-new.model';
+import { CupStageTypeNew } from '@models/v2/cup-stage-type-new.model';
 import { Observable } from 'rxjs';
 
 @Injectable()

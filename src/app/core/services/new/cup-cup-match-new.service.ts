@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 
 import { Sequence } from '@enums/sequence.enum';
 import { environment } from '@env';
-import { CupCupMatchNew } from '@models/new/cup-cup-match-new.model';
+import { CupCupMatchNew } from '@models/v2/cup-cup-match-new.model';
 import { PaginatedResponse } from '@models/paginated-response.model';
 import { CupCupMatchSearch } from '@models/search/cup-cup-match-search.model';
 import { AuthNewService } from '@services/new/auth-new.service';

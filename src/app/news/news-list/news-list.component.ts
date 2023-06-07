@@ -3,7 +3,7 @@ import { ActivatedRoute, Params } from '@angular/router';
 
 import { TitleService } from '@services/title.service';
 import { NewsNewService } from '@services/new/news-new.service';
-import { NewsNew } from '@models/new/news-new.model';
+import { NewsNew } from '@models/v2/news-new.model';
 import { Pagination } from '@models/pagination.model';
 import { PaginationService } from '@services/pagination.service';
 import { NewsSearch } from '@models/search/news-search.model';

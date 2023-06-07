@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
 
-import { ChampionshipMatchNew } from '@models/new/championship-match-new.model';
-import { ChampionshipPredictionNew } from '@models/new/championship-prediction-new.model';
+import { ChampionshipMatchNew } from '@models/v2/championship-match-new.model';
+import { ChampionshipPredictionNew } from '@models/v2/championship-prediction-new.model';
 import { User } from '@models/user.model';
 import { ChampionshipService } from '@services/championship/championship.service';
 import { UtilsService } from '@services/utils.service';

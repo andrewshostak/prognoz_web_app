@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 
 import { Sequence } from '@enums/sequence.enum';
-import { CupMatchNew } from '@models/new/cup-match-new.model';
-import { CupPredictionNew } from '@models/new/cup-prediction-new.model';
-import { UserNew } from '@models/new/user-new.model';
+import { CupMatchNew } from '@models/v2/cup-match-new.model';
+import { CupPredictionNew } from '@models/v2/cup-prediction-new.model';
+import { UserNew } from '@models/v2/user-new.model';
 import { CupMatchSearch } from '@models/search/cup-match-search.model';
 import { CurrentStateService } from '@services/current-state.service';
 import { AuthNewService } from '@services/new/auth-new.service';

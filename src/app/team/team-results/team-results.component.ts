@@ -4,7 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { TitleService } from '@services/title.service';
 import { TeamMatchNewService } from '@services/new/team-match-new.service';
 import { TeamMatchSearch } from '@models/search/team-match-search.model';
-import { TeamMatchNew } from '@models/new/team-match-new.model';
+import { TeamMatchNew } from '@models/v2/team-match-new.model';
 import { PaginatedResponse } from '@models/paginated-response.model';
 import { SettingsService } from '@services/settings.service';
 import { filter, switchMap, tap } from 'rxjs/operators';

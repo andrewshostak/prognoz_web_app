@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 import { Sequence } from '@enums/sequence.enum';
-import { SeasonNew } from '@models/new/season-new.model';
+import { SeasonNew } from '@models/v2/season-new.model';
 import { SeasonSearch } from '@models/search/season-search.model';
 import { SeasonNewService } from '@services/new/season-new.service';
 import { SettingsService } from '@services/settings.service';

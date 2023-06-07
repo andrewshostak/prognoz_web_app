@@ -2,7 +2,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
 import { environment } from '@env';
-import { TeamNew } from '@models/new/team-new.model';
+import { TeamNew } from '@models/v2/team-new.model';
 import { PaginatedResponse } from '@models/paginated-response.model';
 import { TeamSearch } from '@models/search/team-search.model';
 import { isNil } from 'lodash';
@@ -16,7 +16,6 @@ export class TeamNewService {
 
    constructor(private httpClient: HttpClient) {}
 
-   // todo: add to postman collection
    public createTeam(team: Partial<TeamNew>): Observable<TeamNew> {
       const body = team.image ? serialize(team, { booleansAsIntegers: true }) : team;
       return this.httpClient.post<{ team: TeamNew }>(this.teamsUrl, body).pipe(map(response => response.team));
@@ -77,7 +76,6 @@ export class TeamNewService {
       return this.httpClient.get<PaginatedResponse<TeamNew>>(this.teamsUrl, { params });
    }
 
-   // todo: add to postman collection
    public updateTeam(teamId: number, team: Partial<TeamNew>): Observable<TeamNew> {
       const body = team.image ? serialize(team, { booleansAsIntegers: true }) : team;
       return this.httpClient.post<{ team: TeamNew }>(`${this.teamsUrl}/${teamId}`, body).pipe(map(response => response.team));

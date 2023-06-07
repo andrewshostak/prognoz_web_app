@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 
 import { CompetitionState } from '@enums/competition-state.enum';
-import { CompetitionNew } from '@models/new/competition-new.model';
+import { CompetitionNew } from '@models/v2/competition-new.model';
 import { CompetitionNewService } from '@services/new/competition-new.service';
 import { SettingsService } from '@services/settings.service';
 import { CompetitionSearch } from '@models/search/competition-search.model';

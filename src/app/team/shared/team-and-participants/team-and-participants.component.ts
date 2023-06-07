@@ -2,10 +2,10 @@ import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChange
 
 import { CompetitionState } from '@enums/competition-state.enum';
 import { Device } from '@models/device.model';
-import { CompetitionNew } from '@models/new/competition-new.model';
-import { TeamNew } from '@models/new/team-new.model';
-import { TeamParticipantNew } from '@models/new/team-participant-new.model';
-import { UserNew } from '@models/new/user-new.model';
+import { CompetitionNew } from '@models/v2/competition-new.model';
+import { TeamNew } from '@models/v2/team-new.model';
+import { TeamParticipantNew } from '@models/v2/team-participant-new.model';
+import { UserNew } from '@models/v2/user-new.model';
 import { OpenedModal } from '@models/opened-modal.model';
 import { TeamParticipantSearch } from '@models/search/team-participant-search.model';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';

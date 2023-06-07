@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 
 import { CupStageNewService } from '@services/new/cup-stage-new.service';
-import { CupStageNew } from '@models/new/cup-stage-new.model';
+import { CupStageNew } from '@models/v2/cup-stage-new.model';
 
 @Component({
    selector: 'app-cup-stage-edit',

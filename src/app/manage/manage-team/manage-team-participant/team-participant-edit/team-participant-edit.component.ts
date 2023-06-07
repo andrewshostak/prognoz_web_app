@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
-import { TeamParticipantNew } from '@models/new/team-participant-new.model';
+import { TeamParticipantNew } from '@models/v2/team-participant-new.model';
 import { TeamParticipantNewService } from '@services/new/team-participant-new.service';
 
 @Component({

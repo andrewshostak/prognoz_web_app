@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 
-import { TeamNew } from '@models/new/team-new.model';
-import { UserNew } from '@models/new/user-new.model';
-import { TeamTeamMatchNew } from '@models/new/team-team-match-new.model';
+import { TeamNew } from '@models/v2/team-new.model';
+import { UserNew } from '@models/v2/user-new.model';
+import { TeamTeamMatchNew } from '@models/v2/team-team-match-new.model';
 import { TeamSearch } from '@models/search/team-search.model';
 import { TeamTeamMatchSearch } from '@models/search/team-team-match-search.model';
 import { AuthNewService } from '@services/new/auth-new.service';
@@ -80,7 +80,7 @@ export class TeamMyComponent implements OnInit {
             filter(params => params.team_stage_id),
             tap((params: Params) => {
                const teamStageId = parseInt(params.team_stage_id, 10);
-               this.getTeamTeamMatchesData(teamStageId); // todo: we are not using team-team-matches in this component
+               this.getTeamTeamMatchesData(teamStageId); // TODO: we are not using team-team-matches in this component
                // possible navigation to other competition
                if (this.lastTeamStageId - 1 !== teamStageId && this.lastTeamStageId + 1 !== teamStageId) {
                   this.getTeamData(teamStageId);

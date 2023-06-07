@@ -7,7 +7,7 @@ import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { NotificationsService } from 'angular2-notifications';
 import { Subscription } from 'rxjs';
 import { CupStageNewService } from '@services/new/cup-stage-new.service';
-import { CupStageNew } from '@models/new/cup-stage-new.model';
+import { CupStageNew } from '@models/v2/cup-stage-new.model';
 import { CupStageSearch } from '@models/search/cup-stage-search.model';
 import { SettingsService } from '@services/settings.service';
 import { OpenedModal } from '@models/opened-modal.model';

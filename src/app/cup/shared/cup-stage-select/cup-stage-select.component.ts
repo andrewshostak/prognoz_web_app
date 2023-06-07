@@ -3,9 +3,9 @@ import { FormControl, FormGroup } from '@angular/forms';
 
 import { Sequence } from '@enums/sequence.enum';
 import { Tournament } from '@enums/tournament.enum';
-import { CompetitionNew } from '@models/new/competition-new.model';
-import { CupStageNew } from '@models/new/cup-stage-new.model';
-import { SeasonNew } from '@models/new/season-new.model';
+import { CompetitionNew } from '@models/v2/competition-new.model';
+import { CupStageNew } from '@models/v2/cup-stage-new.model';
+import { SeasonNew } from '@models/v2/season-new.model';
 import { CompetitionSearch } from '@models/search/competition-search.model';
 import { CupStageSearch } from '@models/search/cup-stage-search.model';
 import { SeasonSearch } from '@models/search/season-search.model';

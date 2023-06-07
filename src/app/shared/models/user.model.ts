@@ -1,4 +1,5 @@
 /* tslint:disable:variable-name */
+// TODO: move to v2 model
 export class User {
    public first_name: string;
    public id: number;

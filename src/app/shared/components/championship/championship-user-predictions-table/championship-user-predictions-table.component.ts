@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 
-import { ChampionshipPredictionNew } from '@models/new/championship-prediction-new.model';
+import { ChampionshipPredictionNew } from '@models/v2/championship-prediction-new.model';
 import { ChampionshipService } from '@services/championship/championship.service';
 import { UtilsService } from '@services/utils.service';
 

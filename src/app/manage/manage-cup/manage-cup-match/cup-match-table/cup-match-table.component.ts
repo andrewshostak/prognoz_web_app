@@ -3,7 +3,7 @@ import { ActivatedRoute, Params } from '@angular/router';
 
 import { Sequence } from '@enums/sequence.enum';
 import { MatchState } from '@enums/match-state.enum';
-import { CupMatchNew } from '@models/new/cup-match-new.model';
+import { CupMatchNew } from '@models/v2/cup-match-new.model';
 import { OpenedModal } from '@models/opened-modal.model';
 import { Pagination } from '@models/pagination.model';
 import { CupMatchSearch } from '@models/search/cup-match-search.model';

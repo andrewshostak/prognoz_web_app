@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 
 import { Tournament } from '@enums/tournament.enum';
-import { CompetitionNew } from '@models/new/competition-new.model';
+import { CompetitionNew } from '@models/v2/competition-new.model';
 import { CompetitionNewService } from '@services/new/competition-new.service';
 import { TitleService } from '@services/title.service';
 import { SettingsService } from '@services/settings.service';

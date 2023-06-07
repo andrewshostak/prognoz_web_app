@@ -1,10 +1,9 @@
 /* tslint:disable:variable-name */
-import { UserNew } from '@models/new/user-new.model';
+import { UserNew } from '@models/v2/user-new.model';
 
-export class CommentNew {
+export class GuestbookMessageNew {
    id: number;
    user_id: number;
-   news_id: number;
    body: string;
    created_at: string;
    updated_at: string;

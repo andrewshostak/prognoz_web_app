@@ -2,7 +2,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
 import { environment } from '@env';
-import { CommentNew } from '@models/new/comment-new.model';
+import { CommentNew } from '@models/v2/comment-new.model';
 import { PaginatedResponse } from '@models/paginated-response.model';
 import { CommentSearch } from '@models/search/comment-search.model';
 import { isNil } from 'lodash';

@@ -1,8 +1,8 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 
-import { GuestbookMessageNew } from '@models/new/guestbook-message-new.model';
-import { UserNew } from '@models/new/user-new.model';
+import { GuestbookMessageNew } from '@models/v2/guestbook-message-new.model';
+import { UserNew } from '@models/v2/user-new.model';
 import { AuthNewService } from '@services/new/auth-new.service';
 import { NotificationsService } from 'angular2-notifications';
 import { GuestbookMessageNewService } from '@app/guestbook/shared/guestbook-message-new.service';

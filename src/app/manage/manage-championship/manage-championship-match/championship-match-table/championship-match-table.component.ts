@@ -3,7 +3,7 @@ import { ActivatedRoute, Params } from '@angular/router';
 
 import { Sequence } from '@enums/sequence.enum';
 import { MatchState } from '@enums/match-state.enum';
-import { ChampionshipMatchNew } from '@models/new/championship-match-new.model';
+import { ChampionshipMatchNew } from '@models/v2/championship-match-new.model';
 import { OpenedModal } from '@models/opened-modal.model';
 import { Pagination } from '@models/pagination.model';
 import { ChampionshipMatchSearch } from '@models/search/championship-match-search.model';

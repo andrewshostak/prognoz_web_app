@@ -2,7 +2,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
 import { environment } from '@env';
-import { GuestbookMessageNew } from '@models/new/guestbook-message-new.model';
+import { GuestbookMessageNew } from '@models/v2/guestbook-message-new.model';
 import { PaginatedResponse } from '@models/paginated-response.model';
 import { GuestbookMessageSearch } from '@models/search/guestbook-message-search.model';
 import { isNil } from 'lodash';

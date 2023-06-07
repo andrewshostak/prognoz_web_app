@@ -1,4 +1,4 @@
-import { Permission } from '@models/new/rbac/permission.model';
+import { Permission } from '@models/v2/rbac/permission.model';
 
 export class Role {
    id: number;

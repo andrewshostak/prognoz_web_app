@@ -5,13 +5,13 @@ import { AbstractControl, FormArray, FormControl, FormGroup, Validators } from '
 import { CupStageState } from '@enums/cup-stage-state.enum';
 import { Tournament } from '@enums/tournament.enum';
 import { CompetitionState } from '@enums/competition-state.enum';
-import { CompetitionNew } from '@models/new/competition-new.model';
-import { CupMatchNew } from '@models/new/cup-match-new.model';
+import { CompetitionNew } from '@models/v2/competition-new.model';
+import { CupMatchNew } from '@models/v2/cup-match-new.model';
 import { CupMatchNewService } from '@services/new/cup-match-new.service';
 import { CompetitionNewService } from '@services/new/competition-new.service';
 import { CompetitionSearch } from '@models/search/competition-search.model';
-import { CupStageNew } from '@models/new/cup-stage-new.model';
-import { CupStageTypeNew } from '@models/new/cup-stage-type-new.model';
+import { CupStageNew } from '@models/v2/cup-stage-new.model';
+import { CupStageTypeNew } from '@models/v2/cup-stage-type-new.model';
 import { CupStageTypeNewService } from '@services/new/cup-stage-type-new.service';
 import { CupStageNewService } from '@services/new/cup-stage-new.service';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';

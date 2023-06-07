@@ -2,8 +2,8 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
 import { environment } from '@env';
-import { GenerateTeamTeamMatchesNew } from '@models/new/generate-team-team-matches-new.model';
-import { TeamTeamMatchNew } from '@models/new/team-team-match-new.model';
+import { GenerateTeamTeamMatchesNew } from '@models/v2/generate-team-team-matches-new.model';
+import { TeamTeamMatchNew } from '@models/v2/team-team-match-new.model';
 import { PaginatedResponse } from '@models/paginated-response.model';
 import { TeamTeamMatchSearch } from '@models/search/team-team-match-search.model';
 import { Observable } from 'rxjs';

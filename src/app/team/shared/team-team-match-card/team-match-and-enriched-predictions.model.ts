@@ -1,5 +1,5 @@
-import { TeamMatchNew } from '@models/new/team-match-new.model';
-import { TeamPredictionNew } from '@models/new/team-prediction-new.model';
+import { TeamMatchNew } from '@models/v2/team-match-new.model';
+import { TeamPredictionNew } from '@models/v2/team-prediction-new.model';
 
 export class TeamMatchAndEnrichedPredictions {
    teamMatch: TeamMatchNew;

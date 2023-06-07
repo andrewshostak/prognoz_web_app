@@ -1,6 +1,6 @@
 /* tslint:disable:variable-name */
 import { Match } from '@models/match.model';
-import { TeamStageNew } from '@models/new/team-stage-new.model';
+import { TeamStageNew } from '@models/v2/team-stage-new.model';
 
 export class TeamMatchNew {
    blocked: number;

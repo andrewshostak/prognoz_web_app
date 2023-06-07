@@ -1,6 +1,6 @@
 /* tslint:disable:variable-name */
-import { UserNew } from '@models/new/user-new.model';
-import { AwardNew } from '@models/new/award-new.model';
+import { UserNew } from '@models/v2/user-new.model';
+import { AwardNew } from '@models/v2/award-new.model';
 
 export class WinNew {
    award_id: number;

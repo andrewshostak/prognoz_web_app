@@ -1,9 +1,9 @@
 /* tslint:disable:variable-name */
-import { CompetitionNew } from '@models/new/competition-new.model';
-import { CupStageTypeNew } from '@models/new/cup-stage-type-new.model';
+import { CompetitionNew } from '@models/v2/competition-new.model';
+import { CupStageTypeNew } from '@models/v2/cup-stage-type-new.model';
 import { CupStageState } from '@enums/cup-stage-state.enum';
-import { CupCupMatchNew } from '@models/new/cup-cup-match-new.model';
-import { CupMatchNew } from '@models/new/cup-match-new.model';
+import { CupCupMatchNew } from '@models/v2/cup-cup-match-new.model';
+import { CupMatchNew } from '@models/v2/cup-match-new.model';
 
 export class CupStageNew {
    competition_id: number;

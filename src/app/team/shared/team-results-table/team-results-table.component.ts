@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
 
 import { MatchState } from '@enums/match-state.enum';
-import { TeamMatchNew } from '@models/new/team-match-new.model';
+import { TeamMatchNew } from '@models/v2/team-match-new.model';
 
 @Component({
    selector: 'app-team-results-table',

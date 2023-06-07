@@ -1,5 +1,5 @@
 /* tslint:disable:variable-name */
-import { ClubNew } from '@models/new/club-new.model';
+import { ClubNew } from '@models/v2/club-new.model';
 import { MatchState } from '@enums/match-state.enum';
 
 export class Match {

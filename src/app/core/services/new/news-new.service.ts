@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 
 import { environment } from '@env';
-import { NewsNew } from '@models/new/news-new.model';
+import { NewsNew } from '@models/v2/news-new.model';
 import { PaginatedResponse } from '@models/paginated-response.model';
 import { NewsSearch } from '@models/search/news-search.model';
 import { serialize } from 'object-to-formdata';

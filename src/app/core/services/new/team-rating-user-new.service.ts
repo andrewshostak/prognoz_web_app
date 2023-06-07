@@ -2,7 +2,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
 import { environment } from '@env';
-import { TeamRatingUserNew } from '@models/new/team-rating-user-new.model';
+import { TeamRatingUserNew } from '@models/v2/team-rating-user-new.model';
 import { TeamRatingUserSearch } from '@models/search/team-rating-user-search.model';
 import { PaginatedResponse } from '@models/paginated-response.model';
 import { Observable } from 'rxjs';

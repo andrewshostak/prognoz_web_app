@@ -2,9 +2,9 @@ import { ChangeDetectorRef, Component, Input } from '@angular/core';
 
 import { TimePipe } from '@app/shared/pipes/time.pipe';
 import { Sequence } from '@enums/sequence.enum';
-import { TeamPredictionNew } from '@models/new/team-prediction-new.model';
-import { TeamTeamMatchNew } from '@models/new/team-team-match-new.model';
-import { TeamMatchNew } from '@models/new/team-match-new.model';
+import { TeamPredictionNew } from '@models/v2/team-prediction-new.model';
+import { TeamTeamMatchNew } from '@models/v2/team-team-match-new.model';
+import { TeamMatchNew } from '@models/v2/team-match-new.model';
 import { TeamMatchSearch } from '@models/search/team-match-search.model';
 import { TeamPredictionSearch } from '@models/search/team-prediction-search.model';
 import { PaginatedResponse } from '@models/paginated-response.model';

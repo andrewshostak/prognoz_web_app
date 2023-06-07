@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 
-import { TeamParticipantNew } from '@models/new/team-participant-new.model';
+import { TeamParticipantNew } from '@models/v2/team-participant-new.model';
 import { OpenedModal } from '@models/opened-modal.model';
 import { Pagination } from '@models/pagination.model';
 import { TeamParticipantSearch } from '@models/search/team-participant-search.model';

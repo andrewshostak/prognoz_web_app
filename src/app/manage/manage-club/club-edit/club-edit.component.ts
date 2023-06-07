@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ClubNew } from '@models/new/club-new.model';
+import { ClubNew } from '@models/v2/club-new.model';
 import { ActivatedRoute, Params } from '@angular/router';
 import { ClubNewService } from '@services/new/club-new.service';
 

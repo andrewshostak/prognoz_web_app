@@ -1,5 +1,5 @@
 /* tslint:disable:variable-name */
-import { ChampionshipPredictionNew } from '@models/new/championship-prediction-new.model';
+import { ChampionshipPredictionNew } from '@models/v2/championship-prediction-new.model';
 import { Match } from '@models/match.model';
 
 export class ChampionshipMatchNew {

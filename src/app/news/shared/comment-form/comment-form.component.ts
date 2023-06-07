@@ -2,8 +2,8 @@ import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 import { CommentNewService } from '@app/news/shared/comment-new.service';
-import { CommentNew } from '@models/new/comment-new.model';
-import { UserNew } from '@models/new/user-new.model';
+import { CommentNew } from '@models/v2/comment-new.model';
+import { UserNew } from '@models/v2/user-new.model';
 import { AuthNewService } from '@services/new/auth-new.service';
 import { NotificationsService } from 'angular2-notifications';
 import { trim } from 'lodash';

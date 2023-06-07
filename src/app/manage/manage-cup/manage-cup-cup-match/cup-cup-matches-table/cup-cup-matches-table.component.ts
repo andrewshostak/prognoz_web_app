@@ -10,7 +10,7 @@ import { CupCupMatchNewService } from '@services/new/cup-cup-match-new.service';
 import { CupCupMatchSearch } from '@models/search/cup-cup-match-search.model';
 import { SettingsService } from '@services/settings.service';
 import { Sequence } from '@enums/sequence.enum';
-import { CupCupMatchNew } from '@models/new/cup-cup-match-new.model';
+import { CupCupMatchNew } from '@models/v2/cup-cup-match-new.model';
 
 @Component({
    selector: 'app-cup-cup-matches-table',

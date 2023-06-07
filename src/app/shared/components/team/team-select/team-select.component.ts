@@ -2,7 +2,7 @@ import { Component, EventEmitter, Input, OnChanges, OnInit, SimpleChanges } from
 import { FormGroup } from '@angular/forms';
 
 import { Sequence } from '@enums/sequence.enum';
-import { TeamNew } from '@models/new/team-new.model';
+import { TeamNew } from '@models/v2/team-new.model';
 import { PaginatedResponse } from '@models/paginated-response.model';
 import { TeamSearch } from '@models/search/team-search.model';
 import { TeamNewService } from '@services/new/team-new.service';

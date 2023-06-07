@@ -6,9 +6,9 @@ import { CompetitionState } from '@enums/competition-state.enum';
 import { Sequence } from '@enums/sequence.enum';
 import { TeamStageState } from '@enums/team-stage-state.enum';
 import { Tournament } from '@enums/tournament.enum';
-import { CompetitionNew } from '@models/new/competition-new.model';
-import { SeasonNew } from '@models/new/season-new.model';
-import { TeamStageNew } from '@models/new/team-stage-new.model';
+import { CompetitionNew } from '@models/v2/competition-new.model';
+import { SeasonNew } from '@models/v2/season-new.model';
+import { TeamStageNew } from '@models/v2/team-stage-new.model';
 import { PaginatedResponse } from '@models/paginated-response.model';
 import { CompetitionSearch } from '@models/search/competition-search.model';
 import { SeasonSearch } from '@models/search/season-search.model';
@@ -103,7 +103,7 @@ export class TeamStageSelectComponent implements OnInit {
       return this.competitionService.getCompetitions(search);
    }
 
-   // todo: same as in cup-cup-matches
+   // TODO: same as in cup-cup-matches
    private getCompetitionIdForDownloadingStages(competitions: CompetitionNew[], selectedCompetitionId: number): number {
       if (!competitions.length && !selectedCompetitionId) {
          return null;

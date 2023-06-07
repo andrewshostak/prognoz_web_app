@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 
 import { Sequence } from '@enums/sequence.enum';
 import { environment } from '@env';
-import { SeasonNew } from '@models/new/season-new.model';
+import { SeasonNew } from '@models/v2/season-new.model';
 import { PaginatedResponse } from '@models/paginated-response.model';
 import { SeasonSearch } from '@models/search/season-search.model';
 import { SettingsService } from '@services/settings.service';

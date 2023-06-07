@@ -2,7 +2,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
 import { environment } from '@env';
-import { UserNew } from '@models/new/user-new.model';
+import { UserNew } from '@models/v2/user-new.model';
 import { PaginatedResponse } from '@models/paginated-response.model';
 import { UserSearch } from '@models/search/user-search.model';
 import { serialize } from 'object-to-formdata';

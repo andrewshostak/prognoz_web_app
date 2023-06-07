@@ -2,10 +2,10 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
 import { environment } from '@env';
-import { TeamStageNew } from '@models/new/team-stage-new.model';
+import { TeamStageNew } from '@models/v2/team-stage-new.model';
 import { PaginatedResponse } from '@models/paginated-response.model';
 import { TeamStageSearch } from '@models/search/team-stage-search.model';
-import { GenerateTeamStagesNew } from '@models/new/generate-team-stages-new.model';
+import { GenerateTeamStagesNew } from '@models/v2/generate-team-stages-new.model';
 import { map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 

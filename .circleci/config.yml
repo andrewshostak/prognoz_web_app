@@ -55,8 +55,7 @@ jobs:
       - attach_workspace:
           at: .
 
-      # - run: npm run lint
-      - run: echo "lint is temparary disabled untill all files will be modified according to new linter rules"
+      - run: npm run lint
 
   build:
     parallelism: 1
@@ -101,9 +100,10 @@ workflows:
   build-and-deploy:
     jobs:
       - install_dependencies
-      - lint:
-          requires:
-            - install_dependencies
+# lint is temporarily disabled until all files will be modified according to v2 linter rules
+#      - lint:
+#          requires:
+#            - install_dependencies
       - build:
           requires:
             - install_dependencies
@@ -113,7 +113,7 @@ workflows:
       - deploy:
           requires:
             - build
-            - lint
+#            - lint
             - test
           filters:
             branches:

@@ -1,7 +1,7 @@
 import { Component, Input, OnInit, OnChanges, SimpleChanges } from '@angular/core';
 
-import { CupRatingCalculatedNew } from '@models/new/cup-rating-calculated-new.model';
-import { CupRatingNew } from '@models/new/cup-rating-new.model';
+import { CupRatingCalculatedNew } from '@models/v2/cup-rating-calculated-new.model';
+import { CupRatingNew } from '@models/v2/cup-rating-new.model';
 import { ChartDataSets, ChartOptions } from 'chart.js';
 import { cloneDeep } from 'lodash';
 import { Color } from 'ng2-charts/lib/color';

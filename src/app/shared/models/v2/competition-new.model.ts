@@ -1,8 +1,8 @@
 import { CompetitionState } from '@enums/competition-state.enum';
-import { WinNew } from '@models/new/win-new.model';
-import { CupApplicationNew } from '@models/new/cup-application-new.model';
-import { SeasonNew } from '@models/new/season-new.model';
-import { TournamentNew } from '@models/new/tournament-new.model';
+import { WinNew } from '@models/v2/win-new.model';
+import { CupApplicationNew } from '@models/v2/cup-application-new.model';
+import { SeasonNew } from '@models/v2/season-new.model';
+import { TournamentNew } from '@models/v2/tournament-new.model';
 
 /* tslint:disable:variable-name */
 export class CompetitionNew {

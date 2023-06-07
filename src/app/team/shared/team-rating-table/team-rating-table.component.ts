@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
 
-import { CompetitionNew } from '@models/new/competition-new.model';
-import { TeamRatingNew } from '@models/new/team-rating-new.model';
+import { CompetitionNew } from '@models/v2/competition-new.model';
+import { TeamRatingNew } from '@models/v2/team-rating-new.model';
 import { UtilsService } from '@services/utils.service';
 import { get } from 'lodash';
 

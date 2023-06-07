@@ -1,8 +1,8 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 
-import { CupPredictionNew } from '@models/new/cup-prediction-new.model';
-import { UserNew } from '@models/new/user-new.model';
+import { CupPredictionNew } from '@models/v2/cup-prediction-new.model';
+import { UserNew } from '@models/v2/user-new.model';
 import { CupPredictionNewService } from '@services/new/cup-prediction-new.service';
 import { SettingsService } from '@services/settings.service';
 import { UtilsService } from '@services/utils.service';

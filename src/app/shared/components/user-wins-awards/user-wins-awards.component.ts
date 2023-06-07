@@ -1,6 +1,6 @@
 import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 
-import { WinNew } from '@models/new/win-new.model';
+import { WinNew } from '@models/v2/win-new.model';
 import { SettingsService } from '@services/settings.service';
 import { AwardNewService } from '@services/new/award-new.service';
 import { groupBy } from 'lodash';

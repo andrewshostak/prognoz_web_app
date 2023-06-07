@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
-import { CupRatingCalculatedNew } from '@models/new/cup-rating-calculated-new.model';
+import { CupRatingCalculatedNew } from '@models/v2/cup-rating-calculated-new.model';
 import { CupRatingSearch } from '@models/search/cup-rating-search.model';
 import { CupRatingNewService } from '@services/new/cup-rating-new.service';
 import { TitleService } from '@services/title.service';

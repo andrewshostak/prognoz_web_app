@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 
-import { TeamTeamMatchNew } from '@models/new/team-team-match-new.model';
-import { UserNew } from '@models/new/user-new.model';
+import { TeamTeamMatchNew } from '@models/v2/team-team-match-new.model';
+import { UserNew } from '@models/v2/user-new.model';
 import { RequestParams } from '@models/request-params.model';
 import { TeamTeamMatchSearch } from '@models/search/team-team-match-search.model';
 import { TeamMatch } from '@models/team/team-match.model';

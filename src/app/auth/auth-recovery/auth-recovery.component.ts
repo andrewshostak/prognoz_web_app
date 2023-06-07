@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 
-import { UserNew } from '@models/new/user-new.model';
+import { UserNew } from '@models/v2/user-new.model';
 import { AuthNewService } from '@services/new/auth-new.service';
 import { TitleService } from '@services/title.service';
 import { NotificationsService } from 'angular2-notifications';
@@ -52,5 +52,5 @@ export class AuthRecoveryComponent implements OnInit {
       this.captchaValidity = !!captchaResponse;
    }
 
-   // todo: move re-captcha siteKey to env vars
+   // TODO: move re-captcha siteKey to env vars
 }

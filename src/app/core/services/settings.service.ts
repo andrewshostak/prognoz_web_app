@@ -8,6 +8,7 @@ export class SettingsService {
    public static readonly allowToUpdateResultAfterDays: number = 3;
 
    // pagination
+   // TODO: change to one object
    public static readonly championshipMatchesPerPage: number = 10;
    public static readonly competitionsPerPage: number = 10;
    public static readonly clubsPerPage: number = 10;

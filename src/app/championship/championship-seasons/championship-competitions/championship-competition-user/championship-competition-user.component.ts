@@ -1,15 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 
-import { ChampionshipRatingNew } from '@models/new/championship-rating-new.model';
-import { UserNew } from '@models/new/user-new.model';
+import { ChampionshipRatingNew } from '@models/v2/championship-rating-new.model';
+import { UserNew } from '@models/v2/user-new.model';
 import { ChampionshipRatingNewService } from '@services/new/championship-rating-new.service';
 import { UserNewService } from '@services/new/user-new.service';
 import { TitleService } from '@services/title.service';
 import { UtilsService } from '@services/utils.service';
 import { ChampionshipRatingSearch } from '@models/search/championship-rating-search.model';
 import { ChampionshipPredictionNewService } from '@services/new/championship-prediction-new.service';
-import { ChampionshipPredictionNew } from '@models/new/championship-prediction-new.model';
+import { ChampionshipPredictionNew } from '@models/v2/championship-prediction-new.model';
 import { ChampionshipPredictionSearch } from '@models/search/championship-prediction-search.model';
 import { SettingsService } from '@services/settings.service';
 import { Sequence } from '@enums/sequence.enum';

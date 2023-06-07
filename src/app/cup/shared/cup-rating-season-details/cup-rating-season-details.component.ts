@@ -1,6 +1,6 @@
 import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 
-import { CupRatingNew } from '@models/new/cup-rating-new.model';
+import { CupRatingNew } from '@models/v2/cup-rating-new.model';
 import { Label, SingleOrMultiDataSet } from 'ng2-charts/lib/base-chart.directive';
 import { ChartOptions } from 'chart.js';
 import { Color } from 'ng2-charts/lib/color';

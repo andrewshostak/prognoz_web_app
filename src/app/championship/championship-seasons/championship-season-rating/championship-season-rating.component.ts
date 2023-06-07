@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 
 import { ChampionshipRatingNewService } from '@services/new/championship-rating-new.service';
-import { ChampionshipRatingNew } from '@models/new/championship-rating-new.model';
+import { ChampionshipRatingNew } from '@models/v2/championship-rating-new.model';
 import { CurrentStateService } from '@services/current-state.service';
 import { User } from '@models/user.model';
 import { TitleService } from '@services/title.service';

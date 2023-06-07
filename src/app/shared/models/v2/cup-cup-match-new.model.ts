@@ -1,7 +1,7 @@
 /* tslint:disable:variable-name */
 import { CupCupMatchState } from '@enums/cup-cup-match-state.enum';
-import { CupStageNew } from '@models/new/cup-stage-new.model';
-import { UserNew } from '@models/new/user-new.model';
+import { CupStageNew } from '@models/v2/cup-stage-new.model';
+import { UserNew } from '@models/v2/user-new.model';
 
 export class CupCupMatchNew {
    away: number;

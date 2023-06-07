@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
 
-import { CupApplicationNew } from '@models/new/cup-application-new.model';
-import { CompetitionNew } from '@models/new/competition-new.model';
+import { CupApplicationNew } from '@models/v2/cup-application-new.model';
+import { CompetitionNew } from '@models/v2/competition-new.model';
 
 @Component({
    selector: 'app-cup-applications-friendly',

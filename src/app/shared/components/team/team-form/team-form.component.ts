@@ -2,8 +2,8 @@ import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChange
 import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
-import { TeamNew } from '@models/new/team-new.model';
-import { UserNew } from '@models/new/user-new.model';
+import { TeamNew } from '@models/v2/team-new.model';
+import { UserNew } from '@models/v2/user-new.model';
 import { FormValidatorService } from '@services/form-validator.service';
 import { TeamNewService } from '@services/new/team-new.service';
 import { UtilsService } from '@services/utils.service';

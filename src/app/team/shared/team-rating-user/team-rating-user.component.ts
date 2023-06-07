@@ -1,7 +1,7 @@
 import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 
-import { TeamNew } from '@models/new/team-new.model';
-import { TeamRatingUserNew } from '@models/new/team-rating-user-new.model';
+import { TeamNew } from '@models/v2/team-new.model';
+import { TeamRatingUserNew } from '@models/v2/team-rating-user-new.model';
 import { User } from '@models/user.model';
 
 @Component({

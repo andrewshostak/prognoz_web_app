@@ -1,7 +1,7 @@
 import { ChangeDetectorRef, Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 
-import { ChampionshipMatchNew } from '@models/new/championship-match-new.model';
+import { ChampionshipMatchNew } from '@models/v2/championship-match-new.model';
 import { User } from '@models/user.model';
 import { ChampionshipMatchNewService } from '@services/new/championship-match-new.service';
 import { SettingsService } from '@services/settings.service';

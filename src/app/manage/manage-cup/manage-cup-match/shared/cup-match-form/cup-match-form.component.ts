@@ -2,8 +2,8 @@ import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/cor
 import { AbstractControl, FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 
 import { MatchState } from '@enums/match-state.enum';
-import { CupStageNew } from '@models/new/cup-stage-new.model';
-import { CupMatchNew } from '@models/new/cup-match-new.model';
+import { CupStageNew } from '@models/v2/cup-stage-new.model';
+import { CupMatchNew } from '@models/v2/cup-match-new.model';
 import { OpenedModal } from '@models/opened-modal.model';
 import { PaginatedResponse } from '@models/paginated-response.model';
 import { CupMatchSearch } from '@models/search/cup-match-search.model';

@@ -3,7 +3,7 @@ import { FormControl, FormGroup } from '@angular/forms';
 
 import { MatchState } from '@enums/match-state.enum';
 import { Sequence } from '@enums/sequence.enum';
-import { ChampionshipMatchNew } from '@models/new/championship-match-new.model';
+import { ChampionshipMatchNew } from '@models/v2/championship-match-new.model';
 import { ChampionshipMatchSearch } from '@models/search/championship-match-search.model';
 import { User } from '@models/user.model';
 import { ChampionshipPredictionNewService } from '@services/new/championship-prediction-new.service';

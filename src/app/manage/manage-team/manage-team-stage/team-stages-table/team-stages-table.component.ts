@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit, TemplateRef } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 
 import { Sequence } from '@enums/sequence.enum';
-import { TeamStageNew } from '@models/new/team-stage-new.model';
+import { TeamStageNew } from '@models/v2/team-stage-new.model';
 import { Pagination } from '@models/pagination.model';
 import { TeamStageSearch } from '@models/search/team-stage-search.model';
 import { TeamStageNewService } from '@services/new/team-stage-new.service';

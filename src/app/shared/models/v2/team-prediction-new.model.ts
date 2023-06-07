@@ -1,6 +1,6 @@
 /* tslint:disable:variable-name */
-import { TeamMatchNew } from '@models/new/team-match-new.model';
-import { UserNew } from '@models/new/user-new.model';
+import { TeamMatchNew } from '@models/v2/team-match-new.model';
+import { UserNew } from '@models/v2/user-new.model';
 
 export class TeamPredictionNew {
    id: number;

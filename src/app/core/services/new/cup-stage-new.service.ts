@@ -2,7 +2,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
 import { environment } from '@env';
-import { CupStageNew } from '@models/new/cup-stage-new.model';
+import { CupStageNew } from '@models/v2/cup-stage-new.model';
 import { PaginatedResponse } from '@models/paginated-response.model';
 import { CupStageSearch } from '@models/search/cup-stage-search.model';
 import { Observable } from 'rxjs';

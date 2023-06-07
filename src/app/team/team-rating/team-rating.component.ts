@@ -1,9 +1,9 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 
-import { CompetitionNew } from '@models/new/competition-new.model';
-import { TeamRatingNew } from '@models/new/team-rating-new.model';
-import { TeamRatingUserNew } from '@models/new/team-rating-user-new.model';
+import { CompetitionNew } from '@models/v2/competition-new.model';
+import { TeamRatingNew } from '@models/v2/team-rating-new.model';
+import { TeamRatingUserNew } from '@models/v2/team-rating-user-new.model';
 import { PaginatedResponse } from '@models/paginated-response.model';
 import { TeamRatingSearch } from '@models/search/team-rating-search.model';
 import { TeamRatingUserSearch } from '@models/search/team-rating-user-search.model';

@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { ClubNew } from '@models/new/club-new.model';
+import { ClubNew } from '@models/v2/club-new.model';
 
 @Component({
    selector: 'app-club-create',

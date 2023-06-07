@@ -6,7 +6,7 @@ import { UtilsService } from '@services/utils.service';
 import { NotificationsService } from 'angular2-notifications';
 import { QuillEditorComponent } from 'ngx-quill';
 import { NewsNewService } from '@services/new/news-new.service';
-import { NewsNew } from '@models/new/news-new.model';
+import { NewsNew } from '@models/v2/news-new.model';
 import { FormValidatorService } from '@services/form-validator.service';
 
 @Component({

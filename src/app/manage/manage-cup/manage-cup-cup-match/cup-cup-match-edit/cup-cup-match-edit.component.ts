@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 
 import { CupCupMatchNewService } from '@services/new/cup-cup-match-new.service';
-import { CupCupMatchNew } from '@models/new/cup-cup-match-new.model';
+import { CupCupMatchNew } from '@models/v2/cup-cup-match-new.model';
 
 @Component({
    selector: 'app-cup-cup-match-edit',

@@ -2,8 +2,8 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
 import { environment } from '@env';
-import { ChampionshipMatchNew } from '@models/new/championship-match-new.model';
-import { ChampionshipMatchStatistic } from '@models/new/championship-match-statistic.model';
+import { ChampionshipMatchNew } from '@models/v2/championship-match-new.model';
+import { ChampionshipMatchStatistic } from '@models/v2/championship-match-statistic.model';
 import { PaginatedResponse } from '@models/paginated-response.model';
 import { ChampionshipMatchSearch } from '@models/search/championship-match-search.model';
 import { isNil } from 'lodash';

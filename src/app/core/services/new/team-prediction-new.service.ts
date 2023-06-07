@@ -2,7 +2,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
 import { environment } from '@env';
-import { TeamPredictionNew } from '@models/new/team-prediction-new.model';
+import { TeamPredictionNew } from '@models/v2/team-prediction-new.model';
 import { PaginatedResponse } from '@models/paginated-response.model';
 import { TeamPredictionSearch } from '@models/search/team-prediction-search.model';
 import { Observable } from 'rxjs';

@@ -4,7 +4,7 @@ import { FormArray, FormControl, FormGroup } from '@angular/forms';
 import { NotificationsService } from 'angular2-notifications';
 import { TeamMatch } from '@models/team/team-match.model';
 import { TeamPredictionNewService } from '@services/new/team-prediction-new.service';
-import { UserNew } from '@models/new/user-new.model';
+import { UserNew } from '@models/v2/user-new.model';
 
 @Component({
    selector: 'app-team-goalkeeper-form',

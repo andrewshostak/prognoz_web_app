@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 
 import { CupRatingGroupTab } from '@enums/cup-rating-group-tab.enum';
-import { CompetitionNew } from '@models/new/competition-new.model';
-import { CupRatingGroupNew } from '@models/new/cup-rating-group-new.model';
+import { CompetitionNew } from '@models/v2/competition-new.model';
+import { CupRatingGroupNew } from '@models/v2/cup-rating-group-new.model';
 import { CupRatingGroupSearch } from '@models/search/cup-rating-group-search.model';
 import { CompetitionNewService } from '@services/new/competition-new.service';
 import { CupGroupNumberNewService } from '@services/new/cup-group-number-new.service';

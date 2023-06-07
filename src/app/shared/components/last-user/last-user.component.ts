@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 import { Sequence } from '@enums/sequence.enum';
-import { UserNew } from '@models/new/user-new.model';
+import { UserNew } from '@models/v2/user-new.model';
 import { UserSearch } from '@models/search/user-search.model';
 import { UserNewService } from '@services/new/user-new.service';
 import { SettingsService } from '@services/settings.service';

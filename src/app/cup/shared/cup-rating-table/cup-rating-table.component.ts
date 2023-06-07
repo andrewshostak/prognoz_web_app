@@ -1,7 +1,7 @@
 import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 
-import { CupRatingCalculatedNew } from '@models/new/cup-rating-calculated-new.model';
-import { UserNew } from '@models/new/user-new.model';
+import { CupRatingCalculatedNew } from '@models/v2/cup-rating-calculated-new.model';
+import { UserNew } from '@models/v2/user-new.model';
 import { User } from '@models/user.model';
 
 @Component({

@@ -3,9 +3,9 @@ import { Component, Input, OnChanges, OnInit, SimpleChanges, TemplateRef } from 
 import { CompetitionState } from '@enums/competition-state.enum';
 import { CupApplicationDefaultState } from '@enums/cup-application-default-state.enum';
 import { OpenedModal } from '@models/opened-modal.model';
-import { CupApplicationNew } from '@models/new/cup-application-new.model';
-import { CompetitionNew } from '@models/new/competition-new.model';
-import { UserNew } from '@models/new/user-new.model';
+import { CupApplicationNew } from '@models/v2/cup-application-new.model';
+import { CompetitionNew } from '@models/v2/competition-new.model';
+import { UserNew } from '@models/v2/user-new.model';
 import { CupApplicationNewService } from '@services/new/cup-application-new.service';
 import { AuthNewService } from '@services/new/auth-new.service';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';

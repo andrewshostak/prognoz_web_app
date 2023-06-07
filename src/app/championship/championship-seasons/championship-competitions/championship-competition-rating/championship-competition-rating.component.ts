@@ -5,7 +5,7 @@ import { ChampionshipRatingNewService } from '@services/new/championship-rating-
 import { CurrentStateService } from '@services/current-state.service';
 import { TitleService } from '@services/title.service';
 import { User } from '@models/user.model';
-import { ChampionshipRatingNew } from '@models/new/championship-rating-new.model';
+import { ChampionshipRatingNew } from '@models/v2/championship-rating-new.model';
 import { ChampionshipRatingSearch } from '@models/search/championship-rating-search.model';
 import { SettingsService } from '@services/settings.service';
 import { Sequence } from '@enums/sequence.enum';

@@ -4,10 +4,10 @@ import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/fo
 
 import { CompetitionState } from '@enums/competition-state.enum';
 import { SeasonState } from '@enums/season-state.enum';
-import { CompetitionNew } from '@models/new/competition-new.model';
-import { SeasonNew } from '@models/new/season-new.model';
+import { CompetitionNew } from '@models/v2/competition-new.model';
+import { SeasonNew } from '@models/v2/season-new.model';
 import { SeasonSearch } from '@models/search/season-search.model';
-import { TournamentNew } from '@models/new/tournament-new.model';
+import { TournamentNew } from '@models/v2/tournament-new.model';
 import { FormValidatorService } from '@services/form-validator.service';
 import { CompetitionNewService } from '@services/new/competition-new.service';
 import { SeasonNewService } from '@services/new/season-new.service';

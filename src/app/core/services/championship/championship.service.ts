@@ -2,8 +2,8 @@ import { Injectable } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 
 import { MatchState } from '@enums/match-state.enum';
-import { ChampionshipMatchNew } from '@models/new/championship-match-new.model';
-import { ChampionshipPredictionNew } from '@models/new/championship-prediction-new.model';
+import { ChampionshipMatchNew } from '@models/v2/championship-match-new.model';
+import { ChampionshipPredictionNew } from '@models/v2/championship-prediction-new.model';
 import { UtilsService } from '@services/utils.service';
 
 @Injectable()

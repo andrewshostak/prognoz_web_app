@@ -1,5 +1,5 @@
-import { CompetitionNew } from '@models/new/competition-new.model';
-import { TeamNew } from '@models/new/team-new.model';
+import { CompetitionNew } from '@models/v2/competition-new.model';
+import { TeamNew } from '@models/v2/team-new.model';
 import { User } from '@models/user.model';
 
 /* tslint:disable:variable-name */

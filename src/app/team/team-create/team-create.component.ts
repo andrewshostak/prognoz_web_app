@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
-import { TeamNew } from '@models/new/team-new.model';
-import { UserNew } from '@models/new/user-new.model';
+import { TeamNew } from '@models/v2/team-new.model';
+import { UserNew } from '@models/v2/user-new.model';
 import { AuthNewService } from '@services/new/auth-new.service';
 import { TeamCompetitionNewService } from '@services/new/team-competition-new.service';
 import { NotificationsService } from 'angular2-notifications';

@@ -1,5 +1,5 @@
 /* tslint:disable:variable-name */
-import { CupStageNew } from '@models/new/cup-stage-new.model';
+import { CupStageNew } from '@models/v2/cup-stage-new.model';
 import { Match } from '@models/match.model';
 
 export class CupMatchNew {

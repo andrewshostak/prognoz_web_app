@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 
 import { CupApplicationDefaultState } from '@enums/cup-application-default-state.enum';
 import { environment } from '@env';
-import { CupApplicationNew } from '@models/new/cup-application-new.model';
+import { CupApplicationNew } from '@models/v2/cup-application-new.model';
 import { CupApplicationSearch } from '@models/search/cup-application-search.model';
 import { PaginatedResponse } from '@models/paginated-response.model';
 import { Observable } from 'rxjs';

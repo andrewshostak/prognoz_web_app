@@ -9,7 +9,7 @@ import {
    ValidationErrors,
    Validator
 } from '@angular/forms';
-import { ClubNew } from '@models/new/club-new.model';
+import { ClubNew } from '@models/v2/club-new.model';
 import { merge, Observable, of, Subject } from 'rxjs';
 import { ClubNewService } from '@services/new/club-new.service';
 import { SettingsService } from '@services/settings.service';

@@ -2,7 +2,7 @@ import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
 import { environment } from '@env';
-import { TeamParticipantNew } from '@models/new/team-participant-new.model';
+import { TeamParticipantNew } from '@models/v2/team-participant-new.model';
 import { PaginatedResponse } from '@models/paginated-response.model';
 import { TeamParticipantSearch } from '@models/search/team-participant-search.model';
 import { isNil } from 'lodash';

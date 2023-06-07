@@ -4,10 +4,10 @@ import { Router } from '@angular/router';
 
 import { CompetitionState } from '@enums/competition-state.enum';
 import { Tournament } from '@enums/tournament.enum';
-import { CompetitionNew } from '@models/new/competition-new.model';
-import { TeamNew } from '@models/new/team-new.model';
-import { TeamParticipantNew } from '@models/new/team-participant-new.model';
-import { UserNew } from '@models/new/user-new.model';
+import { CompetitionNew } from '@models/v2/competition-new.model';
+import { TeamNew } from '@models/v2/team-new.model';
+import { TeamParticipantNew } from '@models/v2/team-participant-new.model';
+import { UserNew } from '@models/v2/user-new.model';
 import { CompetitionSearch } from '@models/search/competition-search.model';
 import { CompetitionNewService } from '@services/new/competition-new.service';
 import { TeamNewService } from '@services/new/team-new.service';

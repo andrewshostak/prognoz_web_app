@@ -11,7 +11,7 @@ import {
 } from '@angular/forms';
 
 import { Sequence } from '@enums/sequence.enum';
-import { UserNew } from '@models/new/user-new.model';
+import { UserNew } from '@models/v2/user-new.model';
 import { PaginatedResponse } from '@models/paginated-response.model';
 import { UserSearch } from '@models/search/user-search.model';
 import { UserNewService } from '@services/new/user-new.service';

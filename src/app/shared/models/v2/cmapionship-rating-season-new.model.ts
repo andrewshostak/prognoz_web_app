@@ -1,4 +1,4 @@
-import { UserNew } from '@models/new/user-new.model';
+import { UserNew } from '@models/v2/user-new.model';
 
 export class ChampionshipSeasonRatingItem {
    user: UserNew;

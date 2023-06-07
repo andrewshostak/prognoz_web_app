@@ -2,7 +2,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
 import { environment } from '@env';
-import { CupPredictionNew } from '@models/new/cup-prediction-new.model';
+import { CupPredictionNew } from '@models/v2/cup-prediction-new.model';
 import { PaginatedResponse } from '@models/paginated-response.model';
 import { CupPredictionSearch } from '@models/search/cup-prediction-search.model';
 import { Observable } from 'rxjs';

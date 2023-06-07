@@ -4,9 +4,9 @@ import { ActivatedRoute, Params, Router } from '@angular/router';
 
 import { ModelStatus } from '@enums/model-status.enum';
 import { TeamTeamMatchState } from '@enums/team-team-match-state.enum';
-import { UserNew } from '@models/new/user-new.model';
-import { TeamStageNew } from '@models/new/team-stage-new.model';
-import { TeamTeamMatchNew } from '@models/new/team-team-match-new.model';
+import { UserNew } from '@models/v2/user-new.model';
+import { TeamStageNew } from '@models/v2/team-stage-new.model';
+import { TeamTeamMatchNew } from '@models/v2/team-team-match-new.model';
 import { TeamMatch } from '@models/team/team-match.model';
 import { TeamParticipant } from '@models/team/team-participant.model';
 import { TeamParticipantSearch } from '@models/search/team-participant-search.model';
@@ -289,7 +289,7 @@ export class TeamCaptainComponent implements OnInit {
             tap((params: Params) => {
                this.teamStageId = params.team_stage_id;
                this.getMyTeamMatchesData(params.team_stage_id);
-               // todo: why do we even need to call participants on each stage change
+               // TODO: why do we even need to call participants on each stage change
                // this endpoint returns always the same participants
                // (only if we navigate to team-stage in other competition)
                this.getTeamParticipantsData(params.team_stage_id);

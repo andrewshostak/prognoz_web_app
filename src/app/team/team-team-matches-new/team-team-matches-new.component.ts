@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
-import { TeamTeamMatchNew } from '@models/new/team-team-match-new.model';
+import { TeamTeamMatchNew } from '@models/v2/team-team-match-new.model';
 import { PaginatedResponse } from '@models/paginated-response.model';
 import { TeamTeamMatchSearch } from '@models/search/team-team-match-search.model';
 import { CurrentStateService } from '@services/current-state.service';

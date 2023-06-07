@@ -4,7 +4,7 @@ import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/fo
 import { CompetitionState } from '@enums/competition-state.enum';
 import { Sequence } from '@enums/sequence.enum';
 import { Tournament } from '@enums/tournament.enum';
-import { CompetitionNew } from '@models/new/competition-new.model';
+import { CompetitionNew } from '@models/v2/competition-new.model';
 import { CompetitionSearch } from '@models/search/competition-search.model';
 import { CompetitionNewService } from '@services/new/competition-new.service';
 import { TeamStageNewService } from '@services/new/team-stage-new.service';

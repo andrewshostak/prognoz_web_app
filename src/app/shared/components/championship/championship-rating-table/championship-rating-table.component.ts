@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 
-import { ChampionshipRatingNew } from '@models/new/championship-rating-new.model';
+import { ChampionshipRatingNew } from '@models/v2/championship-rating-new.model';
 import { UtilsService } from '@services/utils.service';
 
 @Component({

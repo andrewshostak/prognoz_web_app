@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
 
-import { ClubNew } from '@models/new/club-new.model';
+import { ClubNew } from '@models/v2/club-new.model';
 import { ClubNewService } from '@services/new/club-new.service';
 import { FormValidatorService } from '@services/form-validator.service';
 import { UtilsService } from '@services/utils.service';

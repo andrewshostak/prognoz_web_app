@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 
-import { UserNew } from '@models/new/user-new.model';
+import { UserNew } from '@models/v2/user-new.model';
 import { User } from '@models/user.model';
 import { AuthNewService } from '@services/new/auth-new.service';
 import { PusherService } from '@services/pusher.service';

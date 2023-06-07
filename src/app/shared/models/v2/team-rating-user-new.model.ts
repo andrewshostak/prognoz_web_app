@@ -1,6 +1,6 @@
 /* tslint:disable:variable-name */
-import { UserNew } from '@models/new/user-new.model';
-import { TeamNew } from '@models/new/team-new.model';
+import { UserNew } from '@models/v2/user-new.model';
+import { TeamNew } from '@models/v2/team-new.model';
 
 export class TeamRatingUserNew {
    id: number;

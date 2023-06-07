@@ -1,7 +1,7 @@
 import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 
-import { TeamRatingUserNew } from '@models/new/team-rating-user-new.model';
-import { UserNew } from '@models/new/user-new.model';
+import { TeamRatingUserNew } from '@models/v2/team-rating-user-new.model';
+import { UserNew } from '@models/v2/user-new.model';
 import { Dictionary, groupBy } from 'lodash';
 
 @Component({

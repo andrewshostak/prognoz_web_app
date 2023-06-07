@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
 import { environment } from '@env';
-import { TournamentNew } from '@models/new/tournament-new.model';
+import { TournamentNew } from '@models/v2/tournament-new.model';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 

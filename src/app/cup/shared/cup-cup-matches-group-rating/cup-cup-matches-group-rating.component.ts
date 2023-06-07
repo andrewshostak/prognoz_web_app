@@ -4,7 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { CupRatingGroupTab } from '@enums/cup-rating-group-tab.enum';
 import { CupCupMatchState } from '@enums/cup-cup-match-state.enum';
 import { Sequence } from '@enums/sequence.enum';
-import { CupCupMatchNew } from '@models/new/cup-cup-match-new.model';
+import { CupCupMatchNew } from '@models/v2/cup-cup-match-new.model';
 import { CupCupMatchSearch } from '@models/search/cup-cup-match-search.model';
 import { CupCupMatchNewService } from '@services/new/cup-cup-match-new.service';
 import { SettingsService } from '@services/settings.service';

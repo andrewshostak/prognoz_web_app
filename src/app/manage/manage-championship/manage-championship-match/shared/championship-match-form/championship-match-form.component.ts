@@ -4,8 +4,8 @@ import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/fo
 import { MatchState } from '@enums/match-state.enum';
 import { CompetitionState } from '@enums/competition-state.enum';
 import { Tournament } from '@enums/tournament.enum';
-import { ChampionshipMatchNew } from '@models/new/championship-match-new.model';
-import { CompetitionNew } from '@models/new/competition-new.model';
+import { ChampionshipMatchNew } from '@models/v2/championship-match-new.model';
+import { CompetitionNew } from '@models/v2/competition-new.model';
 import { PaginatedResponse } from '@models/paginated-response.model';
 import { ChampionshipMatchSearch } from '@models/search/championship-match-search.model';
 import { CompetitionSearch } from '@models/search/competition-search.model';

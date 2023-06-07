@@ -3,8 +3,8 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 
 import { Sequence } from '@enums/sequence.enum';
-import { ChampionshipMatchNew } from '@models/new/championship-match-new.model';
-import { ChampionshipPredictionNew } from '@models/new/championship-prediction-new.model';
+import { ChampionshipMatchNew } from '@models/v2/championship-match-new.model';
+import { ChampionshipPredictionNew } from '@models/v2/championship-prediction-new.model';
 import { ChampionshipPredictionSearch } from '@models/search/championship-prediction-search.model';
 import { User } from '@models/user.model';
 import { CurrentStateService } from '@services/current-state.service';

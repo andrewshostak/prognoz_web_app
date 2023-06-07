@@ -6,11 +6,11 @@ import { ActivatedRoute } from '@angular/router';
 import { CurrentStateService } from '@services/current-state.service';
 import { NotificationsService } from 'angular2-notifications';
 import { TitleService } from '@services/title.service';
-import { CommentNew } from '@models/new/comment-new.model';
+import { CommentNew } from '@models/v2/comment-new.model';
 import { CommentNewService } from '@app/news/shared/comment-new.service';
 import { CommentSearch } from '@models/search/comment-search.model';
 import { SettingsService } from '@services/settings.service';
-import { UserNew } from '@models/new/user-new.model';
+import { UserNew } from '@models/v2/user-new.model';
 import { OpenedModal } from '@models/opened-modal.model';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { Sequence } from '@enums/sequence.enum';
@@ -18,7 +18,7 @@ import { ModelStatus } from '@enums/model-status.enum';
 import { AuthNewService } from '@services/new/auth-new.service';
 import * as moment from 'moment';
 import { NewsNewService } from '@services/new/news-new.service';
-import { NewsNew } from '@models/new/news-new.model';
+import { NewsNew } from '@models/v2/news-new.model';
 
 @Component({
    selector: 'app-news-detail',

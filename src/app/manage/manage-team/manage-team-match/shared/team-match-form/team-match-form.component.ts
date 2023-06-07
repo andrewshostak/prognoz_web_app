@@ -4,8 +4,8 @@ import { AbstractControl, FormArray, FormControl, FormGroup, Validators } from '
 import { MatchState } from '@enums/match-state.enum';
 import { Sequence } from '@enums/sequence.enum';
 import { TeamStageState } from '@enums/team-stage-state.enum';
-import { TeamMatchNew } from '@models/new/team-match-new.model';
-import { TeamStageNew } from '@models/new/team-stage-new.model';
+import { TeamMatchNew } from '@models/v2/team-match-new.model';
+import { TeamStageNew } from '@models/v2/team-stage-new.model';
 import { OpenedModal } from '@models/opened-modal.model';
 import { PaginatedResponse } from '@models/paginated-response.model';
 import { TeamMatchSearch } from '@models/search/team-match-search.model';

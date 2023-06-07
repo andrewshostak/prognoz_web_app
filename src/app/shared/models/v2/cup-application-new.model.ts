@@ -1,10 +1,10 @@
 /* tslint:disable:variable-name */
 import { CupApplicationPlace } from '@enums/cup-application-place.enum';
 import { ModelStatus } from '@enums/model-status.enum';
-import { CompetitionNew } from '@models/new/competition-new.model';
-import { UserNew } from '@models/new/user-new.model';
+import { CompetitionNew } from '@models/v2/competition-new.model';
+import { UserNew } from '@models/v2/user-new.model';
 
-// todo: remove receiver_id, place, refused_at, ended, receiver. add state.
+// TODO: remove receiver_id, place, refused_at, ended, receiver. add state.
 export class CupApplicationNew {
    id: number;
    competition_id: number;

@@ -1,5 +1,5 @@
 /* tslint:disable:variable-name */
-import { CupMatchNew } from '@models/new/cup-match-new.model';
+import { CupMatchNew } from '@models/v2/cup-match-new.model';
 
 export class CupPredictionNew {
    id: number;
