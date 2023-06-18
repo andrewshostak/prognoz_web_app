@@ -19,16 +19,7 @@ export class TeamMatch {
    is_predictable: boolean;
    club_first: any;
    club_second: any;
+
    team_predictions: any;
    match: Match;
-   competitions?: {
-      id: number;
-      ended: boolean;
-      pivot: {
-         competition_id: number;
-         number_in_competition: number;
-         number_in_round: number;
-         round: number;
-      };
-   }[];
 }
