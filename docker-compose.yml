@@ -1,0 +1,15 @@
+version: '2.4'
+services:
+   web_app:
+      container_name: prognoz_web_app_server
+      build:
+         context: ./
+         dockerfile: Dockerfile
+         args:
+            - IMAGE_BASE_URL=${IMAGE_BASE_URL}
+            - API_BASE_URL=${API_BASE_URL}
+            - PUSHER_API_KEY=${PUSHER_API_KEY}
+      ports:
+         - '4200:80'
+# find best practices of different dockerfiles
+# find how to behave when fe/be are on different repositories

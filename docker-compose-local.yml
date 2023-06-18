@@ -1,0 +1,15 @@
+version: '2.4'
+services:
+   web_app_dev:
+      container_name: prognoz_web_app_dev_server
+      build:
+         context: ./
+         dockerfile: local.Dockerfile
+      environment:
+         - IMAGE_BASE_URL=${IMAGE_BASE_URL}
+         - API_BASE_URL=${API_BASE_URL}
+         - PUSHER_API_KEY=${PUSHER_API_KEY}
+      ports:
+         - '4200:4200'
+      volumes:
+         - ./src:/app/src
