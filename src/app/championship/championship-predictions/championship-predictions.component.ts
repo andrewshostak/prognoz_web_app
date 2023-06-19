@@ -6,10 +6,10 @@ import { Sequence } from '@enums/sequence.enum';
 import { ChampionshipMatch } from '@models/v2/championship/championship-match.model';
 import { ChampionshipMatchSearch } from '@models/search/championship/championship-match-search.model';
 import { User } from '@models/v2/user.model';
-import { AuthNewService } from '@services/v2/auth-new.service';
-import { ChampionshipPredictionNewService } from '@services/v2/championship-prediction-new.service';
+import { AuthService } from '@services/v2/auth.service';
+import { ChampionshipPredictionService } from '@services/v2/championship-prediction.service';
 import { ChampionshipService } from '@services/championship/championship.service';
-import { ChampionshipMatchNewService } from '@services/v2/championship-match-new.service';
+import { ChampionshipMatchService } from '@services/v2/championship-match.service';
 import { SettingsService } from '@services/settings.service';
 import { TitleService } from '@services/title.service';
 import { NotificationsService } from 'angular2-notifications';
@@ -27,9 +27,9 @@ export class ChampionshipPredictionsComponent implements OnInit {
    public spinnerButton = false;
 
    constructor(
-      private authService: AuthNewService,
-      private championshipMatchService: ChampionshipMatchNewService,
-      private championshipPredictionNewService: ChampionshipPredictionNewService,
+      private authService: AuthService,
+      private championshipMatchService: ChampionshipMatchService,
+      private championshipPredictionService: ChampionshipPredictionService,
       private championshipService: ChampionshipService,
       private notificationsService: NotificationsService,
       private titleService: TitleService
@@ -45,7 +45,7 @@ export class ChampionshipPredictionsComponent implements OnInit {
    public onSubmit(): void {
       this.spinnerButton = true;
       const championshipPredictionsToUpdate = this.championshipService.createChampionshipPredictionsArray(this.championshipPredictionsForm);
-      this.championshipPredictionNewService.upsertPredictions(championshipPredictionsToUpdate).subscribe(
+      this.championshipPredictionService.upsertPredictions(championshipPredictionsToUpdate).subscribe(
          () => {
             this.spinnerButton = false;
             this.notificationsService.success('Успішно', 'Прогнози прийнято');

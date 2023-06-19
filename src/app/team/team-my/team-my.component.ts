@@ -6,9 +6,9 @@ import { User } from '@models/v2/user.model';
 import { TeamTeamMatch } from '@models/v2/team/team-team-match.model';
 import { TeamSearch } from '@models/search/team/team-search.model';
 import { TeamTeamMatchSearch } from '@models/search/team/team-team-match-search.model';
-import { AuthNewService } from '@services/v2/auth-new.service';
-import { TeamNewService } from '@services/v2/team-new.service';
-import { TeamTeamMatchNewService } from '@services/v2/team-team-match-new.service';
+import { AuthService } from '@services/v2/auth.service';
+import { TeamService } from '@services/v2/team.service';
+import { TeamTeamMatchService } from '@services/v2/team-team-match.service';
 import { SettingsService } from '@services/settings.service';
 import { TeamMatchService } from '@services/v1/team-match.service';
 import { TitleService } from '@services/title.service';
@@ -29,12 +29,12 @@ export class TeamMyComponent implements OnInit {
    public lastTeamStageId: number = 0;
 
    constructor(
-      private authService: AuthNewService,
+      private authService: AuthService,
       private activatedRoute: ActivatedRoute,
       private router: Router,
       private teamMatchService: TeamMatchService,
-      private teamService: TeamNewService,
-      private teamTeamMatchService: TeamTeamMatchNewService,
+      private teamService: TeamService,
+      private teamTeamMatchService: TeamTeamMatchService,
       private titleService: TitleService
    ) {}
 

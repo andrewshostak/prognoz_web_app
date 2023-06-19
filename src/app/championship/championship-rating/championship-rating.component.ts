@@ -4,8 +4,8 @@ import { MatchState } from '@enums/match-state.enum';
 import { Sequence } from '@enums/sequence.enum';
 import { ChampionshipMatchSearch } from '@models/search/championship/championship-match-search.model';
 import { User } from '@models/v2/user.model';
-import { AuthNewService } from '@services/v2/auth-new.service';
-import { ChampionshipMatchNewService } from '@services/v2/championship-match-new.service';
+import { AuthService } from '@services/v2/auth.service';
+import { ChampionshipMatchService } from '@services/v2/championship-match.service';
 import { TitleService } from '@services/title.service';
 import { get } from 'lodash';
 import { iif, Observable, of } from 'rxjs';
@@ -14,11 +14,11 @@ import { Competition } from '@models/v2/competition.model';
 import { CompetitionSearch } from '@models/search/competition-search.model';
 import { CompetitionState } from '@enums/competition-state.enum';
 import { Tournament } from '@enums/tournament.enum';
-import { CompetitionNewService } from '@services/v2/competition-new.service';
+import { CompetitionService } from '@services/v2/competition.service';
 import { ChampionshipRating } from '@models/v2/championship/championship-rating.model';
 import { ChampionshipRatingSearch } from '@models/search/championship/championship-rating-search.model';
 import { SettingsService } from '@services/settings.service';
-import { ChampionshipRatingNewService } from '@services/v2/championship-rating-new.service';
+import { ChampionshipRatingService } from '@services/v2/championship-rating.service';
 import { mergeMap } from 'rxjs/operators';
 
 @Component({
@@ -32,10 +32,10 @@ export class ChampionshipRatingComponent implements OnInit {
    public ratingUpdatedAt: string;
 
    constructor(
-      private authService: AuthNewService,
-      private championshipRatingService: ChampionshipRatingNewService,
-      private championshipMatchService: ChampionshipMatchNewService,
-      private competitionService: CompetitionNewService,
+      private authService: AuthService,
+      private championshipRatingService: ChampionshipRatingService,
+      private championshipMatchService: ChampionshipMatchService,
+      private competitionService: CompetitionService,
       private titleService: TitleService
    ) {}
 

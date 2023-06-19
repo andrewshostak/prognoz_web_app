@@ -8,7 +8,7 @@ import { OpenedModal } from '@models/opened-modal.model';
 import { Pagination } from '@models/pagination.model';
 import { CupMatchSearch } from '@models/search/cup/cup-match-search.model';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
-import { CupMatchNewService } from '@services/v2/cup-match-new.service';
+import { CupMatchService } from '@services/v2/cup-match.service';
 import { PaginationService } from '@services/pagination.service';
 import { SettingsService } from '@services/settings.service';
 import { NotificationsService } from 'angular2-notifications';
@@ -30,7 +30,7 @@ export class CupMatchTableComponent implements OnDestroy, OnInit {
 
    constructor(
       private activatedRoute: ActivatedRoute,
-      private cupMatchService: CupMatchNewService,
+      private cupMatchService: CupMatchService,
       private ngbModalService: NgbModal,
       private notificationsService: NotificationsService
    ) {}

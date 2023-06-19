@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 
-import { CupCupMatchNewService } from '@services/v2/cup-cup-match-new.service';
-import { CupStageNewService } from '@services/v2/cup-stage-new.service';
+import { CupCupMatchService } from '@services/v2/cup-cup-match.service';
+import { CupStageService } from '@services/v2/cup-stage.service';
 import { NotificationsService } from 'angular2-notifications';
 import { CupStage } from '@models/v2/cup/cup-stage.model';
 import { CupStageSearch } from '@models/search/cup/cup-stage-search.model';
@@ -17,8 +17,8 @@ import { SettingsService } from '@services/settings.service';
 })
 export class CupCupMatchesCreateAutoComponent implements OnInit {
    constructor(
-      private cupCupMatchService: CupCupMatchNewService,
-      private cupStageService: CupStageNewService,
+      private cupCupMatchService: CupCupMatchService,
+      private cupStageService: CupStageService,
       private notificationsService: NotificationsService
    ) {}
 

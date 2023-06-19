@@ -14,9 +14,9 @@ import { CompetitionSearch } from '@models/search/competition-search.model';
 import { SeasonSearch } from '@models/search/season-search.model';
 import { TeamStageSearch } from '@models/search/team/team-stage-search.model';
 import { CurrentStateService } from '@services/current-state.service';
-import { CompetitionNewService } from '@services/v2/competition-new.service';
-import { SeasonNewService } from '@services/v2/season-new.service';
-import { TeamStageNewService } from '@services/v2/team-stage-new.service';
+import { CompetitionService } from '@services/v2/competition.service';
+import { SeasonService } from '@services/v2/season.service';
+import { TeamStageService } from '@services/v2/team-stage.service';
 import { SettingsService } from '@services/settings.service';
 import { find, findLast, get } from 'lodash';
 import { iif, Observable, of } from 'rxjs';
@@ -43,10 +43,10 @@ export class TeamStageSelectComponent implements OnInit {
 
    constructor(
       private activatedRoute: ActivatedRoute,
-      private competitionService: CompetitionNewService,
+      private competitionService: CompetitionService,
       private currentStateService: CurrentStateService,
-      private seasonService: SeasonNewService,
-      private teamStageService: TeamStageNewService
+      private seasonService: SeasonService,
+      private teamStageService: TeamStageService
    ) {}
 
    get competitionIdFormValue(): number {

@@ -11,8 +11,8 @@ import { PaginatedResponse } from '@models/paginated-response.model';
 import { TeamMatchSearch } from '@models/search/team/team-match-search.model';
 import { TeamStageSearch } from '@models/search/team/team-stage-search.model';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
-import { TeamMatchNewService } from '@services/v2/team-match-new.service';
-import { TeamStageNewService } from '@services/v2/team-stage-new.service';
+import { TeamMatchService } from '@services/v2/team-match.service';
+import { TeamStageService } from '@services/v2/team-stage.service';
 import { SettingsService } from '@services/settings.service';
 import { UtilsService } from '@services/utils.service';
 import { NotificationsService } from 'angular2-notifications';
@@ -33,10 +33,10 @@ export class TeamMatchFormComponent implements OnChanges, OnInit {
    public teamMatchForm: FormGroup;
 
    constructor(
-      private teamStageService: TeamStageNewService,
+      private teamStageService: TeamStageService,
       private ngbModalService: NgbModal,
       private notificationsService: NotificationsService,
-      private teamMatchService: TeamMatchNewService
+      private teamMatchService: TeamMatchService
    ) {}
 
    get teamStagesFormArray(): FormArray {

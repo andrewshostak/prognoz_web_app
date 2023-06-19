@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit, TemplateRef } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 
-import { GuestbookMessageNewService } from '@app/guestbook/shared/guestbook-message-new.service';
+import { GuestbookMessageService } from '@app/guestbook/shared/guestbook-message.service';
 import { ModelStatus } from '@enums/model-status.enum';
 import { Sequence } from '@enums/sequence.enum';
 import { GuestbookMessage } from '@models/v2/guestbook-message.model';
@@ -10,7 +10,7 @@ import { OpenedModal } from '@models/opened-modal.model';
 import { Pagination } from '@models/pagination.model';
 import { GuestbookMessageSearch } from '@models/search/guestbook-message-search.model';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
-import { AuthNewService } from '@services/v2/auth-new.service';
+import { AuthService } from '@services/v2/auth.service';
 import { PaginationService } from '@services/pagination.service';
 import { SettingsService } from '@services/settings.service';
 import { TitleService } from '@services/title.service';
@@ -32,8 +32,8 @@ export class GuestbookPageComponent implements OnDestroy, OnInit {
 
    constructor(
       private activatedRoute: ActivatedRoute,
-      private authService: AuthNewService,
-      private guestbookMessageService: GuestbookMessageNewService,
+      private authService: AuthService,
+      private guestbookMessageService: GuestbookMessageService,
       private ngbModalService: NgbModal,
       private notificationsService: NotificationsService,
       private titleService: TitleService

@@ -13,11 +13,11 @@ import { PaginatedResponse } from '@models/paginated-response.model';
 import { TeamParticipantSearch } from '@models/search/team/team-participant-search.model';
 import { TeamSearch } from '@models/search/team/team-search.model';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
-import { AuthNewService } from '@services/v2/auth-new.service';
-import { CompetitionNewService } from '@services/v2/competition-new.service';
-import { TeamCompetitionNewService } from '@services/v2/team-competition-new.service';
-import { TeamNewService } from '@services/v2/team-new.service';
-import { TeamParticipantNewService } from '@services/v2/team-participant-new.service';
+import { AuthService } from '@services/v2/auth.service';
+import { CompetitionService } from '@services/v2/competition.service';
+import { TeamCompetitionService } from '@services/v2/team-competition.service';
+import { TeamService } from '@services/v2/team.service';
+import { TeamParticipantService } from '@services/v2/team-participant.service';
 import { SettingsService } from '@services/settings.service';
 import { TitleService } from '@services/title.service';
 import { NotificationsService } from 'angular2-notifications';
@@ -43,14 +43,14 @@ export class TeamParticipantsComponent implements OnDestroy, OnInit {
 
    constructor(
       private activatedRoute: ActivatedRoute,
-      private authService: AuthNewService,
-      private competitionService: CompetitionNewService,
+      private authService: AuthService,
+      private competitionService: CompetitionService,
       private ngbModalService: NgbModal,
       private notificationsService: NotificationsService,
       private router: Router,
-      private teamCompetitionService: TeamCompetitionNewService,
-      private teamParticipantService: TeamParticipantNewService,
-      private teamService: TeamNewService,
+      private teamCompetitionService: TeamCompetitionService,
+      private teamParticipantService: TeamParticipantService,
+      private teamService: TeamService,
       private titleService: TitleService
    ) {}
 

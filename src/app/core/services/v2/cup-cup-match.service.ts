@@ -6,16 +6,16 @@ import { environment } from '@env';
 import { CupCupMatch } from '@models/v2/cup/cup-cup-match.model';
 import { PaginatedResponse } from '@models/paginated-response.model';
 import { CupCupMatchSearch } from '@models/search/cup/cup-cup-match-search.model';
-import { AuthNewService } from '@services/v2/auth-new.service';
+import { AuthService } from '@services/v2/auth.service';
 import { groupBy } from 'lodash';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 @Injectable()
-export class CupCupMatchNewService {
+export class CupCupMatchService {
    public readonly cupCupMatchesUrl: string = `${environment.apiBaseUrl}/v2/cup/cup-matches`;
 
-   constructor(private authService: AuthNewService, private httpClient: HttpClient) {}
+   constructor(private authService: AuthService, private httpClient: HttpClient) {}
 
    createCupCupMatch(cupCupMatch: Partial<CupCupMatch>): Observable<CupCupMatch> {
       return this.httpClient

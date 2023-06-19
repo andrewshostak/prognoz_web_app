@@ -3,7 +3,7 @@ import { ActivatedRoute, Params, Router } from '@angular/router';
 
 import { Tournament } from '@enums/tournament.enum';
 import { Competition } from '@models/v2/competition.model';
-import { CompetitionNewService } from '@services/v2/competition-new.service';
+import { CompetitionService } from '@services/v2/competition.service';
 import { TitleService } from '@services/title.service';
 import { SettingsService } from '@services/settings.service';
 
@@ -15,7 +15,7 @@ import { SettingsService } from '@services/settings.service';
 export class ChampionshipCompetitionWinnersComponent implements OnInit {
    constructor(
       private activatedRoute: ActivatedRoute,
-      private competitionService: CompetitionNewService,
+      private competitionService: CompetitionService,
       private router: Router,
       private titleService: TitleService
    ) {}

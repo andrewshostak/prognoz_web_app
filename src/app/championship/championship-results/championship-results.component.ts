@@ -9,8 +9,8 @@ import { Competition } from '@models/v2/competition.model';
 import { PaginatedResponse } from '@models/paginated-response.model';
 import { ChampionshipMatchSearch } from '@models/search/championship/championship-match-search.model';
 import { CompetitionSearch } from '@models/search/competition-search.model';
-import { ChampionshipMatchNewService } from '@services/v2/championship-match-new.service';
-import { CompetitionNewService } from '@services/v2/competition-new.service';
+import { ChampionshipMatchService } from '@services/v2/championship-match.service';
+import { CompetitionService } from '@services/v2/competition.service';
 import { SettingsService } from '@services/settings.service';
 import { TitleService } from '@services/title.service';
 import { Observable, throwError } from 'rxjs';
@@ -26,8 +26,8 @@ export class ChampionshipResultsComponent implements OnInit {
    public error: string;
 
    constructor(
-      private championshipMatchService: ChampionshipMatchNewService,
-      private competitionService: CompetitionNewService,
+      private championshipMatchService: ChampionshipMatchService,
+      private competitionService: CompetitionService,
       private titleService: TitleService
    ) {}
 

@@ -8,10 +8,10 @@ import { PaginatedResponse } from '@models/paginated-response.model';
 import { TeamRatingSearch } from '@models/search/team/team-rating-search.model';
 import { TeamRatingUserSearch } from '@models/search/team/team-rating-user-search.model';
 import { User } from '@models/v2/user.model';
-import { AuthNewService } from '@services/v2/auth-new.service';
-import { CompetitionNewService } from '@services/v2/competition-new.service';
-import { TeamRatingUserNewService } from '@services/v2/team-rating-user-new.service';
-import { TeamRatingNewService } from '@services/v2/team-rating-new.service';
+import { AuthService } from '@services/v2/auth.service';
+import { CompetitionService } from '@services/v2/competition.service';
+import { TeamRatingUserService } from '@services/v2/team-rating-user.service';
+import { TeamRatingService } from '@services/v2/team-rating.service';
 import { SettingsService } from '@services/settings.service';
 import { TitleService } from '@services/title.service';
 import { groupBy } from 'lodash';
@@ -34,12 +34,12 @@ export class TeamRatingComponent implements OnDestroy, OnInit {
    public competition: Competition;
 
    constructor(
-      private authService: AuthNewService,
+      private authService: AuthService,
       private activatedRoute: ActivatedRoute,
-      private competitionNewService: CompetitionNewService,
+      private competitionService: CompetitionService,
       private router: Router,
-      private teamRatingService: TeamRatingNewService,
-      private teamRatingUserService: TeamRatingUserNewService,
+      private teamRatingService: TeamRatingService,
+      private teamRatingUserService: TeamRatingUserService,
       private titleService: TitleService
    ) {}
 
@@ -68,7 +68,7 @@ export class TeamRatingComponent implements OnDestroy, OnInit {
    }
 
    private getCompetitionData(id: number): void {
-      this.competitionNewService.getCompetition(id).subscribe(response => {
+      this.competitionService.getCompetition(id).subscribe(response => {
          this.competition = response;
       });
    }

@@ -10,7 +10,7 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 @Injectable()
-export class CupApplicationNewService {
+export class CupApplicationService {
    readonly cupApplicationsUrl: string = `${environment.apiBaseUrl}/v2/cup/applications`;
 
    constructor(private httpClient: HttpClient) {}

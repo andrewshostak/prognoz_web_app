@@ -6,9 +6,9 @@ import { CupPrediction } from '@models/v2/cup/cup-prediction.model';
 import { User } from '@models/v2/user.model';
 import { CupMatchSearch } from '@models/search/cup/cup-match-search.model';
 import { CurrentStateService } from '@services/current-state.service';
-import { AuthNewService } from '@services/v2/auth-new.service';
-import { CupMatchNewService } from '@services/v2/cup-match-new.service';
-import { CupPredictionNewService } from '@services/v2/cup-prediction-new.service';
+import { AuthService } from '@services/v2/auth.service';
+import { CupMatchService } from '@services/v2/cup-match.service';
+import { CupPredictionService } from '@services/v2/cup-prediction.service';
 import { SettingsService } from '@services/settings.service';
 import { TitleService } from '@services/title.service';
 import { get } from 'lodash';
@@ -23,9 +23,9 @@ import { MatchState } from '@enums/match-state.enum';
 })
 export class CupPredictionsComponent implements OnInit {
    constructor(
-      private authService: AuthNewService,
-      private cupMatchService: CupMatchNewService,
-      private cupPredictionService: CupPredictionNewService,
+      private authService: AuthService,
+      private cupMatchService: CupMatchService,
+      private cupPredictionService: CupPredictionService,
       private currentStateService: CurrentStateService,
       private titleService: TitleService
    ) {}

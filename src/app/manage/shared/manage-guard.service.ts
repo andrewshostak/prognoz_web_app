@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
 import { CanActivate, Router } from '@angular/router';
 
-import { AuthNewService } from '@services/v2/auth-new.service';
+import { AuthService } from '@services/v2/auth.service';
 import { get } from 'lodash';
 
 @Injectable()
 export class ManageGuard implements CanActivate {
-   constructor(private authService: AuthNewService, private router: Router) {}
+   constructor(private authService: AuthService, private router: Router) {}
 
    public canActivate(): boolean {
       const user = this.authService.getUser();

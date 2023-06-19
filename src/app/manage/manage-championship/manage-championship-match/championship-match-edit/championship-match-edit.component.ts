@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 
 import { ChampionshipMatch } from '@models/v2/championship/championship-match.model';
-import { ChampionshipMatchNewService } from '@services/v2/championship-match-new.service';
+import { ChampionshipMatchService } from '@services/v2/championship-match.service';
 
 @Component({
    selector: 'app-championship-match-update',
@@ -12,7 +12,7 @@ import { ChampionshipMatchNewService } from '@services/v2/championship-match-new
 export class ChampionshipMatchEditComponent implements OnInit {
    public championshipMatch: ChampionshipMatch;
 
-   constructor(private activatedRoute: ActivatedRoute, private championshipMatchService: ChampionshipMatchNewService) {}
+   constructor(private activatedRoute: ActivatedRoute, private championshipMatchService: ChampionshipMatchService) {}
 
    public ngOnInit(): void {
       this.activatedRoute.params.forEach((param: Params) => {

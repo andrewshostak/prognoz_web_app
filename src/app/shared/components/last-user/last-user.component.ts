@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { Sequence } from '@enums/sequence.enum';
 import { User } from '@models/v2/user.model';
 import { UserSearch } from '@models/search/user-search.model';
-import { UserNewService } from '@services/v2/user-new.service';
+import { UserService } from '@services/v2/user.service';
 import { SettingsService } from '@services/settings.service';
 import { UtilsService } from '@services/utils.service';
 
@@ -18,7 +18,7 @@ export class LastUserComponent implements OnInit {
    public usersLogosPath = SettingsService.usersLogosPath + '/';
    public homeCityInBrackets: string;
 
-   constructor(private userService: UserNewService) {}
+   constructor(private userService: UserService) {}
 
    public ngOnInit(): void {
       const search: UserSearch = { limit: 1, sequence: Sequence.Descending, orderBy: 'created_at' };

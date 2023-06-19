@@ -8,7 +8,7 @@ import { OpenedModal } from '@models/opened-modal.model';
 import { Pagination } from '@models/pagination.model';
 import { ChampionshipMatchSearch } from '@models/search/championship/championship-match-search.model';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
-import { ChampionshipMatchNewService } from '@services/v2/championship-match-new.service';
+import { ChampionshipMatchService } from '@services/v2/championship-match.service';
 import { PaginationService } from '@services/pagination.service';
 import { SettingsService } from '@services/settings.service';
 import { NotificationsService } from 'angular2-notifications';
@@ -30,7 +30,7 @@ export class ChampionshipMatchTableComponent implements OnDestroy, OnInit {
 
    constructor(
       private activatedRoute: ActivatedRoute,
-      private championshipMatchService: ChampionshipMatchNewService,
+      private championshipMatchService: ChampionshipMatchService,
       private notificationsService: NotificationsService,
       private ngbModalService: NgbModal
    ) {}

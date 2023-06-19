@@ -7,7 +7,7 @@ import { CurrentStateService } from '@services/current-state.service';
 import { NotificationsService } from 'angular2-notifications';
 import { TitleService } from '@services/title.service';
 import { Comment } from '@models/v2/comment.model';
-import { CommentNewService } from '@app/news/shared/comment-new.service';
+import { CommentService } from '@app/news/shared/comment.service';
 import { CommentSearch } from '@models/search/comment-search.model';
 import { SettingsService } from '@services/settings.service';
 import { User } from '@models/v2/user.model';
@@ -15,9 +15,9 @@ import { OpenedModal } from '@models/opened-modal.model';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { Sequence } from '@enums/sequence.enum';
 import { ModelStatus } from '@enums/model-status.enum';
-import { AuthNewService } from '@services/v2/auth-new.service';
+import { AuthService } from '@services/v2/auth.service';
 import * as moment from 'moment';
-import { NewsNewService } from '@services/v2/news-new.service';
+import { NewsService } from '@services/v2/news.service';
 import { News } from '@models/v2/news.model';
 
 @Component({
@@ -27,14 +27,14 @@ import { News } from '@models/v2/news.model';
 export class NewsDetailComponent implements OnInit {
    constructor(
       private activatedRoute: ActivatedRoute,
-      private authService: AuthNewService,
-      private commentService: CommentNewService,
+      private authService: AuthService,
+      private commentService: CommentService,
       private currentStateService: CurrentStateService,
       private domSanitizer: DomSanitizer,
       private location: Location,
       private ngbModalService: NgbModal,
       private notificationsService: NotificationsService,
-      private newsService: NewsNewService,
+      private newsService: NewsService,
       private titleService: TitleService
    ) {}
 

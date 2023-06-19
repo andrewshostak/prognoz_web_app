@@ -11,8 +11,8 @@ import { PaginatedResponse } from '@models/paginated-response.model';
 import { CompetitionSearch } from '@models/search/competition-search.model';
 import { SeasonSearch } from '@models/search/season-search.model';
 import { CurrentStateService } from '@services/current-state.service';
-import { CompetitionNewService } from '@services/v2/competition-new.service';
-import { SeasonNewService } from '@services/v2/season-new.service';
+import { CompetitionService } from '@services/v2/competition.service';
+import { SeasonService } from '@services/v2/season.service';
 import { SettingsService } from '@services/settings.service';
 import { iif, Observable, of } from 'rxjs';
 import { map, mergeMap, tap } from 'rxjs/operators';
@@ -36,9 +36,9 @@ export class CompetitionSelectNewComponent implements OnInit {
 
    constructor(
       private activatedRoute: ActivatedRoute,
-      private competitionService: CompetitionNewService,
+      private competitionService: CompetitionService,
       private currentStateService: CurrentStateService,
-      private seasonService: SeasonNewService
+      private seasonService: SeasonService
    ) {}
 
    get competitionIdFormValue(): number {

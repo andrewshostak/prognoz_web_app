@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 
-import { ChampionshipRatingNewService } from '@services/v2/championship-rating-new.service';
-import { AuthNewService } from '@services/v2/auth-new.service';
+import { ChampionshipRatingService } from '@services/v2/championship-rating.service';
+import { AuthService } from '@services/v2/auth.service';
 import { TitleService } from '@services/title.service';
 import { User } from '@models/v2/user.model';
 import { ChampionshipRating } from '@models/v2/championship/championship-rating.model';
@@ -17,9 +17,9 @@ import { Sequence } from '@enums/sequence.enum';
 })
 export class ChampionshipCompetitionRatingComponent implements OnInit {
    constructor(
-      private authService: AuthNewService,
+      private authService: AuthService,
       private activatedRoute: ActivatedRoute,
-      private championshipRatingService: ChampionshipRatingNewService,
+      private championshipRatingService: ChampionshipRatingService,
       private titleService: TitleService
    ) {}
 

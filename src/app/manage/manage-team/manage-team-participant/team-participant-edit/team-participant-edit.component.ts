@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
 import { TeamParticipant } from '@models/v2/team/team-participant.model';
-import { TeamParticipantNewService } from '@services/v2/team-participant-new.service';
+import { TeamParticipantService } from '@services/v2/team-participant.service';
 
 @Component({
    selector: 'app-team-participant-edit',
@@ -12,7 +12,7 @@ import { TeamParticipantNewService } from '@services/v2/team-participant-new.ser
 export class TeamParticipantEditComponent implements OnInit {
    public teamParticipant: TeamParticipant;
 
-   constructor(private activatedRoute: ActivatedRoute, private teamParticipantService: TeamParticipantNewService) {}
+   constructor(private activatedRoute: ActivatedRoute, private teamParticipantService: TeamParticipantService) {}
 
    public ngOnInit(): void {
       this.getTeamParticipant(this.activatedRoute.snapshot.params.id);

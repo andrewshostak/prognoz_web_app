@@ -10,7 +10,7 @@ import { map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 
 @Injectable()
-export class TeamStageNewService {
+export class TeamStageService {
    public readonly teamStagesUrl: string = `${environment.apiBaseUrl}/v2/team/stages`;
 
    constructor(private httpClient: HttpClient) {}

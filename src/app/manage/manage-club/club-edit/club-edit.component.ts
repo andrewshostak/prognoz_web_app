@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Club } from '@models/v2/club.model';
 import { ActivatedRoute, Params } from '@angular/router';
-import { ClubNewService } from '@services/v2/club-new.service';
+import { ClubService } from '@services/v2/club.service';
 
 @Component({
    selector: 'app-club-edit',
@@ -11,7 +11,7 @@ import { ClubNewService } from '@services/v2/club-new.service';
 export class ClubEditComponent implements OnInit {
    public club: Club;
 
-   constructor(private activatedRoute: ActivatedRoute, private clubService: ClubNewService) {}
+   constructor(private activatedRoute: ActivatedRoute, private clubService: ClubService) {}
 
    public ngOnInit(): void {
       this.activatedRoute.params.forEach((params: Params) => {

@@ -9,7 +9,7 @@ import { Observable } from 'rxjs';
 import { ChampionshipSeasonRatingItem } from '@models/v2/championship/championship-rating-season.model';
 
 @Injectable()
-export class ChampionshipRatingNewService {
+export class ChampionshipRatingService {
    public readonly championshipRatingUrl: string = `${environment.apiBaseUrl}/v2/championship/rating`;
 
    constructor(private httpClient: HttpClient) {}

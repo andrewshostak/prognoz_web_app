@@ -8,8 +8,8 @@ import { OpenedModal } from '@models/opened-modal.model';
 import { PaginatedResponse } from '@models/paginated-response.model';
 import { CupMatchSearch } from '@models/search/cup/cup-match-search.model';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
-import { CupStageNewService } from '@services/v2/cup-stage-new.service';
-import { CupMatchNewService } from '@services/v2/cup-match-new.service';
+import { CupStageService } from '@services/v2/cup-stage.service';
+import { CupMatchService } from '@services/v2/cup-match.service';
 import { SettingsService } from '@services/settings.service';
 import { UtilsService } from '@services/utils.service';
 import { NotificationsService } from 'angular2-notifications';
@@ -33,8 +33,8 @@ export class CupMatchFormComponent implements OnChanges, OnInit {
    public openedModal: OpenedModal<null>;
 
    constructor(
-      private cupMatchService: CupMatchNewService,
-      private cupStageService: CupStageNewService,
+      private cupMatchService: CupMatchService,
+      private cupStageService: CupStageService,
       private ngbModalService: NgbModal,
       private notificationsService: NotificationsService
    ) {}

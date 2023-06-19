@@ -3,7 +3,7 @@ import { NavigationEnd, Router } from '@angular/router';
 
 import { User } from '@models/v2/user.model';
 import { CurrentStateService } from '@services/current-state.service';
-import { AuthNewService } from '@services/v2/auth-new.service';
+import { AuthService } from '@services/v2/auth.service';
 import { HeaderImageService } from '@services/v2/header-image.service';
 import { NotificationsService } from 'angular2-notifications';
 import { filter } from 'rxjs/operators';
@@ -25,7 +25,7 @@ export class HeaderComponent implements AfterViewInit, OnInit {
    @ViewChild('logoBackground', { static: true }) public logoBackground: ElementRef;
 
    constructor(
-      private authService: AuthNewService,
+      private authService: AuthService,
       private currentStateService: CurrentStateService,
       private headerImageService: HeaderImageService,
       private notificationsService: NotificationsService,

@@ -6,7 +6,7 @@ import { OpenedModal } from '@models/opened-modal.model';
 import { Pagination } from '@models/pagination.model';
 import { TeamSearch } from '@models/search/team/team-search.model';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
-import { TeamNewService } from '@services/v2/team-new.service';
+import { TeamService } from '@services/v2/team.service';
 import { PaginationService } from '@services/pagination.service';
 import { SettingsService } from '@services/settings.service';
 import { NotificationsService } from 'angular2-notifications';
@@ -28,7 +28,7 @@ export class TeamTeamsTableComponent implements OnDestroy, OnInit {
       private activatedRoute: ActivatedRoute,
       private ngbModalService: NgbModal,
       private notificationsService: NotificationsService,
-      private teamService: TeamNewService
+      private teamService: TeamService
    ) {}
 
    public deleteTeam(): void {

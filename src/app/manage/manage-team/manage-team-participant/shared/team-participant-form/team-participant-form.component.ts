@@ -9,10 +9,10 @@ import { Team } from '@models/v2/team/team.model';
 import { TeamParticipant } from '@models/v2/team/team-participant.model';
 import { User } from '@models/v2/user.model';
 import { CompetitionSearch } from '@models/search/competition-search.model';
-import { CompetitionNewService } from '@services/v2/competition-new.service';
-import { TeamNewService } from '@services/v2/team-new.service';
-import { TeamParticipantNewService } from '@services/v2/team-participant-new.service';
-import { UserNewService } from '@services/v2/user-new.service';
+import { CompetitionService } from '@services/v2/competition.service';
+import { TeamService } from '@services/v2/team.service';
+import { TeamParticipantService } from '@services/v2/team-participant.service';
+import { UserService } from '@services/v2/user.service';
 import { SettingsService } from '@services/settings.service';
 import { UtilsService } from '@services/utils.service';
 import { NotificationsService } from 'angular2-notifications';
@@ -32,12 +32,12 @@ export class TeamParticipantFormComponent implements OnChanges, OnInit {
    public user: User;
 
    constructor(
-      private competitionService: CompetitionNewService,
+      private competitionService: CompetitionService,
       private notificationsService: NotificationsService,
       private router: Router,
-      private teamService: TeamNewService,
-      private teamParticipantService: TeamParticipantNewService,
-      private userService: UserNewService
+      private teamService: TeamService,
+      private teamParticipantService: TeamParticipantService,
+      private userService: UserService
    ) {}
 
    public ngOnChanges(changes: SimpleChanges) {

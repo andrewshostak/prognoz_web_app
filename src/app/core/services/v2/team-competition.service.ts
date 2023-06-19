@@ -6,17 +6,17 @@ import { Team } from '@models/v2/team/team.model';
 import { TeamParticipant } from '@models/v2/team/team-participant.model';
 import { TeamPrediction } from '@models/v2/team/team-prediction.model';
 import { DeviceService } from '@services/device.service';
-import { TeamNewService } from '@services/v2/team-new.service';
-import { TeamParticipantNewService } from '@services/v2/team-participant-new.service';
+import { TeamService } from '@services/v2/team.service';
+import { TeamParticipantService } from '@services/v2/team-participant.service';
 import { from, Observable, of } from 'rxjs';
 import { catchError, mergeMap } from 'rxjs/operators';
 
 @Injectable()
-export class TeamCompetitionNewService {
+export class TeamCompetitionService {
    constructor(
       private deviceService: DeviceService,
-      private teamParticipantService: TeamParticipantNewService,
-      private teamService: TeamNewService
+      private teamParticipantService: TeamParticipantService,
+      private teamService: TeamService
    ) {}
 
    public updateTeamCreateAndUpdateCaptain(

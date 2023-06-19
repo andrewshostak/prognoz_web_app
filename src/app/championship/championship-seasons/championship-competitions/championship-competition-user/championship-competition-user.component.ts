@@ -3,12 +3,12 @@ import { ActivatedRoute, Params } from '@angular/router';
 
 import { ChampionshipRating } from '@models/v2/championship/championship-rating.model';
 import { User } from '@models/v2/user.model';
-import { ChampionshipRatingNewService } from '@services/v2/championship-rating-new.service';
-import { UserNewService } from '@services/v2/user-new.service';
+import { ChampionshipRatingService } from '@services/v2/championship-rating.service';
+import { UserService } from '@services/v2/user.service';
 import { TitleService } from '@services/title.service';
 import { UtilsService } from '@services/utils.service';
 import { ChampionshipRatingSearch } from '@models/search/championship/championship-rating-search.model';
-import { ChampionshipPredictionNewService } from '@services/v2/championship-prediction-new.service';
+import { ChampionshipPredictionService } from '@services/v2/championship-prediction.service';
 import { ChampionshipPrediction } from '@models/v2/championship/championship-prediction.model';
 import { ChampionshipPredictionSearch } from '@models/search/championship/championship-prediction-search.model';
 import { SettingsService } from '@services/settings.service';
@@ -26,10 +26,10 @@ export class ChampionshipCompetitionUserComponent implements OnInit {
    public user: User;
    constructor(
       private activatedRoute: ActivatedRoute,
-      private championshipPredictionService: ChampionshipPredictionNewService,
-      private championshipRatingService: ChampionshipRatingNewService,
+      private championshipPredictionService: ChampionshipPredictionService,
+      private championshipRatingService: ChampionshipRatingService,
       private titleService: TitleService,
-      private userService: UserNewService
+      private userService: UserService
    ) {}
 
    public ngOnInit() {

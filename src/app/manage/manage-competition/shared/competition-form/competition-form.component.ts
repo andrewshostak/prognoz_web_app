@@ -9,10 +9,10 @@ import { Season } from '@models/v2/season.model';
 import { SeasonSearch } from '@models/search/season-search.model';
 import { Tournament } from '@models/v2/tournament.model';
 import { FormValidatorService } from '@services/form-validator.service';
-import { CompetitionNewService } from '@services/v2/competition-new.service';
-import { SeasonNewService } from '@services/v2/season-new.service';
+import { CompetitionService } from '@services/v2/competition.service';
+import { SeasonService } from '@services/v2/season.service';
 import { SettingsService } from '@services/settings.service';
-import { TournamentNewService } from '@services/v2/tournament-new.service';
+import { TournamentService } from '@services/v2/tournament.service';
 import { UtilsService } from '@services/utils.service';
 import { NotificationsService } from 'angular2-notifications';
 
@@ -30,11 +30,11 @@ export class CompetitionFormComponent implements OnChanges, OnInit {
    competitionStates = CompetitionState;
 
    constructor(
-      private competitionService: CompetitionNewService,
+      private competitionService: CompetitionService,
       private location: Location,
       private notificationsService: NotificationsService,
-      private seasonService: SeasonNewService,
-      private tournamentService: TournamentNewService,
+      private seasonService: SeasonService,
+      private tournamentService: TournamentService,
       private formValidatorService: FormValidatorService
    ) {}
 

@@ -5,10 +5,10 @@ import { MatchState } from '@enums/match-state.enum';
 import { Sequence } from '@enums/sequence.enum';
 import { ChampionshipMatch } from '@models/v2/championship/championship-match.model';
 import { ChampionshipMatchSearch } from '@models/search/championship/championship-match-search.model';
-import { ChampionshipMatchNewService } from '@services/v2/championship-match-new.service';
+import { ChampionshipMatchService } from '@services/v2/championship-match.service';
 import { SettingsService } from '@services/settings.service';
 import { TitleService } from '@services/title.service';
-import { NewsNewService } from '@services/v2/news-new.service';
+import { NewsService } from '@services/v2/news.service';
 import { News } from '@models/v2/news.model';
 import { NewsSearch } from '@models/search/news-search.model';
 
@@ -25,8 +25,8 @@ export class HomeComponent implements OnInit {
    public newsImagesUrl = SettingsService.newsLogosPath;
 
    constructor(
-      private championshipMatchService: ChampionshipMatchNewService,
-      private newsService: NewsNewService,
+      private championshipMatchService: ChampionshipMatchService,
+      private newsService: NewsService,
       private titleService: TitleService
    ) {}
 

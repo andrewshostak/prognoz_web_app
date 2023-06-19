@@ -4,7 +4,7 @@ import { ActivatedRoute, Params, Router } from '@angular/router';
 
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { NotificationsService } from 'angular2-notifications';
-import { ClubNewService } from '@services/v2/club-new.service';
+import { ClubService } from '@services/v2/club.service';
 import { Club } from '@models/v2/club.model';
 import { Subscription } from 'rxjs';
 import { ClubSearch } from '@models/search/club-search.model';
@@ -24,7 +24,7 @@ import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 export class ClubTableComponent implements OnDestroy, OnInit {
    constructor(
       private activatedRoute: ActivatedRoute,
-      private clubNewService: ClubNewService,
+      private clubService: ClubService,
       private ngbModalService: NgbModal,
       private notificationsService: NotificationsService,
       private router: Router
@@ -37,7 +37,7 @@ export class ClubTableComponent implements OnDestroy, OnInit {
    public searchForm: FormGroup;
 
    public deleteClub(): void {
-      this.clubNewService.deleteClub(this.openedModal.data.id).subscribe(() => {
+      this.clubService.deleteClub(this.openedModal.data.id).subscribe(() => {
          remove(this.clubs, this.openedModal.data);
          this.paginationData.total--;
          this.notificationsService.success('Успішно', `${this.openedModal.data.title} видалено`);
@@ -73,7 +73,7 @@ export class ClubTableComponent implements OnDestroy, OnInit {
          search: this.searchForm.get('search').value,
          relations: ['parent']
       };
-      this.clubNewService.getClubs(search).subscribe(response => {
+      this.clubService.getClubs(search).subscribe(response => {
          this.clubs = response.data;
          this.paginationData = PaginationService.getPaginationData(response, '/manage/clubs/page/');
       });

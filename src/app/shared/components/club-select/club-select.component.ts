@@ -11,7 +11,7 @@ import {
 } from '@angular/forms';
 import { Club } from '@models/v2/club.model';
 import { merge, Observable, of, Subject } from 'rxjs';
-import { ClubNewService } from '@services/v2/club-new.service';
+import { ClubService } from '@services/v2/club.service';
 import { SettingsService } from '@services/settings.service';
 import { catchError, debounceTime, distinctUntilChanged, map, switchMap, tap } from 'rxjs/operators';
 import { trim } from 'lodash';
@@ -51,7 +51,7 @@ export class ClubSelectComponent implements OnChanges, OnInit, ControlValueAcces
    public clubsTypeAhead: EventEmitter<string>;
    public clubsLogosPath = SettingsService.clubsLogosPath + '/';
 
-   constructor(private clubsService: ClubNewService) {}
+   constructor(private clubsService: ClubService) {}
 
    public focusOut(): void {
       this.onTouched();

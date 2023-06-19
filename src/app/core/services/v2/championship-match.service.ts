@@ -11,7 +11,7 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 @Injectable()
-export class ChampionshipMatchNewService {
+export class ChampionshipMatchService {
    public readonly championshipMatchesUrl: string = `${environment.apiBaseUrl}/v2/championship/matches`;
 
    constructor(private httpClient: HttpClient) {}

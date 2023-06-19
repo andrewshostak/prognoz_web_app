@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
-import { AuthNewService } from '@services/v2/auth-new.service';
+import { AuthService } from '@services/v2/auth.service';
 
 @Component({
    selector: 'app-guestbook',
@@ -10,7 +10,7 @@ import { AuthNewService } from '@services/v2/auth-new.service';
 export class GuestbookComponent implements OnInit {
    public isAuthenticated: boolean = false;
 
-   constructor(private authService: AuthNewService) {}
+   constructor(private authService: AuthService) {}
 
    public ngOnInit(): void {
       this.isAuthenticated = !!this.authService.getUser();

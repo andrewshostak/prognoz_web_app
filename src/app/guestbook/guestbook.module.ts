@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 
-import { GuestbookMessageNewService } from '@app/guestbook/shared/guestbook-message-new.service';
+import { GuestbookMessageService } from '@app/guestbook/shared/guestbook-message.service';
 import { SharedModule } from '../shared/shared.module';
 import { GuestbookPageComponent } from './guestbook-page/guestbook-page.component';
 import { GuestbookRoutingModule } from './guestbook-routing.module';
@@ -12,7 +12,7 @@ import { GuestbookMessageFormComponent } from './shared/guestbook-message-form/g
 @NgModule({
    imports: [CommonModule, ReactiveFormsModule, GuestbookRoutingModule, SharedModule],
    declarations: [GuestbookComponent, GuestbookPageComponent, GuestbookMessageFormComponent],
-   providers: [GuestbookMessageNewService],
+   providers: [GuestbookMessageService],
    exports: [GuestbookComponent]
 })
 export class GuestbookModule {}

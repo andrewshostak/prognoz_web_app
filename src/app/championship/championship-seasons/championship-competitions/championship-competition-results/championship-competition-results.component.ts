@@ -5,7 +5,7 @@ import { MatchState } from '@enums/match-state.enum';
 import { Sequence } from '@enums/sequence.enum';
 import { ChampionshipMatch } from '@models/v2/championship/championship-match.model';
 import { ChampionshipMatchSearch } from '@models/search/championship/championship-match-search.model';
-import { ChampionshipMatchNewService } from '@services/v2/championship-match-new.service';
+import { ChampionshipMatchService } from '@services/v2/championship-match.service';
 import { SettingsService } from '@services/settings.service';
 import { TitleService } from '@services/title.service';
 
@@ -20,7 +20,7 @@ export class ChampionshipCompetitionResultsComponent implements OnInit {
 
    constructor(
       private activatedRoute: ActivatedRoute,
-      private championshipMatchService: ChampionshipMatchNewService,
+      private championshipMatchService: ChampionshipMatchService,
       private titleService: TitleService
    ) {}
 

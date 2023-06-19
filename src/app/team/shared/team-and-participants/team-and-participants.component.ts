@@ -10,8 +10,8 @@ import { OpenedModal } from '@models/opened-modal.model';
 import { TeamParticipantSearch } from '@models/search/team/team-participant-search.model';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { DeviceService } from '@services/device.service';
-import { AuthNewService } from '@services/v2/auth-new.service';
-import { TeamParticipantNewService } from '@services/v2/team-participant-new.service';
+import { AuthService } from '@services/v2/auth.service';
+import { TeamParticipantService } from '@services/v2/team-participant.service';
 import { SettingsService } from '@services/settings.service';
 import { NotificationsService } from 'angular2-notifications';
 import { pick, remove } from 'lodash';
@@ -39,11 +39,11 @@ export class TeamAndParticipantsComponent implements OnInit, OnChanges {
    public user: User;
 
    constructor(
-      private authService: AuthNewService,
+      private authService: AuthService,
       private deviceService: DeviceService,
       private ngbModalService: NgbModal,
       private notificationsService: NotificationsService,
-      private teamParticipantService: TeamParticipantNewService
+      private teamParticipantService: TeamParticipantService
    ) {}
 
    public confirmTeamParticipant(): void {

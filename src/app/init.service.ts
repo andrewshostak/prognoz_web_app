@@ -3,13 +3,13 @@ import { Injectable } from '@angular/core';
 
 import { environment } from '@env';
 import { User } from '@models/v2/user.model';
-import { AuthNewService } from '@services/v2/auth-new.service';
+import { AuthService } from '@services/v2/auth.service';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 @Injectable()
 export class InitService {
-   constructor(private httpClient: HttpClient, private authService: AuthNewService) {}
+   constructor(private httpClient: HttpClient, private authService: AuthService) {}
 
    public initializeUser(): Promise<User> {
       return new Promise((resolve: (u: User) => void) => {

@@ -9,9 +9,9 @@ import { Season } from '@models/v2/season.model';
 import { CompetitionSearch } from '@models/search/competition-search.model';
 import { CupStageSearch } from '@models/search/cup/cup-stage-search.model';
 import { SeasonSearch } from '@models/search/season-search.model';
-import { CompetitionNewService } from '@services/v2/competition-new.service';
-import { CupStageNewService } from '@services/v2/cup-stage-new.service';
-import { SeasonNewService } from '@services/v2/season-new.service';
+import { CompetitionService } from '@services/v2/competition.service';
+import { CupStageService } from '@services/v2/cup-stage.service';
+import { SeasonService } from '@services/v2/season.service';
 import { SettingsService } from '@services/settings.service';
 import { map } from 'rxjs/operators';
 
@@ -29,9 +29,9 @@ export class CupStageSelectComponent implements OnInit {
    public seasons: Season[] = [];
 
    constructor(
-      private competitionService: CompetitionNewService,
-      private cupStageService: CupStageNewService,
-      private seasonService: SeasonNewService
+      private competitionService: CompetitionService,
+      private cupStageService: CupStageService,
+      private seasonService: SeasonService
    ) {}
 
    get competitionIdFormValue(): number {

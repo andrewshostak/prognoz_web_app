@@ -6,8 +6,8 @@ import { TeamStageType } from '@enums/team-stage-type.enum';
 import { GenerateTeamTeamMatches } from '@models/v2/team/generate-team-team-matches.model';
 import { TeamStage } from '@models/v2/team/team-stage.model';
 import { TeamStageSearch } from '@models/search/team/team-stage-search.model';
-import { TeamStageNewService } from '@services/v2/team-stage-new.service';
-import { TeamTeamMatchNewService } from '@services/v2/team-team-match-new.service';
+import { TeamStageService } from '@services/v2/team-stage.service';
+import { TeamTeamMatchService } from '@services/v2/team-team-match.service';
 import { SettingsService } from '@services/settings.service';
 import { UtilsService } from '@services/utils.service';
 import { NotificationsService } from 'angular2-notifications';
@@ -28,8 +28,8 @@ export class TeamTeamMatchGenerationModalComponent implements OnInit {
 
    constructor(
       private notificationsService: NotificationsService,
-      private teamStageService: TeamStageNewService,
-      private teamTeamMatchService: TeamTeamMatchNewService
+      private teamStageService: TeamStageService,
+      private teamTeamMatchService: TeamTeamMatchService
    ) {}
 
    get pots(): FormArray {

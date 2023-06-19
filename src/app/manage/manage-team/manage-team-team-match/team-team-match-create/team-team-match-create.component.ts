@@ -9,8 +9,8 @@ import { TeamStageSearch } from '@models/search/team/team-stage-search.model';
 import { TeamTeamMatch } from '@models/v2/team/team-team-match.model';
 import { UtilsService } from '@services/utils.service';
 import { SettingsService } from '@services/settings.service';
-import { TeamStageNewService } from '@services/v2/team-stage-new.service';
-import { TeamTeamMatchNewService } from '@services/v2/team-team-match-new.service';
+import { TeamStageService } from '@services/v2/team-stage.service';
+import { TeamTeamMatchService } from '@services/v2/team-team-match.service';
 import { NotificationsService } from 'angular2-notifications';
 
 @Component({
@@ -21,8 +21,8 @@ import { NotificationsService } from 'angular2-notifications';
 export class TeamTeamMatchCreateComponent implements OnInit {
    constructor(
       private notificationsService: NotificationsService,
-      private teamStageService: TeamStageNewService,
-      private teamTeamMatchService: TeamTeamMatchNewService
+      private teamStageService: TeamStageService,
+      private teamTeamMatchService: TeamTeamMatchService
    ) {}
 
    public teamStages: TeamStage[] = [];

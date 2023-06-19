@@ -6,7 +6,7 @@ import { ChampionshipService } from '@services/championship/championship.service
 
 @Injectable()
 /**
- * @deprecated use TeamCompetitionNewService
+ * @deprecated use v2 TeamCompetitionService
  */
 export class TeamCompetitionService {
    public static isTeamMatchBlocked(teamMatch: TeamMatch, teamId: number): boolean {

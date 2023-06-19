@@ -2,18 +2,18 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
 import { environment } from '@env';
-import { TeamRatingUser } from '@models/v2/team/team-rating-user.model';
-import { TeamRatingUserSearch } from '@models/search/team/team-rating-user-search.model';
+import { TeamRating } from '@models/v2/team/team-rating.model';
+import { TeamRatingSearch } from '@models/search/team/team-rating-search.model';
 import { PaginatedResponse } from '@models/paginated-response.model';
 import { Observable } from 'rxjs';
 
 @Injectable()
-export class TeamRatingUserNewService {
-   public readonly teamRatingUserUrl: string = `${environment.apiBaseUrl}/v2/team/rating-user`;
+export class TeamRatingService {
+   public readonly teamRatingUrl: string = `${environment.apiBaseUrl}/v2/team/rating`;
 
    constructor(private httpClient: HttpClient) {}
 
-   public getTeamRatingUser(search: TeamRatingUserSearch): Observable<PaginatedResponse<TeamRatingUser>> {
+   public getTeamRating(search: TeamRatingSearch): Observable<PaginatedResponse<TeamRating>> {
       let params: HttpParams = new HttpParams();
 
       if (search.competitionId) {
@@ -39,6 +39,6 @@ export class TeamRatingUserNewService {
          });
       }
 
-      return this.httpClient.get<PaginatedResponse<TeamRatingUser>>(this.teamRatingUserUrl, { params });
+      return this.httpClient.get<PaginatedResponse<TeamRating>>(this.teamRatingUrl, { params });
    }
 }

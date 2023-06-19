@@ -10,7 +10,7 @@ import { map } from 'rxjs/operators';
 import { serialize } from 'object-to-formdata';
 
 @Injectable()
-export class ClubNewService {
+export class ClubService {
    public readonly clubsUrl: string = `${environment.apiBaseUrl}/v2/clubs`;
 
    constructor(private httpClient: HttpClient) {}

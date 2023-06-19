@@ -8,9 +8,9 @@ import { TeamMatch } from '@models/v2/team/team-match.model';
 import { TeamMatchSearch } from '@models/search/team/team-match-search.model';
 import { TeamPredictionSearch } from '@models/search/team/team-prediction-search.model';
 import { PaginatedResponse } from '@models/paginated-response.model';
-import { TeamCompetitionNewService } from '@services/v2/team-competition-new.service';
-import { TeamMatchNewService } from '@services/v2/team-match-new.service';
-import { TeamPredictionNewService } from '@services/v2/team-prediction-new.service';
+import { TeamCompetitionService } from '@services/v2/team-competition.service';
+import { TeamMatchService } from '@services/v2/team-match.service';
+import { TeamPredictionService } from '@services/v2/team-prediction.service';
 import { SettingsService } from '@services/settings.service';
 import { UtilsService } from '@services/utils.service';
 import { TeamMatchAndEnrichedPredictions } from '@team/shared/team-team-match-card/team-match-and-enriched-predictions.model';
@@ -23,8 +23,8 @@ import { catchError, map, mergeMap } from 'rxjs/operators';
 })
 export class TeamTeamMatchCardComponent {
    constructor(
-      private teamMatchService: TeamMatchNewService,
-      private teamPredictionService: TeamPredictionNewService,
+      private teamMatchService: TeamMatchService,
+      private teamPredictionService: TeamPredictionService,
       private changeDetectorRef: ChangeDetectorRef,
       private timePipe: TimePipe
    ) {}
@@ -147,21 +147,21 @@ export class TeamTeamMatchCardComponent {
    private enrichPredictionsData(teamMatches: TeamMatchAndEnrichedPredictions[]): TeamMatchAndEnrichedPredictions[] {
       return teamMatches.map(teamMatch => {
          teamMatch.homePredictionTitle = this.getPredictionTitle(teamMatch.teamMatch, teamMatch.homePrediction.prediction);
-         teamMatch.homePrediction.guessed = TeamCompetitionNewService.isTeamMatchGuessed(
+         teamMatch.homePrediction.guessed = TeamCompetitionService.isTeamMatchGuessed(
             teamMatch.teamMatch,
             teamMatch.homePrediction.prediction
          );
-         teamMatch.homePrediction.blocked = TeamCompetitionNewService.isTeamMatchBlocked(
+         teamMatch.homePrediction.blocked = TeamCompetitionService.isTeamMatchBlocked(
             teamMatch.teamMatch,
             teamMatch.homePrediction.prediction
          );
 
          teamMatch.awayPredictionTitle = this.getPredictionTitle(teamMatch.teamMatch, teamMatch.awayPrediction.prediction);
-         teamMatch.awayPrediction.guessed = TeamCompetitionNewService.isTeamMatchGuessed(
+         teamMatch.awayPrediction.guessed = TeamCompetitionService.isTeamMatchGuessed(
             teamMatch.teamMatch,
             teamMatch.awayPrediction.prediction
          );
-         teamMatch.awayPrediction.blocked = TeamCompetitionNewService.isTeamMatchBlocked(
+         teamMatch.awayPrediction.blocked = TeamCompetitionService.isTeamMatchBlocked(
             teamMatch.teamMatch,
             teamMatch.awayPrediction.prediction
          );

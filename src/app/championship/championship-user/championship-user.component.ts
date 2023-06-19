@@ -11,10 +11,10 @@ import { User } from '@models/v2/user.model';
 import { PaginatedResponse } from '@models/paginated-response.model';
 import { ChampionshipPredictionSearch } from '@models/search/championship/championship-prediction-search.model';
 import { CompetitionSearch } from '@models/search/competition-search.model';
-import { ChampionshipRatingNewService } from '@services/v2/championship-rating-new.service';
-import { ChampionshipPredictionNewService } from '@services/v2/championship-prediction-new.service';
-import { CompetitionNewService } from '@services/v2/competition-new.service';
-import { UserNewService } from '@services/v2/user-new.service';
+import { ChampionshipRatingService } from '@services/v2/championship-rating.service';
+import { ChampionshipPredictionService } from '@services/v2/championship-prediction.service';
+import { CompetitionService } from '@services/v2/competition.service';
+import { UserService } from '@services/v2/user.service';
 import { SettingsService } from '@services/settings.service';
 import { TitleService } from '@services/title.service';
 import { UtilsService } from '@services/utils.service';
@@ -34,11 +34,11 @@ export class ChampionshipUserComponent implements OnInit {
 
    constructor(
       private activatedRoute: ActivatedRoute,
-      private championshipPredictionService: ChampionshipPredictionNewService,
-      private championshipRatingService: ChampionshipRatingNewService,
-      private competitionService: CompetitionNewService,
+      private championshipPredictionService: ChampionshipPredictionService,
+      private championshipRatingService: ChampionshipRatingService,
+      private competitionService: CompetitionService,
       private titleService: TitleService,
-      private userService: UserNewService
+      private userService: UserService
    ) {}
 
    public ngOnInit(): void {

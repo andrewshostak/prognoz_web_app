@@ -7,9 +7,9 @@ import { ChampionshipMatch } from '@models/v2/championship/championship-match.mo
 import { ChampionshipPrediction } from '@models/v2/championship/championship-prediction.model';
 import { ChampionshipPredictionSearch } from '@models/search/championship/championship-prediction-search.model';
 import { User } from '@models/v2/user.model';
-import { AuthNewService } from '@services/v2/auth-new.service';
-import { ChampionshipMatchNewService } from '@services/v2/championship-match-new.service';
-import { ChampionshipPredictionNewService } from '@services/v2/championship-prediction-new.service';
+import { AuthService } from '@services/v2/auth.service';
+import { ChampionshipMatchService } from '@services/v2/championship-match.service';
+import { ChampionshipPredictionService } from '@services/v2/championship-prediction.service';
 import { SettingsService } from '@services/settings.service';
 import { TitleService } from '@services/title.service';
 
@@ -26,9 +26,9 @@ export class ChampionshipMatchComponent implements OnInit {
 
    constructor(
       private activatedRoute: ActivatedRoute,
-      private authService: AuthNewService,
-      private championshipMatchService: ChampionshipMatchNewService,
-      private championshipPredictionService: ChampionshipPredictionNewService,
+      private authService: AuthService,
+      private championshipMatchService: ChampionshipMatchService,
+      private championshipPredictionService: ChampionshipPredictionService,
       private location: Location,
       private titleService: TitleService
    ) {}

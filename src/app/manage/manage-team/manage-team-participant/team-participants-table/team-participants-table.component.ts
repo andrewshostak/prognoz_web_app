@@ -6,7 +6,7 @@ import { OpenedModal } from '@models/opened-modal.model';
 import { Pagination } from '@models/pagination.model';
 import { TeamParticipantSearch } from '@models/search/team/team-participant-search.model';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
-import { TeamParticipantNewService } from '@services/v2/team-participant-new.service';
+import { TeamParticipantService } from '@services/v2/team-participant.service';
 import { PaginationService } from '@services/pagination.service';
 import { SettingsService } from '@services/settings.service';
 import { NotificationsService } from 'angular2-notifications';
@@ -30,7 +30,7 @@ export class TeamParticipantsTableComponent implements OnDestroy, OnInit {
       private activatedRoute: ActivatedRoute,
       private ngbModalService: NgbModal,
       private notificationsService: NotificationsService,
-      private teamParticipantNewService: TeamParticipantNewService
+      private teamParticipantService: TeamParticipantService
    ) {}
 
    public getTeamParticipantsData(pageNumber: number): void {
@@ -38,14 +38,14 @@ export class TeamParticipantsTableComponent implements OnDestroy, OnInit {
          limit: SettingsService.teamParticipantsPerPage,
          page: pageNumber
       };
-      this.teamParticipantNewService.getTeamParticipants(search).subscribe(response => {
+      this.teamParticipantService.getTeamParticipants(search).subscribe(response => {
          this.teamParticipants = response.data;
          this.paginationData = PaginationService.getPaginationData(response, '/manage/team/participants/page/');
       });
    }
 
    public deleteTeamParticipant(): void {
-      this.teamParticipantNewService.deleteTeamParticipant(this.openedModal.data.id).subscribe(
+      this.teamParticipantService.deleteTeamParticipant(this.openedModal.data.id).subscribe(
          () => {
             remove(this.teamParticipants, this.openedModal.data);
             this.paginationData.total--;

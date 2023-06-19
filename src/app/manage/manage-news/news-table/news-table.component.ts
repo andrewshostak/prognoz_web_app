@@ -3,7 +3,7 @@ import { ActivatedRoute, Params } from '@angular/router';
 
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { NotificationsService } from 'angular2-notifications';
-import { NewsNewService } from '@services/v2/news-new.service';
+import { NewsService } from '@services/v2/news.service';
 import { News } from '@models/v2/news.model';
 import { NewsSearch } from '@models/search/news-search.model';
 import { SettingsService } from '@services/settings.service';
@@ -20,7 +20,7 @@ export class NewsTableComponent implements OnInit {
    constructor(
       private activatedRoute: ActivatedRoute,
       private ngbModalService: NgbModal,
-      private newsNewService: NewsNewService,
+      private newsService: NewsService,
       private notificationsService: NotificationsService
    ) {}
 
@@ -32,7 +32,7 @@ export class NewsTableComponent implements OnInit {
    paginationData: Pagination;
 
    deleteNewsItem(news: News) {
-      this.newsNewService.deleteNews(news.id).subscribe(
+      this.newsService.deleteNews(news.id).subscribe(
          () => {
             this.confirmModalReference.close();
             this.news = this.news.filter(n => n.id !== news.id);
@@ -51,7 +51,7 @@ export class NewsTableComponent implements OnInit {
             orderBy: 'created_at',
             sequence: Sequence.Descending
          };
-         this.newsNewService.getNews(search).subscribe(response => {
+         this.newsService.getNews(search).subscribe(response => {
             this.news = response.data;
             this.paginationData = PaginationService.getPaginationData(response, this.path);
          });

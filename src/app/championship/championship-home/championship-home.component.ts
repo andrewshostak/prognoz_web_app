@@ -8,10 +8,10 @@ import { ChampionshipPrediction } from '@models/v2/championship/championship-pre
 import { ChampionshipMatch } from '@models/v2/championship/championship-match.model';
 import { ChampionshipMatchSearch } from '@models/search/championship/championship-match-search.model';
 import { User } from '@models/v2/user.model';
-import { ChampionshipPredictionNewService } from '@services/v2/championship-prediction-new.service';
+import { ChampionshipPredictionService } from '@services/v2/championship-prediction.service';
 import { ChampionshipService } from '@services/championship/championship.service';
-import { AuthNewService } from '@services/v2/auth-new.service';
-import { ChampionshipMatchNewService } from '@services/v2/championship-match-new.service';
+import { AuthService } from '@services/v2/auth.service';
+import { ChampionshipMatchService } from '@services/v2/championship-match.service';
 import { SettingsService } from '@services/settings.service';
 import { TitleService } from '@services/title.service';
 import { UtilsService } from '@services/utils.service';
@@ -24,10 +24,10 @@ import { Competition } from '@models/v2/competition.model';
 import { CompetitionSearch } from '@models/search/competition-search.model';
 import { CompetitionState } from '@enums/competition-state.enum';
 import { Tournament } from '@enums/tournament.enum';
-import { CompetitionNewService } from '@services/v2/competition-new.service';
+import { CompetitionService } from '@services/v2/competition.service';
 import { ChampionshipRating } from '@models/v2/championship/championship-rating.model';
 import { ChampionshipRatingSearch } from '@models/search/championship/championship-rating-search.model';
-import { ChampionshipRatingNewService } from '@services/v2/championship-rating-new.service';
+import { ChampionshipRatingService } from '@services/v2/championship-rating.service';
 
 @Component({
    selector: 'app-championship-home',
@@ -46,12 +46,12 @@ export class ChampionshipHomeComponent implements OnInit {
    public spinnerButton = false;
 
    constructor(
-      private authService: AuthNewService,
-      private championshipMatchService: ChampionshipMatchNewService,
-      private championshipPredictionNewService: ChampionshipPredictionNewService,
+      private authService: AuthService,
+      private championshipMatchService: ChampionshipMatchService,
+      private championshipPredictionService: ChampionshipPredictionService,
       private championshipService: ChampionshipService,
-      private championshipRatingService: ChampionshipRatingNewService,
-      private competitionService: CompetitionNewService,
+      private championshipRatingService: ChampionshipRatingService,
+      private competitionService: CompetitionService,
       private notificationsService: NotificationsService,
       private titleService: TitleService
    ) {}
@@ -92,7 +92,7 @@ export class ChampionshipHomeComponent implements OnInit {
    }
 
    public getChampionshipPredictionsData(): void {
-      this.championshipPredictionNewService.getLastDistinctPredictions().subscribe(response => (this.championshipPredictions = response));
+      this.championshipPredictionService.getLastDistinctPredictions().subscribe(response => (this.championshipPredictions = response));
    }
 
    public getChampionshipRatingData(): void {
@@ -135,7 +135,7 @@ export class ChampionshipHomeComponent implements OnInit {
    public onSubmit(): void {
       this.spinnerButton = true;
       const championshipPredictionsToUpdate = this.championshipService.createChampionshipPredictionsArray(this.championshipPredictionsForm);
-      this.championshipPredictionNewService.upsertPredictions(championshipPredictionsToUpdate).subscribe(
+      this.championshipPredictionService.upsertPredictions(championshipPredictionsToUpdate).subscribe(
          () => {
             this.spinnerButton = false;
             this.notificationsService.success('Успішно', 'Прогнози прийнято');

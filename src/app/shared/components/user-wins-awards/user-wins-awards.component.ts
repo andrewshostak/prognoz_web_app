@@ -2,7 +2,7 @@ import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 
 import { Win } from '@models/v2/win.model';
 import { SettingsService } from '@services/settings.service';
-import { AwardNewService } from '@services/v2/award-new.service';
+import { AwardService } from '@services/v2/award.service';
 import { groupBy } from 'lodash';
 
 @Component({
@@ -15,7 +15,7 @@ export class UserWinsAwardsComponent implements OnChanges {
 
    public awardsLogosPath = SettingsService.awardsLogosPath;
    public groupedWins: { [awardId: number]: Win[] } = {};
-   public isChampionshipSeasonWinner = AwardNewService.isChampionshipSeasonWinner;
+   public isChampionshipSeasonWinner = AwardService.isChampionshipSeasonWinner;
 
    public ngOnChanges(changes: SimpleChanges) {
       this.groupedWins = groupBy(this.wins, 'award_id');

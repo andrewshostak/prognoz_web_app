@@ -1,6 +1,6 @@
 import { Directive, ElementRef, Input, TemplateRef, ViewContainerRef } from '@angular/core';
 
-import { AuthNewService } from '@services/v2/auth-new.service';
+import { AuthService } from '@services/v2/auth.service';
 import { isNil } from 'lodash';
 
 @Directive({
@@ -11,7 +11,7 @@ export class HasPermissionsDirective {
    private elseTemplateRef: TemplateRef<any>;
 
    constructor(
-      private authService: AuthNewService,
+      private authService: AuthService,
       private elementRef: ElementRef,
       private templateRef: TemplateRef<any>,
       private viewContainerRef: ViewContainerRef

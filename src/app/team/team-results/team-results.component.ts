@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { TitleService } from '@services/title.service';
-import { TeamMatchNewService } from '@services/v2/team-match-new.service';
+import { TeamMatchService } from '@services/v2/team-match.service';
 import { TeamMatchSearch } from '@models/search/team/team-match-search.model';
 import { TeamMatch } from '@models/v2/team/team-match.model';
 import { PaginatedResponse } from '@models/paginated-response.model';
@@ -20,7 +20,7 @@ export class TeamResultsComponent implements OnInit {
    constructor(
       private activatedRoute: ActivatedRoute,
       private router: Router,
-      private teamMatchService: TeamMatchNewService,
+      private teamMatchService: TeamMatchService,
       private titleService: TitleService
    ) {}
 

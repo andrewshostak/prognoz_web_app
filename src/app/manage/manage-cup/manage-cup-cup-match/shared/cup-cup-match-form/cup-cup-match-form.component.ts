@@ -5,9 +5,9 @@ import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/fo
 import { CupCupMatch } from '@models/v2/cup/cup-cup-match.model';
 import { CupStage } from '@models/v2/cup/cup-stage.model';
 import { User } from '@models/v2/user.model';
-import { CupCupMatchNewService } from '@services/v2/cup-cup-match-new.service';
-import { CupStageNewService } from '@services/v2/cup-stage-new.service';
-import { UserNewService } from '@services/v2/user-new.service';
+import { CupCupMatchService } from '@services/v2/cup-cup-match.service';
+import { CupStageService } from '@services/v2/cup-stage.service';
+import { UserService } from '@services/v2/user.service';
 import { UtilsService } from '@services/utils.service';
 import { NotificationsService } from 'angular2-notifications';
 import { CupStageSearch } from '@models/search/cup/cup-stage-search.model';
@@ -30,9 +30,9 @@ export class CupCupMatchFormComponent implements OnChanges, OnInit {
    public awayUser: User;
 
    constructor(
-      private cupCupMatchService: CupCupMatchNewService,
-      private cupStageService: CupStageNewService,
-      private userNewService: UserNewService,
+      private cupCupMatchService: CupCupMatchService,
+      private cupStageService: CupStageService,
+      private userService: UserService,
       private location: Location,
       private notificationsService: NotificationsService
    ) {}
@@ -77,14 +77,14 @@ export class CupCupMatchFormComponent implements OnChanges, OnInit {
    public swapUsers(): void {
       const homeUserId = this.cupCupMatchForm.get('home_user_id').value;
       if (!this.homeUser && homeUserId) {
-         this.userNewService.getUser(homeUserId).subscribe(response => {
+         this.userService.getUser(homeUserId).subscribe(response => {
             this.awayUser = response;
          });
       }
 
       const awayUserId = this.cupCupMatchForm.get('away_user_id').value;
       if (!this.awayUser && awayUserId) {
-         this.userNewService.getUser(awayUserId).subscribe(response => {
+         this.userService.getUser(awayUserId).subscribe(response => {
             this.homeUser = response;
          });
       }

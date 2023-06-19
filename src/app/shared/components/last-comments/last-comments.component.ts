@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 
-import { CommentNewService } from '@app/news/shared/comment-new.service';
+import { CommentService } from '@app/news/shared/comment.service';
 import { Sequence } from '@enums/sequence.enum';
 import { Comment } from '@models/v2/comment.model';
 import { CommentSearch } from '@models/search/comment-search.model';
@@ -11,7 +11,7 @@ import { CommentSearch } from '@models/search/comment-search.model';
    styleUrls: ['./last-comments.component.scss']
 })
 export class LastCommentsComponent implements OnInit {
-   constructor(private commentService: CommentNewService) {}
+   constructor(private commentService: CommentService) {}
 
    @Input() limitTo = 100;
 

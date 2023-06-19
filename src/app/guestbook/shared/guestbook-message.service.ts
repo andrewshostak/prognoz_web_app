@@ -10,7 +10,7 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 @Injectable()
-export class GuestbookMessageNewService {
+export class GuestbookMessageService {
    public readonly guestbookMessagesUrl: string = `${environment.apiBaseUrl}/v2/guestbook-messages`;
 
    constructor(private httpClient: HttpClient) {}

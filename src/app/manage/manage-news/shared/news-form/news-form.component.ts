@@ -5,7 +5,7 @@ import { Router } from '@angular/router';
 import { UtilsService } from '@services/utils.service';
 import { NotificationsService } from 'angular2-notifications';
 import { QuillEditorComponent } from 'ngx-quill';
-import { NewsNewService } from '@services/v2/news-new.service';
+import { NewsService } from '@services/v2/news.service';
 import { News } from '@models/v2/news.model';
 import { FormValidatorService } from '@services/form-validator.service';
 
@@ -26,7 +26,7 @@ export class NewsFormComponent implements OnChanges, OnInit {
 
    constructor(
       private formValidatorService: FormValidatorService,
-      private newsNewService: NewsNewService,
+      private newsService: NewsService,
       private notificationsService: NotificationsService,
       private router: Router
    ) {}
@@ -90,7 +90,7 @@ export class NewsFormComponent implements OnChanges, OnInit {
 
    private updateNews(news: Partial<News>): void {
       this.spinnerButton = true;
-      this.newsNewService.updateNews(this.news.id, news).subscribe(
+      this.newsService.updateNews(this.news.id, news).subscribe(
          response => {
             this.spinnerButton = false;
             this.notificationsService.success('Успішно', 'Новину змінено!');
@@ -102,7 +102,7 @@ export class NewsFormComponent implements OnChanges, OnInit {
 
    private createNews(news: Partial<News>): void {
       this.spinnerButton = true;
-      this.newsNewService.createNews(news).subscribe(
+      this.newsService.createNews(news).subscribe(
          response => {
             this.spinnerButton = false;
             this.notificationsService.success('Успішно', 'Новину створено');

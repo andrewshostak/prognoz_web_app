@@ -11,7 +11,7 @@ import { Observable, of } from 'rxjs';
 import { tap } from 'rxjs/operators';
 
 @Injectable()
-export class SeasonNewService {
+export class SeasonService {
    public readonly seasonsUrl: string = `${environment.apiBaseUrl}/v2/seasons`;
    private seasons: Season[];
 

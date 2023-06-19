@@ -3,7 +3,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 import { CupPrediction } from '@models/v2/cup/cup-prediction.model';
 import { User } from '@models/v2/user.model';
-import { CupPredictionNewService } from '@services/v2/cup-prediction-new.service';
+import { CupPredictionService } from '@services/v2/cup-prediction.service';
 import { SettingsService } from '@services/settings.service';
 import { UtilsService } from '@services/utils.service';
 import { NotificationsService } from 'angular2-notifications';
@@ -14,7 +14,7 @@ import { NotificationsService } from 'angular2-notifications';
    styleUrls: ['./cup-prediction-form.component.scss']
 })
 export class CupPredictionFormComponent implements OnInit {
-   constructor(private cupPredictionService: CupPredictionNewService, private notificationsService: NotificationsService) {}
+   constructor(private cupPredictionService: CupPredictionService, private notificationsService: NotificationsService) {}
 
    clubsLogosPath: string = SettingsService.clubsLogosPath + '/';
    cupPredictionForm: FormGroup;

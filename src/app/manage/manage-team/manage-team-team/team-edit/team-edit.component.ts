@@ -3,7 +3,7 @@ import { ActivatedRoute, Params } from '@angular/router';
 
 import { Team } from '@models/v2/team/team.model';
 import { User } from '@models/v2/user.model';
-import { TeamNewService } from '@services/v2/team-new.service';
+import { TeamService } from '@services/v2/team.service';
 
 @Component({
    selector: 'app-team-edit',
@@ -14,7 +14,7 @@ export class TeamEditComponent implements OnInit {
    public team: Team;
    public captain: User;
 
-   constructor(private activatedRoute: ActivatedRoute, private teamService: TeamNewService) {}
+   constructor(private activatedRoute: ActivatedRoute, private teamService: TeamService) {}
 
    public ngOnInit(): void {
       this.activatedRoute.params.forEach((params: Params) => {

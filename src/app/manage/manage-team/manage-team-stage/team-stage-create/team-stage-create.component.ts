@@ -8,10 +8,10 @@ import { TeamStageType } from '@models/v2/team/team-stage-type.model';
 import { Competition } from '@models/v2/competition.model';
 import { CompetitionSearch } from '@models/search/competition-search.model';
 import { TeamStage } from '@models/v2/team/team-stage.model';
-import { TeamStageTypeNewService } from '@services/v2/team-stage-type-new.service';
-import { CompetitionNewService } from '@services/v2/competition-new.service';
+import { TeamStageTypeService } from '@services/v2/team-stage-type.service';
+import { CompetitionService } from '@services/v2/competition.service';
 import { SettingsService } from '@services/settings.service';
-import { TeamStageNewService } from '@services/v2/team-stage-new.service';
+import { TeamStageService } from '@services/v2/team-stage.service';
 import { UtilsService } from '@services/utils.service';
 import { NotificationsService } from 'angular2-notifications';
 
@@ -22,11 +22,11 @@ import { NotificationsService } from 'angular2-notifications';
 })
 export class TeamStageCreateComponent implements OnInit {
    constructor(
-      private competitionService: CompetitionNewService,
+      private competitionService: CompetitionService,
       private notificationsService: NotificationsService,
       private router: Router,
-      private teamStageService: TeamStageNewService,
-      private teamStageTypeService: TeamStageTypeNewService
+      private teamStageService: TeamStageService,
+      private teamStageTypeService: TeamStageTypeService
    ) {}
 
    public teamStageForm: FormGroup;

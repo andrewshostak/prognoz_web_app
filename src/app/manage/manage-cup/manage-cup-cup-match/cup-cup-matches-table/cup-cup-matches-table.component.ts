@@ -6,7 +6,7 @@ import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { NotificationsService } from 'angular2-notifications';
 import { Subscription } from 'rxjs';
 import { UtilsService } from '@services/utils.service';
-import { CupCupMatchNewService } from '@services/v2/cup-cup-match-new.service';
+import { CupCupMatchService } from '@services/v2/cup-cup-match.service';
 import { CupCupMatchSearch } from '@models/search/cup/cup-cup-match-search.model';
 import { SettingsService } from '@services/settings.service';
 import { Sequence } from '@enums/sequence.enum';
@@ -20,7 +20,7 @@ import { CupCupMatch } from '@models/v2/cup/cup-cup-match.model';
 export class CupCupMatchesTableComponent implements OnDestroy, OnInit {
    constructor(
       private activatedRoute: ActivatedRoute,
-      private cupCupMatchNewService: CupCupMatchNewService,
+      private cupCupMatchService: CupCupMatchService,
       private ngbModalService: NgbModal,
       private notificationsService: NotificationsService
    ) {}
@@ -40,7 +40,7 @@ export class CupCupMatchesTableComponent implements OnDestroy, OnInit {
    isScore = UtilsService.isScore;
 
    deleteCupCupMatch(cupCupMatch: CupCupMatch): void {
-      this.cupCupMatchNewService.deleteCupCupMatch(cupCupMatch.id).subscribe(
+      this.cupCupMatchService.deleteCupCupMatch(cupCupMatch.id).subscribe(
          () => {
             this.openedModalReference.close();
             this.total--;
@@ -70,7 +70,7 @@ export class CupCupMatchesTableComponent implements OnDestroy, OnInit {
             sequence: Sequence.Descending,
             relations: ['cupStage.competition', 'homeUser', 'awayUser']
          };
-         this.cupCupMatchNewService.getCupCupMatches(search).subscribe(
+         this.cupCupMatchService.getCupCupMatches(search).subscribe(
             response => {
                this.currentPage = response.current_page;
                this.lastPage = response.last_page;

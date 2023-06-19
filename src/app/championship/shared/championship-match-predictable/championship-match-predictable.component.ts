@@ -3,7 +3,7 @@ import { FormGroup } from '@angular/forms';
 
 import { ChampionshipMatch } from '@models/v2/championship/championship-match.model';
 import { User } from '@models/v2/user.model';
-import { ChampionshipMatchNewService } from '@services/v2/championship-match-new.service';
+import { ChampionshipMatchService } from '@services/v2/championship-match.service';
 import { SettingsService } from '@services/settings.service';
 
 @Component({
@@ -25,7 +25,7 @@ export class ChampionshipMatchPredictableComponent implements OnChanges, OnInit 
    public spinnerStatistic = false;
    public statistic: any = false;
 
-   constructor(private championshipMatchService: ChampionshipMatchNewService, private changeDetectorRef: ChangeDetectorRef) {}
+   constructor(private championshipMatchService: ChampionshipMatchService, private changeDetectorRef: ChangeDetectorRef) {}
 
    public getChampionshipMatchStatisticData(championshipMatch: ChampionshipMatch, forceUpdate: boolean = false): void {
       if (this.isCollapsed || forceUpdate) {

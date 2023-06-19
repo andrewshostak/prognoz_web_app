@@ -7,13 +7,13 @@ import { NewsDetailComponent } from './news-detail/news-detail.component';
 import { NewsListComponent } from './news-list/news-list.component';
 import { NewsRoutingModule } from './news-routing.module';
 import { SharedModule } from '../shared/shared.module';
-import { CommentNewService } from '@app/news/shared/comment-new.service';
+import { CommentService } from '@app/news/shared/comment.service';
 import { CommentFormComponent } from '@app/news/shared/comment-form/comment-form.component';
 
 @NgModule({
    imports: [CommonModule, ReactiveFormsModule, NewsRoutingModule, SharedModule],
    declarations: [NewsComponent, NewsDetailComponent, NewsListComponent, CommentFormComponent],
-   providers: [CommentNewService],
+   providers: [CommentService],
    exports: [NewsComponent]
 })
 export class NewsModule {}

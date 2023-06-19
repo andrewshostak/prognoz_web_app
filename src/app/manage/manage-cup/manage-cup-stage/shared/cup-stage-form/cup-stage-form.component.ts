@@ -7,13 +7,13 @@ import { Tournament } from '@enums/tournament.enum';
 import { CompetitionState } from '@enums/competition-state.enum';
 import { Competition } from '@models/v2/competition.model';
 import { CupMatch } from '@models/v2/cup/cup-match.model';
-import { CupMatchNewService } from '@services/v2/cup-match-new.service';
-import { CompetitionNewService } from '@services/v2/competition-new.service';
+import { CupMatchService } from '@services/v2/cup-match.service';
+import { CompetitionService } from '@services/v2/competition.service';
 import { CompetitionSearch } from '@models/search/competition-search.model';
 import { CupStage } from '@models/v2/cup/cup-stage.model';
 import { CupStageType } from '@models/v2/cup/cup-stage-type.model';
-import { CupStageTypeNewService } from '@services/v2/cup-stage-type-new.service';
-import { CupStageNewService } from '@services/v2/cup-stage-new.service';
+import { CupStageTypeService } from '@services/v2/cup-stage-type.service';
+import { CupStageService } from '@services/v2/cup-stage.service';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { NotificationsService } from 'angular2-notifications';
 import { UtilsService } from '@services/utils.service';
@@ -30,10 +30,10 @@ import { uniqBy } from 'lodash';
 })
 export class CupStageFormComponent implements OnChanges, OnInit {
    constructor(
-      private competitionService: CompetitionNewService,
-      private cupMatchService: CupMatchNewService,
-      private cupStageService: CupStageNewService,
-      private cupStageTypeService: CupStageTypeNewService,
+      private competitionService: CompetitionService,
+      private cupMatchService: CupMatchService,
+      private cupStageService: CupStageService,
+      private cupStageTypeService: CupStageTypeService,
       private ngbModalService: NgbModal,
       private notificationsService: NotificationsService,
       private router: Router

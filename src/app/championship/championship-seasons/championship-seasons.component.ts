@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { Sequence } from '@enums/sequence.enum';
 import { Season } from '@models/v2/season.model';
 import { SeasonSearch } from '@models/search/season-search.model';
-import { SeasonNewService } from '@services/v2/season-new.service';
+import { SeasonService } from '@services/v2/season.service';
 import { SettingsService } from '@services/settings.service';
 import { TitleService } from '@services/title.service';
 
@@ -15,7 +15,7 @@ import { TitleService } from '@services/title.service';
 export class ChampionshipSeasonsComponent implements OnInit {
    public seasons: Season[];
 
-   constructor(private seasonService: SeasonNewService, private titleService: TitleService) {}
+   constructor(private seasonService: SeasonService, private titleService: TitleService) {}
 
    public ngOnInit() {
       this.titleService.setTitle('Архів конкурсів - Чемпіонат');

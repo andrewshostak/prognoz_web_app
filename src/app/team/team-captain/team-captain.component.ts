@@ -11,13 +11,13 @@ import { TeamMatch } from '@models/v1/team-match.model';
 import { TeamParticipant } from '@models/v1/team-participant.model';
 import { TeamParticipantSearch } from '@models/search/team/team-participant-search.model';
 import { TeamTeamMatchSearch } from '@models/search/team/team-team-match-search.model';
-import { AuthNewService } from '@services/v2/auth-new.service';
+import { AuthService } from '@services/v2/auth.service';
 import { TeamCompetitionService } from '@services/v1/team-competition.service';
-import { TeamParticipantNewService } from '@services/v2/team-participant-new.service';
-import { TeamStageNewService } from '@services/v2/team-stage-new.service';
-import { TeamTeamMatchNewService } from '@services/v2/team-team-match-new.service';
+import { TeamParticipantService } from '@services/v2/team-participant.service';
+import { TeamStageService } from '@services/v2/team-stage.service';
+import { TeamTeamMatchService } from '@services/v2/team-team-match.service';
 import { TeamMatchService } from '@services/v1/team-match.service';
-import { TeamPredictionNewService } from '@services/v2/team-prediction-new.service';
+import { TeamPredictionService } from '@services/v2/team-prediction.service';
 import { SettingsService } from '@services/settings.service';
 import { UtilsService } from '@services/utils.service';
 import { NotificationsService } from 'angular2-notifications';
@@ -32,15 +32,15 @@ import { isEqual, sortBy } from 'lodash';
 })
 export class TeamCaptainComponent implements OnInit {
    constructor(
-      private authService: AuthNewService,
+      private authService: AuthService,
       private activatedRoute: ActivatedRoute,
       private notificationsService: NotificationsService,
       private router: Router,
       private teamMatchService: TeamMatchService,
-      private teamParticipantService: TeamParticipantNewService,
-      private teamPredictionService: TeamPredictionNewService,
-      private teamStageService: TeamStageNewService,
-      private teamTeamMatchNewService: TeamTeamMatchNewService
+      private teamParticipantService: TeamParticipantService,
+      private teamPredictionService: TeamPredictionService,
+      private teamStageService: TeamStageService,
+      private teamTeamMatchService: TeamTeamMatchService
    ) {}
 
    authenticatedUser: User;
@@ -108,7 +108,7 @@ export class TeamCaptainComponent implements OnInit {
    setTeamTeamMatchGoalkeeper(teamGoalkeeperForm: NgForm) {
       if (teamGoalkeeperForm.valid) {
          this.spinnerButtonGoalkeeper = true;
-         this.teamTeamMatchNewService.updateGoalkeeper(this.teamTeamMatch.id, teamGoalkeeperForm.value.goalkeeper_id).subscribe(
+         this.teamTeamMatchService.updateGoalkeeper(this.teamTeamMatch.id, teamGoalkeeperForm.value.goalkeeper_id).subscribe(
             () => {
                this.spinnerButtonGoalkeeper = false;
                this.goalkeeperId = teamGoalkeeperForm.value.goalkeeper_id;
@@ -238,7 +238,7 @@ export class TeamCaptainComponent implements OnInit {
 
    private getTeamTeamMatchesData(teamStageId: number) {
       const search = { teamStageId, limit: SettingsService.maxLimitValues.teamTeamMatches, page: 1 } as TeamTeamMatchSearch;
-      this.teamTeamMatchNewService.getTeamTeamMatches(search).subscribe(
+      this.teamTeamMatchService.getTeamTeamMatches(search).subscribe(
          response => {
             this.errorTeamTeamMatches = null;
             if (!response || !response.data) {

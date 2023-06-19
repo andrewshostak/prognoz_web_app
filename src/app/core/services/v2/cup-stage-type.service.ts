@@ -7,7 +7,7 @@ import { CupStageType } from '@models/v2/cup/cup-stage-type.model';
 import { Observable } from 'rxjs';
 
 @Injectable()
-export class CupStageTypeNewService {
+export class CupStageTypeService {
    public readonly cupStageTypesUrl: string = `${environment.apiBaseUrl}/v2/cup/stage-types`;
 
    constructor(private httpClient: HttpClient) {}

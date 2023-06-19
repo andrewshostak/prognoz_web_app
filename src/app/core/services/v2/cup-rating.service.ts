@@ -10,7 +10,7 @@ import { CupRatingSearch } from '@models/search/cup/cup-rating-search.model';
 import { Observable } from 'rxjs';
 
 @Injectable()
-export class CupRatingNewService {
+export class CupRatingService {
    public readonly cupRatingUrl: string = `${environment.apiBaseUrl}/v2/cup/rating`;
 
    constructor(private httpClient: HttpClient) {}

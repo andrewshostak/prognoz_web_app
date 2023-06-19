@@ -10,7 +10,7 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 @Injectable()
-export class UserNewService {
+export class UserService {
    public readonly usersUrl: string = `${environment.apiBaseUrl}/v2/users`;
 
    constructor(private httpClient: HttpClient) {}

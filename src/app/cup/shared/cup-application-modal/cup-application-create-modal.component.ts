@@ -4,10 +4,10 @@ import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/fo
 import { Competition } from '@models/v2/competition.model';
 import { CupApplication } from '@models/v2/cup/cup-application.model';
 import { User } from '@models/v2/user.model';
-import { CupApplicationNewService } from '@services/v2/cup-application-new.service';
+import { CupApplicationService } from '@services/v2/cup-application.service';
 import { DeviceService } from '@services/device.service';
-import { AuthNewService } from '@services/v2/auth-new.service';
-import { UserNewService } from '@services/v2/user-new.service';
+import { AuthService } from '@services/v2/auth.service';
+import { UserService } from '@services/v2/user.service';
 import { UtilsService } from '@services/utils.service';
 import { NotificationsService } from 'angular2-notifications';
 import { from, of } from 'rxjs';
@@ -29,11 +29,11 @@ export class CupApplicationCreateModalComponent implements OnInit {
    public spinnerButton = false;
 
    constructor(
-      private authNewService: AuthNewService,
-      private cupApplicationService: CupApplicationNewService,
+      private authService: AuthService,
+      private cupApplicationService: CupApplicationService,
       private deviceService: DeviceService,
       private notificationsService: NotificationsService,
-      private userNewService: UserNewService
+      private userService: UserService
    ) {}
 
    public ngOnInit(): void {
@@ -91,10 +91,10 @@ export class CupApplicationCreateModalComponent implements OnInit {
    }
 
    private getApplicant(id: number): void {
-      this.userNewService.getUser(id).subscribe(response => (this.applicant = response));
+      this.userService.getUser(id).subscribe(response => (this.applicant = response));
    }
 
    private hasModeratorRights(): boolean {
-      return this.authNewService.hasPermissions(['create_cup_application_wo_validation']);
+      return this.authService.hasPermissions(['create_cup_application_wo_validation']);
    }
 }

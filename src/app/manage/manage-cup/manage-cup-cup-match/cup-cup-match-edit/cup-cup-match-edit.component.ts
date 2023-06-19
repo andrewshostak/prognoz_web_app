@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 
-import { CupCupMatchNewService } from '@services/v2/cup-cup-match-new.service';
+import { CupCupMatchService } from '@services/v2/cup-cup-match.service';
 import { CupCupMatch } from '@models/v2/cup/cup-cup-match.model';
 
 @Component({
@@ -10,7 +10,7 @@ import { CupCupMatch } from '@models/v2/cup/cup-cup-match.model';
    styleUrls: ['./cup-cup-match-edit.component.scss']
 })
 export class CupCupMatchEditComponent implements OnInit {
-   constructor(private activatedRoute: ActivatedRoute, private cupCupMatchService: CupCupMatchNewService) {}
+   constructor(private activatedRoute: ActivatedRoute, private cupCupMatchService: CupCupMatchService) {}
 
    cupCupMatch: CupCupMatch;
 

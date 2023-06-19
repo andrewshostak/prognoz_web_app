@@ -3,7 +3,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 
 import { User } from '@models/v2/user.model';
-import { AuthNewService } from '@services/v2/auth-new.service';
+import { AuthService } from '@services/v2/auth.service';
 import { TitleService } from '@services/title.service';
 import { NotificationsService } from 'angular2-notifications';
 
@@ -19,7 +19,7 @@ export class AuthResetComponent implements OnInit {
 
    constructor(
       private activatedRoute: ActivatedRoute,
-      private authService: AuthNewService,
+      private authService: AuthService,
       private notificationsService: NotificationsService,
       private router: Router,
       private titleService: TitleService

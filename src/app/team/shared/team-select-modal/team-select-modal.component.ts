@@ -3,8 +3,8 @@ import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/fo
 
 import { Team } from '@models/v2/team/team.model';
 import { TeamSearch } from '@models/search/team/team-search.model';
-import { AuthNewService } from '@services/v2/auth-new.service';
-import { TeamNewService } from '@services/v2/team-new.service';
+import { AuthService } from '@services/v2/auth.service';
+import { TeamService } from '@services/v2/team.service';
 import { SettingsService } from '@services/settings.service';
 import { UtilsService } from '@services/utils.service';
 
@@ -21,7 +21,7 @@ export class TeamSelectModalComponent implements OnInit {
    public teamForm: FormGroup;
    public showNotFoundMessage: boolean;
 
-   constructor(private authService: AuthNewService, private teamService: TeamNewService) {}
+   constructor(private authService: AuthService, private teamService: TeamService) {}
 
    public ngOnInit(): void {
       this.teamForm = new FormGroup({ id: new FormControl(null, [Validators.required]) });

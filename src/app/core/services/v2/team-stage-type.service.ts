@@ -7,7 +7,7 @@ import { TeamStageType } from '@models/v2/team/team-stage-type.model';
 import { Observable } from 'rxjs';
 
 @Injectable()
-export class TeamStageTypeNewService {
+export class TeamStageTypeService {
    public readonly teamStageTypesUrl: string = `${environment.apiBaseUrl}/v2/team/stage-types`;
 
    constructor(private httpClient: HttpClient) {}

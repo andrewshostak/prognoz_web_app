@@ -6,8 +6,8 @@ import { Sequence } from '@enums/sequence.enum';
 import { Tournament } from '@enums/tournament.enum';
 import { Competition } from '@models/v2/competition.model';
 import { CompetitionSearch } from '@models/search/competition-search.model';
-import { CompetitionNewService } from '@services/v2/competition-new.service';
-import { TeamStageNewService } from '@services/v2/team-stage-new.service';
+import { CompetitionService } from '@services/v2/competition.service';
+import { TeamStageService } from '@services/v2/team-stage.service';
 import { SettingsService } from '@services/settings.service';
 import { UtilsService } from '@services/utils.service';
 import { NotificationsService } from 'angular2-notifications';
@@ -26,9 +26,9 @@ export class TeamStagesGenerationModalComponent implements OnInit {
    public spinnerButton = false;
 
    constructor(
-      private competitionService: CompetitionNewService,
+      private competitionService: CompetitionService,
       private notificationsService: NotificationsService,
-      private teamStageService: TeamStageNewService
+      private teamStageService: TeamStageService
    ) {}
 
    public ngOnInit(): void {

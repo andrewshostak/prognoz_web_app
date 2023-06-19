@@ -6,8 +6,8 @@ import { OpenedModal } from '@models/opened-modal.model';
 import { CupApplication } from '@models/v2/cup/cup-application.model';
 import { Competition } from '@models/v2/competition.model';
 import { User } from '@models/v2/user.model';
-import { CupApplicationNewService } from '@services/v2/cup-application-new.service';
-import { AuthNewService } from '@services/v2/auth-new.service';
+import { CupApplicationService } from '@services/v2/cup-application.service';
+import { AuthService } from '@services/v2/auth.service';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { NotificationsService } from 'angular2-notifications';
 
@@ -35,8 +35,8 @@ export class CupApplicationsDefaultComponent implements OnChanges, OnInit {
    private hasModeratorRights: boolean = false;
 
    constructor(
-      private authService: AuthNewService,
-      private cupApplicationService: CupApplicationNewService,
+      private authService: AuthService,
+      private cupApplicationService: CupApplicationService,
       private ngbModalService: NgbModal,
       private notificationsService: NotificationsService
    ) {}

@@ -14,9 +14,9 @@ import { CompetitionSearch } from '@models/search/competition-search.model';
 import { CupCupMatchSearch } from '@models/search/cup/cup-cup-match-search.model';
 import { CupStageSearch } from '@models/search/cup/cup-stage-search.model';
 import { CurrentStateService } from '@services/current-state.service';
-import { CompetitionNewService } from '@services/v2/competition-new.service';
-import { CupCupMatchNewService } from '@services/v2/cup-cup-match-new.service';
-import { CupStageNewService } from '@services/v2/cup-stage-new.service';
+import { CompetitionService } from '@services/v2/competition.service';
+import { CupCupMatchService } from '@services/v2/cup-cup-match.service';
+import { CupStageService } from '@services/v2/cup-stage.service';
 import { SettingsService } from '@services/settings.service';
 import { TitleService } from '@services/title.service';
 import { find, findLast, get } from 'lodash';
@@ -40,9 +40,9 @@ export class CupCupMatchesComponent implements OnInit {
 
    constructor(
       private activatedRoute: ActivatedRoute,
-      private competitionService: CompetitionNewService,
-      private cupCupMatchService: CupCupMatchNewService,
-      private cupStageService: CupStageNewService,
+      private competitionService: CompetitionService,
+      private cupCupMatchService: CupCupMatchService,
+      private cupStageService: CupStageService,
       private currentStateService: CurrentStateService,
       private router: Router,
       private titleService: TitleService

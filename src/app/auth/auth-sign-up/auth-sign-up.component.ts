@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 
 import { User } from '@models/v2/user.model';
 import { CurrentStateService } from '@services/current-state.service';
-import { AuthNewService } from '@services/v2/auth-new.service';
+import { AuthService } from '@services/v2/auth.service';
 import { TitleService } from '@services/title.service';
 import { NotificationsService } from 'angular2-notifications';
 
@@ -20,7 +20,7 @@ export class AuthSignUpComponent implements OnInit {
    public user: User;
 
    constructor(
-      private authService: AuthNewService,
+      private authService: AuthService,
       private currentStateService: CurrentStateService,
       private notificationsService: NotificationsService,
       private router: Router,

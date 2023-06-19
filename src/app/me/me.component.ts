@@ -4,8 +4,8 @@ import { Router } from '@angular/router';
 
 import { User } from '@models/v2/user.model';
 import { FormValidatorService } from '@services/form-validator.service';
-import { AuthNewService } from '@services/v2/auth-new.service';
-import { UserNewService } from '@services/v2/user-new.service';
+import { AuthService } from '@services/v2/auth.service';
+import { UserService } from '@services/v2/user.service';
 import { SettingsService } from '@services/settings.service';
 import { TitleService } from '@services/title.service';
 import { UtilsService } from '@services/utils.service';
@@ -27,12 +27,12 @@ export class MeComponent implements OnInit {
    public userImageSize: number = FormValidatorService.fileSizeLimits.userImage;
 
    constructor(
-      private authService: AuthNewService,
+      private authService: AuthService,
       private formValidatorService: FormValidatorService,
       private notificationsService: NotificationsService,
       private router: Router,
       private titleService: TitleService,
-      private userService: UserNewService
+      private userService: UserService
    ) {}
 
    get clubUser(): FormArray {

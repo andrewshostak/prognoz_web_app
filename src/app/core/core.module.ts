@@ -11,95 +11,95 @@ import { PageNotFoundComponent } from '@app/core/page-not-found/page-not-found.c
 import { SharedModule } from '@app/shared/shared.module';
 
 import { AuthGuard } from '@app/core/guards/auth.guard.service';
-import { AwardNewService } from '@services/v2/award-new.service';
-import { ChampionshipRatingNewService } from '@services/v2/championship-rating-new.service';
+import { AwardService } from '@services/v2/award.service';
+import { ChampionshipRatingService } from '@services/v2/championship-rating.service';
 import { ChampionshipService } from '@services/championship/championship.service';
-import { CupApplicationNewService } from '@services/v2/cup-application-new.service';
-import { CupGroupNumberNewService } from '@services/v2/cup-group-number-new.service';
-import { CupRatingNewService } from '@services/v2/cup-rating-new.service';
+import { CupApplicationService } from '@services/v2/cup-application.service';
+import { CupGroupNumberService } from '@services/v2/cup-group-number.service';
+import { CupRatingService } from '@services/v2/cup-rating.service';
 import { CurrentStateService } from '@services/current-state.service';
 import { DeviceService } from '@services/device.service';
 import { FormValidatorService } from '@services/form-validator.service';
-import { AuthNewService } from '@services/v2/auth-new.service';
-import { ChampionshipMatchNewService } from '@services/v2/championship-match-new.service';
-import { ChampionshipPredictionNewService } from '@services/v2/championship-prediction-new.service';
-import { ClubNewService } from '@services/v2/club-new.service';
-import { CompetitionNewService } from '@services/v2/competition-new.service';
-import { CupCupMatchNewService } from '@services/v2/cup-cup-match-new.service';
-import { CupMatchNewService } from '@services/v2/cup-match-new.service';
-import { CupPredictionNewService } from '@services/v2/cup-prediction-new.service';
-import { CupStageNewService } from '@services/v2/cup-stage-new.service';
-import { CupStageTypeNewService } from '@services/v2/cup-stage-type-new.service';
+import { AuthService } from '@services/v2/auth.service';
+import { ChampionshipMatchService } from '@services/v2/championship-match.service';
+import { ChampionshipPredictionService } from '@services/v2/championship-prediction.service';
+import { ClubService } from '@services/v2/club.service';
+import { CompetitionService } from '@services/v2/competition.service';
+import { CupCupMatchService } from '@services/v2/cup-cup-match.service';
+import { CupMatchService } from '@services/v2/cup-match.service';
+import { CupPredictionService } from '@services/v2/cup-prediction.service';
+import { CupStageService } from '@services/v2/cup-stage.service';
+import { CupStageTypeService } from '@services/v2/cup-stage-type.service';
 import { HeaderImageService } from '@services/v2/header-image.service';
 import { MatchService } from '@services/v2/match.service';
-import { NewsNewService } from '@services/v2/news-new.service';
-import { SeasonNewService } from '@services/v2/season-new.service';
-import { TeamCompetitionNewService } from '@services/v2/team-competition-new.service';
-import { TeamMatchNewService } from '@services/v2/team-match-new.service';
-import { TeamNewService } from '@services/v2/team-new.service';
-import { TeamParticipantNewService } from '@services/v2/team-participant-new.service';
-import { UserNewService } from '@services/v2/user-new.service';
+import { NewsService } from '@services/v2/news.service';
+import { SeasonService } from '@services/v2/season.service';
+import { TeamCompetitionService } from '@services/v2/team-competition.service';
+import { TeamMatchService } from '@services/v2/team-match.service';
+import { TeamMatchService as TeamMatchV1Service } from '@services/v1/team-match.service';
+import { TeamService } from '@services/v2/team.service';
+import { TeamParticipantService } from '@services/v2/team-participant.service';
+import { UserService } from '@services/v2/user.service';
 import { PaginationService } from '@services/pagination.service';
 import { PusherService } from '@services/pusher.service';
 import { SettingsService } from '@services/settings.service';
-import { TeamMatchService } from '@services/v1/team-match.service';
-import { TeamPredictionNewService } from '@services/v2/team-prediction-new.service';
-import { TeamPredictionService } from '@services/v1/team-prediction.service';
-import { TeamRatingUserNewService } from '@services/v2/team-rating-user-new.service';
-import { TeamRatingNewService } from '@services/v2/team-rating-new.service';
-import { TeamStageNewService } from '@services/v2/team-stage-new.service';
-import { TeamStageTypeNewService } from '@services/v2/team-stage-type-new.service';
-import { TeamTeamMatchNewService } from '@services/v2/team-team-match-new.service';
+import { TeamPredictionService } from '@services/v2/team-prediction.service';
+import { TeamPredictionService as TeamPredictionV1Service } from '@services/v1/team-prediction.service';
+import { TeamRatingUserService } from '@services/v2/team-rating-user.service';
+import { TeamRatingService } from '@services/v2/team-rating.service';
+import { TeamStageService } from '@services/v2/team-stage.service';
+import { TeamStageTypeService } from '@services/v2/team-stage-type.service';
+import { TeamTeamMatchService } from '@services/v2/team-team-match.service';
 import { TitleService } from '@services/title.service';
-import { TournamentNewService } from '@services/v2/tournament-new.service';
+import { TournamentService } from '@services/v2/tournament.service';
 import { UtilsService } from '@services/utils.service';
 
 @NgModule({
    declarations: [AccessDeniedComponent, FooterComponent, HeaderComponent, PageNotFoundComponent],
    exports: [AccessDeniedComponent, FooterComponent, HeaderComponent, PageNotFoundComponent],
    providers: [
-      AuthNewService,
+      AuthService,
       AuthGuard,
-      AwardNewService,
+      AwardService,
       ChampionshipService,
-      ChampionshipMatchNewService,
-      ChampionshipPredictionNewService,
-      ChampionshipRatingNewService,
-      ClubNewService,
-      CompetitionNewService,
-      CupApplicationNewService,
-      CupCupMatchNewService,
-      CupGroupNumberNewService,
-      CupMatchNewService,
-      CupPredictionNewService,
-      CupRatingNewService,
-      CupStageNewService,
-      CupStageTypeNewService,
+      ChampionshipMatchService,
+      ChampionshipPredictionService,
+      ChampionshipRatingService,
+      ClubService,
+      CompetitionService,
+      CupApplicationService,
+      CupCupMatchService,
+      CupGroupNumberService,
+      CupMatchService,
+      CupPredictionService,
+      CupRatingService,
+      CupStageService,
+      CupStageTypeService,
       CurrentStateService,
       DeviceService,
       FormValidatorService,
       HeaderImageService,
       MatchService,
-      NewsNewService,
+      NewsService,
       PaginationService,
       PusherService,
-      SeasonNewService,
+      SeasonService,
       SettingsService,
-      TeamCompetitionNewService,
-      TeamMatchNewService,
+      TeamCompetitionService,
+      TeamMatchV1Service,
       TeamMatchService,
-      TeamNewService,
-      TeamParticipantNewService,
-      TeamPredictionNewService,
+      TeamService,
+      TeamParticipantService,
+      TeamPredictionV1Service,
       TeamPredictionService,
-      TeamRatingNewService,
-      TeamRatingUserNewService,
-      TeamStageNewService,
-      TeamStageTypeNewService,
-      TeamTeamMatchNewService,
+      TeamRatingService,
+      TeamRatingUserService,
+      TeamStageService,
+      TeamStageTypeService,
+      TeamTeamMatchService,
       TitleService,
-      TournamentNewService,
-      UserNewService,
+      TournamentService,
+      UserService,
       UtilsService
    ],
    imports: [CommonModule, ReactiveFormsModule, RouterModule, SharedModule]

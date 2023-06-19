@@ -10,7 +10,7 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 @Injectable()
-export class CommentNewService {
+export class CommentService {
    public readonly commentsUrl: string = `${environment.apiBaseUrl}/v2/comments`;
 
    constructor(private httpClient: HttpClient) {}

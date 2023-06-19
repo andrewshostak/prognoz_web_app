@@ -7,7 +7,7 @@ import { CupGroupNumberSearch } from '@models/search/cup/cup-group-number-search
 import { Observable } from 'rxjs';
 
 @Injectable()
-export class CupGroupNumberNewService {
+export class CupGroupNumberService {
    public readonly cupGroupNumbersUrl: string = `${environment.apiBaseUrl}/v2/cup/group-numbers`;
 
    constructor(private httpClient: HttpClient) {}

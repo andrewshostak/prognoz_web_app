@@ -9,7 +9,7 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 @Injectable()
-export class CompetitionNewService {
+export class CompetitionService {
    public readonly competitionsUrl: string = `${environment.apiBaseUrl}/v2/competitions`;
 
    constructor(private httpClient: HttpClient) {}

@@ -10,7 +10,7 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 @Injectable()
-export class NewsNewService {
+export class NewsService {
    public readonly newsUrl: string = `${environment.apiBaseUrl}/v2/news`;
 
    constructor(private httpClient: HttpClient) {}

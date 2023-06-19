@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 import { User } from '@models/v2/user.model';
-import { AuthNewService } from '@services/v2/auth-new.service';
+import { AuthService } from '@services/v2/auth.service';
 import { TitleService } from '@services/title.service';
 import { NotificationsService } from 'angular2-notifications';
 
@@ -17,11 +17,7 @@ export class AuthRecoveryComponent implements OnInit {
    public spinnerButton: boolean;
    public user: User;
 
-   constructor(
-      private authService: AuthNewService,
-      private notificationsService: NotificationsService,
-      private titleService: TitleService
-   ) {}
+   constructor(private authService: AuthService, private notificationsService: NotificationsService, private titleService: TitleService) {}
 
    public ngOnInit(): void {
       this.titleService.setTitle('Відновлення паролю');

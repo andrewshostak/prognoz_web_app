@@ -6,7 +6,7 @@ import { Sequence } from '@enums/sequence.enum';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { NotificationsService } from 'angular2-notifications';
 import { Subscription } from 'rxjs';
-import { CupStageNewService } from '@services/v2/cup-stage-new.service';
+import { CupStageService } from '@services/v2/cup-stage.service';
 import { CupStage } from '@models/v2/cup/cup-stage.model';
 import { CupStageSearch } from '@models/search/cup/cup-stage-search.model';
 import { SettingsService } from '@services/settings.service';
@@ -30,13 +30,13 @@ export class CupStagesTableComponent implements OnInit, OnDestroy {
 
    constructor(
       private activatedRoute: ActivatedRoute,
-      private cupStageNewService: CupStageNewService,
+      private cupStageService: CupStageService,
       private ngbModalService: NgbModal,
       private notificationsService: NotificationsService
    ) {}
 
    public deleteCupStage(): void {
-      this.cupStageNewService.deleteCupStage(this.openedModal.data.id).subscribe(
+      this.cupStageService.deleteCupStage(this.openedModal.data.id).subscribe(
          () => {
             remove(this.cupStages, this.openedModal.data);
             this.paginationData.total--;
@@ -49,7 +49,7 @@ export class CupStagesTableComponent implements OnInit, OnDestroy {
 
    public makeCupStageActive(notStarted: CupStage): void {
       const cupStage = { ...notStarted, state: CupStageState.Active };
-      this.cupStageNewService.updateCupStage(cupStage.id, cupStage).subscribe(
+      this.cupStageService.updateCupStage(cupStage.id, cupStage).subscribe(
          response => {
             const index = findIndex(this.cupStages, { id: cupStage.id });
             if (index > -1) {
@@ -64,7 +64,7 @@ export class CupStagesTableComponent implements OnInit, OnDestroy {
 
    public makeCupStageEnded(active: CupStage): void {
       const cupStage = { ...active, state: CupStageState.Ended };
-      this.cupStageNewService.updateCupStage(cupStage.id, cupStage).subscribe(
+      this.cupStageService.updateCupStage(cupStage.id, cupStage).subscribe(
          response => {
             const index = findIndex(this.cupStages, { id: cupStage.id });
             if (index > -1) {
@@ -92,7 +92,7 @@ export class CupStagesTableComponent implements OnInit, OnDestroy {
             sequence: Sequence.Ascending,
             relations: ['competition', 'cupStageType']
          };
-         this.cupStageNewService.getCupStages(search).subscribe(response => {
+         this.cupStageService.getCupStages(search).subscribe(response => {
             this.cupStages = response.data;
             this.paginationData = PaginationService.getPaginationData(response, this.path);
          });

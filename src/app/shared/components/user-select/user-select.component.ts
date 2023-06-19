@@ -14,7 +14,7 @@ import { Sequence } from '@enums/sequence.enum';
 import { User } from '@models/v2/user.model';
 import { PaginatedResponse } from '@models/paginated-response.model';
 import { UserSearch } from '@models/search/user-search.model';
-import { UserNewService } from '@services/v2/user-new.service';
+import { UserService } from '@services/v2/user.service';
 import { SettingsService } from '@services/settings.service';
 import { trim } from 'lodash';
 import { merge, Observable, of, Subject } from 'rxjs';
@@ -50,7 +50,7 @@ export class UserSelectComponent implements OnChanges, OnInit, ControlValueAcces
    public userSelectFormGroup: FormGroup;
    public usersTypeAhead: EventEmitter<string>;
 
-   constructor(private userService: UserNewService) {}
+   constructor(private userService: UserService) {}
 
    public focusOut(): void {
       this.onTouched();

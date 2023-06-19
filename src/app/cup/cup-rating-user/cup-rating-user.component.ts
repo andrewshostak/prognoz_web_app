@@ -3,7 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 
 import { CupRatingCalculated } from '@models/v2/cup/cup-rating-calculated.model';
 import { CupRatingSearch } from '@models/search/cup/cup-rating-search.model';
-import { CupRatingNewService } from '@services/v2/cup-rating-new.service';
+import { CupRatingService } from '@services/v2/cup-rating.service';
 import { TitleService } from '@services/title.service';
 
 @Component({
@@ -14,7 +14,7 @@ import { TitleService } from '@services/title.service';
 export class CupRatingUserComponent implements OnInit {
    constructor(
       private activatedRoute: ActivatedRoute,
-      private cupRatingService: CupRatingNewService,
+      private cupRatingService: CupRatingService,
       private router: Router,
       private titleService: TitleService
    ) {}

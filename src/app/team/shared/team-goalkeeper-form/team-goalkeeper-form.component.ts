@@ -3,7 +3,7 @@ import { FormArray, FormControl, FormGroup } from '@angular/forms';
 
 import { NotificationsService } from 'angular2-notifications';
 import { TeamMatch } from '@models/v1/team-match.model';
-import { TeamPredictionNewService } from '@services/v2/team-prediction-new.service';
+import { TeamPredictionService } from '@services/v2/team-prediction.service';
 import { User } from '@models/v2/user.model';
 
 @Component({
@@ -22,7 +22,7 @@ export class TeamGoalkeeperFormComponent implements OnChanges {
       predictions: new FormArray([])
    });
 
-   constructor(private notificationsService: NotificationsService, private teamPredictionService: TeamPredictionNewService) {}
+   constructor(private notificationsService: NotificationsService, private teamPredictionService: TeamPredictionService) {}
 
    get numberOfCurrentlyBlocked(): number {
       return this.predictionsFormArray.controls.filter(control => control.value).length;

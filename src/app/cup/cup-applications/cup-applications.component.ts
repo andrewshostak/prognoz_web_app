@@ -7,8 +7,8 @@ import { Competition } from '@models/v2/competition.model';
 import { CupApplication } from '@models/v2/cup/cup-application.model';
 import { CompetitionSearch } from '@models/search/competition-search.model';
 import { CupApplicationSearch } from '@models/search/cup/cup-application-search.model';
-import { CompetitionNewService } from '@services/v2/competition-new.service';
-import { CupApplicationNewService } from '@services/v2/cup-application-new.service';
+import { CompetitionService } from '@services/v2/competition.service';
+import { CupApplicationService } from '@services/v2/cup-application.service';
 import { SettingsService } from '@services/settings.service';
 import { TitleService } from '@services/title.service';
 import { get } from 'lodash';
@@ -26,8 +26,8 @@ export class CupApplicationsComponent implements OnInit {
    selectedCompetition: Competition;
 
    constructor(
-      private competitionService: CompetitionNewService,
-      private cupApplicationNewService: CupApplicationNewService,
+      private competitionService: CompetitionService,
+      private cupApplicationService: CupApplicationService,
       private titleService: TitleService
    ) {}
 
@@ -66,7 +66,7 @@ export class CupApplicationsComponent implements OnInit {
                   applicationsSearch.competitionId = this.selectedCompetition.id;
                }
 
-               return this.cupApplicationNewService.getCupApplications(applicationsSearch);
+               return this.cupApplicationService.getCupApplications(applicationsSearch);
             }),
             tap(response => (this.cupApplications = response.data))
          )
@@ -97,7 +97,7 @@ export class CupApplicationsComponent implements OnInit {
          limit: SettingsService.maxLimitValues.cupApplications,
          relations: ['applicant']
       };
-      this.cupApplicationNewService.getCupApplications(applicationsSearch).subscribe(
+      this.cupApplicationService.getCupApplications(applicationsSearch).subscribe(
          response => {
             this.cupApplications = response.data;
          },

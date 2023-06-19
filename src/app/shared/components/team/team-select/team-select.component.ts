@@ -5,7 +5,7 @@ import { Sequence } from '@enums/sequence.enum';
 import { Team } from '@models/v2/team/team.model';
 import { PaginatedResponse } from '@models/paginated-response.model';
 import { TeamSearch } from '@models/search/team/team-search.model';
-import { TeamNewService } from '@services/v2/team-new.service';
+import { TeamService } from '@services/v2/team.service';
 import { SettingsService } from '@services/settings.service';
 import { trim } from 'lodash';
 import { merge, Observable, of, Subject } from 'rxjs';
@@ -28,7 +28,7 @@ export class TeamSelectComponent implements OnChanges, OnInit {
    public teamsList$: Subject<Team[]>;
    public teamsTypeAhead: EventEmitter<string>;
 
-   constructor(private teamService: TeamNewService) {}
+   constructor(private teamService: TeamService) {}
 
    public ngOnChanges(changes: SimpleChanges): void {
       if (changes.teamsList && !changes.teamsList.isFirstChange() && changes.teamsList.currentValue) {

@@ -10,10 +10,10 @@ import { CompetitionSearch } from '@models/search/competition-search.model';
 import { Competition } from '@models/v2/competition.model';
 import { TeamStageType } from '@models/v2/team/team-stage-type.model';
 import { OpenedModal } from '@models/opened-modal.model';
-import { TeamStageNewService } from '@services/v2/team-stage-new.service';
+import { TeamStageService } from '@services/v2/team-stage.service';
 import { SettingsService } from '@services/settings.service';
-import { CompetitionNewService } from '@services/v2/competition-new.service';
-import { TeamStageTypeNewService } from '@services/v2/team-stage-type-new.service';
+import { CompetitionService } from '@services/v2/competition.service';
+import { TeamStageTypeService } from '@services/v2/team-stage-type.service';
 import { NotificationsService } from 'angular2-notifications';
 import { UtilsService } from '@services/utils.service';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
@@ -27,11 +27,11 @@ import { pick, uniqBy } from 'lodash';
 export class TeamStageEditComponent implements OnInit {
    constructor(
       private activatedRoute: ActivatedRoute,
-      private competitionService: CompetitionNewService,
+      private competitionService: CompetitionService,
       private notificationsService: NotificationsService,
       private ngbModalService: NgbModal,
-      private teamStageService: TeamStageNewService,
-      private teamStageTypeService: TeamStageTypeNewService,
+      private teamStageService: TeamStageService,
+      private teamStageTypeService: TeamStageTypeService,
       private router: Router
    ) {}
 

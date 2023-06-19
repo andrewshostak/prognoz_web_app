@@ -7,14 +7,14 @@ import { RequestParams } from '@models/request-params.model';
 import { TeamTeamMatchSearch } from '@models/search/team/team-team-match-search.model';
 import { TeamMatch } from '@models/v1/team-match.model';
 import { TeamPrediction } from '@models/v1/team-prediction.model';
-import { AuthNewService } from '@services/v2/auth-new.service';
-import { TeamTeamMatchNewService } from '@services/v2/team-team-match-new.service';
+import { AuthService } from '@services/v2/auth.service';
+import { TeamTeamMatchService } from '@services/v2/team-team-match.service';
 import { SettingsService } from '@services/settings.service';
 import { TeamMatchService } from '@services/v1/team-match.service';
 import { TeamPredictionService } from '@services/v1/team-prediction.service';
 import { TitleService } from '@services/title.service';
 import { filter, tap } from 'rxjs/operators';
-import { TeamStageNewService } from '@services/v2/team-stage-new.service';
+import { TeamStageService } from '@services/v2/team-stage.service';
 
 @Component({
    selector: 'app-team-predictions',
@@ -24,12 +24,12 @@ import { TeamStageNewService } from '@services/v2/team-stage-new.service';
 export class TeamPredictionsComponent implements OnInit {
    constructor(
       private activatedRoute: ActivatedRoute,
-      private authService: AuthNewService,
+      private authService: AuthService,
       private router: Router,
       private teamMatchService: TeamMatchService,
-      private teamTeamMatchService: TeamTeamMatchNewService,
+      private teamTeamMatchService: TeamTeamMatchService,
       private teamPredictionService: TeamPredictionService,
-      private teamStageService: TeamStageNewService,
+      private teamStageService: TeamStageService,
       private titleService: TitleService
    ) {}
 

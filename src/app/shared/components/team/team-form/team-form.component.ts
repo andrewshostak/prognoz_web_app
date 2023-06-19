@@ -5,7 +5,7 @@ import { Router } from '@angular/router';
 import { Team } from '@models/v2/team/team.model';
 import { User } from '@models/v2/user.model';
 import { FormValidatorService } from '@services/form-validator.service';
-import { TeamNewService } from '@services/v2/team-new.service';
+import { TeamService } from '@services/v2/team.service';
 import { UtilsService } from '@services/utils.service';
 import { NotificationsService } from 'angular2-notifications';
 
@@ -28,7 +28,7 @@ export class TeamFormComponent implements OnChanges, OnInit {
       private formValidatorService: FormValidatorService,
       private notificationsService: NotificationsService,
       private router: Router,
-      private teamService: TeamNewService
+      private teamService: TeamService
    ) {}
 
    get isUpdatePage(): boolean {

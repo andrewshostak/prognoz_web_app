@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 
-import { NewsNewService } from '@services/v2/news-new.service';
+import { NewsService } from '@services/v2/news.service';
 import { News } from '@models/v2/news.model';
 
 @Component({
@@ -10,7 +10,7 @@ import { News } from '@models/v2/news.model';
    styleUrls: ['./news-edit.component.scss']
 })
 export class NewsEditComponent implements OnInit {
-   constructor(private activatedRoute: ActivatedRoute, private newsService: NewsNewService) {}
+   constructor(private activatedRoute: ActivatedRoute, private newsService: NewsService) {}
 
    news: News;
 

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 
-import { CupStageNewService } from '@services/v2/cup-stage-new.service';
+import { CupStageService } from '@services/v2/cup-stage.service';
 import { CupStage } from '@models/v2/cup/cup-stage.model';
 
 @Component({
@@ -10,7 +10,7 @@ import { CupStage } from '@models/v2/cup/cup-stage.model';
    styleUrls: ['./cup-stage-edit.component.scss']
 })
 export class CupStageEditComponent implements OnInit {
-   constructor(private activatedRoute: ActivatedRoute, private cupStageService: CupStageNewService) {}
+   constructor(private activatedRoute: ActivatedRoute, private cupStageService: CupStageService) {}
 
    cupStage: CupStage;
 

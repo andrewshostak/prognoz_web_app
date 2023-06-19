@@ -8,7 +8,7 @@ import { OpenedModal } from '@models/opened-modal.model';
 import { Pagination } from '@models/pagination.model';
 import { TeamMatchSearch } from '@models/search/team/team-match-search.model';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
-import { TeamMatchNewService } from '@services/v2/team-match-new.service';
+import { TeamMatchService } from '@services/v2/team-match.service';
 import { PaginationService } from '@services/pagination.service';
 import { SettingsService } from '@services/settings.service';
 import { NotificationsService } from 'angular2-notifications';
@@ -30,7 +30,7 @@ export class TeamMatchesTableComponent implements OnDestroy, OnInit {
 
    constructor(
       private activatedRoute: ActivatedRoute,
-      private teamMatchService: TeamMatchNewService,
+      private teamMatchService: TeamMatchService,
       private ngbModalService: NgbModal,
       private notificationsService: NotificationsService
    ) {}

@@ -10,7 +10,7 @@ import { get, omit, uniq } from 'lodash';
 import { Observable } from 'rxjs';
 
 @Injectable()
-export class AuthNewService {
+export class AuthService {
    private user: User = null;
    private authURL = environment.apiBaseUrl + '/v2/auth';
 

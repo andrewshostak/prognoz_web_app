@@ -3,8 +3,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 
 import { Team } from '@models/v2/team/team.model';
 import { User } from '@models/v2/user.model';
-import { AuthNewService } from '@services/v2/auth-new.service';
-import { TeamCompetitionNewService } from '@services/v2/team-competition-new.service';
+import { AuthService } from '@services/v2/auth.service';
+import { TeamCompetitionService } from '@services/v2/team-competition.service';
 import { NotificationsService } from 'angular2-notifications';
 import { get } from 'lodash';
 
@@ -18,9 +18,9 @@ export class TeamCreateComponent implements OnInit {
 
    constructor(
       private activatedRoute: ActivatedRoute,
-      private authService: AuthNewService,
+      private authService: AuthService,
       private notificationsService: NotificationsService,
-      private teamCompetitionService: TeamCompetitionNewService,
+      private teamCompetitionService: TeamCompetitionService,
       private router: Router
    ) {}
 

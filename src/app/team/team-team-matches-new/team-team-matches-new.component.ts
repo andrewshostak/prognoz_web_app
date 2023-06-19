@@ -5,9 +5,9 @@ import { TeamTeamMatch } from '@models/v2/team/team-team-match.model';
 import { PaginatedResponse } from '@models/paginated-response.model';
 import { TeamTeamMatchSearch } from '@models/search/team/team-team-match-search.model';
 import { CurrentStateService } from '@services/current-state.service';
-import { TeamStageNewService } from '@services/v2/team-stage-new.service';
-import { CompetitionNewService } from '@services/v2/competition-new.service';
-import { TeamTeamMatchNewService } from '@services/v2/team-team-match-new.service';
+import { TeamStageService } from '@services/v2/team-stage.service';
+import { CompetitionService } from '@services/v2/competition.service';
+import { TeamTeamMatchService } from '@services/v2/team-team-match.service';
 import { SettingsService } from '@services/settings.service';
 import { groupBy } from 'lodash';
 import { Observable } from 'rxjs';
@@ -24,11 +24,11 @@ export class TeamTeamMatchesNewComponent implements OnInit {
 
    constructor(
       private activatedRoute: ActivatedRoute,
-      private competitionService: CompetitionNewService,
+      private competitionService: CompetitionService,
       private currentStateService: CurrentStateService,
       private router: Router,
-      private teamStageService: TeamStageNewService,
-      private teamTeamMatchService: TeamTeamMatchNewService
+      private teamStageService: TeamStageService,
+      private teamTeamMatchService: TeamTeamMatchService
    ) {}
 
    public clickOnTeamStageSelectButton(event: { teamStageId: number }): void {

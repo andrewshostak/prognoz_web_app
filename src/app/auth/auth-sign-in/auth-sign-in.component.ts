@@ -6,7 +6,7 @@ import { Device } from '@models/device.model';
 import { User } from '@models/v2/user.model';
 import { CurrentStateService } from '@services/current-state.service';
 import { DeviceService } from '@services/device.service';
-import { AuthNewService } from '@services/v2/auth-new.service';
+import { AuthService } from '@services/v2/auth.service';
 import { TitleService } from '@services/title.service';
 import { NotificationsService } from 'angular2-notifications';
 import { from, of } from 'rxjs';
@@ -23,7 +23,7 @@ export class AuthSignInComponent implements OnInit {
    public user: User;
 
    constructor(
-      private authService: AuthNewService,
+      private authService: AuthService,
       private currentStateService: CurrentStateService,
       private deviceService: DeviceService,
       private notificationsService: NotificationsService,

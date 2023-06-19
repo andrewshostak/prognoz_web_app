@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 
 import { TeamMatch } from '@models/v2/team/team-match.model';
-import { TeamMatchNewService } from '@services/v2/team-match-new.service';
+import { TeamMatchService } from '@services/v2/team-match.service';
 
 @Component({
    selector: 'app-team-match-edit',
@@ -12,7 +12,7 @@ import { TeamMatchNewService } from '@services/v2/team-match-new.service';
 export class TeamMatchEditComponent implements OnInit {
    public teamMatch: TeamMatch;
 
-   constructor(private activatedRoute: ActivatedRoute, private teamMatchService: TeamMatchNewService) {}
+   constructor(private activatedRoute: ActivatedRoute, private teamMatchService: TeamMatchService) {}
 
    public ngOnInit(): void {
       this.activatedRoute.params.forEach((params: Params) => {
