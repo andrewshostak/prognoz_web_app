@@ -1,18 +1,16 @@
-import { HttpParams } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
 import { environment } from '@env';
 import { RequestParams } from '@models/request-params.model';
-import { ErrorHandlerService } from '@services/error-handler.service';
-import { HeadersWithToken } from '@services/headers-with-token.service';
 import { Observable } from 'rxjs';
-import { catchError } from 'rxjs/operators';
+import { TeamMatch } from '@models/v1/team-match.model';
 
 @Injectable()
 export class TeamMatchService {
    private teamMatchUrl = environment.apiBaseUrl + '/team/matches';
 
-   constructor(private errorHandlerService: ErrorHandlerService, private headersWithToken: HeadersWithToken) {}
+   constructor(private httpClient: HttpClient) {}
 
    /**
     * @deprecated
@@ -37,12 +35,12 @@ export class TeamMatchService {
     *    - to get team_match_id, team_id, prediction id (if it is present) for updating blocked_by
     * note: protected, loaded by current user
     */
-   public getTeamMatchesAuthUser(requestParams: RequestParams[]): Observable<any> {
+   public getTeamMatchesAuthUser(requestParams: RequestParams[]): Observable<{ team_matches: TeamMatch[] }> {
       let params: HttpParams = new HttpParams();
       const url = `${this.teamMatchUrl}-predictable`;
       for (const requestParam of requestParams) {
          params = params.append(requestParam.parameter, requestParam.value);
       }
-      return this.headersWithToken.get(url, params).pipe(catchError(this.errorHandlerService.handle));
+      return this.httpClient.get<{ team_matches: TeamMatch[] }>(url, { params });
    }
 }

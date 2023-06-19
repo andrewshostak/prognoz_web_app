@@ -5,11 +5,12 @@ import { TestBed } from '@angular/core/testing';
 import { AuthInterceptor } from '@app/core/interceptors/auth.interceptor';
 import { environment } from '@env';
 import { MatchService } from '@services/new/match.service';
-import { SettingsService } from '@services/settings.service';
+import { TeamPredictionService } from '@services/team/team-prediction.service';
 
 describe('AuthInterceptor', () => {
    let authInterceptor: AuthInterceptor;
    let exampleService: MatchService;
+   let exampleV1Service: TeamPredictionService;
    let httpTestingController: HttpTestingController;
    let httpClient: HttpClient;
 
@@ -18,6 +19,7 @@ describe('AuthInterceptor', () => {
          imports: [HttpClientTestingModule],
          providers: [
             MatchService,
+            TeamPredictionService,
             {
                multi: true,
                provide: HTTP_INTERCEPTORS,
@@ -30,6 +32,7 @@ describe('AuthInterceptor', () => {
 
       authInterceptor = TestBed.get(AuthInterceptor);
       exampleService = TestBed.get(MatchService);
+      exampleV1Service = TestBed.get(TeamPredictionService);
       httpTestingController = TestBed.get(HttpTestingController);
       httpClient = TestBed.get(HttpClient);
    });
@@ -49,6 +52,18 @@ describe('AuthInterceptor', () => {
          exampleService.deleteMatch(900).subscribe(() => {});
 
          const httpRequest = httpTestingController.expectOne(exampleService.matchesUrl + '/900');
+
+         expect(httpRequest.request.headers.has('Authorization')).toBeTruthy();
+         expect(httpRequest.request.headers.get('Authorization')).toContain('i_am_auth_token');
+      });
+
+      it('should add an Authorization header for v1 endpoints', () => {
+         spyOn(localStorage, 'getItem').and.returnValue('i_am_auth_token');
+         spyOn(authInterceptor, 'isAllowedPath').and.returnValue(true);
+
+         exampleV1Service.getTeamPredictions().subscribe(() => {});
+
+         const httpRequest = httpTestingController.expectOne(environment.apiBaseUrl + '/team/predictions');
 
          expect(httpRequest.request.headers.has('Authorization')).toBeTruthy();
          expect(httpRequest.request.headers.get('Authorization')).toContain('i_am_auth_token');

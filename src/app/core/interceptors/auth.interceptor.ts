@@ -2,7 +2,6 @@ import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from '@angular/c
 import { Injectable } from '@angular/core';
 
 import { environment } from '@env';
-import { SettingsService } from '@services/settings.service';
 import { Observable } from 'rxjs';
 
 @Injectable()
@@ -22,6 +21,9 @@ export class AuthInterceptor implements HttpInterceptor {
    }
 
    public isAllowedPath(url: string): boolean {
-      return url.includes(`${environment.apiBaseUrl}`) && url.includes('v2');
+      return (
+         url.includes(`${environment.apiBaseUrl}`) &&
+         (url.includes('v2') || url.includes('/team/matches-predictable') || url.includes('/team/predictions'))
+      );
    }
 }
