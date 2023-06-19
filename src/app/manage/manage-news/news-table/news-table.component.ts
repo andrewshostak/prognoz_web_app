@@ -3,7 +3,7 @@ import { ActivatedRoute, Params } from '@angular/router';
 
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { NotificationsService } from 'angular2-notifications';
-import { NewsNewService } from '@services/new/news-new.service';
+import { NewsNewService } from '@services/v2/news-new.service';
 import { News } from '@models/v2/news.model';
 import { NewsSearch } from '@models/search/news-search.model';
 import { SettingsService } from '@services/settings.service';

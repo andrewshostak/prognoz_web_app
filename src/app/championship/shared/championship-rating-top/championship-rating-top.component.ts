@@ -7,12 +7,12 @@ import { PaginatedResponse } from '@models/paginated-response.model';
 import { ChampionshipRating } from '@models/v2/championship/championship-rating.model';
 import { ChampionshipRatingSearch } from '@models/search/championship/championship-rating-search.model';
 import { Sequence } from '@enums/sequence.enum';
-import { ChampionshipRatingNewService } from '@services/new/championship-rating-new.service';
+import { ChampionshipRatingNewService } from '@services/v2/championship-rating-new.service';
 import { Competition } from '@models/v2/competition.model';
 import { CompetitionSearch } from '@models/search/competition-search.model';
 import { CompetitionState } from '@enums/competition-state.enum';
 import { Tournament } from '@enums/tournament.enum';
-import { CompetitionNewService } from '@services/new/competition-new.service';
+import { CompetitionNewService } from '@services/v2/competition-new.service';
 import { mergeMap } from 'rxjs/operators';
 
 @Component({

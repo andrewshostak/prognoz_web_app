@@ -5,7 +5,7 @@ import { Router } from '@angular/router';
 import { Team } from '@models/v2/team/team.model';
 import { User } from '@models/v2/user.model';
 import { FormValidatorService } from '@services/form-validator.service';
-import { TeamNewService } from '@services/new/team-new.service';
+import { TeamNewService } from '@services/v2/team-new.service';
 import { UtilsService } from '@services/utils.service';
 import { NotificationsService } from 'angular2-notifications';
 

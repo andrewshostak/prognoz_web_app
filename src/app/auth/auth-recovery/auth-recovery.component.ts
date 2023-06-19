@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 import { User } from '@models/v2/user.model';
-import { AuthNewService } from '@services/new/auth-new.service';
+import { AuthNewService } from '@services/v2/auth-new.service';
 import { TitleService } from '@services/title.service';
 import { NotificationsService } from 'angular2-notifications';
 

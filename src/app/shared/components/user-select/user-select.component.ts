@@ -14,7 +14,7 @@ import { Sequence } from '@enums/sequence.enum';
 import { User } from '@models/v2/user.model';
 import { PaginatedResponse } from '@models/paginated-response.model';
 import { UserSearch } from '@models/search/user-search.model';
-import { UserNewService } from '@services/new/user-new.service';
+import { UserNewService } from '@services/v2/user-new.service';
 import { SettingsService } from '@services/settings.service';
 import { trim } from 'lodash';
 import { merge, Observable, of, Subject } from 'rxjs';

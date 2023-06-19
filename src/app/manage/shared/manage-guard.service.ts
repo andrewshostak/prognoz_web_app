@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { CanActivate, Router } from '@angular/router';
 
-import { AuthNewService } from '@services/new/auth-new.service';
+import { AuthNewService } from '@services/v2/auth-new.service';
 import { get } from 'lodash';
 
 @Injectable()

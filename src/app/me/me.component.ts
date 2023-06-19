@@ -4,8 +4,8 @@ import { Router } from '@angular/router';
 
 import { User } from '@models/v2/user.model';
 import { FormValidatorService } from '@services/form-validator.service';
-import { AuthNewService } from '@services/new/auth-new.service';
-import { UserNewService } from '@services/new/user-new.service';
+import { AuthNewService } from '@services/v2/auth-new.service';
+import { UserNewService } from '@services/v2/user-new.service';
 import { SettingsService } from '@services/settings.service';
 import { TitleService } from '@services/title.service';
 import { UtilsService } from '@services/utils.service';

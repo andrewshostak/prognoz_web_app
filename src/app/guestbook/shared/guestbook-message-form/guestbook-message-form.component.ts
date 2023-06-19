@@ -3,7 +3,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 import { GuestbookMessage } from '@models/v2/guestbook-message.model';
 import { User } from '@models/v2/user.model';
-import { AuthNewService } from '@services/new/auth-new.service';
+import { AuthNewService } from '@services/v2/auth-new.service';
 import { NotificationsService } from 'angular2-notifications';
 import { GuestbookMessageNewService } from '@app/guestbook/shared/guestbook-message-new.service';
 import { trim } from 'lodash';

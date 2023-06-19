@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 
 import { TitleService } from '@services/title.service';
-import { NewsNewService } from '@services/new/news-new.service';
+import { NewsNewService } from '@services/v2/news-new.service';
 import { News } from '@models/v2/news.model';
 import { Pagination } from '@models/pagination.model';
 import { PaginationService } from '@services/pagination.service';

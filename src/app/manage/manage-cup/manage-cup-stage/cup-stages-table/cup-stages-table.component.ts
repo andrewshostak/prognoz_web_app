@@ -6,7 +6,7 @@ import { Sequence } from '@enums/sequence.enum';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { NotificationsService } from 'angular2-notifications';
 import { Subscription } from 'rxjs';
-import { CupStageNewService } from '@services/new/cup-stage-new.service';
+import { CupStageNewService } from '@services/v2/cup-stage-new.service';
 import { CupStage } from '@models/v2/cup/cup-stage.model';
 import { CupStageSearch } from '@models/search/cup/cup-stage-search.model';
 import { SettingsService } from '@services/settings.service';

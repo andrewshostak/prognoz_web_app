@@ -3,7 +3,7 @@ import { FormArray, FormControl, FormGroup } from '@angular/forms';
 
 import { NotificationsService } from 'angular2-notifications';
 import { TeamMatch } from '@models/v1/team-match.model';
-import { TeamPredictionNewService } from '@services/new/team-prediction-new.service';
+import { TeamPredictionNewService } from '@services/v2/team-prediction-new.service';
 import { User } from '@models/v2/user.model';
 
 @Component({

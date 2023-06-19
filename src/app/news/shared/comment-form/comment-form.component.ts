@@ -4,7 +4,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { CommentNewService } from '@app/news/shared/comment-new.service';
 import { Comment } from '@models/v2/comment.model';
 import { User } from '@models/v2/user.model';
-import { AuthNewService } from '@services/new/auth-new.service';
+import { AuthNewService } from '@services/v2/auth-new.service';
 import { NotificationsService } from 'angular2-notifications';
 import { trim } from 'lodash';
 

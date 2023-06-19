@@ -6,7 +6,7 @@ import { OpenedModal } from '@models/opened-modal.model';
 import { Pagination } from '@models/pagination.model';
 import { TeamParticipantSearch } from '@models/search/team/team-participant-search.model';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
-import { TeamParticipantNewService } from '@services/new/team-participant-new.service';
+import { TeamParticipantNewService } from '@services/v2/team-participant-new.service';
 import { PaginationService } from '@services/pagination.service';
 import { SettingsService } from '@services/settings.service';
 import { NotificationsService } from 'angular2-notifications';

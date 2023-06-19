@@ -2,7 +2,7 @@ import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/cor
 import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
 
 import { Match } from '@models/v2/match.model';
-import { MatchService } from '@services/new/match.service';
+import { MatchService } from '@services/v2/match.service';
 import { SettingsService } from '@services/settings.service';
 import { UtilsService } from '@services/utils.service';
 import { NotificationsService } from 'angular2-notifications';

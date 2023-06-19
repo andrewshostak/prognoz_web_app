@@ -8,7 +8,7 @@ import { OpenedModal } from '@models/opened-modal.model';
 import { Pagination } from '@models/pagination.model';
 import { TeamMatchSearch } from '@models/search/team/team-match-search.model';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
-import { TeamMatchNewService } from '@services/new/team-match-new.service';
+import { TeamMatchNewService } from '@services/v2/team-match-new.service';
 import { PaginationService } from '@services/pagination.service';
 import { SettingsService } from '@services/settings.service';
 import { NotificationsService } from 'angular2-notifications';

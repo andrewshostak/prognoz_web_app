@@ -10,7 +10,7 @@ import { OpenedModal } from '@models/opened-modal.model';
 import { Pagination } from '@models/pagination.model';
 import { GuestbookMessageSearch } from '@models/search/guestbook-message-search.model';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
-import { AuthNewService } from '@services/new/auth-new.service';
+import { AuthNewService } from '@services/v2/auth-new.service';
 import { PaginationService } from '@services/pagination.service';
 import { SettingsService } from '@services/settings.service';
 import { TitleService } from '@services/title.service';

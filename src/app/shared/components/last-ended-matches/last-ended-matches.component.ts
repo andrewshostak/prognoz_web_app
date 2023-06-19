@@ -4,7 +4,7 @@ import { MatchState } from '@enums/match-state.enum';
 import { Sequence } from '@enums/sequence.enum';
 import { Match } from '@models/v2/match.model';
 import { MatchSearch } from '@models/search/match-search.model';
-import { MatchService } from '@services/new/match.service';
+import { MatchService } from '@services/v2/match.service';
 
 @Component({
    selector: 'app-last-ended-matches',

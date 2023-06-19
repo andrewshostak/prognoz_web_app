@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 
-import { CupCupMatchNewService } from '@services/new/cup-cup-match-new.service';
-import { CupStageNewService } from '@services/new/cup-stage-new.service';
+import { CupCupMatchNewService } from '@services/v2/cup-cup-match-new.service';
+import { CupStageNewService } from '@services/v2/cup-stage-new.service';
 import { NotificationsService } from 'angular2-notifications';
 import { CupStage } from '@models/v2/cup/cup-stage.model';
 import { CupStageSearch } from '@models/search/cup/cup-stage-search.model';

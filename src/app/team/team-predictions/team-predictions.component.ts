@@ -7,14 +7,14 @@ import { RequestParams } from '@models/request-params.model';
 import { TeamTeamMatchSearch } from '@models/search/team/team-team-match-search.model';
 import { TeamMatch } from '@models/v1/team-match.model';
 import { TeamPrediction } from '@models/v1/team-prediction.model';
-import { AuthNewService } from '@services/new/auth-new.service';
-import { TeamTeamMatchNewService } from '@services/new/team-team-match-new.service';
+import { AuthNewService } from '@services/v2/auth-new.service';
+import { TeamTeamMatchNewService } from '@services/v2/team-team-match-new.service';
 import { SettingsService } from '@services/settings.service';
 import { TeamMatchService } from '@services/team/team-match.service';
 import { TeamPredictionService } from '@services/team/team-prediction.service';
 import { TitleService } from '@services/title.service';
 import { filter, tap } from 'rxjs/operators';
-import { TeamStageNewService } from '@services/new/team-stage-new.service';
+import { TeamStageNewService } from '@services/v2/team-stage-new.service';
 
 @Component({
    selector: 'app-team-predictions',

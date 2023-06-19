@@ -2,7 +2,7 @@ import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 
 import { Win } from '@models/v2/win.model';
 import { SettingsService } from '@services/settings.service';
-import { AwardNewService } from '@services/new/award-new.service';
+import { AwardNewService } from '@services/v2/award-new.service';
 import { groupBy } from 'lodash';
 
 @Component({

@@ -4,7 +4,7 @@ import { TestBed } from '@angular/core/testing';
 
 import { AuthInterceptor } from '@app/core/interceptors/auth.interceptor';
 import { environment } from '@env';
-import { MatchService } from '@services/new/match.service';
+import { MatchService } from '@services/v2/match.service';
 import { TeamPredictionService } from '@services/team/team-prediction.service';
 
 describe('AuthInterceptor', () => {

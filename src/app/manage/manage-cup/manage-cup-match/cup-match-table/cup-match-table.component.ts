@@ -8,7 +8,7 @@ import { OpenedModal } from '@models/opened-modal.model';
 import { Pagination } from '@models/pagination.model';
 import { CupMatchSearch } from '@models/search/cup/cup-match-search.model';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
-import { CupMatchNewService } from '@services/new/cup-match-new.service';
+import { CupMatchNewService } from '@services/v2/cup-match-new.service';
 import { PaginationService } from '@services/pagination.service';
 import { SettingsService } from '@services/settings.service';
 import { NotificationsService } from 'angular2-notifications';

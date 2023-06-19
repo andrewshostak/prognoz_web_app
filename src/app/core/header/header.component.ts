@@ -3,8 +3,8 @@ import { NavigationEnd, Router } from '@angular/router';
 
 import { User } from '@models/v2/user.model';
 import { CurrentStateService } from '@services/current-state.service';
-import { AuthNewService } from '@services/new/auth-new.service';
-import { HeaderImageService } from '@services/new/header-image.service';
+import { AuthNewService } from '@services/v2/auth-new.service';
+import { HeaderImageService } from '@services/v2/header-image.service';
 import { NotificationsService } from 'angular2-notifications';
 import { filter } from 'rxjs/operators';
 

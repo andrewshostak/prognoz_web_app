@@ -9,9 +9,9 @@ import { Season } from '@models/v2/season.model';
 import { CompetitionSearch } from '@models/search/competition-search.model';
 import { CupStageSearch } from '@models/search/cup/cup-stage-search.model';
 import { SeasonSearch } from '@models/search/season-search.model';
-import { CompetitionNewService } from '@services/new/competition-new.service';
-import { CupStageNewService } from '@services/new/cup-stage-new.service';
-import { SeasonNewService } from '@services/new/season-new.service';
+import { CompetitionNewService } from '@services/v2/competition-new.service';
+import { CupStageNewService } from '@services/v2/cup-stage-new.service';
+import { SeasonNewService } from '@services/v2/season-new.service';
 import { SettingsService } from '@services/settings.service';
 import { map } from 'rxjs/operators';
 

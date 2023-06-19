@@ -5,7 +5,7 @@ import { Sequence } from '@enums/sequence.enum';
 import { TeamStage } from '@models/v2/team/team-stage.model';
 import { Pagination } from '@models/pagination.model';
 import { TeamStageSearch } from '@models/search/team/team-stage-search.model';
-import { TeamStageNewService } from '@services/new/team-stage-new.service';
+import { TeamStageNewService } from '@services/v2/team-stage-new.service';
 import { PaginationService } from '@services/pagination.service';
 import { SettingsService } from '@services/settings.service';
 

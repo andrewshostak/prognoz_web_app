@@ -6,7 +6,7 @@ import { Device } from '@models/device.model';
 import { User } from '@models/v2/user.model';
 import { CurrentStateService } from '@services/current-state.service';
 import { DeviceService } from '@services/device.service';
-import { AuthNewService } from '@services/new/auth-new.service';
+import { AuthNewService } from '@services/v2/auth-new.service';
 import { TitleService } from '@services/title.service';
 import { NotificationsService } from 'angular2-notifications';
 import { from, of } from 'rxjs';

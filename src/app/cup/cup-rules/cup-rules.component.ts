@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { TitleService } from '@services/title.service';
 
 import { CupStageType } from '@models/v2/cup/cup-stage-type.model';
-import { CupStageTypeNewService } from '@services/new/cup-stage-type-new.service';
+import { CupStageTypeNewService } from '@services/v2/cup-stage-type-new.service';
 import { sortBy } from 'lodash';
 
 @Component({

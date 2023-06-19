@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 
 import { environment } from '@env';
 import { User } from '@models/v2/user.model';
-import { AuthNewService } from '@services/new/auth-new.service';
+import { AuthNewService } from '@services/v2/auth-new.service';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 

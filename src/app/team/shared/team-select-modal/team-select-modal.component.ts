@@ -3,8 +3,8 @@ import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/fo
 
 import { Team } from '@models/v2/team/team.model';
 import { TeamSearch } from '@models/search/team/team-search.model';
-import { AuthNewService } from '@services/new/auth-new.service';
-import { TeamNewService } from '@services/new/team-new.service';
+import { AuthNewService } from '@services/v2/auth-new.service';
+import { TeamNewService } from '@services/v2/team-new.service';
 import { SettingsService } from '@services/settings.service';
 import { UtilsService } from '@services/utils.service';
 

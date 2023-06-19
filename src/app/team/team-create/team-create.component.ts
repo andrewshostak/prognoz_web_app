@@ -3,8 +3,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 
 import { Team } from '@models/v2/team/team.model';
 import { User } from '@models/v2/user.model';
-import { AuthNewService } from '@services/new/auth-new.service';
-import { TeamCompetitionNewService } from '@services/new/team-competition-new.service';
+import { AuthNewService } from '@services/v2/auth-new.service';
+import { TeamCompetitionNewService } from '@services/v2/team-competition-new.service';
 import { NotificationsService } from 'angular2-notifications';
 import { get } from 'lodash';
 

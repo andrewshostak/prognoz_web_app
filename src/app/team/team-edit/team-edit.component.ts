@@ -3,8 +3,8 @@ import { ActivatedRoute, Params } from '@angular/router';
 
 import { Team } from '@models/v2/team/team.model';
 import { User } from '@models/v2/user.model';
-import { AuthNewService } from '@services/new/auth-new.service';
-import { TeamNewService } from '@services/new/team-new.service';
+import { AuthNewService } from '@services/v2/auth-new.service';
+import { TeamNewService } from '@services/v2/team-new.service';
 
 @Component({
    selector: 'app-team-edit',

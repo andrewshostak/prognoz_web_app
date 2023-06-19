@@ -9,10 +9,10 @@ import { Season } from '@models/v2/season.model';
 import { SeasonSearch } from '@models/search/season-search.model';
 import { Tournament } from '@models/v2/tournament.model';
 import { FormValidatorService } from '@services/form-validator.service';
-import { CompetitionNewService } from '@services/new/competition-new.service';
-import { SeasonNewService } from '@services/new/season-new.service';
+import { CompetitionNewService } from '@services/v2/competition-new.service';
+import { SeasonNewService } from '@services/v2/season-new.service';
 import { SettingsService } from '@services/settings.service';
-import { TournamentNewService } from '@services/new/tournament-new.service';
+import { TournamentNewService } from '@services/v2/tournament-new.service';
 import { UtilsService } from '@services/utils.service';
 import { NotificationsService } from 'angular2-notifications';
 

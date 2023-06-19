@@ -5,9 +5,9 @@ import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/fo
 import { CupCupMatch } from '@models/v2/cup/cup-cup-match.model';
 import { CupStage } from '@models/v2/cup/cup-stage.model';
 import { User } from '@models/v2/user.model';
-import { CupCupMatchNewService } from '@services/new/cup-cup-match-new.service';
-import { CupStageNewService } from '@services/new/cup-stage-new.service';
-import { UserNewService } from '@services/new/user-new.service';
+import { CupCupMatchNewService } from '@services/v2/cup-cup-match-new.service';
+import { CupStageNewService } from '@services/v2/cup-stage-new.service';
+import { UserNewService } from '@services/v2/user-new.service';
 import { UtilsService } from '@services/utils.service';
 import { NotificationsService } from 'angular2-notifications';
 import { CupStageSearch } from '@models/search/cup/cup-stage-search.model';

@@ -11,7 +11,7 @@ import {
 } from '@angular/forms';
 import { Club } from '@models/v2/club.model';
 import { merge, Observable, of, Subject } from 'rxjs';
-import { ClubNewService } from '@services/new/club-new.service';
+import { ClubNewService } from '@services/v2/club-new.service';
 import { SettingsService } from '@services/settings.service';
 import { catchError, debounceTime, distinctUntilChanged, map, switchMap, tap } from 'rxjs/operators';
 import { trim } from 'lodash';

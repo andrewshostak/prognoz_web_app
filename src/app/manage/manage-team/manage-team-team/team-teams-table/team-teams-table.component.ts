@@ -6,7 +6,7 @@ import { OpenedModal } from '@models/opened-modal.model';
 import { Pagination } from '@models/pagination.model';
 import { TeamSearch } from '@models/search/team/team-search.model';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
-import { TeamNewService } from '@services/new/team-new.service';
+import { TeamNewService } from '@services/v2/team-new.service';
 import { PaginationService } from '@services/pagination.service';
 import { SettingsService } from '@services/settings.service';
 import { NotificationsService } from 'angular2-notifications';

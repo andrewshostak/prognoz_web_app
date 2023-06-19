@@ -15,9 +15,9 @@ import { OpenedModal } from '@models/opened-modal.model';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { Sequence } from '@enums/sequence.enum';
 import { ModelStatus } from '@enums/model-status.enum';
-import { AuthNewService } from '@services/new/auth-new.service';
+import { AuthNewService } from '@services/v2/auth-new.service';
 import * as moment from 'moment';
-import { NewsNewService } from '@services/new/news-new.service';
+import { NewsNewService } from '@services/v2/news-new.service';
 import { News } from '@models/v2/news.model';
 
 @Component({

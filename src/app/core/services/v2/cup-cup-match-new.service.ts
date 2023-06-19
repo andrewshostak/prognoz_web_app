@@ -6,7 +6,7 @@ import { environment } from '@env';
 import { CupCupMatch } from '@models/v2/cup/cup-cup-match.model';
 import { PaginatedResponse } from '@models/paginated-response.model';
 import { CupCupMatchSearch } from '@models/search/cup/cup-cup-match-search.model';
-import { AuthNewService } from '@services/new/auth-new.service';
+import { AuthNewService } from '@services/v2/auth-new.service';
 import { groupBy } from 'lodash';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';

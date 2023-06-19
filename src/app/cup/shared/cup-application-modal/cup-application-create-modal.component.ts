@@ -4,10 +4,10 @@ import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/fo
 import { Competition } from '@models/v2/competition.model';
 import { CupApplication } from '@models/v2/cup/cup-application.model';
 import { User } from '@models/v2/user.model';
-import { CupApplicationNewService } from '@services/new/cup-application-new.service';
+import { CupApplicationNewService } from '@services/v2/cup-application-new.service';
 import { DeviceService } from '@services/device.service';
-import { AuthNewService } from '@services/new/auth-new.service';
-import { UserNewService } from '@services/new/user-new.service';
+import { AuthNewService } from '@services/v2/auth-new.service';
+import { UserNewService } from '@services/v2/user-new.service';
 import { UtilsService } from '@services/utils.service';
 import { NotificationsService } from 'angular2-notifications';
 import { from, of } from 'rxjs';

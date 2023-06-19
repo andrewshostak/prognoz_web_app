@@ -7,9 +7,9 @@ import { ChampionshipMatch } from '@models/v2/championship/championship-match.mo
 import { ChampionshipPrediction } from '@models/v2/championship/championship-prediction.model';
 import { ChampionshipPredictionSearch } from '@models/search/championship/championship-prediction-search.model';
 import { User } from '@models/v2/user.model';
-import { AuthNewService } from '@services/new/auth-new.service';
-import { ChampionshipMatchNewService } from '@services/new/championship-match-new.service';
-import { ChampionshipPredictionNewService } from '@services/new/championship-prediction-new.service';
+import { AuthNewService } from '@services/v2/auth-new.service';
+import { ChampionshipMatchNewService } from '@services/v2/championship-match-new.service';
+import { ChampionshipPredictionNewService } from '@services/v2/championship-prediction-new.service';
 import { SettingsService } from '@services/settings.service';
 import { TitleService } from '@services/title.service';
 

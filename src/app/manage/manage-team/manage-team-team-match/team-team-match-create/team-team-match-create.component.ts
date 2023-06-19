@@ -9,8 +9,8 @@ import { TeamStageSearch } from '@models/search/team/team-stage-search.model';
 import { TeamTeamMatch } from '@models/v2/team/team-team-match.model';
 import { UtilsService } from '@services/utils.service';
 import { SettingsService } from '@services/settings.service';
-import { TeamStageNewService } from '@services/new/team-stage-new.service';
-import { TeamTeamMatchNewService } from '@services/new/team-team-match-new.service';
+import { TeamStageNewService } from '@services/v2/team-stage-new.service';
+import { TeamTeamMatchNewService } from '@services/v2/team-team-match-new.service';
 import { NotificationsService } from 'angular2-notifications';
 
 @Component({

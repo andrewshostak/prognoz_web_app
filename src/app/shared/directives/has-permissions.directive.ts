@@ -1,6 +1,6 @@
 import { Directive, ElementRef, Input, TemplateRef, ViewContainerRef } from '@angular/core';
 
-import { AuthNewService } from '@services/new/auth-new.service';
+import { AuthNewService } from '@services/v2/auth-new.service';
 import { isNil } from 'lodash';
 
 @Directive({

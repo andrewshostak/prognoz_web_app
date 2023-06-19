@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 
-import { ChampionshipRatingNewService } from '@services/new/championship-rating-new.service';
-import { AuthNewService } from '@services/new/auth-new.service';
+import { ChampionshipRatingNewService } from '@services/v2/championship-rating-new.service';
+import { AuthNewService } from '@services/v2/auth-new.service';
 import { TitleService } from '@services/title.service';
 import { User } from '@models/v2/user.model';
 import { ChampionshipRating } from '@models/v2/championship/championship-rating.model';

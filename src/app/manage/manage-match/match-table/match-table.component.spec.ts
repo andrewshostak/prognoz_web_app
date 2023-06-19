@@ -13,7 +13,7 @@ import { PaginatedResponse } from '@models/paginated-response.model';
 import { Pagination } from '@models/pagination.model';
 import { MatchSearch } from '@models/search/match-search.model';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
-import { MatchService } from '@services/new/match.service';
+import { MatchService } from '@services/v2/match.service';
 import { PaginationService } from '@services/pagination.service';
 import { SettingsService } from '@services/settings.service';
 import { NotificationsService } from 'angular2-notifications';

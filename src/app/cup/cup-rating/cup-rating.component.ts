@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 
 import { CupRatingCalculated } from '@models/v2/cup/cup-rating-calculated.model';
 import { User } from '@models/v2/user.model';
-import { AuthNewService } from '@services/new/auth-new.service';
-import { CupRatingNewService } from '@services/new/cup-rating-new.service';
+import { AuthNewService } from '@services/v2/auth-new.service';
+import { CupRatingNewService } from '@services/v2/cup-rating-new.service';
 import { TitleService } from '@services/title.service';
 
 @Component({

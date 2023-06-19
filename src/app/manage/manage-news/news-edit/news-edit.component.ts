@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 
-import { NewsNewService } from '@services/new/news-new.service';
+import { NewsNewService } from '@services/v2/news-new.service';
 import { News } from '@models/v2/news.model';
 
 @Component({

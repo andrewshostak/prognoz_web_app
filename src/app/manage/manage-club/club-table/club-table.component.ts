@@ -4,7 +4,7 @@ import { ActivatedRoute, Params, Router } from '@angular/router';
 
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { NotificationsService } from 'angular2-notifications';
-import { ClubNewService } from '@services/new/club-new.service';
+import { ClubNewService } from '@services/v2/club-new.service';
 import { Club } from '@models/v2/club.model';
 import { Subscription } from 'rxjs';
 import { ClubSearch } from '@models/search/club-search.model';
