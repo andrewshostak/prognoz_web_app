@@ -10,7 +10,7 @@ import { AuthNewService } from '@services/v2/auth-new.service';
 import { TeamNewService } from '@services/v2/team-new.service';
 import { TeamTeamMatchNewService } from '@services/v2/team-team-match-new.service';
 import { SettingsService } from '@services/settings.service';
-import { TeamMatchService } from '@services/team/team-match.service';
+import { TeamMatchService } from '@services/v1/team-match.service';
 import { TitleService } from '@services/title.service';
 import { filter, tap } from 'rxjs/operators';
 
