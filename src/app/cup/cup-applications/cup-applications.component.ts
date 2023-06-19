@@ -8,7 +8,7 @@ import { CupApplication } from '@models/v2/cup/cup-application.model';
 import { CompetitionSearch } from '@models/search/competition-search.model';
 import { CupApplicationSearch } from '@models/search/cup/cup-application-search.model';
 import { CompetitionService } from '@services/v2/competition.service';
-import { CupApplicationService } from '@services/v2/cup-application.service';
+import { CupApplicationService } from '@services/v2/cup/cup-application.service';
 import { SettingsService } from '@services/settings.service';
 import { TitleService } from '@services/title.service';
 import { get } from 'lodash';

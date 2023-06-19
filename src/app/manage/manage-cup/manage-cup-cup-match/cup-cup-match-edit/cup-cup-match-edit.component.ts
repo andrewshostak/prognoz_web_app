@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 
-import { CupCupMatchService } from '@services/v2/cup-cup-match.service';
+import { CupCupMatchService } from '@services/v2/cup/cup-cup-match.service';
 import { CupCupMatch } from '@models/v2/cup/cup-cup-match.model';
 
 @Component({

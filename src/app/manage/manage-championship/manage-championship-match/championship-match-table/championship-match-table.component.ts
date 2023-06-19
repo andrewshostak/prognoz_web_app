@@ -8,7 +8,7 @@ import { OpenedModal } from '@models/opened-modal.model';
 import { Pagination } from '@models/pagination.model';
 import { ChampionshipMatchSearch } from '@models/search/championship/championship-match-search.model';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
-import { ChampionshipMatchService } from '@services/v2/championship-match.service';
+import { ChampionshipMatchService } from '@services/v2/championship/championship-match.service';
 import { PaginationService } from '@services/pagination.service';
 import { SettingsService } from '@services/settings.service';
 import { NotificationsService } from 'angular2-notifications';

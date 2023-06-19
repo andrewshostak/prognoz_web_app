@@ -15,8 +15,8 @@ import { CupCupMatchSearch } from '@models/search/cup/cup-cup-match-search.model
 import { CupStageSearch } from '@models/search/cup/cup-stage-search.model';
 import { CurrentStateService } from '@services/current-state.service';
 import { CompetitionService } from '@services/v2/competition.service';
-import { CupCupMatchService } from '@services/v2/cup-cup-match.service';
-import { CupStageService } from '@services/v2/cup-stage.service';
+import { CupCupMatchService } from '@services/v2/cup/cup-cup-match.service';
+import { CupStageService } from '@services/v2/cup/cup-stage.service';
 import { SettingsService } from '@services/settings.service';
 import { TitleService } from '@services/title.service';
 import { find, findLast, get } from 'lodash';

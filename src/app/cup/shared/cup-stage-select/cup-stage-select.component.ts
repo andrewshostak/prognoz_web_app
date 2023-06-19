@@ -10,7 +10,7 @@ import { CompetitionSearch } from '@models/search/competition-search.model';
 import { CupStageSearch } from '@models/search/cup/cup-stage-search.model';
 import { SeasonSearch } from '@models/search/season-search.model';
 import { CompetitionService } from '@services/v2/competition.service';
-import { CupStageService } from '@services/v2/cup-stage.service';
+import { CupStageService } from '@services/v2/cup/cup-stage.service';
 import { SeasonService } from '@services/v2/season.service';
 import { SettingsService } from '@services/settings.service';
 import { map } from 'rxjs/operators';

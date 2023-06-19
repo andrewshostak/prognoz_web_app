@@ -5,7 +5,7 @@ import { Sequence } from '@enums/sequence.enum';
 import { ChampionshipMatchSearch } from '@models/search/championship/championship-match-search.model';
 import { User } from '@models/v2/user.model';
 import { AuthService } from '@services/v2/auth.service';
-import { ChampionshipMatchService } from '@services/v2/championship-match.service';
+import { ChampionshipMatchService } from '@services/v2/championship/championship-match.service';
 import { TitleService } from '@services/title.service';
 import { get } from 'lodash';
 import { iif, Observable, of } from 'rxjs';
@@ -18,7 +18,7 @@ import { CompetitionService } from '@services/v2/competition.service';
 import { ChampionshipRating } from '@models/v2/championship/championship-rating.model';
 import { ChampionshipRatingSearch } from '@models/search/championship/championship-rating-search.model';
 import { SettingsService } from '@services/settings.service';
-import { ChampionshipRatingService } from '@services/v2/championship-rating.service';
+import { ChampionshipRatingService } from '@services/v2/championship/championship-rating.service';
 import { mergeMap } from 'rxjs/operators';
 
 @Component({

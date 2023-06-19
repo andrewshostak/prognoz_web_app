@@ -10,8 +10,8 @@ import { TeamRatingUserSearch } from '@models/search/team/team-rating-user-searc
 import { User } from '@models/v2/user.model';
 import { AuthService } from '@services/v2/auth.service';
 import { CompetitionService } from '@services/v2/competition.service';
-import { TeamRatingUserService } from '@services/v2/team-rating-user.service';
-import { TeamRatingService } from '@services/v2/team-rating.service';
+import { TeamRatingUserService } from '@services/v2/team/team-rating-user.service';
+import { TeamRatingService } from '@services/v2/team/team-rating.service';
 import { SettingsService } from '@services/settings.service';
 import { TitleService } from '@services/title.service';
 import { groupBy } from 'lodash';

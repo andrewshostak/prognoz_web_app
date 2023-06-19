@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 
-import { CupStageService } from '@services/v2/cup-stage.service';
+import { CupStageService } from '@services/v2/cup/cup-stage.service';
 import { CupStage } from '@models/v2/cup/cup-stage.model';
 
 @Component({

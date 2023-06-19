@@ -6,7 +6,7 @@ import { CupCupMatchState } from '@enums/cup-cup-match-state.enum';
 import { Sequence } from '@enums/sequence.enum';
 import { CupCupMatch } from '@models/v2/cup/cup-cup-match.model';
 import { CupCupMatchSearch } from '@models/search/cup/cup-cup-match-search.model';
-import { CupCupMatchService } from '@services/v2/cup-cup-match.service';
+import { CupCupMatchService } from '@services/v2/cup/cup-cup-match.service';
 import { SettingsService } from '@services/settings.service';
 import { isNil } from 'lodash';
 

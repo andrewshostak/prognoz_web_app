@@ -8,8 +8,8 @@ import { ChampionshipPrediction } from '@models/v2/championship/championship-pre
 import { ChampionshipPredictionSearch } from '@models/search/championship/championship-prediction-search.model';
 import { User } from '@models/v2/user.model';
 import { AuthService } from '@services/v2/auth.service';
-import { ChampionshipMatchService } from '@services/v2/championship-match.service';
-import { ChampionshipPredictionService } from '@services/v2/championship-prediction.service';
+import { ChampionshipMatchService } from '@services/v2/championship/championship-match.service';
+import { ChampionshipPredictionService } from '@services/v2/championship/championship-prediction.service';
 import { SettingsService } from '@services/settings.service';
 import { TitleService } from '@services/title.service';
 

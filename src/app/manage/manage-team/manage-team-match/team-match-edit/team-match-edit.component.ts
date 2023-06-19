@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 
 import { TeamMatch } from '@models/v2/team/team-match.model';
-import { TeamMatchService } from '@services/v2/team-match.service';
+import { TeamMatchService } from '@services/v2/team/team-match.service';
 
 @Component({
    selector: 'app-team-match-edit',

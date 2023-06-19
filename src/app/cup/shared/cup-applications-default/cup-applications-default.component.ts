@@ -6,7 +6,7 @@ import { OpenedModal } from '@models/opened-modal.model';
 import { CupApplication } from '@models/v2/cup/cup-application.model';
 import { Competition } from '@models/v2/competition.model';
 import { User } from '@models/v2/user.model';
-import { CupApplicationService } from '@services/v2/cup-application.service';
+import { CupApplicationService } from '@services/v2/cup/cup-application.service';
 import { AuthService } from '@services/v2/auth.service';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { NotificationsService } from 'angular2-notifications';

@@ -4,7 +4,7 @@ import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/fo
 import { Competition } from '@models/v2/competition.model';
 import { CupApplication } from '@models/v2/cup/cup-application.model';
 import { User } from '@models/v2/user.model';
-import { CupApplicationService } from '@services/v2/cup-application.service';
+import { CupApplicationService } from '@services/v2/cup/cup-application.service';
 import { DeviceService } from '@services/device.service';
 import { AuthService } from '@services/v2/auth.service';
 import { UserService } from '@services/v2/user.service';

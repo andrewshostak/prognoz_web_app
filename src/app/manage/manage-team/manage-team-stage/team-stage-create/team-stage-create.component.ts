@@ -8,10 +8,10 @@ import { TeamStageType } from '@models/v2/team/team-stage-type.model';
 import { Competition } from '@models/v2/competition.model';
 import { CompetitionSearch } from '@models/search/competition-search.model';
 import { TeamStage } from '@models/v2/team/team-stage.model';
-import { TeamStageTypeService } from '@services/v2/team-stage-type.service';
+import { TeamStageTypeService } from '@services/v2/team/team-stage-type.service';
 import { CompetitionService } from '@services/v2/competition.service';
 import { SettingsService } from '@services/settings.service';
-import { TeamStageService } from '@services/v2/team-stage.service';
+import { TeamStageService } from '@services/v2/team/team-stage.service';
 import { UtilsService } from '@services/utils.service';
 import { NotificationsService } from 'angular2-notifications';
 

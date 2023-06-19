@@ -8,10 +8,10 @@ import { ChampionshipPrediction } from '@models/v2/championship/championship-pre
 import { ChampionshipMatch } from '@models/v2/championship/championship-match.model';
 import { ChampionshipMatchSearch } from '@models/search/championship/championship-match-search.model';
 import { User } from '@models/v2/user.model';
-import { ChampionshipPredictionService } from '@services/v2/championship-prediction.service';
+import { ChampionshipPredictionService } from '@services/v2/championship/championship-prediction.service';
 import { ChampionshipService } from '@services/championship/championship.service';
 import { AuthService } from '@services/v2/auth.service';
-import { ChampionshipMatchService } from '@services/v2/championship-match.service';
+import { ChampionshipMatchService } from '@services/v2/championship/championship-match.service';
 import { SettingsService } from '@services/settings.service';
 import { TitleService } from '@services/title.service';
 import { UtilsService } from '@services/utils.service';
@@ -27,7 +27,7 @@ import { Tournament } from '@enums/tournament.enum';
 import { CompetitionService } from '@services/v2/competition.service';
 import { ChampionshipRating } from '@models/v2/championship/championship-rating.model';
 import { ChampionshipRatingSearch } from '@models/search/championship/championship-rating-search.model';
-import { ChampionshipRatingService } from '@services/v2/championship-rating.service';
+import { ChampionshipRatingService } from '@services/v2/championship/championship-rating.service';
 
 @Component({
    selector: 'app-championship-home',

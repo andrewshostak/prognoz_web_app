@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 
-import { ChampionshipRatingService } from '@services/v2/championship-rating.service';
+import { ChampionshipRatingService } from '@services/v2/championship/championship-rating.service';
 import { AuthService } from '@services/v2/auth.service';
 import { TitleService } from '@services/title.service';
 import { User } from '@models/v2/user.model';

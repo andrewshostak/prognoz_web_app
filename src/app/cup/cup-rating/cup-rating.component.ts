@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { CupRatingCalculated } from '@models/v2/cup/cup-rating-calculated.model';
 import { User } from '@models/v2/user.model';
 import { AuthService } from '@services/v2/auth.service';
-import { CupRatingService } from '@services/v2/cup-rating.service';
+import { CupRatingService } from '@services/v2/cup/cup-rating.service';
 import { TitleService } from '@services/title.service';
 
 @Component({

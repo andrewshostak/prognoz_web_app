@@ -7,7 +7,7 @@ import { Tournament } from '@enums/tournament.enum';
 import { Competition } from '@models/v2/competition.model';
 import { CompetitionSearch } from '@models/search/competition-search.model';
 import { CompetitionService } from '@services/v2/competition.service';
-import { TeamStageService } from '@services/v2/team-stage.service';
+import { TeamStageService } from '@services/v2/team/team-stage.service';
 import { SettingsService } from '@services/settings.service';
 import { UtilsService } from '@services/utils.service';
 import { NotificationsService } from 'angular2-notifications';

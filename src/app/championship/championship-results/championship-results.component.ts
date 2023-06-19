@@ -9,7 +9,7 @@ import { Competition } from '@models/v2/competition.model';
 import { PaginatedResponse } from '@models/paginated-response.model';
 import { ChampionshipMatchSearch } from '@models/search/championship/championship-match-search.model';
 import { CompetitionSearch } from '@models/search/competition-search.model';
-import { ChampionshipMatchService } from '@services/v2/championship-match.service';
+import { ChampionshipMatchService } from '@services/v2/championship/championship-match.service';
 import { CompetitionService } from '@services/v2/competition.service';
 import { SettingsService } from '@services/settings.service';
 import { TitleService } from '@services/title.service';

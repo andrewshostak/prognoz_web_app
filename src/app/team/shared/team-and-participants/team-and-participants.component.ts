@@ -11,7 +11,7 @@ import { TeamParticipantSearch } from '@models/search/team/team-participant-sear
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { DeviceService } from '@services/device.service';
 import { AuthService } from '@services/v2/auth.service';
-import { TeamParticipantService } from '@services/v2/team-participant.service';
+import { TeamParticipantService } from '@services/v2/team/team-participant.service';
 import { SettingsService } from '@services/settings.service';
 import { NotificationsService } from 'angular2-notifications';
 import { pick, remove } from 'lodash';

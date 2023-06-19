@@ -8,13 +8,13 @@ import { TeamTeamMatchSearch } from '@models/search/team/team-team-match-search.
 import { TeamMatch } from '@models/v1/team-match.model';
 import { TeamPrediction } from '@models/v1/team-prediction.model';
 import { AuthService } from '@services/v2/auth.service';
-import { TeamTeamMatchService } from '@services/v2/team-team-match.service';
+import { TeamTeamMatchService } from '@services/v2/team/team-team-match.service';
 import { SettingsService } from '@services/settings.service';
 import { TeamMatchService } from '@services/v1/team-match.service';
 import { TeamPredictionService } from '@services/v1/team-prediction.service';
 import { TitleService } from '@services/title.service';
 import { filter, tap } from 'rxjs/operators';
-import { TeamStageService } from '@services/v2/team-stage.service';
+import { TeamStageService } from '@services/v2/team/team-stage.service';
 
 @Component({
    selector: 'app-team-predictions',

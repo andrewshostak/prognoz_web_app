@@ -7,7 +7,7 @@ import { PaginatedResponse } from '@models/paginated-response.model';
 import { ChampionshipRating } from '@models/v2/championship/championship-rating.model';
 import { ChampionshipRatingSearch } from '@models/search/championship/championship-rating-search.model';
 import { Sequence } from '@enums/sequence.enum';
-import { ChampionshipRatingService } from '@services/v2/championship-rating.service';
+import { ChampionshipRatingService } from '@services/v2/championship/championship-rating.service';
 import { Competition } from '@models/v2/competition.model';
 import { CompetitionSearch } from '@models/search/competition-search.model';
 import { CompetitionState } from '@enums/competition-state.enum';

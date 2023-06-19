@@ -13,11 +13,11 @@ import { TeamParticipantSearch } from '@models/search/team/team-participant-sear
 import { TeamTeamMatchSearch } from '@models/search/team/team-team-match-search.model';
 import { AuthService } from '@services/v2/auth.service';
 import { TeamCompetitionService } from '@services/v1/team-competition.service';
-import { TeamParticipantService } from '@services/v2/team-participant.service';
-import { TeamStageService } from '@services/v2/team-stage.service';
-import { TeamTeamMatchService } from '@services/v2/team-team-match.service';
+import { TeamParticipantService } from '@services/v2/team/team-participant.service';
+import { TeamStageService } from '@services/v2/team/team-stage.service';
+import { TeamTeamMatchService } from '@services/v2/team/team-team-match.service';
 import { TeamMatchService } from '@services/v1/team-match.service';
-import { TeamPredictionService } from '@services/v2/team-prediction.service';
+import { TeamPredictionService } from '@services/v2/team/team-prediction.service';
 import { SettingsService } from '@services/settings.service';
 import { UtilsService } from '@services/utils.service';
 import { NotificationsService } from 'angular2-notifications';

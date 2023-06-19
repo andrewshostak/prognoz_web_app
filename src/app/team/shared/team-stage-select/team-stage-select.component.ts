@@ -16,7 +16,7 @@ import { TeamStageSearch } from '@models/search/team/team-stage-search.model';
 import { CurrentStateService } from '@services/current-state.service';
 import { CompetitionService } from '@services/v2/competition.service';
 import { SeasonService } from '@services/v2/season.service';
-import { TeamStageService } from '@services/v2/team-stage.service';
+import { TeamStageService } from '@services/v2/team/team-stage.service';
 import { SettingsService } from '@services/settings.service';
 import { find, findLast, get } from 'lodash';
 import { iif, Observable, of } from 'rxjs';

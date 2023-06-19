@@ -5,7 +5,7 @@ import { Sequence } from '@enums/sequence.enum';
 import { Team } from '@models/v2/team/team.model';
 import { PaginatedResponse } from '@models/paginated-response.model';
 import { TeamSearch } from '@models/search/team/team-search.model';
-import { TeamService } from '@services/v2/team.service';
+import { TeamService } from '@services/v2/team/team.service';
 import { SettingsService } from '@services/settings.service';
 import { trim } from 'lodash';
 import { merge, Observable, of, Subject } from 'rxjs';

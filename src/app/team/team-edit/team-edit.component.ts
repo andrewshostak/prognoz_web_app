@@ -4,7 +4,7 @@ import { ActivatedRoute, Params } from '@angular/router';
 import { Team } from '@models/v2/team/team.model';
 import { User } from '@models/v2/user.model';
 import { AuthService } from '@services/v2/auth.service';
-import { TeamService } from '@services/v2/team.service';
+import { TeamService } from '@services/v2/team/team.service';
 
 @Component({
    selector: 'app-team-edit',

@@ -4,7 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Team } from '@models/v2/team/team.model';
 import { User } from '@models/v2/user.model';
 import { AuthService } from '@services/v2/auth.service';
-import { TeamCompetitionService } from '@services/v2/team-competition.service';
+import { TeamCompetitionService } from '@services/v2/team/team-competition.service';
 import { NotificationsService } from 'angular2-notifications';
 import { get } from 'lodash';
 
