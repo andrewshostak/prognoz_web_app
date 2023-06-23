@@ -11,5 +11,3 @@ services:
             - PUSHER_API_KEY=${PUSHER_API_KEY}
       ports:
          - '4200:80'
-# find best practices of different dockerfiles
-# find how to behave when fe/be are on different repositories
