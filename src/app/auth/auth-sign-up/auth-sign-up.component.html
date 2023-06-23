@@ -128,7 +128,7 @@
             </div>
             <!-- reCaptcha -->
             <div class="mb-2">
-               <re-captcha (resolved)="resolved($event)" siteKey="6LcZUhQUAAAAAO0sLBWgT4DujK8EfRpEG2jdZbLv"></re-captcha>
+               <re-captcha (resolved)="resolved($event)" [siteKey]="reCaptchaSiteKey"></re-captcha>
             </div>
             <!-- submit button -->
             <button

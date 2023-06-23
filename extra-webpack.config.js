@@ -6,7 +6,8 @@ module.exports = {
          'process.env': {
             IMAGE_BASE_URL: JSON.stringify(process.env.IMAGE_BASE_URL),
             API_BASE_URL: JSON.stringify(process.env.API_BASE_URL),
-            PUSHER_API_KEY: JSON.stringify(process.env.PUSHER_API_KEY)
+            PUSHER_API_KEY: JSON.stringify(process.env.PUSHER_API_KEY),
+            RECAPTCHA_SITE_KEY: JSON.stringify(process.env.RECAPTCHA_SITE_KEY)
          }
       })
    ]

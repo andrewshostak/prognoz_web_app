@@ -5,6 +5,7 @@ import { User } from '@models/v2/user.model';
 import { AuthService } from '@services/v2/auth.service';
 import { TitleService } from '@services/title.service';
 import { NotificationsService } from 'angular2-notifications';
+import { environment } from '@env';
 
 @Component({
    selector: 'app-auth-recovery',
@@ -16,6 +17,7 @@ export class AuthRecoveryComponent implements OnInit {
    public recoveryForm: FormGroup;
    public spinnerButton: boolean;
    public user: User;
+   reCaptchaSiteKey = environment.reCaptchaSiteKey;
 
    constructor(private authService: AuthService, private notificationsService: NotificationsService, private titleService: TitleService) {}
 
@@ -47,6 +49,4 @@ export class AuthRecoveryComponent implements OnInit {
    public resolved(captchaResponse: string): void {
       this.captchaValidity = !!captchaResponse;
    }
-
-   // TODO: move re-captcha siteKey to env vars
 }

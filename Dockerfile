@@ -9,6 +9,7 @@ RUN npm ci
 ARG IMAGE_BASE_URL
 ARG API_BASE_URL
 ARG PUSHER_API_KEY
+ARG RECAPTCHA_SITE_KEY
 
 RUN npm run build -- --configuration=production --aot
 

@@ -7,6 +7,7 @@ import { CurrentStateService } from '@services/current-state.service';
 import { AuthService } from '@services/v2/auth.service';
 import { TitleService } from '@services/title.service';
 import { NotificationsService } from 'angular2-notifications';
+import { environment } from '@env';
 
 @Component({
    selector: 'app-auth-sign-up',
@@ -18,6 +19,7 @@ export class AuthSignUpComponent implements OnInit {
    public signUpForm: FormGroup;
    public spinnerButton: boolean;
    public user: User;
+   reCaptchaSiteKey = environment.reCaptchaSiteKey;
 
    constructor(
       private authService: AuthService,
@@ -65,6 +67,4 @@ export class AuthSignUpComponent implements OnInit {
       this.authService.setUser(response.user);
       this.authService.setToken(response.token);
    }
-
-   // TODO: move re-captcha siteKey to env vars
 }

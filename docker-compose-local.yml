@@ -9,6 +9,7 @@ services:
          - IMAGE_BASE_URL=${IMAGE_BASE_URL}
          - API_BASE_URL=${API_BASE_URL}
          - PUSHER_API_KEY=${PUSHER_API_KEY}
+         - RECAPTCHA_SITE_KEY=${RECAPTCHA_SITE_KEY}
       ports:
          - '4200:4200'
       volumes:
