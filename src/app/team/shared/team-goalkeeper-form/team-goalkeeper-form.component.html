@@ -14,42 +14,42 @@
             <!-- xs screens -->
             <div class="d-block d-sm-none mb-1">
                <input class="form-check-input" type="checkbox" [formControlName]="i" (ngModelChange)="updateDisabledStatus()" />
-               <div>{{ teamMatches[i].teamMatch.starts_at | time: 'D MMMM HH:mm' }}</div>
+               <div>{{ teamMatches[i].teamMatch.match.started_at | time: 'D MMMM HH:mm' }}</div>
                <div class="font-weight-bold">
-                  {{ teamMatches[i].teamMatch.club_first.title }} - {{ teamMatches[i].teamMatch.club_second.title }}
+                  {{ teamMatches[i].teamMatch.match.club_home.title }} - {{ teamMatches[i].teamMatch.match.club_away.title }}
                </div>
             </div>
             <!-- sm-md screens -->
             <div class="d-none d-sm-block d-lg-none mb-1">
                <div class="d-flex">
-                  <div class="col-4">{{ teamMatches[i].teamMatch.starts_at | time: 'D MMMM HH:mm' }}</div>
+                  <div class="col-4">{{ teamMatches[i].teamMatch.match.started_at | time: 'D MMMM HH:mm' }}</div>
                   <div class="col-3 text-right font-weight-bold align-items-center">
-                     {{ teamMatches[i].teamMatch.club_first.title }}
+                     {{ teamMatches[i].teamMatch.match.club_home.title }}
                   </div>
                   <div class="col-2 text-nowrap">
-                     <app-club-logo [club]="teamMatches[i].teamMatch.club_first"></app-club-logo>
-                     <app-club-logo [club]="teamMatches[i].teamMatch.club_second"></app-club-logo>
+                     <app-club-logo [club]="teamMatches[i].teamMatch.match.club_home"></app-club-logo>
+                     <app-club-logo [club]="teamMatches[i].teamMatch.match.club_away"></app-club-logo>
                   </div>
                   <div class="col-3 font-weight-bold align-items-center">
-                     {{ teamMatches[i].teamMatch.club_second.title }}
+                     {{ teamMatches[i].teamMatch.match.club_away.title }}
                   </div>
                </div>
             </div>
             <!-- lg xl screens -->
             <div class="d-none d-lg-block mb-1 mt-1">
                <div class="d-flex">
-                  <div class="col-3">{{ teamMatches[i].teamMatch.starts_at | time: 'D MMMM HH:mm' }}</div>
+                  <div class="col-3">{{ teamMatches[i].teamMatch.match.started_at | time: 'D MMMM HH:mm' }}</div>
                   <div class="col-4 font-weight-bold text-right">
-                     {{ teamMatches[i].teamMatch.club_first.title }}
-                     <app-club-logo [club]="teamMatches[i].teamMatch.club_first"></app-club-logo>
+                     {{ teamMatches[i].teamMatch.match.club_home.title }}
+                     <app-club-logo [club]="teamMatches[i].teamMatch.match.club_home"></app-club-logo>
                   </div>
                   <div class="col-1 text-center">
                      <i *ngIf="teamMatch.value" class="fa fa-lock text-danger"></i>
                      <span *ngIf="!teamMatch.value">-</span>
                   </div>
                   <div class="col-4 font-weight-bold">
-                     <app-club-logo [club]="teamMatches[i].teamMatch.club_second"></app-club-logo>
-                     {{ teamMatches[i].teamMatch.club_second.title }}
+                     <app-club-logo [club]="teamMatches[i].teamMatch.match.club_away"></app-club-logo>
+                     {{ teamMatches[i].teamMatch.match.club_away.title }}
                   </div>
                </div>
             </div>

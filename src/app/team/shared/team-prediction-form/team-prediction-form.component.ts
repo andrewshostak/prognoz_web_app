@@ -57,7 +57,7 @@ export class TeamPredictionFormComponent implements OnInit {
             this.teamPredictionUpdated.emit();
             const message = `прогноз
                      ${this.teamPredictionUpdateForm.value.home}:${this.teamPredictionUpdateForm.value.away} на матч<br>
-                     ${this.teamPrediction.team_match.club_first.title} - ${this.teamPrediction.team_match.club_second.title}`;
+                     ${this.teamPrediction.team_match.match.club_home.title} - ${this.teamPrediction.team_match.match.club_away.title}`;
             this.notificationsService.success('Збережено', message);
          },
          () => {

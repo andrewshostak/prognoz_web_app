@@ -13,9 +13,9 @@
             <div class="d-none d-lg-block col-md-2">
                <img
                   class="img-fluid"
-                  src="{{ clubsLogosPath }}{{ teamPrediction.team_match.club_first.image }}"
-                  alt="{{ teamPrediction.team_match.club_first.title }}"
-                  title="{{ teamPrediction.team_match.club_first.title }}"
+                  src="{{ clubsLogosPath }}{{ teamPrediction.team_match.match.club_home.image }}"
+                  alt="{{ teamPrediction.team_match.match.club_home.title }}"
+                  title="{{ teamPrediction.team_match.match.club_home.title }}"
                />
             </div>
             <!-- club names, starts_at, inputs -->
@@ -28,14 +28,14 @@
             >
                <div class="row">
                   <div class="col-12 text-center text-light">
-                     {{ teamPrediction.team_match.starts_at | time: 'DD MMMM HH:mm' }}
+                     {{ teamPrediction.team_match.match.started_at | time: 'DD MMMM HH:mm' }}
                   </div>
                </div>
                <div class="row align-items-center">
                   <div class="col-6 col-sm-4 col-md-3 col-lg-4 order-1 order-sm-1 text-right text-light text-sm-center">
                      <strong
                         ><label [for]="'home-' + teamPrediction.team_match.id">{{
-                           teamPrediction.team_match.club_first.title
+                           teamPrediction.team_match.match.club_home.title
                         }}</label></strong
                      >
                   </div>
@@ -68,7 +68,7 @@
                   <div class="col-6 col-sm-4 col-md-3 col-lg-4 order-2 order-sm-3 text-left text-light text-sm-center">
                      <strong
                         ><label [for]="'away' + teamPrediction.team_match.id">{{
-                           teamPrediction.team_match.club_second.title
+                           teamPrediction.team_match.match.club_away.title
                         }}</label></strong
                      >
                   </div>
@@ -78,9 +78,9 @@
             <div class="d-none d-lg-block col-md-2">
                <img
                   class="img-fluid"
-                  src="{{ clubsLogosPath }}{{ teamPrediction.team_match.club_second.image }}"
-                  alt="{{ teamPrediction.team_match.club_second.title }}"
-                  title="{{ teamPrediction.team_match.club_second.title }}"
+                  src="{{ clubsLogosPath }}{{ teamPrediction.team_match.match.club_away.image }}"
+                  alt="{{ teamPrediction.team_match.match.club_away.title }}"
+                  title="{{ teamPrediction.team_match.match.club_away.title }}"
                />
             </div>
          </div>

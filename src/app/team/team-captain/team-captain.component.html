@@ -51,17 +51,17 @@
                                  'table-danger': isTeamMatchBlocked(teamMatch, teamParticipants[0].team_id)
                               }"
                            >
-                              <td class="d-none d-lg-table-cell">{{ teamMatch.club_first.title }}</td>
+                              <td class="d-none d-lg-table-cell">{{ teamMatch.match.club_home.title }}</td>
                               <td>
-                                 <app-club-logo [club]="teamMatch.club_first"></app-club-logo>
+                                 <app-club-logo [club]="teamMatch.match.club_home"></app-club-logo>
                               </td>
                               <td class="d-none d-sm-table-cell">
-                                 {{ showScoresOrString(teamMatch.home, teamMatch.away, 'vs') }}
+                                 {{ showScoresOrString(teamMatch.match.home, teamMatch.match.away, 'vs') }}
                               </td>
                               <td>
-                                 <app-club-logo [club]="teamMatch.club_second"></app-club-logo>
+                                 <app-club-logo [club]="teamMatch.match.club_away"></app-club-logo>
                               </td>
-                              <td class="d-none d-lg-table-cell">{{ teamMatch.club_second.title }}</td>
+                              <td class="d-none d-lg-table-cell">{{ teamMatch.match.club_away.title }}</td>
                            </tr>
                            <tr
                               class="d-sm-none"
@@ -73,7 +73,7 @@
                               }"
                            >
                               <td colspan="2">
-                                 {{ showScoresOrString(teamMatch.home, teamMatch.away, 'vs') }}
+                                 {{ showScoresOrString(teamMatch.match.home, teamMatch.match.away, 'vs') }}
                               </td>
                            </tr>
                         </table>
@@ -89,7 +89,7 @@
                      }"
                   >
                      <td class="text-center">
-                        <small class="text-muted text-capitalize">{{ teamMatch.starts_at | time: 'DD MMMM HH:mm' }}</small>
+                        <small class="text-muted text-capitalize">{{ teamMatch.match.started_at | time: 'DD MMMM HH:mm' }}</small>
                         <small *ngIf="matchHasPrediction(teamMatch)" class="text-muted">
                            / Прогноз зроблено
                            {{ getPredictionDetails(teamMatch, teamParticipants[0].team_id).predicted_at | time: 'YYYY-MM-DD HH:mm' }}

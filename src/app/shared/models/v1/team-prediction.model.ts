@@ -1,4 +1,6 @@
 /* tslint:disable:variable-name */
+import { TeamMatch } from '@models/v1/team-match.model';
+
 export class TeamPrediction {
    id?: number;
    team_id: number;
@@ -9,5 +11,9 @@ export class TeamPrediction {
    predicted_at?: string;
    blocked_by?: number;
    blocked_at?: string;
-   team_match?: any;
+
+   team_match?: TeamMatch;
+   user?: {
+      name: string;
+   };
 }

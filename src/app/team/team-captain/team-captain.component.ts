@@ -25,6 +25,7 @@ import { NotificationsService } from 'angular2-notifications';
 import { filter, map, mergeMap, tap } from 'rxjs/operators';
 import { forkJoin, of } from 'rxjs';
 import { isEqual, sortBy } from 'lodash';
+import { TeamPrediction } from '@models/v2/team/team-prediction.model';
 
 @Component({
    selector: 'app-team-captain',
@@ -96,7 +97,7 @@ export class TeamCaptainComponent implements OnInit {
    }
 
    matchHasPrediction(teamMatch: TeamMatchV1): boolean {
-      return teamMatch.team_predictions[0] && teamMatch.team_predictions[0].user_id;
+      return teamMatch.team_predictions[0] && !!teamMatch.team_predictions[0].user_id;
    }
 
    ngOnInit() {
@@ -158,7 +159,8 @@ export class TeamCaptainComponent implements OnInit {
       }
 
       const mapped = { match: { state: teamMatch.match.state } } as TeamMatchV2;
-      return TeamCompetitionService.isTeamMatchBlocked(mapped, teamPrediction);
+      const mappedPrediction = { blocked_by: teamPrediction.blocked_by } as TeamPrediction;
+      return TeamCompetitionService.isTeamMatchBlocked(mapped, mappedPrediction);
    }
 
    isTeamMatchGuessed(teamMatch: TeamMatchV1, teamId: number): boolean {
@@ -176,7 +178,8 @@ export class TeamCaptainComponent implements OnInit {
       }
 
       const mapped = { match: { state: teamMatch.match.state, home: teamMatch.match.home, away: teamMatch.match.away } } as TeamMatchV2;
-      return TeamCompetitionService.isTeamMatchGuessed(mapped, teamPrediction);
+      const mappedPrediction = { home: teamPrediction.home, away: teamPrediction.away } as TeamPrediction;
+      return TeamCompetitionService.isTeamMatchGuessed(mapped, mappedPrediction);
    }
 
    private getTeamCaptain(teamParticipants: TeamParticipant[]) {
@@ -260,7 +263,7 @@ export class TeamCaptainComponent implements OnInit {
                   return;
                }
 
-               this.teamMatches = sortBy(responses.teamMatches.team_matches, ['starts_at', 'id']);
+               this.teamMatches = sortBy(responses.teamMatches.team_matches, ['match.started_at', 'id']); // TODO: check
                this.availableTeamParticipants = this.getAvailableTeamParticipants(responses.teamMatches.team_matches, responses.teamStage);
                this.getCurrentTeamTeamMatch();
             },

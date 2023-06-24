@@ -55,8 +55,8 @@ export class AuthService {
       return or ? roles.some(role => userRoleSlugs.includes(role)) : roles.every(role => userRoleSlugs.includes(role));
    }
 
-   public logout(): Observable<any> {
-      return this.httpClient.delete(`${this.authURL}/logout`);
+   public logout(): Observable<void> {
+      return this.httpClient.delete<void>(`${this.authURL}/logout`);
    }
 
    public recovery(email: string): Observable<void> {

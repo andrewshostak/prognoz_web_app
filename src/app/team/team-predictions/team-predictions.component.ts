@@ -151,7 +151,7 @@ export class TeamPredictionsComponent implements OnInit {
    }
 
    private sortByStartDateFunc(a: { teamMatch: TeamMatch; isBlocked: boolean }, b: { teamMatch: TeamMatch; isBlocked: boolean }): number {
-      return a.teamMatch.starts_at < b.teamMatch.starts_at ? -1 : 1;
+      return a.teamMatch.match.started_at < b.teamMatch.match.started_at ? -1 : 1;
    }
 
    private subscribeToTeamStageIdUrlParamChange(): void {
