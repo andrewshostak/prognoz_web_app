@@ -7,12 +7,13 @@ import { TeamTeamMatchState } from '@enums/team-team-match-state.enum';
 import { User } from '@models/v2/user.model';
 import { TeamStage } from '@models/v2/team/team-stage.model';
 import { TeamTeamMatch } from '@models/v2/team/team-team-match.model';
-import { TeamMatch } from '@models/v1/team-match.model';
+import { TeamMatch as TeamMatchV1 } from '@models/v1/team-match.model';
+import { TeamMatch as TeamMatchV2 } from '@models/v2/team/team-match.model';
 import { TeamParticipant } from '@models/v1/team-participant.model';
 import { TeamParticipantSearch } from '@models/search/team/team-participant-search.model';
 import { TeamTeamMatchSearch } from '@models/search/team/team-team-match-search.model';
 import { AuthService } from '@services/v2/auth.service';
-import { TeamCompetitionService } from '@services/v1/team-competition.service';
+import { TeamCompetitionService } from '@services/v2/team/team-competition.service';
 import { TeamParticipantService } from '@services/v2/team/team-participant.service';
 import { TeamStageService } from '@services/v2/team/team-stage.service';
 import { TeamTeamMatchService } from '@services/v2/team/team-team-match.service';
@@ -50,14 +51,12 @@ export class TeamCaptainComponent implements OnInit {
    errorTeamParticipants: string;
    errorTeamTeamMatches: string;
    goalkeeperId: number;
-   isTeamMatchBlocked = TeamCompetitionService.isTeamMatchBlocked;
-   isTeamMatchGuessed = TeamCompetitionService.isTeamMatchGuessed;
    isCaptain = false;
    teamStageId: number;
    showScoresOrString = UtilsService.showScoresOrString;
    spinnerButton: any = {};
    spinnerButtonGoalkeeper = false;
-   teamMatches: TeamMatch[];
+   teamMatches: TeamMatchV1[];
    teamParticipants: TeamParticipant[];
    teamTeamMatch: TeamTeamMatch;
    teamTeamMatchStates = TeamTeamMatchState;
@@ -79,7 +78,7 @@ export class TeamCaptainComponent implements OnInit {
       }
    }
 
-   getPredictionDetails(teamMatch: TeamMatch, teamId: number): { name: string; prediction: string; predicted_at: string } {
+   getPredictionDetails(teamMatch: TeamMatchV1, teamId: number): { name: string; prediction: string; predicted_at: string } {
       // not the same function as in team-team-match-card component - no is predictable check
       if (teamMatch.team_predictions) {
          const teamPrediction = teamMatch.team_predictions.find(prediction => teamId === prediction.team_id);
@@ -96,7 +95,7 @@ export class TeamCaptainComponent implements OnInit {
       return { name: '-', prediction: '-', predicted_at: '-' };
    }
 
-   matchHasPrediction(teamMatch: TeamMatch): boolean {
+   matchHasPrediction(teamMatch: TeamMatchV1): boolean {
       return teamMatch.team_predictions[0] && teamMatch.team_predictions[0].user_id;
    }
 
@@ -121,7 +120,7 @@ export class TeamCaptainComponent implements OnInit {
       }
    }
 
-   updateOrCreateTeamPredictor(teamPredictorForm: NgForm, teamMatch: TeamMatch) {
+   updateOrCreateTeamPredictor(teamPredictorForm: NgForm, teamMatch: TeamMatchV1) {
       if (this.authenticatedUser && this.isCaptain) {
          this.spinnerButton['team_match_' + teamMatch.id] = true;
          const teamPrediction: { team_id: number; team_match_id: number; user_id?: number } = {
@@ -142,6 +141,42 @@ export class TeamCaptainComponent implements OnInit {
             }
          );
       }
+   }
+
+   isTeamMatchBlocked(teamMatch: TeamMatchV1, teamId: number) {
+      if (!teamMatch || !teamId) {
+         return false;
+      }
+
+      if (!teamMatch.team_predictions) {
+         return false;
+      }
+
+      const teamPrediction = teamMatch.team_predictions.find(prediction => teamId === prediction.team_id);
+      if (!teamPrediction) {
+         return false;
+      }
+
+      const mapped = { match: { state: teamMatch.match.state } } as TeamMatchV2;
+      return TeamCompetitionService.isTeamMatchBlocked(mapped, teamPrediction);
+   }
+
+   isTeamMatchGuessed(teamMatch: TeamMatchV1, teamId: number): boolean {
+      if (!teamMatch || !teamId) {
+         return false;
+      }
+
+      if (!teamMatch.team_predictions) {
+         return false;
+      }
+
+      const teamPrediction = teamMatch.team_predictions.find(prediction => teamId === prediction.team_id);
+      if (!teamPrediction) {
+         return false;
+      }
+
+      const mapped = { match: { state: teamMatch.match.state, home: teamMatch.match.home, away: teamMatch.match.away } } as TeamMatchV2;
+      return TeamCompetitionService.isTeamMatchGuessed(mapped, teamPrediction);
    }
 
    private getTeamCaptain(teamParticipants: TeamParticipant[]) {
@@ -257,7 +292,7 @@ export class TeamCaptainComponent implements OnInit {
    }
 
    private getAvailableTeamParticipants(
-      teamMatches: TeamMatch[],
+      teamMatches: TeamMatchV1[],
       teamStage: TeamStage
    ): { [userId: number]: { predictionsLeft: number; participantAvailable: boolean } } {
       const teamParticipants: any = {};
