@@ -53,7 +53,7 @@ export class NewsTableComponent implements OnInit {
          };
          this.newsService.getNews(search).subscribe(response => {
             this.news = response.data;
-            this.paginationData = PaginationService.getPaginationData(response, this.path);
+            this.paginationData = PaginationService.getPaginationData<News>(response, this.path);
          });
       });
    }

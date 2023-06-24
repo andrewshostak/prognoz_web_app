@@ -94,7 +94,7 @@ export class CupStagesTableComponent implements OnInit, OnDestroy {
          };
          this.cupStageService.getCupStages(search).subscribe(response => {
             this.cupStages = response.data;
-            this.paginationData = PaginationService.getPaginationData(response, this.path);
+            this.paginationData = PaginationService.getPaginationData<CupStage>(response, this.path);
          });
       });
    }

@@ -75,7 +75,7 @@ export class TeamStagesTableComponent implements OnDestroy, OnInit {
       };
       this.teamStageService.getTeamStages(search).subscribe(response => {
          this.teamStages = response.data;
-         this.paginationData = PaginationService.getPaginationData(response, '/manage/team/stages/page/');
+         this.paginationData = PaginationService.getPaginationData<TeamStage>(response, '/manage/team/stages/page/');
       });
    }
 

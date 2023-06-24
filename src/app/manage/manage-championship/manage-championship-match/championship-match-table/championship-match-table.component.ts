@@ -56,7 +56,7 @@ export class ChampionshipMatchTableComponent implements OnDestroy, OnInit {
       };
       this.championshipMatchService.getChampionshipMatches(search).subscribe(response => {
          this.championshipMatches = response.data;
-         this.paginationData = PaginationService.getPaginationData(response, '/manage/championship/matches/page/');
+         this.paginationData = PaginationService.getPaginationData<ChampionshipMatch>(response, '/manage/championship/matches/page/');
       });
    }
 

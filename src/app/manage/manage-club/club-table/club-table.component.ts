@@ -75,7 +75,7 @@ export class ClubTableComponent implements OnDestroy, OnInit {
       };
       this.clubService.getClubs(search).subscribe(response => {
          this.clubs = response.data;
-         this.paginationData = PaginationService.getPaginationData(response, '/manage/clubs/page/');
+         this.paginationData = PaginationService.getPaginationData<Club>(response, '/manage/clubs/page/');
       });
    }
 }

@@ -9,6 +9,7 @@ import { TeamStage } from '@models/v2/team/team-stage.model';
 import { TeamTeamMatch } from '@models/v2/team/team-team-match.model';
 import { TeamMatch as TeamMatchV1 } from '@models/v1/team-match.model';
 import { TeamMatch as TeamMatchV2 } from '@models/v2/team/team-match.model';
+import { TeamPrediction } from '@models/v2/team/team-prediction.model';
 import { TeamParticipant } from '@models/v1/team-participant.model';
 import { TeamParticipantSearch } from '@models/search/team/team-participant-search.model';
 import { TeamTeamMatchSearch } from '@models/search/team/team-team-match-search.model';
@@ -25,7 +26,6 @@ import { NotificationsService } from 'angular2-notifications';
 import { filter, map, mergeMap, tap } from 'rxjs/operators';
 import { forkJoin, of } from 'rxjs';
 import { isEqual, sortBy } from 'lodash';
-import { TeamPrediction } from '@models/v2/team/team-prediction.model';
 
 @Component({
    selector: 'app-team-captain',
@@ -263,7 +263,7 @@ export class TeamCaptainComponent implements OnInit {
                   return;
                }
 
-               this.teamMatches = sortBy(responses.teamMatches.team_matches, ['match.started_at', 'id']); // TODO: check
+               this.teamMatches = sortBy(responses.teamMatches.team_matches, ['match.started_at', 'id']);
                this.availableTeamParticipants = this.getAvailableTeamParticipants(responses.teamMatches.team_matches, responses.teamStage);
                this.getCurrentTeamTeamMatch();
             },

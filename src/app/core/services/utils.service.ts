@@ -21,30 +21,12 @@ export class UtilsService {
       return hometown ? '(' + hometown + ')' : '';
    }
 
-   public static getItemFromLocalStorage(key: string): any {
-      return JSON.parse(localStorage.getItem(key));
-   }
-
    public static showScoresOrString(home, away, noScore: string): string {
       if (home != null && away != null) {
          return home + ' : ' + away;
       }
 
       return noScore;
-   }
-
-   public static groupBy(list: any[], keyGetter) {
-      const map = new Map();
-      list.forEach(item => {
-         const key = keyGetter(item);
-         const collection = map.get(key);
-         if (!collection) {
-            map.set(key, [item]);
-         } else {
-            collection.push(item);
-         }
-      });
-      return map;
    }
 
    public static isScore(home: number, away: number): boolean {

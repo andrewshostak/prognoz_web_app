@@ -22,7 +22,7 @@ export class TeamCompetitionService {
    public updateTeamCreateAndUpdateCaptain(
       team: Team,
       competitionId: number,
-      callbacks: { successful: () => any; error: () => any }
+      callbacks: { successful: () => void; error: () => void }
    ): void {
       this.makeTeamStatedRequest(team)
          .pipe(

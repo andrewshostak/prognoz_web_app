@@ -40,7 +40,7 @@ export class TeamParticipantsTableComponent implements OnDestroy, OnInit {
       };
       this.teamParticipantService.getTeamParticipants(search).subscribe(response => {
          this.teamParticipants = response.data;
-         this.paginationData = PaginationService.getPaginationData(response, '/manage/team/participants/page/');
+         this.paginationData = PaginationService.getPaginationData<TeamParticipant>(response, '/manage/team/participants/page/');
       });
    }
 

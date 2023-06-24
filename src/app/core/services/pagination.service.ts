@@ -8,7 +8,7 @@ export class PaginationService {
       return pageNumber * itemsPerPage - itemsPerPage;
    }
 
-   public static getPaginationData(paginatedResponse: PaginatedResponse<any>, path: string): Pagination {
+   public static getPaginationData<T>(paginatedResponse: PaginatedResponse<T>, path: string): Pagination {
       return {
          currentPage: paginatedResponse.current_page,
          pageSize: paginatedResponse.per_page,

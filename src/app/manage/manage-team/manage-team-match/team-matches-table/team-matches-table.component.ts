@@ -62,7 +62,7 @@ export class TeamMatchesTableComponent implements OnDestroy, OnInit {
       };
       this.teamMatchService.getTeamMatches(search).subscribe(response => {
          this.teamMatches = response.data;
-         this.paginationData = PaginationService.getPaginationData(response, '/manage/team/matches/page/');
+         this.paginationData = PaginationService.getPaginationData<TeamMatch>(response, '/manage/team/matches/page/');
       });
    }
 

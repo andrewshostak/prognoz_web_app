@@ -52,7 +52,7 @@ export class TeamTeamsTableComponent implements OnDestroy, OnInit {
       };
       this.teamService.getTeams(search).subscribe(response => {
          this.teams = response.data;
-         this.paginationData = PaginationService.getPaginationData(response, '/manage/team/teams/page/');
+         this.paginationData = PaginationService.getPaginationData<Team>(response, '/manage/team/teams/page/');
       });
    }
 

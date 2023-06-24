@@ -57,7 +57,7 @@ export class CupMatchTableComponent implements OnDestroy, OnInit {
       };
       this.cupMatchService.getCupMatches(search).subscribe(response => {
          this.cupMatches = response.data;
-         this.paginationData = PaginationService.getPaginationData(response, '/manage/cup/matches/page/');
+         this.paginationData = PaginationService.getPaginationData<CupMatch>(response, '/manage/cup/matches/page/');
       });
    }
 

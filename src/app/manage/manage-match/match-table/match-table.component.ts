@@ -71,7 +71,7 @@ export class MatchTableComponent implements OnDestroy, OnInit {
       };
       this.matchService.getMatches(matchSearch).subscribe(response => {
          this.matches = response.data;
-         this.paginationData = PaginationService.getPaginationData(response, '/manage/matches/page/');
+         this.paginationData = PaginationService.getPaginationData<Match>(response, '/manage/matches/page/');
       });
    }
 

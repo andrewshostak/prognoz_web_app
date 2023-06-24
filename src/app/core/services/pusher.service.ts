@@ -15,11 +15,7 @@ export class PusherService {
       return subscription.bind(eventName, callback);
    }
 
-   /**
-    * Create Pusher instance
-    * @returns {any}
-    */
-   createInstance() {
+   createInstance(): Pusher {
       return new Pusher(environment.pusherApiKey, {
          cluster: 'eu',
          authEndpoint: environment.apiBaseUrl + '/v2/auth/pusher',
@@ -37,7 +33,7 @@ export class PusherService {
     * @param instance
     * @param {string} channelName
     */
-   subscribeToChannel(instance, channelName: string) {
+   subscribeToChannel(instance: Pusher, channelName: string) {
       return instance.subscribe(channelName);
    }
 
@@ -46,7 +42,7 @@ export class PusherService {
     * @param instance
     * @param {string} channelName
     */
-   unsubscribeFromChannel(instance, channelName: string) {
+   unsubscribeFromChannel(instance: Pusher, channelName: string) {
       return instance.unsubscribe(channelName);
    }
 }

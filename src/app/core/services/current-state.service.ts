@@ -3,13 +3,14 @@ import { Injectable } from '@angular/core';
 import { User } from '@models/v2/user.model';
 import { AuthService } from '@services/v2/auth.service';
 import { PusherService } from '@services/pusher.service';
+import Pusher from 'pusher-js';
 import { Subject } from 'rxjs';
 
 @Injectable()
 export class CurrentStateService {
-   public onlineUsers: any[] = [];
+   public onlineUsers: { id: number; name: string }[] = [];
    public onlineUserObservable = new Subject<void>();
-   public pusherInstance: any;
+   public pusherInstance: Pusher;
    private selectedCupCompetitionId: number;
    private selectedTeamCompetitionId: number;
 

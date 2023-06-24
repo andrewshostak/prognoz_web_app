@@ -67,7 +67,7 @@ export class GuestbookPageComponent implements OnDestroy, OnInit {
       };
       this.guestbookMessageService.getGuestbookMessages(search).subscribe(response => {
          this.guestbookMessages = response.data;
-         this.paginationData = PaginationService.getPaginationData(response, '/guestbook/page/');
+         this.paginationData = PaginationService.getPaginationData<GuestbookMessage>(response, '/guestbook/page/');
       });
    }
 
