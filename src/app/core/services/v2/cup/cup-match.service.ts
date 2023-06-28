@@ -35,8 +35,10 @@ export class CupMatchService {
          });
       }
 
-      if (search.cupCupMatchId) {
-         params = params.set('cup_cup_match_id', search.cupCupMatchId.toString());
+      if (search.cupCupMatchIds) {
+         search.cupCupMatchIds.forEach(cupCupMatchId => {
+            params = params.append('cup_cup_match_ids[]', cupCupMatchId.toString());
+         });
       }
 
       if (search.userId) {

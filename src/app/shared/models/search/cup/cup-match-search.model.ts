@@ -2,7 +2,7 @@ import { Sequence } from '@enums/sequence.enum';
 import { MatchState } from '@enums/match-state.enum';
 
 export class CupMatchSearch {
-   cupCupMatchId?: number; // TODO: move to cupCupMatchIds
+   cupCupMatchIds?: number[];
    limit: number;
    orderBy?: string;
    page: number;

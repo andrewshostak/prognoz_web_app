@@ -80,7 +80,7 @@ export class CupCupMatchComponent implements OnInit {
 
    private getCupMatchesObservable(cupCupMatchId: number): Observable<PaginatedResponse<CupMatch>> {
       const search: CupMatchSearch = {
-         cupCupMatchId,
+         cupCupMatchIds: [cupCupMatchId],
          relations: ['match.clubHome', 'match.clubAway'],
          orderBy: 'started_at',
          sequence: Sequence.Ascending,
