@@ -116,7 +116,7 @@ describe('MatchTableComponent', () => {
          spyOn(matchService, 'getMatches').and.callThrough();
          matchTableComponent.getMatchesData(2);
          const expectedParam: MatchSearch = {
-            limit: SettingsService.matchesPerPage,
+            limit: PaginationService.perPage.matches,
             orderBy: 'state',
             page: 2,
             sequence: Sequence.Ascending

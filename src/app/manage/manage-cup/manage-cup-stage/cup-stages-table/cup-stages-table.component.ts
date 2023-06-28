@@ -9,7 +9,6 @@ import { Subscription } from 'rxjs';
 import { CupStageService } from '@services/v2/cup/cup-stage.service';
 import { CupStage } from '@models/v2/cup/cup-stage.model';
 import { CupStageSearch } from '@models/search/cup/cup-stage-search.model';
-import { SettingsService } from '@services/settings.service';
 import { OpenedModal } from '@models/opened-modal.model';
 import { findIndex, remove } from 'lodash';
 import { Pagination } from '@models/pagination.model';
@@ -87,7 +86,7 @@ export class CupStagesTableComponent implements OnInit, OnDestroy {
       this.activatedRouteSubscription = this.activatedRoute.params.subscribe((params: Params) => {
          const search: CupStageSearch = {
             page: params.number,
-            limit: SettingsService.cupStagesPerPage,
+            limit: PaginationService.perPage.cupStages,
             orderBy: 'state',
             sequence: Sequence.Ascending,
             relations: ['competition', 'cupStageType']

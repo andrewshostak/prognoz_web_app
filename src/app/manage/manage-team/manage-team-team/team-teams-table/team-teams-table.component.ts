@@ -8,7 +8,6 @@ import { TeamSearch } from '@models/search/team/team-search.model';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { TeamService } from '@services/v2/team/team.service';
 import { PaginationService } from '@services/pagination.service';
-import { SettingsService } from '@services/settings.service';
 import { NotificationsService } from 'angular2-notifications';
 import { remove } from 'lodash';
 import { Subscription } from 'rxjs';
@@ -47,7 +46,7 @@ export class TeamTeamsTableComponent implements OnDestroy, OnInit {
 
    public getTeamsData(pageNumber: number): void {
       const search: TeamSearch = {
-         limit: SettingsService.teamsPerPage,
+         limit: PaginationService.perPage.teams,
          page: pageNumber
       };
       this.teamService.getTeams(search).subscribe(response => {

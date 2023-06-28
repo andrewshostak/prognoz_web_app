@@ -8,7 +8,6 @@ import { TeamParticipantSearch } from '@models/search/team/team-participant-sear
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { TeamParticipantService } from '@services/v2/team/team-participant.service';
 import { PaginationService } from '@services/pagination.service';
-import { SettingsService } from '@services/settings.service';
 import { NotificationsService } from 'angular2-notifications';
 import { remove } from 'lodash';
 import { Subscription } from 'rxjs';
@@ -35,7 +34,7 @@ export class TeamParticipantsTableComponent implements OnDestroy, OnInit {
 
    public getTeamParticipantsData(pageNumber: number): void {
       const search: TeamParticipantSearch = {
-         limit: SettingsService.teamParticipantsPerPage,
+         limit: PaginationService.perPage.teamParticipants,
          page: pageNumber
       };
       this.teamParticipantService.getTeamParticipants(search).subscribe(response => {

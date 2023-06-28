@@ -49,7 +49,7 @@ export class ChampionshipMatchTableComponent implements OnDestroy, OnInit {
 
    public getChampionshipMatchesData(pageNumber: number): void {
       const search: ChampionshipMatchSearch = {
-         limit: SettingsService.championshipMatchesPerPage,
+         limit: PaginationService.perPage.championshipMatches,
          orderBy: 'started_at',
          page: pageNumber,
          sequence: Sequence.Descending

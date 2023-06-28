@@ -7,7 +7,6 @@ import { TeamTeamMatchSearch } from '@models/search/team/team-team-match-search.
 import { TeamTeamMatch } from '@models/v2/team/team-team-match.model';
 import { Pagination } from '@models/pagination.model';
 import { OpenedModal } from '@models/opened-modal.model';
-import { SettingsService } from '@services/settings.service';
 import { TeamTeamMatchService } from '@services/v2/team/team-team-match.service';
 import { PaginationService } from '@services/pagination.service';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
@@ -73,7 +72,7 @@ export class TeamTeamMatchesTableComponent implements OnDestroy, OnInit {
       const search: TeamTeamMatchSearch = {
          page: pageNumber,
          orderBy: 'id',
-         limit: SettingsService.teamTeamMatchesPerPage,
+         limit: PaginationService.perPage.teamTeamMatches,
          sequence: Sequence.Descending,
          relations: ['homeTeam', 'awayTeam', 'teamStage']
       };

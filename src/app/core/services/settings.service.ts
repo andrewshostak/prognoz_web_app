@@ -6,24 +6,6 @@ import { environment } from '@env';
 export class SettingsService {
    public static readonly allowToUpdateResultAfterDays: number = 3;
 
-   // pagination
-   // TODO: change to one object
-   public static readonly championshipMatchesPerPage: number = 10;
-   public static readonly competitionsPerPage: number = 10;
-   public static readonly clubsPerPage: number = 10;
-   public static readonly cupMatchesPerPage: number = 16;
-   public static readonly cupCupMatchesPerPage: number = 10;
-   public static readonly cupStagesPerPage: number = 10;
-   public static readonly guestbookMessagesPerPage: number = 15;
-   public static readonly matchesPerPage: number = 12;
-   public static readonly newsPerPage: number = 10;
-   public static readonly teamMatchesPerPage: number = 12;
-   public static readonly teamTeamMatchesPerPage: number = 10;
-   public static readonly teamsPerPage: number = 10;
-   public static readonly teamParticipantsPerPage: number = 10;
-   public static readonly teamsStagesPerPage: number = 10;
-   public static readonly usersPerPage: number = 10;
-
    public static readonly defaultDebounceTime: number = 750;
 
    // new image logos paths

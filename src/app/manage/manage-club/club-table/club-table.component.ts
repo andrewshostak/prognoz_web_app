@@ -66,7 +66,7 @@ export class ClubTableComponent implements OnDestroy, OnInit {
 
    private getClubsData(pageNumber: number): void {
       const search: ClubSearch = {
-         limit: SettingsService.clubsPerPage,
+         limit: PaginationService.perPage.clubs,
          orderBy: 'updated_at',
          page: pageNumber,
          sequence: Sequence.Descending,

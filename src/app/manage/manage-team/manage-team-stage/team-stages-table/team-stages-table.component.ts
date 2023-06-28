@@ -69,7 +69,7 @@ export class TeamStagesTableComponent implements OnDestroy, OnInit {
       const search: TeamStageSearch = {
          page: pageNumber,
          orderBy: 'state',
-         limit: SettingsService.teamsStagesPerPage,
+         limit: PaginationService.perPage.teamsStages,
          sequence: Sequence.Ascending,
          relations: ['competition', 'teamStageType']
       };

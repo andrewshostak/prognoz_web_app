@@ -12,7 +12,6 @@ import { GuestbookMessageSearch } from '@models/search/guestbook-message-search.
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { AuthService } from '@services/v2/auth.service';
 import { PaginationService } from '@services/pagination.service';
-import { SettingsService } from '@services/settings.service';
 import { TitleService } from '@services/title.service';
 import { NotificationsService } from 'angular2-notifications';
 import * as moment from 'moment';
@@ -58,7 +57,7 @@ export class GuestbookPageComponent implements OnDestroy, OnInit {
 
    public getGuestbookMessagesData(pageNumber: number): void {
       const search: GuestbookMessageSearch = {
-         limit: SettingsService.guestbookMessagesPerPage,
+         limit: PaginationService.perPage.guestbookMessages,
          page: pageNumber,
          sequence: Sequence.Descending,
          trashed: ModelStatus.Truthy,

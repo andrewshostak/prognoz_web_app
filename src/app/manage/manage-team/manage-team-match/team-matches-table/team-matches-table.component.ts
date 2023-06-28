@@ -54,7 +54,7 @@ export class TeamMatchesTableComponent implements OnDestroy, OnInit {
 
    public getTeamMatchesData(pageNumber: number): void {
       const search: TeamMatchSearch = {
-         limit: SettingsService.teamMatchesPerPage,
+         limit: PaginationService.perPage.teamMatches,
          orderBy: 'started_at',
          page: pageNumber,
          relations: ['match.clubHome', 'match.clubAway', 'teamStages.competition'],

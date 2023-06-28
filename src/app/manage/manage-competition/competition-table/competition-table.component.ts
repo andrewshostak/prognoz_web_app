@@ -4,7 +4,7 @@ import { ActivatedRoute, Params } from '@angular/router';
 import { CompetitionState } from '@enums/competition-state.enum';
 import { Competition } from '@models/v2/competition.model';
 import { CompetitionService } from '@services/v2/competition.service';
-import { SettingsService } from '@services/settings.service';
+import { PaginationService } from '@services/pagination.service';
 import { CompetitionSearch } from '@models/search/competition-search.model';
 
 @Component({
@@ -28,7 +28,7 @@ export class CompetitionTableComponent implements OnInit {
          const search: CompetitionSearch = {
             relations: ['season', 'tournament'],
             page: params.number || 1,
-            limit: SettingsService.competitionsPerPage
+            limit: PaginationService.perPage.competitions
          };
          this.competitionService.getCompetitions(search).subscribe(response => {
             this.currentPage = response.current_page;

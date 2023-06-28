@@ -49,7 +49,7 @@ export class CupMatchTableComponent implements OnDestroy, OnInit {
 
    public getCupMatchesData(pageNumber: number): void {
       const search: CupMatchSearch = {
-         limit: SettingsService.cupMatchesPerPage,
+         limit: PaginationService.perPage.cupMatches,
          orderBy: 'started_at',
          page: pageNumber,
          relations: ['match.clubHome', 'match.clubAway', 'cupStages.competition'],

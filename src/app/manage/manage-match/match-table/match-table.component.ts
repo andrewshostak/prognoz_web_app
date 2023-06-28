@@ -64,7 +64,7 @@ export class MatchTableComponent implements OnDestroy, OnInit {
 
    public getMatchesData(pageNumber: number): void {
       const matchSearch: MatchSearch = {
-         limit: SettingsService.matchesPerPage,
+         limit: PaginationService.perPage.matches,
          orderBy: 'state',
          page: pageNumber,
          sequence: Sequence.Ascending

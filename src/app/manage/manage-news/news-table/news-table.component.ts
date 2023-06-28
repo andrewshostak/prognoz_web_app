@@ -6,7 +6,6 @@ import { NotificationsService } from 'angular2-notifications';
 import { NewsService } from '@services/v2/news.service';
 import { News } from '@models/v2/news.model';
 import { NewsSearch } from '@models/search/news-search.model';
-import { SettingsService } from '@services/settings.service';
 import { Sequence } from '@enums/sequence.enum';
 import { PaginationService } from '@services/pagination.service';
 import { Pagination } from '@models/pagination.model';
@@ -47,7 +46,7 @@ export class NewsTableComponent implements OnInit {
          const search: NewsSearch = {
             page: params.number,
             relations: ['tournament'],
-            limit: SettingsService.newsPerPage,
+            limit: PaginationService.perPage.news,
             orderBy: 'created_at',
             sequence: Sequence.Descending
          };

@@ -28,7 +28,7 @@ export class NewsListComponent implements OnInit {
       this.activatedRoute.params.subscribe((params: Params) => {
          const search: NewsSearch = {
             page: params.number,
-            limit: SettingsService.newsPerPage,
+            limit: PaginationService.perPage.news,
             relations: ['tournament'],
             orderBy: 'created_at',
             sequence: Sequence.Descending

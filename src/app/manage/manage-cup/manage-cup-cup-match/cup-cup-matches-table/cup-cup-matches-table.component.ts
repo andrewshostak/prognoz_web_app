@@ -8,7 +8,7 @@ import { Subscription } from 'rxjs';
 import { UtilsService } from '@services/utils.service';
 import { CupCupMatchService } from '@services/v2/cup/cup-cup-match.service';
 import { CupCupMatchSearch } from '@models/search/cup/cup-cup-match-search.model';
-import { SettingsService } from '@services/settings.service';
+import { PaginationService } from '@services/pagination.service';
 import { Sequence } from '@enums/sequence.enum';
 import { CupCupMatch } from '@models/v2/cup/cup-cup-match.model';
 
@@ -65,7 +65,7 @@ export class CupCupMatchesTableComponent implements OnDestroy, OnInit {
       this.activatedRouteSubscription = this.activatedRoute.params.subscribe((params: Params) => {
          const search: CupCupMatchSearch = {
             page: params.number,
-            limit: SettingsService.cupCupMatchesPerPage,
+            limit: PaginationService.perPage.cupCupMatches,
             orderBy: 'id',
             sequence: Sequence.Descending,
             relations: ['cupStage.competition', 'homeUser', 'awayUser']
