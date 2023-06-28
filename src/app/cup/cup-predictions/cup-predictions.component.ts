@@ -9,7 +9,7 @@ import { CurrentStateService } from '@services/current-state.service';
 import { AuthService } from '@services/v2/auth.service';
 import { CupMatchService } from '@services/v2/cup/cup-match.service';
 import { CupPredictionService } from '@services/v2/cup/cup-prediction.service';
-import { SettingsService } from '@services/settings.service';
+import { PaginationService } from '@services/pagination.service';
 import { TitleService } from '@services/title.service';
 import { get } from 'lodash';
 import { Observable } from 'rxjs';
@@ -93,7 +93,7 @@ export class CupPredictionsComponent implements OnInit {
          userId,
          showPredictability: true,
          page: 1,
-         limit: SettingsService.maxLimitValues.cupMatches,
+         limit: PaginationService.limit.cupMatches,
          orderBy: 'started_at',
          sequence: Sequence.Ascending,
          relations: ['match.clubHome', 'match.clubAway'],

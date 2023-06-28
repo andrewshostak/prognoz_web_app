@@ -17,7 +17,7 @@ import { Tournament } from '@enums/tournament.enum';
 import { CompetitionService } from '@services/v2/competition.service';
 import { ChampionshipRating } from '@models/v2/championship/championship-rating.model';
 import { ChampionshipRatingSearch } from '@models/search/championship/championship-rating-search.model';
-import { SettingsService } from '@services/settings.service';
+import { PaginationService } from '@services/pagination.service';
 import { ChampionshipRatingService } from '@services/v2/championship/championship-rating.service';
 import { mergeMap } from 'rxjs/operators';
 
@@ -68,7 +68,7 @@ export class ChampionshipRatingComponent implements OnInit {
 
    private getChampionshipRatingObservable(competitionId: number): Observable<PaginatedResponse<ChampionshipRating>> {
       const search: ChampionshipRatingSearch = {
-         limit: SettingsService.maxLimitValues.championshipRating,
+         limit: PaginationService.limit.championshipRating,
          relations: ['user.mainClub'],
          competitionId,
          page: 1,

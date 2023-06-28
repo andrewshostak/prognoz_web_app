@@ -8,7 +8,7 @@ import { CupStage } from '@models/v2/cup/cup-stage.model';
 import { CupStageSearch } from '@models/search/cup/cup-stage-search.model';
 import { CupStageState } from '@enums/cup-stage-state.enum';
 import { Sequence } from '@enums/sequence.enum';
-import { SettingsService } from '@services/settings.service';
+import { PaginationService } from '@services/pagination.service';
 
 @Component({
    selector: 'app-cup-cup-matches-create-auto',
@@ -32,7 +32,7 @@ export class CupCupMatchesCreateAutoComponent implements OnInit {
       });
       const search: CupStageSearch = {
          states: [CupStageState.NotStarted],
-         limit: SettingsService.maxLimitValues.cupStages,
+         limit: PaginationService.limit.cupStages,
          orderBy: 'id',
          page: 1,
          relations: ['competition'],

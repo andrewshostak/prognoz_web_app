@@ -7,6 +7,7 @@ import { PaginatedResponse } from '@models/paginated-response.model';
 import { TeamSearch } from '@models/search/team/team-search.model';
 import { TeamService } from '@services/v2/team/team.service';
 import { SettingsService } from '@services/settings.service';
+import { PaginationService } from '@services/pagination.service';
 import { trim } from 'lodash';
 import { merge, Observable, of, Subject } from 'rxjs';
 import { catchError, debounceTime, distinctUntilChanged, filter, map, switchMap, tap } from 'rxjs/operators';
@@ -56,7 +57,7 @@ export class TeamSelectComponent implements OnChanges, OnInit {
             tap(() => (this.teamsLoading = true)),
             switchMap((term: string) => {
                const search: TeamSearch = {
-                  limit: SettingsService.maxLimitValues.teamTeams,
+                  limit: PaginationService.limit.teamTeams,
                   name: trim(term),
                   orderBy: 'name',
                   page: 1,

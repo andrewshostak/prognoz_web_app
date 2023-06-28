@@ -11,7 +11,7 @@ import { TeamStageSearch } from '@models/search/team/team-stage-search.model';
 import { TeamTeamMatch } from '@models/v2/team/team-team-match.model';
 import { TeamStageService } from '@services/v2/team/team-stage.service';
 import { TeamTeamMatchService } from '@services/v2/team/team-team-match.service';
-import { SettingsService } from '@services/settings.service';
+import { PaginationService } from '@services/pagination.service';
 import { UtilsService } from '@services/utils.service';
 import { NotificationsService } from 'angular2-notifications';
 import { uniqBy } from 'lodash';
@@ -75,7 +75,7 @@ export class TeamTeamMatchEditComponent implements OnInit {
          page: 1,
          orderBy: 'title',
          sequence: Sequence.Descending,
-         limit: SettingsService.maxLimitValues.teamStages,
+         limit: PaginationService.limit.teamStages,
          relations: ['competition', 'teamStageType'],
          states: [TeamStageState.NotStarted, TeamStageState.Active]
       };

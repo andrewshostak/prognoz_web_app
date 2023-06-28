@@ -6,7 +6,7 @@ import { environment } from '@env';
 import { Season } from '@models/v2/season.model';
 import { PaginatedResponse } from '@models/paginated-response.model';
 import { SeasonSearch } from '@models/search/season-search.model';
-import { SettingsService } from '@services/settings.service';
+import { PaginationService } from '@services/pagination.service';
 import { Observable, of } from 'rxjs';
 import { tap } from 'rxjs/operators';
 
@@ -66,6 +66,6 @@ export class SeasonService {
          return false;
       }
 
-      return search.limit === SettingsService.maxLimitValues.seasons;
+      return search.limit === PaginationService.limit.seasons;
    }
 }

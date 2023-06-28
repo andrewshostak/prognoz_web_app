@@ -8,7 +8,7 @@ import { CurrentStateService } from '@services/current-state.service';
 import { TeamStageService } from '@services/v2/team/team-stage.service';
 import { CompetitionService } from '@services/v2/competition.service';
 import { TeamTeamMatchService } from '@services/v2/team/team-team-match.service';
-import { SettingsService } from '@services/settings.service';
+import { PaginationService } from '@services/pagination.service';
 import { groupBy } from 'lodash';
 import { Observable } from 'rxjs';
 import { filter, switchMap, tap } from 'rxjs/operators';
@@ -44,7 +44,7 @@ export class TeamTeamMatchesNewComponent implements OnInit {
          page: 1,
          teamStageId,
          relations: includeRelations ? ['homeTeam', 'awayTeam', 'homeTeamGoalkeeper', 'awayTeamGoalkeeper'] : [],
-         limit: SettingsService.maxLimitValues.teamTeamMatches
+         limit: PaginationService.limit.teamTeamMatches
       };
       return this.teamTeamMatchService.getTeamTeamMatches(search);
    }

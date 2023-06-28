@@ -19,7 +19,7 @@ import { NotificationsService } from 'angular2-notifications';
 import { UtilsService } from '@services/utils.service';
 import { CupMatchSearch } from '@models/search/cup/cup-match-search.model';
 import { MatchState } from '@enums/match-state.enum';
-import { SettingsService } from '@services/settings.service';
+import { PaginationService } from '@services/pagination.service';
 import { OpenedModal } from '@models/opened-modal.model';
 import { uniqBy } from 'lodash';
 
@@ -163,7 +163,7 @@ export class CupStageFormComponent implements OnChanges, OnInit {
 
    private getCupMatchesData(): void {
       const search: CupMatchSearch = {
-         limit: SettingsService.maxLimitValues.cupMatches,
+         limit: PaginationService.limit.cupMatches,
          page: 1,
          states: [MatchState.Active],
          relations: ['match.clubHome', 'match.clubAway']
@@ -184,7 +184,7 @@ export class CupStageFormComponent implements OnChanges, OnInit {
    private getCompetitionsData(): void {
       const search: CompetitionSearch = {
          page: 1,
-         limit: SettingsService.maxLimitValues.competitions,
+         limit: PaginationService.limit.competitions,
          tournamentId: Tournament.Cup,
          states: [CompetitionState.NotStarted, CompetitionState.Applications, CompetitionState.Active]
       };

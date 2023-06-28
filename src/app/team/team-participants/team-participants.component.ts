@@ -18,7 +18,7 @@ import { CompetitionService } from '@services/v2/competition.service';
 import { TeamCompetitionService } from '@services/v2/team/team-competition.service';
 import { TeamService } from '@services/v2/team/team.service';
 import { TeamParticipantService } from '@services/v2/team/team-participant.service';
-import { SettingsService } from '@services/settings.service';
+import { PaginationService } from '@services/pagination.service';
 import { TitleService } from '@services/title.service';
 import { NotificationsService } from 'angular2-notifications';
 import { forkJoin, Observable, ObservableInput, of, Subject } from 'rxjs';
@@ -104,7 +104,7 @@ export class TeamParticipantsComponent implements OnDestroy, OnInit {
    private getAllUserApplicationsObservable(competitionId: number, userId): Observable<PaginatedResponse<TeamParticipant>> {
       const search: TeamParticipantSearch = {
          page: 1,
-         limit: SettingsService.maxLimitValues.teamParticipants,
+         limit: PaginationService.limit.teamParticipants,
          competitionId,
          userId
       };
@@ -182,7 +182,7 @@ export class TeamParticipantsComponent implements OnDestroy, OnInit {
          competitionId,
          orderBy: 'confirmed',
          sequence: Sequence.Ascending,
-         limit: SettingsService.maxLimitValues.teamTeams,
+         limit: PaginationService.limit.teamTeams,
          page: 1
       };
       return this.teamService.getTeams(search);

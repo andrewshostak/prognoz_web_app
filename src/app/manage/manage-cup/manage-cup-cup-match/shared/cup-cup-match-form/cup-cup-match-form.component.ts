@@ -11,7 +11,7 @@ import { UserService } from '@services/v2/user.service';
 import { UtilsService } from '@services/utils.service';
 import { NotificationsService } from 'angular2-notifications';
 import { CupStageSearch } from '@models/search/cup/cup-stage-search.model';
-import { SettingsService } from '@services/settings.service';
+import { PaginationService } from '@services/pagination.service';
 import { Sequence } from '@enums/sequence.enum';
 import { CupStageState } from '@enums/cup-stage-state.enum';
 import { omit, uniqBy } from 'lodash';
@@ -108,7 +108,7 @@ export class CupCupMatchFormComponent implements OnChanges, OnInit {
 
    private getCupStagesData(): void {
       const search: CupStageSearch = {
-         limit: SettingsService.maxLimitValues.cupStages,
+         limit: PaginationService.limit.cupStages,
          page: 1,
          orderBy: 'id',
          sequence: Sequence.Descending,

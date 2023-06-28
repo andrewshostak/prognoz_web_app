@@ -4,7 +4,7 @@ import { Sequence } from '@enums/sequence.enum';
 import { Season } from '@models/v2/season.model';
 import { SeasonSearch } from '@models/search/season-search.model';
 import { SeasonService } from '@services/v2/season.service';
-import { SettingsService } from '@services/settings.service';
+import { PaginationService } from '@services/pagination.service';
 import { TitleService } from '@services/title.service';
 
 @Component({
@@ -23,7 +23,7 @@ export class ChampionshipSeasonsComponent implements OnInit {
          orderBy: 'id',
          sequence: Sequence.Descending,
          page: 1,
-         limit: SettingsService.maxLimitValues.seasons
+         limit: PaginationService.limit.seasons
       };
       this.seasonService.getSeasons(search).subscribe(response => (this.seasons = response.data));
    }

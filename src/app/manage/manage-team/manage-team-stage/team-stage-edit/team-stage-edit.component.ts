@@ -11,7 +11,7 @@ import { Competition } from '@models/v2/competition.model';
 import { TeamStageType } from '@models/v2/team/team-stage-type.model';
 import { OpenedModal } from '@models/opened-modal.model';
 import { TeamStageService } from '@services/v2/team/team-stage.service';
-import { SettingsService } from '@services/settings.service';
+import { PaginationService } from '@services/pagination.service';
 import { CompetitionService } from '@services/v2/competition.service';
 import { TeamStageTypeService } from '@services/v2/team/team-stage-type.service';
 import { NotificationsService } from 'angular2-notifications';
@@ -92,7 +92,7 @@ export class TeamStageEditComponent implements OnInit {
    private getCompetitionsData(): void {
       const search: CompetitionSearch = {
          page: 1,
-         limit: SettingsService.maxLimitValues.competitions,
+         limit: PaginationService.limit.competitions,
          states: [CompetitionState.NotStarted, CompetitionState.Applications, CompetitionState.Active],
          tournamentId: Tournament.Team
       };

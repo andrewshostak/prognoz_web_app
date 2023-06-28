@@ -7,7 +7,7 @@ import { Sequence } from '@enums/sequence.enum';
 import { CupCupMatch } from '@models/v2/cup/cup-cup-match.model';
 import { CupCupMatchSearch } from '@models/search/cup/cup-cup-match-search.model';
 import { CupCupMatchService } from '@services/v2/cup/cup-cup-match.service';
-import { SettingsService } from '@services/settings.service';
+import { PaginationService } from '@services/pagination.service';
 import { isNil } from 'lodash';
 
 @Component({
@@ -27,7 +27,7 @@ export class CupCupMatchesGroupRatingComponent implements OnChanges {
 
    private search: CupCupMatchSearch = {
       cupPredictionsCount: true,
-      limit: SettingsService.maxLimitValues.cupCupMatches,
+      limit: PaginationService.limit.cupCupMatches,
       page: 1,
       relations: ['homeUser', 'awayUser', 'cupStage']
    };

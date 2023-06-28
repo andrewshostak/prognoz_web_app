@@ -10,6 +10,7 @@ import { Comment } from '@models/v2/comment.model';
 import { CommentService } from '@app/news/shared/comment.service';
 import { CommentSearch } from '@models/search/comment-search.model';
 import { SettingsService } from '@services/settings.service';
+import { PaginationService } from '@services/pagination.service';
 import { User } from '@models/v2/user.model';
 import { OpenedModal } from '@models/opened-modal.model';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
@@ -71,7 +72,7 @@ export class NewsDetailComponent implements OnInit {
       const search = {
          orderBy: 'created_at',
          sequence: Sequence.Ascending,
-         limit: SettingsService.maxLimitValues.comments,
+         limit: PaginationService.limit.comments,
          page: 1,
          relations: ['user.clubs', 'user.winners.award', 'user.winners.competition.season', 'deleter'],
          newsId,

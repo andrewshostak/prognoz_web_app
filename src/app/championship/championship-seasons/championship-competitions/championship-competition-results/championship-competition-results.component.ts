@@ -6,7 +6,7 @@ import { Sequence } from '@enums/sequence.enum';
 import { ChampionshipMatch } from '@models/v2/championship/championship-match.model';
 import { ChampionshipMatchSearch } from '@models/search/championship/championship-match-search.model';
 import { ChampionshipMatchService } from '@services/v2/championship/championship-match.service';
-import { SettingsService } from '@services/settings.service';
+import { PaginationService } from '@services/pagination.service';
 import { TitleService } from '@services/title.service';
 
 @Component({
@@ -27,7 +27,7 @@ export class ChampionshipCompetitionResultsComponent implements OnInit {
    public getEndedChampionshipMatchesData(competitionId: number): void {
       const search: ChampionshipMatchSearch = {
          competitionId,
-         limit: SettingsService.maxLimitValues.championshipMatches,
+         limit: PaginationService.limit.championshipMatches,
          orderBy: 'number_in_competition',
          page: 1,
          sequence: Sequence.Descending,

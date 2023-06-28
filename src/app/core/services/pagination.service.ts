@@ -21,6 +21,33 @@ export class PaginationService {
       teamsStages: 10
    };
 
+   public static limit: { [key: string]: number } = {
+      championshipMatches: 100,
+      championshipPredictions: 150,
+      championshipRating: 200,
+
+      cupCupMatches: 48,
+      cupMatches: 24,
+      cupStages: 36,
+      cupApplications: 192,
+
+      teamMatches: 24,
+      teamParticipants: 10,
+      teamPredictions: 24,
+      teamStages: 30,
+      teamTeamMatches: 16,
+      teamTeams: 42,
+      teamRatingItems: 16,
+      teamRatingUsers: 128,
+
+      clubs: 10,
+      competitions: 16,
+      comments: 40,
+      matches: 32,
+      seasons: 20,
+      users: 10
+   };
+
    public static getOffset(pageNumber: number, itemsPerPage: number): number {
       return pageNumber * itemsPerPage - itemsPerPage;
    }

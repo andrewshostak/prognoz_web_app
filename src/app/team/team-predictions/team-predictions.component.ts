@@ -9,7 +9,7 @@ import { TeamMatch } from '@models/v1/team-match.model';
 import { TeamPrediction } from '@models/v1/team-prediction.model';
 import { AuthService } from '@services/v2/auth.service';
 import { TeamTeamMatchService } from '@services/v2/team/team-team-match.service';
-import { SettingsService } from '@services/settings.service';
+import { PaginationService } from '@services/pagination.service';
 import { TeamMatchService } from '@services/v1/team-match.service';
 import { TeamPredictionService } from '@services/v1/team-prediction.service';
 import { TitleService } from '@services/title.service';
@@ -111,7 +111,7 @@ export class TeamPredictionsComponent implements OnInit {
 
    private getTeamTeamMatchesData(teamStageId: number) {
       const search: TeamTeamMatchSearch = {
-         limit: SettingsService.maxLimitValues.teamTeamMatches,
+         limit: PaginationService.limit.teamTeamMatches,
          page: 1,
          teamStageId
       };

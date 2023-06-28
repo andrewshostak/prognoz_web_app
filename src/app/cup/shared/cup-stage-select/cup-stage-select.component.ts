@@ -12,7 +12,7 @@ import { SeasonSearch } from '@models/search/season-search.model';
 import { CompetitionService } from '@services/v2/competition.service';
 import { CupStageService } from '@services/v2/cup/cup-stage.service';
 import { SeasonService } from '@services/v2/season.service';
-import { SettingsService } from '@services/settings.service';
+import { PaginationService } from '@services/pagination.service';
 import { map } from 'rxjs/operators';
 
 @Component({
@@ -65,7 +65,7 @@ export class CupStageSelectComponent implements OnInit {
 
    private getCompetitionsData(seasonId: number): void {
       const search: CompetitionSearch = {
-         limit: SettingsService.maxLimitValues.seasons,
+         limit: PaginationService.limit.competitions,
          page: 1,
          seasonId,
          tournamentId: Tournament.Cup
@@ -79,7 +79,7 @@ export class CupStageSelectComponent implements OnInit {
       const search: CupStageSearch = {
          competitionId,
          page: 1,
-         limit: SettingsService.maxLimitValues.cupStages,
+         limit: PaginationService.limit.cupStages,
          orderBy: 'id',
          sequence: Sequence.Ascending
       };
@@ -98,7 +98,7 @@ export class CupStageSelectComponent implements OnInit {
 
    private getSeasonsData(): void {
       const search: SeasonSearch = {
-         limit: SettingsService.maxLimitValues.seasons,
+         limit: PaginationService.limit.seasons,
          orderBy: 'id',
          page: 1,
          sequence: Sequence.Descending

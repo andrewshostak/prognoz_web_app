@@ -9,7 +9,7 @@ import { TeamTeamMatchSearch } from '@models/search/team/team-team-match-search.
 import { AuthService } from '@services/v2/auth.service';
 import { TeamService } from '@services/v2/team/team.service';
 import { TeamTeamMatchService } from '@services/v2/team/team-team-match.service';
-import { SettingsService } from '@services/settings.service';
+import { PaginationService } from '@services/pagination.service';
 import { TeamMatchService } from '@services/v1/team-match.service';
 import { TitleService } from '@services/title.service';
 import { filter, tap } from 'rxjs/operators';
@@ -39,7 +39,7 @@ export class TeamMyComponent implements OnInit {
    ) {}
 
    public getTeamTeamMatchesData(teamStageId: number) {
-      const search: TeamTeamMatchSearch = { limit: SettingsService.maxLimitValues.teamTeamMatches, page: 1, teamStageId };
+      const search: TeamTeamMatchSearch = { limit: PaginationService.limit.teamTeamMatches, page: 1, teamStageId };
       this.teamTeamMatchService.getTeamTeamMatches(search).subscribe(
          response => (this.teamTeamMatches = response.data),
          () => (this.teamTeamMatches = [])

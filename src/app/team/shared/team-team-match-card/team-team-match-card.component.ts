@@ -11,7 +11,7 @@ import { PaginatedResponse } from '@models/paginated-response.model';
 import { TeamCompetitionService } from '@services/v2/team/team-competition.service';
 import { TeamMatchService } from '@services/v2/team/team-match.service';
 import { TeamPredictionService } from '@services/v2/team/team-prediction.service';
-import { SettingsService } from '@services/settings.service';
+import { PaginationService } from '@services/pagination.service';
 import { UtilsService } from '@services/utils.service';
 import { TeamMatchAndEnrichedPredictions } from '@team/shared/team-team-match-card/team-match-and-enriched-predictions.model';
 import { Observable, of } from 'rxjs';
@@ -67,7 +67,7 @@ export class TeamTeamMatchCardComponent {
    private getTeamMatches(teamStageId: number): Observable<PaginatedResponse<TeamMatch>> {
       const search: TeamMatchSearch = {
          page: 1,
-         limit: SettingsService.maxLimitValues.teamMatches,
+         limit: PaginationService.limit.teamMatches,
          orderBy: 'started_at',
          sequence: Sequence.Ascending,
          relations: ['match.clubHome', 'match.clubAway'],
@@ -102,7 +102,7 @@ export class TeamTeamMatchCardComponent {
    private getTeamPredictions(teamIds: number[], teamMatchIds: number[]): Observable<PaginatedResponse<TeamPrediction>> {
       const search: TeamPredictionSearch = {
          page: 1,
-         limit: SettingsService.maxLimitValues.teamPredictions,
+         limit: PaginationService.limit.teamPredictions,
          orderBy: 'team_match_id',
          sequence: Sequence.Ascending,
          teamIds,

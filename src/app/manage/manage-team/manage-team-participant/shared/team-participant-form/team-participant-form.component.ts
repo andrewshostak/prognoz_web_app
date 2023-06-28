@@ -13,7 +13,7 @@ import { CompetitionService } from '@services/v2/competition.service';
 import { TeamService } from '@services/v2/team/team.service';
 import { TeamParticipantService } from '@services/v2/team/team-participant.service';
 import { UserService } from '@services/v2/user.service';
-import { SettingsService } from '@services/settings.service';
+import { PaginationService } from '@services/pagination.service';
 import { UtilsService } from '@services/utils.service';
 import { NotificationsService } from 'angular2-notifications';
 import { uniqBy } from 'lodash';
@@ -90,7 +90,7 @@ export class TeamParticipantFormComponent implements OnChanges, OnInit {
 
    private getNotEndedCompetitionsData(): void {
       const search: CompetitionSearch = {
-         limit: SettingsService.maxLimitValues.competitions,
+         limit: PaginationService.limit.competitions,
          page: 1,
          states: [CompetitionState.NotStarted, CompetitionState.Applications, CompetitionState.Active],
          tournamentId: Tournament.Team

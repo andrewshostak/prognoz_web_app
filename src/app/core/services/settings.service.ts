@@ -16,36 +16,6 @@ export class SettingsService {
    public static readonly usersLogosPath: string = environment.imageBaseUrl + '/users';
    public static readonly userDefaultImage: string = 'default.png';
 
-   // max limit values (same limitations present on the back-end side)
-   public static readonly maxLimitValues = {
-      championshipMatches: 100,
-      championshipPredictions: 150,
-      championshipRating: 200,
-
-      cupCupMatches: 48,
-      cupMatches: 50,
-      cupStages: 40,
-      cupApplications: 300,
-
-      teamMatches: 20,
-      teamParticipants: 10,
-      teamPredictions: 24,
-      teamStages: 40,
-      teamTeamMatches: 16,
-      teamTeams: 50,
-      teamRatingItems: 32,
-      teamRatingUsers: 200,
-
-      clubs: 10,
-      competitions: 100,
-      guestbook: 20,
-      comments: 40,
-      matches: 100,
-      news: 10,
-      seasons: 100,
-      users: 10
-   };
-
    public static readonly textMessages = {
       ngSelect: {
          notFoundText: 'Нічого не знайдено',

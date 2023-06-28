@@ -10,7 +10,7 @@ import { CompetitionSearch } from '@models/search/competition-search.model';
 import { TeamStage } from '@models/v2/team/team-stage.model';
 import { TeamStageTypeService } from '@services/v2/team/team-stage-type.service';
 import { CompetitionService } from '@services/v2/competition.service';
-import { SettingsService } from '@services/settings.service';
+import { PaginationService } from '@services/pagination.service';
 import { TeamStageService } from '@services/v2/team/team-stage.service';
 import { UtilsService } from '@services/utils.service';
 import { NotificationsService } from 'angular2-notifications';
@@ -70,7 +70,7 @@ export class TeamStageCreateComponent implements OnInit {
    private getCompetitionsData(): void {
       const search: CompetitionSearch = {
          page: 1,
-         limit: SettingsService.maxLimitValues.competitions,
+         limit: PaginationService.limit.competitions,
          states: [CompetitionState.NotStarted, CompetitionState.Applications, CompetitionState.Active],
          tournamentId: Tournament.Team
       };

@@ -15,7 +15,7 @@ import { AuthService } from '@services/v2/auth.service';
 import { CupCupMatchService } from '@services/v2/cup/cup-cup-match.service';
 import { CupMatchService } from '@services/v2/cup/cup-match.service';
 import { CupPredictionService } from '@services/v2/cup/cup-prediction.service';
-import { SettingsService } from '@services/settings.service';
+import { PaginationService } from '@services/pagination.service';
 import { TitleService } from '@services/title.service';
 import { UtilsService } from '@services/utils.service';
 import { isNil } from 'lodash';
@@ -84,7 +84,7 @@ export class CupCupMatchComponent implements OnInit {
          relations: ['match.clubHome', 'match.clubAway'],
          orderBy: 'started_at',
          sequence: Sequence.Ascending,
-         limit: SettingsService.maxLimitValues.cupMatches,
+         limit: PaginationService.limit.cupMatches,
          page: 1
       };
       return this.cupMatchService.getCupMatches(search);

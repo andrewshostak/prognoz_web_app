@@ -7,7 +7,7 @@ import { TitleService } from '@services/title.service';
 import { User } from '@models/v2/user.model';
 import { ChampionshipRating } from '@models/v2/championship/championship-rating.model';
 import { ChampionshipRatingSearch } from '@models/search/championship/championship-rating-search.model';
-import { SettingsService } from '@services/settings.service';
+import { PaginationService } from '@services/pagination.service';
 import { Sequence } from '@enums/sequence.enum';
 
 @Component({
@@ -33,7 +33,7 @@ export class ChampionshipCompetitionRatingComponent implements OnInit {
          const search: ChampionshipRatingSearch = {
             competitionId: params.competitionId,
             page: 1,
-            limit: SettingsService.maxLimitValues.championshipRating,
+            limit: PaginationService.limit.championshipRating,
             relations: ['user.mainClub'],
             orderBy: 'rating',
             sequence: Sequence.Descending

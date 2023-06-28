@@ -8,6 +8,7 @@ import { PaginatedResponse } from '@models/paginated-response.model';
 import { MatchSearch } from '@models/search/match-search.model';
 import { MatchService } from '@services/v2/match.service';
 import { SettingsService } from '@services/settings.service';
+import { PaginationService } from '@services/pagination.service';
 import { UtilsService } from '@services/utils.service';
 import { differenceWith, get, remove } from 'lodash';
 import { forkJoin, Observable } from 'rxjs';
@@ -32,7 +33,7 @@ export class MatchSelectComponent implements OnChanges, OnInit {
    get matchSearch(): MatchSearch {
       return {
          states: [MatchState.Active],
-         limit: SettingsService.maxLimitValues.matches,
+         limit: PaginationService.limit.matches,
          orderBy: 'started_at',
          page: 1,
          sequence: Sequence.Descending

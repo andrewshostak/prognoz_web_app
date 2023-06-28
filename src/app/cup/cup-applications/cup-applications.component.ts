@@ -9,7 +9,7 @@ import { CompetitionSearch } from '@models/search/competition-search.model';
 import { CupApplicationSearch } from '@models/search/cup/cup-application-search.model';
 import { CompetitionService } from '@services/v2/competition.service';
 import { CupApplicationService } from '@services/v2/cup/cup-application.service';
-import { SettingsService } from '@services/settings.service';
+import { PaginationService } from '@services/pagination.service';
 import { TitleService } from '@services/title.service';
 import { get } from 'lodash';
 import { of } from 'rxjs';
@@ -34,7 +34,7 @@ export class CupApplicationsComponent implements OnInit {
    getApplicationsAndCompetitions(): void {
       const competitionSearch: CompetitionSearch = {
          page: 1,
-         limit: SettingsService.maxLimitValues.competitions,
+         limit: PaginationService.limit.competitions,
          orderBy: 'id',
          sequence: Sequence.Ascending,
          states: [CompetitionState.Applications, CompetitionState.Active],
@@ -44,7 +44,7 @@ export class CupApplicationsComponent implements OnInit {
          page: 1,
          orderBy: 'points',
          sequence: Sequence.Descending,
-         limit: SettingsService.maxLimitValues.cupApplications,
+         limit: PaginationService.limit.cupApplications,
          relations: ['applicant']
       };
       this.competitionService
@@ -94,7 +94,7 @@ export class CupApplicationsComponent implements OnInit {
          page: 1,
          orderBy: 'points',
          sequence: Sequence.Descending,
-         limit: SettingsService.maxLimitValues.cupApplications,
+         limit: PaginationService.limit.cupApplications,
          relations: ['applicant']
       };
       this.cupApplicationService.getCupApplications(applicationsSearch).subscribe(

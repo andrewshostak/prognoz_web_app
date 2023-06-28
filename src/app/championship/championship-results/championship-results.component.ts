@@ -11,7 +11,7 @@ import { ChampionshipMatchSearch } from '@models/search/championship/championshi
 import { CompetitionSearch } from '@models/search/competition-search.model';
 import { ChampionshipMatchService } from '@services/v2/championship/championship-match.service';
 import { CompetitionService } from '@services/v2/competition.service';
-import { SettingsService } from '@services/settings.service';
+import { PaginationService } from '@services/pagination.service';
 import { TitleService } from '@services/title.service';
 import { Observable, throwError } from 'rxjs';
 import { mergeMap } from 'rxjs/operators';
@@ -45,7 +45,7 @@ export class ChampionshipResultsComponent implements OnInit {
    public getEndedChampionshipMatches(competitionId: number): Observable<PaginatedResponse<ChampionshipMatch>> {
       const search: ChampionshipMatchSearch = {
          competitionId,
-         limit: SettingsService.maxLimitValues.championshipMatches,
+         limit: PaginationService.limit.championshipMatches,
          orderBy: 'number_in_competition',
          page: 1,
          sequence: Sequence.Descending,

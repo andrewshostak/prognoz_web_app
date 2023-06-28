@@ -11,6 +11,7 @@ import { AuthService } from '@services/v2/auth.service';
 import { ChampionshipMatchService } from '@services/v2/championship/championship-match.service';
 import { ChampionshipPredictionService } from '@services/v2/championship/championship-prediction.service';
 import { SettingsService } from '@services/settings.service';
+import { PaginationService } from '@services/pagination.service';
 import { TitleService } from '@services/title.service';
 
 @Component({
@@ -54,7 +55,7 @@ export class ChampionshipMatchComponent implements OnInit {
    private getChampionshipPredictionData(id: number): void {
       const search: ChampionshipPredictionSearch = {
          championshipMatchId: id,
-         limit: SettingsService.maxLimitValues.championshipPredictions,
+         limit: PaginationService.limit.championshipPredictions,
          orderBy: 'updated_at',
          page: 1,
          sequence: Sequence.Descending,

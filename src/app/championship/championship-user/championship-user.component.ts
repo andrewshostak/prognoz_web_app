@@ -15,7 +15,7 @@ import { ChampionshipRatingService } from '@services/v2/championship/championshi
 import { ChampionshipPredictionService } from '@services/v2/championship/championship-prediction.service';
 import { CompetitionService } from '@services/v2/competition.service';
 import { UserService } from '@services/v2/user.service';
-import { SettingsService } from '@services/settings.service';
+import { PaginationService } from '@services/pagination.service';
 import { TitleService } from '@services/title.service';
 import { UtilsService } from '@services/utils.service';
 import { forkJoin, iif, Observable, of } from 'rxjs';
@@ -86,7 +86,7 @@ export class ChampionshipUserComponent implements OnInit {
    private getChampionshipPredictionsObservable(competitionId, userId: number): Observable<PaginatedResponse<ChampionshipPrediction>> {
       const search: ChampionshipPredictionSearch = {
          competitionId,
-         limit: SettingsService.maxLimitValues.championshipPredictions,
+         limit: PaginationService.limit.championshipPredictions,
          orderBy: 'number_in_competition',
          page: 1,
          sequence: Sequence.Descending,

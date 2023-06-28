@@ -13,7 +13,7 @@ import { SeasonSearch } from '@models/search/season-search.model';
 import { CurrentStateService } from '@services/current-state.service';
 import { CompetitionService } from '@services/v2/competition.service';
 import { SeasonService } from '@services/v2/season.service';
-import { SettingsService } from '@services/settings.service';
+import { PaginationService } from '@services/pagination.service';
 import { iif, Observable, of } from 'rxjs';
 import { map, mergeMap, tap } from 'rxjs/operators';
 
@@ -77,7 +77,7 @@ export class CompetitionSelectNewComponent implements OnInit {
 
    private getActiveCompetitions(): Observable<PaginatedResponse<Competition>> {
       const search: CompetitionSearch = {
-         limit: SettingsService.maxLimitValues.competitions,
+         limit: PaginationService.limit.competitions,
          page: 1,
          states: [CompetitionState.Applications, CompetitionState.Active],
          tournamentId: Tournament.Team
@@ -87,7 +87,7 @@ export class CompetitionSelectNewComponent implements OnInit {
 
    private getCompetitionsData(seasonId: number): void {
       const search: CompetitionSearch = {
-         limit: SettingsService.maxLimitValues.seasons,
+         limit: PaginationService.limit.competitions,
          page: 1,
          seasonId,
          tournamentId: Tournament.Team
@@ -137,7 +137,7 @@ export class CompetitionSelectNewComponent implements OnInit {
 
    private getSeasonsObservable(): Observable<PaginatedResponse<Season>> {
       const search: SeasonSearch = {
-         limit: SettingsService.maxLimitValues.seasons,
+         limit: PaginationService.limit.seasons,
          orderBy: 'id',
          page: 1,
          sequence: Sequence.Descending

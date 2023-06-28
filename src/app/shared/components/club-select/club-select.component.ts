@@ -13,6 +13,7 @@ import { Club } from '@models/v2/club.model';
 import { merge, Observable, of, Subject } from 'rxjs';
 import { ClubService } from '@services/v2/club.service';
 import { SettingsService } from '@services/settings.service';
+import { PaginationService } from '@services/pagination.service';
 import { catchError, debounceTime, distinctUntilChanged, map, switchMap, tap } from 'rxjs/operators';
 import { trim } from 'lodash';
 import { Sequence } from '@enums/sequence.enum';
@@ -114,7 +115,7 @@ export class ClubSelectComponent implements OnChanges, OnInit, ControlValueAcces
 
                const search: ClubSearch = {
                   page: 1,
-                  limit: SettingsService.maxLimitValues.clubs,
+                  limit: PaginationService.limit.clubs,
                   search: trim(term),
                   orderBy: 'title',
                   sequence: Sequence.Ascending,

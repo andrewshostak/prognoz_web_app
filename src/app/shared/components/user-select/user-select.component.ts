@@ -16,6 +16,7 @@ import { PaginatedResponse } from '@models/paginated-response.model';
 import { UserSearch } from '@models/search/user-search.model';
 import { UserService } from '@services/v2/user.service';
 import { SettingsService } from '@services/settings.service';
+import { PaginationService } from '@services/pagination.service';
 import { trim } from 'lodash';
 import { merge, Observable, of, Subject } from 'rxjs';
 import { catchError, debounceTime, distinctUntilChanged, map, switchMap, tap } from 'rxjs/operators';
@@ -112,7 +113,7 @@ export class UserSelectComponent implements OnChanges, OnInit, ControlValueAcces
                this.usersLoading = true;
 
                const search: UserSearch = {
-                  limit: SettingsService.maxLimitValues.users,
+                  limit: PaginationService.limit.users,
                   name: trim(term),
                   orderBy: 'name',
                   sequence: Sequence.Ascending

@@ -10,7 +10,7 @@ import { AuthService } from '@services/v2/auth.service';
 import { ChampionshipPredictionService } from '@services/v2/championship/championship-prediction.service';
 import { ChampionshipService } from '@services/championship/championship.service';
 import { ChampionshipMatchService } from '@services/v2/championship/championship-match.service';
-import { SettingsService } from '@services/settings.service';
+import { PaginationService } from '@services/pagination.service';
 import { TitleService } from '@services/title.service';
 import { NotificationsService } from 'angular2-notifications';
 
@@ -57,7 +57,7 @@ export class ChampionshipPredictionsComponent implements OnInit {
 
    private getChampionshipMatchesData(): void {
       const search: ChampionshipMatchSearch = {
-         limit: SettingsService.maxLimitValues.championshipMatches,
+         limit: PaginationService.limit.championshipMatches,
          orderBy: 'started_at',
          page: 1,
          sequence: Sequence.Ascending,

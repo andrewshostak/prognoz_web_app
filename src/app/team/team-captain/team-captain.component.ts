@@ -20,6 +20,7 @@ import { TeamStageService } from '@services/v2/team/team-stage.service';
 import { TeamTeamMatchService } from '@services/v2/team/team-team-match.service';
 import { TeamMatchService } from '@services/v1/team-match.service';
 import { TeamPredictionService } from '@services/v2/team/team-prediction.service';
+import { PaginationService } from '@services/pagination.service';
 import { SettingsService } from '@services/settings.service';
 import { UtilsService } from '@services/utils.service';
 import { NotificationsService } from 'angular2-notifications';
@@ -212,7 +213,7 @@ export class TeamCaptainComponent implements OnInit {
                   teamId: response.data[0].team_id,
                   confirmed: ModelStatus.Truthy,
                   page: 1,
-                  limit: SettingsService.maxLimitValues.teamParticipants
+                  limit: PaginationService.limit.teamParticipants
                };
                return this.teamParticipantService.getTeamParticipants(search);
             })
@@ -275,7 +276,7 @@ export class TeamCaptainComponent implements OnInit {
    }
 
    private getTeamTeamMatchesData(teamStageId: number) {
-      const search = { teamStageId, limit: SettingsService.maxLimitValues.teamTeamMatches, page: 1 } as TeamTeamMatchSearch;
+      const search = { teamStageId, limit: PaginationService.limit.teamTeamMatches, page: 1 } as TeamTeamMatchSearch;
       this.teamTeamMatchService.getTeamTeamMatches(search).subscribe(
          response => {
             this.errorTeamTeamMatches = null;

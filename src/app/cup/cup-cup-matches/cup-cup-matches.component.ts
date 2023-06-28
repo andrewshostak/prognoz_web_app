@@ -17,7 +17,7 @@ import { CurrentStateService } from '@services/current-state.service';
 import { CompetitionService } from '@services/v2/competition.service';
 import { CupCupMatchService } from '@services/v2/cup/cup-cup-match.service';
 import { CupStageService } from '@services/v2/cup/cup-stage.service';
-import { SettingsService } from '@services/settings.service';
+import { PaginationService } from '@services/pagination.service';
 import { TitleService } from '@services/title.service';
 import { find, findLast, get } from 'lodash';
 import { iif, Observable, of } from 'rxjs';
@@ -101,7 +101,7 @@ export class CupCupMatchesComponent implements OnInit {
 
    private getActiveCompetitions(): Observable<PaginatedResponse<Competition>> {
       const search: CompetitionSearch = {
-         limit: SettingsService.maxLimitValues.competitions,
+         limit: PaginationService.limit.competitions,
          page: 1,
          states: [CompetitionState.Applications, CompetitionState.Active],
          tournamentId: Tournament.Cup
@@ -121,7 +121,7 @@ export class CupCupMatchesComponent implements OnInit {
          cupStageId,
          cupPredictionsCount: true,
          relations: includeRelations ? ['homeUser', 'awayUser'] : [],
-         limit: SettingsService.maxLimitValues.cupCupMatches
+         limit: PaginationService.limit.cupCupMatches
       };
       return this.cupCupMatchService.getCupCupMatches(search);
    }
@@ -132,7 +132,7 @@ export class CupCupMatchesComponent implements OnInit {
          sequence: Sequence.Ascending,
          page: 1,
          competitionId,
-         limit: SettingsService.maxLimitValues.cupStages
+         limit: PaginationService.limit.cupStages
       };
       return this.cupStageService.getCupStages(search);
    }

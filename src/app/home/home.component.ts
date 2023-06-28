@@ -7,6 +7,7 @@ import { ChampionshipMatch } from '@models/v2/championship/championship-match.mo
 import { ChampionshipMatchSearch } from '@models/search/championship/championship-match-search.model';
 import { ChampionshipMatchService } from '@services/v2/championship/championship-match.service';
 import { SettingsService } from '@services/settings.service';
+import { PaginationService } from '@services/pagination.service';
 import { TitleService } from '@services/title.service';
 import { NewsService } from '@services/v2/news.service';
 import { News } from '@models/v2/news.model';
@@ -39,7 +40,7 @@ export class HomeComponent implements OnInit {
 
    private getMatchesData() {
       const search: ChampionshipMatchSearch = {
-         limit: SettingsService.maxLimitValues.championshipMatches,
+         limit: PaginationService.limit.championshipMatches,
          orderBy: 'started_at',
          page: 1,
          sequence: Sequence.Ascending,

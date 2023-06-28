@@ -11,7 +11,7 @@ import { ChampionshipRatingSearch } from '@models/search/championship/championsh
 import { ChampionshipPredictionService } from '@services/v2/championship/championship-prediction.service';
 import { ChampionshipPrediction } from '@models/v2/championship/championship-prediction.model';
 import { ChampionshipPredictionSearch } from '@models/search/championship/championship-prediction-search.model';
-import { SettingsService } from '@services/settings.service';
+import { PaginationService } from '@services/pagination.service';
 import { Sequence } from '@enums/sequence.enum';
 
 @Component({
@@ -44,7 +44,7 @@ export class ChampionshipCompetitionUserComponent implements OnInit {
    private getChampionshipPredictionsData(userId: number, competitionId: number) {
       const search: ChampionshipPredictionSearch = {
          competitionId,
-         limit: SettingsService.maxLimitValues.championshipPredictions,
+         limit: PaginationService.limit.championshipPredictions,
          orderBy: 'number_in_competition',
          page: 1,
          sequence: Sequence.Descending,

@@ -10,7 +10,7 @@ import { CupMatchSearch } from '@models/search/cup/cup-match-search.model';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { CupStageService } from '@services/v2/cup/cup-stage.service';
 import { CupMatchService } from '@services/v2/cup/cup-match.service';
-import { SettingsService } from '@services/settings.service';
+import { PaginationService } from '@services/pagination.service';
 import { UtilsService } from '@services/utils.service';
 import { NotificationsService } from 'angular2-notifications';
 import { Observable } from 'rxjs';
@@ -118,7 +118,7 @@ export class CupMatchFormComponent implements OnChanges, OnInit {
 
    public setCupMatchesObservable(): void {
       const search: CupMatchSearch = {
-         limit: SettingsService.maxLimitValues.cupMatches,
+         limit: PaginationService.limit.cupMatches,
          page: 1,
          relations: ['match.clubHome', 'match.clubAway'],
          states: [MatchState.Active]
@@ -151,7 +151,7 @@ export class CupMatchFormComponent implements OnChanges, OnInit {
 
    private getCupStagesData(): void {
       const search: CupStageSearch = {
-         limit: SettingsService.maxLimitValues.cupStages,
+         limit: PaginationService.limit.cupStages,
          page: 1,
          relations: ['competition'],
          sequence: Sequence.Ascending,

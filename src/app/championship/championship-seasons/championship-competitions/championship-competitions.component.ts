@@ -6,7 +6,7 @@ import { TitleService } from '@services/title.service';
 import { CompetitionService } from '@services/v2/competition.service';
 import { Competition } from '@models/v2/competition.model';
 import { CompetitionSearch } from '@models/search/competition-search.model';
-import { SettingsService } from '@services/settings.service';
+import { PaginationService } from '@services/pagination.service';
 
 @Component({
    selector: 'app-championship-competitions',
@@ -29,7 +29,7 @@ export class ChampionshipCompetitionsComponent implements OnInit {
             tournamentId: Tournament.Championship,
             seasonId: params.id,
             page: 1,
-            limit: SettingsService.maxLimitValues.competitions
+            limit: PaginationService.limit.competitions
          };
          this.competitions = [];
          this.competitionService.getCompetitions(search).subscribe(response => (this.competitions = response.data));

@@ -12,6 +12,7 @@ import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { DeviceService } from '@services/device.service';
 import { AuthService } from '@services/v2/auth.service';
 import { TeamParticipantService } from '@services/v2/team/team-participant.service';
+import { PaginationService } from '@services/pagination.service';
 import { SettingsService } from '@services/settings.service';
 import { NotificationsService } from 'angular2-notifications';
 import { pick, remove } from 'lodash';
@@ -149,7 +150,7 @@ export class TeamAndParticipantsComponent implements OnInit, OnChanges {
    }
 
    private getTeamParticipants(competitionId: number, teamId: number): void {
-      const search: TeamParticipantSearch = { competitionId, teamId, limit: SettingsService.maxLimitValues.teamParticipants, page: 1 };
+      const search: TeamParticipantSearch = { competitionId, teamId, limit: PaginationService.limit.teamParticipants, page: 1 };
       this.teamParticipantService.getTeamParticipants(search).subscribe(response => {
          this.teamParticipants = response.data;
       });

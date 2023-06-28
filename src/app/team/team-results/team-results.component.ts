@@ -6,7 +6,7 @@ import { TeamMatchService } from '@services/v2/team/team-match.service';
 import { TeamMatchSearch } from '@models/search/team/team-match-search.model';
 import { TeamMatch } from '@models/v2/team/team-match.model';
 import { PaginatedResponse } from '@models/paginated-response.model';
-import { SettingsService } from '@services/settings.service';
+import { PaginationService } from '@services/pagination.service';
 import { filter, switchMap, tap } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import { Sequence } from '@enums/sequence.enum';
@@ -39,7 +39,7 @@ export class TeamResultsComponent implements OnInit {
       const search: TeamMatchSearch = {
          teamStageId,
          page: 1,
-         limit: SettingsService.maxLimitValues.teamMatches,
+         limit: PaginationService.limit.teamMatches,
          relations: ['match.clubHome', 'match.clubAway'],
          orderBy: 'id',
          sequence: Sequence.Ascending

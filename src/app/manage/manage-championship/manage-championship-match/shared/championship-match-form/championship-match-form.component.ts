@@ -11,7 +11,7 @@ import { ChampionshipMatchSearch } from '@models/search/championship/championshi
 import { CompetitionSearch } from '@models/search/competition-search.model';
 import { ChampionshipMatchService } from '@services/v2/championship/championship-match.service';
 import { CompetitionService } from '@services/v2/competition.service';
-import { SettingsService } from '@services/settings.service';
+import { PaginationService } from '@services/pagination.service';
 import { UtilsService } from '@services/utils.service';
 import { NotificationsService } from 'angular2-notifications';
 import { Observable } from 'rxjs';
@@ -55,7 +55,7 @@ export class ChampionshipMatchFormComponent implements OnChanges, OnInit {
 
    public getCompetitionsData(): void {
       const competitionSearch: CompetitionSearch = {
-         limit: SettingsService.maxLimitValues.competitions,
+         limit: PaginationService.limit.competitions,
          page: 1,
          states: [CompetitionState.NotStarted, CompetitionState.Active],
          tournamentId: Tournament.Championship
@@ -87,7 +87,7 @@ export class ChampionshipMatchFormComponent implements OnChanges, OnInit {
 
    public setChampionshipMatchesObservable(): void {
       const search: ChampionshipMatchSearch = {
-         limit: SettingsService.maxLimitValues.championshipMatches,
+         limit: PaginationService.limit.championshipMatches,
          page: 1,
          states: [MatchState.Active]
       };

@@ -12,7 +12,7 @@ import { AuthService } from '@services/v2/auth.service';
 import { CompetitionService } from '@services/v2/competition.service';
 import { TeamRatingUserService } from '@services/v2/team/team-rating-user.service';
 import { TeamRatingService } from '@services/v2/team/team-rating.service';
-import { SettingsService } from '@services/settings.service';
+import { PaginationService } from '@services/pagination.service';
 import { TitleService } from '@services/title.service';
 import { groupBy } from 'lodash';
 import { Subscription } from 'rxjs';
@@ -78,7 +78,7 @@ export class TeamRatingComponent implements OnDestroy, OnInit {
          competitionId: this.competitionId,
          page: 1,
          relations: ['team'],
-         limit: SettingsService.maxLimitValues.teamRatingItems
+         limit: PaginationService.limit.teamRatingItems
       };
       this.teamRatingService.getTeamRating(search).subscribe(response => this.setTeamRating(response));
    }
@@ -88,7 +88,7 @@ export class TeamRatingComponent implements OnDestroy, OnInit {
          competitionId: this.competitionId,
          page: 1,
          relations: ['team', 'user'],
-         limit: SettingsService.maxLimitValues.teamRatingUsers
+         limit: PaginationService.limit.teamRatingUsers
       };
       this.teamRatingUserService.getTeamRatingUser(search).subscribe(response => (this.teamRatingUser = response.data));
    }

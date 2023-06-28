@@ -5,7 +5,7 @@ import { Team } from '@models/v2/team/team.model';
 import { TeamSearch } from '@models/search/team/team-search.model';
 import { AuthService } from '@services/v2/auth.service';
 import { TeamService } from '@services/v2/team/team.service';
-import { SettingsService } from '@services/settings.service';
+import { PaginationService } from '@services/pagination.service';
 import { UtilsService } from '@services/utils.service';
 
 @Component({
@@ -49,7 +49,7 @@ export class TeamSelectModalComponent implements OnInit {
       const search: TeamSearch = {
          captainId: this.authService.getUser().id,
          page: 1,
-         limit: SettingsService.maxLimitValues.teamTeams
+         limit: PaginationService.limit.teamTeams
       };
       this.teamService.getTeams(search).subscribe(response => {
          this.teams = response.data;

@@ -11,7 +11,7 @@ import { Tournament } from '@models/v2/tournament.model';
 import { FormValidatorService } from '@services/form-validator.service';
 import { CompetitionService } from '@services/v2/competition.service';
 import { SeasonService } from '@services/v2/season.service';
-import { SettingsService } from '@services/settings.service';
+import { PaginationService } from '@services/pagination.service';
 import { TournamentService } from '@services/v2/tournament.service';
 import { UtilsService } from '@services/utils.service';
 import { NotificationsService } from 'angular2-notifications';
@@ -100,7 +100,7 @@ export class CompetitionFormComponent implements OnChanges, OnInit {
 
    private getSeasonsData() {
       const search: SeasonSearch = {
-         limit: SettingsService.maxLimitValues.seasons,
+         limit: 1,
          page: 1,
          states: [SeasonState.Active]
       };

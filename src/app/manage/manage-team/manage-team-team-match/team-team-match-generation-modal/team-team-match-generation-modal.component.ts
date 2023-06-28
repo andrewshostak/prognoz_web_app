@@ -8,7 +8,7 @@ import { TeamStage } from '@models/v2/team/team-stage.model';
 import { TeamStageSearch } from '@models/search/team/team-stage-search.model';
 import { TeamStageService } from '@services/v2/team/team-stage.service';
 import { TeamTeamMatchService } from '@services/v2/team/team-team-match.service';
-import { SettingsService } from '@services/settings.service';
+import { PaginationService } from '@services/pagination.service';
 import { UtilsService } from '@services/utils.service';
 import { NotificationsService } from 'angular2-notifications';
 import { times } from 'lodash';
@@ -129,7 +129,7 @@ export class TeamTeamMatchGenerationModalComponent implements OnInit {
    private getTeamStagesData(): void {
       const search: TeamStageSearch = {
          page: 1,
-         limit: SettingsService.maxLimitValues.teamStages,
+         limit: PaginationService.limit.teamStages,
          states: [TeamStageState.NotStarted, TeamStageState.Active],
          relations: ['teamStageType', 'competition'],
          rounds: [1]
