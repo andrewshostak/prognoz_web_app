@@ -90,7 +90,7 @@ export class GuestbookPageComponent implements OnDestroy, OnInit {
       this.authenticatedUser = this.authService.getUser();
    }
 
-   public openConfirmModal(data: number, content: NgbModalRef | TemplateRef<any>, submitted: (event) => void): void {
+   public openConfirmModal(data: number, content: NgbModalRef | TemplateRef<Element>, submitted: (event) => void): void {
       const reference = this.ngbModalService.open(content, { centered: true });
       this.openedModal = { reference, data, submitted: () => submitted.call(this) };
    }

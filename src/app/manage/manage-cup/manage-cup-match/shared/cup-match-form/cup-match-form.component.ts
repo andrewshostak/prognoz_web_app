@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { Component, Input, OnChanges, OnInit, SimpleChanges, TemplateRef } from '@angular/core';
 import { AbstractControl, FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 
 import { MatchState } from '@enums/match-state.enum';
@@ -95,7 +95,7 @@ export class CupMatchFormComponent implements OnChanges, OnInit {
       this.cupMatch ? this.updateCupMatch(this.cupMatchForm.value) : this.createCupMatch(this.cupMatchForm.value);
    }
 
-   public openConfirmModal(content: NgbModalRef | HTMLElement, data: null, submitted: (event) => void): void {
+   public openConfirmModal(content: NgbModalRef | TemplateRef<Element>, data: null, submitted: (event) => void): void {
       const reference = this.ngbModalService.open(content, { centered: true });
       this.openedModal = { reference, data, submitted: () => submitted.call(this) };
    }
@@ -109,7 +109,7 @@ export class CupMatchFormComponent implements OnChanges, OnInit {
       this.cupMatchForm.reset();
       if (this.cupMatch) {
          this.cupMatch.cup_stages.forEach(cupStage => this.addCupStage(cupStage.id));
-         Object.entries(this.cupMatch as any).forEach(
+         Object.entries(this.cupMatch).forEach(
             ([field, value]) => this.cupMatchForm.get(field) && this.cupMatchForm.patchValue({ [field]: value })
          );
       }

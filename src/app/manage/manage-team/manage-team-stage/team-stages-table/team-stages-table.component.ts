@@ -91,17 +91,22 @@ export class TeamStagesTableComponent implements OnDestroy, OnInit {
       });
    }
 
-   public openActivateConfirm(content: NgbModalRef | TemplateRef<any>, data: TeamStage, submitted: (event) => void): void {
+   public openActivateConfirm(content: NgbModalRef | TemplateRef<Element>, data: TeamStage, submitted: (event) => void): void {
       const message = `Активувати стадію ${data.title}?`;
       this.openConfirmModal(content, data, submitted, message);
    }
 
-   public openEndConfirm(content: NgbModalRef | TemplateRef<any>, data: TeamStage, submitted: (event) => void): void {
+   public openEndConfirm(content: NgbModalRef | TemplateRef<Element>, data: TeamStage, submitted: (event) => void): void {
       const message = `Завершити стадію ${data.title}?`;
       this.openConfirmModal(content, data, submitted, message);
    }
 
-   private openConfirmModal(content: NgbModalRef | TemplateRef<any>, data: TeamStage, submitted: (event) => void, message: string): void {
+   private openConfirmModal(
+      content: NgbModalRef | TemplateRef<Element>,
+      data: TeamStage,
+      submitted: (event) => void,
+      message: string
+   ): void {
       const reference = this.ngbModalService.open(content, { centered: true });
       this.openedModal = { reference, data, submitted: () => submitted.call(this), message };
    }

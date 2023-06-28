@@ -1,5 +1,5 @@
 import { Router } from '@angular/router';
-import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { Component, Input, OnChanges, OnInit, SimpleChanges, TemplateRef } from '@angular/core';
 import { AbstractControl, FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 
 import { CupStageState } from '@enums/cup-stage-state.enum';
@@ -112,7 +112,7 @@ export class CupStageFormComponent implements OnChanges, OnInit {
       this.cupStage ? this.updateCupStage(this.cupStageForm.value) : this.createCupStage(this.cupStageForm.value);
    }
 
-   openConfirmModal(content: NgbModalRef | HTMLElement, data: null, submitted: (event) => void): void {
+   openConfirmModal(content: NgbModalRef | TemplateRef<Element>, data: null, submitted: (event) => void): void {
       const reference = this.ngbModalService.open(content, { centered: true });
       this.openedModal = { reference, data, submitted: () => submitted.call(this) };
    }

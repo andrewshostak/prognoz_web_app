@@ -59,7 +59,7 @@ export class ClubTableComponent implements OnDestroy, OnInit {
       });
    }
 
-   public openConfirmModal(content: NgbModalRef | HTMLElement | TemplateRef<any>, data: Club, submitted: (event) => void): void {
+   public openConfirmModal(content: NgbModalRef | TemplateRef<Element>, data: Club, submitted: (event) => void): void {
       const reference = this.ngbModalService.open(content, { centered: true });
       this.openedModal = { reference, data, submitted: () => submitted.call(this) };
    }

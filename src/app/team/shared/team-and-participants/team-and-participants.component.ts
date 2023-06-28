@@ -103,7 +103,7 @@ export class TeamAndParticipantsComponent implements OnInit, OnChanges {
    }
 
    public openConfirmModal(
-      content: NgbModalRef | TemplateRef<any>,
+      content: NgbModalRef | TemplateRef<Element>,
       data: { message: string; teamParticipant: TeamParticipant },
       submitted: (event) => void
    ): void {

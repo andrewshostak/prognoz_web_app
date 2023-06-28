@@ -65,7 +65,7 @@ export class CupApplicationsDefaultComponent implements OnChanges, OnInit {
       ]);
    }
 
-   openApplicationModal(content: NgbModalRef | TemplateRef<any>): void {
+   openApplicationModal(content: NgbModalRef | TemplateRef<Element>): void {
       this.openedModal = {
          data: {
             competition_id: this.competition.id,
@@ -76,7 +76,7 @@ export class CupApplicationsDefaultComponent implements OnChanges, OnInit {
       };
    }
 
-   openAcceptApplicationConfirmModal(content: NgbModalRef | TemplateRef<any>, cupApplication: CupApplication): void {
+   openAcceptApplicationConfirmModal(content: NgbModalRef | TemplateRef<Element>, cupApplication: CupApplication): void {
       this.openedModal = {
          data: cupApplication,
          message: `Підтвердити заявку ${cupApplication.applicant.name}?`,
@@ -85,7 +85,7 @@ export class CupApplicationsDefaultComponent implements OnChanges, OnInit {
       };
    }
 
-   openDeleteApplicationConfirmModal(content: NgbModalRef | TemplateRef<any>, cupApplication: CupApplication): void {
+   openDeleteApplicationConfirmModal(content: NgbModalRef | TemplateRef<Element>, cupApplication: CupApplication): void {
       this.openedModal = {
          data: cupApplication,
          message: `Видалити заявку ${cupApplication.applicant.name}?`,

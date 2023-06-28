@@ -11,7 +11,7 @@ export class ManageTeamStageComponent {
 
    private generationModalReference: NgbModalRef;
 
-   public openGenerationModal(content: NgbModalRef | TemplateRef<any>): void {
+   public openGenerationModal(content: NgbModalRef | TemplateRef<Element>): void {
       this.generationModalReference = this.ngbModalService.open(content);
    }
 

@@ -3,6 +3,7 @@ import { FormGroup } from '@angular/forms';
 
 import { ChampionshipMatch } from '@models/v2/championship/championship-match.model';
 import { User } from '@models/v2/user.model';
+import { ChampionshipMatchStatistic } from '@models/v2/championship/championship-match-statistic.model';
 import { ChampionshipMatchService } from '@services/v2/championship/championship-match.service';
 import { SettingsService } from '@services/settings.service';
 
@@ -19,11 +20,11 @@ export class ChampionshipMatchPredictableComponent implements OnChanges, OnInit 
    public clubsLogosPath: string;
    public errorStatistic: string;
    public isCollapsed = true;
-   public resultChartData: any;
-   public resultChartLabels: any;
+   public resultChartData: number[];
+   public resultChartLabels: string[];
    public resultChartType = 'doughnut';
    public spinnerStatistic = false;
-   public statistic: any = false;
+   public statistic: ChampionshipMatchStatistic;
 
    constructor(private championshipMatchService: ChampionshipMatchService, private changeDetectorRef: ChangeDetectorRef) {}
 

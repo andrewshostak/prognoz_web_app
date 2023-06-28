@@ -54,7 +54,7 @@ export class TeamTeamMatchesNewComponent implements OnInit {
          .pipe(
             filter(params => params.team_stage_id),
             switchMap(params => this.getTeamTeamMatchesObservable(params.team_stage_id, true)),
-            tap((response: PaginatedResponse<TeamTeamMatch>) => this.setTeamTeamMatches(response)) as any
+            tap((response: PaginatedResponse<TeamTeamMatch>) => this.setTeamTeamMatches(response))
          )
          .subscribe();
    }

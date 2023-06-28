@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { Component, Input, OnChanges, OnInit, SimpleChanges, TemplateRef } from '@angular/core';
 import { AbstractControl, FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 
 import { MatchState } from '@enums/match-state.enum';
@@ -95,7 +95,7 @@ export class TeamMatchFormComponent implements OnChanges, OnInit {
       this.teamMatch ? this.updateTeamMatch(this.teamMatchForm.value) : this.createTeamMatch(this.teamMatchForm.value);
    }
 
-   public openConfirmModal(content: NgbModalRef | HTMLElement, data: null, submitted: (event) => void): void {
+   public openConfirmModal(content: NgbModalRef | TemplateRef<Element>, data: null, submitted: (event) => void): void {
       const reference = this.ngbModalService.open(content, { centered: true });
       this.openedModal = { reference, data, submitted: () => submitted.call(this) };
    }
@@ -109,7 +109,7 @@ export class TeamMatchFormComponent implements OnChanges, OnInit {
       this.teamMatchForm.reset();
       if (this.teamMatch) {
          this.teamMatch.team_stages.forEach(teamStage => this.addTeamStage(teamStage.id));
-         Object.entries(this.teamMatch as any).forEach(
+         Object.entries(this.teamMatch).forEach(
             ([field, value]) => this.teamMatchForm.get(field) && this.teamMatchForm.patchValue({ [field]: value })
          );
       }

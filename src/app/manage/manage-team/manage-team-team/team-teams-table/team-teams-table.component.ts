@@ -68,7 +68,7 @@ export class TeamTeamsTableComponent implements OnDestroy, OnInit {
       });
    }
 
-   public openConfirmModal(content: NgbModalRef | TemplateRef<any>, data: Team, submitted: (event) => void): void {
+   public openConfirmModal(content: NgbModalRef | TemplateRef<Element>, data: Team, submitted: (event) => void): void {
       const reference = this.ngbModalService.open(content, { centered: true });
       this.openedModal = { reference, data, submitted: () => submitted.call(this) };
    }

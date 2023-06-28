@@ -1,6 +1,7 @@
 import { Component, Input } from '@angular/core';
 
 import { ChampionshipRating } from '@models/v2/championship/championship-rating.model';
+import { User } from '@models/v2/user.model';
 import { UtilsService } from '@services/utils.service';
 
 @Component({
@@ -10,7 +11,7 @@ import { UtilsService } from '@services/utils.service';
 })
 export class ChampionshipRatingTableComponent {
    @Input() rating: Partial<ChampionshipRating>[];
-   @Input() authenticatedUser: any;
+   @Input() authenticatedUser: User;
 
    getHomeCityInBrackets = UtilsService.getHomeCityInBrackets;
    makeUnsigned = UtilsService.makeUnsigned;

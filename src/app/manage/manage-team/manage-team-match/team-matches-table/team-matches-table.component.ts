@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, TemplateRef } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 
 import { Sequence } from '@enums/sequence.enum';
@@ -79,7 +79,7 @@ export class TeamMatchesTableComponent implements OnDestroy, OnInit {
       });
    }
 
-   public openConfirmModal(content: NgbModalRef | HTMLElement, data: TeamMatch, submitted: (event) => void): void {
+   public openConfirmModal(content: NgbModalRef | TemplateRef<Element>, data: TeamMatch, submitted: (event) => void): void {
       const reference = this.ngbModalService.open(content, { centered: true });
       this.openedModal = { reference, data, submitted: () => submitted.call(this) };
    }

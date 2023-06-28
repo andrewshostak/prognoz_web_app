@@ -76,7 +76,7 @@ export class TeamStageEditComponent implements OnInit {
       this.updateTeamStage({ ...teamStage, ...this.teamStageForm.value });
    }
 
-   public openDeleteConfirm(content: NgbModalRef | TemplateRef<any>, data: TeamStage, submitted: (event) => void): void {
+   public openDeleteConfirm(content: NgbModalRef | TemplateRef<Element>, data: TeamStage, submitted: (event) => void): void {
       const message = `Ви впевнені що хочете видалити ${data.title}?`;
       this.openConfirmModal(content, data, submitted, message);
    }
@@ -131,7 +131,12 @@ export class TeamStageEditComponent implements OnInit {
       }
    }
 
-   private openConfirmModal(content: NgbModalRef | TemplateRef<any>, data: TeamStage, submitted: (event) => void, message: string): void {
+   private openConfirmModal(
+      content: NgbModalRef | TemplateRef<Element>,
+      data: TeamStage,
+      submitted: (event) => void,
+      message: string
+   ): void {
       const reference = this.ngbModalService.open(content, { centered: true });
       this.openedModal = { reference, data, submitted: () => submitted.call(this), message };
    }

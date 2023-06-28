@@ -55,7 +55,7 @@ export class TeamCaptainComponent implements OnInit {
    isCaptain = false;
    teamStageId: number;
    showScoresOrString = UtilsService.showScoresOrString;
-   spinnerButton: any = {};
+   spinnerButton: { [key: string]: boolean } = {};
    spinnerButtonGoalkeeper = false;
    teamMatches: TeamMatchV1[];
    teamParticipants: TeamParticipant[];
@@ -253,10 +253,10 @@ export class TeamCaptainComponent implements OnInit {
          .pipe(
             map(([teamMatchesResponse, teamStageResponse]) => {
                return { teamMatches: teamMatchesResponse, teamStage: teamStageResponse };
-            }) as any
+            })
          )
          .subscribe(
-            (responses: { teamMatches: any; teamStage: TeamStage }) => {
+            (responses: { teamMatches: { team_matches: TeamMatchV1[] }; teamStage: TeamStage }) => {
                this.errorTeamMatches = null;
                if (!responses.teamMatches) {
                   this.teamMatches = null;
@@ -298,7 +298,7 @@ export class TeamCaptainComponent implements OnInit {
       teamMatches: TeamMatchV1[],
       teamStage: TeamStage
    ): { [userId: number]: { predictionsLeft: number; participantAvailable: boolean } } {
-      const teamParticipants: any = {};
+      const teamParticipants: { [key: number]: { predictionsLeft: number; participantAvailable: boolean } } = {};
       const maxParticipantNumberOfPredictions = Math.ceil(teamStage.team_stage_type.matches_count / SettingsService.participantsInTeam);
       teamMatches.forEach(teamMatch => {
          if (this.matchHasPrediction(teamMatch)) {

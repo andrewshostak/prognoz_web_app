@@ -63,7 +63,7 @@ export class TeamTeamMatchesTableComponent implements OnDestroy, OnInit {
       });
    }
 
-   public openDeleteConfirm(content: NgbModalRef | TemplateRef<any>, data: TeamTeamMatch, submitted: (event) => void): void {
+   public openDeleteConfirm(content: NgbModalRef | TemplateRef<Element>, data: TeamTeamMatch, submitted: (event) => void): void {
       const message = `Ви впевнені що хочете видалити ${data.home_team.name} - ${data.away_team.name} ?`;
       const reference = this.ngbModalService.open(content, { centered: true });
       this.openedModal = { reference, data, submitted: () => submitted.call(this), message };

@@ -99,22 +99,27 @@ export class CupStagesTableComponent implements OnInit, OnDestroy {
       });
    }
 
-   public openActivateConfirm(content: NgbModalRef | TemplateRef<any>, data: CupStage, submitted: (event) => void): void {
+   public openActivateConfirm(content: NgbModalRef | TemplateRef<Element>, data: CupStage, submitted: (event) => void): void {
       const message = `Активувати стадію ${data.title}?`;
       this.openConfirmModal(content, data, submitted, message);
    }
 
-   public openDeleteConfirm(content: NgbModalRef | TemplateRef<any>, data: CupStage, submitted: (event) => void): void {
+   public openDeleteConfirm(content: NgbModalRef | TemplateRef<Element>, data: CupStage, submitted: (event) => void): void {
       const message = `Ви впевнені що хочете видалити ${data.title}?`;
       this.openConfirmModal(content, data, submitted, message);
    }
 
-   public openEndConfirm(content: NgbModalRef | TemplateRef<any>, data: CupStage, submitted: (event) => void): void {
+   public openEndConfirm(content: NgbModalRef | TemplateRef<Element>, data: CupStage, submitted: (event) => void): void {
       const message = `Завершити стадію ${data.title}?`;
       this.openConfirmModal(content, data, submitted, message);
    }
 
-   private openConfirmModal(content: NgbModalRef | TemplateRef<any>, data: CupStage, submitted: (event) => void, message: string): void {
+   private openConfirmModal(
+      content: NgbModalRef | TemplateRef<Element>,
+      data: CupStage,
+      submitted: (event) => void,
+      message: string
+   ): void {
       const reference = this.ngbModalService.open(content, { centered: true });
       this.openedModal = { reference, data, submitted: () => submitted.call(this), message };
    }

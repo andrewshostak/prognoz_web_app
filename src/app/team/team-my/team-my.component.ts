@@ -86,7 +86,7 @@ export class TeamMyComponent implements OnInit {
                   this.getTeamData(teamStageId);
                }
                this.lastTeamStageId = teamStageId;
-            }) as any
+            })
          )
          .subscribe();
    }

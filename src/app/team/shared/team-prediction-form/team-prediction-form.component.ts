@@ -14,7 +14,7 @@ import { SettingsService } from '@services/settings.service';
 })
 export class TeamPredictionFormComponent implements OnInit {
    @Input() public teamPrediction: TeamPrediction;
-   @Output() public teamPredictionUpdated = new EventEmitter<any>();
+   @Output() public teamPredictionUpdated = new EventEmitter<void>();
 
    public clubsLogosPath: string = SettingsService.clubsLogosPath + '/';
    public isScore = UtilsService.isScore;

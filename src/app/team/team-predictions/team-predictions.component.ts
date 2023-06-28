@@ -164,7 +164,7 @@ export class TeamPredictionsComponent implements OnInit {
                this.getTeamTeamMatchesData(params.team_stage_id);
                this.getTeamPredictionsData(params.team_stage_id);
                this.getTeamStageData(params.team_stage_id);
-            }) as any
+            })
          )
          .subscribe();
    }

@@ -84,7 +84,7 @@ export class TeamParticipantsComponent implements OnDestroy, OnInit {
          });
    }
 
-   public openTeamSelectModal(content: NgbModalRef | TemplateRef<any>): void {
+   public openTeamSelectModal(content: NgbModalRef | TemplateRef<Element>): void {
       const reference = this.ngbModalService.open(content, { centered: true });
       this.openedModal = { reference, data: null, submitted: () => {} };
    }

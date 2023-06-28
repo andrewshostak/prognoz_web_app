@@ -80,7 +80,7 @@ export class TeamTeamMatchCardComponent {
    private getTeamMatchesAndPredictions(
       teamTeamMatch: TeamTeamMatch
    ): Observable<{ teamTeamMatch: TeamTeamMatch; teamMatches: TeamMatch[]; teamPredictions: TeamPrediction[] }> {
-      const noDataResponse = { data: [], total: 0 } as PaginatedResponse<any>;
+      const noDataResponse = { data: [], total: 0 };
       return this.getTeamMatches(teamTeamMatch.team_stage_id).pipe(
          catchError(() => of(noDataResponse)),
          mergeMap(teamMatchesResponse => {
