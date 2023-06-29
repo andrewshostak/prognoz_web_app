@@ -42,7 +42,7 @@ import { NgbDropdownModule, NgbPopoverModule, NgbTooltipModule } from '@ng-boots
 import { NgSelectModule } from '@ng-select/ng-select';
 import { ChartsModule } from 'ng2-charts';
 import { UserMessageComponent } from '@app/shared/components/user-message/user-message.component';
-import { CompetitionSelectNewComponent } from '@app/shared/components/competition-select-new/competition-select-new.component';
+import { CompetitionSelectComponent } from '@app/shared/components/competition-select/competition-select.component';
 import { HasPermissionsDirective } from '@app/shared/directives/has-permissions.directive';
 import { UserWinsAwardsComponent } from '@app/shared/components/user-wins-awards/user-wins-awards.component';
 
@@ -55,7 +55,7 @@ import { UserWinsAwardsComponent } from '@app/shared/components/user-wins-awards
       CheckboxComponent,
       ClubLogoComponent,
       ClubSelectComponent,
-      CompetitionSelectNewComponent,
+      CompetitionSelectComponent,
       ConfirmationModalComponent,
       CustomContentWithTooltipComponent,
       DeclensionPipe,
@@ -96,7 +96,7 @@ import { UserWinsAwardsComponent } from '@app/shared/components/user-wins-awards
       CheckboxComponent,
       ClubLogoComponent,
       ClubSelectComponent,
-      CompetitionSelectNewComponent,
+      CompetitionSelectComponent,
       ConfirmationModalComponent,
       CustomContentWithTooltipComponent,
       DeclensionPipe,

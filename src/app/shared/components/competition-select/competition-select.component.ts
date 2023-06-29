@@ -18,11 +18,11 @@ import { iif, Observable, of } from 'rxjs';
 import { map, mergeMap, tap } from 'rxjs/operators';
 
 @Component({
-   selector: 'app-competition-select-new',
-   templateUrl: './competition-select-new.component.html',
-   styleUrls: ['./competition-select-new.component.scss']
+   selector: 'app-competition-select',
+   templateUrl: './competition-select.component.html',
+   styleUrls: ['./competition-select.component.scss']
 })
-export class CompetitionSelectNewComponent implements OnInit {
+export class CompetitionSelectComponent implements OnInit {
    // made for team competition. modify this component to use with cup/championship by adding @Input()
    @Output() public competitionSelected = new EventEmitter<{ selected: Competition | Partial<Competition> }>();
 

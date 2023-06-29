@@ -14,11 +14,11 @@ import { Observable } from 'rxjs';
 import { filter, switchMap, tap } from 'rxjs/operators';
 
 @Component({
-   selector: 'app-team-team-matches-new',
-   templateUrl: './team-team-matches-new.component.html',
-   styleUrls: ['./team-team-matches-new.component.scss']
+   selector: 'app-team-team-matches',
+   templateUrl: './team-team-matches.component.html',
+   styleUrls: ['./team-team-matches.component.scss']
 })
-export class TeamTeamMatchesNewComponent implements OnInit {
+export class TeamTeamMatchesComponent implements OnInit {
    public teamTeamMatches: TeamTeamMatch[] = [];
    public groupedTeamTeamMatches: { [groupNumber: string]: TeamTeamMatch[] };
 

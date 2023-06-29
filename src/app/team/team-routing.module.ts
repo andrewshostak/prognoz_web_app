@@ -4,7 +4,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { AuthGuard } from '@app/core/guards/auth.guard.service';
 import { TeamCreateComponent } from '@team/team-create/team-create.component';
 import { TeamEditComponent } from '@team/team-edit/team-edit.component';
-import { TeamTeamMatchesNewComponent } from '@team/team-team-matches-new/team-team-matches-new.component';
+import { TeamTeamMatchesComponent } from '@team/team-team-matches/team-team-matches.component';
 import { TeamMyComponent } from '@team/team-my/team-my.component';
 import { TeamParticipantsComponent } from '@team/team-participants/team-participants.component';
 import { TeamPredictionsComponent } from '@team/team-predictions/team-predictions.component';
@@ -36,7 +36,7 @@ const routes: Routes = [
          },
          {
             path: 'team-matches',
-            component: TeamTeamMatchesNewComponent
+            component: TeamTeamMatchesComponent
          },
          {
             path: 'results',
