@@ -26,7 +26,7 @@ export class ChampionshipRatingTopComponent implements OnInit {
    championshipRatingItems: ChampionshipRating[];
    errorRating: string;
    userDefaultImage: string = SettingsService.userDefaultImage;
-   usersLogosPath: string = SettingsService.usersLogosPath + '/';
+   usersLogosPath: string = SettingsService.imageBaseUrl.users;
    getHomeCityInBrackets = UtilsService.getHomeCityInBrackets;
 
    ngOnInit() {

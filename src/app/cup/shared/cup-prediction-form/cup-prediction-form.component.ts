@@ -16,7 +16,7 @@ import { NotificationsService } from 'angular2-notifications';
 export class CupPredictionFormComponent implements OnInit {
    constructor(private cupPredictionService: CupPredictionService, private notificationsService: NotificationsService) {}
 
-   clubsLogosPath: string = SettingsService.clubsLogosPath + '/';
+   clubsLogosPath: string = SettingsService.imageBaseUrl.clubs;
    cupPredictionForm: FormGroup;
    spinnerButton: boolean;
    isScore: boolean;

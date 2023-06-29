@@ -170,7 +170,7 @@ describe('MatchTableComponent', () => {
    describe('#ngOnInit', () => {
       it('should set clubsLogosPath', () => {
          matchTableComponent.ngOnInit();
-         expect(matchTableComponent.clubsLogosPath).toEqual(SettingsService.clubsLogosPath + '/');
+         expect(matchTableComponent.clubsLogosPath).toEqual(SettingsService.imageBaseUrl.clubs);
       });
 
       it('should set activatedRouteSubscription', () => {

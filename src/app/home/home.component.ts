@@ -23,7 +23,7 @@ export class HomeComponent implements OnInit {
    public clubsLogosPath: string;
    public errorChampionshipMatches: string;
    public news: News[];
-   public newsImagesUrl = SettingsService.newsLogosPath;
+   public newsImagesUrl = SettingsService.imageBaseUrl.news;
 
    constructor(
       private championshipMatchService: ChampionshipMatchService,
@@ -33,7 +33,7 @@ export class HomeComponent implements OnInit {
 
    public ngOnInit(): void {
       this.titleService.setTitle('Prognoz.org.ua - конкурси футбольних прогнозів, прогнози на топ-матчі, чемпіонати прогнозистів');
-      this.clubsLogosPath = SettingsService.clubsLogosPath + '/';
+      this.clubsLogosPath = SettingsService.imageBaseUrl.clubs;
       this.getNewsData();
       this.getMatchesData();
    }

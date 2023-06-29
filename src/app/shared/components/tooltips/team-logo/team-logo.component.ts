@@ -12,9 +12,9 @@ export class TeamLogoComponent {
    @Input() public team: Team;
    @Input() public showTooltip: boolean = true;
 
-   private teamLogosPath: string = SettingsService.teamsLogosPath + '/';
+   private teamLogosPath: string = SettingsService.imageBaseUrl.teams;
 
    get src(): string {
-      return this.teamLogosPath + (this.team.image || 'default.jpeg');
+      return this.teamLogosPath + '/' + (this.team.image || 'default.jpeg');
    }
 }

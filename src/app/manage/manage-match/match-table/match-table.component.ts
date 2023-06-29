@@ -80,7 +80,7 @@ export class MatchTableComponent implements OnDestroy, OnInit {
    }
 
    public ngOnInit() {
-      this.clubsLogosPath = SettingsService.clubsLogosPath + '/';
+      this.clubsLogosPath = SettingsService.imageBaseUrl.clubs;
       this.activatedRouteSubscription = this.activatedRoute.params.subscribe((params: Params) => {
          this.getMatchesData(params.pageNumber);
       });

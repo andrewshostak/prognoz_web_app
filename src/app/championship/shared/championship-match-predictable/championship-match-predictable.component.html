@@ -7,7 +7,7 @@
    <div class="d-none d-md-block col-md-2">
       <img
          class="img-fluid"
-         [attr.src]="clubsLogosPath + championshipMatch.match.club_home.image"
+         [attr.src]="clubsLogosPath + '/' + championshipMatch.match.club_home.image"
          alt="{{ championshipMatch.match.club_home.title }}"
          title="{{ championshipMatch.match.club_home.title }}"
       />
@@ -49,7 +49,7 @@
    <div class="d-none d-md-block col-md-2">
       <img
          class="img-fluid"
-         [attr.src]="clubsLogosPath + championshipMatch.match.club_away.image"
+         [attr.src]="clubsLogosPath + '/' + championshipMatch.match.club_away.image"
          alt="{{ championshipMatch.match.club_away.title }}"
          title="{{ championshipMatch.match.club_away.title }}"
       />
@@ -89,7 +89,7 @@
    <div class="d-none d-lg-block col-md-2">
       <img
          class="img-fluid"
-         [attr.src]="clubsLogosPath + championshipMatch.match.club_home.image"
+         [attr.src]="clubsLogosPath + '/' + championshipMatch.match.club_home.image"
          alt="{{ championshipMatch.match.club_home.title }}"
          title="{{ championshipMatch.match.club_home.title }}"
       />
@@ -114,7 +114,7 @@
          <div class="col-12 col-sm-6 col-lg-4 order-3 order-sm-2 text-center text-light mb-2">
             <img
                class="small-image d-lg-none"
-               [attr.src]="clubsLogosPath + championshipMatch.match.club_home.image"
+               [attr.src]="clubsLogosPath + '/' + championshipMatch.match.club_home.image"
                alt="{{ championshipMatch.match.club_home.title }}"
                title="{{ championshipMatch.match.club_home.title }}"
             />
@@ -137,7 +137,7 @@
             />
             <img
                class="small-image d-lg-none"
-               [attr.src]="clubsLogosPath + championshipMatch.match.club_away.image"
+               [attr.src]="clubsLogosPath + '/' + championshipMatch.match.club_away.image"
                alt="{{ championshipMatch.match.club_away.title }}"
                title="{{ championshipMatch.match.club_away.title }}"
             />
@@ -167,7 +167,7 @@
    <div class="d-none d-lg-block col-md-2">
       <img
          class="img-fluid"
-         [attr.src]="clubsLogosPath + championshipMatch.match.club_away.image"
+         [attr.src]="clubsLogosPath + '/' + championshipMatch.match.club_away.image"
          alt="{{ championshipMatch.match.club_away.title }}"
          title="{{ championshipMatch.match.club_away.title }}"
       />

@@ -22,10 +22,10 @@
          </th>
          <td class="text-right align-middle">{{ championshipMatch.match.club_home.title }}</td>
          <td class="align-middle">
-            <img class="small-image" [attr.src]="clubsLogosPath + championshipMatch.match.club_home.image" />
+            <img class="small-image" [attr.src]="clubsLogosPath + '/' + championshipMatch.match.club_home.image" />
          </td>
          <td class="align-middle">
-            <img class="small-image" [attr.src]="clubsLogosPath + championshipMatch.match.club_away.image" />
+            <img class="small-image" [attr.src]="clubsLogosPath + '/' + championshipMatch.match.club_away.image" />
          </td>
          <td class="align-middle">{{ championshipMatch.match.club_away.title }}</td>
          <td class="text-nowrap text-center align-middle">{{ championshipMatch.match.home }} : {{ championshipMatch.match.away }}</td>
@@ -81,10 +81,10 @@
             {{ championshipMatch.match.club_home.title | slice: 0:3 }}
          </td>
          <td class="text-center align-middle">
-            <img class="small-image" [attr.src]="clubsLogosPath + championshipMatch.match.club_home.image" />
+            <img class="small-image" [attr.src]="clubsLogosPath + '/' + championshipMatch.match.club_home.image" />
          </td>
          <td class="text-center align-middle">
-            <img class="small-image" [attr.src]="clubsLogosPath + championshipMatch.match.club_away.image" />
+            <img class="small-image" [attr.src]="clubsLogosPath + '/' + championshipMatch.match.club_away.image" />
          </td>
          <td class="text-uppercase align-middle font-weight-bold">{{ championshipMatch.match.club_away.title | slice: 0:3 }}</td>
          <td class="text-nowrap text-center align-middle">{{ championshipMatch.match.home }}:{{ championshipMatch.match.away }}</td>
@@ -138,10 +138,10 @@
                <tr>
                   <td class="text-uppercase font-weight-bold">{{ championshipMatch.match.club_home.title | slice: 0:3 }}</td>
                   <td>
-                     <img class="small-image" [attr.src]="clubsLogosPath + championshipMatch.match.club_home.image" />
+                     <img class="small-image" [attr.src]="clubsLogosPath + '/' + championshipMatch.match.club_home.image" />
                   </td>
                   <td>
-                     <img class="small-image" [attr.src]="clubsLogosPath + championshipMatch.match.club_away.image" />
+                     <img class="small-image" [attr.src]="clubsLogosPath + '/' + championshipMatch.match.club_away.image" />
                   </td>
                   <td class="text-uppercase font-weight-bold">{{ championshipMatch.match.club_away.title | slice: 0:3 }}</td>
                </tr>
@@ -201,10 +201,10 @@
                <tr>
                   <td class="text-uppercase font-weight-bold">{{ championshipMatch.match.club_home.title | slice: 0:3 }}</td>
                   <td>
-                     <img class="small-image" [attr.src]="clubsLogosPath + championshipMatch.match.club_home.image" />
+                     <img class="small-image" [attr.src]="clubsLogosPath + '/' + championshipMatch.match.club_home.image" />
                   </td>
                   <td>
-                     <img class="small-image" [attr.src]="clubsLogosPath + championshipMatch.match.club_away.image" />
+                     <img class="small-image" [attr.src]="clubsLogosPath + '/' + championshipMatch.match.club_away.image" />
                   </td>
                   <td class="text-uppercase font-weight-bold">{{ championshipMatch.match.club_away.title | slice: 0:3 }}</td>
                </tr>

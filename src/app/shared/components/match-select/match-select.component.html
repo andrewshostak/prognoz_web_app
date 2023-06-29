@@ -11,10 +11,10 @@
       >
          <ng-template ng-label-tmp let-item="item">
             <div>
-               <img class="small-image mr-1" [attr.src]="clubsLogosPath + item.club_home.image" />
+               <img class="small-image mr-1" [attr.src]="clubsLogosPath + '/' + item.club_home.image" />
                <span class="font-weight-bold">{{ item.club_home.title }}</span> -
                <span class="font-weight-bold">{{ item.club_away.title }}</span>
-               <img class="small-image ml-1" [attr.src]="clubsLogosPath + item.club_away.image" />
+               <img class="small-image ml-1" [attr.src]="clubsLogosPath + '/' + item.club_away.image" />
                <span class="text-muted ml-2">ID:</span> {{ item.id }}
             </div>
          </ng-template>

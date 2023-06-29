@@ -16,7 +16,7 @@ export class TeamPredictionFormComponent implements OnInit {
    @Input() public teamPrediction: TeamPrediction;
    @Output() public teamPredictionUpdated = new EventEmitter<void>();
 
-   public clubsLogosPath: string = SettingsService.clubsLogosPath + '/';
+   public clubsLogosPath: string = SettingsService.imageBaseUrl.clubs;
    public isScore = UtilsService.isScore;
    public showScoresOrString = UtilsService.showScoresOrString;
    public spinnerButton: boolean;

@@ -8,13 +8,14 @@ export class SettingsService {
 
    public static readonly defaultDebounceTime: number = 750;
 
-   // new image logos paths
-   public static readonly awardsLogosPath: string = environment.imageBaseUrl + '/awards';
-   public static readonly clubsLogosPath: string = environment.imageBaseUrl + '/clubs';
-   public static readonly newsLogosPath: string = environment.imageBaseUrl + '/news';
-   public static readonly teamsLogosPath: string = environment.imageBaseUrl + '/teams';
-   public static readonly usersLogosPath: string = environment.imageBaseUrl + '/users';
    public static readonly userDefaultImage: string = 'default.png';
+   public static readonly imageBaseUrl = {
+      awards: environment.imageBaseUrl + '/awards',
+      clubs: environment.imageBaseUrl + '/clubs',
+      news: environment.imageBaseUrl + '/news',
+      teams: environment.imageBaseUrl + '/teams',
+      users: environment.imageBaseUrl + '/users'
+   };
 
    public static readonly textMessages = {
       ngSelect: {

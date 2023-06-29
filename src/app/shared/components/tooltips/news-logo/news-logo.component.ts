@@ -11,9 +11,9 @@ import { News } from '@models/v2/news.model';
 export class NewsLogoComponent {
    @Input() public news: News;
 
-   private newsLogosPath: string = SettingsService.newsLogosPath + '/';
+   private newsLogosPath: string = SettingsService.imageBaseUrl.news;
 
    get src(): string {
-      return this.newsLogosPath + this.news.image;
+      return this.newsLogosPath + '/' + this.news.image;
    }
 }

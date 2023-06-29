@@ -22,7 +22,7 @@ export class MeComponent implements OnInit {
    public spinnerButton: boolean;
    public userEditForm: FormGroup;
    public userImageDefault: string = SettingsService.userDefaultImage;
-   public userImagesUrl: string = SettingsService.usersLogosPath;
+   public userImagesUrl: string = SettingsService.imageBaseUrl.users;
    public userImageExtensions: string[] = FormValidatorService.fileExtensions.userImage;
    public userImageSize: number = FormValidatorService.fileSizeLimits.userImage;
 

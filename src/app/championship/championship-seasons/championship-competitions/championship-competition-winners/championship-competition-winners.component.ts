@@ -20,7 +20,7 @@ export class ChampionshipCompetitionWinnersComponent implements OnInit {
       private titleService: TitleService
    ) {}
 
-   awardsLogosPath: string = SettingsService.awardsLogosPath + '/';
+   awardsLogosPath: string = SettingsService.imageBaseUrl.awards;
    competition: Competition;
 
    ngOnInit() {

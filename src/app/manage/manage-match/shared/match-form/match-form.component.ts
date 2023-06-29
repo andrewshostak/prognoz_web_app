@@ -3,7 +3,6 @@ import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/fo
 
 import { Match } from '@models/v2/match.model';
 import { MatchService } from '@services/v2/match.service';
-import { SettingsService } from '@services/settings.service';
 import { UtilsService } from '@services/utils.service';
 import { NotificationsService } from 'angular2-notifications';
 import { isNull } from 'lodash';
@@ -17,7 +16,6 @@ import * as moment from 'moment';
 export class MatchFormComponent implements OnChanges, OnInit {
    @Input() public match: Match;
 
-   public clubsLogosPath: string;
    public matchForm: FormGroup;
    public timeTemplates: { hour: number; minute: number }[];
 
@@ -141,7 +139,6 @@ export class MatchFormComponent implements OnChanges, OnInit {
 
    public ngOnInit() {
       this.setTimeTemplates();
-      this.clubsLogosPath = SettingsService.clubsLogosPath + '/';
       const date = this.defaultMomentFormDate;
 
       this.matchForm = new FormGroup({

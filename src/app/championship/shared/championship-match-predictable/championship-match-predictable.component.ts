@@ -58,6 +58,6 @@ export class ChampionshipMatchPredictableComponent implements OnChanges, OnInit 
    }
 
    public ngOnInit(): void {
-      this.clubsLogosPath = SettingsService.clubsLogosPath + '/';
+      this.clubsLogosPath = SettingsService.imageBaseUrl.clubs;
    }
 }

@@ -11,9 +11,9 @@ import { SettingsService } from '@services/settings.service';
 export class ClubLogoComponent {
    @Input() club: Club;
 
-   private clubsLogosPath: string = SettingsService.clubsLogosPath + '/';
+   private clubsLogosPath: string = SettingsService.imageBaseUrl.clubs;
 
    get src(): string {
-      return this.clubsLogosPath + this.club.image;
+      return this.clubsLogosPath + '/' + this.club.image;
    }
 }

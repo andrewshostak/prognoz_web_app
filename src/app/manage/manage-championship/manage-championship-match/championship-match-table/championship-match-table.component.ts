@@ -65,7 +65,7 @@ export class ChampionshipMatchTableComponent implements OnDestroy, OnInit {
    }
 
    public ngOnInit(): void {
-      this.clubsLogosPath = SettingsService.clubsLogosPath + '/';
+      this.clubsLogosPath = SettingsService.imageBaseUrl.clubs;
       this.activatedRouteSubscription = this.activatedRoute.params.subscribe((params: Params) => {
          this.getChampionshipMatchesData(params.pageNumber);
       });

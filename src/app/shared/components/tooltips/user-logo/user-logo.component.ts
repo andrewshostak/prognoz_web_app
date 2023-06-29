@@ -12,9 +12,9 @@ export class UserLogoComponent {
    @Input() public user: User;
 
    public userDefaultImage: string = SettingsService.userDefaultImage;
-   public usersLogosPath: string = SettingsService.usersLogosPath + '/';
+   public usersLogosPath: string = SettingsService.imageBaseUrl.users;
 
    get src(): string {
-      return this.usersLogosPath + (this.user.image || this.userDefaultImage);
+      return this.usersLogosPath + '/' + (this.user.image || this.userDefaultImage);
    }
 }

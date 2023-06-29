@@ -6,7 +6,7 @@
    <div class="card-body text-center cursor-pointer" routerLink="/championship/users/{{ championshipRatingItems[0].user_id }}">
       <img
          class="card-img-top img-fluid rounded"
-         src="{{ usersLogosPath }}{{ championshipRatingItems[0].user.image || userDefaultImage }}"
+         src="{{ usersLogosPath }}/{{ championshipRatingItems[0].user.image || userDefaultImage }}"
          alt="{{ championshipRatingItems[0].user.name }}"
       />
    </div>

@@ -27,10 +27,10 @@
                <tr>
                   <td class="text-right align-middle">{{ cupMatch.match.club_home.title }}</td>
                   <td class="align-middle text-center">
-                     <img class="small-image" [attr.src]="clubsLogosPath + cupMatch.match.club_home.image" />
+                     <img class="small-image" [attr.src]="clubsLogosPath + '/' + cupMatch.match.club_home.image" />
                   </td>
                   <td class="align-middle text-center">
-                     <img class="small-image" [attr.src]="clubsLogosPath + cupMatch.match.club_away.image" />
+                     <img class="small-image" [attr.src]="clubsLogosPath + '/' + cupMatch.match.club_away.image" />
                   </td>
                   <td class="align-middle">{{ cupMatch.match.club_away.title }}</td>
                </tr>
@@ -101,10 +101,10 @@
                      {{ cupMatch.match.club_home.title | slice: 0:3 }}
                   </td>
                   <td class="text-center align-middle">
-                     <img class="small-image" [attr.src]="clubsLogosPath + cupMatch.match.club_home.image" />
+                     <img class="small-image" [attr.src]="clubsLogosPath + '/' + cupMatch.match.club_home.image" />
                   </td>
                   <td class="text-center align-middle">
-                     <img class="small-image" [attr.src]="clubsLogosPath + cupMatch.match.club_away.image" />
+                     <img class="small-image" [attr.src]="clubsLogosPath + '/' + cupMatch.match.club_away.image" />
                   </td>
                   <td class="text-center text-uppercase font-weight-bold align-middle">
                      {{ cupMatch.match.club_away.title | slice: 0:3 }}
@@ -183,10 +183,10 @@
                      {{ cupMatch.match.club_home.title | slice: 0:3 }}
                   </td>
                   <td class="text-center align-middle">
-                     <img class="small-image" [attr.src]="clubsLogosPath + cupMatch.match.club_home.image" />
+                     <img class="small-image" [attr.src]="clubsLogosPath + '/' + cupMatch.match.club_home.image" />
                   </td>
                   <td class="text-center align-middle">
-                     <img class="small-image" [attr.src]="clubsLogosPath + cupMatch.match.club_away.image" />
+                     <img class="small-image" [attr.src]="clubsLogosPath + '/' + cupMatch.match.club_away.image" />
                   </td>
                   <td class="text-center text-uppercase font-weight-bold align-middle">
                      {{ cupMatch.match.club_away.title | slice: 0:3 }}
@@ -271,10 +271,10 @@
                               {{ cupMatch.match.club_home.title | slice: 0:3 }}
                            </td>
                            <td class="text-center align-middle">
-                              <img class="small-image" [attr.src]="clubsLogosPath + cupMatch.match.club_home.image" />
+                              <img class="small-image" [attr.src]="clubsLogosPath + '/' + cupMatch.match.club_home.image" />
                            </td>
                            <td class="text-center align-middle">
-                              <img class="small-image" [attr.src]="clubsLogosPath + cupMatch.match.club_away.image" />
+                              <img class="small-image" [attr.src]="clubsLogosPath + '/' + cupMatch.match.club_away.image" />
                            </td>
                            <td class="text-center text-uppercase font-weight-bold align-middle">
                               {{ cupMatch.match.club_away.title | slice: 0:3 }}

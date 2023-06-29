@@ -43,7 +43,7 @@ export class NewsDetailComponent implements OnInit {
    public comments: Comment[];
    public news: News;
    public newsId: number;
-   public newsImagesUrl = SettingsService.newsLogosPath;
+   public newsImagesUrl = SettingsService.imageBaseUrl.news;
    public openedModal: OpenedModal<number>;
    public spinnerButton = false;
 

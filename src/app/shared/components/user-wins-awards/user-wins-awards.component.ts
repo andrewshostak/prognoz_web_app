@@ -13,7 +13,7 @@ import { groupBy } from 'lodash';
 export class UserWinsAwardsComponent implements OnChanges {
    @Input() public wins: Win[] = [];
 
-   public awardsLogosPath = SettingsService.awardsLogosPath;
+   public awardsLogosPath = SettingsService.imageBaseUrl.awards;
    public groupedWins: { [awardId: number]: Win[] } = {};
    public isChampionshipSeasonWinner = AwardService.isChampionshipSeasonWinner;
 

@@ -15,7 +15,7 @@ import { UtilsService } from '@services/utils.service';
 export class LastUserComponent implements OnInit {
    public lastUser: User;
    public userDefaultImage = SettingsService.userDefaultImage;
-   public usersLogosPath = SettingsService.usersLogosPath + '/';
+   public usersLogosPath = SettingsService.imageBaseUrl.users;
    public homeCityInBrackets: string;
 
    constructor(private userService: UserService) {}

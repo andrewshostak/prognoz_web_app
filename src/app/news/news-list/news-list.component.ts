@@ -20,7 +20,7 @@ export class NewsListComponent implements OnInit {
 
    news: News[];
    paginationData: Pagination;
-   newsImagesUrl = SettingsService.newsLogosPath;
+   newsImagesUrl = SettingsService.imageBaseUrl.news;
    path = '/news/page/';
 
    ngOnInit() {

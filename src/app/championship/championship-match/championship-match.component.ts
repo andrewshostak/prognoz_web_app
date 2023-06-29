@@ -10,7 +10,6 @@ import { User } from '@models/v2/user.model';
 import { AuthService } from '@services/v2/auth.service';
 import { ChampionshipMatchService } from '@services/v2/championship/championship-match.service';
 import { ChampionshipPredictionService } from '@services/v2/championship/championship-prediction.service';
-import { SettingsService } from '@services/settings.service';
 import { PaginationService } from '@services/pagination.service';
 import { TitleService } from '@services/title.service';
 
@@ -23,7 +22,6 @@ export class ChampionshipMatchComponent implements OnInit {
    public authenticatedUser: User;
    public championshipMatch: ChampionshipMatch;
    public championshipPredictions: ChampionshipPrediction[];
-   public clubsLogosPath: string;
 
    constructor(
       private activatedRoute: ActivatedRoute,
@@ -36,7 +34,6 @@ export class ChampionshipMatchComponent implements OnInit {
 
    public ngOnInit(): void {
       this.authenticatedUser = this.authService.getUser();
-      this.clubsLogosPath = SettingsService.clubsLogosPath + '/';
       this.activatedRoute.params.forEach((params: Params) => {
          this.getChampionshipMatchData(params.id);
          this.getChampionshipPredictionData(params.id);
