@@ -96,7 +96,7 @@ export class MatchTableComponent implements OnDestroy, OnInit {
          return true;
       }
 
-      const updatedAt: moment.Moment = moment(match.updated_at).add(SettingsService.allowToUpdateResultAfterDays, 'day');
+      const updatedAt: moment.Moment = moment(match.updated_at).add(MatchService.daysToUpdateMatchResult, 'day');
       const now: moment.Moment = moment();
       return updatedAt.isAfter(now);
    }

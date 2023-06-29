@@ -21,7 +21,6 @@ import { TeamTeamMatchService } from '@services/v2/team/team-team-match.service'
 import { TeamMatchService } from '@services/v1/team-match.service';
 import { TeamPredictionService } from '@services/v2/team/team-prediction.service';
 import { PaginationService } from '@services/pagination.service';
-import { SettingsService } from '@services/settings.service';
 import { UtilsService } from '@services/utils.service';
 import { NotificationsService } from 'angular2-notifications';
 import { filter, map, mergeMap, tap } from 'rxjs/operators';
@@ -300,7 +299,9 @@ export class TeamCaptainComponent implements OnInit {
       teamStage: TeamStage
    ): { [userId: number]: { predictionsLeft: number; participantAvailable: boolean } } {
       const teamParticipants: { [key: number]: { predictionsLeft: number; participantAvailable: boolean } } = {};
-      const maxParticipantNumberOfPredictions = Math.ceil(teamStage.team_stage_type.matches_count / SettingsService.participantsInTeam);
+      const maxParticipantNumberOfPredictions = Math.ceil(
+         teamStage.team_stage_type.matches_count / TeamParticipantService.participantsInTeam
+      );
       teamMatches.forEach(teamMatch => {
          if (this.matchHasPrediction(teamMatch)) {
             if (!teamParticipants[teamMatch.team_predictions[0].user_id]) {

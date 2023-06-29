@@ -12,6 +12,8 @@ import { map } from 'rxjs/operators';
 export class MatchService {
    public readonly matchesUrl: string = `${environment.apiBaseUrl}/v2/matches`;
 
+   public static readonly daysToUpdateMatchResult: number = 3;
+
    constructor(private httpClient: HttpClient) {}
 
    public createMatch(match: Partial<Match>): Observable<Match> {

@@ -13,6 +13,8 @@ import { map } from 'rxjs/operators';
 export class TeamParticipantService {
    public readonly teamParticipantsUrl: string = `${environment.apiBaseUrl}/v2/team/participants`;
 
+   public static readonly participantsInTeam: number = 4;
+
    constructor(private httpClient: HttpClient) {}
 
    public createTeamParticipant(

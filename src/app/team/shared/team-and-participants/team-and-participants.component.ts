@@ -13,7 +13,6 @@ import { DeviceService } from '@services/device.service';
 import { AuthService } from '@services/v2/auth.service';
 import { TeamParticipantService } from '@services/v2/team/team-participant.service';
 import { PaginationService } from '@services/pagination.service';
-import { SettingsService } from '@services/settings.service';
 import { NotificationsService } from 'angular2-notifications';
 import { pick, remove } from 'lodash';
 import { from, of } from 'rxjs';
@@ -194,7 +193,7 @@ export class TeamAndParticipantsComponent implements OnInit, OnChanges {
       const totalConfirmed = this.teamParticipants.reduce((total, teamParticipant) => {
          return teamParticipant.confirmed ? total + 1 : total;
       }, 0);
-      if (totalConfirmed === SettingsService.participantsInTeam) {
+      if (totalConfirmed === TeamParticipantService.participantsInTeam) {
          this.team.stated = false;
          this.team.confirmed = true;
          this.showCaptainButtons = false;

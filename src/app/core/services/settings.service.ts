@@ -4,8 +4,6 @@ import { environment } from '@env';
 
 @Injectable()
 export class SettingsService {
-   public static readonly allowToUpdateResultAfterDays: number = 3;
-
    public static readonly defaultDebounceTime: number = 750;
 
    public static readonly userDefaultImage: string = 'default.png';
@@ -24,6 +22,4 @@ export class SettingsService {
          loadingText: 'Завантаження'
       }
    };
-
-   public static readonly participantsInTeam: number = 4;
 }
