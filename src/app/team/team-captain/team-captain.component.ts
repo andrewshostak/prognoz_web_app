@@ -13,13 +13,13 @@ import { TeamPrediction } from '@models/v2/team/team-prediction.model';
 import { TeamParticipant } from '@models/v1/team-participant.model';
 import { TeamParticipantSearch } from '@models/search/team/team-participant-search.model';
 import { TeamTeamMatchSearch } from '@models/search/team/team-team-match-search.model';
-import { AuthService } from '@services/v2/auth.service';
-import { TeamCompetitionService } from '@services/v2/team/team-competition.service';
-import { TeamParticipantService } from '@services/v2/team/team-participant.service';
-import { TeamStageService } from '@services/v2/team/team-stage.service';
-import { TeamTeamMatchService } from '@services/v2/team/team-team-match.service';
-import { TeamMatchService } from '@services/v1/team-match.service';
-import { TeamPredictionService } from '@services/v2/team/team-prediction.service';
+import { CurrentStateService } from '@services/current-state.service';
+import { TeamCompetitionService } from '@services/team-competition.service';
+import { TeamParticipantService } from '@services/api/v2/team/team-participant.service';
+import { TeamStageService } from '@services/api/v2/team/team-stage.service';
+import { TeamTeamMatchService } from '@services/api/v2/team/team-team-match.service';
+import { TeamMatchService } from '@services/api/v1/team-match.service';
+import { TeamPredictionService } from '@services/api/v2/team/team-prediction.service';
 import { PaginationService } from '@services/pagination.service';
 import { UtilsService } from '@services/utils.service';
 import { NotificationsService } from 'angular2-notifications';
@@ -34,8 +34,8 @@ import { isEqual, sortBy } from 'lodash';
 })
 export class TeamCaptainComponent implements OnInit {
    constructor(
-      private authService: AuthService,
       private activatedRoute: ActivatedRoute,
+      private currentStateService: CurrentStateService,
       private notificationsService: NotificationsService,
       private router: Router,
       private teamMatchService: TeamMatchService,
@@ -101,7 +101,7 @@ export class TeamCaptainComponent implements OnInit {
    }
 
    ngOnInit() {
-      this.authenticatedUser = this.authService.getUser();
+      this.authenticatedUser = this.currentStateService.getUser();
       this.subscribeToTeamStageIdUrlParamChange();
    }
 

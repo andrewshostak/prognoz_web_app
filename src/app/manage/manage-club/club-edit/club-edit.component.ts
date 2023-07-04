@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Club } from '@models/v2/club.model';
 import { ActivatedRoute, Params } from '@angular/router';
-import { ClubService } from '@services/v2/club.service';
+import { ClubService } from '@services/api/v2/club.service';
 
 @Component({
    selector: 'app-club-edit',

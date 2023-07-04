@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 
 import { ChampionshipMatch } from '@models/v2/championship/championship-match.model';
-import { ChampionshipMatchService } from '@services/v2/championship/championship-match.service';
+import { ChampionshipMatchService } from '@services/api/v2/championship/championship-match.service';
 
 @Component({
    selector: 'app-championship-match-update',

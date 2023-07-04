@@ -7,9 +7,9 @@ import { ChampionshipMatch } from '@models/v2/championship/championship-match.mo
 import { ChampionshipPrediction } from '@models/v2/championship/championship-prediction.model';
 import { ChampionshipPredictionSearch } from '@models/search/championship/championship-prediction-search.model';
 import { User } from '@models/v2/user.model';
-import { AuthService } from '@services/v2/auth.service';
-import { ChampionshipMatchService } from '@services/v2/championship/championship-match.service';
-import { ChampionshipPredictionService } from '@services/v2/championship/championship-prediction.service';
+import { ChampionshipMatchService } from '@services/api/v2/championship/championship-match.service';
+import { ChampionshipPredictionService } from '@services/api/v2/championship/championship-prediction.service';
+import { CurrentStateService } from '@services/current-state.service';
 import { PaginationService } from '@services/pagination.service';
 import { TitleService } from '@services/title.service';
 
@@ -25,15 +25,15 @@ export class ChampionshipMatchComponent implements OnInit {
 
    constructor(
       private activatedRoute: ActivatedRoute,
-      private authService: AuthService,
       private championshipMatchService: ChampionshipMatchService,
       private championshipPredictionService: ChampionshipPredictionService,
+      private currentStateService: CurrentStateService,
       private location: Location,
       private titleService: TitleService
    ) {}
 
    public ngOnInit(): void {
-      this.authenticatedUser = this.authService.getUser();
+      this.authenticatedUser = this.currentStateService.getUser();
       this.activatedRoute.params.forEach((params: Params) => {
          this.getChampionshipMatchData(params.id);
          this.getChampionshipPredictionData(params.id);

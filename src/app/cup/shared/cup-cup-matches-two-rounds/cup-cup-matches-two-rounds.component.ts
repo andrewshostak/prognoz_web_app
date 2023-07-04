@@ -3,7 +3,7 @@ import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { CupStageType } from '@enums/cup-stage-type.enum';
 import { CupCupMatch } from '@models/v2/cup/cup-cup-match.model';
 import { CupStage } from '@models/v2/cup/cup-stage.model';
-import { CupCupMatchService } from '@services/v2/cup/cup-cup-match.service';
+import { CupCompetitionService } from '@services/cup-competition.service';
 import { isNil } from 'lodash';
 
 @Component({
@@ -20,17 +20,17 @@ export class CupCupMatchesTwoRoundsComponent implements OnChanges {
    public isNil = isNil;
    public wrappedCupCupMatches: { current: CupCupMatch; first: CupCupMatch }[] = [];
 
-   constructor(private cupCupMatchService: CupCupMatchService) {}
+   constructor(private cupCompetitionService: CupCompetitionService) {}
 
    public ngOnChanges(changes: SimpleChanges) {
       if (changes.cupCupMatches && changes.cupCupMatches.currentValue) {
-         const sorted = this.cupCupMatchService.sortCupCupMatches(this.cupCupMatches);
-         const sortedFirst = this.cupCupMatchService.sortCupCupMatches(this.cupCupMatchesOfFirstStage);
+         const sorted = this.cupCompetitionService.sortCupCupMatches(this.cupCupMatches);
+         const sortedFirst = this.cupCompetitionService.sortCupCupMatches(this.cupCupMatchesOfFirstStage);
          this.wrappedCupCupMatches = this.wrapCupCupMatches(sorted, sortedFirst);
       }
       if (changes.cupCupMatchesOfFirstStage && changes.cupCupMatchesOfFirstStage.currentValue) {
-         const sorted = this.cupCupMatchService.sortCupCupMatches(this.cupCupMatches);
-         const sortedFirst = this.cupCupMatchService.sortCupCupMatches(this.cupCupMatchesOfFirstStage);
+         const sorted = this.cupCompetitionService.sortCupCupMatches(this.cupCupMatches);
+         const sortedFirst = this.cupCompetitionService.sortCupCupMatches(this.cupCupMatchesOfFirstStage);
          this.wrappedCupCupMatches = this.wrapCupCupMatches(sorted, sortedFirst);
       }
    }

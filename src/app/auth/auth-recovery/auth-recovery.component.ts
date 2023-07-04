@@ -2,8 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 import { User } from '@models/v2/user.model';
-import { AuthService } from '@services/v2/auth.service';
+import { AuthService } from '@services/api/v2/auth.service';
 import { TitleService } from '@services/title.service';
+import { CurrentStateService } from '@services/current-state.service';
 import { NotificationsService } from 'angular2-notifications';
 import { environment } from '@env';
 
@@ -19,11 +20,16 @@ export class AuthRecoveryComponent implements OnInit {
    public user: User;
    reCaptchaSiteKey = environment.reCaptchaSiteKey;
 
-   constructor(private authService: AuthService, private notificationsService: NotificationsService, private titleService: TitleService) {}
+   constructor(
+      private authService: AuthService,
+      private currentStateService: CurrentStateService,
+      private notificationsService: NotificationsService,
+      private titleService: TitleService
+   ) {}
 
    public ngOnInit(): void {
       this.titleService.setTitle('Відновлення паролю');
-      this.user = this.authService.getUser();
+      this.user = this.currentStateService.getUser();
       const emailRegex = '^[a-z0-9]+(.[_a-z0-9]+)*@[a-z0-9-]+(.[a-z0-9-]+)*(.[a-z]{2,15})$';
       this.recoveryForm = new FormGroup({
          email: new FormControl('', [Validators.required, Validators.pattern(emailRegex)])

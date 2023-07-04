@@ -3,7 +3,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 import { GuestbookMessage } from '@models/v2/guestbook-message.model';
 import { User } from '@models/v2/user.model';
-import { AuthService } from '@services/v2/auth.service';
+import { CurrentStateService } from '@services/current-state.service';
 import { NotificationsService } from 'angular2-notifications';
 import { GuestbookMessageService } from '@app/guestbook/shared/guestbook-message.service';
 import { trim } from 'lodash';
@@ -20,13 +20,13 @@ export class GuestbookMessageFormComponent implements OnInit {
    public user: User;
 
    constructor(
-      private authService: AuthService,
+      private currentStateService: CurrentStateService,
       private guestbookService: GuestbookMessageService,
       private notificationsService: NotificationsService
    ) {}
 
    public ngOnInit(): void {
-      this.user = this.authService.getUser();
+      this.user = this.currentStateService.getUser();
 
       this.guestbookMessageForm = new FormGroup({
          body: new FormControl(null, [Validators.required, Validators.minLength(10), Validators.maxLength(1000)])

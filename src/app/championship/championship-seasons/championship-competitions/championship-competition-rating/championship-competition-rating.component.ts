@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 
-import { ChampionshipRatingService } from '@services/v2/championship/championship-rating.service';
-import { AuthService } from '@services/v2/auth.service';
+import { ChampionshipRatingService } from '@services/api/v2/championship/championship-rating.service';
 import { TitleService } from '@services/title.service';
 import { User } from '@models/v2/user.model';
 import { ChampionshipRating } from '@models/v2/championship/championship-rating.model';
 import { ChampionshipRatingSearch } from '@models/search/championship/championship-rating-search.model';
+import { CurrentStateService } from '@services/current-state.service';
 import { PaginationService } from '@services/pagination.service';
 import { Sequence } from '@enums/sequence.enum';
 
@@ -17,9 +17,9 @@ import { Sequence } from '@enums/sequence.enum';
 })
 export class ChampionshipCompetitionRatingComponent implements OnInit {
    constructor(
-      private authService: AuthService,
       private activatedRoute: ActivatedRoute,
       private championshipRatingService: ChampionshipRatingService,
+      private currentStateService: CurrentStateService,
       private titleService: TitleService
    ) {}
 
@@ -27,7 +27,7 @@ export class ChampionshipCompetitionRatingComponent implements OnInit {
    championshipRatingItems: ChampionshipRating[];
 
    ngOnInit() {
-      this.authenticatedUser = this.authService.getUser();
+      this.authenticatedUser = this.currentStateService.getUser();
       this.activatedRoute.params.forEach((params: Params) => {
          this.titleService.setTitle(`Рейтинг гравців в конкурсі ${params.competitionId} - Чемпіонат`);
          const search: ChampionshipRatingSearch = {

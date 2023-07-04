@@ -6,7 +6,7 @@ import { Sequence } from '@enums/sequence.enum';
 import { Match } from '@models/v2/match.model';
 import { PaginatedResponse } from '@models/paginated-response.model';
 import { MatchSearch } from '@models/search/match-search.model';
-import { MatchService } from '@services/v2/match.service';
+import { MatchService } from '@services/api/v2/match.service';
 import { SettingsService } from '@services/settings.service';
 import { PaginationService } from '@services/pagination.service';
 import { UtilsService } from '@services/utils.service';

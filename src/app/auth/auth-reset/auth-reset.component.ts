@@ -3,9 +3,10 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 
 import { User } from '@models/v2/user.model';
-import { AuthService } from '@services/v2/auth.service';
+import { AuthService } from '@services/api/v2/auth.service';
 import { TitleService } from '@services/title.service';
 import { NotificationsService } from 'angular2-notifications';
+import { CurrentStateService } from '@services/current-state.service';
 
 @Component({
    selector: 'app-auth-reset',
@@ -18,6 +19,7 @@ export class AuthResetComponent implements OnInit {
    public user: User;
 
    constructor(
+      private currentStateService: CurrentStateService,
       private activatedRoute: ActivatedRoute,
       private authService: AuthService,
       private notificationsService: NotificationsService,
@@ -27,7 +29,7 @@ export class AuthResetComponent implements OnInit {
 
    public ngOnInit() {
       this.titleService.setTitle('Зміна паролю');
-      this.user = this.authService.getUser();
+      this.user = this.currentStateService.getUser();
       const emailRegex = '^[a-z0-9]+(.[_a-z0-9]+)*@[a-z0-9-]+(.[a-z0-9-]+)*(.[a-z]{2,15})$';
       this.activatedRoute.params.subscribe((params: Params) => {
          this.resetForm = new FormGroup({

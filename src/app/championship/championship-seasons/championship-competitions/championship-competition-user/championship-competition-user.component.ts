@@ -3,12 +3,12 @@ import { ActivatedRoute, Params } from '@angular/router';
 
 import { ChampionshipRating } from '@models/v2/championship/championship-rating.model';
 import { User } from '@models/v2/user.model';
-import { ChampionshipRatingService } from '@services/v2/championship/championship-rating.service';
-import { UserService } from '@services/v2/user.service';
+import { ChampionshipRatingService } from '@services/api/v2/championship/championship-rating.service';
+import { UserService } from '@services/api/v2/user.service';
 import { TitleService } from '@services/title.service';
 import { UtilsService } from '@services/utils.service';
 import { ChampionshipRatingSearch } from '@models/search/championship/championship-rating-search.model';
-import { ChampionshipPredictionService } from '@services/v2/championship/championship-prediction.service';
+import { ChampionshipPredictionService } from '@services/api/v2/championship/championship-prediction.service';
 import { ChampionshipPrediction } from '@models/v2/championship/championship-prediction.model';
 import { ChampionshipPredictionSearch } from '@models/search/championship/championship-prediction-search.model';
 import { PaginationService } from '@services/pagination.service';

@@ -6,8 +6,8 @@ import { Team } from '@models/v2/team/team.model';
 import { TeamParticipant } from '@models/v2/team/team-participant.model';
 import { TeamPrediction } from '@models/v2/team/team-prediction.model';
 import { DeviceService } from '@services/device.service';
-import { TeamService } from '@services/v2/team/team.service';
-import { TeamParticipantService } from '@services/v2/team/team-participant.service';
+import { TeamService } from '@services/api/v2/team/team.service';
+import { TeamParticipantService } from '@services/api/v2/team/team-participant.service';
 import { from, Observable, of } from 'rxjs';
 import { catchError, mergeMap } from 'rxjs/operators';
 

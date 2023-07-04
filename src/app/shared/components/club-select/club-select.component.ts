@@ -11,7 +11,7 @@ import {
 } from '@angular/forms';
 import { Club } from '@models/v2/club.model';
 import { merge, Observable, of, Subject } from 'rxjs';
-import { ClubService } from '@services/v2/club.service';
+import { ClubService } from '@services/api/v2/club.service';
 import { SettingsService } from '@services/settings.service';
 import { PaginationService } from '@services/pagination.service';
 import { catchError, debounceTime, distinctUntilChanged, map, switchMap, tap } from 'rxjs/operators';

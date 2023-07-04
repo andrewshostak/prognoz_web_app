@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 
 import { User } from '@models/v2/user.model';
 import { CurrentStateService } from '@services/current-state.service';
-import { AuthService } from '@services/v2/auth.service';
+import { AuthService } from '@services/api/v2/auth.service';
 import { TitleService } from '@services/title.service';
 import { NotificationsService } from 'angular2-notifications';
 import { environment } from '@env';
@@ -31,7 +31,7 @@ export class AuthSignUpComponent implements OnInit {
 
    public ngOnInit(): void {
       this.titleService.setTitle('Реєстрація');
-      this.user = this.authService.getUser();
+      this.user = this.currentStateService.getUser();
       const emailRegex = '^[a-z0-9]+(.[_a-z0-9]+)*@[a-z0-9-]+(.[a-z0-9-]+)*(.[a-z]{2,15})$';
       this.signUpForm = new FormGroup({
          name: new FormControl('', [Validators.required, Validators.minLength(3), Validators.maxLength(50)]),
@@ -64,7 +64,7 @@ export class AuthSignUpComponent implements OnInit {
    }
 
    private setAuthData(response: { token: string; user: User }): void {
-      this.authService.setUser(response.user);
-      this.authService.setToken(response.token);
+      this.currentStateService.setUser(response.user);
+      this.currentStateService.setToken(response.token);
    }
 }

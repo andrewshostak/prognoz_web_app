@@ -6,7 +6,7 @@ import { OpenedModal } from '@models/opened-modal.model';
 import { Pagination } from '@models/pagination.model';
 import { TeamParticipantSearch } from '@models/search/team/team-participant-search.model';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
-import { TeamParticipantService } from '@services/v2/team/team-participant.service';
+import { TeamParticipantService } from '@services/api/v2/team/team-participant.service';
 import { PaginationService } from '@services/pagination.service';
 import { NotificationsService } from 'angular2-notifications';
 import { remove } from 'lodash';

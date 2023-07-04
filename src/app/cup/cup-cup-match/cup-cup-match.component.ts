@@ -11,10 +11,10 @@ import { CupPrediction } from '@models/v2/cup/cup-prediction.model';
 import { User } from '@models/v2/user.model';
 import { PaginatedResponse } from '@models/paginated-response.model';
 import { CupMatchSearch } from '@models/search/cup/cup-match-search.model';
-import { AuthService } from '@services/v2/auth.service';
-import { CupCupMatchService } from '@services/v2/cup/cup-cup-match.service';
-import { CupMatchService } from '@services/v2/cup/cup-match.service';
-import { CupPredictionService } from '@services/v2/cup/cup-prediction.service';
+import { CupCupMatchService } from '@services/api/v2/cup/cup-cup-match.service';
+import { CupMatchService } from '@services/api/v2/cup/cup-match.service';
+import { CupPredictionService } from '@services/api/v2/cup/cup-prediction.service';
+import { CurrentStateService } from '@services/current-state.service';
 import { PaginationService } from '@services/pagination.service';
 import { TitleService } from '@services/title.service';
 import { UtilsService } from '@services/utils.service';
@@ -44,10 +44,10 @@ export class CupCupMatchComponent implements OnInit {
 
    constructor(
       private activatedRoute: ActivatedRoute,
-      private authService: AuthService,
       private cupCupMatchService: CupCupMatchService,
       private cupMatchService: CupMatchService,
       private cupPredictionService: CupPredictionService,
+      private currentStateService: CurrentStateService,
       private timePipe: TimePipe,
       private titleService: TitleService
    ) {}
@@ -69,7 +69,7 @@ export class CupCupMatchComponent implements OnInit {
    }
 
    public ngOnInit(): void {
-      this.user = this.authService.getUser();
+      this.user = this.currentStateService.getUser();
       this.getPageData(this.activatedRoute.snapshot.params.cupCupMatchId);
    }
 

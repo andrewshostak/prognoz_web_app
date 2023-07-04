@@ -3,8 +3,8 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 import { CommentService } from '@app/news/shared/comment.service';
 import { Comment } from '@models/v2/comment.model';
+import { CurrentStateService } from '@services/current-state.service';
 import { User } from '@models/v2/user.model';
-import { AuthService } from '@services/v2/auth.service';
 import { NotificationsService } from 'angular2-notifications';
 import { trim } from 'lodash';
 
@@ -21,13 +21,13 @@ export class CommentFormComponent implements OnInit {
    public user: User;
 
    constructor(
-      private authService: AuthService,
       private commentService: CommentService,
+      private currentStateService: CurrentStateService,
       private notificationsService: NotificationsService
    ) {}
 
    public ngOnInit(): void {
-      this.user = this.authService.getUser();
+      this.user = this.currentStateService.getUser();
 
       this.commentForm = new FormGroup({
          body: new FormControl(null, [Validators.required, Validators.minLength(10), Validators.maxLength(1000)])

@@ -4,7 +4,7 @@ import { FormGroup } from '@angular/forms';
 import { ChampionshipMatch } from '@models/v2/championship/championship-match.model';
 import { User } from '@models/v2/user.model';
 import { ChampionshipMatchStatistic } from '@models/v2/championship/championship-match-statistic.model';
-import { ChampionshipMatchService } from '@services/v2/championship/championship-match.service';
+import { ChampionshipMatchService } from '@services/api/v2/championship/championship-match.service';
 import { SettingsService } from '@services/settings.service';
 
 @Component({

@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 
 import { Match } from '@models/v2/match.model';
-import { MatchService } from '@services/v2/match.service';
+import { MatchService } from '@services/api/v2/match.service';
 
 @Component({
    selector: 'app-match-edit',

@@ -6,11 +6,11 @@ import { User } from '@models/v2/user.model';
 import { TeamTeamMatch } from '@models/v2/team/team-team-match.model';
 import { TeamSearch } from '@models/search/team/team-search.model';
 import { TeamTeamMatchSearch } from '@models/search/team/team-team-match-search.model';
-import { AuthService } from '@services/v2/auth.service';
-import { TeamService } from '@services/v2/team/team.service';
-import { TeamTeamMatchService } from '@services/v2/team/team-team-match.service';
+import { CurrentStateService } from '@services/current-state.service';
+import { TeamService } from '@services/api/v2/team/team.service';
+import { TeamTeamMatchService } from '@services/api/v2/team/team-team-match.service';
 import { PaginationService } from '@services/pagination.service';
-import { TeamMatchService } from '@services/v1/team-match.service';
+import { TeamMatchService } from '@services/api/v1/team-match.service';
 import { TitleService } from '@services/title.service';
 import { filter, tap } from 'rxjs/operators';
 
@@ -29,8 +29,8 @@ export class TeamMyComponent implements OnInit {
    public lastTeamStageId: number = 0;
 
    constructor(
-      private authService: AuthService,
       private activatedRoute: ActivatedRoute,
+      private currentStateService: CurrentStateService,
       private router: Router,
       private teamMatchService: TeamMatchService,
       private teamService: TeamService,
@@ -48,7 +48,7 @@ export class TeamMyComponent implements OnInit {
 
    public ngOnInit() {
       this.titleService.setTitle('Вибір статегії і воротаря - Командний');
-      this.authenticatedUser = this.authService.getUser();
+      this.authenticatedUser = this.currentStateService.getUser();
       this.subscribeToTeamStageIdUrlParamChange();
    }
 

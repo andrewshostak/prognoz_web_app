@@ -4,8 +4,8 @@ import { Router } from '@angular/router';
 
 import { User } from '@models/v2/user.model';
 import { FormValidatorService } from '@services/form-validator.service';
-import { AuthService } from '@services/v2/auth.service';
-import { UserService } from '@services/v2/user.service';
+import { CurrentStateService } from '@services/current-state.service';
+import { UserService } from '@services/api/v2/user.service';
 import { SettingsService } from '@services/settings.service';
 import { TitleService } from '@services/title.service';
 import { UtilsService } from '@services/utils.service';
@@ -27,7 +27,7 @@ export class MeComponent implements OnInit {
    public userImageSize: number = FormValidatorService.fileSizeLimits.userImage;
 
    constructor(
-      private authService: AuthService,
+      private currentStateService: CurrentStateService,
       private formValidatorService: FormValidatorService,
       private notificationsService: NotificationsService,
       private router: Router,
@@ -53,7 +53,7 @@ export class MeComponent implements OnInit {
    }
 
    public ngOnInit() {
-      this.authenticatedUser = Object.assign({}, this.authService.getUser());
+      this.authenticatedUser = Object.assign({}, this.currentStateService.getUser());
       this.setForm(this.authenticatedUser);
       this.titleService.setTitle('Редагувати профіль');
    }
@@ -62,9 +62,9 @@ export class MeComponent implements OnInit {
       this.spinnerButton = true;
       this.userService.updateUser(this.authenticatedUser.id, this.userEditForm.value).subscribe(
          response => {
-            const updated = assign(this.authService.getUser(), response);
-            this.authService.setUser(updated);
-            this.authenticatedUser = this.authService.getUser();
+            const updated = assign(this.currentStateService.getUser(), response);
+            this.currentStateService.setUser(updated);
+            this.authenticatedUser = this.currentStateService.getUser();
             this.notificationsService.success('Успішно', 'Інформацію змінено');
             this.spinnerButton = false;
             this.userEditForm.get('image').reset();

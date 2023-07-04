@@ -6,7 +6,7 @@ import { environment } from '@env';
 import { Match } from '@models/v2/match.model';
 import { PaginatedResponse } from '@models/paginated-response.model';
 import { MatchSearch } from '@models/search/match-search.model';
-import { MatchService } from '@services/v2/match.service';
+import { MatchService } from '@services/api/v2/match.service';
 
 describe('MatchService', () => {
    let matchService: MatchService;

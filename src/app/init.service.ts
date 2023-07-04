@@ -3,13 +3,13 @@ import { Injectable } from '@angular/core';
 
 import { environment } from '@env';
 import { User } from '@models/v2/user.model';
-import { AuthService } from '@services/v2/auth.service';
+import { CurrentStateService } from '@services/current-state.service';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 @Injectable()
 export class InitService {
-   constructor(private httpClient: HttpClient, private authService: AuthService) {}
+   constructor(private httpClient: HttpClient, private currentStateService: CurrentStateService) {}
 
    public initializeUser(): Promise<User> {
       return new Promise((resolve: (u: User) => void) => {
@@ -21,7 +21,7 @@ export class InitService {
          this.getUser().subscribe(
             response => {
                resolve(response);
-               this.authService.setUser(response);
+               this.currentStateService.setUser(response);
             },
             () => {
                resolve(null);

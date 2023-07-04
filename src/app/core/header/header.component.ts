@@ -3,8 +3,8 @@ import { NavigationEnd, Router } from '@angular/router';
 
 import { User } from '@models/v2/user.model';
 import { CurrentStateService } from '@services/current-state.service';
-import { AuthService } from '@services/v2/auth.service';
-import { HeaderImageService } from '@services/v2/header-image.service';
+import { AuthService } from '@services/api/v2/auth.service';
+import { HeaderImageService } from '@services/header-image.service';
 import { NotificationsService } from 'angular2-notifications';
 import { filter } from 'rxjs/operators';
 
@@ -35,7 +35,7 @@ export class HeaderComponent implements AfterViewInit, OnInit {
 
    public logout(): void {
       this.authService.logout().subscribe(() => {});
-      this.authService.setUser(null);
+      this.currentStateService.setUser(null);
       this.user = null;
       localStorage.clear();
       this.currentStateService.getOnlineUsers(null);
@@ -53,7 +53,7 @@ export class HeaderComponent implements AfterViewInit, OnInit {
 
    private subscribeToNavigationChanges(): void {
       this.router.events.pipe(filter(event => event instanceof NavigationEnd)).subscribe(() => {
-         this.user = this.authService.getUser();
+         this.user = this.currentStateService.getUser();
       });
    }
 }

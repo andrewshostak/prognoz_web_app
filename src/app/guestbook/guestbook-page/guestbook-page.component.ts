@@ -10,7 +10,7 @@ import { OpenedModal } from '@models/opened-modal.model';
 import { Pagination } from '@models/pagination.model';
 import { GuestbookMessageSearch } from '@models/search/guestbook-message-search.model';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
-import { AuthService } from '@services/v2/auth.service';
+import { CurrentStateService } from '@services/current-state.service';
 import { PaginationService } from '@services/pagination.service';
 import { TitleService } from '@services/title.service';
 import { NotificationsService } from 'angular2-notifications';
@@ -31,7 +31,7 @@ export class GuestbookPageComponent implements OnDestroy, OnInit {
 
    constructor(
       private activatedRoute: ActivatedRoute,
-      private authService: AuthService,
+      private currentStateService: CurrentStateService,
       private guestbookMessageService: GuestbookMessageService,
       private ngbModalService: NgbModal,
       private notificationsService: NotificationsService,
@@ -86,7 +86,7 @@ export class GuestbookPageComponent implements OnDestroy, OnInit {
          this.getGuestbookMessagesData(params.pageNumber);
       });
 
-      this.authenticatedUser = this.authService.getUser();
+      this.authenticatedUser = this.currentStateService.getUser();
    }
 
    public openConfirmModal(data: number, content: NgbModalRef | TemplateRef<Element>, submitted: (event) => void): void {

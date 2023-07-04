@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, CanActivate, CanActivateChild, Router } from '@angular/router';
 
-import { AuthService } from '@services/v2/auth.service';
+import { CurrentStateService } from '@services/current-state.service';
 import { get } from 'lodash';
 
 @Injectable()
 export class RoleGuard implements CanActivate, CanActivateChild {
-   constructor(private authService: AuthService, private router: Router) {}
+   constructor(private currentStateService: CurrentStateService, private router: Router) {}
 
    public canActivate(route: ActivatedRouteSnapshot): boolean {
       if (!get(route, 'data.roles')) {
@@ -16,7 +16,7 @@ export class RoleGuard implements CanActivate, CanActivateChild {
 
       const roles: string[] = get(route, 'data.roles') || [];
 
-      if (this.authService.hasRoles(roles, true)) {
+      if (this.currentStateService.hasRoles(roles, true)) {
          return true;
       }
 

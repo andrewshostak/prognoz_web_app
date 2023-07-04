@@ -6,9 +6,8 @@ import { CupPrediction } from '@models/v2/cup/cup-prediction.model';
 import { User } from '@models/v2/user.model';
 import { CupMatchSearch } from '@models/search/cup/cup-match-search.model';
 import { CurrentStateService } from '@services/current-state.service';
-import { AuthService } from '@services/v2/auth.service';
-import { CupMatchService } from '@services/v2/cup/cup-match.service';
-import { CupPredictionService } from '@services/v2/cup/cup-prediction.service';
+import { CupMatchService } from '@services/api/v2/cup/cup-match.service';
+import { CupPredictionService } from '@services/api/v2/cup/cup-prediction.service';
 import { PaginationService } from '@services/pagination.service';
 import { TitleService } from '@services/title.service';
 import { get } from 'lodash';
@@ -23,7 +22,6 @@ import { MatchState } from '@enums/match-state.enum';
 })
 export class CupPredictionsComponent implements OnInit {
    constructor(
-      private authService: AuthService,
       private cupMatchService: CupMatchService,
       private cupPredictionService: CupPredictionService,
       private currentStateService: CurrentStateService,
@@ -55,7 +53,7 @@ export class CupPredictionsComponent implements OnInit {
 
    ngOnInit() {
       this.titleService.setTitle('Зробити прогнози - Кубок');
-      this.authenticatedUser = this.authService.getUser();
+      this.authenticatedUser = this.currentStateService.getUser();
       if (this.authenticatedUser) {
          this.getPageData(this.authenticatedUser.id);
       }

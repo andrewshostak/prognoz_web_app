@@ -4,10 +4,10 @@ import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/fo
 import { Competition } from '@models/v2/competition.model';
 import { CupApplication } from '@models/v2/cup/cup-application.model';
 import { User } from '@models/v2/user.model';
-import { CupApplicationService } from '@services/v2/cup/cup-application.service';
+import { CupApplicationService } from '@services/api/v2/cup/cup-application.service';
 import { DeviceService } from '@services/device.service';
-import { AuthService } from '@services/v2/auth.service';
-import { UserService } from '@services/v2/user.service';
+import { CurrentStateService } from '@services/current-state.service';
+import { UserService } from '@services/api/v2/user.service';
 import { UtilsService } from '@services/utils.service';
 import { NotificationsService } from 'angular2-notifications';
 import { from, of } from 'rxjs';
@@ -29,8 +29,8 @@ export class CupApplicationCreateModalComponent implements OnInit {
    public spinnerButton = false;
 
    constructor(
-      private authService: AuthService,
       private cupApplicationService: CupApplicationService,
+      private currentStateService: CurrentStateService,
       private deviceService: DeviceService,
       private notificationsService: NotificationsService,
       private userService: UserService
@@ -95,6 +95,6 @@ export class CupApplicationCreateModalComponent implements OnInit {
    }
 
    private hasModeratorRights(): boolean {
-      return this.authService.hasPermissions(['create_cup_application_wo_validation']);
+      return this.currentStateService.hasPermissions(['create_cup_application_wo_validation']);
    }
 }

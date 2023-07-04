@@ -4,9 +4,10 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { CupRatingGroupTab } from '@enums/cup-rating-group-tab.enum';
 import { CupCupMatchState } from '@enums/cup-cup-match-state.enum';
 import { Sequence } from '@enums/sequence.enum';
+import { CupCompetitionService } from '@services/cup-competition.service';
 import { CupCupMatch } from '@models/v2/cup/cup-cup-match.model';
 import { CupCupMatchSearch } from '@models/search/cup/cup-cup-match-search.model';
-import { CupCupMatchService } from '@services/v2/cup/cup-cup-match.service';
+import { CupCupMatchService } from '@services/api/v2/cup/cup-cup-match.service';
 import { PaginationService } from '@services/pagination.service';
 import { isNil } from 'lodash';
 
@@ -32,7 +33,12 @@ export class CupCupMatchesGroupRatingComponent implements OnChanges {
       relations: ['homeUser', 'awayUser', 'cupStage']
    };
 
-   constructor(private activatedRoute: ActivatedRoute, private cupCupMatchService: CupCupMatchService, private router: Router) {}
+   constructor(
+      private activatedRoute: ActivatedRoute,
+      private cupCupMatchService: CupCupMatchService,
+      private cupCompetitionService: CupCompetitionService,
+      private router: Router
+   ) {}
 
    public ngOnChanges(changes: SimpleChanges) {
       if (changes) {
@@ -48,7 +54,7 @@ export class CupCupMatchesGroupRatingComponent implements OnChanges {
             response => {
                this.isLoading = false;
                const sequence = isActiveTab ? Sequence.Ascending : Sequence.Descending;
-               this.groupedCupCupMatches = this.cupCupMatchService.groupCupCupMatchesByStage(response.data, sequence);
+               this.groupedCupCupMatches = this.cupCompetitionService.groupCupCupMatchesByStage(response.data, sequence);
             },
             () => (this.isLoading = false)
          );

@@ -3,6 +3,7 @@ import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChange
 import { CompetitionState } from '@enums/competition-state.enum';
 import { Device } from '@models/device.model';
 import { Competition } from '@models/v2/competition.model';
+import { CurrentStateService } from '@services/current-state.service';
 import { Team } from '@models/v2/team/team.model';
 import { TeamParticipant } from '@models/v2/team/team-participant.model';
 import { User } from '@models/v2/user.model';
@@ -10,8 +11,7 @@ import { OpenedModal } from '@models/opened-modal.model';
 import { TeamParticipantSearch } from '@models/search/team/team-participant-search.model';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { DeviceService } from '@services/device.service';
-import { AuthService } from '@services/v2/auth.service';
-import { TeamParticipantService } from '@services/v2/team/team-participant.service';
+import { TeamParticipantService } from '@services/api/v2/team/team-participant.service';
 import { PaginationService } from '@services/pagination.service';
 import { NotificationsService } from 'angular2-notifications';
 import { pick, remove } from 'lodash';
@@ -39,7 +39,7 @@ export class TeamAndParticipantsComponent implements OnInit, OnChanges {
    public user: User;
 
    constructor(
-      private authService: AuthService,
+      private currentStateService: CurrentStateService,
       private deviceService: DeviceService,
       private ngbModalService: NgbModal,
       private notificationsService: NotificationsService,
@@ -99,7 +99,7 @@ export class TeamAndParticipantsComponent implements OnInit, OnChanges {
    }
 
    public ngOnInit(): void {
-      this.user = this.authService.getUser();
+      this.user = this.currentStateService.getUser();
    }
 
    public openConfirmModal(

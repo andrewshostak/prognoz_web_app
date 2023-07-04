@@ -8,10 +8,10 @@ import { ChampionshipPrediction } from '@models/v2/championship/championship-pre
 import { ChampionshipMatch } from '@models/v2/championship/championship-match.model';
 import { ChampionshipMatchSearch } from '@models/search/championship/championship-match-search.model';
 import { User } from '@models/v2/user.model';
-import { ChampionshipPredictionService } from '@services/v2/championship/championship-prediction.service';
-import { ChampionshipService } from '@services/championship/championship.service';
-import { AuthService } from '@services/v2/auth.service';
-import { ChampionshipMatchService } from '@services/v2/championship/championship-match.service';
+import { ChampionshipPredictionService } from '@services/api/v2/championship/championship-prediction.service';
+import { ChampionshipCompetitionService } from '@services/championship-competition.service';
+import { CurrentStateService } from '@services/current-state.service';
+import { ChampionshipMatchService } from '@services/api/v2/championship/championship-match.service';
 import { PaginationService } from '@services/pagination.service';
 import { TitleService } from '@services/title.service';
 import { UtilsService } from '@services/utils.service';
@@ -24,10 +24,10 @@ import { Competition } from '@models/v2/competition.model';
 import { CompetitionSearch } from '@models/search/competition-search.model';
 import { CompetitionState } from '@enums/competition-state.enum';
 import { Tournament } from '@enums/tournament.enum';
-import { CompetitionService } from '@services/v2/competition.service';
+import { CompetitionService } from '@services/api/v2/competition.service';
 import { ChampionshipRating } from '@models/v2/championship/championship-rating.model';
 import { ChampionshipRatingSearch } from '@models/search/championship/championship-rating-search.model';
-import { ChampionshipRatingService } from '@services/v2/championship/championship-rating.service';
+import { ChampionshipRatingService } from '@services/api/v2/championship/championship-rating.service';
 
 @Component({
    selector: 'app-championship-home',
@@ -46,12 +46,12 @@ export class ChampionshipHomeComponent implements OnInit {
    public spinnerButton = false;
 
    constructor(
-      private authService: AuthService,
       private championshipMatchService: ChampionshipMatchService,
       private championshipPredictionService: ChampionshipPredictionService,
-      private championshipService: ChampionshipService,
+      private championshipService: ChampionshipCompetitionService,
       private championshipRatingService: ChampionshipRatingService,
       private competitionService: CompetitionService,
+      private currentStateService: CurrentStateService,
       private notificationsService: NotificationsService,
       private titleService: TitleService
    ) {}
@@ -124,7 +124,7 @@ export class ChampionshipHomeComponent implements OnInit {
 
    public ngOnInit(): void {
       this.titleService.setTitle('Найближчі матчі, останні прогнози і топ-рейтингу - Чемпіонат');
-      this.authenticatedUser = this.authService.getUser();
+      this.authenticatedUser = this.currentStateService.getUser();
       this.championshipPredictionsForm = new FormGroup({});
       this.getChampionshipMatchesData();
       this.getChampionshipRatingData();

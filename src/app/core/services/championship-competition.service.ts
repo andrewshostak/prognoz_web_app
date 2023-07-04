@@ -5,9 +5,10 @@ import { MatchState } from '@enums/match-state.enum';
 import { ChampionshipMatch } from '@models/v2/championship/championship-match.model';
 import { ChampionshipPrediction } from '@models/v2/championship/championship-prediction.model';
 import { UtilsService } from '@services/utils.service';
+import { Award } from '@models/v2/award.model';
 
 @Injectable()
-export class ChampionshipService {
+export class ChampionshipCompetitionService {
    public static readonly pointsFull: number = 3;
    public static readonly pointsDiff: number = 2;
    public static readonly pointsWinner: number = 1;
@@ -29,13 +30,13 @@ export class ChampionshipService {
                switch (true) {
                   // full guessed (3 points)
                   case resultHome === predictHome && resultAway === predictAway:
-                     return ChampionshipService.pointsFull;
+                     return ChampionshipCompetitionService.pointsFull;
                   // guessed goal difference
                   case resultHome - predictHome === resultAway - predictAway:
-                     return ChampionshipService.pointsDiff;
+                     return ChampionshipCompetitionService.pointsDiff;
                   // guessed match winner
                   default:
-                     return ChampionshipService.pointsWinner;
+                     return ChampionshipCompetitionService.pointsWinner;
                }
             }
             break;
@@ -45,13 +46,13 @@ export class ChampionshipService {
                switch (true) {
                   // full guessed (3 points)
                   case resultHome === predictHome && resultAway === predictAway:
-                     return ChampionshipService.pointsFull;
+                     return ChampionshipCompetitionService.pointsFull;
                   // guessed goal difference
                   case resultHome - predictHome === resultAway - predictAway:
-                     return ChampionshipService.pointsDiff;
+                     return ChampionshipCompetitionService.pointsDiff;
                   // guessed match winner
                   default:
-                     return ChampionshipService.pointsWinner;
+                     return ChampionshipCompetitionService.pointsWinner;
                }
             }
             break;
@@ -60,16 +61,16 @@ export class ChampionshipService {
                switch (true) {
                   // full guessed (3 points)
                   case resultHome === predictHome && resultAway === predictAway:
-                     return ChampionshipService.pointsFull;
+                     return ChampionshipCompetitionService.pointsFull;
                   // guessed goal difference
                   case resultHome - predictHome === resultAway - predictAway:
-                     return ChampionshipService.pointsDiff;
+                     return ChampionshipCompetitionService.pointsDiff;
                }
             }
             break;
       }
 
-      return ChampionshipService.noPoints;
+      return ChampionshipCompetitionService.noPoints;
    }
 
    public static isChampionshipMatchGuessed(championshipMatch: ChampionshipMatch, championshipPrediction: ChampionshipPrediction): boolean {
@@ -78,12 +79,12 @@ export class ChampionshipService {
       }
       if (UtilsService.isScore(championshipPrediction.home, championshipPrediction.away)) {
          if (
-            ChampionshipService.getUserPointsOnMatch(
+            ChampionshipCompetitionService.getUserPointsOnMatch(
                championshipMatch.match.home,
                championshipMatch.match.away,
                championshipPrediction.home,
                championshipPrediction.away
-            ) === ChampionshipService.pointsFull
+            ) === ChampionshipCompetitionService.pointsFull
          ) {
             return true;
          }
@@ -145,5 +146,9 @@ export class ChampionshipService {
       }
 
       return championshipPredictionsToUpdate;
+   }
+
+   public static isChampionshipSeasonWinner(award: Award): boolean {
+      return award.id === 4;
    }
 }

@@ -1,21 +1,22 @@
 import { Injectable } from '@angular/core';
 
 import { User } from '@models/v2/user.model';
-import { AuthService } from '@services/v2/auth.service';
 import { PusherService } from '@services/pusher.service';
 import Pusher from 'pusher-js';
 import { Subject } from 'rxjs';
+import { get, uniq } from 'lodash';
 
 @Injectable()
 export class CurrentStateService {
+   private user: User = null;
    public onlineUsers: { id: number; name: string }[] = [];
    public onlineUserObservable = new Subject<void>();
    public pusherInstance: Pusher;
    private selectedCupCompetitionId: number;
    private selectedTeamCompetitionId: number;
 
-   constructor(private authService: AuthService, private pusherService: PusherService) {
-      this.getOnlineUsers(this.authService.getUser());
+   constructor(private pusherService: PusherService) {
+      this.getOnlineUsers(this.getUser());
    }
 
    set cupCompetitionId(cupCompetitionId: number) {
@@ -39,6 +40,57 @@ export class CurrentStateService {
    public initialize(): void {
       this.selectedTeamCompetitionId = this.getSelectedTeamCompetitionId();
       this.selectedCupCompetitionId = this.getSelectedCupCompetitionId();
+   }
+
+   public getUser(): User {
+      return this.user;
+   }
+
+   public setUser(user: User): void {
+      this.user = user;
+   }
+
+   public setToken(token: string): void {
+      localStorage.setItem('auth_token', token);
+   }
+
+   public getPermissions(): string[] {
+      const user = this.getUser();
+      if (!get(user, 'roles.length')) {
+         return [];
+      }
+
+      const permissions: string[] = [];
+      user.roles.forEach(role => {
+         if (!role.permissions) {
+            return;
+         }
+
+         role.permissions.forEach(permission => {
+            permissions.push(permission.slug);
+         });
+      });
+
+      return uniq(permissions);
+   }
+
+   public hasPermissions(permissions: string[], or?: boolean): boolean {
+      const userPermissions = this.getPermissions();
+
+      return or
+         ? permissions.some(permission => userPermissions.includes(permission))
+         : permissions.every(permission => userPermissions.includes(permission));
+   }
+
+   public hasRoles(roles: string[], or?: boolean): boolean {
+      const user = this.getUser();
+      if (!get(user, 'roles.length')) {
+         return false;
+      }
+
+      const userRoleSlugs = user.roles.map(role => role.slug);
+
+      return or ? roles.some(role => userRoleSlugs.includes(role)) : roles.every(role => userRoleSlugs.includes(role));
    }
 
    /**

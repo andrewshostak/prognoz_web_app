@@ -3,7 +3,7 @@ import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { CupStageType } from '@enums/cup-stage-type.enum';
 import { CupCupMatch } from '@models/v2/cup/cup-cup-match.model';
 import { CupStage } from '@models/v2/cup/cup-stage.model';
-import { CupCupMatchService } from '@services/v2/cup/cup-cup-match.service';
+import { CupCompetitionService } from '@services/cup-competition.service';
 import { isNil } from 'lodash';
 
 @Component({
@@ -19,11 +19,11 @@ export class CupCupMatchesDefaultComponent implements OnChanges {
    public sortedCupCupMatches: CupCupMatch[] = [];
    public isNil = isNil;
 
-   constructor(private cupCupMatchService: CupCupMatchService) {}
+   constructor(private cupCompetitionService: CupCompetitionService) {}
 
    public ngOnChanges(changes: SimpleChanges) {
       if (changes.cupCupMatches && changes.cupCupMatches.currentValue) {
-         this.sortedCupCupMatches = this.cupCupMatchService.sortCupCupMatches(changes.cupCupMatches.currentValue);
+         this.sortedCupCupMatches = this.cupCompetitionService.sortCupCupMatches(changes.cupCupMatches.currentValue);
       }
    }
 }

@@ -3,7 +3,7 @@ import { ActivatedRoute, Params } from '@angular/router';
 
 import { CompetitionState } from '@enums/competition-state.enum';
 import { Competition } from '@models/v2/competition.model';
-import { CompetitionService } from '@services/v2/competition.service';
+import { CompetitionService } from '@services/api/v2/competition.service';
 import { PaginationService } from '@services/pagination.service';
 import { CompetitionSearch } from '@models/search/competition-search.model';
 

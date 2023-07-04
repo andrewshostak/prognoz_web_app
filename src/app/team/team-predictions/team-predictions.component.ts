@@ -7,14 +7,14 @@ import { RequestParams } from '@models/request-params.model';
 import { TeamTeamMatchSearch } from '@models/search/team/team-team-match-search.model';
 import { TeamMatch } from '@models/v1/team-match.model';
 import { TeamPrediction } from '@models/v1/team-prediction.model';
-import { AuthService } from '@services/v2/auth.service';
-import { TeamTeamMatchService } from '@services/v2/team/team-team-match.service';
+import { CurrentStateService } from '@services/current-state.service';
+import { TeamTeamMatchService } from '@services/api/v2/team/team-team-match.service';
 import { PaginationService } from '@services/pagination.service';
-import { TeamMatchService } from '@services/v1/team-match.service';
-import { TeamPredictionService } from '@services/v1/team-prediction.service';
+import { TeamMatchService } from '@services/api/v1/team-match.service';
+import { TeamPredictionService } from '@services/api/v1/team-prediction.service';
 import { TitleService } from '@services/title.service';
 import { filter, tap } from 'rxjs/operators';
-import { TeamStageService } from '@services/v2/team/team-stage.service';
+import { TeamStageService } from '@services/api/v2/team/team-stage.service';
 
 @Component({
    selector: 'app-team-predictions',
@@ -24,7 +24,7 @@ import { TeamStageService } from '@services/v2/team/team-stage.service';
 export class TeamPredictionsComponent implements OnInit {
    constructor(
       private activatedRoute: ActivatedRoute,
-      private authService: AuthService,
+      private currentStateService: CurrentStateService,
       private router: Router,
       private teamMatchService: TeamMatchService,
       private teamTeamMatchService: TeamTeamMatchService,
@@ -90,7 +90,7 @@ export class TeamPredictionsComponent implements OnInit {
 
    ngOnInit() {
       this.titleService.setTitle('Зробити прогнози - Командний');
-      this.authenticatedUser = this.authService.getUser();
+      this.authenticatedUser = this.currentStateService.getUser();
       this.subscribeToTeamStageIdUrlParamChange();
    }
 

@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
 import { Competition } from '@models/v2/competition.model';
-import { CompetitionService } from '@services/v2/competition.service';
+import { CompetitionService } from '@services/api/v2/competition.service';
 
 @Component({
    selector: 'app-competition-edit',

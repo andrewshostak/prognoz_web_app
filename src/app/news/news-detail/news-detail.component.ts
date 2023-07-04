@@ -16,9 +16,9 @@ import { OpenedModal } from '@models/opened-modal.model';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { Sequence } from '@enums/sequence.enum';
 import { ModelStatus } from '@enums/model-status.enum';
-import { AuthService } from '@services/v2/auth.service';
+import { AuthService } from '@services/api/v2/auth.service';
 import * as moment from 'moment';
-import { NewsService } from '@services/v2/news.service';
+import { NewsService } from '@services/api/v2/news.service';
 import { News } from '@models/v2/news.model';
 
 @Component({
@@ -85,7 +85,7 @@ export class NewsDetailComponent implements OnInit {
       this.newsId = +this.activatedRoute.snapshot.params.id;
       this.getCommentsData(this.newsId);
       this.getNewsData(this.newsId);
-      this.authenticatedUser = this.authService.getUser();
+      this.authenticatedUser = this.currentStateService.getUser();
    }
 
    public openConfirmModal(data: number, content: NgbModalRef | TemplateRef<Element>, submitted: (event) => void): void {

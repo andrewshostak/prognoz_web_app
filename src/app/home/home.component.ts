@@ -5,11 +5,11 @@ import { MatchState } from '@enums/match-state.enum';
 import { Sequence } from '@enums/sequence.enum';
 import { ChampionshipMatch } from '@models/v2/championship/championship-match.model';
 import { ChampionshipMatchSearch } from '@models/search/championship/championship-match-search.model';
-import { ChampionshipMatchService } from '@services/v2/championship/championship-match.service';
+import { ChampionshipMatchService } from '@services/api/v2/championship/championship-match.service';
 import { SettingsService } from '@services/settings.service';
 import { PaginationService } from '@services/pagination.service';
 import { TitleService } from '@services/title.service';
-import { NewsService } from '@services/v2/news.service';
+import { NewsService } from '@services/api/v2/news.service';
 import { News } from '@models/v2/news.model';
 import { NewsSearch } from '@models/search/news-search.model';
 

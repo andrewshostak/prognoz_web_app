@@ -1,10 +1,10 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
 
+import { CurrentStateService } from '@services/current-state.service';
 import { Team } from '@models/v2/team/team.model';
 import { TeamSearch } from '@models/search/team/team-search.model';
-import { AuthService } from '@services/v2/auth.service';
-import { TeamService } from '@services/v2/team/team.service';
+import { TeamService } from '@services/api/v2/team/team.service';
 import { PaginationService } from '@services/pagination.service';
 import { UtilsService } from '@services/utils.service';
 
@@ -21,7 +21,7 @@ export class TeamSelectModalComponent implements OnInit {
    public teamForm: FormGroup;
    public showNotFoundMessage: boolean;
 
-   constructor(private authService: AuthService, private teamService: TeamService) {}
+   constructor(private currentStateService: CurrentStateService, private teamService: TeamService) {}
 
    public ngOnInit(): void {
       this.teamForm = new FormGroup({ id: new FormControl(null, [Validators.required]) });
@@ -47,7 +47,7 @@ export class TeamSelectModalComponent implements OnInit {
 
    private getTeamsData(): void {
       const search: TeamSearch = {
-         captainId: this.authService.getUser().id,
+         captainId: this.currentStateService.getUser().id,
          page: 1,
          limit: PaginationService.limit.teamTeams
       };

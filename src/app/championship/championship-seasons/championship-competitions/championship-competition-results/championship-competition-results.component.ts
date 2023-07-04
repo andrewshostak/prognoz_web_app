@@ -5,7 +5,7 @@ import { MatchState } from '@enums/match-state.enum';
 import { Sequence } from '@enums/sequence.enum';
 import { ChampionshipMatch } from '@models/v2/championship/championship-match.model';
 import { ChampionshipMatchSearch } from '@models/search/championship/championship-match-search.model';
-import { ChampionshipMatchService } from '@services/v2/championship/championship-match.service';
+import { ChampionshipMatchService } from '@services/api/v2/championship/championship-match.service';
 import { PaginationService } from '@services/pagination.service';
 import { TitleService } from '@services/title.service';
 

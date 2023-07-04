@@ -6,7 +6,7 @@ import { Device } from '@models/device.model';
 import { User } from '@models/v2/user.model';
 import { CurrentStateService } from '@services/current-state.service';
 import { DeviceService } from '@services/device.service';
-import { AuthService } from '@services/v2/auth.service';
+import { AuthService } from '@services/api/v2/auth.service';
 import { TitleService } from '@services/title.service';
 import { NotificationsService } from 'angular2-notifications';
 import { from, of } from 'rxjs';
@@ -33,7 +33,7 @@ export class AuthSignInComponent implements OnInit {
 
    public ngOnInit(): void {
       this.titleService.setTitle('Вхід');
-      this.user = this.authService.getUser();
+      this.user = this.currentStateService.getUser();
       this.signInForm = new FormGroup({
          name: new FormControl('', [Validators.required, Validators.minLength(3)]),
          password: new FormControl('', [Validators.required])
@@ -71,7 +71,7 @@ export class AuthSignInComponent implements OnInit {
    }
 
    private setAuthData(response: { token: string; user: User }): void {
-      this.authService.setUser(response.user);
-      this.authService.setToken(response.token);
+      this.currentStateService.setUser(response.user);
+      this.currentStateService.setToken(response.token);
    }
 }

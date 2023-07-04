@@ -8,10 +8,10 @@ import { PaginatedResponse } from '@models/paginated-response.model';
 import { TeamRatingSearch } from '@models/search/team/team-rating-search.model';
 import { TeamRatingUserSearch } from '@models/search/team/team-rating-user-search.model';
 import { User } from '@models/v2/user.model';
-import { AuthService } from '@services/v2/auth.service';
-import { CompetitionService } from '@services/v2/competition.service';
-import { TeamRatingUserService } from '@services/v2/team/team-rating-user.service';
-import { TeamRatingService } from '@services/v2/team/team-rating.service';
+import { CurrentStateService } from '@services/current-state.service';
+import { CompetitionService } from '@services/api/v2/competition.service';
+import { TeamRatingUserService } from '@services/api/v2/team/team-rating-user.service';
+import { TeamRatingService } from '@services/api/v2/team/team-rating.service';
 import { PaginationService } from '@services/pagination.service';
 import { TitleService } from '@services/title.service';
 import { groupBy } from 'lodash';
@@ -34,8 +34,8 @@ export class TeamRatingComponent implements OnDestroy, OnInit {
    public competition: Competition;
 
    constructor(
-      private authService: AuthService,
       private activatedRoute: ActivatedRoute,
+      private currentStateService: CurrentStateService,
       private competitionService: CompetitionService,
       private router: Router,
       private teamRatingService: TeamRatingService,
@@ -55,7 +55,7 @@ export class TeamRatingComponent implements OnDestroy, OnInit {
 
    public ngOnInit() {
       this.titleService.setTitle('Рейтинг команд, бомбардирів і воротарів - Командний');
-      this.authenticatedUser = this.authService.getUser();
+      this.authenticatedUser = this.currentStateService.getUser();
       this.activatedRouteSubscription = this.activatedRoute.params
          .pipe(filter(params => params.competition_id))
          .subscribe((params: Params) => {

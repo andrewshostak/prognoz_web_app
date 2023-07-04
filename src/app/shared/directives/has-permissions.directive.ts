@@ -1,6 +1,6 @@
 import { Directive, ElementRef, Input, TemplateRef, ViewContainerRef } from '@angular/core';
 
-import { AuthService } from '@services/v2/auth.service';
+import { CurrentStateService } from '@services/current-state.service';
 import { isNil } from 'lodash';
 
 @Directive({
@@ -11,7 +11,7 @@ export class HasPermissionsDirective {
    private elseTemplateRef: TemplateRef<any>;
 
    constructor(
-      private authService: AuthService,
+      private currentStateService: CurrentStateService,
       private elementRef: ElementRef,
       private templateRef: TemplateRef<any>,
       private viewContainerRef: ViewContainerRef
@@ -20,7 +20,7 @@ export class HasPermissionsDirective {
    @Input()
    set appHasPermissions(params: { permissions: string[]; or?: boolean; otherCondition?: boolean }) {
       params.otherCondition = isNil(params.otherCondition) ? true : params.otherCondition;
-      if (params && params.permissions && this.authService.hasPermissions(params.permissions, params.or) && params.otherCondition) {
+      if (params && params.permissions && this.currentStateService.hasPermissions(params.permissions, params.or) && params.otherCondition) {
          this.thenTemplateRef = this.templateRef;
          this.updateView();
       }

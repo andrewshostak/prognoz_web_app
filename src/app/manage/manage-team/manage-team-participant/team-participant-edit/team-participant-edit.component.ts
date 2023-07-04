@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
 import { TeamParticipant } from '@models/v2/team/team-participant.model';
-import { TeamParticipantService } from '@services/v2/team/team-participant.service';
+import { TeamParticipantService } from '@services/api/v2/team/team-participant.service';
 
 @Component({
    selector: 'app-team-participant-edit',

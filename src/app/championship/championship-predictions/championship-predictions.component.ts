@@ -6,10 +6,10 @@ import { Sequence } from '@enums/sequence.enum';
 import { ChampionshipMatch } from '@models/v2/championship/championship-match.model';
 import { ChampionshipMatchSearch } from '@models/search/championship/championship-match-search.model';
 import { User } from '@models/v2/user.model';
-import { AuthService } from '@services/v2/auth.service';
-import { ChampionshipPredictionService } from '@services/v2/championship/championship-prediction.service';
-import { ChampionshipService } from '@services/championship/championship.service';
-import { ChampionshipMatchService } from '@services/v2/championship/championship-match.service';
+import { CurrentStateService } from '@services/current-state.service';
+import { ChampionshipPredictionService } from '@services/api/v2/championship/championship-prediction.service';
+import { ChampionshipCompetitionService } from '@services/championship-competition.service';
+import { ChampionshipMatchService } from '@services/api/v2/championship/championship-match.service';
 import { PaginationService } from '@services/pagination.service';
 import { TitleService } from '@services/title.service';
 import { NotificationsService } from 'angular2-notifications';
@@ -27,17 +27,17 @@ export class ChampionshipPredictionsComponent implements OnInit {
    public spinnerButton = false;
 
    constructor(
-      private authService: AuthService,
       private championshipMatchService: ChampionshipMatchService,
       private championshipPredictionService: ChampionshipPredictionService,
-      private championshipService: ChampionshipService,
+      private championshipService: ChampionshipCompetitionService,
+      private currentStateService: CurrentStateService,
       private notificationsService: NotificationsService,
       private titleService: TitleService
    ) {}
 
    public ngOnInit(): void {
       this.titleService.setTitle('Зробити прогнози - Чемпіонат');
-      this.authenticatedUser = this.authService.getUser();
+      this.authenticatedUser = this.currentStateService.getUser();
       this.championshipPredictionsForm = new FormGroup({});
       this.getChampionshipMatchesData();
    }

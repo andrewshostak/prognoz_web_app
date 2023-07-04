@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 
-import { ChampionshipRatingService } from '@services/v2/championship/championship-rating.service';
+import { ChampionshipRatingService } from '@services/api/v2/championship/championship-rating.service';
 import { ChampionshipRating } from '@models/v2/championship/championship-rating.model';
-import { AuthService } from '@services/v2/auth.service';
+import { CurrentStateService } from '@services/current-state.service';
 import { User } from '@models/v2/user.model';
 import { TitleService } from '@services/title.service';
 
@@ -14,9 +14,9 @@ import { TitleService } from '@services/title.service';
 })
 export class ChampionshipSeasonRatingComponent implements OnInit {
    constructor(
-      private authService: AuthService,
       private activatedRoute: ActivatedRoute,
       private championshipRatingService: ChampionshipRatingService,
+      private currentStateService: CurrentStateService,
       private titleService: TitleService
    ) {}
 
@@ -24,7 +24,7 @@ export class ChampionshipSeasonRatingComponent implements OnInit {
    championshipRatingItems: Partial<ChampionshipRating>[];
 
    ngOnInit() {
-      this.authenticatedUser = this.authService.getUser();
+      this.authenticatedUser = this.currentStateService.getUser();
       this.activatedRoute.params.forEach((params: Params) => {
          this.titleService.setTitle(`Рейтинг гравців в сезоні ${params.id} - Чемпіонат`);
          this.championshipRatingService.getChampionshipRatingSeason(params.id as number).subscribe(response => {

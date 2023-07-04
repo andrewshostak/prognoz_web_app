@@ -3,8 +3,8 @@ import { ActivatedRoute, Params } from '@angular/router';
 
 import { Team } from '@models/v2/team/team.model';
 import { User } from '@models/v2/user.model';
-import { AuthService } from '@services/v2/auth.service';
-import { TeamService } from '@services/v2/team/team.service';
+import { CurrentStateService } from '@services/current-state.service';
+import { TeamService } from '@services/api/v2/team/team.service';
 
 @Component({
    selector: 'app-team-edit',
@@ -16,10 +16,14 @@ export class TeamEditComponent implements OnInit {
    public user: User;
    public notCaptainsTeamMessage: string;
 
-   constructor(private activatedRoute: ActivatedRoute, private authService: AuthService, private teamService: TeamService) {}
+   constructor(
+      private activatedRoute: ActivatedRoute,
+      private currentStateService: CurrentStateService,
+      private teamService: TeamService
+   ) {}
 
    public ngOnInit() {
-      this.user = this.authService.getUser();
+      this.user = this.currentStateService.getUser();
       this.team = { captain_id: this.user.id } as Team;
       this.activatedRoute.params.forEach((params: Params) => {
          this.getTeamData(params.id);

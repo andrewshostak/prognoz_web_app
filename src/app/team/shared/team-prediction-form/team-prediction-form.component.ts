@@ -2,7 +2,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import { TeamPrediction } from '@models/v1/team-prediction.model';
-import { TeamPredictionService } from '@services/v2/team/team-prediction.service';
+import { TeamPredictionService } from '@services/api/v2/team/team-prediction.service';
 import { UtilsService } from '@services/utils.service';
 import { NotificationsService } from 'angular2-notifications';
 import { SettingsService } from '@services/settings.service';

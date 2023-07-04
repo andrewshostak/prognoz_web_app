@@ -4,8 +4,8 @@ import { MatchState } from '@enums/match-state.enum';
 import { Sequence } from '@enums/sequence.enum';
 import { ChampionshipMatchSearch } from '@models/search/championship/championship-match-search.model';
 import { User } from '@models/v2/user.model';
-import { AuthService } from '@services/v2/auth.service';
-import { ChampionshipMatchService } from '@services/v2/championship/championship-match.service';
+import { ChampionshipMatchService } from '@services/api/v2/championship/championship-match.service';
+import { CurrentStateService } from '@services/current-state.service';
 import { TitleService } from '@services/title.service';
 import { get } from 'lodash';
 import { iif, Observable, of } from 'rxjs';
@@ -14,11 +14,11 @@ import { Competition } from '@models/v2/competition.model';
 import { CompetitionSearch } from '@models/search/competition-search.model';
 import { CompetitionState } from '@enums/competition-state.enum';
 import { Tournament } from '@enums/tournament.enum';
-import { CompetitionService } from '@services/v2/competition.service';
+import { CompetitionService } from '@services/api/v2/competition.service';
 import { ChampionshipRating } from '@models/v2/championship/championship-rating.model';
 import { ChampionshipRatingSearch } from '@models/search/championship/championship-rating-search.model';
 import { PaginationService } from '@services/pagination.service';
-import { ChampionshipRatingService } from '@services/v2/championship/championship-rating.service';
+import { ChampionshipRatingService } from '@services/api/v2/championship/championship-rating.service';
 import { mergeMap } from 'rxjs/operators';
 
 @Component({
@@ -32,16 +32,16 @@ export class ChampionshipRatingComponent implements OnInit {
    public ratingUpdatedAt: string;
 
    constructor(
-      private authService: AuthService,
       private championshipRatingService: ChampionshipRatingService,
       private championshipMatchService: ChampionshipMatchService,
       private competitionService: CompetitionService,
+      private currentStateService: CurrentStateService,
       private titleService: TitleService
    ) {}
 
    public ngOnInit(): void {
       this.titleService.setTitle('Рейтинг гравців - Чемпіонат');
-      this.authenticatedUser = this.authService.getUser();
+      this.authenticatedUser = this.currentStateService.getUser();
       this.getLastMatchData();
       this.getActiveCompetitionObservable()
          .pipe(

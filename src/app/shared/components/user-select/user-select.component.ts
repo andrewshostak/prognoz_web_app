@@ -14,7 +14,7 @@ import { Sequence } from '@enums/sequence.enum';
 import { User } from '@models/v2/user.model';
 import { PaginatedResponse } from '@models/paginated-response.model';
 import { UserSearch } from '@models/search/user-search.model';
-import { UserService } from '@services/v2/user.service';
+import { UserService } from '@services/api/v2/user.service';
 import { SettingsService } from '@services/settings.service';
 import { PaginationService } from '@services/pagination.service';
 import { trim } from 'lodash';

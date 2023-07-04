@@ -3,7 +3,7 @@ import { ActivatedRoute, Params, Router } from '@angular/router';
 
 import { Tournament } from '@enums/tournament.enum';
 import { Competition } from '@models/v2/competition.model';
-import { CompetitionService } from '@services/v2/competition.service';
+import { CompetitionService } from '@services/api/v2/competition.service';
 import { TitleService } from '@services/title.service';
 import { SettingsService } from '@services/settings.service';
 

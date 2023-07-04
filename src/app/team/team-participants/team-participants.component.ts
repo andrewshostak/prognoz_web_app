@@ -13,11 +13,11 @@ import { PaginatedResponse } from '@models/paginated-response.model';
 import { TeamParticipantSearch } from '@models/search/team/team-participant-search.model';
 import { TeamSearch } from '@models/search/team/team-search.model';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
-import { AuthService } from '@services/v2/auth.service';
-import { CompetitionService } from '@services/v2/competition.service';
-import { TeamCompetitionService } from '@services/v2/team/team-competition.service';
-import { TeamService } from '@services/v2/team/team.service';
-import { TeamParticipantService } from '@services/v2/team/team-participant.service';
+import { CurrentStateService } from '@services/current-state.service';
+import { CompetitionService } from '@services/api/v2/competition.service';
+import { TeamCompetitionService } from '@services/team-competition.service';
+import { TeamService } from '@services/api/v2/team/team.service';
+import { TeamParticipantService } from '@services/api/v2/team/team-participant.service';
 import { PaginationService } from '@services/pagination.service';
 import { TitleService } from '@services/title.service';
 import { NotificationsService } from 'angular2-notifications';
@@ -43,8 +43,8 @@ export class TeamParticipantsComponent implements OnDestroy, OnInit {
 
    constructor(
       private activatedRoute: ActivatedRoute,
-      private authService: AuthService,
       private competitionService: CompetitionService,
+      private currentStateService: CurrentStateService,
       private ngbModalService: NgbModal,
       private notificationsService: NotificationsService,
       private router: Router,
@@ -72,7 +72,7 @@ export class TeamParticipantsComponent implements OnDestroy, OnInit {
    }
 
    public ngOnInit(): void {
-      this.user = this.authService.getUser();
+      this.user = this.currentStateService.getUser();
       this.titleService.setTitle('Заявки на участь / склади команд - Командний');
       this.activatedRoute.params
          .pipe(

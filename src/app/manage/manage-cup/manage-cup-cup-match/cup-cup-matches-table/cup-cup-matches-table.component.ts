@@ -6,7 +6,7 @@ import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { NotificationsService } from 'angular2-notifications';
 import { Subscription } from 'rxjs';
 import { UtilsService } from '@services/utils.service';
-import { CupCupMatchService } from '@services/v2/cup/cup-cup-match.service';
+import { CupCupMatchService } from '@services/api/v2/cup/cup-cup-match.service';
 import { CupCupMatchSearch } from '@models/search/cup/cup-cup-match-search.model';
 import { PaginationService } from '@services/pagination.service';
 import { Sequence } from '@enums/sequence.enum';
