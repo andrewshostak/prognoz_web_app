@@ -15,9 +15,7 @@ export class CurrentStateService {
    private selectedCupCompetitionId: number;
    private selectedTeamCompetitionId: number;
 
-   constructor(private pusherService: PusherService) {
-      this.getOnlineUsers(this.getUser());
-   }
+   constructor(private pusherService: PusherService) {}
 
    set cupCompetitionId(cupCompetitionId: number) {
       this.selectedCupCompetitionId = cupCompetitionId;

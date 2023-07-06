@@ -22,6 +22,7 @@ export class InitService {
             response => {
                resolve(response);
                this.currentStateService.setUser(response);
+               this.currentStateService.getOnlineUsers(this.currentStateService.getUser());
             },
             () => {
                resolve(null);
