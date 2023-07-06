@@ -7,7 +7,7 @@ import { Observable } from 'rxjs';
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
    public createHeaderValue(authToken: string): string {
-      return `Bearer {${authToken}}`;
+      return `Bearer ${authToken}`;
    }
 
    public intercept(httpRequest: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {

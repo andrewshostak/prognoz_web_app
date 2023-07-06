@@ -22,7 +22,7 @@ export class PusherService {
          auth: {
             params: {},
             headers: {
-               Authorization: 'Bearer {' + localStorage.getItem('auth_token') + '}'
+               Authorization: 'Bearer ' + localStorage.getItem('auth_token')
             }
          }
       });
