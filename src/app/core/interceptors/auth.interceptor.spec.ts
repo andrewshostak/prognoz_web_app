@@ -40,7 +40,7 @@ describe('AuthInterceptor', () => {
    describe('#createHeaderValue', () => {
       it('should create authorization header value', () => {
          const authToken = 'bla-bla';
-         expect(authInterceptor.createHeaderValue(authToken)).toEqual(`Bearer {${authToken}}`);
+         expect(authInterceptor.createHeaderValue(authToken)).toEqual(`Bearer ${authToken}`);
       });
    });
 
