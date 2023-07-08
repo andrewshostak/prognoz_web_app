@@ -4,7 +4,7 @@ services:
       container_name: prognoz_web_app_dev_server
       build:
          context: ./
-         dockerfile: local.Dockerfile
+         dockerfile: dev.Dockerfile
       environment:
          - IMAGE_BASE_URL=${IMAGE_BASE_URL}
          - API_BASE_URL=${API_BASE_URL}
