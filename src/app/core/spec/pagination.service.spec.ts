@@ -4,7 +4,7 @@ import { PaginationService } from '@services/pagination.service';
 
 describe('PaginationService', () => {
    describe('#getOffset', () => {
-      const offsetValues: Array<{ pageNumber: number; itemsPerPage: number }> = [
+      const offsetValues: { pageNumber: number; itemsPerPage: number }[] = [
          { pageNumber: 1, itemsPerPage: 10 },
          { pageNumber: 1, itemsPerPage: 20 },
          { pageNumber: 1, itemsPerPage: 50 },

@@ -6,7 +6,7 @@ import { Component, OnInit } from '@angular/core';
    templateUrl: './manage.component.html'
 })
 export class ManageComponent implements OnInit {
-   public navigationItems: Array<{ title: string; iconClass: string; routerLink: string }>;
+   public navigationItems: { title: string; iconClass: string; routerLink: string }[];
 
    public ngOnInit(): void {
       this.navigationItems = [

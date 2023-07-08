@@ -5,9 +5,10 @@ import { AppModule } from './app';
 import { environment } from '@env';
 
 if (environment.production) {
-    enableProdMode();
+   enableProdMode();
 }
 
 platformBrowserDynamic()
-    .bootstrapModule(AppModule, { preserveWhitespaces: true })
-    .catch(err => console.log(err));
+   .bootstrapModule(AppModule, { preserveWhitespaces: true })
+   // tslint:disable-next-line:no-console
+   .catch(err => console.log(err));
