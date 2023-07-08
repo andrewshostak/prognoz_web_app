@@ -31,11 +31,11 @@ describe('ErrorInterceptor', () => {
          ]
       });
 
-      errorInterceptor = TestBed.get(ErrorInterceptor);
-      exampleService = TestBed.get(MatchService);
-      httpTestingController = TestBed.get(HttpTestingController);
-      httpClient = TestBed.get(HttpClient);
-      notificationsService = TestBed.get(NotificationsService);
+      errorInterceptor = TestBed.inject(ErrorInterceptor);
+      exampleService = TestBed.inject(MatchService);
+      httpTestingController = TestBed.inject(HttpTestingController);
+      httpClient = TestBed.inject(HttpClient);
+      notificationsService = TestBed.inject(NotificationsService);
    });
 
    it('should have POST, PUT, DELETE methods', () => {

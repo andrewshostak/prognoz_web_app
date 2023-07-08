@@ -30,11 +30,11 @@ describe('AuthInterceptor', () => {
          ]
       });
 
-      authInterceptor = TestBed.get(AuthInterceptor);
-      exampleService = TestBed.get(MatchService);
-      exampleV1Service = TestBed.get(TeamPredictionService);
-      httpTestingController = TestBed.get(HttpTestingController);
-      httpClient = TestBed.get(HttpClient);
+      authInterceptor = TestBed.inject(AuthInterceptor);
+      exampleService = TestBed.inject(MatchService);
+      exampleV1Service = TestBed.inject(TeamPredictionService);
+      httpTestingController = TestBed.inject(HttpTestingController);
+      httpClient = TestBed.inject(HttpClient);
    });
 
    describe('#createHeaderValue', () => {

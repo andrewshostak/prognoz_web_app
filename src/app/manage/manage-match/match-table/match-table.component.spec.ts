@@ -37,11 +37,11 @@ describe('MatchTableComponent', () => {
          ]
       });
 
-      matchTableComponent = TestBed.get(MatchTableComponent);
-      matchService = TestBed.get(MatchService);
-      activatedRoute = TestBed.get(ActivatedRoute);
-      ngbModalService = TestBed.get(NgbModal);
-      notificationsService = TestBed.get(NotificationsService);
+      matchTableComponent = TestBed.inject(MatchTableComponent);
+      matchService = TestBed.inject(MatchService);
+      activatedRoute = TestBed.inject(ActivatedRoute);
+      ngbModalService = TestBed.inject(NgbModal);
+      notificationsService = TestBed.inject(NotificationsService);
    });
 
    it('should not have any activatedRouteSubscription value', () => {
@@ -129,7 +129,7 @@ describe('MatchTableComponent', () => {
          spyOn(matchService, 'getMatches').and.callThrough();
          matchTableComponent.getMatchesData(20);
 
-         expect(matchTableComponent.matches).toEqual(matchService.paginatedMatchesResponse.data);
+         expect(matchTableComponent.matches).toEqual([{ id: 1, home_club_id: 24 }, { id: 2 }, { id: 3 }] as Match[]);
       });
 
       it('should call getPaginationData if response from service is successful', () => {
@@ -179,7 +179,7 @@ describe('MatchTableComponent', () => {
       });
 
       it('should call getMatchesData with appropriate param', () => {
-         TestBed.get(ActivatedRoute).params = of({ pageNumber: 823 });
+         TestBed.inject(ActivatedRoute).params = of({ pageNumber: 823 });
          spyOn(matchTableComponent, 'getMatchesData');
          matchTableComponent.ngOnInit();
 
@@ -190,10 +190,11 @@ describe('MatchTableComponent', () => {
    describe('#openConfirmModal', () => {
       it('should set openedModal', () => {
          spyOn(ngbModalService, 'open').and.callThrough();
-         matchTableComponent.openConfirmModal(ngbModalService.reference.componentInstance, { id: 422 } as Match, () => {});
+         matchTableComponent.openConfirmModal(('aaa' as unknown) as NgbModalRef, { id: 422 } as Match, () => {});
 
-         expect(ngbModalService.open).toHaveBeenCalledWith(ngbModalService.reference.componentInstance, { centered: true });
-         expect(matchTableComponent.openedModal.reference).toEqual(ngbModalService.reference as NgbModalRef);
+         expect(ngbModalService.open).toHaveBeenCalledWith(('aaa' as unknown) as NgbModalRef, { centered: true });
+         expect(matchTableComponent.openedModal.reference.componentInstance).toEqual(('aaa' as unknown) as NgbModalRef);
+         expect(matchTableComponent.openedModal.reference.close).toBeDefined();
          expect(matchTableComponent.openedModal.data).toEqual({ id: 422 } as Match);
          expect(matchTableComponent.openedModal.submitted).not.toBeNull();
       });

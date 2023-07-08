@@ -18,8 +18,8 @@ describe('MatchService', () => {
          providers: [MatchService]
       });
 
-      matchService = TestBed.get(MatchService);
-      httpTestingController = TestBed.get(HttpTestingController);
+      matchService = TestBed.inject(MatchService);
+      httpTestingController = TestBed.inject(HttpTestingController);
    });
 
    it('should have matchesUrl', () => {
@@ -56,6 +56,7 @@ describe('MatchService', () => {
                matchSearch.orderBy
             }&sequence=${matchSearch.sequence}`
          );
+         expect(testRequest.request.url).toEqual(`${matchService.matchesUrl}`);
          testRequest.flush(someMatchesData);
       });
 
