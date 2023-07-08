@@ -3,7 +3,7 @@
    "version": 1,
    "newProjectRoot": "projects",
    "projects": {
-      "prognoz-angular": {
+      "prognoz": {
          "root": "",
          "sourceRoot": "src",
          "projectType": "application",
@@ -75,11 +75,11 @@
                   "customWebpackConfig": {
                      "path": "./extra-webpack.config.js"
                   },
-                  "browserTarget": "prognoz-angular:build"
+                  "browserTarget": "prognoz:build"
                },
                "configurations": {
                   "production": {
-                     "browserTarget": "prognoz-angular:build:production"
+                     "browserTarget": "prognoz:build:production"
                   }
                }
             },
@@ -105,7 +105,7 @@
          }
       }
    },
-   "defaultProject": "prognoz-angular",
+   "defaultProject": "prognoz",
    "cli": {
       "analytics": false
    }

@@ -4,7 +4,7 @@ version: 2
 jobs:
   install_dependencies:
     parallelism: 1
-    working_directory: ~/prognoz_v2_angular
+    working_directory: ~/prognoz_web_app
     docker:
       - image: circleci/node:12-browsers
 
@@ -29,7 +29,7 @@ jobs:
             - .
   test:
     parallelism: 1
-    working_directory: ~/prognoz_v2_angular
+    working_directory: ~/prognoz_web_app
     docker:
       - image: circleci/node:12-browsers
 
@@ -47,7 +47,7 @@ jobs:
 
   lint:
     parallelism: 1
-    working_directory: ~/prognoz_v2_angular
+    working_directory: ~/prognoz_web_app
     docker:
       - image: circleci/node:12-browsers
 
@@ -59,7 +59,7 @@ jobs:
 
   build:
     parallelism: 1
-    working_directory: ~/prognoz_v2_angular
+    working_directory: ~/prognoz_web_app
     docker:
       - image: circleci/node:12-browsers
 
@@ -78,7 +78,7 @@ jobs:
 
   deploy:
     parallelism: 1
-    working_directory: ~/prognoz_v2_angular
+    working_directory: ~/prognoz_web_app
     docker:
       - image: circleci/node:12-browsers
 
