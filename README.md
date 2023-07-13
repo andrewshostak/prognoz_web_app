@@ -1,6 +1,7 @@
-# Prognoz
+# Prognoz Web App
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.5.4.
+[![en](https://img.shields.io/badge/lang-en-red.svg)](https://github.com/andrewshostak/prognoz_web_app/blob/master/README.md)
+[![ua](https://img.shields.io/badge/lang-ua-yellow.svg)](https://github.com/andrewshostak/prognoz_web_app/blob/master/README.ua.md)
 
 ## Development server
 
@@ -17,10 +18,6 @@ Run `ng build` to build the project. The build artifacts will be stored in the `
 ## Running unit tests
 
 Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
 
 ## Further help
 
