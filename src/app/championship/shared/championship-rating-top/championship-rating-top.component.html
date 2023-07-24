@@ -17,7 +17,7 @@
    </div>
 </div>
 <!-- rating card -->
-<div *ngIf="championshipRatingItems" class="card shadow mt-2 mb-2">
+<div *ngIf="championshipRatingItems && championshipRatingItems.length" class="card shadow mt-2 mb-2">
    <h4 class="card-header text-xs-center">Топ-{{ championshipRatingItems.length }} рейтингу</h4>
    <table class="table table-hover mb-0">
       <tbody>
