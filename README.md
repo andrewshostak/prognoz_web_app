@@ -39,7 +39,7 @@ The following libraries used as well:
 -  [quill](https://github.com/quilljs/quill) / [ngx-quill](https://github.com/KillerCodeMonkey/ngx-quill)
 -  [pusher-js](https://github.com/pusher/pusher-js)
 
-A server-side part of the code is placed in a separate [repository](https://github.com/andrewshostak/prognoz_v2_rest).
+A server-side part of the code is placed in a separate [repository](https://github.com/andrewshostak/prognoz_api).
 
 ## Setup
 

@@ -38,7 +38,7 @@
 -  [quill](https://github.com/quilljs/quill) / [ngx-quill](https://github.com/KillerCodeMonkey/ngx-quill)
 -  [pusher-js](https://github.com/pusher/pusher-js)
 
-Код серверної частини знаходиться в окремому [репозиторії](https://github.com/andrewshostak/prognoz_v2_rest).
+Код серверної частини знаходиться в окремому [репозиторії](https://github.com/andrewshostak/prognoz_api).
 
 ## Запуск
 
