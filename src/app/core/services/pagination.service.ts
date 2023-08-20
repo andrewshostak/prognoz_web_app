@@ -37,7 +37,7 @@ export class PaginationService {
       teamStages: 30,
       teamTeamMatches: 16,
       teamTeams: 42,
-      teamRatingItems: 16,
+      teamRatingItems: 32,
       teamRatingUsers: 128,
 
       clubs: 10,
