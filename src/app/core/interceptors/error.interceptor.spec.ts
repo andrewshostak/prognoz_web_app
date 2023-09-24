@@ -80,6 +80,24 @@ describe('ErrorInterceptor', () => {
 
          expect(notificationsService.error).toHaveBeenCalledWith('Помилка 400', '{}', { timeOut: 0 });
       });
+
+      it('should invoke notificationsService `error` with overwritten message when token is expired', () => {
+         spyOn(notificationsService, 'error');
+
+         httpClient.delete(exampleService.matchesUrl).subscribe(
+            () => {},
+            () => {}
+         );
+         httpTestingController
+            .expectOne(exampleService.matchesUrl)
+            .flush({ message: 'Token has expired' }, { status: 401, statusText: 'Unauthorized' });
+
+         expect(notificationsService.error).toHaveBeenCalledWith(
+            'Помилка 401',
+            'Час дії токену закінчився. Виконайте вхід на сайт знову.',
+            { timeOut: 0 }
+         );
+      });
    });
 
    describe('#isAllowedMethod', () => {

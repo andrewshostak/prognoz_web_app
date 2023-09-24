@@ -10,6 +10,7 @@ import { ChampionshipModule } from '@app/championship/championship.module';
 import { CoreModule } from '@app/core/core.module';
 import { AuthInterceptor } from '@app/core/interceptors/auth.interceptor';
 import { ErrorInterceptor } from '@app/core/interceptors/error.interceptor';
+import { TokenExpiredInterceptor } from '@app/core/interceptors/token-expired.interceptor';
 import { HomeModule } from '@app/home/home.module';
 import { InitService } from '@app/init.service';
 import { NewsModule } from '@app/news/news.module';
@@ -44,6 +45,11 @@ import { QuillModule } from 'ngx-quill';
    providers: [
       Title,
       InitService,
+      {
+         multi: true,
+         provide: HTTP_INTERCEPTORS,
+         useClass: TokenExpiredInterceptor
+      },
       {
          multi: true,
          provide: HTTP_INTERCEPTORS,

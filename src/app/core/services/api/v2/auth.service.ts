@@ -11,6 +11,8 @@ import { Observable } from 'rxjs';
 
 @Injectable()
 export class AuthService {
+   public static readonly tokenExpired = 'Token has expired';
+
    private authURL = environment.apiBaseUrl + '/v2/auth';
 
    constructor(private httpClient: HttpClient) {}
