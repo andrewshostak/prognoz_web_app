@@ -8,7 +8,7 @@
                <small>Ім'я обов'язкове</small>
             </div>
             <div [hidden]="!showFormErrorMessage(teamForm.get('name'), 'minlength')" class="error-message">
-               <small>Ім'я повинне бути довшим ніж 3 символи</small>
+               <small>Ім'я повинне бути довшим ніж 2 символи</small>
             </div>
             <div [hidden]="!showFormErrorMessage(teamForm.get('name'), 'maxlength')" class="error-message">
                <small>Ім'я не повинно перевищувати 30 символів</small>

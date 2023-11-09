@@ -101,7 +101,7 @@ export class TeamFormComponent implements OnChanges, OnInit {
 
    private setTeamForm(): void {
       this.teamForm = new FormGroup({
-         name: new FormControl(null, [Validators.required, Validators.minLength(3), Validators.maxLength(30)]),
+         name: new FormControl(null, [Validators.required, Validators.minLength(2), Validators.maxLength(30)]),
          caption: new FormControl(null, [Validators.maxLength(140)]),
          captain_id: new FormControl(null, [Validators.required]),
          image: new FormControl(null, [
