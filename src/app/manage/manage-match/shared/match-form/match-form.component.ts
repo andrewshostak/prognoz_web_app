@@ -17,6 +17,7 @@ export class MatchFormComponent implements OnChanges, OnInit {
    @Input() public match: Match;
 
    public matchForm: FormGroup;
+   spinnerButton: boolean;
    public timeTemplates: { hour: number; minute: number }[];
 
    constructor(private matchService: MatchService, private notificationsService: NotificationsService) {}
@@ -58,14 +59,18 @@ export class MatchFormComponent implements OnChanges, OnInit {
          started_at: date.format('YYYY-MM-DD HH:mm')
       };
 
-      this.matchService.createMatch(match).subscribe(response => {
-         this.notificationsService.success(
-            'Успішно',
-            `Матч №${response.id} ${response.club_home.title} - ${response.club_away.title} створено`
-         );
-         this.matchForm.get('home_club_id').reset();
-         this.matchForm.get('away_club_id').reset();
-      });
+      this.matchService.createMatch(match).subscribe(
+         response => {
+            this.spinnerButton = false;
+            this.notificationsService.success(
+               'Успішно',
+               `Матч №${response.id} ${response.club_home.title} - ${response.club_away.title} створено`
+            );
+            this.matchForm.get('home_club_id').reset();
+            this.matchForm.get('away_club_id').reset();
+         },
+         () => (this.spinnerButton = false)
+      );
    }
 
    public decreaseTime(key: 'date' | 'hour' | 'minute' | 'month' | 'year'): void {
@@ -226,6 +231,7 @@ export class MatchFormComponent implements OnChanges, OnInit {
          return;
       }
 
+      this.spinnerButton = true;
       this.match ? this.updateMatch(date) : this.createMatch(date);
    }
 
@@ -246,11 +252,15 @@ export class MatchFormComponent implements OnChanges, OnInit {
          started_at: date.format('YYYY-MM-DD HH:mm')
       };
 
-      this.matchService.updateMatch(match).subscribe(response => {
-         this.notificationsService.success(
-            'Успішно',
-            `Матч №${response.id} ${response.club_home.title} - ${response.club_away.title} змінено`
-         );
-      });
+      this.matchService.updateMatch(match).subscribe(
+         response => {
+            this.spinnerButton = false;
+            this.notificationsService.success(
+               'Успішно',
+               `Матч №${response.id} ${response.club_home.title} - ${response.club_away.title} змінено`
+            );
+         },
+         () => (this.spinnerButton = false)
+      );
    }
 }
