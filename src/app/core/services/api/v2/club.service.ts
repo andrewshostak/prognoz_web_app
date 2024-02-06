@@ -68,6 +68,13 @@ export class ClubService {
       return this.httpClient.get<PaginatedResponse<Club>>(this.clubsUrl, { params });
    }
 
+   getClubsAliases(search: string): Observable<string[]> {
+      const params = new HttpParams({ fromObject: { search: search } });
+      return this.httpClient
+         .get<{ aliases: string[] }>(`${this.clubsUrl}/aliases`, { params })
+         .pipe(map(response => response.aliases));
+   }
+
    public updateClub(clubId: number, club: Partial<Club>): Observable<Club> {
       const body = club.image ? serialize(club, { indices: true, nullsAsUndefineds: true }) : club;
       return this.httpClient.post<{ club: Club }>(`${this.clubsUrl}/${clubId}`, body).pipe(map(response => response.club));
