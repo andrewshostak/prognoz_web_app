@@ -1,8 +1,8 @@
-<!--<div *ngIf="paginationData && paginationData.currentPage === 1" class="row">-->
-<!--   <div class="col">-->
-<!--      <app-guestbook-message-form (guestbookMessageCreated)="messageCreated($event)"></app-guestbook-message-form>-->
-<!--   </div>-->
-<!--</div>-->
+<div *ngIf="paginationData && paginationData.currentPage === 1" class="row">
+   <div class="col">
+      <app-guestbook-message-form (guestbookMessageCreated)="messageCreated($event)"></app-guestbook-message-form>
+   </div>
+</div>
 <div class="row">
    <div class="col">
       <div *ngFor="let message of guestbookMessages" class="mt-2">
