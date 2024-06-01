@@ -4,8 +4,12 @@ import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/fo
 import { Club } from '@models/v2/club.model';
 import { ClubService } from '@services/api/v2/club.service';
 import { FormValidatorService } from '@services/form-validator.service';
+import { SettingsService } from '@services/settings.service';
 import { UtilsService } from '@services/utils.service';
 import { NotificationsService } from 'angular2-notifications';
+import { trim } from 'lodash';
+import { merge, Observable, of, Subject } from 'rxjs';
+import { catchError, debounceTime, distinctUntilChanged, filter, map, switchMap, tap } from 'rxjs/operators';
 
 @Component({
    selector: 'app-club-form',
@@ -16,9 +20,15 @@ export class ClubFormComponent implements OnChanges, OnInit {
    @Input() public club: Club;
    @Output() public successfullySubmitted = new EventEmitter<Club>();
 
+   aliases: string[] = [];
+   aliases$: Observable<string[]>;
+   aliasesInput$: Subject<string>;
+   aliasesList$: Subject<string[]>;
+   aliasesLoading: boolean;
    public clubForm: FormGroup;
    public clubImageExtensions: string[];
    public clubImageSize: number;
+   ngSelectTexts: { [key: string]: string };
 
    constructor(
       private clubService: ClubService,
@@ -42,12 +52,21 @@ export class ClubFormComponent implements OnChanges, OnInit {
             ])
          );
       }
+      if (!changes.club.isFirstChange() && changes.club.currentValue) {
+         this.aliasesList$.next([changes.club.currentValue.link]);
+      }
    }
 
    public ngOnInit(): void {
       this.clubImageExtensions = FormValidatorService.fileExtensions.clubImage;
       this.clubImageSize = FormValidatorService.fileSizeLimits.clubImage;
+      this.ngSelectTexts = SettingsService.textMessages.ngSelect;
       this.setClubForm();
+
+      this.aliasesInput$ = new Subject<string>();
+      this.aliasesList$ = new Subject<string[]>();
+      this.aliasesLoading = false;
+      this.enableTypeAheadSearch();
    }
 
    public showFormErrorMessage(abstractControl: AbstractControl, errorKey: string): boolean {
@@ -71,6 +90,30 @@ export class ClubFormComponent implements OnChanges, OnInit {
          this.notificationsService.success('Успішно', `Команду ${response.title} створено`);
          this.successfullySubmitted.emit(response);
       });
+   }
+
+   private enableTypeAheadSearch(): void {
+      this.aliases$ = merge(
+         of(this.aliases), // default aliases
+         this.aliasesList$,
+         this.aliasesInput$.pipe(
+            distinctUntilChanged(),
+            debounceTime(SettingsService.defaultDebounceTime),
+            filter(term => term && term.length >= 2),
+            switchMap((term: string) => {
+               if (!term) {
+                  return of(this.aliases);
+               }
+
+               this.aliasesLoading = true;
+               return this.clubService.getClubsAliases(trim(term)).pipe(
+                  catchError(() => of([])),
+                  tap(() => (this.aliasesLoading = false)),
+                  map((response: string[]) => response)
+               );
+            })
+         )
+      );
    }
 
    private patchClubValuesInForm(formGroup, field, value) {

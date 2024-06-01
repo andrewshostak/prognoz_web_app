@@ -19,7 +19,8 @@ export class SettingsService {
       ngSelect: {
          notFoundText: 'Нічого не знайдено',
          typeToSearchText: 'Почніть вводити текст для пошуку',
-         loadingText: 'Завантаження'
+         loadingText: 'Завантаження',
+         addTagText: 'Добавити власний варіант'
       }
    };
 }

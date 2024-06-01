@@ -10,9 +10,10 @@ import { ManageClubRoutingModule } from './manage-club-routing.module';
 import { ManageClubComponent } from './manage-club.component';
 import { ClubFormComponent } from './shared/club-form/club-form.component';
 import { NgbTooltipModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgSelectModule } from '@ng-select/ng-select';
 
 @NgModule({
-   imports: [CommonModule, ReactiveFormsModule, ManageClubRoutingModule, SharedModule, NgbTooltipModule],
+   imports: [CommonModule, ReactiveFormsModule, ManageClubRoutingModule, SharedModule, NgbTooltipModule, NgSelectModule],
    declarations: [ManageClubComponent, ClubTableComponent, ClubCreateComponent, ClubEditComponent, ClubFormComponent]
 })
 export class ManageClubModule {}
