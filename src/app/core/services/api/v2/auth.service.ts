@@ -34,7 +34,7 @@ export class AuthService {
       return this.httpClient.post<{ token: string; user: User }>(`${this.authURL}/sign-in`, omit(authSignIn, 'deviceId'), httpOptions);
    }
 
-   public signUp(authSignUp: AuthSignUp): Observable<{ token: string; user: User }> {
-      return this.httpClient.post<{ token: string; user: User }>(`${this.authURL}/sign-up`, authSignUp);
+   public signUp(authSignUp: AuthSignUp): Observable<void> {
+      return this.httpClient.post<void>(`${this.authURL}/sign-up`, authSignUp);
    }
 }

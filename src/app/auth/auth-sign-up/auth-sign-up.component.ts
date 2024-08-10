@@ -48,12 +48,10 @@ export class AuthSignUpComponent implements OnInit {
 
       this.spinnerButton = true;
       this.authService.signUp(this.signUpForm.value).subscribe(
-         response => {
-            this.setAuthData(response);
-            this.currentStateService.getOnlineUsers(response.user);
+         () => {
             this.spinnerButton = false;
-            this.notificationsService.success('Успішно', 'Реєстрація успішна');
-            this.router.navigate(['/me']);
+            this.notificationsService.success('Дані збережено');
+            this.router.navigate(['/waiting-verification', encodeURIComponent(this.signUpForm.get('email').value)]);
          },
          () => (this.spinnerButton = false)
       );
@@ -61,10 +59,5 @@ export class AuthSignUpComponent implements OnInit {
 
    public resolved(captchaResponse: string): void {
       this.captchaValidity = !!captchaResponse;
-   }
-
-   private setAuthData(response: { token: string; user: User }): void {
-      this.currentStateService.setUser(response.user);
-      this.currentStateService.setToken(response.token);
    }
 }
