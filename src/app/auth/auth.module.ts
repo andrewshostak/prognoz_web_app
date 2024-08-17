@@ -10,11 +10,20 @@ import { AuthRoutingModule } from './auth-routing.module';
 import { AuthSignInComponent } from './auth-sign-in/auth-sign-in.component';
 import { AuthSignUpComponent } from './auth-sign-up/auth-sign-up.component';
 import { AuthComponent } from './auth.component';
-import { AuthWaitingVerificationComponent } from './auth-waiting-verification/auth-waiting-verification.component';
+import { AuthWaitingEmailVerificationComponent } from './auth-waiting-email-verification/auth-waiting-email-verification.component';
+import { AuthEmailVerificationComponent } from './auth-email-verification/auth-email-verification.component';
 
 @NgModule({
    imports: [CommonModule, AuthRoutingModule, ReactiveFormsModule, SharedModule, RecaptchaModule],
-   declarations: [AuthComponent, AuthRecoveryComponent, AuthResetComponent, AuthSignInComponent, AuthSignUpComponent, AuthWaitingVerificationComponent],
+   declarations: [
+      AuthComponent,
+      AuthRecoveryComponent,
+      AuthResetComponent,
+      AuthSignInComponent,
+      AuthSignUpComponent,
+      AuthWaitingEmailVerificationComponent,
+      AuthEmailVerificationComponent
+   ],
    exports: [AuthComponent]
 })
 export class AuthModule {}

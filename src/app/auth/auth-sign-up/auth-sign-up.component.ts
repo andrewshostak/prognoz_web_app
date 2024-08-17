@@ -51,7 +51,7 @@ export class AuthSignUpComponent implements OnInit {
          () => {
             this.spinnerButton = false;
             this.notificationsService.success('Дані збережено');
-            this.router.navigate(['/waiting-verification', encodeURIComponent(this.signUpForm.get('email').value)]);
+            this.router.navigate(['/waiting-email-verification', encodeURIComponent(this.signUpForm.get('email').value)]);
          },
          () => (this.spinnerButton = false)
       );

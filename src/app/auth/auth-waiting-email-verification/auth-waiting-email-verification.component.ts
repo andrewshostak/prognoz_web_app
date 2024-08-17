@@ -2,11 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
 @Component({
-   selector: 'app-auth-waiting-verification',
-   templateUrl: './auth-waiting-verification.component.html',
+   selector: 'app-auth-waiting-email-verification',
+   templateUrl: './auth-waiting-email-verification.component.html',
    styleUrls: []
 })
-export class AuthWaitingVerificationComponent implements OnInit {
+export class AuthWaitingEmailVerificationComponent implements OnInit {
    email;
    message;
 
