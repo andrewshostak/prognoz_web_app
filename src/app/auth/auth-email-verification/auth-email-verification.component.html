@@ -1,1 +1,8 @@
-<p>auth-email-verification works!</p>
+<div class="container">
+   <div class="row">
+      <div class="col-12 col-md-10 col-lg-6 offset-md-1 offset-lg-3">
+         <app-spinner *ngIf="isVerificationInProgress" [height]="100"></app-spinner>
+         <app-error *ngIf="error" [message]="error"></app-error>
+      </div>
+   </div>
+</div>

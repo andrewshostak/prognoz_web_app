@@ -17,8 +17,8 @@ export class AuthService {
 
    constructor(private httpClient: HttpClient) {}
 
-   public emailVerification(email: string, token: string): Observable<void> {
-      return this.httpClient.patch<void>(`${this.authURL}/email-verification`, { email, token });
+   public emailVerification(token: string): Observable<void> {
+      return this.httpClient.patch<void>(`${this.authURL}/email-verification`, { token });
    }
 
    public logout(): Observable<void> {

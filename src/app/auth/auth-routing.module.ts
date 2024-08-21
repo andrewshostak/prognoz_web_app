@@ -35,7 +35,7 @@ const routes: Routes = [
             component: AuthWaitingEmailVerificationComponent
          },
          {
-            path: 'email-verification',
+            path: 'email-verification/:token',
             component: AuthEmailVerificationComponent
          }
       ]
