@@ -10,7 +10,7 @@ import { catchError } from 'rxjs/operators';
 
 @Injectable()
 export class ErrorInterceptor implements HttpInterceptor {
-   public methods: string[] = ['POST', 'PUT', 'DELETE'];
+   public methods: string[] = ['POST', 'PUT', 'DELETE', 'PATCH'];
 
    constructor(private injector: Injector) {}
 

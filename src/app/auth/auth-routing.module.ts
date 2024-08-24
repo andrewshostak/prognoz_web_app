@@ -6,6 +6,8 @@ import { AuthResetComponent } from './auth-reset/auth-reset.component';
 import { AuthSignInComponent } from './auth-sign-in/auth-sign-in.component';
 import { AuthSignUpComponent } from './auth-sign-up/auth-sign-up.component';
 import { AuthComponent } from './auth.component';
+import { AuthWaitingEmailVerificationComponent } from '@app/auth/auth-waiting-email-verification/auth-waiting-email-verification.component';
+import { AuthEmailVerificationComponent } from '@app/auth/auth-email-verification/auth-email-verification.component';
 
 const routes: Routes = [
    {
@@ -27,6 +29,14 @@ const routes: Routes = [
          {
             path: 'signup',
             component: AuthSignUpComponent
+         },
+         {
+            path: 'waiting-email-verification/:email',
+            component: AuthWaitingEmailVerificationComponent
+         },
+         {
+            path: 'email-verification/:token',
+            component: AuthEmailVerificationComponent
          }
       ]
    }

@@ -17,6 +17,10 @@ export class AuthService {
 
    constructor(private httpClient: HttpClient) {}
 
+   public emailVerification(token: string): Observable<void> {
+      return this.httpClient.patch<void>(`${this.authURL}/email-verification`, { token });
+   }
+
    public logout(): Observable<void> {
       return this.httpClient.delete<void>(`${this.authURL}/logout`);
    }
@@ -34,7 +38,7 @@ export class AuthService {
       return this.httpClient.post<{ token: string; user: User }>(`${this.authURL}/sign-in`, omit(authSignIn, 'deviceId'), httpOptions);
    }
 
-   public signUp(authSignUp: AuthSignUp): Observable<{ token: string; user: User }> {
-      return this.httpClient.post<{ token: string; user: User }>(`${this.authURL}/sign-up`, authSignUp);
+   public signUp(authSignUp: AuthSignUp): Observable<void> {
+      return this.httpClient.post<void>(`${this.authURL}/sign-up`, authSignUp);
    }
 }
