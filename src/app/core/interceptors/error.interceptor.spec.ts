@@ -39,7 +39,7 @@ describe('ErrorInterceptor', () => {
    });
 
    it('should have POST, PUT, DELETE methods', () => {
-      expect(errorInterceptor.methods).toEqual(['POST', 'PUT', 'DELETE']);
+      expect(errorInterceptor.methods).toEqual(['POST', 'PUT', 'DELETE', 'PATCH']);
    });
 
    describe('#intercept', () => {
