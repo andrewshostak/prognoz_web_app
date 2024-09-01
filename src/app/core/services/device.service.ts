@@ -55,18 +55,17 @@ export class DeviceService {
             };
 
             try {
-               const components = await Fingerprint2.getPromise(options);
+               let components = await Fingerprint2.getPromise(options);
+               const omittedKeys = ['canvas', 'webgl'];
+               components = components.filter(component => !omittedKeys.includes(component.key));
                const values = components.map(component => component.value);
 
-               const omittedKeys = ['canvas', 'webgl'];
+               const fingerprint = Fingerprint2.x64hash128(values.join(''), 31);
                const info = components.reduce((acc, item) => {
-                  if (omittedKeys.includes(item.key)) {
-                     return acc;
-                  }
                   return { ...acc, [item.key]: item.value };
                }, {});
 
-               return { fingerprint: String(Fingerprint2.x64hash128(values.join(''), 31)), info };
+               return { fingerprint, info };
             } catch (e) {
                reject(e);
             }
