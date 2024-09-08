@@ -96,7 +96,19 @@
          </div>
       </div>
       <div class="form-row">
-         <div class="col-12 col-md-6 col-lg-4 offset-0 offset-md-6">
+         <div class="col-12 col-md-6 col-lg-4 offset-0 offset-lg-2">
+            <div class="form-group" [class.form-group-invalid]="showFormInvalidClass(cupStageForm.get('relegation_to_competition_id'))">
+               <label for="relegation_to_competition_id" class="font-weight-bold">Змагання для вилетівших зі стадії:</label>
+               <select id="relegation_to_competition_id" class="form-control" formControlName="relegation_to_competition_id">
+                  <option [ngValue]="null">Немає</option>
+                  <option *ngFor="let competition of competitions" [value]="competition.id">{{ competition.title }}</option>
+               </select>
+               <div [hidden]="!showFormErrorMessage(cupStageForm.get('relegation_to_competition_id'), 'required')" class="error-message">
+                  <small>Змагання для вилетівших зі стадії обов'язкове</small>
+               </div>
+            </div>
+         </div>
+         <div class="col-12 col-md-6 col-lg-4 offset-0">
             <div formArrayName="cup_matches" class="mb-2">
                <label class="font-weight-bold">Кубкові матчі ({{ cupMatchesFormArray.controls.length }}):</label>
                <div [hidden]="cupStageForm.disabled" class="mb-2">

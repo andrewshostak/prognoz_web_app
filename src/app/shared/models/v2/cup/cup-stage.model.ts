@@ -7,6 +7,7 @@ import { CupMatch } from '@models/v2/cup/cup-match.model';
 
 export class CupStage {
    competition_id: number;
+   relegation_to_competition_id: null | number;
    cup_stage_type_id: number;
    created_at: string;
    id: number;
