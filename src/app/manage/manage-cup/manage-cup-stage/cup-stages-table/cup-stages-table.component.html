@@ -15,7 +15,10 @@
       <tr *ngFor="let cupStage of cupStages">
          <th scope="row" class="align-middle text-muted">{{ cupStage.id }}</th>
          <td class="font-weight-bold align-middle">{{ cupStage.title }}</td>
-         <td class="align-middle text-muted">{{ cupStage.cup_stage_type.title }}</td>
+         <td class="align-middle text-muted">
+            {{ cupStage.cup_stage_type.title }}
+            <ng-container [ngTemplateOutlet]="relegation" [ngTemplateOutletContext]="{ relegationCompetitionID: cupStage.relegation_to_competition_id }"></ng-container>
+         </td>
          <td class="align-middle text-center">{{ cupStage.round }}</td>
          <td class="align-middle">{{ cupStage.competition.title }}</td>
          <td class="align-middle text-center">
@@ -57,7 +60,7 @@
                <tr>
                   <td>
                      <strong>{{ cupStage.title }}</strong
-                     >: {{ cupStage.cup_stage_type.title }}
+                     >: {{ cupStage.cup_stage_type.title }} <ng-container [ngTemplateOutlet]="relegation" [ngTemplateOutletContext]="{ relegationCompetitionID: cupStage.relegation_to_competition_id }"></ng-container>
                   </td>
                </tr>
             </table>
@@ -104,7 +107,7 @@
                <tr>
                   <td colspan="2">
                      <strong>{{ cupStage.title }}</strong
-                     >: {{ cupStage.cup_stage_type.title }}
+                     >: {{ cupStage.cup_stage_type.title }} <ng-container [ngTemplateOutlet]="relegation" [ngTemplateOutletContext]="{ relegationCompetitionID: cupStage.relegation_to_competition_id }"></ng-container>
                   </td>
                </tr>
                <tr>
@@ -134,7 +137,7 @@
                <tr>
                   <td colspan="2">
                      <strong>{{ cupStage.title }}</strong
-                     >: {{ cupStage.cup_stage_type.title }}
+                     >: {{ cupStage.cup_stage_type.title }} <ng-container [ngTemplateOutlet]="relegation" [ngTemplateOutletContext]="{ relegationCompetitionID: cupStage.relegation_to_competition_id }"></ng-container>
                   </td>
                </tr>
                <tr>
@@ -285,4 +288,7 @@
 <ng-template #confirmModal let-c="close">
    <app-confirmation-modal [close]="c" [message]="openedModal.message" (confirmed)="openedModal.submitted($event)">
    </app-confirmation-modal>
+</ng-template>
+<ng-template #relegation let-relegationCompetitionID="relegationCompetitionID">
+   <span *ngIf="relegationCompetitionID" class="text-danger" ngbTooltip="Вилетівші з цієї стадії гравці попадають в змагання рангом нижче"><i class="fa fa-arrow-down"></i></span>
 </ng-template>
