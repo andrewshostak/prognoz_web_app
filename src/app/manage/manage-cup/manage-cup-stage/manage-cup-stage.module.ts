@@ -9,14 +9,16 @@ import { CupStageEditComponent }        from './cup-stage-edit/cup-stage-edit.co
 import { CupStageFormComponent }        from './shared/cup-stage-form/cup-stage-form.component';
 import { ManageCupStageComponent }      from './manage-cup-stage.component';
 import { SharedModule }                 from '../../../shared/shared.module';
+import { NgbTooltipModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
-    imports: [
-        CommonModule,
-        ReactiveFormsModule,
-        RouterModule,
-        SharedModule
-    ],
+   imports: [
+      CommonModule,
+      ReactiveFormsModule,
+      RouterModule,
+      SharedModule,
+      NgbTooltipModule
+   ],
     declarations: [
         ManageCupStageComponent,
         CupStagesTableComponent,

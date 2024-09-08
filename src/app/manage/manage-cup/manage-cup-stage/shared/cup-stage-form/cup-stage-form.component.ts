@@ -96,6 +96,7 @@ export class CupStageFormComponent implements OnChanges, OnInit {
       this.getCupMatchesData();
       this.cupStageForm = new FormGroup({
          competition_id: new FormControl('', [Validators.required]),
+         relegation_to_competition_id: new FormControl(null),
          cup_stage_type_id: new FormControl('', [Validators.required]),
          round: new FormControl(1, [Validators.required]),
          title: new FormControl('', [Validators.required]),
@@ -150,6 +151,7 @@ export class CupStageFormComponent implements OnChanges, OnInit {
    private createCupStage(cupStage: CupStage): void {
       const cupStageNew: Partial<CupStage> = {
          competition_id: cupStage.competition_id,
+         relegation_to_competition_id: cupStage.relegation_to_competition_id,
          cup_stage_type_id: cupStage.cup_stage_type_id,
          round: cupStage.round,
          title: cupStage.title
@@ -158,6 +160,7 @@ export class CupStageFormComponent implements OnChanges, OnInit {
          this.notificationsService.success('Успішно', `Кубкову стадію ${response.title} створено`);
          this.cupStageForm.get('round').reset();
          this.cupStageForm.get('title').reset();
+         this.cupStageForm.get('relegation_to_competition_id').reset();
       });
    }
 
@@ -200,6 +203,7 @@ export class CupStageFormComponent implements OnChanges, OnInit {
    private updateCupStage(cupStage: CupStage): void {
       const cupStageNew: Partial<CupStage> = {
          competition_id: cupStage.competition_id,
+         relegation_to_competition_id: cupStage.relegation_to_competition_id,
          cup_stage_type_id: cupStage.cup_stage_type_id,
          round: cupStage.round,
          title: cupStage.title,
