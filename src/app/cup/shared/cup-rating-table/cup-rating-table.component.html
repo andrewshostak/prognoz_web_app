@@ -6,7 +6,7 @@
                <th class="text-center align-middle">№</th>
                <th class="text-center align-middle" title="Улюблена команда"><i class="fa fa-shield" aria-hidden="true"></i><br /></th>
                <th title="Ім'я гравця" class="align-middle">Ім'я</th>
-               <th *ngFor="let season of seasons | keyvalue" class="text-center">
+               <th *ngFor="let season of seasons | keyvalue | sortKeyValue: true:'asc';" class="text-center">
                   <div>{{ season.value.title }}</div>
                   <small class="text-muted text-nowrap">(Рейтинг * {{ season.value.coefficient }})</small>
                </th>
@@ -29,7 +29,7 @@
                   {{ cupRatingItem.user.hometown ? '(' + cupRatingItem.user.hometown + ')' : '' }}
                </td>
                <td
-                  *ngFor="let season of seasons | keyvalue"
+                  *ngFor="let season of seasons | keyvalue | sortKeyValue: true:'asc';"
                   class="text-center text-muted"
                   [ngClass]="{
                      'table-secondary': !cupRatingItem.season_points[season.key],
