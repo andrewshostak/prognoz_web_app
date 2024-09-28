@@ -24,6 +24,7 @@ import { Subscription } from 'rxjs';
 export class MatchTableComponent implements OnDestroy, OnInit {
    public activatedRouteSubscription: Subscription;
    public clubsLogosPath: string;
+   public updateInProgressMatchID: number | null = null;
    public matches: Match[];
    public matchStates = MatchState;
    public openedModal: OpenedModal<Match>;
@@ -37,6 +38,7 @@ export class MatchTableComponent implements OnDestroy, OnInit {
    ) {}
 
    public addResult(match: Match): void {
+      this.updateInProgressMatchID = match.id;
       const toUpdate = pick(match, ['id', 'home', 'away', 'home_club_id', 'away_club_id', 'started_at']);
       this.matchService.updateMatch(toUpdate).subscribe(response => {
          this.notificationsService.success(
@@ -47,7 +49,8 @@ export class MatchTableComponent implements OnDestroy, OnInit {
          if (index > -1) {
             this.matches[index] = response;
          }
-      });
+         this.updateInProgressMatchID = null;
+      }, () => this.updateInProgressMatchID = null);
    }
 
    public deleteMatch(): void {

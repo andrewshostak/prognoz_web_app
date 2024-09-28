@@ -130,10 +130,10 @@
       type="button"
       class="btn btn-sm"
       [ngClass]="match.state === matchStates.Ended ? 'btn-outline-secondary' : 'btn-primary'"
-      [disabled]="match.state === matchStates.Ended"
+      [disabled]="updateInProgressMatchID === match.id || match.state === matchStates.Ended"
       (click)="addResult(match)"
    >
-      <i class="fa" [ngClass]="match.state === matchStates.Ended ? 'fa-ban' : 'fa-plus-circle'" aria-hidden="true"></i>
+      <i class="fa" [ngClass]="match.state === matchStates.Ended ? 'fa-ban' : updateInProgressMatchID === match.id ? 'fa-spinner fa-pulse' : 'fa-plus-circle'" aria-hidden="true"></i>
    </button>
 </ng-template>
 <ng-template #updatedAtText let-match="match">
