@@ -41,7 +41,7 @@ export class TeamResultsComponent implements OnInit {
          page: 1,
          limit: PaginationService.limit.teamMatches,
          relations: ['match.clubHome', 'match.clubAway'],
-         orderBy: 'id',
+         orderBy: 'started_at',
          sequence: Sequence.Ascending
       };
       return this.teamMatchService.getTeamMatches(search);
