@@ -4,7 +4,7 @@
          <ng-container [ngTemplateOutlet]="competitionsNavigation"></ng-container>
       </div>
    </div>
-   <div class="d-none d-md-block mb-2">
+   <div class="d-none d-md-block mb-3">
       <div class="btn-group">
          <ng-container [ngTemplateOutlet]="competitionsNavigation"></ng-container>
       </div>
@@ -14,21 +14,16 @@
    <button
       *ngFor="let competition of competitions"
       (click)="clickOnCompetitionButton(competition)"
-      class="btn mb-2"
+      class="btn"
       [ngClass]="competition.id === selectedCompetitionId ? 'btn-primary' : 'btn-outline-primary'"
       type="button"
    >
       {{ competition.title }}
    </button>
-   <button
-      (click)="showTeamStageSelect = !showTeamStageSelect"
-      class="btn btn-outline-secondary mb-2"
-      type="button"
-      title="Попередні змагання"
-   >
-      <i class="fa fa-history"></i>
-      <i [hidden]="showTeamStageSelect" class="fa fa-chevron-down"></i>
-      <i [hidden]="!showTeamStageSelect" class="fa fa-chevron-up"></i>
+   <button (click)="showTeamStageSelect = !showTeamStageSelect" class="btn btn-outline-secondary" type="button" title="Попередні змагання">
+      Попередні змагання
+      <i [hidden]="showTeamStageSelect" class="fa fa-chevron-down ml-1"></i>
+      <i [hidden]="!showTeamStageSelect" class="fa fa-chevron-up ml-1"></i>
    </button>
 </ng-template>
 <div class="mb-2">
