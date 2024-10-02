@@ -1,6 +1,8 @@
 import { Injectable, SimpleChanges } from '@angular/core';
 import { AbstractControl, FormArray, FormGroup } from '@angular/forms';
 
+import { Competition } from '@models/v2/competition.model';
+
 @Injectable()
 export class UtilsService {
    public static showFormErrorMessage(abstractControl: AbstractControl, errorKey: string): boolean {
@@ -15,6 +17,19 @@ export class UtilsService {
       while (0 !== formArray.length) {
          formArray.removeAt(0);
       }
+   }
+
+   public static getCompetitionID(competitions: Competition[], selectedCompetitionId: number | null): number | null {
+      if (!competitions.length && !selectedCompetitionId) {
+         return null;
+      }
+
+      if (!selectedCompetitionId) {
+         return competitions[0].id;
+      }
+
+      const ids = competitions.map(competition => competition.id);
+      return ids.includes(selectedCompetitionId) ? selectedCompetitionId : competitions[0].id;
    }
 
    public static getHomeCityInBrackets(hometown: string): string {
@@ -67,4 +82,5 @@ export class UtilsService {
          }
       });
    }
+   // return selected competition id if it is present in competitions list, otherwise return first id from the list
 }

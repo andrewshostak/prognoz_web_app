@@ -14,6 +14,7 @@ import { CurrentStateService } from '@services/current-state.service';
 import { CompetitionService } from '@services/api/v2/competition.service';
 import { SeasonService } from '@services/api/v2/season.service';
 import { PaginationService } from '@services/pagination.service';
+import { UtilsService } from '@services/utils.service';
 import { iif, Observable, of } from 'rxjs';
 import { map, mergeMap, tap } from 'rxjs/operators';
 
@@ -97,19 +98,6 @@ export class CompetitionSelectComponent implements OnInit {
       });
    }
 
-   private getCompetitionId(competitions: Competition[], selectedCompetitionId: number): number {
-      if (!competitions.length && !selectedCompetitionId) {
-         return null;
-      }
-
-      if (!selectedCompetitionId) {
-         return competitions[0].id;
-      }
-
-      const ids = competitions.map(competition => competition.id);
-      return ids.includes(selectedCompetitionId) ? selectedCompetitionId : competitions[0].id;
-   }
-
    private getCompetitionSelectFormGroup(): FormGroup {
       return new FormGroup({
          season_id: new FormControl(null),
@@ -155,7 +143,7 @@ export class CompetitionSelectComponent implements OnInit {
                   return;
                }
 
-               const id = this.getCompetitionId(response.data, this.currentStateService.teamCompetitionId);
+               const id = UtilsService.getCompetitionID(response.data, this.currentStateService.teamCompetitionId);
                this.selectedCompetitionId = id;
                this.competitionSelected.emit({ selected: { id } });
             })

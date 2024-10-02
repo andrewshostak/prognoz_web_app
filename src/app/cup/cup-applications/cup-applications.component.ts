@@ -9,8 +9,10 @@ import { CompetitionSearch } from '@models/search/competition-search.model';
 import { CupApplicationSearch } from '@models/search/cup/cup-application-search.model';
 import { CompetitionService } from '@services/api/v2/competition.service';
 import { CupApplicationService } from '@services/api/v2/cup/cup-application.service';
+import { CurrentStateService } from '@services/current-state.service';
 import { PaginationService } from '@services/pagination.service';
 import { TitleService } from '@services/title.service';
+import { UtilsService } from '@services/utils.service';
 import { get } from 'lodash';
 import { of } from 'rxjs';
 import { mergeMap, tap } from 'rxjs/operators';
@@ -28,6 +30,7 @@ export class CupApplicationsComponent implements OnInit {
    constructor(
       private competitionService: CompetitionService,
       private cupApplicationService: CupApplicationService,
+      private currentStateService: CurrentStateService,
       private titleService: TitleService
    ) {}
 
@@ -59,11 +62,15 @@ export class CupApplicationsComponent implements OnInit {
                   return of({ data: [] });
                }
 
+               // TODO: improve this code: modify func?
                if (!this.selectedCompetition) {
-                  applicationsSearch.competitionId = response.data[0].id;
-                  this.selectedCompetition = response.data[0];
+                  const selectedCompetitionID = UtilsService.getCompetitionID(response.data, this.currentStateService.cupCompetitionId);
+                  applicationsSearch.competitionId = selectedCompetitionID; // TODO: think about null cases
+                  this.selectedCompetition = response.data.find(competition => competition.id === selectedCompetitionID);
                } else {
                   applicationsSearch.competitionId = this.selectedCompetition.id;
+                  const selectedCompetitionID = UtilsService.getCompetitionID(response.data, this.selectedCompetition.id);
+                  this.selectedCompetition = response.data.find(competition => competition.id === selectedCompetitionID);
                }
 
                return this.cupApplicationService.getCupApplications(applicationsSearch);
@@ -103,5 +110,10 @@ export class CupApplicationsComponent implements OnInit {
          },
          () => (this.cupApplications = [])
       );
+      this.currentStateService.cupCompetitionId = competition.id;
    }
+
+   // TODO: sort competitions
+   // TODO: check old competition selection is not setting
+   // TODO: manually set old competition id for cases when new 3 competitions are started
 }

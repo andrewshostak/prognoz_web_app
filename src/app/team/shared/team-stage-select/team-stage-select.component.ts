@@ -18,6 +18,7 @@ import { CompetitionService } from '@services/api/v2/competition.service';
 import { SeasonService } from '@services/api/v2/season.service';
 import { TeamStageService } from '@services/api/v2/team/team-stage.service';
 import { PaginationService } from '@services/pagination.service';
+import { UtilsService } from '@services/utils.service';
 import { find, findLast, get } from 'lodash';
 import { iif, Observable, of } from 'rxjs';
 import { filter, first, map, mergeMap, tap } from 'rxjs/operators';
@@ -101,20 +102,6 @@ export class TeamStageSelectComponent implements OnInit {
          tournamentId: Tournament.Team
       };
       return this.competitionService.getCompetitions(search);
-   }
-
-   // TODO: same as in cup-cup-matches
-   private getCompetitionIdForDownloadingStages(competitions: Competition[], selectedCompetitionId: number): number {
-      if (!competitions.length && !selectedCompetitionId) {
-         return null;
-      }
-
-      if (!selectedCompetitionId) {
-         return competitions[0].id;
-      }
-
-      const ids = competitions.map(competition => competition.id);
-      return ids.includes(selectedCompetitionId) ? selectedCompetitionId : competitions[0].id;
    }
 
    private getCompetitionsData(seasonId: number): void {
@@ -218,7 +205,7 @@ export class TeamStageSelectComponent implements OnInit {
                   () => this.activatedRoute.snapshot.params.team_stage_id,
                   this.getSiblingTeamStagesObservable(this.activatedRoute.snapshot.params.team_stage_id),
                   this.getTeamStagesObservable(
-                     this.getCompetitionIdForDownloadingStages(response.data, this.currentStateService.teamCompetitionId)
+                     UtilsService.getCompetitionID(response.data, this.currentStateService.teamCompetitionId)
                   )
                )
             ),
