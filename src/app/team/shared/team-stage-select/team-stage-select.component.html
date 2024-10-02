@@ -40,14 +40,14 @@
       <div class="form-row">
          <div class="form-group col-12 col-md-6 col-lg-4 col-xl-3">
             <label for="season_id" class="font-weight-bold">Сезон:</label>
-            <select id="season_id" class="form-control" formControlName="season_id">
+            <select id="season_id" class="form-control cursor-pointer" formControlName="season_id">
                <option [ngValue]="null" disabled>Виберіть сезон</option>
                <option *ngFor="let season of seasons" [value]="season.id">{{ season.title }}</option>
             </select>
          </div>
          <div *ngIf="competitionsBySeasonId[seasonIdFormValue]" class="form-group col-12 col-md-6 col-lg-4 col-xl-3">
             <label for="competition_id" class="font-weight-bold">Змагання:</label>
-            <select id="competition_id" class="form-control" formControlName="competition_id">
+            <select id="competition_id" class="form-control cursor-pointer" formControlName="competition_id">
                <option [ngValue]="null" disabled>Виберіть змагання</option>
                <option *ngFor="let competition of competitionsBySeasonId[seasonIdFormValue]" [value]="competition.id">
                   {{ competition.title }}
@@ -56,7 +56,7 @@
          </div>
          <div *ngIf="teamStagesByCompetitionId[competitionIdFormValue]" class="form-group col-12 col-md-6 col-lg-4 col-xl-3">
             <label for="team_stage_id" class="font-weight-bold">Стадія:</label>
-            <select id="team_stage_id" class="form-control" formControlName="team_stage_id">
+            <select id="team_stage_id" class="form-control cursor-pointer" formControlName="team_stage_id" (change)="submit()">
                <option [ngValue]="null" disabled>Виберіть стадію</option>
                <option *ngFor="let teamStage of teamStagesByCompetitionId[competitionIdFormValue]" [value]="teamStage.id">
                   {{ teamStage.title }}
@@ -66,12 +66,7 @@
          <div
             *ngIf="teamStageIdFormValue"
             class="form-group d-flex align-items-end col-12 col-md-6 col-lg-4 col-xl-3 offset-0 offset-lg-8 offset-xl-0"
-         >
-            <button (click)="submit()" class="btn btn-primary text-nowrap" type="button">
-               <i class="fa fa-search"></i>
-               Показати Матчі
-            </button>
-         </div>
+         ></div>
       </div>
    </form>
 </div>
