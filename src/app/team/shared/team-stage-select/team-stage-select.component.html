@@ -26,15 +26,6 @@
       <i [hidden]="!showTeamStageSelect" class="fa fa-chevron-up ml-1"></i>
    </button>
 </ng-template>
-<div class="mb-2">
-   <app-dropdown-navigation
-      [dropdownItems]="teamStages"
-      [selectedId]="selectedTeamStage?.id"
-      [paramKey]="'team_stage_id'"
-      [formSize]="'lg'"
-   >
-   </app-dropdown-navigation>
-</div>
 <div *ngIf="showTeamStageSelect" class="card shadow p-2 mb-2">
    <form novalidate [formGroup]="teamStageSelectForm">
       <div class="form-row">
@@ -69,4 +60,13 @@
          ></div>
       </div>
    </form>
+</div>
+<div class="mb-2">
+   <app-dropdown-navigation
+      [dropdownItems]="teamStages"
+      [selectedId]="selectedTeamStage?.id"
+      [paramKey]="'team_stage_id'"
+      [formSize]="'lg'"
+   >
+   </app-dropdown-navigation>
 </div>
