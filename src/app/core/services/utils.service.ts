@@ -19,8 +19,9 @@ export class UtilsService {
       }
    }
 
+   // returns selected competition id if it is present in competitions list, otherwise return first id from the list
    public static getCompetitionID(competitions: Competition[], selectedCompetitionId: number | null): number | null {
-      if (!competitions.length && !selectedCompetitionId) {
+      if (!competitions.length) {
          return null;
       }
 
@@ -82,5 +83,4 @@ export class UtilsService {
          }
       });
    }
-   // return selected competition id if it is present in competitions list, otherwise return first id from the list
 }

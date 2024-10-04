@@ -13,7 +13,7 @@ import { CurrentStateService } from '@services/current-state.service';
 import { PaginationService } from '@services/pagination.service';
 import { TitleService } from '@services/title.service';
 import { UtilsService } from '@services/utils.service';
-import { get } from 'lodash';
+import { get, find } from 'lodash';
 import { of } from 'rxjs';
 import { mergeMap, tap } from 'rxjs/operators';
 
@@ -62,16 +62,9 @@ export class CupApplicationsComponent implements OnInit {
                   return of({ data: [] });
                }
 
-               // TODO: improve this code: modify func?
-               if (!this.selectedCompetition) {
-                  const selectedCompetitionID = UtilsService.getCompetitionID(response.data, this.currentStateService.cupCompetitionId);
-                  applicationsSearch.competitionId = selectedCompetitionID; // TODO: think about null cases
-                  this.selectedCompetition = response.data.find(competition => competition.id === selectedCompetitionID);
-               } else {
-                  applicationsSearch.competitionId = this.selectedCompetition.id;
-                  const selectedCompetitionID = UtilsService.getCompetitionID(response.data, this.selectedCompetition.id);
-                  this.selectedCompetition = response.data.find(competition => competition.id === selectedCompetitionID);
-               }
+               const selectedCompetitionID = UtilsService.getCompetitionID(response.data, this.currentStateService.cupCompetitionId);
+               applicationsSearch.competitionId = selectedCompetitionID;
+               this.selectedCompetition = find(response.data, { id: selectedCompetitionID });
 
                return this.cupApplicationService.getCupApplications(applicationsSearch);
             }),
@@ -112,8 +105,4 @@ export class CupApplicationsComponent implements OnInit {
       );
       this.currentStateService.cupCompetitionId = competition.id;
    }
-
-   // TODO: sort competitions
-   // TODO: check old competition selection is not setting
-   // TODO: manually set old competition id for cases when new 3 competitions are started
 }

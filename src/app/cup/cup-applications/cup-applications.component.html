@@ -18,7 +18,8 @@
    >
    </app-cup-applications-friendly>
    <ng-template #defaultCompetition>
-      <app-cup-applications-default [cupApplications]="cupApplications" [competition]="selectedCompetition"> </app-cup-applications-default>
+      <app-cup-applications-default *ngIf="selectedCompetition" [cupApplications]="cupApplications" [competition]="selectedCompetition"> </app-cup-applications-default>
+      <app-info *ngIf="competitions && !competitions.length && !selectedCompetition" [message]="'Активних змагань або змагань з відкритими заявками немає'"></app-info>
    </ng-template>
 </div>
 <ng-template #competitionsNavigation>
@@ -31,7 +32,7 @@
    >
       {{ competition.title }}
    </button>
-   <button (click)="getApplicationsAndCompetitions()" title="Оновити" type="button" class="btn btn-outline-secondary mb-2">
+   <button *ngIf="selectedCompetition" (click)="getApplicationsAndCompetitions()" title="Оновити" type="button" class="btn btn-outline-secondary mb-2">
       <i class="fa fa-refresh fa-fw" aria-hidden="true"></i>
    </button>
 </ng-template>

@@ -90,6 +90,8 @@ export class CupCupMatchesComponent implements OnInit {
    private getActiveCompetitions(): Observable<PaginatedResponse<Competition>> {
       const search: CompetitionSearch = {
          limit: PaginationService.limit.competitions,
+         orderBy: 'id',
+         sequence: Sequence.Ascending,
          page: 1,
          states: [CompetitionState.Applications, CompetitionState.Active],
          tournamentId: Tournament.Cup
