@@ -46,7 +46,7 @@
             </select>
          </div>
          <div *ngIf="competitionsBySeasonId[seasonIdFormValue]?.length === 0" class="d-flex align-items-center ml-2 mt-lg-2">
-            <div class="alert alert-warning mb-0 text-center" role="alert">Нажаль в цьому сезоні відсутні змагання</div>
+            <div class="alert alert-info mb-0 text-center" role="alert">В цьому сезоні відсутні змагання</div>
          </div>
          <div *ngIf="teamStagesByCompetitionId[competitionIdFormValue]" class="form-group col-12 col-md-6 col-lg-4 col-xl-3">
             <label for="team_stage_id" class="font-weight-bold">Стадія:</label>
