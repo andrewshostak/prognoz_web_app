@@ -9,9 +9,11 @@ import { CompetitionSearch } from '@models/search/competition-search.model';
 import { CupApplicationSearch } from '@models/search/cup/cup-application-search.model';
 import { CompetitionService } from '@services/api/v2/competition.service';
 import { CupApplicationService } from '@services/api/v2/cup/cup-application.service';
+import { CurrentStateService } from '@services/current-state.service';
 import { PaginationService } from '@services/pagination.service';
 import { TitleService } from '@services/title.service';
-import { get } from 'lodash';
+import { UtilsService } from '@services/utils.service';
+import { get, find } from 'lodash';
 import { of } from 'rxjs';
 import { mergeMap, tap } from 'rxjs/operators';
 
@@ -28,6 +30,7 @@ export class CupApplicationsComponent implements OnInit {
    constructor(
       private competitionService: CompetitionService,
       private cupApplicationService: CupApplicationService,
+      private currentStateService: CurrentStateService,
       private titleService: TitleService
    ) {}
 
@@ -59,12 +62,9 @@ export class CupApplicationsComponent implements OnInit {
                   return of({ data: [] });
                }
 
-               if (!this.selectedCompetition) {
-                  applicationsSearch.competitionId = response.data[0].id;
-                  this.selectedCompetition = response.data[0];
-               } else {
-                  applicationsSearch.competitionId = this.selectedCompetition.id;
-               }
+               const selectedCompetitionID = UtilsService.getCompetitionID(response.data, this.currentStateService.cupCompetitionId);
+               applicationsSearch.competitionId = selectedCompetitionID;
+               this.selectedCompetition = find(response.data, { id: selectedCompetitionID });
 
                return this.cupApplicationService.getCupApplications(applicationsSearch);
             }),
@@ -103,5 +103,6 @@ export class CupApplicationsComponent implements OnInit {
          },
          () => (this.cupApplications = [])
       );
+      this.currentStateService.cupCompetitionId = competition.id;
    }
 }
