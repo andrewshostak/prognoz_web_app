@@ -98,6 +98,8 @@ export class TeamStageSelectComponent implements OnInit {
       const search: CompetitionSearch = {
          limit: PaginationService.limit.competitions,
          page: 1,
+         orderBy: 'id',
+         sequence: Sequence.Ascending,
          states: [CompetitionState.Applications, CompetitionState.Active],
          tournamentId: Tournament.Team
       };
