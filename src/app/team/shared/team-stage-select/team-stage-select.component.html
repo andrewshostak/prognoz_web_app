@@ -45,7 +45,10 @@
                </option>
             </select>
          </div>
-         <div *ngIf="competitionsBySeasonId[seasonIdFormValue]?.length === 0" class="d-flex align-items-center ml-2 mt-lg-2">
+         <div
+            *ngIf="competitionsBySeasonId[seasonIdFormValue]?.length === 0"
+            class="col-12 col-md-6 d-md-flex align-items-center mt-lg-2 ml-lg-1"
+         >
             <div class="alert alert-info mb-0 text-center" role="alert">В цьому сезоні відсутні змагання</div>
          </div>
          <div *ngIf="teamStagesByCompetitionId[competitionIdFormValue]" class="form-group col-12 col-md-6 col-lg-4 col-xl-3">
