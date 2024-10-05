@@ -191,10 +191,11 @@ export class TeamStageSelectComponent implements OnInit {
       }
    }
 
-   private formValueSeasonIdChanged(competitionId: number): void {
+   private formValueSeasonIdChanged(seasonId: number): void {
       this.teamStageSelectForm.get('competition_id').reset();
-      if (competitionId && !this.competitionsBySeasonId[competitionId]) {
-         this.getCompetitionsData(competitionId);
+      if (seasonId && !this.competitionsBySeasonId[seasonId]) {
+         this.getCompetitionsData(seasonId);
+         this.selectedCompetitionId = this.competitionsBySeasonId[seasonId]?.length ? this.selectedCompetitionId : null;
       }
    }
 
