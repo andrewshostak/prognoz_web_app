@@ -19,6 +19,7 @@ import { CupCupMatchService } from '@services/api/v2/cup/cup-cup-match.service';
 import { CupStageService } from '@services/api/v2/cup/cup-stage.service';
 import { PaginationService } from '@services/pagination.service';
 import { TitleService } from '@services/title.service';
+import { UtilsService } from '@services/utils.service';
 import { find, findLast, get } from 'lodash';
 import { iif, Observable, of } from 'rxjs';
 import { filter, first, mergeMap, tap } from 'rxjs/operators';
@@ -86,22 +87,11 @@ export class CupCupMatchesComponent implements OnInit {
       });
    }
 
-   private getCompetitionIdForDownloadingStages(competitions: Competition[], selectedCompetitionId: number): number {
-      if (!competitions.length && !selectedCompetitionId) {
-         return null;
-      }
-
-      if (!selectedCompetitionId) {
-         return competitions[0].id;
-      }
-
-      const ids = competitions.map(competition => competition.id);
-      return ids.includes(selectedCompetitionId) ? selectedCompetitionId : competitions[0].id;
-   }
-
    private getActiveCompetitions(): Observable<PaginatedResponse<Competition>> {
       const search: CompetitionSearch = {
          limit: PaginationService.limit.competitions,
+         orderBy: 'id',
+         sequence: Sequence.Ascending,
          page: 1,
          states: [CompetitionState.Applications, CompetitionState.Active],
          tournamentId: Tournament.Cup
@@ -167,7 +157,7 @@ export class CupCupMatchesComponent implements OnInit {
                   () => this.activatedRoute.snapshot.params.cup_stage_id,
                   this.getSiblingCupStagesObservable(this.activatedRoute.snapshot.params.cup_stage_id),
                   this.getCupStagesObservable(
-                     this.getCompetitionIdForDownloadingStages(response.data, this.currentStateService.cupCompetitionId)
+                     UtilsService.getCompetitionID(response.data, this.currentStateService.cupCompetitionId)
                   )
                )
             ),
