@@ -12,7 +12,7 @@
       <app-team-team-match-card *ngFor="let teamTeamMatch of teamTeamMatches" [teamTeamMatch]="teamTeamMatch"> </app-team-team-match-card>
    </div>
 </div>
-<div *ngIf="teamTeamMatches">
-   <small class="pull-right text-muted"> *прогнози гравців відображаються після початку другого тайму матчу. </small>
-   <small class="pull-right text-muted"> **заблоковані матчі відображаються після добавлення результату. </small>
+<div *ngIf="teamTeamMatches" class="mt-2gitt">
+   <small class="text-center text-muted d-block"> *прогнози гравців відображаються після початку другого тайму матчу. </small>
+   <small class="text-center text-muted d-block"> **заблоковані матчі відображаються після додавання результату. </small>
 </div>

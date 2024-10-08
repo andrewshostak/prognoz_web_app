@@ -1,7 +1,7 @@
 <!-- one match row (if user not authenticated)-->
 <div
    *ngIf="championshipMatch && !authenticatedUser"
-   class="row align-items-center mb-2 p-md-1 rounded border border-dark shadow position-relative"
+   class="row align-items-center mb-2 p-md-1 rounded border border-dark shadow position-relative mb-lg-3 p-lg-2"
 >
    <!-- home club logo -->
    <div class="d-none d-md-block col-md-2">
@@ -79,7 +79,7 @@
 <!-- one match row (if user is authenticated)-->
 <div
    *ngIf="championshipMatch && authenticatedUser && championshipMatch.championship_predicts"
-   class="row align-items-center mb-2 p-md-1 rounded border border-dark position-relative"
+   class="row align-items-center mb-2 p-md-1 rounded border border-dark position-relative mb-lg-3 p-lg-2"
    [ngClass]="{
       'green-inset-and-black-shadow': championshipMatch.championship_predicts[0],
       'red-inset-and-black-shadow': !championshipMatch.championship_predicts[0]
