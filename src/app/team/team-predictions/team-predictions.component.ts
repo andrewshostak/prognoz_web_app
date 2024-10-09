@@ -94,8 +94,9 @@ export class TeamPredictionsComponent implements OnInit {
       this.subscribeToTeamStageIdUrlParamChange();
    }
 
-   reloadTeamPredictionsData() {
-      this.getTeamPredictionsData(this.teamStageId);
+   updatePredictions(updatedPrediction: TeamPrediction): void {
+      const index = this.teamPredictions.findIndex(prediction => prediction.id === updatedPrediction.id);
+      if (index !== -1) this.teamPredictions[index] = updatedPrediction;
    }
 
    setBlockedMatches(teamMatches: TeamMatch[]) {
