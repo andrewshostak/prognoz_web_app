@@ -9,16 +9,20 @@
       <div class="col">
          <div class="card-columns">
             <div *ngFor="let one of news" class="card mb-0 mb-sm-2 shadow">
-               <ul class="list-group list-group-flush">
+               <ul class="list-group list-group-flush" style="height: 46px">
                   <li class="list-group-item">Категорія: {{ one.tournament ? one.tournament.title : 'Інше' }}</li>
                </ul>
-               <img class="card-img-top img-fluid p-sm-2" src="{{ newsImagesUrl }}/{{ one.image }}" alt="{{ one.title }}" />
-               <div class="card-body">
-                  <h4 class="card-title">{{ one.title }}</h4>
-                  <a routerLink="/news/{{ one.id }}" class="btn btn-outline-primary">Читати далі</a>
-                  <p class="card-text">
-                     <small class="text-muted">{{ one.created_at | time: 'fromNow' }}</small>
-                  </p>
+               <img class="card-img-top p-sm-2" src="{{ newsImagesUrl }}/{{ one.image }}" alt="{{ one.title }}" height="220" />
+               <div class="p-2 px-lg-3 py-lg-2 d-flex flex-column justify-content-between" style="height: 180px">
+                  <h4 class="card-title h4 d-block d-sm-none">{{ one.title }}</h4>
+                  <h4 class="card-title h6 d-none d-sm-block d-lg-none">{{ one.title }}</h4>
+                  <h4 class="card-title h5 h5 d-none d-lg-block">{{ one.title }}</h4>
+                  <div>
+                     <a routerLink="/news/{{ one.id }}" class="btn btn-outline-primary">Читати далі</a>
+                     <p class="card-text">
+                        <small class="text-muted">{{ one.created_at | time: 'fromNow' }}</small>
+                     </p>
+                  </div>
                </div>
             </div>
          </div>
