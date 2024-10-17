@@ -7,11 +7,13 @@
    <!-- news -->
    <div *ngIf="news" class="row">
       <div class="col p-0">
-         <ul class="list-news">
-            <li *ngFor="let one of news" class="card-news shadow">
+         <ul
+            class="list-news d-flex flex-column flex-sm-row flex-sm-wrap justify-content-between justify-content-lg-center list-unstyled p-0"
+         >
+            <li *ngFor="let one of news" class="card-news shadow rounded">
                <p class="list-group-item m-0">Категорія: {{ one.tournament ? one.tournament.title : 'Інше' }}</p>
-               <div class="wrapper-news">
-                  <img class="img-news" src="{{ newsImagesUrl }}/{{ one.image }}" alt="{{ one.title }}" />
+               <div class="wrapper-news p-3 p-sm-2 d-flex flex-column">
+                  <img class="img-news w-100" src="{{ newsImagesUrl }}/{{ one.image }}" alt="{{ one.title }}" />
                   <h4 class="header-news m-0">{{ one.title }}</h4>
                   <div>
                      <a routerLink="/news/{{ one.id }}" class="btn btn-outline-primary">Читати далі</a>
