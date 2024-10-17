@@ -6,22 +6,24 @@
    </div>
    <!-- news -->
    <div *ngIf="news" class="row">
-      <div class="col">
-         <div class="card-columns">
-            <div *ngFor="let one of news" class="card mb-0 mb-sm-2 shadow">
-               <ul class="list-group list-group-flush">
-                  <li class="list-group-item">Категорія: {{ one.tournament ? one.tournament.title : 'Інше' }}</li>
-               </ul>
-               <img class="card-img-top img-fluid p-sm-2" src="{{ newsImagesUrl }}/{{ one.image }}" alt="{{ one.title }}" />
-               <div class="card-body">
-                  <h4 class="card-title">{{ one.title }}</h4>
-                  <a routerLink="/news/{{ one.id }}" class="btn btn-outline-primary">Читати далі</a>
-                  <p class="card-text">
-                     <small class="text-muted">{{ one.created_at | time: 'fromNow' }}</small>
-                  </p>
+      <div class="col p-0">
+         <ul
+            class="list-news d-flex flex-column flex-sm-row flex-sm-wrap justify-content-between justify-content-lg-center list-unstyled p-0"
+         >
+            <li *ngFor="let one of news" class="card-news shadow rounded">
+               <p class="list-group-item m-0">Категорія: {{ one.tournament ? one.tournament.title : 'Інше' }}</p>
+               <div class="wrapper-news d-flex flex-column">
+                  <img class="img-news w-100" src="{{ newsImagesUrl }}/{{ one.image }}" alt="{{ one.title }}" />
+                  <h4 class="header-news m-0">{{ one.title }}</h4>
+                  <div>
+                     <a routerLink="/news/{{ one.id }}" class="btn btn-outline-primary">Читати далі</a>
+                     <p class="card-text">
+                        <small class="text-muted">{{ one.created_at | time: 'fromNow' }}</small>
+                     </p>
+                  </div>
                </div>
-            </div>
-         </div>
+            </li>
+         </ul>
       </div>
    </div>
    <app-pagination

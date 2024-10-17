@@ -13,7 +13,7 @@ export class PaginationService {
       cupStages: 10,
       guestbookMessages: 15,
       matches: 12,
-      news: 10,
+      news: 9,
       teamMatches: 12,
       teamTeamMatches: 10,
       teams: 10,

@@ -68,7 +68,7 @@
 <div class="container">
    <div class="row">
       <div class="col">
-         <h4>Останні новини</h4>
+         <h4 class="my-3">Останні новини</h4>
       </div>
    </div>
    <!-- last 3 news -->
@@ -76,7 +76,7 @@
       <div class="col">
          <div class="card-deck">
             <div *ngFor="let one of news | slice: 0:3" class="card shadow">
-               <img class="card-img-top img-fluid p-2" src="{{ newsImagesUrl }}/{{ one.image }}" alt="{{ one.title }}" />
+               <img class="card-img-top img-fluid p-3" src="{{ newsImagesUrl }}/{{ one.image }}" alt="{{ one.title }}" />
                <div class="card-body">
                   <h4 class="card-title">{{ one.title }}</h4>
                   <a routerLink="/news/{{ one.id }}" class="btn btn-outline-primary">Читати далі</a>
@@ -92,12 +92,12 @@
    </div>
    <!-- more news button -->
    <div *ngIf="news && news" class="row">
-      <div class="col text-center mt-2">
+      <div class="col text-center mt-2 mt-sm-3 mb-2">
          <a routerLink="news" class="btn btn-outline-primary btn-lg">Більше новин</a>
       </div>
    </div>
    <div class="row">
-      <div class="col mt-2">
+      <div class="col">
          <app-last-comments [limitTo]="0"></app-last-comments>
       </div>
    </div>
