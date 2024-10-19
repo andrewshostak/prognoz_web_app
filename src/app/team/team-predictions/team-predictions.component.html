@@ -1,7 +1,7 @@
 <!--TODO: don't show this page at all for not authenticated user, as well as my-team -->
 <app-error *ngIf="!authenticatedUser" [message]="noAccess" [additionalInfo]="false"></app-error>
 <ng-container *ngIf="authenticatedUser">
-   <app-team-stage-select (teamStageSelected)="clickOnTeamStageSelectButton($event)"></app-team-stage-select>
+   <app-team-stage-select [findCurrentCompetition]="true" (teamStageSelected)="clickOnTeamStageSelectButton($event)"></app-team-stage-select>
    <div *ngIf="teamPredictions" class="container-fluid">
       <app-team-prediction-form
          *ngFor="let teamPrediction of teamPredictions"
