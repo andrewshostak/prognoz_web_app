@@ -131,7 +131,7 @@ export class TeamStageSelectComponent implements OnInit {
          return this.getCurrentTeamParticipantObservable(this.authenticatedUser.id).pipe(mergeMap(response =>
             iif(
                () => !!response.length,
-               defer(() => of({ data: [response[0].competition] })),
+               defer(() => of({ data: [response[0].competition] } as PaginatedResponse<Competition>)),
                this.getNonCurrentCompetitionsObservable()
             )
          ));
