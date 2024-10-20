@@ -1,26 +1,31 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 
 import { CompetitionState } from '@enums/competition-state.enum';
+import { ModelStatus } from '@enums/model-status.enum';
 import { Sequence } from '@enums/sequence.enum';
 import { TeamStageState } from '@enums/team-stage-state.enum';
 import { Tournament } from '@enums/tournament.enum';
 import { Competition } from '@models/v2/competition.model';
 import { Season } from '@models/v2/season.model';
+import { TeamParticipant } from '@models/v2/team/team-participant.model';
 import { TeamStage } from '@models/v2/team/team-stage.model';
+import { User } from '@models/v2/user.model';
 import { PaginatedResponse } from '@models/paginated-response.model';
 import { CompetitionSearch } from '@models/search/competition-search.model';
 import { SeasonSearch } from '@models/search/season-search.model';
+import { TeamParticipantSearch } from '@models/search/team/team-participant-search.model';
 import { TeamStageSearch } from '@models/search/team/team-stage-search.model';
 import { CurrentStateService } from '@services/current-state.service';
 import { CompetitionService } from '@services/api/v2/competition.service';
 import { SeasonService } from '@services/api/v2/season.service';
+import { TeamParticipantService } from '@services/api/v2/team/team-participant.service';
 import { TeamStageService } from '@services/api/v2/team/team-stage.service';
 import { PaginationService } from '@services/pagination.service';
 import { UtilsService } from '@services/utils.service';
 import { find, findLast, get } from 'lodash';
-import { iif, Observable, of } from 'rxjs';
+import { defer, iif, Observable, of } from 'rxjs';
 import { filter, first, map, mergeMap, tap } from 'rxjs/operators';
 
 @Component({
@@ -29,8 +34,10 @@ import { filter, first, map, mergeMap, tap } from 'rxjs/operators';
    styleUrls: ['./team-stage-select.component.scss']
 })
 export class TeamStageSelectComponent implements OnInit {
+   @Input() public findCurrentCompetition: boolean = false;
    @Output() public teamStageSelected = new EventEmitter<{ teamStageId: number }>();
 
+   public authenticatedUser: User;
    public competitions: Competition[] = [];
    public selectedCompetitionId: number = null;
    public selectedTeamStage: TeamStage = null;
@@ -47,6 +54,7 @@ export class TeamStageSelectComponent implements OnInit {
       private competitionService: CompetitionService,
       private currentStateService: CurrentStateService,
       private seasonService: SeasonService,
+      private teamParticipantService: TeamParticipantService,
       private teamStageService: TeamStageService
    ) {}
 
@@ -119,9 +127,34 @@ export class TeamStageSelectComponent implements OnInit {
    }
 
    private getCompetitionsObservable(): Observable<PaginatedResponse<Competition>> {
+      if (this.sendTeamParticipantRequest()) {
+         return this.getCurrentTeamParticipantObservable(this.authenticatedUser.id).pipe(mergeMap(response =>
+            iif(
+               () => !!response.length,
+               defer(() => of({ data: [response[0].competition] } as PaginatedResponse<Competition>)),
+               this.getNonCurrentCompetitionsObservable()
+            )
+         ));
+      }
+
+      return this.getNonCurrentCompetitionsObservable();
+   }
+
+   private getNonCurrentCompetitionsObservable(): Observable<PaginatedResponse<Competition>> {
       return this.getActiveCompetitions().pipe(
          mergeMap(response => iif(() => !!response.total, of(response), this.getEndedCompetitions()))
       );
+   }
+
+   private getCurrentTeamParticipantObservable(userId: number): Observable<TeamParticipant[]> {
+      const search: TeamParticipantSearch = {
+         userId: userId,
+         confirmed: ModelStatus.Truthy,
+         ended: ModelStatus.Falsy,
+         limit: 1,
+         page: 1
+      };
+      return this.teamParticipantService.getTeamParticipants(search).pipe(map(response => response.data));
    }
 
    private getEndedCompetitions(): Observable<PaginatedResponse<Competition>> {
@@ -200,6 +233,7 @@ export class TeamStageSelectComponent implements OnInit {
    }
 
    private initializeComponentData(): void {
+      this.authenticatedUser = this.currentStateService.getUser();
       this.getCompetitionsObservable()
          .pipe(
             tap(response => (this.competitions = response.data)),
@@ -255,6 +289,10 @@ export class TeamStageSelectComponent implements OnInit {
       }
 
       this.teamStageSelected.emit({ teamStageId: teamStages[0].id });
+   }
+
+   private sendTeamParticipantRequest(): boolean {
+      return !!this.authenticatedUser && this.findCurrentCompetition;
    }
 
    private setSelectedCompetitionId(response: PaginatedResponse<TeamStage>): void {

@@ -5,7 +5,7 @@
          <i class="fa fa-cogs"></i> Редагувати
       </a>
    </h4>
-   <app-team-stage-select (teamStageSelected)="teamStageSelected($event)"></app-team-stage-select>
+   <app-team-stage-select [findCurrentCompetition]="true" (teamStageSelected)="teamStageSelected($event)"></app-team-stage-select>
    <app-team-captain></app-team-captain>
 </ng-container>
 <ng-template #noAccessError>
