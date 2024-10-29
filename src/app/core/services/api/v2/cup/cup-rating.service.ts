@@ -7,6 +7,7 @@ import { CupRatingGroup } from '@models/v2/cup/cup-rating-group.model';
 import { PaginatedResponse } from '@models/paginated-response.model';
 import { CupRatingGroupSearch } from '@models/search/cup/cup-rating-group-search.model';
 import { CupRatingSearch } from '@models/search/cup/cup-rating-search.model';
+import { CupRatingPositionSearch } from '@app/shared/models/v2/cup/cup-rating-position-search.model';
 import { Observable } from 'rxjs';
 
 @Injectable()
@@ -36,5 +37,23 @@ export class CupRatingService {
          fromObject: { competition_id: search.competitionId.toString(), group_number: search.groupNumber.toString() }
       });
       return this.httpClient.get<PaginatedResponse<CupRatingGroup>>(`${this.cupRatingUrl}-groups`, { params });
+   }
+
+   getCupRatingPositionInGroups(search: CupRatingPositionSearch): Observable<CupRatingGroup> {
+      const params: HttpParams = new HttpParams({
+         fromObject: {
+            competition_id: search.competitionId.toString(),
+            position: search.position.toString()
+         }
+      });
+      return this.httpClient.get<CupRatingGroup>(`${this.cupRatingUrl}/rating-position-in-groups`, { params });
+   }
+
+   getCupGroupFurtheranceByPosition(search: CupRatingPositionSearch): Observable<PaginatedResponse<number>> {
+      const params: HttpParams = new HttpParams()
+         .set('competition_id', search.competitionId.toString())
+         .set('position', search.position.toString());
+
+      return this.httpClient.get<PaginatedResponse<number>>(`${this.cupRatingUrl}/group-furtherance-by-position`, { params });
    }
 }

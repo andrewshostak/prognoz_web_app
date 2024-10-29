@@ -28,6 +28,7 @@ import { CupCompetitionService } from '@services/cup-competition.service';
 import { CupCupMatchService } from '@services/api/v2/cup/cup-cup-match.service';
 import { CupMatchService } from '@services/api/v2/cup/cup-match.service';
 import { CupPredictionService } from '@services/api/v2/cup/cup-prediction.service';
+import { CupRatingGroupTableComponent } from '@app/cup/cup-rating-group-table/cup-rating-group-table.component';
 import { CupStageService } from '@services/api/v2/cup/cup-stage.service';
 import { CupStageTypeService } from '@services/api/v2/cup/cup-stage-type.service';
 import { HeaderImageService } from '@services/header-image.service';
@@ -55,8 +56,8 @@ import { TournamentService } from '@services/api/v2/tournament.service';
 import { UtilsService } from '@services/utils.service';
 
 @NgModule({
-   declarations: [AccessDeniedComponent, FooterComponent, HeaderComponent, PageNotFoundComponent],
-   exports: [AccessDeniedComponent, FooterComponent, HeaderComponent, PageNotFoundComponent],
+   declarations: [AccessDeniedComponent, CupRatingGroupTableComponent, FooterComponent, HeaderComponent, PageNotFoundComponent],
+   exports: [AccessDeniedComponent, CupRatingGroupTableComponent, FooterComponent, HeaderComponent, PageNotFoundComponent],
    providers: [
       AuthService,
       AuthGuard,
