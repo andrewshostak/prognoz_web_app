@@ -53,6 +53,6 @@ export class CupRatingService {
       const params: HttpParams = new HttpParams()
          .set('competition_id', search.competitionId.toString())
          .set('position', search.position.toString());
-      return this.httpClient.get<PaginatedResponse<number>>(`v2/cup/group-furtherance-by-position`, { params });
+      return this.httpClient.get<PaginatedResponse<number>>(`${environment.apiBaseUrl}/v2/cup/group-furtherance-by-position`, { params });
    }
 }

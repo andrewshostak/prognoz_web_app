@@ -44,12 +44,3 @@
 <div class="mt-2">
    <app-cup-rating-group-matches [competitionId]="competitionId" [groupNumber]="groupNumber" [tab]="tab"> </app-cup-rating-group-matches>
 </div>
-<ng-template #userInfo let-item="item">
-   <div class="d-flex flex-row align-items-center">
-      <app-user-logo [user]="item.user"></app-user-logo>
-      <div class="ml-1 d-flex flex-column">
-         <strong>{{ item.user.name }}</strong>
-         <small class="text-muted break-word">{{ getHomeCityInBrackets(item.user.hometown) }}</small>
-      </div>
-   </div>
-</ng-template>

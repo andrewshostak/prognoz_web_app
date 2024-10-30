@@ -9,7 +9,6 @@ import { CompetitionService } from '@services/api/v2/competition.service';
 import { CupGroupNumberService } from '@services/api/v2/cup/cup-group-number.service';
 import { CupRatingService } from '@services/api/v2/cup/cup-rating.service';
 import { TitleService } from '@services/title.service';
-import { UtilsService } from '@services/utils.service';
 import { first, get, last } from 'lodash';
 
 @Component({
@@ -20,7 +19,6 @@ import { first, get, last } from 'lodash';
 export class CupRatingGroupComponent implements OnInit {
    public competitionId: number;
    public cupRatingGroup: CupRatingGroup[];
-   public getHomeCityInBrackets = UtilsService.getHomeCityInBrackets;
    public groupNumber: number;
    public groupNumbers: number[];
    public tab: CupRatingGroupTab = CupRatingGroupTab.Active;
@@ -85,18 +83,6 @@ export class CupRatingGroupComponent implements OnInit {
       }
 
       this.navigateToGroup(--this.groupNumber);
-   }
-
-   public showPositionHighlight(index: number, key: string): boolean {
-      if (!this.competition) {
-         return false;
-      }
-      const promotion: number[] = get(this.competition, key);
-      if (!promotion) {
-         return false;
-      }
-
-      return promotion.includes(index + 1);
    }
 
    private getCompetitionData(competitionId: number): void {
