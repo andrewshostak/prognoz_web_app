@@ -9,7 +9,7 @@ import { UtilsService } from '@services/utils.service';
 })
 export class CupRatingGroupTableComponent {
    @Input() cupRatingGroup: CupRatingGroup[];
-   @Input() highlightConfig: { promotion: number[]; possible_promotion: number[]; other_competition: number[] };
+   @Input() highlightConfig: { promotion?: number[]; possible_promotion?: number[]; other_competition?: number[] };
 
    public getHomeCityInBrackets(hometown: string): string {
       return UtilsService.getHomeCityInBrackets(hometown);

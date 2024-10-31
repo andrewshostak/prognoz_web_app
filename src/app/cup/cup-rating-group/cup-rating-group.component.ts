@@ -21,6 +21,7 @@ export class CupRatingGroupComponent implements OnInit {
    public cupRatingGroup: CupRatingGroup[];
    public groupNumber: number;
    public groupNumbers: number[];
+   public highlightConfig: { promotion?: number[]; possible_promotion?: number[]; other_competition?: number[] } = {};
    public tab: CupRatingGroupTab = CupRatingGroupTab.Active;
 
    private competition: Competition;
@@ -86,7 +87,10 @@ export class CupRatingGroupComponent implements OnInit {
    }
 
    private getCompetitionData(competitionId: number): void {
-      this.competitionService.getCompetition(competitionId).subscribe(response => (this.competition = response));
+      this.competitionService.getCompetition(competitionId).subscribe(response => {
+         this.competition = response;
+         this.highlightConfig = get(response, 'config.cup.group', {});
+      });
    }
 
    private getCupRatingGroupData(competitionId: number, groupNumber: number): void {

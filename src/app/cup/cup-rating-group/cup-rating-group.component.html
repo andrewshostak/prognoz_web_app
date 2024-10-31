@@ -37,10 +37,8 @@
       </div>
    </div>
 </div>
-<div *ngIf="cupRatingGroup">
-   <app-cup-rating-group-table [cupRatingGroup]="cupRatingGroup" [highlightConfig]="competition?.highlightConfig">
-   </app-cup-rating-group-table>
-</div>
+<app-cup-rating-group-table *ngIf="cupRatingGroup" [cupRatingGroup]="cupRatingGroup" [highlightConfig]="highlightConfig">
+</app-cup-rating-group-table>
 <div class="mt-2">
    <app-cup-rating-group-matches [competitionId]="competitionId" [groupNumber]="groupNumber" [tab]="tab"> </app-cup-rating-group-matches>
 </div>
