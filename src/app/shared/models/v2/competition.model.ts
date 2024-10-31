@@ -1,5 +1,6 @@
 import { CompetitionState } from '@enums/competition-state.enum';
 import { Win } from '@models/v2/win.model';
+import { CompetitionCupConfig } from '@models/v2/cup/competition-cup-config.model';
 import { CupApplication } from '@models/v2/cup/cup-application.model';
 import { Season } from '@models/v2/season.model';
 import { Tournament } from '@models/v2/tournament.model';
@@ -11,9 +12,7 @@ export class Competition {
          relegation?: number;
          promotion?: number;
       };
-      cup?: {
-         is_friendly: boolean;
-      };
+      cup?: CompetitionCupConfig;
    };
    id: number;
    number_in_season: number;

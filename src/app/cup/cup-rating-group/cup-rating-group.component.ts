@@ -9,7 +9,6 @@ import { CompetitionService } from '@services/api/v2/competition.service';
 import { CupGroupNumberService } from '@services/api/v2/cup/cup-group-number.service';
 import { CupRatingService } from '@services/api/v2/cup/cup-rating.service';
 import { TitleService } from '@services/title.service';
-import { UtilsService } from '@services/utils.service';
 import { first, get, last } from 'lodash';
 
 @Component({
@@ -20,9 +19,9 @@ import { first, get, last } from 'lodash';
 export class CupRatingGroupComponent implements OnInit {
    public competitionId: number;
    public cupRatingGroup: CupRatingGroup[];
-   public getHomeCityInBrackets = UtilsService.getHomeCityInBrackets;
    public groupNumber: number;
    public groupNumbers: number[];
+   public highlightConfig: { promotion?: number[]; possible_promotion?: number[]; other_competition?: number[] } = {};
    public tab: CupRatingGroupTab = CupRatingGroupTab.Active;
 
    private competition: Competition;
@@ -87,20 +86,11 @@ export class CupRatingGroupComponent implements OnInit {
       this.navigateToGroup(--this.groupNumber);
    }
 
-   public showPositionHighlight(index: number, key: string): boolean {
-      if (!this.competition) {
-         return false;
-      }
-      const promotion: number[] = get(this.competition, key);
-      if (!promotion) {
-         return false;
-      }
-
-      return promotion.includes(index + 1);
-   }
-
    private getCompetitionData(competitionId: number): void {
-      this.competitionService.getCompetition(competitionId).subscribe(response => (this.competition = response));
+      this.competitionService.getCompetition(competitionId).subscribe(response => {
+         this.competition = response;
+         this.highlightConfig = get(response, 'config.cup.group', {});
+      });
    }
 
    private getCupRatingGroupData(competitionId: number, groupNumber: number): void {

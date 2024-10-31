@@ -15,6 +15,7 @@ import { CupRatingGroupComponent } from './cup-rating-group/cup-rating-group.com
 import { CupRatingUserComponent } from './cup-rating-user/cup-rating-user.component';
 import { CupRatingComponent } from './cup-rating/cup-rating.component';
 import { CupRoutingModule } from './cup-routing.module';
+import { CupRatingGroupTableComponent } from './shared/cup-rating-group-table/cup-rating-group-table.component';
 import { CupRulesComponent } from './cup-rules/cup-rules.component';
 import { CupComponent } from './cup.component';
 import { CupApplicationCreateModalComponent } from './shared/cup-application-modal/cup-application-create-modal.component';
@@ -56,6 +57,7 @@ import { CupCupMatchesGroupRatingComponent } from './shared/cup-cup-matches-grou
       CupPredictionsComponent,
       CupRatingComponent,
       CupRatingGroupComponent,
+      CupRatingGroupTableComponent,
       CupRatingSeasonDetailsComponent,
       CupRatingSeasonsSummaryComponent,
       CupRatingTableComponent,
