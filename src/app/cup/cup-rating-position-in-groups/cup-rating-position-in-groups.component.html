@@ -1,0 +1,15 @@
+<div class="container">
+   <h4>Рейтинг третіх місць</h4>
+   <cup-rating-position-in-groups
+      *ngIf="ratingData"
+      [cupRatingGroup]="ratingData"
+      [highlightConfig]="highlightConfig"
+      [competitionId]="competitionId"
+   >
+   </cup-rating-position-in-groups>
+   <div *ngIf="furtheranceData && furtheranceData.length">
+      <ul>
+         <li *ngFor="let item of furtheranceData">{{ item }}</li>
+      </ul>
+   </div>
+</div>
