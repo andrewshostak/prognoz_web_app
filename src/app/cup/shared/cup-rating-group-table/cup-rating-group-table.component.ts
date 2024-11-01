@@ -8,7 +8,6 @@ import { UtilsService } from '@services/utils.service';
    styleUrls: ['./cup-rating-group-table.component.scss']
 })
 export class CupRatingGroupTableComponent {
-   @Input() competitionId: number;
    @Input() cupRatingGroup: CupRatingGroup[];
    @Input() highlightConfig: { promotion?: number[]; possible_promotion?: number[]; other_competition?: number[] };
 
