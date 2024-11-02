@@ -15,9 +15,9 @@ export class CupRatingPositionInGroupsComponent implements OnInit {
    public competitionId: number;
    public position: number;
    public ratingData: CupRatingGroup[];
-   public positionsToPromote!: number[];
-   public possiblePromotion: number[] = [];
-   public ratingTitle: string = '';
+   public positionsToPromote: number[];
+   public possiblePromotion: number[];
+   public ratingTitle: string;
 
    constructor(private activatedRoute: ActivatedRoute, private cupRatingService: CupRatingService) {}
 

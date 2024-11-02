@@ -40,7 +40,7 @@
 <app-cup-rating-group-table *ngIf="cupRatingGroup" [cupRatingGroup]="cupRatingGroup" [highlightConfig]="highlightConfig">
 </app-cup-rating-group-table>
 <a
-   *ngIf="possiblePromotion"
+   *ngIf="possiblePromotion?.length"
    [routerLink]="['/cup', competitionId, 'rating-position-in-groups', possiblePromotion[0]]"
    class="nav-link text-right font-weight-bold mt-1"
 >

@@ -22,7 +22,7 @@ export class CupRatingGroupComponent implements OnInit {
    public groupNumber: number;
    public groupNumbers: number[];
    public highlightConfig: { promotion?: number[]; possible_promotion?: number[]; other_competition?: number[] } = {};
-   public possiblePromotion: number[] = [];
+   public possiblePromotion: number[];
    public tab: CupRatingGroupTab = CupRatingGroupTab.Active;
 
    private competition: Competition;
