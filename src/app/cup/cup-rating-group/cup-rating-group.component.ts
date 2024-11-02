@@ -22,6 +22,7 @@ export class CupRatingGroupComponent implements OnInit {
    public groupNumber: number;
    public groupNumbers: number[];
    public highlightConfig: { promotion?: number[]; possible_promotion?: number[]; other_competition?: number[] } = {};
+   public possiblePromotion: number[];
    public tab: CupRatingGroupTab = CupRatingGroupTab.Active;
 
    private competition: Competition;
@@ -90,6 +91,7 @@ export class CupRatingGroupComponent implements OnInit {
       this.competitionService.getCompetition(competitionId).subscribe(response => {
          this.competition = response;
          this.highlightConfig = get(response, 'config.cup.group', {});
+         this.possiblePromotion = get(response, 'config.cup.group.possible_promotion', []);
       });
    }
 

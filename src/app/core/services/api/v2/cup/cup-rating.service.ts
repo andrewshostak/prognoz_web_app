@@ -39,14 +39,14 @@ export class CupRatingService {
       return this.httpClient.get<PaginatedResponse<CupRatingGroup>>(`${this.cupRatingUrl}-groups`, { params });
    }
 
-   getCupRatingPositionInGroups(search: CupRatingPositionSearch): Observable<CupRatingGroup> {
+   getCupRatingPositionInGroups(search: CupRatingPositionSearch): Observable<PaginatedResponse<CupRatingGroup>> {
       const params: HttpParams = new HttpParams({
          fromObject: {
             competition_id: search.competitionId.toString(),
             position: search.position.toString()
          }
       });
-      return this.httpClient.get<CupRatingGroup>(`${this.cupRatingUrl}-position-in-groups`, { params });
+      return this.httpClient.get<PaginatedResponse<CupRatingGroup>>(`${this.cupRatingUrl}-position-in-groups`, { params });
    }
 
    getCupGroupFurtheranceByPosition(search: CupRatingPositionSearch): Observable<PaginatedResponse<number>> {

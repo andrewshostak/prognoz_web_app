@@ -1,0 +1,5 @@
+<div>
+   <h4 *ngIf="ratingTitle" class="mt-2 mb-3">{{ ratingTitle }}</h4>
+   <app-cup-rating-group-table *ngIf="ratingData" [cupRatingGroup]="ratingData" [highlightConfig]="{ promotion: positionsToPromote }">
+   </app-cup-rating-group-table>
+</div>
