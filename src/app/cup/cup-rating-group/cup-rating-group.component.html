@@ -39,7 +39,13 @@
 </div>
 <app-cup-rating-group-table *ngIf="cupRatingGroup" [cupRatingGroup]="cupRatingGroup" [highlightConfig]="highlightConfig">
 </app-cup-rating-group-table>
-<a routerLink="{{ competitionId }}/rating-position-in-groups/3" class="btn btn-outline-primary"> Рейтинг третіх місць </a>
+<a
+   *ngIf="competition?.config?.cup?.group?.possible_promotion?.length > 0"
+   [routerLink]="['/cup', competitionId, 'rating-position-in-groups', competition.config.cup.group.possible_promotion[0]]"
+   class="nav-link text-right font-weight-bold mt-1"
+>
+   Рейтинг третіх місць
+</a>
 <div class="mt-2">
    <app-cup-rating-group-matches [competitionId]="competitionId" [groupNumber]="groupNumber" [tab]="tab"> </app-cup-rating-group-matches>
 </div>

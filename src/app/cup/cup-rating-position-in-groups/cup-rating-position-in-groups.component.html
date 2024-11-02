@@ -1,10 +1,5 @@
 <div class="container">
-   <h4>Рейтинг третіх місць</h4>
+   <h4 class="mt-2 mb-3">Рейтинг третіх місць</h4>
    <app-cup-rating-group-table *ngIf="ratingData" [cupRatingGroup]="ratingData" [highlightConfig]="highlightConfig">
    </app-cup-rating-group-table>
-   <div *ngIf="furtheranceData && furtheranceData.length">
-      <ul>
-         <li *ngFor="let item of furtheranceData">{{ item }}</li>
-      </ul>
-   </div>
 </div>

@@ -6,7 +6,7 @@ import { PaginatedResponse } from '@models/paginated-response.model';
 import { CupRatingPositionSearch } from '@app/shared/models/search/cup/cup-rating-position-search.model';
 
 @Component({
-   selector: 'app-cup-rating-group-table',
+   selector: 'app-cup-rating-position-in-groups',
    templateUrl: './cup-rating-position-in-groups.component.html',
    styleUrls: ['./cup-rating-position-in-groups.component.scss']
 })
