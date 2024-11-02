@@ -50,6 +50,7 @@ import { CupRatingPositionInGroupsComponent } from './cup-rating-position-in-gro
       CupApplicationsFriendlyComponent,
       CupCupMatchesDefaultComponent,
       CupCupMatchesGroupComponent,
+      CupCupMatchesGroupRatingComponent,
       CupCupMatchesTwoRoundsComponent,
       CupCupMatchesComponent,
       CupCupMatchComponent,
@@ -59,14 +60,13 @@ import { CupRatingPositionInGroupsComponent } from './cup-rating-position-in-gro
       CupRatingComponent,
       CupRatingGroupComponent,
       CupRatingGroupTableComponent,
+      CupRatingPositionInGroupsComponent,
       CupRatingSeasonDetailsComponent,
       CupRatingSeasonsSummaryComponent,
       CupRatingTableComponent,
       CupRatingUserComponent,
       CupRulesComponent,
-      CupStageSelectComponent,
-      CupCupMatchesGroupRatingComponent,
-      CupRatingPositionInGroupsComponent
+      CupStageSelectComponent
    ]
 })
 export class CupModule {}
