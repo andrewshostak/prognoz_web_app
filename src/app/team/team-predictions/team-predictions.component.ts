@@ -96,16 +96,13 @@ export class TeamPredictionsComponent implements OnInit {
    }
 
    predictionUpdated(event: {teamPredictionId: number, teamPrediction?: TeamPrediction, error?: { message: string; status_code: number };}): void {
-      const index = this.teamPredictions.findIndex(prediction => prediction.id === event.teamPredictionId);
-      if (index === -1) {
-         return;
-      }
+      const found = this.teamPredictions.find(prediction => prediction.id === event.teamPredictionId);
+      if (!found) return;
 
-      if (event.teamPrediction) {
-         this.teamPredictions[index] = { ...this.teamPredictions[index], ...event.teamPrediction as unknown as TeamPredictionV1 };
-      } else if (event.error && event.error.message.includes('Час для прогнозування вже вийшов')) {
-         this.teamPredictions[index].team_match.is_predictable = false;
-      }
+      event.teamPrediction
+         ? Object.assign(found, event.teamPrediction as unknown as TeamPredictionV1)
+         : event.error?.message.includes('Час для прогнозування вже вийшов') &&
+         (found.team_match.is_predictable = false);
    }
 
    setBlockedMatches(teamMatches: TeamMatch[]) {
