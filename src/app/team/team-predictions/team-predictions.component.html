@@ -6,7 +6,7 @@
       <app-team-prediction-form
          *ngFor="let teamPrediction of teamPredictions"
          [teamPrediction]="teamPrediction"
-         (teamPredictionUpdated)="updatePredictions(teamPrediction)"
+         (teamPredictionUpdated)="predictionUpdated($event)"
       >
       </app-team-prediction-form>
    </div>

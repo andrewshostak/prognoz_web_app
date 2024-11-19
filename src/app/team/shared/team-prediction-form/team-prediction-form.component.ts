@@ -1,7 +1,8 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
-import { TeamPrediction } from '@models/v1/team-prediction.model';
+import { TeamPrediction as TeamPredictionV1 } from '@models/v1/team-prediction.model';
+import { TeamPrediction } from '@models/v2/team/team-prediction.model';
 import { TeamPredictionService } from '@services/api/v2/team/team-prediction.service';
 import { UtilsService } from '@services/utils.service';
 import { NotificationsService } from 'angular2-notifications';
@@ -13,8 +14,12 @@ import { SettingsService } from '@services/settings.service';
    styleUrls: ['./team-prediction-form.component.scss']
 })
 export class TeamPredictionFormComponent implements OnInit {
-   @Input() public teamPrediction: TeamPrediction;
-   @Output() public teamPredictionUpdated = new EventEmitter<void>();
+   @Input() public teamPrediction: TeamPredictionV1;
+   @Output() public teamPredictionUpdated = new EventEmitter<{
+      teamPredictionId: number,
+      teamPrediction?: TeamPrediction
+      error?: { message: string; status_code: number };
+   }>();
 
    public clubsLogosPath: string = SettingsService.imageBaseUrl.clubs;
    public isScore = UtilsService.isScore;
@@ -52,15 +57,16 @@ export class TeamPredictionFormComponent implements OnInit {
       };
 
       this.teamPredictionService.updatePrediction(this.teamPrediction.id, teamPredictionToUpdate).subscribe(
-         () => {
+         response => {
             this.spinnerButton = false;
-            this.teamPredictionUpdated.emit();
+            this.teamPredictionUpdated.emit({ teamPredictionId: this.teamPrediction.id, teamPrediction: response });
             const message = `прогноз
                      ${this.teamPredictionUpdateForm.value.home}:${this.teamPredictionUpdateForm.value.away} на матч<br>
                      ${this.teamPrediction.team_match.match.club_home.title} - ${this.teamPrediction.team_match.match.club_away.title}`;
             this.notificationsService.success('Збережено', message);
          },
-         () => {
+         error => {
+            this.teamPredictionUpdated.emit({teamPredictionId: this.teamPrediction.id, error: error.error});
             this.spinnerButton = false;
          }
       );

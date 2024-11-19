@@ -6,7 +6,8 @@ import { User } from '@models/v2/user.model';
 import { RequestParams } from '@models/request-params.model';
 import { TeamTeamMatchSearch } from '@models/search/team/team-team-match-search.model';
 import { TeamMatch } from '@models/v1/team-match.model';
-import { TeamPrediction } from '@models/v1/team-prediction.model';
+import { TeamPrediction as TeamPredictionV1 } from '@models/v1/team-prediction.model';
+import { TeamPrediction } from '@models/v2/team/team-prediction.model';
 import { CurrentStateService } from '@services/current-state.service';
 import { TeamTeamMatchService } from '@services/api/v2/team/team-team-match.service';
 import { PaginationService } from '@services/pagination.service';
@@ -43,7 +44,7 @@ export class TeamPredictionsComponent implements OnInit {
    public teamStageId: number;
    teamMatches: TeamMatch[];
    public teamTeamMatches: TeamTeamMatch[];
-   teamPredictions: TeamPrediction[];
+   teamPredictions: TeamPredictionV1[];
 
    public clickOnTeamStageSelectButton(event: { teamStageId: number }): void {
       this.router.navigate(['/team', 'predictions', { team_stage_id: event.teamStageId }]);
@@ -94,9 +95,14 @@ export class TeamPredictionsComponent implements OnInit {
       this.subscribeToTeamStageIdUrlParamChange();
    }
 
-   updatePredictions(updatedPrediction: TeamPrediction): void {
-      const index = this.teamPredictions.findIndex(prediction => prediction.id === updatedPrediction.id);
-      if (index !== -1) this.teamPredictions[index] = updatedPrediction;
+   predictionUpdated(event: {teamPredictionId: number, teamPrediction?: TeamPrediction, error?: { message: string; status_code: number };}): void {
+      const found = this.teamPredictions.find(prediction => prediction.id === event.teamPredictionId);
+      if (!found) return;
+
+      event.teamPrediction
+         ? Object.assign(found, event.teamPrediction as unknown as TeamPredictionV1)
+         : event.error?.message.includes('Час для прогнозування вже вийшов') &&
+         (found.team_match.is_predictable = false);
    }
 
    setBlockedMatches(teamMatches: TeamMatch[]) {
