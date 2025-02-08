@@ -92,7 +92,8 @@ export class ChampionshipHomeComponent implements OnInit {
    }
 
    public getChampionshipPredictionsData(): void {
-      this.championshipPredictionService.getLastDistinctPredictions().subscribe(response => (this.championshipPredictions = response));
+      // disabling data fetch temporarily
+      // this.championshipPredictionService.getLastDistinctPredictions().subscribe(response => (this.championshipPredictions = response));
    }
 
    public getChampionshipRatingData(): void {
