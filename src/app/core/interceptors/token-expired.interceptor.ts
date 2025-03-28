@@ -20,6 +20,7 @@ export class TokenExpiredInterceptor implements HttpInterceptor {
             if (error.status === 401 && errorObject.message && errorObject.message === AuthService.tokenExpired) {
                const currentStateService = this.injector.get(CurrentStateService);
                currentStateService.setUser(null);
+               currentStateService.removeToken();
                currentStateService.getOnlineUsers(null);
 
                const router = this.injector.get(Router);
