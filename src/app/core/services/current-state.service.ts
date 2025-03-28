@@ -52,6 +52,10 @@ export class CurrentStateService {
       localStorage.setItem('auth_token', token);
    }
 
+   public removeToken(): void {
+      localStorage.removeItem('auth_token');
+   }
+
    public getPermissions(): string[] {
       const user = this.getUser();
       if (!get(user, 'roles.length')) {
