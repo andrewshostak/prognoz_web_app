@@ -109,7 +109,7 @@ export class TeamTeamMatchEditComponent implements OnInit {
          return false;
       }
 
-      return stage.team_stage_type.id === TeamStageType.CupGroupRound;
+      return stage.team_stage_type.id === TeamStageType.CupGroupRound8 || stage.team_stage_type.id === TeamStageType.CupGroupRound12;
    }
 
    private subscribeToTeamStageChanges(): void {
