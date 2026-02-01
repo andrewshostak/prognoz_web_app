@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-
+import { NgSelectModule } from '@ng-select/ng-select';
 import { NgbModalModule, NgbTooltipModule } from '@ng-bootstrap/ng-bootstrap';
 import { ChartsModule } from 'ng2-charts';
 import { SharedModule } from '../shared/shared.module';
@@ -39,6 +39,7 @@ import { CupRatingPositionInGroupsComponent } from './cup-rating-position-in-gro
       FormsModule,
       NgbModalModule,
       NgbTooltipModule,
+      NgSelectModule,
       ReactiveFormsModule,
       SharedModule
    ],
