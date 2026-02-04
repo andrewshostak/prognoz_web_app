@@ -50,7 +50,13 @@ export class HomeComponent implements OnInit {
 
       this.championshipMatchService.getChampionshipMatches(search).subscribe(
          response => {
-            this.championshipMatches = response.data;
+            const now = new Date();
+            this.championshipMatches = response.data.filter(item => {
+               const val = (item as any)?.match?.started_at;
+               if (!val) return false;
+               const start = new Date(val.replace(' ', 'T'));
+               return start > now;
+            });
          },
          error => {
             this.errorChampionshipMatches = error;
