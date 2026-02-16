@@ -232,3 +232,7 @@ body {
 .simple-notification.error {
    background-color: $danger !important;
 }
+.ng-select-container {
+   padding-left: 6px !important;
+   cursor: pointer !important;
+}

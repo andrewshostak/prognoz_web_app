@@ -62,6 +62,10 @@ export class CupStageSelectComponent implements OnInit {
          this.cupStageSelected.emit({ cupStages, selected });
       }
    }
+   
+   public groupByNumberInSeason(item: any): string {
+      return `Розіграш ${item.number_in_season}`;
+   }
 
    private getCompetitionsData(seasonId: number): void {
       const search: CompetitionSearch = {

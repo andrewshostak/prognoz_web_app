@@ -76,6 +76,10 @@ export class CompetitionSelectComponent implements OnInit {
       }
    }
 
+   public groupByNumberInSeason(item: any): string {
+      return `Розіграш ${item.number_in_season}`;
+   }
+
    private getActiveCompetitions(): Observable<PaginatedResponse<Competition>> {
       const search: CompetitionSearch = {
          limit: PaginationService.limit.competitions,

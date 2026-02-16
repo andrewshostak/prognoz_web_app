@@ -31,19 +31,32 @@
       <div class="form-row">
          <div class="form-group col-12 col-md-6 col-lg-4 col-xl-3">
             <label for="season_id" class="font-weight-bold">Сезон:</label>
-            <select id="season_id" class="form-control cursor-pointer" formControlName="season_id">
-               <option [ngValue]="null" disabled>Виберіть сезон</option>
-               <option *ngFor="let season of seasons" [value]="season.id">{{ season.title }}</option>
-            </select>
+            <ng-select
+               id="season_id"
+               placeholder="Оберіть сезон"
+               [items]="seasons || []"
+               bindValue="id"
+               bindLabel="title"
+               formControlName="season_id"
+               [searchable]="false"
+               [clearable]="false"
+            >
+            </ng-select>
          </div>
          <div *ngIf="competitionsBySeasonId[seasonIdFormValue]?.length > 0" class="form-group col-12 col-md-6 col-lg-4 col-xl-3">
             <label for="competition_id" class="font-weight-bold">Змагання:</label>
-            <select id="competition_id" class="form-control cursor-pointer" formControlName="competition_id">
-               <option [ngValue]="null" disabled>Виберіть змагання</option>
-               <option *ngFor="let competition of competitionsBySeasonId[seasonIdFormValue]" [value]="competition.id">
-                  {{ competition.title }}
-               </option>
-            </select>
+            <ng-select
+               id="competition_id"
+               placeholder="Оберіть змагання"
+               [items]="competitionsBySeasonId[seasonIdFormValue] || []"
+               bindValue="id"
+               bindLabel="title"
+               formControlName="competition_id"
+               [groupBy]="groupByNumberInSeason"
+               [searchable]="false"
+               [clearable]="false"
+            >
+            </ng-select>
          </div>
          <div
             *ngIf="competitionsBySeasonId[seasonIdFormValue]?.length === 0"
@@ -53,12 +66,18 @@
          </div>
          <div *ngIf="teamStagesByCompetitionId[competitionIdFormValue]" class="form-group col-12 col-md-6 col-lg-4 col-xl-3">
             <label for="team_stage_id" class="font-weight-bold">Стадія:</label>
-            <select id="team_stage_id" class="form-control cursor-pointer" formControlName="team_stage_id" (change)="submit()">
-               <option [ngValue]="null" disabled>Виберіть стадію</option>
-               <option *ngFor="let teamStage of teamStagesByCompetitionId[competitionIdFormValue]" [value]="teamStage.id">
-                  {{ teamStage.title }}
-               </option>
-            </select>
+            <ng-select
+               id="team_stage_id"
+               placeholder="Оберіть стадію"
+               [items]="teamStagesByCompetitionId[competitionIdFormValue] || []"
+               bindValue="id"
+               bindLabel="title"
+               formControlName="team_stage_id"
+               [searchable]="false"
+               [clearable]="false"
+               (change)="submit()"
+            >
+            </ng-select>
          </div>
          <div
             *ngIf="teamStageIdFormValue"

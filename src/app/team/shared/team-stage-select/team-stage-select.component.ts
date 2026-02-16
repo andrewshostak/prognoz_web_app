@@ -102,6 +102,10 @@ export class TeamStageSelectComponent implements OnInit {
       }
    }
 
+   public groupByNumberInSeason(item: any): string {
+      return `Розіграш ${item.number_in_season}`;
+   }
+
    private getActiveCompetitions(): Observable<PaginatedResponse<Competition>> {
       const search: CompetitionSearch = {
          limit: PaginationService.limit.competitions,
@@ -128,13 +132,15 @@ export class TeamStageSelectComponent implements OnInit {
 
    private getCompetitionsObservable(): Observable<PaginatedResponse<Competition>> {
       if (this.sendTeamParticipantRequest()) {
-         return this.getCurrentTeamParticipantObservable(this.authenticatedUser.id).pipe(mergeMap(response =>
-            iif(
-               () => !!response.length,
-               defer(() => of({ data: [response[0].competition] } as PaginatedResponse<Competition>)),
-               this.getNonCurrentCompetitionsObservable()
+         return this.getCurrentTeamParticipantObservable(this.authenticatedUser.id).pipe(
+            mergeMap(response =>
+               iif(
+                  () => !!response.length,
+                  defer(() => of({ data: [response[0].competition] } as PaginatedResponse<Competition>)),
+                  this.getNonCurrentCompetitionsObservable()
+               )
             )
-         ));
+         );
       }
 
       return this.getNonCurrentCompetitionsObservable();
@@ -241,9 +247,7 @@ export class TeamStageSelectComponent implements OnInit {
                iif(
                   () => this.activatedRoute.snapshot.params.team_stage_id,
                   this.getSiblingTeamStagesObservable(this.activatedRoute.snapshot.params.team_stage_id),
-                  this.getTeamStagesObservable(
-                     UtilsService.getCompetitionID(response.data, this.currentStateService.teamCompetitionId)
-                  )
+                  this.getTeamStagesObservable(UtilsService.getCompetitionID(response.data, this.currentStateService.teamCompetitionId))
                )
             ),
             tap(response => {
