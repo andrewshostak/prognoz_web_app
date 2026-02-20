@@ -43,7 +43,7 @@ export class TeamStageSelectComponent implements OnInit {
    public selectedTeamStage: TeamStage = null;
    public showTeamStageSelect = false;
    public teamStages: TeamStage[] = [];
-
+   public groupByNumberInSeason = UtilsService.groupByNumberInSeason;
    public competitionsBySeasonId: { [id: number]: Competition[] } = {};
    public seasons: Season[] = [];
    public teamStagesByCompetitionId: { [id: number]: TeamStage[] } = {};
@@ -107,7 +107,7 @@ export class TeamStageSelectComponent implements OnInit {
          limit: PaginationService.limit.competitions,
          page: 1,
          orderBy: 'id',
-         sequence: Sequence.Ascending,
+         sequence: Sequence.Descending,
          states: [CompetitionState.Applications, CompetitionState.Active],
          tournamentId: Tournament.Team
       };
@@ -128,13 +128,15 @@ export class TeamStageSelectComponent implements OnInit {
 
    private getCompetitionsObservable(): Observable<PaginatedResponse<Competition>> {
       if (this.sendTeamParticipantRequest()) {
-         return this.getCurrentTeamParticipantObservable(this.authenticatedUser.id).pipe(mergeMap(response =>
-            iif(
-               () => !!response.length,
-               defer(() => of({ data: [response[0].competition] } as PaginatedResponse<Competition>)),
-               this.getNonCurrentCompetitionsObservable()
+         return this.getCurrentTeamParticipantObservable(this.authenticatedUser.id).pipe(
+            mergeMap(response =>
+               iif(
+                  () => !!response.length,
+                  defer(() => of({ data: [response[0].competition] } as PaginatedResponse<Competition>)),
+                  this.getNonCurrentCompetitionsObservable()
+               )
             )
-         ));
+         );
       }
 
       return this.getNonCurrentCompetitionsObservable();
@@ -181,7 +183,7 @@ export class TeamStageSelectComponent implements OnInit {
          page: 1,
          limit: PaginationService.limit.teamStages,
          orderBy: 'id',
-         sequence: Sequence.Ascending
+         sequence: Sequence.Descending
       };
       this.teamStageService.getTeamStages(search).subscribe(response => {
          this.teamStagesByCompetitionId[competitionId] = response.data;
@@ -191,7 +193,7 @@ export class TeamStageSelectComponent implements OnInit {
    private getTeamStagesObservable(competitionId: number): Observable<PaginatedResponse<TeamStage>> {
       const search: TeamStageSearch = {
          orderBy: 'id',
-         sequence: Sequence.Ascending,
+         sequence: Sequence.Descending,
          page: 1,
          competitionId,
          limit: PaginationService.limit.teamStages
@@ -241,9 +243,7 @@ export class TeamStageSelectComponent implements OnInit {
                iif(
                   () => this.activatedRoute.snapshot.params.team_stage_id,
                   this.getSiblingTeamStagesObservable(this.activatedRoute.snapshot.params.team_stage_id),
-                  this.getTeamStagesObservable(
-                     UtilsService.getCompetitionID(response.data, this.currentStateService.teamCompetitionId)
-                  )
+                  this.getTeamStagesObservable(UtilsService.getCompetitionID(response.data, this.currentStateService.teamCompetitionId))
                )
             ),
             tap(response => {

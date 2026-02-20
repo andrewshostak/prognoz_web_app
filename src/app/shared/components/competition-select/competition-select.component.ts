@@ -29,7 +29,7 @@ export class CompetitionSelectComponent implements OnInit {
 
    public competitions: Competition[] = [];
    public selectedCompetitionId: number = null;
-
+   public groupByNumberInSeason = UtilsService.groupByNumberInSeason;
    public seasons: Season[] = [];
    public showCompetitionSelect: boolean = false;
    public competitionsBySeasonId: { [id: number]: Competition[] } = {};
@@ -81,7 +81,7 @@ export class CompetitionSelectComponent implements OnInit {
          limit: PaginationService.limit.competitions,
          page: 1,
          orderBy: 'id',
-         sequence: Sequence.Ascending,
+         sequence: Sequence.Descending,
          states: [CompetitionState.Applications, CompetitionState.Active],
          tournamentId: Tournament.Team
       };

@@ -14,6 +14,7 @@ import { CupStageService } from '@services/api/v2/cup/cup-stage.service';
 import { SeasonService } from '@services/api/v2/season.service';
 import { PaginationService } from '@services/pagination.service';
 import { map } from 'rxjs/operators';
+import { UtilsService } from '@app/core/services/utils.service';
 
 @Component({
    selector: 'app-cup-stage-select',
@@ -23,7 +24,7 @@ export class CupStageSelectComponent implements OnInit {
    @Output() public cupStageSelected = new EventEmitter<{ cupStages: CupStage[]; selected: CupStage }>();
 
    public cupStageSelectForm: FormGroup;
-
+   public groupByNumberInSeason = UtilsService.groupByNumberInSeason;
    public competitionsBySeasonId: { [id: number]: Competition[] } = {};
    public cupStagesByCompetitionId: { [id: number]: CupStage[] } = {};
    public seasons: Season[] = [];
@@ -81,7 +82,7 @@ export class CupStageSelectComponent implements OnInit {
          page: 1,
          limit: PaginationService.limit.cupStages,
          orderBy: 'id',
-         sequence: Sequence.Ascending
+         sequence: Sequence.Descending
       };
       this.cupStageService.getCupStages(search).subscribe(response => {
          this.cupStagesByCompetitionId[competitionId] = response.data;
