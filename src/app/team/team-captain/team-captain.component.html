@@ -198,9 +198,9 @@
    </table>
 </div>
 <app-error *ngIf="errorTeamTeamMatches" [message]="errorTeamTeamMatches"></app-error>
-<h4 [hidden]="!teamParticipants || !teamTeamMatches">Воротар</h4>
+<h4 class="mt-2" [hidden]="!teamParticipants || !teamTeamMatches">Воротар</h4>
 <div *ngIf="teamParticipants && teamTeamMatches" class="card shadow">
-   <form #teamGoalkeeperForm="ngForm" novalidate class="p-2">
+   <form #teamGoalkeeperForm="ngForm" novalidate class="p-3">
       <div class="form-group" [class.form-group-invalid-custom]="goalkeeper_id.errors?.required && goalkeeper_id.touched">
          <label class="form-control-label" for="goalkeeper_id"><strong>Воротар:</strong></label>
          <select
