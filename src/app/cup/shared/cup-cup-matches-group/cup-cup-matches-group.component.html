@@ -6,7 +6,7 @@
          <div>Матчів: {{ cupCupMatches.length }}</div>
       </div>
    </div>
-   <div class="card-body p-0 overflow-hidden">
+   <div class="card-body p-0">
       <div *ngFor="let cupCupMatchesInOneGroup of groupedCupCupMatches">
          <div
             class="table-secondary cursor-pointer font-italic pl-2 pr-2"
@@ -24,7 +24,7 @@
                   >({{ cupCupMatch.home_user.hometown }})</small
                >
                <app-cup-cup-match-user-name
-                  class="text-right pr-1"
+                  class="text-right pr-1 overflow-hidden"
                   [count]="cupCupMatch.cup_predictions_home_count"
                   [user]="cupCupMatch.home_user"
                ></app-cup-cup-match-user-name>
@@ -44,7 +44,7 @@
             <div class="col-5 d-flex align-items-center justify-content-start">
                <app-user-logo [user]="cupCupMatch.away_user"></app-user-logo>
                <app-cup-cup-match-user-name
-                  class="text-left pl-1"
+                  class="text-left pl-1 overflow-hidden"
                   [count]="cupCupMatch.cup_predictions_away_count"
                   [user]="cupCupMatch.away_user"
                ></app-cup-cup-match-user-name>
