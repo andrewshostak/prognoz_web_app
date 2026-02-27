@@ -164,7 +164,7 @@ export class TeamStageSelectComponent implements OnInit {
          limit: 3,
          orderBy: 'id',
          page: 1,
-         sequence: Sequence.Descending,
+         sequence: Sequence.Ascending,
          states: [CompetitionState.Ended],
          tournamentId: Tournament.Team
       };
@@ -193,7 +193,7 @@ export class TeamStageSelectComponent implements OnInit {
    private getTeamStagesObservable(competitionId: number): Observable<PaginatedResponse<TeamStage>> {
       const search: TeamStageSearch = {
          orderBy: 'id',
-         sequence: Sequence.Descending,
+         sequence: Sequence.Ascending,
          page: 1,
          competitionId,
          limit: PaginationService.limit.teamStages

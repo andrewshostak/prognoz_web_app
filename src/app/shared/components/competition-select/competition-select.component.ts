@@ -1,7 +1,7 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-
+import { orderBy } from 'lodash';
 import { Sequence } from '@enums/sequence.enum';
 import { Tournament } from '@enums/tournament.enum';
 import { CompetitionState } from '@enums/competition-state.enum';
@@ -81,7 +81,7 @@ export class CompetitionSelectComponent implements OnInit {
          limit: PaginationService.limit.competitions,
          page: 1,
          orderBy: 'id',
-         sequence: Sequence.Descending,
+         sequence: Sequence.Ascending,
          states: [CompetitionState.Applications, CompetitionState.Active],
          tournamentId: Tournament.Team
       };
@@ -96,7 +96,7 @@ export class CompetitionSelectComponent implements OnInit {
          tournamentId: Tournament.Team
       };
       this.competitionService.getCompetitions(search).subscribe(response => {
-         this.competitionsBySeasonId[seasonId] = response.data;
+         this.competitionsBySeasonId[seasonId] = orderBy(response.data, ['number_in_season', 'id'], ['desc', 'desc']);
       });
    }
 
