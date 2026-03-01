@@ -37,6 +37,10 @@ export class DropdownNavigationComponent implements OnChanges, OnInit {
    }
 
    public ngOnChanges(changes: SimpleChanges): void {
+      if (changes.dropdownItems && changes.dropdownItems.currentValue) {
+         this.dropdownItems = [...changes.dropdownItems.currentValue].sort((a, b) => a.id - b.id);
+      }
+
       if (changes.selectedId && this.form) {
          if (changes.selectedId.currentValue) {
             this.form.get('id').setValue(changes.selectedId.currentValue);

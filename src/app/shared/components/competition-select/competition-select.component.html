@@ -31,24 +31,38 @@
       <i [hidden]="!showCompetitionSelect" class="fa fa-chevron-up ml-1"></i>
    </button>
 </ng-template>
-<div *ngIf="showCompetitionSelect" class="card shadow p-2 mb-2">
+<div *ngIf="showCompetitionSelect" class="card shadow p-3 mb-2">
    <form novalidate [formGroup]="competitionSelectForm">
       <div class="form-row">
          <div class="form-group col-12 col-md-6 col-lg-4 col-xl-3">
             <label for="season_id" class="font-weight-bold">Сезон:</label>
-            <select id="season_id" class="form-control cursor-pointer" formControlName="season_id">
-               <option [ngValue]="null" disabled>Виберіть сезон</option>
-               <option *ngFor="let season of seasons" [value]="season.id">{{ season.title }}</option>
-            </select>
+            <ng-select
+               id="season_id"
+               [items]="seasons || []"
+               bindLabel="title"
+               bindValue="id"
+               placeholder="Оберіть сезон"
+               formControlName="season_id"
+               [searchable]="false"
+               [clearable]="false"
+            >
+            </ng-select>
          </div>
          <div *ngIf="competitionsBySeasonId[seasonIdFormValue]" class="form-group col-12 col-md-6 col-lg-4 col-xl-3">
             <label for="competition_id" class="font-weight-bold">Змагання:</label>
-            <select id="competition_id" class="form-control cursor-pointer" formControlName="competition_id" (change)="submit()">
-               <option [ngValue]="null" disabled>Виберіть змагання</option>
-               <option *ngFor="let competition of competitionsBySeasonId[seasonIdFormValue]" [value]="competition.id">
-                  {{ competition.title }}
-               </option>
-            </select>
+            <ng-select
+               id="competition_id"
+               [items]="competitionsBySeasonId[seasonIdFormValue] || []"
+               bindLabel="title"
+               bindValue="id"
+               placeholder="Оберіть змагання"
+               formControlName="competition_id"
+               [groupBy]="groupByNumberInSeason"
+               [searchable]="false"
+               [clearable]="false"
+               (change)="submit()"
+            >
+            </ng-select>
          </div>
          <div
             *ngIf="competitionIdFormValue"
