@@ -164,7 +164,7 @@ export class TeamStageSelectComponent implements OnInit {
          limit: 3,
          orderBy: 'id',
          page: 1,
-         sequence: Sequence.Ascending,
+         sequence: Sequence.Descending,
          states: [CompetitionState.Ended],
          tournamentId: Tournament.Team
       };
