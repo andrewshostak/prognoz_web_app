@@ -232,3 +232,22 @@ body {
 .simple-notification.error {
    background-color: $danger !important;
 }
+.ng-select-container {
+   padding-left: 6px;
+   cursor: pointer !important;
+}
+.ng-select .ng-arrow-wrapper .ng-arrow {
+   display: none !important;
+}
+.ng-select span.ng-arrow-wrapper:before {
+   content: '\f078';
+   display: inline-block;
+   font: normal normal normal 12px/1 FontAwesome;
+   font-size: 12px;
+   text-rendering: auto;
+   color: #8e8c84;
+}
+.ng-select.ng-select-opened span.ng-arrow-wrapper:before {
+   content: '\f077';
+   color: #8e8c84;
+}

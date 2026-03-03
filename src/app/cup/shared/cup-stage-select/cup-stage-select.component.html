@@ -1,30 +1,49 @@
-<div class="card shadow p-2">
+<div class="card shadow p-3 mb-2">
    <form novalidate [formGroup]="cupStageSelectForm">
       <div class="form-row">
          <div class="form-group col-12 col-md-6 col-lg-4 col-xl-3">
             <label for="season_id" class="font-weight-bold">Сезон:</label>
-            <select id="season_id" class="form-control cursor-pointer" formControlName="season_id">
-               <option [ngValue]="null" disabled>Виберіть сезон</option>
-               <option *ngFor="let season of seasons" [value]="season.id">{{ season.title }}</option>
-            </select>
+            <ng-select
+               id="season_id"
+               placeholder="Оберіть сезон"
+               [items]="seasons || []"
+               bindValue="id"
+               bindLabel="title"
+               formControlName="season_id"
+               [searchable]="false"
+               [clearable]="false"
+            >
+            </ng-select>
          </div>
          <div *ngIf="competitionsBySeasonId[seasonIdFormValue]" class="form-group col-12 col-md-6 col-lg-4 col-xl-3">
             <label for="competition_id" class="font-weight-bold">Змагання:</label>
-            <select id="competition_id" class="form-control cursor-pointer" formControlName="competition_id">
-               <option [ngValue]="null" disabled>Виберіть змагання</option>
-               <option *ngFor="let competition of competitionsBySeasonId[seasonIdFormValue]" [value]="competition.id">
-                  {{ competition.title }}
-               </option>
-            </select>
+            <ng-select
+               id="competition_id"
+               placeholder="Оберіть змагання"
+               [items]="competitionsBySeasonId[seasonIdFormValue] || []"
+               bindValue="id"
+               bindLabel="title"
+               [groupBy]="groupByNumberInSeason"
+               formControlName="competition_id"
+               [searchable]="false"
+               [clearable]="false"
+            >
+            </ng-select>
          </div>
          <div *ngIf="cupStagesByCompetitionId[competitionIdFormValue]" class="form-group col-12 col-md-6 col-lg-4 col-xl-3">
             <label for="cup_stage_id" class="font-weight-bold">Стадія:</label>
-            <select id="cup_stage_id" class="form-control cursor-pointer" formControlName="cup_stage_id" (change)="submit()">
-               <option [ngValue]="null" disabled>Виберіть стадію</option>
-               <option *ngFor="let cupStage of cupStagesByCompetitionId[competitionIdFormValue]" [value]="cupStage.id">
-                  {{ cupStage.title }}
-               </option>
-            </select>
+            <ng-select
+               id="cup_stage_id"
+               formControlName="cup_stage_id"
+               [items]="cupStagesByCompetitionId[competitionIdFormValue] || []"
+               bindValue="id"
+               bindLabel="title"
+               placeholder="Оберіть стадію"
+               [searchable]="false"
+               [clearable]="false"
+               (change)="submit()"
+            >
+            </ng-select>
          </div>
          <div
             *ngIf="cupStageIdFormValue"

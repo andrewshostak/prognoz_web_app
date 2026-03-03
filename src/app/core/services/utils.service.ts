@@ -9,6 +9,10 @@ export class UtilsService {
       return abstractControl.touched && abstractControl.hasError(errorKey);
    }
 
+   public static groupByNumberInSeason(competition: Competition): string {
+      return `Серія ${competition.number_in_season}`;
+   }
+
    public static showFormInvalidClass(abstractControl: AbstractControl): boolean {
       return abstractControl.invalid && abstractControl.touched;
    }
