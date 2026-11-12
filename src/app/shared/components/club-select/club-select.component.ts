@@ -94,9 +94,7 @@ export class ClubSelectComponent implements OnChanges, OnInit, ControlValueAcces
    }
 
    public writeValue(value: any): void {
-      if (value) {
-         this.clubSelectFormGroup.get('club_id').setValue(value);
-      }
+      this.clubSelectFormGroup.get('club_id').setValue(value);
    }
 
    private enableTypeAheadSearch(): void {
